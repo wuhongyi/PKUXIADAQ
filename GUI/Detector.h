@@ -59,7 +59,7 @@ private:
   char DSPCodeFile[80];
   char DSPParFile[80];
   char DSPVarFile[80];
-  bool ReadConfigFile(char *config = (char*)"cfgPixie16.txt");
+  bool ReadConfigFile(char *config = (char*)"../parset/cfgPixie16.txt");
 	
   FILE *fsave[PRESET_MAX_MODULES];
   unsigned int buff[PRESET_MAX_MODULES][BUFFLENGTH];

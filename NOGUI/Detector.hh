@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:51:04 2016 (+0800)
-// Last-Updated: 一 10月  3 10:12:43 2016 (+0800)
+// Last-Updated: 一 10月  3 19:57:56 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 4
+//     Update #: 5
 // URL: http://wuhongyi.github.io 
 
 #ifndef _DETECTOR_H_
@@ -66,7 +66,7 @@ private:
   char DSPCodeFile[80];
   char DSPParFile[80];
   char DSPVarFile[80];
-  bool ReadConfigFile(char *config = (char*)"cfgPixie16.txt");
+  bool ReadConfigFile(char *config = (char*)"../parset/cfgPixie16.txt");
 	
   FILE *fsave[PRESET_MAX_MODULES];
   unsigned int buff[PRESET_MAX_MODULES][BUFFLENGTH];
