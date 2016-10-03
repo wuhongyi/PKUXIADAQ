@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+  <link rel="stylesheet" href="/home/wuhongyi/CodeProject/ShellAndTemplate/css/wuMarkdownStyle.css" type="text/css" />
+</head>
+<body>
+<!-- README.md --- 
+;; 
+;; Description: 
+;; Author: Hongyi Wu(吴鸿毅)
+;; Email: wuhongyi@qq.com 
+;; Created: 四 9月  8 16:09:02 2016 (+0800)
+;; Last-Updated: 四 9月  8 17:28:09 2016 (+0800)
+;;           By: Hongyi Wu(吴鸿毅)
+;;     Update #: 4
+;; URL: http://wuhongyi.github.io -->
+
+<h1 id="代码简单描述">代码简单描述</h1>
+<p>运行程序之前需要先修改以下文件：</p>
+<ul>
+<li>文件<strong>PixieLSMRun.config</strong>第一行为输出文件路径， 第二行为文件名，第三行为run number。</li>
+<li>文件<strong>cfgPixie16.txt</strong>中参数意义与官网提供示例代码相同。</li>
+</ul>
+<p>测试只有两个插件。</p>
+<p>测试程序包含以下代码文件：</p>
+<ul>
+<li>main.cc</li>
+<li>Global.hh</li>
+<li>Global.cc</li>
+<li>Manager.hh</li>
+<li>Manager.cc</li>
+<li>Detector.hh</li>
+<li>Detector.cc</li>
+</ul>
+<h1 id="程序运行">程序运行</h1>
+<pre><code>  [q]   Quit
+  [s]   Start/Stop acquisition
+--------------------------------------------------------------------------</code></pre>
+<p>执行编译好的可执行文件后会有以上运行提示，键盘输入 q <strong>退出程序</strong>，输入 s <strong>启动获取</strong>，再输入一次 s <strong>停止获取</strong>。</p>
+<h1 id="程序逻辑">程序逻辑</h1>
+<p>主程序 main.cc 初始化运行管理类 Manager 并进入键盘交互状态。</p>
+<p>Detector类主要函数功能描述：</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="co">//执行函数 Pixie16InitSystem Pixie16BootModule</span>
+<span class="dt">bool</span> BootSystem();
+
+<span class="co">//执行函数 Pixie16ExitSystem</span>
+<span class="dt">int</span> ExitSystem();
+
+<span class="co">//Pixie16WriteSglModPar - SYNCH_WAIT</span>
+<span class="co">//Pixie16WriteSglModPar - IN_SYNCH</span>
+<span class="co">//执行函数 Pixie16StartListModeRun</span>
+<span class="dt">int</span> StartLSMRun(<span class="dt">int</span> continue_run);
+
+<span class="co">//执行函数  Pixie16EndRun</span>
+<span class="dt">int</span> StopLSMRun();
+
+<span class="co">//执行函数 Pixie16CheckExternalFIFOStatus Pixie16ReadDataFromExternalFIFO</span>
+<span class="co">//该函数中 if(fonline) StatisticsForModule(); 每3秒会执行函数 Pixie16ReadStatisticsFromModule 读取统计信息</span>
+<span class="dt">int</span> ReadDataFromModules(<span class="dt">int</span> thres=<span class="dv">0</span>,<span class="dt">unsigned</span> <span class="dt">short</span> endofrun=<span class="dv">0</span>);
+
+<span class="co">//执行函数 Pixie16ReadStatisticsFromModule 读取统计参数并通过共享内存发送</span>
+<span class="dt">int</span> UpdateSharedMemory();
+
+<span class="co">// 每隔3秒调用一次UpdateSharedMemory()函数</span>
+<span class="dt">void</span> StatisticsForModule();</code></pre>
+<h1 id="输入信号">输入信号</h1>
+<p>测试信号源为脉冲发生器，频率 1 kHz，幅值 1V。</p>
+<!-- README.md ends here -->
+</body>
+</html>
