@@ -175,7 +175,8 @@ private:
   bool            fstartdaq;
   bool            fstopdaq;
   void 	        LSRunReadData();
-
+  bool IsDirectoryExists(const char *path);//判断文件夹是否存在
+  
   ClassDef(Main,1)
 };
 

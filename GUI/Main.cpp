@@ -1,6 +1,7 @@
 #define MADE "v. 2.4,---> 11/13/07"
 
 #include <unistd.h>
+#include <sys/stat.h>//stat(const char *file_name,struct stat *buf)
 #include "Main.h"
 #include "PulseShape.h"
 #include "Detector.h"
@@ -596,17 +597,20 @@ void Main::MakeFold2Panel(TGCompositeFrame *TabPanel){
   TabPanel->AddFrame(controlgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
 
   // restore last run's file information
-  ifstream in("PixieLSMRun.config");
-  if(!in.is_open()) return;
   char tmp[200];
+  ifstream in("../parset/Run.config");
+  if(!in.is_open()) return;
   in.getline(tmp,200);
   filepathtext->Insert(tmp);
   in.getline(tmp,200);
   filenametext->Insert(tmp);
-  in.getline(tmp,200);
-  filerunnum->SetText(tmp);
   in.close();
 
+  ifstream inrunnumber("../parset/RunNumber");
+  if(!inrunnumber.is_open()) return;
+  inrunnumber.getline(tmp,200);
+  filerunnum->SetText(tmp);
+  inrunnumber.close();
 }
 
 
@@ -626,13 +630,21 @@ void Main::SetLSFileName()
       sprintf(Filename[i],"%s%s_R%04d_M%02d.bin",path,filen,runnum,i);
       cout<<i<<" "<<Filename[i]<<endl;
     }
-  // sprintf(Histofile,"%s%s_Histo_%04d.bin",path,filen,runnum);
-  // sprintf(Staticfile,"%s%s_Static_%04d.bin",path,filen,runnum);
 
-  // cout<<Histofile<<endl;
-  // cout<<Staticfile<<endl;
-  startdaq->SetEnabled(1);
-  fstartdaq=0;
+  if(IsDirectoryExists(filepathtext->GetText()))
+    {
+      ofstream out("../parset/Run.config");
+      out<<filepathtext->GetText()<<endl;
+      out<<filenametext->GetText()<<endl;
+      out.close();
+      
+      startdaq->SetEnabled(1);
+      fstartdaq = 0;
+    }
+  else
+    {
+      cout<<"The output file directory does not exist"<<endl;
+    }
 }
 
 void Main::StartLSRun()
@@ -668,11 +680,10 @@ void Main::StartLSRun()
       fstartdaq = 0;
       startdaq->SetText("LSRunStart");
       filerunnum->SetIntNumber((++runnum));
-      ofstream out("PixieLSMRun.config");
-      out<<filepathtext->GetText()<<endl;
-      out<<filenametext->GetText()<<endl;
-      out<<filerunnum->GetIntNumber();
-      out.close();
+
+      ofstream outrunnumber("../parset/RunNumber");
+      outrunnumber<<filerunnum->GetIntNumber();
+      outrunnumber.close();
     }
 }
 
@@ -705,4 +716,13 @@ void Main::SetLSonlinedataf()
     detector->SetOnlineF(0);
     cout<<"DAQ wont send online data!"<<endl;
   }
+}
+
+bool Main::IsDirectoryExists(const char *path)
+{
+  struct stat fileStat;
+  if ((stat(path, &fileStat) == 0) && S_ISDIR(fileStat.st_mode))
+    return true;
+  else
+    return false;
 }

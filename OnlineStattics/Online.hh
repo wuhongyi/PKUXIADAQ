@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:41 2016 (+0800)
-// Last-Updated: 一 10月  3 16:59:03 2016 (+0800)
+// Last-Updated: 二 10月  4 19:04:09 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 19
+//     Update #: 24
 // URL: http://wuhongyi.github.io 
 
 #ifndef _ONLINE_H_
@@ -34,6 +34,7 @@
 #include <cmath>
 #include <cstring>
 #include <string>
+#include <sstream>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/mman.h>
@@ -79,6 +80,16 @@ private:
   long get_time();
   
 private:
+  TGVerticalFrame **Column1;
+  
+  TGTextEntry **cl0;
+  TGTextEntry **LabelsI;
+  TGTextEntry **LabelsO;
+  
+  TGTextEntry **ICR;//[0-207] Input rate   >=208 File size
+  TGTextEntry **OCR;//[0-207] Output rate  >=208 not used
+  TGTextEntry **Labels;
+  
   uint64_t CurrentTime;
   uint64_t PrevRateTime;
   uint64_t ElapsedTime;

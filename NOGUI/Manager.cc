@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 22:19:02 2016 (+0800)
-// Last-Updated: 一 10月  3 10:05:42 2016 (+0800)
+// Last-Updated: 二 10月  4 15:29:49 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 26
+//     Update #: 29
 // URL: http://wuhongyi.github.io 
 
 #include "Manager.hh"
@@ -30,7 +30,7 @@ Manager::Manager()
   fonlinedata = 0;
   
   // restore last run's file information
-  std::ifstream in("./PixieLSMRun.config");
+  std::ifstream in("../parset/Run.config");
   if(!in.is_open())
     {
       std::cout<<"can't open file PixieLSMRun.config"<<std::endl;
@@ -41,10 +41,14 @@ Manager::Manager()
   filepathtext = tmp;
   in.getline(tmp,200);
   filenametext = tmp;
-  in.getline(tmp,200);
-  filerunnum = tmp;
   in.close();
 
+  std::ifstream inrunnumber("../parset/RunNumber");
+  if(!inrunnumber.is_open()) return;
+  inrunnumber.getline(tmp,200);
+  filerunnum = tmp;
+  inrunnumber.close();
+  
   std::stringstream ss;//sstream cstring
   ss.clear();//重复使用前一定要清空
   ss<<filerunnum;
@@ -107,7 +111,6 @@ void Manager::SetLSonlinedataf()
 
 void Manager::CheckKeyboard()
 {
-  int b;
   // Check keyboard
   if(kbhit())
     {
@@ -144,9 +147,7 @@ void Manager::CheckKeyboard()
 	        AcqRun = false;
 
 		runnum++;
-		std::ofstream out("./PixieLSMRun.config");
-		out<<filepathtext<<std::endl;
-		out<<filenametext<<std::endl;
+		std::ofstream out("../parset/RunNumber");
 		out<<runnum;
 		out.close();
 	      }
