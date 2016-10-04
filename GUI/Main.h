@@ -40,6 +40,7 @@
 #include "Histogram.h"
 #include "ScopedT.h"
 #include "Popup.h"
+#include "MultiplicityMask.h"
 
 #include "TVirtualPad.h"
 #include "TObject.h"
@@ -73,6 +74,7 @@ enum Commands //commands for the menu bar popups
     FILE_SAVE,
     MODVAR,
     LOGIC,
+    MULTIPLICITYMASK,
     FRONTPANELOUTPUTS,
     CHANVAR,
     CLEARMCA,
@@ -123,6 +125,7 @@ private:
   ExpertMod *expertmod;
   LogicTrigger *logictrigger;
   FPOutputs *fpoutputs;
+  MultiplicityMask *multiplicitymask;
   Offline *popupoffline;
   Pixel_t color;
   ScopedT *scopedt;

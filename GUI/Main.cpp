@@ -92,6 +92,7 @@ void Main::CreateMenuBar()
   MenuExpert->AddEntry("Module Variables", MODVAR);
   MenuExpert->AddEntry("Logic Set", LOGIC);
   MenuExpert->AddEntry("Front Outputs", FRONTPANELOUTPUTS);
+  MenuExpert->AddEntry("Multiplicity", MULTIPLICITYMASK);
   // MenuExpert->AddEntry ("Channel Variables", CHANVAR);
   MenuExpert->Associate(this);
   MenuBar->AddPopup("&Expert", MenuExpert, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
@@ -202,6 +203,10 @@ Bool_t Main::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    case LOGIC:
 	      logictrigger = new LogicTrigger(fClient->GetRoot(),this,(char*)"Logic Trigger");
 	      logictrigger->load_info(0);
+	      break;
+	    case MULTIPLICITYMASK:
+	      multiplicitymask = new MultiplicityMask(fClient->GetRoot(),this,(char*)"Multiplicity Mark");
+		multiplicitymask->load_info(0);
 	      break;
 	    case FRONTPANELOUTPUTS:
 	      fpoutputs = new FPOutputs(fClient->GetRoot(), this);
