@@ -5,8 +5,7 @@
 class Tau : public Table
 {
 public:
-  Tau(const TGWindow * p, const TGWindow * main, char *name, int columns = 3,
-      int rows = 16, int NumModules=5);
+  Tau(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, int NumModules);
   virtual ~ Tau();
 
   int change_values(Long_t mod);
@@ -14,7 +13,7 @@ public:
 
 protected:
   Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2);
-  void findtau();
+  void findtau(short int mod);
   
   TGNumberEntry *chanCopy;
   short int chanNumber;

@@ -1,15 +1,14 @@
 #include "ExpertMod.h"
-#include "pixie16app_defs.h"
 #include "pixie16sys_export.h"
 #include "pixie16app_export.h"
 #include "pixie16app_common.h"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-ExpertMod::ExpertMod(const TGWindow * p, const TGWindow * main, char *name,int NumModules=24)
+ExpertMod::ExpertMod(const TGWindow * p, const TGWindow * main, char *name,int NumModules)
 {
   SetCleanup(kDeepCleanup);
 
-  numModules = PRESET_MAX_MODULES;
+  numModules = NumModules;
 
   mn_vert = new TGVerticalFrame(this, 200, 300);
   TGHorizontalFrame *Median = new TGHorizontalFrame(mn_vert, 400, 300);
@@ -146,7 +145,7 @@ ExpertMod::load_info (Long_t mod, int param)
 
   if (param == 0 )
     {
-      retval = Pixie16ReadSglModPar ((char*)"MODULE_CSRB", &ChanParData, modNumber);
+      retval = Pixie16ReadSglModPar ((char*)"MODULE_CSRB", &ChanParData, mod);
       sprintf (text, "%u", ChanParData);
       NumEntry->SetText (text);
     }
@@ -154,7 +153,7 @@ ExpertMod::load_info (Long_t mod, int param)
   
   if (param == 1 )
     {
-      retval = Pixie16ReadSglModPar ((char*)"MAX_EVENTS", &ChanParData, modNumber);
+      retval = Pixie16ReadSglModPar ((char*)"MAX_EVENTS", &ChanParData, mod);
       sprintf (text, "%u", ChanParData);
       NumEntry->SetText (text);    
     }
@@ -211,12 +210,12 @@ ExpertMod::change_values (Long_t mod, int param)
   value = NumEntry->GetNumber ();
   if (param == 0 )
     {
-      retval=Pixie16WriteSglModPar ((char*)"MODULE_CSRB",(long unsigned int)value,modNumber );    
+      retval=Pixie16WriteSglModPar ((char*)"MODULE_CSRB",(long unsigned int)value,mod );    
     }
   
   if (param == 1 )
     {
-      retval=Pixie16WriteSglModPar ((char*)"MAX_EVENTS",(long unsigned int)value,modNumber );    
+      retval=Pixie16WriteSglModPar ((char*)"MAX_EVENTS",(long unsigned int)value,mod );    
     }
 
   // GOTO 
@@ -225,7 +224,7 @@ ExpertMod::change_values (Long_t mod, int param)
       // retval=Pixie16WriteSglModPar ("COINWINDLEN",(long unsigned int)value,modNumber );   // this function don't provide par "COINWINDLEN"
 
       value_i = (unsigned int)value;
-      retval = Pixie_DSP_Memory_IO(&value_i, 0x4a007, 1,  MOD_WRITE, modNumber);
+      retval = Pixie_DSP_Memory_IO(&value_i, 0x4a007, 1,  MOD_WRITE, mod);
       if(retval < 0)
 	{
 	  sprintf(ErrMSG, "*ERROR* (CoincPattern): IMbuffer I/O failed for module %d, retval=%d",  modNumber, retval);

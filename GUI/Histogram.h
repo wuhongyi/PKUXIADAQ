@@ -6,7 +6,7 @@ class Histogram : public Table
 {
 public:
   Histogram(const TGWindow * p, const TGWindow * main, char *name,
-	     int columns = 3, int rows = 16, int NumModules=5);
+	     int columns, int rows, int NumModules);
   virtual ~ Histogram ();
   
   int change_values(Long_t mod);

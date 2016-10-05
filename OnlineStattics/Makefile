@@ -4,9 +4,9 @@
 ## Author: Hongyi Wu(吴鸿毅)
 ## Email: wuhongyi@qq.com 
 ## Created: 一 10月  3 12:40:11 2016 (+0800)
-## Last-Updated: 一 10月  3 14:29:34 2016 (+0800)
+## Last-Updated: 三 10月  5 18:57:03 2016 (+0800)
 ##           By: Hongyi Wu(吴鸿毅)
-##     Update #: 4
+##     Update #: 5
 ## URL: http://wuhongyi.github.io 
 
 OBJ = online
@@ -22,7 +22,7 @@ SRCS:=Online.cc OnlineDict.cc main.cc
 
 all: $(OBJ)
 
-online: $(SRCS) $(OBJECTS) $(INCLUDES)
+$(OBJ): $(SRCS) $(OBJECTS) $(INCLUDES)
 	$(CXX) -o  $@  $(OBJECTS) $(CXXFLAGS) $(ROOTLIBS)
 
 %.o: %.cxx 

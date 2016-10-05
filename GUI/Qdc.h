@@ -6,7 +6,7 @@
 class Qdc : public Table 
 {
 public:
-  Qdc(const TGWindow *p, const TGWindow *main, char *name, int colunms = 9, int rows = 16,int NumModules=5);
+  Qdc(const TGWindow *p, const TGWindow *main, char *name, int colunms, int rows,int NumModules);
   ~Qdc();
 
   int change_values (Long_t mod);
@@ -21,7 +21,7 @@ protected:
   char tmp[10];
   TGNumberEntry* chanCopy;
 
-  float qlen[8];
+  double qlen[8];
 };
 
 #endif

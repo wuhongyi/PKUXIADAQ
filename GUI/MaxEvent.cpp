@@ -126,12 +126,12 @@ int MaxEvent::load_info()
 
 int MaxEvent::change_values()
 {
-  double d;
+  unsigned int d;
   int retval;
   for (int i = 0; i < 3; i++)
     {
       // d = maxEvent[i]->GetNumber ();
-      retval = Pixie16WriteSglModPar((char*)"MAX_EVENTS", (unsigned long)d,i);
+      retval = Pixie16WriteSglModPar((char*)"MAX_EVENTS", d,i);
       std::cout<<"maxevent write(MAX_EVENTS): "<<retval<< "in mod "<<i<<std::endl;
     }
   //std::cout << "change values\n";
@@ -154,7 +154,7 @@ Bool_t MaxEvent::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    case 4000:
 	      {
 		Load_Once = true;
-		load_info ();
+		load_info();
 	      }
 	      break;
 	    case 4001:

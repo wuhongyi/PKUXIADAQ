@@ -1,13 +1,12 @@
 #include "ScopedT.h"
 #include "Global.h"
-#include "pixie16app_defs.h"
 #include "pixie16app_export.h"
 
 ScopedT::~ScopedT()
 {
 }
-ScopedT::ScopedT(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows)
-  :Table(p, main, columns, rows, name, PRESET_MAX_MODULES)
+ScopedT::ScopedT(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, int NumModules)
+  :Table(p, main, columns, rows, name, NumModules)
 {
   char n[10];
   cl0->SetText ("ch #");
@@ -45,11 +44,11 @@ ScopedT::ScopedT(const TGWindow * p, const TGWindow * main, char *name, int colu
   modNumber = 0;
   chanNumber = 0;
   decay = 0;
-  //tlength=0;tdelay=0;
   ///////////////////////////////////////////////////////////////////////
   MapSubwindows();
   Resize();			// resize to default size
 }
+
 Bool_t ScopedT::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 {
   switch (GET_MSG(msg))
@@ -67,6 +66,7 @@ Bool_t ScopedT::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		    {
 		      ++modNumber;
 		      numericMod->SetIntNumber(modNumber);
+		      load_info(modNumber);
 		    }
 		}
 	      else
@@ -76,6 +76,7 @@ Bool_t ScopedT::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		      if (--modNumber == 0)
 			modNumber = 0;
 		      numericMod->SetIntNumber(modNumber);
+		      load_info(modNumber);
 		    }
 		}
 	      break;
@@ -156,12 +157,12 @@ int ScopedT::load_info(Long_t mod)
   char text[20];
   for (int i = 0; i < 16; i++)
     {
-      retval = Pixie16ReadSglChanPar((char*)"XDT", &ChanParData, modNumber, i);
+      retval = Pixie16ReadSglChanPar((char*)"XDT", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("ScopedT.cpp", "load_info(...)", "Pixie16ReadSglChanPar/XDT", retval);
       sprintf(text, "%1.2f", ChanParData);
       NumEntry[1][i]->SetText(text);
     }
-  //  cout << "loading info\n";
+
   return 1;
 }
 
@@ -172,8 +173,8 @@ ScopedT::change_values(Long_t mod)
   double d;
   for (int i = 0; i < 16; i++)
     {
-      d = NumEntry[1][i]->GetNumber ();
-      retval = Pixie16WriteSglChanPar((char*)"XDT", d, modNumber, i);
+      d = NumEntry[1][i]->GetNumber();
+      retval = Pixie16WriteSglChanPar((char*)"XDT", d, mod, i);
       if(retval < 0) ErrorInfo("ScopedT.cpp", "change_values(...)", "Pixie16WriteSglChanPar/XDT", retval);
     }
   // cout << "change values\n";

@@ -5,7 +5,6 @@
 #include "TGWidget.h"
 #include "TG3DLine.h"
 #include "pixie16app_export.h"
-#include "pixie16app_defs.h"
 #include <iostream>
 using namespace std;
 
@@ -16,8 +15,7 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   module_number1 = 0;
   char name[20];
 
-  //numModules=NumModules;
-  numModules = PRESET_MAX_MODULES;
+  numModules = NumModules;
 
   mn_vert = new TGVerticalFrame(this, 200, 300);
   mn = new TGHorizontalFrame(mn_vert, 200, 300);
@@ -40,7 +38,13 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   column15 = new TGVerticalFrame(mn, 400, 300);
   column16 = new TGVerticalFrame(mn, 400, 300);
   column17 = new TGVerticalFrame(mn, 400, 300);
-
+  column18 = new TGVerticalFrame(mn, 400, 300);
+  column19 = new TGVerticalFrame(mn, 400, 300);
+  column20 = new TGVerticalFrame(mn, 400, 300);
+  column21 = new TGVerticalFrame(mn, 400, 300);
+  column22 = new TGVerticalFrame(mn, 400, 300);
+  column23 = new TGVerticalFrame(mn, 400, 300);
+  
   buttons = new TGHorizontalFrame(mn_vert, 400, 300);
 
   mn->AddFrame(column1, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
@@ -60,7 +64,12 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   mn->AddFrame(column15, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   mn->AddFrame(column16, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   mn->AddFrame(column17, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-
+  mn->AddFrame(column18, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  mn->AddFrame(column19, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  mn->AddFrame(column20, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  mn->AddFrame(column21, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  mn->AddFrame(column22, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  mn->AddFrame(column23, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
   //////////////////////////first column////////////////////////
 
@@ -105,6 +114,7 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   Labels[16]->Resize(35, 20);
   Labels[16]->SetEnabled(kFALSE);
   Labels[16]->SetFrameDrawn(kTRUE);
+  
   column1->AddFrame(Labels[16], new TGLayoutHints(kLHintsCenterX, 0, 3, 0, 0));
 
   make_columns(column2, ckBtn, (char*)"RGT", (char*)"Respond to group triggers only: Rev-A", 5000);
@@ -122,8 +132,15 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   make_columns(column14, ckBtn_12, (char*)"ERB", (char*)"Enable capture raw energy sums and baselines: All But Rev-A", 6200);
   make_columns(column15, ckBtn_13, (char*)"CTV", (char*)"Enable Channel trigger validation: All But Rev-A", 6300);
   make_columns(column16, ckBtn_14, (char*)"EIR", (char*)"Enable input relay: All types", 6400);
-  make_columns(column17, ckBtn_15, (char*)"PRC", (char*)"Pileup rejection control: All But Rev-A", 6500);
+  make_columns(column17, ckBtn_15, (char*)"PR", (char*)"Pileup rejection control: All But Rev-A", 6500);
 
+  make_columns(column18, ckBtn_16, (char*)"IPR", (char*)"Inverse pileup rejection control", 6600);
+  make_columns(column19, ckBtn_17, (char*)"NTL", (char*)"Enable 'no traces for large pulses' featrue", 6700);
+  make_columns(column20, ckBtn_18, (char*)"TS", (char*)"Group trigger selection (external group trigger(checked) or local fast trigger(unchecked))", 6800);
+  make_columns(column21, ckBtn_19, (char*)"CVS", (char*)"Channel veto selection (channel validation trigger(checked) or front panel channel veto(unchecked))", 6900);
+  make_columns(column22, ckBtn_20, (char*)"MVS", (char*)"Module veto selection (module validation trigger(checked) or front panel module veto(unchecked))", 7000);
+  make_columns(column23, ckBtn_21, (char*)"ECT", (char*)"Enable (checked) or disable (unchecked) recording of external clock timestamps in event header", 7100);
+  
   /////////////////////////////module entry///////////////////////////////
 
   TGHorizontal3DLine *ln1 = new TGHorizontal3DLine(column1, 50, 2);
@@ -191,7 +208,7 @@ int Csra::make_columns(TGVerticalFrame * column, TGCheckButton * ckBtn_g[17],
     {
       column->AddFrame(ckBtn_g[i] =
 		       new TGCheckButton(column, "", id + i),
-		       new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+		       new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 2));
       ckBtn_g[i]->Associate(this);
     }
   return 1;
@@ -217,6 +234,7 @@ Bool_t Csra::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		    {
 		      ++module_number1;
 		      numericMod->SetIntNumber(module_number1);
+		      load_info(module_number1);
 		    }
 		}
 	      else
@@ -226,6 +244,7 @@ Bool_t Csra::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		      if (--module_number1 == 0)
 			module_number1 = 0;
 		      numericMod->SetIntNumber(module_number1);
+		      load_info(module_number1);
 		    }
 		}
 	      break;
@@ -272,11 +291,11 @@ int Csra::load_info(Long_t mod)
 
   for (int i = 0; i < 16; i++)
     {
-      retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA", &ChanParData, module_number1, i);
+      retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Csra.cpp", "load_info(...)", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);
       
-      for(int j = 0;j < 16;j++){
-        gt = APP32_TstBit(j, (unsigned long) ChanParData);
+      for(int j = 0;j < 22;j++){
+        gt = APP32_TstBit(j, ChanParData);
 	if(gt==0) 
 	  tmpckBtn[j][i]->SetState(kButtonUp);
 	else 
@@ -295,14 +314,14 @@ int Csra::change_values(Long_t mod)
 
   for (int i = 0; i < 16; i++)
     {
-      for(int j = 0;j < 16;j++){
+      for(int j = 0;j < 22;j++){
         if(tmpckBtn[j][i]->IsDown())
-	  ChanParData = APP32_SetBit(j,(unsigned short)ChanParData);
+	  ChanParData = APP32_SetBit(j,ChanParData);
 	else 
-	  ChanParData = APP32_ClrBit(j,(unsigned short)ChanParData);
+	  ChanParData = APP32_ClrBit(j,ChanParData);
       }
       
-      retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, module_number1, i);
+      retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Csra.cpp", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);
     } 
 
@@ -311,28 +330,32 @@ int Csra::change_values(Long_t mod)
 
 void Csra::checkbutton(Long_t parm1)
 {
-  if(parm1 > 6516 || parm1 < 5000) return;
-  if(parm1%100 == 16 ){
-    int k = parm1/100-50;
-    if(k < 0 || k > 15) return;
-    if(tmpckBtn[k][16]->IsDown()){
-      for(int i = 0;i < 16;i++)
-        tmpckBtn[k][i]->SetState(kButtonDown);
-    }else {
-      for(int i = 0;i < 16;i++)
-        tmpckBtn[k][i]->SetState(kButtonUp);
-    }
-  } else {
-    int k = parm1/100-50;
-    if(k < 0 || k > 15) return;
-    int j = parm1%100;
-    if(j < 0 || j > 15) return;
-    if(!tmpckBtn[k][j]->IsDown()){
+  // 添加功能类需要修改本函数
+  if(parm1 > 7116 || parm1 < 5000) return;
+  if(parm1%100 == 16 ) // All
+    {
+      int k = parm1/100-50;//第几个功能类
+      if(k < 0 || k > 21) return;
       if(tmpckBtn[k][16]->IsDown()){
-        tmpckBtn[k][16]->SetState(kButtonUp);
+	for(int i = 0;i < 16;i++)
+	  tmpckBtn[k][i]->SetState(kButtonDown);
+      }else {
+	for(int i = 0;i < 16;i++)
+	  tmpckBtn[k][i]->SetState(kButtonUp);
       }
     }
-  }
+  else //0-15
+    {
+      int k = parm1/100-50;
+      if(k < 0 || k > 21) return;
+      int j = parm1%100;
+      if(j < 0 || j > 15) return;
+      if(!tmpckBtn[k][j]->IsDown()){
+	if(tmpckBtn[k][16]->IsDown()){
+	  tmpckBtn[k][16]->SetState(kButtonUp);
+	}
+      }
+    }
 }
 
 void Csra::getckbuttonaddress()
@@ -353,4 +376,10 @@ void Csra::getckbuttonaddress()
   tmpckBtn[13] = ckBtn_13;
   tmpckBtn[14] = ckBtn_14;
   tmpckBtn[15] = ckBtn_15;
+  tmpckBtn[16] = ckBtn_16;
+  tmpckBtn[17] = ckBtn_17;
+  tmpckBtn[18] = ckBtn_18;
+  tmpckBtn[19] = ckBtn_19;
+  tmpckBtn[20] = ckBtn_20;
+  tmpckBtn[21] = ckBtn_21;
 }

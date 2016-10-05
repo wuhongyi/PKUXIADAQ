@@ -1,9 +1,8 @@
 #include "AnalogSignal.h"
-#include "pixie16app_defs.h"
 #include "pixie16app_export.h"
 #include "Global.h"
 AnalogSignal::AnalogSignal(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, int NumModules)
-  :Table (p, main, columns, rows, name,PRESET_MAX_MODULES)
+  :Table (p, main, columns, rows, name,NumModules)
 {
   char n[10];
   cl0->SetText("ch #");
@@ -129,7 +128,7 @@ Bool_t AnalogSignal::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		    {
 		      ++modNumber;
 		      numericMod->SetIntNumber(modNumber);
-		      load_info(chanNumber);
+		      load_info(modNumber);
 		    }
 		}
 	      else
@@ -139,7 +138,7 @@ Bool_t AnalogSignal::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		      if (--modNumber == 0)
 			modNumber = 0;
 		      numericMod->SetIntNumber(modNumber);
-		      load_info(chanNumber);
+		      load_info(modNumber);
 		    }
 		}
 	      break;
@@ -234,22 +233,22 @@ int AnalogSignal::load_info(Long_t mod)
 
   for (int i = 0; i < 16; i++)
     {
-      retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA", &ChanParData, modNumber, i);
+      retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA", &ChanParData, mod, i);
       if(retval < 0)
 	ErrorInfo("AnalogSignal.cpp", "load_info(...)", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);
-      gain = APP32_TstBit(14, (unsigned long) ChanParData);
+      gain = APP32_TstBit(14, (unsigned int) ChanParData);
       if (gain == 1)
 	lstBoxGain[i]->Select(0);
       else if (gain == 0)
 	lstBoxGain[i]->Select(1);
 
-      pol = APP32_TstBit(5, (unsigned long) ChanParData);
+      pol = APP32_TstBit(5, (unsigned int) ChanParData);
       if (pol == 1)
 	lstBox[i]->Select(0);
       else if (pol == 0)
 	lstBox[i]->Select(1);
 
-      retval = Pixie16ReadSglChanPar((char*)"VOFFSET", &ChanParData, modNumber, i);
+      retval = Pixie16ReadSglChanPar((char*)"VOFFSET", &ChanParData, mod, i);
       if(retval < 0)
 	ErrorInfo("AnalogSignal.cpp", "load_info(...)", "Pixie16ReadSglChanPar/VOFFSET", retval);
       sprintf(text, "%1.3f", ChanParData);
@@ -270,37 +269,37 @@ int AnalogSignal::change_values(Long_t mod)
     {
       offset = NumEntry[1][i]->GetNumber();
 
-      retval = Pixie16WriteSglChanPar((char*)"VOFFSET", offset, modNumber, i);
+      retval = Pixie16WriteSglChanPar((char*)"VOFFSET", offset, mod, i);
       if(retval < 0) ErrorInfo("AnalogSignal.cpp", "change_values(...)", "Pixie16WriteSglChanPar/VOFFSET", retval);
-      retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA", &ChanParData, modNumber, i);
+      retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("AnalogSignal.cpp", "change_values(...)", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);     
       pol = lstBox[i]->GetSelected();
       if (pol == 0)
 	{
-	  ChanParData = APP32_SetBit(5, (unsigned long) ChanParData);
-	  retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, modNumber, i);
+	  ChanParData = APP32_SetBit(5, (unsigned int) ChanParData);
+	  retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, mod, i);
 	  if(retval < 0) ErrorInfo("AnalogSignal.cpp", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);   
 	}
       else
 	{
-	  ChanParData = APP32_ClrBit(5, (unsigned long) ChanParData);
-	  retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, modNumber, i);
+	  ChanParData = APP32_ClrBit(5, (unsigned int) ChanParData);
+	  retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, mod, i);
 	  if(retval < 0) ErrorInfo("AnalogSignal.cpp", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);   
 	}
 
-      retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA", &ChanParData, modNumber, i);
+      retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("AnalogSignal.cpp", "change_values(...)", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);   
       gain = lstBoxGain[i]->GetSelected();
       if (gain == 1)
 	{
-	  ChanParData = APP32_ClrBit(14, (unsigned long) ChanParData);
-	  retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, modNumber, i);
+	  ChanParData = APP32_ClrBit(14, (unsigned int) ChanParData);
+	  retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, mod, i);
 	  if(retval < 0) ErrorInfo("AnalogSignal.cpp", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);   
 	}
       else
 	{
-	  ChanParData = APP32_SetBit(14, (unsigned long) ChanParData);
-	  retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, modNumber, i);
+	  ChanParData = APP32_SetBit(14, (unsigned int) ChanParData);
+	  retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, mod, i);
 	  if(retval < 0) ErrorInfo("AnalogSignal.cpp", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);   
 	}
     }

@@ -1,12 +1,11 @@
 #include "Baseline.h"
 
 #include "Global.h"
-#include "pixie16app_defs.h"
 #include "pixie16app_export.h"
 
 Baseline::Baseline(const TGWindow * p, const TGWindow * main,  
 		   char *name,int columns,int rows,int NumModules)
-  : Table(p,main,columns,rows,name,PRESET_MAX_MODULES)
+  : Table(p,main,columns,rows,name,NumModules)
 {
   char n[10];
   cl0->SetText("ch #");
@@ -177,7 +176,7 @@ Bool_t Baseline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 }
 
 
-int Baseline::load_info(Long_t module)
+int Baseline::load_info(Long_t mod)
 {
   double ChanParData = -1;
   int retval;
@@ -185,12 +184,12 @@ int Baseline::load_info(Long_t module)
 
   for (int i = 0; i < 16; i++)
     {
-      retval = Pixie16ReadSglChanPar((char*)"BLCUT", &ChanParData, modNumber, i);
+      retval = Pixie16ReadSglChanPar((char*)"BLCUT", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Baseline.cpp", "load_info(...)", "Pixie16ReadSglChanPar/BLCUT", retval);  
       sprintf(text, "%d", (int)ChanParData);
       NumEntry[1][i]->SetText(text);
 
-      retval = Pixie16ReadSglChanPar((char*)"BASELINE_PERCENT", &ChanParData, modNumber, i);
+      retval = Pixie16ReadSglChanPar((char*)"BASELINE_PERCENT", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Baseline.cpp", "load_info(...)", "Pixie16ReadSglChanPar/BASELINE_PERCENT", retval);  
       sprintf(text, "%d", (int)ChanParData);
       NumEntry[2][i]->SetText(text);
@@ -200,7 +199,7 @@ int Baseline::load_info(Long_t module)
   return 1;
 }
 
-int Baseline::change_values(Long_t module)
+int Baseline::change_values(Long_t mod)
 {
   int retval;
   double cut;
@@ -208,10 +207,10 @@ int Baseline::change_values(Long_t module)
   for (int i = 0; i < 16; i++)
     {
       cut = NumEntry[1][i]->GetNumber();
-      retval = Pixie16WriteSglChanPar((char*)"BLCUT", cut, modNumber, i);
+      retval = Pixie16WriteSglChanPar((char*)"BLCUT", cut, mod, i);
       if(retval < 0) ErrorInfo("Baseline.cpp", "change_values(...)", "Pixie16WriteSglChanPar/BLCUT", retval);  
       percent = NumEntry[2][i]->GetNumber();
-      retval = Pixie16WriteSglChanPar((char*)"BASELINE_PERCENT", percent, modNumber, i);
+      retval = Pixie16WriteSglChanPar((char*)"BASELINE_PERCENT", percent, mod, i);
       if(retval < 0) ErrorInfo("Baseline.cpp", "change_values(...)", "Pixie16WriteSglChanPar/BASELINE_PERCENT", retval);  
     }
 

@@ -7,8 +7,8 @@ class Baseline : public Table
   
 public:
   Baseline(const TGWindow * p, const TGWindow * main, 
-	   char *name, int columns=3,
-	   int rows=16, int NumModules=5);
+	   char *name, int columns,
+	   int rows, int NumModules);
   virtual ~Baseline();
   
   int change_values(Long_t mod);

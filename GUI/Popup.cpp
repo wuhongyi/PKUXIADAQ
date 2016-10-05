@@ -1,12 +1,10 @@
 #include "Popup.h"
 
-
 Popup::Popup(const TGWindow * p, const TGWindow * main,char *message)
 {
   TGVerticalFrame *mn_vert = new TGVerticalFrame(this, 200, 300);
 
   TGGroupFrame *StateMsgFrame = new TGGroupFrame (mn_vert, "", kVerticalFrame);
-  
   
   TGTextEntry *Message = new TGTextEntry(StateMsgFrame,
 					 new TGTextBuffer(30), 10000,
@@ -14,8 +12,6 @@ Popup::Popup(const TGWindow * p, const TGWindow * main,char *message)
 					 Message->GetDefaultFontStruct(),
 					 kRaisedFrame | kDoubleBorder,
 					 GetWhitePixel());
-  
-  
   Message->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
   
   fClient->GetColorByName("red", color);

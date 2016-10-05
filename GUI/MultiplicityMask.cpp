@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 10月  4 20:33:32 2016 (+0800)
-// Last-Updated: 三 10月  5 14:38:28 2016 (+0800)
+// Last-Updated: 三 10月  5 18:23:29 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 5
+//     Update #: 6
 // URL: http://wuhongyi.github.io 
 
 #include "MultiplicityMask.h"
@@ -15,9 +15,9 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 MultiplicityMask::MultiplicityMask(const TGWindow *p, const TGWindow * main, char *name, int columns, int rows, int NumModules)
-  :Table(p,main,columns,rows,name, PRESET_MAX_MODULES)
+  :Table(p,main,columns,rows,name, NumModules)
 {
-  modNumber=0;
+  modNumber = 0;
   char n[10];
   cl0->SetText("ch #");
   for(int i = 0;i < rows;i++){
@@ -187,17 +187,17 @@ int MultiplicityMask::load_info(Long_t mod)
 
   // for (int i = 0; i < 16; i++)
   //   {
-  //     retval = Pixie16ReadSglChanPar((char*)"CFDDelay", &ChanParData, modNumber, i);
+  //     retval = Pixie16ReadSglChanPar((char*)"CFDDelay", &ChanParData, mod, i);
   //     if(retval < 0) ErrorInfo("Cfd.cpp", "load_info(...)", "Pixie16ReadSglChanPar/CFDDelay", retval);
   //     sprintf(text, "%1.2f", ChanParData);
   //     NumEntry[1][i]->SetText(text);
 
-  //     retval = Pixie16ReadSglChanPar((char*)"CFDScale", &ChanParData, modNumber, i);
+  //     retval = Pixie16ReadSglChanPar((char*)"CFDScale", &ChanParData, mod, i);
   //     if(retval < 0) ErrorInfo("Cfd.cpp", "load_info(...)", "Pixie16ReadSglChanPar/CFDScale", retval);  
   //     sprintf(text, "%1.2f", ChanParData);
   //     NumEntry[2][i]->SetText(text);
 
-  //     retval = Pixie16ReadSglChanPar((char*)"CFDThresh", &ChanParData, modNumber, i);
+  //     retval = Pixie16ReadSglChanPar((char*)"CFDThresh", &ChanParData, mod, i);
   //     if(retval < 0) ErrorInfo("Cfd.cpp", "load_info(...)", "Pixie16ReadSglChanPar/CFDThresh", retval);     
   //     sprintf(text, "%1.2f", ChanParData);
   //     NumEntry[3][i]->SetText(text);
@@ -216,15 +216,15 @@ int MultiplicityMask::change_values(Long_t mod)
   // for (int i = 0; i < 16; i++)
   //   {
   //     delay = NumEntry[1][i]->GetNumber();
-  //     retval = Pixie16WriteSglChanPar((char*)"CFDDelay", delay, modNumber, i);
+  //     retval = Pixie16WriteSglChanPar((char*)"CFDDelay", delay, mod, i);
   //     if(retval < 0) ErrorInfo("Cfd.cpp", "change_values(...)", "Pixie16WriteSglChanPar/CFDDelay", retval);
       
   //     frac = NumEntry[2][i]->GetNumber();
-  //     retval = Pixie16WriteSglChanPar((char*)"CFDScale", frac, modNumber, i);
+  //     retval = Pixie16WriteSglChanPar((char*)"CFDScale", frac, mod, i);
   //     if(retval < 0) ErrorInfo("Cfd.cpp", "change_values(...)", "Pixie16WriteSglChanPar/CFDScale", retval);
       
   //     thres = NumEntry[3][i]->GetNumber();
-  //     retval = Pixie16WriteSglChanPar((char*)"CFDThresh", thres, modNumber, i);
+  //     retval = Pixie16WriteSglChanPar((char*)"CFDThresh", thres, mod, i);
   //     if(retval < 0) ErrorInfo("Cfd.cpp", "change_values(...)", "Pixie16WriteSglChanPar/CFDThresh", retval);
   //   }
   // std::cout << "change values\n";

@@ -4,16 +4,14 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 10:48:22 2016 (+0800)
-// Last-Updated: 二 8月  9 12:39:15 2016 (+0800)
+// Last-Updated: 三 10月  5 18:04:38 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 30
+//     Update #: 32
 // URL: http://wuhongyi.github.io 
 
 #include "FPOutputs.h"
-
 #include "Global.h"
 #include "pixie16app_export.h"
-#include "pixie16app_defs.h"
 #include <iostream>
 using namespace std;
 
@@ -22,7 +20,7 @@ FPOutputs::FPOutputs(const TGWindow * p, const TGWindow * main, int NumModules)
 {
   SetCleanup(kDeepCleanup);
   
-  numModules = PRESET_MAX_MODULES;
+  numModules = NumModules;
   modNumber = 0;
   Load_Once = true;
   
@@ -97,16 +95,12 @@ FPOutputs::FPOutputs(const TGWindow * p, const TGWindow * main, int NumModules)
   buttons->AddFrame(ApplyButton, new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
   buttons->AddFrame(CancelButton, new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
 
-  
-
   MapSubwindows();
   Resize();			// resize to default size
   CenterOnParent();
-
   SetWindowName("Front Panel Outputs");
 
   MapWindow();
-  
 }
 
 FPOutputs::~FPOutputs()
@@ -131,6 +125,7 @@ Bool_t FPOutputs::ProcessMessage(Long_t msg, Long_t parm1,Long_t parm2)
 		    {
 		      ++modNumber;
 		      numericMod->SetIntNumber(modNumber);
+		      load_info(modNumber);
 		    }
 		}
 	      else
@@ -140,6 +135,7 @@ Bool_t FPOutputs::ProcessMessage(Long_t msg, Long_t parm1,Long_t parm2)
 		      if (--modNumber == 0)
 		        modNumber = 0;
 		      numericMod->SetIntNumber(modNumber);
+		      load_info(modNumber);
 		    }
 		}
 	      break;

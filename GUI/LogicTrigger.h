@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:36 2016 (+0800)
-// Last-Updated: 三 10月  5 13:38:42 2016 (+0800)
+// Last-Updated: 三 10月  5 18:19:55 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 21
+//     Update #: 22
 // URL: http://wuhongyi.github.io 
 
 #ifndef _LOGICTRIGGER_H_
@@ -20,8 +20,8 @@ class LogicTrigger : public Table
 {
 public:
   LogicTrigger(const TGWindow * p, const TGWindow * main, 
-	       char *name, int columns = 6,
-	       int rows = 16, int NumModules = 5);
+	       char *name, int columns,
+	       int rows, int NumModules);
   virtual ~LogicTrigger();
 
   int change_values(Long_t mod);

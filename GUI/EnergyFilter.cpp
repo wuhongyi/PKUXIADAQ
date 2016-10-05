@@ -2,11 +2,10 @@
 
 #include "Global.h"
 #include "pixie16app_export.h"
-#include "pixie16app_defs.h"
 
 EnergyFilter::EnergyFilter(const TGWindow * p, const TGWindow * main,
 			   char *name, int columns, int rows, int NumModules)
-  :Table(p, main, columns, rows, name, PRESET_MAX_MODULES)
+  :Table(p, main, columns, rows, name, NumModules)
 {
   char n[10];
   cl0->SetText ("ch #");
@@ -223,22 +222,22 @@ EnergyFilter::load_info(Long_t mod)
 
   for (int i = 0; i < 16; i++)
     {
-      retval = Pixie16ReadSglChanPar((char*)"ENERGY_RISETIME", &ChanParData, modNumber, i);
+      retval = Pixie16ReadSglChanPar((char*)"ENERGY_RISETIME", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("EnergyFilter.cpp", "load_info(...)", "Pixie16ReadSglChanPar/ENERGY_RISETIME", retval);
       sprintf(text, "%1.2f", ChanParData);
       NumEntry[1][i]->SetText(text);
 
-      retval = Pixie16ReadSglChanPar((char*)"ENERGY_FLATTOP", &ChanParData, modNumber, i);
+      retval = Pixie16ReadSglChanPar((char*)"ENERGY_FLATTOP", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("EnergyFilter.cpp", "load_info(...)", "Pixie16ReadSglChanPar/ENERGY_FLATTOP", retval);
       sprintf(text, "%1.2f", ChanParData);
       NumEntry[2][i]->SetText (text);
     }
 
   unsigned int Range = 0; 
-  retval = Pixie16ReadSglModPar((char*)"SLOW_FILTER_RANGE", &Range, modNumber);
+  retval = Pixie16ReadSglModPar((char*)"SLOW_FILTER_RANGE", &Range, mod);
   if(retval < 0) ErrorInfo("EnergyFilter.cpp", "load_info(...)", "Pixie16ReadSglModPar/SLOW_FILTER_RANGE", retval);
   filterRange->SetIntNumber(Range);
-  //  std::cout << "loading info\n";
+
   return 1;
 }
 
@@ -250,14 +249,13 @@ int EnergyFilter::change_values(Long_t mod)
   for (int i = 0; i < 16; i++)
     {
       length = NumEntry[1][i]->GetNumber();
-      retval = Pixie16WriteSglChanPar((char*)"ENERGY_RISETIME", length, modNumber, i);
+      retval = Pixie16WriteSglChanPar((char*)"ENERGY_RISETIME", length, mod, i);
       if(retval < 0) ErrorInfo("EnergyFilter.cpp", "change_values(...)", "Pixie16WriteSglChanPar/ENERGY_RISETIME", retval);
       
       delay = NumEntry[2][i]->GetNumber();
-      retval = Pixie16WriteSglChanPar((char*)"ENERGY_FLATTOP", delay, modNumber, i);
+      retval = Pixie16WriteSglChanPar((char*)"ENERGY_FLATTOP", delay, mod, i);
       if(retval < 0) ErrorInfo("EnergyFilter.cpp", "change_values(...)", "Pixie16WriteSglChanPar/ENERGY_FLATTOP", retval);  
     }
-  // std::cout << "change values\n";
 
   return 1;
 }

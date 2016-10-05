@@ -6,7 +6,7 @@
 class ScopedT : public Table
 {
 public:
-  ScopedT(const TGWindow * p, const TGWindow * main, char *name, int columns = 2, int rows = 16);
+  ScopedT(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, int NumModules);
   virtual ~ScopedT();
 
   int change_values(Long_t mod);

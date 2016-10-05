@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 10:48:48 2016 (+0800)
-// Last-Updated: 二 8月  9 12:40:33 2016 (+0800)
+// Last-Updated: 三 10月  5 17:16:24 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 8
+//     Update #: 9
 // URL: http://wuhongyi.github.io 
 
 #ifndef _FPOUTPUTS_H_
@@ -23,7 +23,7 @@
 class FPOutputs : public TGTransientFrame
 {
 public:
-  FPOutputs(const TGWindow * p, const TGWindow * main,int NumModules=5);
+  FPOutputs(const TGWindow * p, const TGWindow * main,int NumModules);
   virtual ~FPOutputs();
 
   int change_values(Long_t mod);

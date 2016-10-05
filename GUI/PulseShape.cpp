@@ -2,15 +2,12 @@
 
 #include "Global.h"
 #include "TGWidget.h"
-#include "pixie16app_defs.h"
 #include "pixie16app_export.h"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-PulseShape::PulseShape(const TGWindow * p, const TGWindow * main,  char *name,int NumModules,int columns, int rows)
-  :Table(p,main,columns,rows,name, PRESET_MAX_MODULES)
+PulseShape::PulseShape(const TGWindow * p, const TGWindow * main,  char *name,int columns, int rows,int NumModules)
+  :Table(p,main,columns,rows,name, NumModules)
 {
-  // if(NumModules>0) numModules = NumModules;
-  // else numModules=24;
 
   char n[10];
   cl0->SetText("ch #");
@@ -48,7 +45,8 @@ PulseShape::PulseShape(const TGWindow * p, const TGWindow * main,  char *name,in
 
 
   chanNumber = 0;
-  tlength=0;tdelay = 0;
+  tlength = 0;
+  tdelay = 0;
   ///////////////////////////////////////////////////////////////////////
   MapSubwindows();
   Resize();			// resize to default size
@@ -135,17 +133,12 @@ Bool_t PulseShape::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 	      //////////////////////////////
 	    case (COPYBUTTON+1000):
-	      //	pol_temp=lstBox[chanNumber-1]->GetSelected();
-	      //	gain_temp=lstBoxGain[chanNumber-1]->GetSelected();
-	      tlength=NumEntry[1][chanNumber]->GetNumber();
-	      tdelay=NumEntry[2][chanNumber]->GetNumber();
-	      //cout<<pol_temp<<" "<<gain_temp<<" "<<offset_temp<<endl;
-	      for(int i=0;i<16;i++)
+	      tlength = NumEntry[1][chanNumber]->GetNumber();
+	      tdelay = NumEntry[2][chanNumber]->GetNumber();
+	      for(int i  = 0;i < 16;i++)
 		{
 		  if(i != (chanNumber))
 		    {
-		      //			lstBox[i]->Select(pol_temp);
-		      //		lstBoxGain[i]->Select(gain_temp);
 		      sprintf(tmp,"%1.3f",tlength);
 		      NumEntry[1][i]->SetText(tmp);
 		      sprintf(tmp,"%1.3f",tdelay);
@@ -183,13 +176,12 @@ int PulseShape::change_values(Long_t mod)
   for (int i = 0; i < 16; i++)
     {
       length = NumEntry[1][i]->GetNumber();
-      retval = Pixie16WriteSglChanPar((char*)"TRACE_LENGTH", length, modNumber, i);
+      retval = Pixie16WriteSglChanPar((char*)"TRACE_LENGTH", length, mod, i);
       if(retval < 0) ErrorInfo("PulseShape.cpp", "change_values(...)", "Pixie16WriteSglChanPar/TRACE_LENGTH", retval);
       delay = NumEntry[2][i]->GetNumber();
-      retval = Pixie16WriteSglChanPar((char*)"TRACE_DELAY", delay, modNumber, i);
+      retval = Pixie16WriteSglChanPar((char*)"TRACE_DELAY", delay, mod, i);
       if(retval < 0) ErrorInfo("PulseShape.cpp", "change_values(...)", "Pixie16WriteSglChanPar/TRACE_DELAY", retval);
     }
-  // std::cout << "change values\n";
 
   return 1;
 }
@@ -203,16 +195,16 @@ PulseShape::load_info(Long_t mod)
 
   for (int i = 0; i < 16; i++)
     {
-      retval = Pixie16ReadSglChanPar((char*)"TRACE_LENGTH", &ChanParData, modNumber, i);
+      retval = Pixie16ReadSglChanPar((char*)"TRACE_LENGTH", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("PulseShape.cpp", "load_info(...)", "Pixie16ReadSglChanPar/TRACE_LENGTH", retval);
       sprintf (text, "%1.2f", ChanParData);
       NumEntry[1][i]->SetText(text);
 
-      retval = Pixie16ReadSglChanPar((char*)"TRACE_DELAY", &ChanParData, modNumber, i);
+      retval = Pixie16ReadSglChanPar((char*)"TRACE_DELAY", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("PulseShape.cpp", "load_info(...)", "Pixie16ReadSglChanPar/TRACE_DELAY", retval);
       sprintf(text, "%1.2f", ChanParData);
       NumEntry[2][i]->SetText(text);
     }
-  //  std::cout << "loading info\n";
+
   return 1;
 }

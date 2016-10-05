@@ -1,11 +1,9 @@
 #include "TriggerFilter.h"
-
 #include "Global.h"
-#include "pixie16app_defs.h"
 #include "pixie16app_export.h"
 
 TriggerFilter::TriggerFilter(const TGWindow * p, const TGWindow * main, char *name,int columns,int rows, int NumModules)
-  :Table(p,main,columns,rows,name, PRESET_MAX_MODULES)
+  :Table(p,main,columns,rows,name, NumModules)
 {
   char n[10];
   cl0->SetText("ch #");
@@ -60,6 +58,7 @@ TriggerFilter::TriggerFilter(const TGWindow * p, const TGWindow * main, char *na
 
 TriggerFilter::~TriggerFilter()
 {
+  
 }
 
 Bool_t TriggerFilter::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
@@ -100,7 +99,6 @@ Bool_t TriggerFilter::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		  if (chanNumber != 15)
 		    {
 		      ++chanNumber;
-		      // cout<<chanNumber<<" "<<flush;
 		      chanCopy->SetIntNumber(chanNumber);
 		    }
 		}
@@ -110,7 +108,6 @@ Bool_t TriggerFilter::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		    {
 		      if (--chanNumber == 0)
 			chanNumber = 0;
-		      //  cout<<chanNumber<<" "<<flush;
 		      chanCopy->SetIntNumber(chanNumber);
 		    }
 		}
@@ -132,18 +129,13 @@ Bool_t TriggerFilter::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      DeleteWindow();
 	      break;
 	    case (COPYBUTTON+1000):
-	      //		  	pol_temp=lstBox[chanNumber-1]->GetSelected();
-	      //		  	gain_temp=lstBoxGain[chanNumber-1]->GetSelected();
 	      tpeak=NumEntry[1][chanNumber]->GetNumber();
 	      tgap=NumEntry[2][chanNumber]->GetNumber();
 	      thresh=NumEntry[3][chanNumber]->GetNumber();
-	      //		  	cout<<pol_temp<<" "<<gain_temp<<" "<<offset_temp<<endl;
 	      for(int i = 0;i < 16;i++)
 		{
 		  if(i != (chanNumber))
 		    {
-		      //lstBox[i]->Select(pol_temp);
-		      //lstBoxGain[i]->Select(gain_temp);
 		      sprintf(tmp,"%1.3f",tpeak);
 		      NumEntry[1][i]->SetText(tmp);
 		      sprintf(tmp,"%1.3f",tgap);
@@ -169,7 +161,7 @@ Bool_t TriggerFilter::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
   return kTRUE;
 }
 
-int TriggerFilter::load_info(Long_t module)
+int TriggerFilter::load_info(Long_t mod)
 {
   double ChanParData = -1;
   int retval;
@@ -177,28 +169,27 @@ int TriggerFilter::load_info(Long_t module)
 
   for (int i = 0; i < 16; i++)
     {
-      retval = Pixie16ReadSglChanPar((char*)"TRIGGER_RISETIME", &ChanParData, modNumber, i);
+      retval = Pixie16ReadSglChanPar((char*)"TRIGGER_RISETIME", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("TriggerFilter.cpp", "load_info(...)", "Pixie16ReadSglChanPar/TRIGGER_RISETIME", retval);
       sprintf(text, "%1.2f", ChanParData);
       NumEntry[1][i]->SetText(text);
 
-      retval = Pixie16ReadSglChanPar((char*)"TRIGGER_FLATTOP", &ChanParData, modNumber, i);
+      retval = Pixie16ReadSglChanPar((char*)"TRIGGER_FLATTOP", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("TriggerFilter.cpp", "load_info(...)", "Pixie16ReadSglChanPar/TRIGGER_FLATTOP", retval);
       sprintf(text, "%1.2f", ChanParData);
       NumEntry[2][i]->SetText(text);
 
-      retval = Pixie16ReadSglChanPar((char*)"TRIGGER_THRESHOLD", &ChanParData, modNumber, i);
+      retval = Pixie16ReadSglChanPar((char*)"TRIGGER_THRESHOLD", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("TriggerFilter.cpp", "load_info(...)", "Pixie16ReadSglChanPar/TRIGGER_THRESHOLD", retval);
       sprintf(text, "%d", (int)ChanParData);
       NumEntry[3][i]->SetText(text);
     }
-  //  std::cout << "loading info for module " << module << std::endl;
 
   return 1;
 }
 
 
-int TriggerFilter::change_values(Long_t module)
+int TriggerFilter::change_values(Long_t mod)
 {
   int retval;
   double rise;
@@ -208,13 +199,13 @@ int TriggerFilter::change_values(Long_t module)
   for (int i = 0; i < 16; i++)
     {
       rise = NumEntry[1][i]->GetNumber();
-      retval = Pixie16WriteSglChanPar((char*)"TRIGGER_RISETIME", rise, modNumber, i);
+      retval = Pixie16WriteSglChanPar((char*)"TRIGGER_RISETIME", rise, mod, i);
       if(retval < 0) ErrorInfo("TriggerFilter.cpp", "change_values(...)", "Pixie16WriteSglChanPar/TRIGGER_RISETIME", retval);
       flat = NumEntry[2][i]->GetNumber();
-      retval = Pixie16WriteSglChanPar((char*)"TRIGGER_FLATTOP", flat, modNumber, i);
+      retval = Pixie16WriteSglChanPar((char*)"TRIGGER_FLATTOP", flat, mod, i);
       if(retval < 0) ErrorInfo("TriggerFilter.cpp", "change_values(...)", "Pixie16WriteSglChanPar/TRIGGER_FLATTOP", retval);
       thresh = NumEntry[3][i]->GetNumber();
-      retval = Pixie16WriteSglChanPar((char*)"TRIGGER_THRESHOLD", thresh, modNumber, i);
+      retval = Pixie16WriteSglChanPar((char*)"TRIGGER_THRESHOLD", thresh, mod, i);
       if(retval < 0) ErrorInfo("TriggerFilter.cpp", "change_values(...)", "Pixie16WriteSglChanPar/TRIGGER_THRESHOLD", retval);
     }
 

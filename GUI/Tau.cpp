@@ -1,10 +1,9 @@
 #include "Tau.h"
 #include "Global.h"
-#include "pixie16app_defs.h"
 #include "pixie16app_export.h"
 
 Tau::Tau (const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, int NumModules)
-  :Table(p, main, columns, rows, name, PRESET_MAX_MODULES)
+  :Table(p, main, columns, rows, name, NumModules)
 {
   char n[10];
   cl0->SetText("ch #");
@@ -61,7 +60,6 @@ Tau::Tau (const TGWindow * p, const TGWindow * main, char *name, int columns, in
   acceptTau->SetToolTipText("Accept the decay time find by module");
   CopyButton->AddFrame(acceptTau,new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
-  //tlength=0;tdelay=0;
   ///////////////////////////////////////////////////////////////////////
   MapSubwindows();
   Resize();			// resize to default size
@@ -69,6 +67,7 @@ Tau::Tau (const TGWindow * p, const TGWindow * main, char *name, int columns, in
 
 Tau::~Tau()
 {
+  
 }
 
 Bool_t Tau::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
@@ -146,7 +145,7 @@ Bool_t Tau::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		{
 		  if (i != (chanNumber))
 		    {
-		      sprintf (tmp, "%1.3f", decay);
+		      sprintf(tmp, "%1.3f", decay);
 		      NumEntry[1][i]->SetText(tmp);
 		    }
 		}
@@ -154,7 +153,7 @@ Bool_t Tau::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 	    case (COPYBUTTON + 2000):
 	      {
-		findtau();
+		findtau(modNumber);
 		break;
 	      }
 	    case (COPYBUTTON + 3000):
@@ -189,12 +188,12 @@ int Tau::load_info(Long_t mod)
   char text[20];
   for (int i = 0; i < 16; i++)
     {
-      retval = Pixie16ReadSglChanPar((char*)"TAU", &ChanParData, modNumber, i);
+      retval = Pixie16ReadSglChanPar((char*)"TAU", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Tau.cpp", "load_info(...)", "Pixie16ReadSglChanPar/TAU", retval);
       sprintf(text, "%1.2f", ChanParData);
       NumEntry[1][i]->SetText(text);
     }
-  //  cout << "loading info\n";
+
   return 1;
 }
 
@@ -205,17 +204,17 @@ int Tau::change_values(Long_t mod)
   for (int i = 0; i < 16; i++)
     {
       d = NumEntry[1][i]->GetNumber();
-      retval = Pixie16WriteSglChanPar((char*)"TAU", d, modNumber, i);
+      retval = Pixie16WriteSglChanPar((char*)"TAU", d, mod, i);
       if(retval < 0) ErrorInfo("Tau.cpp", "change_values(...)", "Pixie16WriteSglChanPar/TAU", retval);
     }
-  //cout << "change values\n";
+
   return 1;
 }
 
-void Tau::findtau()
+void Tau::findtau(short int mod)
 {
   double TauByFPGA[16];
-  int retval = Pixie16TauFinder(modNumber,TauByFPGA);
+  int retval = Pixie16TauFinder(mod,TauByFPGA);
   if(retval<0){
     if(retval < 0) ErrorInfo("Tau.cpp", "findtau(...)", "Pixie16TauFinder", retval);
     switch (retval) {
@@ -240,7 +239,7 @@ void Tau::findtau()
       break;
     }
   }else {
-    for(int i=0;i<16;i++){
+    for(int i = 0;i < 16;i++){
       sprintf (tmp, "%1.3f", TauByFPGA[i]);
       NumEntry[2][i]->SetText(tmp);
     }

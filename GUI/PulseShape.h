@@ -7,7 +7,7 @@
 class PulseShape : public Table
 {
 public:
-  PulseShape(const TGWindow * p, const TGWindow * main, char *name,int NumModules=5, int columns=3,  int rows=16);
+  PulseShape(const TGWindow * p, const TGWindow * main, char *name,int columns, int rows,int NumModules);
   virtual ~PulseShape();
   
   int change_values(Long_t mod);
@@ -23,7 +23,7 @@ protected:
   bool Load_Once;
 
   TGNumberEntry* chanCopy;
-  //	int PulseShape::LoadInfo(Long_t mod);
 };
 
 #endif /*PULSESHAPE_H_*/
+

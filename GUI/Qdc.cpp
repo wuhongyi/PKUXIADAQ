@@ -1,15 +1,12 @@
 #include "Qdc.h"
 #include "Global.h"
-#include "pixie16app_defs.h"
 #include "pixie16app_export.h"
 #include <iostream>
-
 using namespace std;
 
 Qdc::Qdc(const TGWindow *p, const TGWindow *main, char *name, int columns, int rows,int NumModules)
-  : Table(p,main,columns,rows,name, PRESET_MAX_MODULES)
+  : Table(p,main,columns,rows,name, NumModules)
 {
-  // numModules=24;
   modNumber=0;
   char n[10];
   cl0->SetText("ch #");
@@ -57,13 +54,11 @@ Qdc::Qdc(const TGWindow *p, const TGWindow *main, char *name, int columns, int r
   copyB->SetToolTipText("Copy the setup of the selected channel to all channels of the module", 0);
   CopyButton->AddFrame(copyB, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 0, 0));
 
-
   chanNumber = 0;
   MapSubwindows();
   Resize();			// resize to default size
 
   Load_Once = true;
-
 }
 
 
@@ -142,19 +137,14 @@ Bool_t Qdc::ProcessMessage(Long_t msg, Long_t parm1,Long_t parm2)
 	      break;
 	      //////////////////////////////
 	    case (COPYBUTTON+1000):
-	      //	pol_temp=lstBox[chanNumber-1]->GetSelected();
-	      //	gain_temp=lstBoxGain[chanNumber-1]->GetSelected();
-	      memset(qlen,0,sizeof(float)*8);
-	      for(int i=0;i<8;i++)
+	      memset(qlen,0,sizeof(double)*8);
+	      for(int i = 0;i < 8;i++)
 		qlen[i]=NumEntry[i+1][chanNumber]->GetNumber();
-	      //cout<<pol_temp<<" "<<gain_temp<<" "<<offset_temp<<endl;
-	      for(int i=0;i<16;i++)
+	      for(int i = 0;i  < 16;i++)
 		{
 		  if(i != (chanNumber))
 		    {
-		      //			lstBox[i]->Select(pol_temp);
-		      //		lstBoxGain[i]->Select(gain_temp);
-		      for(int j=0;j<8;j++){
+		      for(int j = 0;j < 8;j++){
 			sprintf(tmp,"%1.3f",qlen[j]);
 			NumEntry[j+1][i]->SetText(tmp);
 		      }
@@ -188,14 +178,13 @@ int Qdc::change_values(Long_t mod)
     for(int j = 0;j < 8;j++){
       qlen[j] = NumEntry[j+1][i]->GetNumber();
       sprintf(varN,"QDCLen%d",j);
-      retval = Pixie16WriteSglChanPar(varN,qlen[j],modNumber,i);
+      retval = Pixie16WriteSglChanPar(varN,qlen[j],mod,i);
       if(retval<0) {
 	ErrorInfo("Qdc.cpp", "change_values(...)", "Pixie16WriteSglChanPar/QDCLen0-7", retval);
 	return retval;
       }
-      //     cout<<varN<<"\t"<<qlen[j]<<"\t";
     }
-    //    cout<<endl;
+
   }
   return 0;
 }
@@ -209,12 +198,12 @@ int Qdc::load_info(Long_t mod)
   char varN[8][10] = {"QDCLen0","QDCLen1","QDCLen2","QDCLen3","QDCLen4","QDCLen5","QDCLen6","QDCLen7"};
   for(int i = 0;i < 16;i++){
     for(int j = 0;j < 8;j++){
-      retval = Pixie16ReadSglChanPar(varN[j],&ChanParData,modNumber,i);
+      retval = Pixie16ReadSglChanPar(varN[j],&ChanParData,mod,i);
       if(retval < 0) ErrorInfo("Qdc.cpp", "load_info(...)", "Pixie16ReadSglChanPar/QDCLen0-7", retval);
       sprintf(text,"%1.2f",ChanParData);
       NumEntry[j+1][i]->SetText(text);
     }
   }
-  //  cout<< varN[0]<<endl;
+
   return 0;
 }

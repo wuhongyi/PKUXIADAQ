@@ -6,7 +6,7 @@ class EnergyFilter : public Table
 {
 public:
   EnergyFilter(const TGWindow * p, const TGWindow * main, char *name, 
-	       int columns=3, int rows=16, int NumModules=5);
+	       int columns, int rows, int NumModules);
   virtual ~EnergyFilter();
   
   Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2);

@@ -1,11 +1,10 @@
 #include "Histogram.h"
-#include "pixie16app_defs.h"
 #include "pixie16app_export.h"
 #include "Global.h"
 
 Histogram::Histogram(const TGWindow * p, const TGWindow * main,  char *name,int columns,
 		     int rows, int NumModules)
-  :Table(p,main,columns,rows,name, PRESET_MAX_MODULES)
+  :Table(p,main,columns,rows,name, NumModules)
 {
   char n[10];
   cl0->SetText("ch #");
@@ -52,11 +51,11 @@ Histogram::Histogram(const TGWindow * p, const TGWindow * main,  char *name,int 
   Load_Once = true;
   emin = 0;
   bin = 0;
-	
 }
 
 Histogram::~Histogram()
 {
+  
 }
 
 Bool_t Histogram::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
@@ -132,8 +131,8 @@ Bool_t Histogram::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 	      /////////////////////////////
 	    case (COPYBUTTON+1000):
-	      emin=NumEntry[1][chanNumber]->GetNumber();
-	      bin=NumEntry[2][chanNumber]->GetNumber();
+	      emin = NumEntry[1][chanNumber]->GetNumber();
+	      bin = NumEntry[2][chanNumber]->GetNumber();
 	      for(int i = 0;i < 16;i++)
 		{
 		  if(i != (chanNumber))
@@ -176,7 +175,7 @@ Bool_t Histogram::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 }
 
 
-int Histogram::load_info(Long_t module)
+int Histogram::load_info(Long_t mod)
 {
   double ChanParData = -1;
   int retval;
@@ -184,12 +183,12 @@ int Histogram::load_info(Long_t module)
 
   for (int i = 0; i < 16; i++)
     {
-      retval = Pixie16ReadSglChanPar((char*)"EMIN", &ChanParData, modNumber, i);
+      retval = Pixie16ReadSglChanPar((char*)"EMIN", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Histogram.cpp", "load_info(...)", "Pixie16ReadSglChanPar/EMIN", retval);
       sprintf(text, "%d", (int)ChanParData);
       NumEntry[1][i]->SetText(text);
 
-      retval = Pixie16ReadSglChanPar((char*)"BINFACTOR", &ChanParData, modNumber, i);
+      retval = Pixie16ReadSglChanPar((char*)"BINFACTOR", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Histogram.cpp", "load_info(...)", "Pixie16ReadSglChanPar/BINFACTOR", retval);
       sprintf(text, "%d", (int)ChanParData);
       NumEntry[2][i]->SetText(text);
@@ -201,7 +200,7 @@ int Histogram::load_info(Long_t module)
 }
 
 int
-Histogram::change_values(Long_t module)
+Histogram::change_values(Long_t mod)
 {
   double cut;
   int retval;
@@ -209,11 +208,11 @@ Histogram::change_values(Long_t module)
   for (int i = 0; i < 16; i++)
     {
       cut = NumEntry[1][i]->GetNumber();
-      retval = Pixie16WriteSglChanPar((char*)"EMIN", cut, modNumber, i);
+      retval = Pixie16WriteSglChanPar((char*)"EMIN", cut, mod, i);
       if(retval < 0) ErrorInfo("Histogram.cpp", "change_values(...)", "Pixie16WriteSglChanPar/EMIN", retval);
       
       percent = NumEntry[2][i]->GetNumber();
-      retval = Pixie16WriteSglChanPar((char*)"BINFACTOR", percent, modNumber, i);
+      retval = Pixie16WriteSglChanPar((char*)"BINFACTOR", percent, mod, i);
       if(retval < 0) ErrorInfo("Histogram.cpp", "change_values(...)", "Pixie16WriteSglChanPar/BINFACTOR", retval);
     }
 

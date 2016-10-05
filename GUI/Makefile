@@ -1,3 +1,5 @@
+OBJ = pku
+
 CXX=g++        
 CXXFLAGS:=-std=c++11 -g -Wall -lrt -I. -I../software/app -I../software/sys
 ROOTLIBS = $(shell root-config --libs) -lGui
@@ -13,10 +15,10 @@ OBJECTS:=Global.o AnalogSignal.o ExpertMod.o MaxEvent.o Baseline.o Histogram.o C
 
 SRCS:=Global.cpp AnalogSignal.cpp ExpertMod.cpp MaxEvent.cpp Baseline.cpp Histogram.cpp Csra.cpp Detector.cpp displayEdit.cpp EnergyFilter.cpp Main.cpp nscope.cpp PulseShape.cpp ScopedT.cpp Table.cpp Tau.cpp TriggerFilter.cpp Popup.cpp  MainDict.cpp Cfd.cpp Qdc.cpp LogicTrigger.cpp FPOutputs.cpp Offline.cpp MultiplicityMask.cpp
 
-all: nscope
+all: $(OBJ)
 
 
-nscope: $(SRCS) $(OBJECTS) $(INCLUDES)
+$(OBJ): $(SRCS) $(OBJECTS) $(INCLUDES)
 	$(CXX) -o  $@  $(OBJECTS) $(CXXFLAGS) $(LIBS) $(ROOTLIBS)
 
 %.o: %.cxx 
@@ -28,10 +30,10 @@ MainDict.cpp:Main.h MainLinkdef.h
 
 
 clean: 
-	rm -f *.o *~ nscope *Dict*
+	rm -f *.o *~ $(OBJ) *Dict*
 
 very-clean:
-	rm -f nscope *.o *~
+	rm -f $(OBJ) *.o *~
 
 .PHONY: clean very-clean
 #.SILENT:

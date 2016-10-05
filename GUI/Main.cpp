@@ -160,64 +160,67 @@ Bool_t Main::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 
 	    case PULSE:
-	      pulseshape = new PulseShape(fClient->GetRoot (), this, (char*)"Pulse Shape",-1);
+	      pulseshape = new PulseShape(fClient->GetRoot (), this, (char*)"Pulse Shape", 3, 16, detector->NumModules);
 	      pulseshape->load_info(0);
 	      break;
 	    case CFDP:
-	      cfd=new Cfd(fClient->GetRoot(),this,(char*)"Cfd Par.");
+	      cfd=new Cfd(fClient->GetRoot(),this,(char*)"Cfd Par.", 4, 16, detector->NumModules);
+	      cfd->load_info(0);
 	      break;
 	    case QDCP:
-	      qdc=new Qdc(fClient->GetRoot(),this,(char*)"Qdc Par.");
+	      qdc=new Qdc(fClient->GetRoot(),this,(char*)"Qdc Par.", 9, 16, detector->NumModules);
+	      qdc->load_info(0);
 	      break;
 	    case EFILTER:
-	      energyfilter = new EnergyFilter(fClient->GetRoot (), this, (char*)"Energy Filter");
+	      energyfilter = new EnergyFilter(fClient->GetRoot (), this, (char*)"Energy Filter", 3, 16, detector->NumModules);
 	      energyfilter->load_info(0);
 	      break;
 	    case ASG:
-	      analogsignal = new AnalogSignal(fClient->GetRoot (), this, (char*)"Analog Signal Setup");
+	      analogsignal = new AnalogSignal(fClient->GetRoot (), this, (char*)"Analog Signal Setup", 3, 16, detector->NumModules);
 	      analogsignal->load_info(0);
 	      break;
 	    case CSRA:
-	      csra = new Csra(fClient->GetRoot(), this);
+	      csra = new Csra(fClient->GetRoot(), this,detector->NumModules);
 	      csra->load_info(0);
 	      break;
 	    case TFILTER:
-	      triggerfilter = new TriggerFilter(fClient->GetRoot (), this, (char*)"Trigger Filter");
+	      triggerfilter = new TriggerFilter(fClient->GetRoot (), this, (char*)"Trigger Filter", 4, 16, detector->NumModules);
 	      triggerfilter->load_info(0);
 	      break;
 
 	    case BASELINE:
-	      baseline = new Baseline(fClient->GetRoot (), this, (char*)"Baseline Setup");
+	      baseline = new Baseline(fClient->GetRoot (), this, (char*)"Baseline Setup", 3, 16, detector->NumModules);
 	      baseline->load_info(0);
 	      break;
 	    case DECAY:
-	      tau = new Tau(fClient->GetRoot(), NULL, (char*)"Decay Time");
+	      tau = new Tau(fClient->GetRoot(), NULL, (char*)"Decay Time", 3, 16, detector->NumModules);
 	      tau->load_info(0);
 	      break;
 	    case MAXEVENT:
 	      maxevent = new MaxEvent(fClient->GetRoot(), this);
 	      break;
 	    case MODVAR:
-	      expertmod = new ExpertMod(fClient->GetRoot(), this, (char*)"Expert MOD", 24);
+	      expertmod = new ExpertMod(fClient->GetRoot(), this, (char*)"Expert MOD", detector->NumModules);
 	      break;
 	    case LOGIC:
-	      logictrigger = new LogicTrigger(fClient->GetRoot(),this,(char*)"Logic Trigger");
+	      logictrigger = new LogicTrigger(fClient->GetRoot(),this,(char*)"Logic Trigger", 6, 16, detector->NumModules);
 	      logictrigger->load_info(0);
 	      break;
 	    case MULTIPLICITYMASK:
-	      multiplicitymask = new MultiplicityMask(fClient->GetRoot(),this,(char*)"Multiplicity Mark");
+	      multiplicitymask = new MultiplicityMask(fClient->GetRoot(),this,(char*)"Multiplicity Mark", 7, 16, detector->NumModules);
 		multiplicitymask->load_info(0);
 	      break;
 	    case FRONTPANELOUTPUTS:
-	      fpoutputs = new FPOutputs(fClient->GetRoot(), this);
+	      fpoutputs = new FPOutputs(fClient->GetRoot(), this, detector->NumModules);
 	      fpoutputs->load_info(0);
 	      break;
 	    case HISTOGRAM:
-	      histogram = new Histogram(fClient->GetRoot(), this, (char*)"Histogramming");
+	      histogram = new Histogram(fClient->GetRoot(), this, (char*)"Histogramming", 3, 16, detector->NumModules);
 	      histogram->load_info(0);
 	      break;
 	    case SCOPEDT:
-	      scopedt = new ScopedT(fClient->GetRoot(), this, (char*)"dT");
+	      scopedt = new ScopedT(fClient->GetRoot(), this, (char*)"dT", 2, 16, detector->NumModules);
+	      scopedt->load_info(0);
 	      break;
 	    case OFFLINEADJUSTPAR:
 	      popupoffline = new Offline(fClient->GetRoot(), this, detector,filepathtext,filenametext);

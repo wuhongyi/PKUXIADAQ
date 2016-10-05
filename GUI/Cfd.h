@@ -7,7 +7,7 @@
 class Cfd : public Table
 {
 public:
-  Cfd(const TGWindow *p, const TGWindow *main, char *name,int colunms =4,int rows =16,int NumModules=5);
+  Cfd(const TGWindow *p, const TGWindow *main, char *name,int colunms,int rows,int NumModules);
   virtual ~Cfd();
 
   Bool_t ProcessMessage(Long_t msg,Long_t parm1,Long_t parm2);

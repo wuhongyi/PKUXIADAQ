@@ -8,7 +8,6 @@ Table::Table (const TGWindow * p, const TGWindow * main, int columns,
 	      int rows, char *name, int NumModules)
 {
   SetCleanup(kDeepCleanup);
-  //Rows=rows;
 
   numModules = NumModules;
 
@@ -122,16 +121,12 @@ Table::Table (const TGWindow * p, const TGWindow * main, int columns,
   Buttons->AddFrame(ApplyButton, new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
   Buttons->AddFrame(CancelButton, new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
 
-
   ///////////////////////////////////////////////////////////////////
-
 
   MapSubwindows();
   Resize();			// resize to default size
   CenterOnParent();
-
   SetWindowName(name);
-
   MapWindow();
 }
 
@@ -158,7 +153,7 @@ int Table::LoadInfo(Long_t mod, TGNumberEntryField *** NumEntry, int column, cha
   return 1;
 }
 
-//int Table::ChangeValues(Long_t mod){return 1;}
+
 
 
 

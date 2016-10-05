@@ -5,8 +5,7 @@
 class TriggerFilter : public Table
 {
 public:
-  TriggerFilter(const TGWindow * p, const TGWindow * main, 
-		char *name, int columns=4, int rows=16, int NumModules=5);
+  TriggerFilter(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, int NumModules);
   virtual ~TriggerFilter();
 
   int change_values(Long_t mod);

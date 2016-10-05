@@ -15,7 +15,7 @@ class Table : public TGTransientFrame
 {
 public:
   Table(const TGWindow * p, const TGWindow * main, int columns,
-	int rows,char *name,int NumModules=5);
+	int rows,char *name,int NumModules);
   virtual ~Table();
 
   virtual int LoadInfo(Long_t mod, TGNumberEntryField *** NumEntry, int column, char *parameter);
@@ -45,8 +45,7 @@ protected:
       COPYBUTTON,
       FINDTAU
     };
-		 
-  //virtual  int ChangeValues (Long_t mod);
+
 };
 
 #endif /*TABLE_H_*/
