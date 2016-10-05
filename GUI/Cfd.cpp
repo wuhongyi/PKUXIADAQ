@@ -3,7 +3,9 @@
 #include "Global.h"
 #include <iostream>
 #include "pixie16app_defs.h"
+#include "pixie16app_export.h"
 using namespace std;
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 Cfd::Cfd(const TGWindow *p, const TGWindow * main, char *name, int columns, int rows, int NumModules)
   :Table(p,main,columns,rows,name, PRESET_MAX_MODULES)

@@ -1,5 +1,7 @@
 #ifndef DETECTOR_H_
 #define DETECTOR_H_
+
+#include "../software/app/pixie16app_export.h"
 #include <iostream>
 #include <fstream>
 #include <cstdio>
@@ -7,8 +9,6 @@
 #include <sys/stat.h>
 #include <sys/mman.h>
 #include <semaphore.h>
-#include "pixie16app_defs.h"
-#include "pixie16app_export.h"
 
 #include <sys/time.h>
 #include <stdint.h>

@@ -5,6 +5,7 @@
 #include <string.h>
 #include <errno.h>
 #include "pixie16app_defs.h"
+#include "pixie16app_export.h"
 #include <math.h>
 
 using namespace std;

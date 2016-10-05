@@ -1,7 +1,7 @@
 #ifndef TRIGGERFILTER_H_
 #define TRIGGERFILTER_H_
 #include "Table.h"
-#include "pixie16app_export.h"
+
 class TriggerFilter : public Table
 {
 public:

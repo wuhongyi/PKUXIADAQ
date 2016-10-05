@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 二 10月  4 19:44:01 2016 (+0800)
+// Last-Updated: 三 10月  5 14:44:57 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 84
+//     Update #: 85
 // URL: http://wuhongyi.github.io 
 
 #include "Online.hh"
@@ -496,7 +496,7 @@ void Online::LoopRun()
 		      ChanEvents_new[j] = (double)Statistics_new[223+j] * pow(2.0, 32.0);
 		      ChanEvents_new[j] += (double)Statistics_new[239+j];
 
-		      std::cout<<j<<"  "<<LiveTime_new[j] <<"  "<<(FastPeaks_new[j]-FastPeaks[j])/(LiveTime_new[j]-LiveTime[j])<<"  "<<(ChanEvents_new[j]-ChanEvents[j])/(RealTime_new-RealTime)<<std::endl;
+		      // std::cout<<j<<"  "<<LiveTime_new[j] <<"  "<<(FastPeaks_new[j]-FastPeaks[j])/(LiveTime_new[j]-LiveTime[j])<<"  "<<(ChanEvents_new[j]-ChanEvents[j])/(RealTime_new-RealTime)<<std::endl;
 		      tempinputcountrate = (FastPeaks_new[j]-FastPeaks[j])/(LiveTime_new[j]-LiveTime[j]);
 		      tempoutputcountrate = (ChanEvents_new[j]-ChanEvents[j])/(RealTime_new-RealTime);
 

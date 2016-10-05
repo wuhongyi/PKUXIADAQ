@@ -4,13 +4,13 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 三 8月 10 10:07:48 2016 (+0800)
+// Last-Updated: 三 10月  5 14:39:29 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 104
+//     Update #: 105
 // URL: http://wuhongyi.github.io 
 
 #include "Offline.h"
-
+#include "Detector.h"
 #include "Global.h"
 
 #include "TGTab.h"

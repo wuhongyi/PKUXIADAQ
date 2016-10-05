@@ -4,15 +4,13 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 三 8月 10 10:09:25 2016 (+0800)
+// Last-Updated: 三 10月  5 14:28:47 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 27
+//     Update #: 29
 // URL: http://wuhongyi.github.io 
 
 #ifndef _OFFLINE_H_
 #define _OFFLINE_H_
-
-#include "Detector.h"
 
 #include "TGWindow.h"
 #include "TGFrame.h"
@@ -33,6 +31,7 @@
 #include "TObject.h"
 #include "TH1.h"
 
+class Detector;
 class Offline : public TGTransientFrame
 {
 public:

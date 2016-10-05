@@ -2,7 +2,6 @@
 #define QDC_H
 
 #include "Table.h"
-#include "pixie16app_export.h"
 
 class Qdc : public Table 
 {

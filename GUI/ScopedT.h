@@ -2,7 +2,6 @@
 #define SCOPEDT_H_
 
 #include "Table.h"
-#include "pixie16app_export.h"
 
 class ScopedT : public Table
 {

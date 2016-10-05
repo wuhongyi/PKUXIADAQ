@@ -1,6 +1,7 @@
 #include "ScopedT.h"
 #include "Global.h"
 #include "pixie16app_defs.h"
+#include "pixie16app_export.h"
 
 ScopedT::~ScopedT()
 {

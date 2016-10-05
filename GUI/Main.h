@@ -22,6 +22,7 @@
 #include <TCanvas.h>
 #include <iostream>
 #include <fstream>
+
 #include "PulseShape.h"
 #include "Cfd.h"
 #include "Qdc.h"
@@ -47,7 +48,7 @@
 #include "TGDoubleSlider.h"
 #include "TGraph.h"
 #include "TMultiGraph.h"
-
+#include "../software/app/pixie16app_export.h"
 using namespace std;
 
 enum Commands //commands for the menu bar popups

@@ -4,12 +4,14 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 10月  4 20:33:32 2016 (+0800)
-// Last-Updated: 二 10月  4 20:51:50 2016 (+0800)
+// Last-Updated: 三 10月  5 14:38:28 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 3
+//     Update #: 5
 // URL: http://wuhongyi.github.io 
 
 #include "MultiplicityMask.h"
+#include "Detector.h"
+#include "pixie16app_export.h"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 MultiplicityMask::MultiplicityMask(const TGWindow *p, const TGWindow * main, char *name, int columns, int rows, int NumModules)

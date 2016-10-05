@@ -4,16 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:36 2016 (+0800)
-// Last-Updated: 二 8月  9 13:04:41 2016 (+0800)
+// Last-Updated: 三 10月  5 13:38:42 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 20
+//     Update #: 21
 // URL: http://wuhongyi.github.io 
 
 #ifndef _LOGICTRIGGER_H_
 #define _LOGICTRIGGER_H_
 
 #include "Table.h"
-#include "pixie16app_export.h"
 #include "TGComboBox.h"
 #include "TGTextEntry.h"
 

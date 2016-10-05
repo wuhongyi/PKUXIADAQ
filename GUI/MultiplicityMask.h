@@ -4,16 +4,16 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 10月  4 20:33:42 2016 (+0800)
-// Last-Updated: 二 10月  4 20:39:14 2016 (+0800)
+// Last-Updated: 三 10月  5 14:29:45 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 1
+//     Update #: 2
 // URL: http://wuhongyi.github.io 
 
 #ifndef _MULTIPLICITYMASK_H_
 #define _MULTIPLICITYMASK_H_
 
 #include "Table.h"
-#include "pixie16app_export.h"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class MultiplicityMask : public Table

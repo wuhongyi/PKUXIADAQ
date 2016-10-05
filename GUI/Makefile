@@ -1,9 +1,9 @@
 CXX=g++        
-CXXFLAGS:=-std=c++11 -g -Wall -lrt -I.
+CXXFLAGS:=-std=c++11 -g -Wall -lrt -I. -I../software/app -I../software/sys
 ROOTLIBS = $(shell root-config --libs) -lGui
-ROOTINC = -I$(shell root-config --incdir)
+ROOTINC = -I$(shell root-config --incdir) 
 CXXFLAGS+=$(ROOTINC)
-LIBS:=libPixie16App.a  libPixie16Sys.a  libPlxApi.a
+LIBS:=../software/libPixie16App.a  ../software/libPixie16Sys.a  $(PLX_SDK_DIR)/PlxApi/Library/PlxApi.a
 
 
 

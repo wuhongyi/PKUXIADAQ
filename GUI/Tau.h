@@ -1,7 +1,6 @@
 #ifndef TAU_H_
 #define TAU_H_
 #include "Table.h"
-#include "pixie16app_export.h"
 
 class Tau : public Table
 {

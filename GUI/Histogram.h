@@ -1,7 +1,7 @@
 #ifndef HISTOGRAM_H_
 #define HISTOGRAM_H_
 #include "Table.h"
-#include "pixie16app_export.h"
+
 class Histogram : public Table
 {
 public:

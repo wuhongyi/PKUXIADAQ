@@ -4,15 +4,16 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 二 8月  9 13:03:58 2016 (+0800)
+// Last-Updated: 三 10月  5 13:38:42 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 68
+//     Update #: 69
 // URL: http://wuhongyi.github.io 
 
 #include "LogicTrigger.h"
 
 #include "Global.h"
 #include "pixie16app_defs.h"
+#include "pixie16app_export.h"
 #include <iostream>
 
 LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, int columns, int rows,int NumModules)

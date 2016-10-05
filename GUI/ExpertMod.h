@@ -6,12 +6,12 @@
 #include "TGNumberEntry.h"
 #include "TG3DLine.h"
 #include "TGLabel.h"
-#include "pixie16sys_export.h"
-#include "pixie16app_export.h"
-#include "pixie16app_common.h"
 #include <iostream>
 using namespace std;
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 // TODO 这个类有问题，需要大改
+
 class ExpertMod : public TGTransientFrame
 {
 public:

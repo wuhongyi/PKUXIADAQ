@@ -2,6 +2,7 @@
 
 #include "Global.h"
 #include "pixie16app_defs.h"
+#include "pixie16app_export.h"
 
 Baseline::Baseline(const TGWindow * p, const TGWindow * main,  
 		   char *name,int columns,int rows,int NumModules)

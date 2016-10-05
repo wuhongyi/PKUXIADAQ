@@ -1,7 +1,6 @@
 #ifndef ENERGYFILTER_H_
 #define ENERGYFILTER_H_
 #include "Table.h"
-#include "pixie16app_export.h"
 
 class EnergyFilter : public Table
 {

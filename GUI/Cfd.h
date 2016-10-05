@@ -1,7 +1,8 @@
 #ifndef CFD_H
 #define CFD_H
+
 #include "Table.h"
-#include "pixie16app_export.h"
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class Cfd : public Table
 {
