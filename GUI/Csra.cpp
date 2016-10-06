@@ -43,7 +43,7 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   column20 = new TGVerticalFrame(mn, 400, 300);
   column21 = new TGVerticalFrame(mn, 400, 300);
   column22 = new TGVerticalFrame(mn, 400, 300);
-  column23 = new TGVerticalFrame(mn, 400, 300);
+  // column23 = new TGVerticalFrame(mn, 400, 300);
   
   buttons = new TGHorizontalFrame(mn_vert, 400, 300);
 
@@ -69,7 +69,7 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   mn->AddFrame(column20, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   mn->AddFrame(column21, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   mn->AddFrame(column22, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  mn->AddFrame(column23, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  // mn->AddFrame(column23, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
   //////////////////////////first column////////////////////////
 
@@ -99,7 +99,6 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
       Labels[i]->SetEnabled(kFALSE);
       Labels[i]->SetFrameDrawn(kTRUE);
 
-      //      Labels[i] = new TGLabel (column1, name);
       column1->AddFrame (Labels[i],
 			 new TGLayoutHints(kLHintsCenterX, 0, 3, 0, 0));
     }
@@ -117,29 +116,29 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   
   column1->AddFrame(Labels[16], new TGLayoutHints(kLHintsCenterX, 0, 3, 0, 0));
 
-  make_columns(column2, ckBtn, (char*)"RGT", (char*)"Respond to group triggers only: Rev-A", 5000);
-  make_columns(column3, ckBtn_1, (char*)"MIL", (char*)"Measure individual live time: Rev-A ", 5100);
-  make_columns(column4, ckBtn_2, (char*)"GC", (char*)"Good channel: All types", 5200);
-  make_columns(column5, ckBtn_3, (char*)"RA", (char*)"Read allways: Rev-A", 5300);
-  make_columns(column6, ckBtn_4, (char*)"ET", (char*)"Enable trigger: Rev-A", 5400);
-  make_columns(column7, ckBtn_5, (char*)"TP", (char*)"Trigger Positive: All types", 5500);
-  make_columns(column8, ckBtn_6, (char*)"GT", (char*)"GFLT input: Rev-A", 5600);
-  make_columns(column9, ckBtn_7, (char*)"HE", (char*)"Histogram energies: All types", 5700);
-  make_columns(column10, ckBtn_8, (char*)"ETC", (char*)"Enable Trace Capture: All But Rev-A", 5800);
-  make_columns(column11, ckBtn_9, (char*)"EQS", (char*)"Enable QDC sums Capture: All But Rev-A", 5900);
-  make_columns(column12, ckBtn_10, (char*)"ECT", (char*)"Enable CFD trigger mode: All But Rev-A", 6000);
-  make_columns(column13, ckBtn_11, (char*)"EGT", (char*)"Enable Global trigger validation: All But Rev-A", 6100);
-  make_columns(column14, ckBtn_12, (char*)"ERB", (char*)"Enable capture raw energy sums and baselines: All But Rev-A", 6200);
-  make_columns(column15, ckBtn_13, (char*)"CTV", (char*)"Enable Channel trigger validation: All But Rev-A", 6300);
-  make_columns(column16, ckBtn_14, (char*)"EIR", (char*)"Enable input relay: All types", 6400);
-  make_columns(column17, ckBtn_15, (char*)"PR", (char*)"Pileup rejection control: All But Rev-A", 6500);
+  make_columns(column2, ckBtn, (char*)"FTS", (char*)"Fast trigger selection (local FiPPI trigger vs. external fast trigger from System FPGA)", 5000);
+  make_columns(column3, ckBtn_1, (char*)"MSE", (char*)"Module validation signal selection (module validation trigger from System FPGA vs. module GATE from front panel)", 5100);
+  make_columns(column4, ckBtn_2, (char*)"GC", (char*)"Good channel", 5200);
+  make_columns(column5, ckBtn_3, (char*)"CSE", (char*)"Channel validation signal selection (channel validation trigger from System FPGA vs. channel GATE from front panel)", 5300);
+  make_columns(column6, ckBtn_4, (char*)"BDA", (char*)"Block data acquisition if trace or header DPMs are full", 5400);
+  make_columns(column7, ckBtn_5, (char*)"SP", (char*)"Input signal polarity control", 5500);
+  make_columns(column8, ckBtn_6, (char*)"CTV", (char*)"Enable channel trigger veto", 5600);
+  make_columns(column9, ckBtn_7, (char*)"HE", (char*)"Histograms energy in the on-chip MCA", 5700);
+  make_columns(column10, ckBtn_8, (char*)"TC", (char*)"Trace capture and associated header data", 5800);
+  make_columns(column11, ckBtn_9, (char*)"EQS", (char*)"QDC summing and associated header data", 5900);
+  make_columns(column12, ckBtn_10, (char*)"ECT", (char*)"CFD for real time, trace capture and QDC capture", 6000);
+  make_columns(column13, ckBtn_11, (char*)"MVS", (char*)"Require module validation trigger", 6100);
+  make_columns(column14, ckBtn_12, (char*)"ERB", (char*)"Record raw energy sums and baseline in event header", 6200);
+  make_columns(column15, ckBtn_13, (char*)"CVT", (char*)"Require channel validation trigger", 6300);
+  make_columns(column16, ckBtn_14, (char*)"IR", (char*)"Control input relay: 1: connect, 0: disconnect", 6400);
+  make_columns(column17, ckBtn_15, (char*)"NPR", (char*)"Control normal pileup rejection", 6500);
 
-  make_columns(column18, ckBtn_16, (char*)"IPR", (char*)"Inverse pileup rejection control", 6600);
-  make_columns(column19, ckBtn_17, (char*)"NTL", (char*)"Enable 'no traces for large pulses' featrue", 6700);
-  make_columns(column20, ckBtn_18, (char*)"TS", (char*)"Group trigger selection (external group trigger(checked) or local fast trigger(unchecked))", 6800);
-  make_columns(column21, ckBtn_19, (char*)"CVS", (char*)"Channel veto selection (channel validation trigger(checked) or front panel channel veto(unchecked))", 6900);
-  make_columns(column22, ckBtn_20, (char*)"MVS", (char*)"Module veto selection (module validation trigger(checked) or front panel module veto(unchecked))", 7000);
-  make_columns(column23, ckBtn_21, (char*)"ECT", (char*)"Enable (checked) or disable (unchecked) recording of external clock timestamps in event header", 7100);
+  make_columns(column18, ckBtn_16, (char*)"IPR", (char*)"Control Inverse pileup rejection", 6600);
+  make_columns(column19, ckBtn_17, (char*)"NTL", (char*)"Enable 'no traces for large pulses' feature", 6700);
+  make_columns(column20, ckBtn_18, (char*)"GTS", (char*)"Group trigger selection (local FiPPI trigger vs. external group trigger from System FPGA)", 6800);
+  make_columns(column21, ckBtn_19, (char*)"CVS", (char*)"Channel veto selection (front panel channel GATE vs. channel validation trigger)", 6900);
+  make_columns(column22, ckBtn_20, (char*)"MVS", (char*)"Module veto selection (front panel module GATE vs. module validation trigger)", 7000);
+  // make_columns(column23, ckBtn_21, (char*)"ECT", (char*)"Enable (checked) or disable (unchecked) recording of external clock timestamps in event header", 7100);
   
   /////////////////////////////module entry///////////////////////////////
 
@@ -294,7 +293,7 @@ int Csra::load_info(Long_t mod)
       retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Csra.cpp", "load_info(...)", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);
       
-      for(int j = 0;j < 22;j++){
+      for(int j = 0;j < 21;j++){
         gt = APP32_TstBit(j, ChanParData);
 	if(gt==0) 
 	  tmpckBtn[j][i]->SetState(kButtonUp);
@@ -314,7 +313,7 @@ int Csra::change_values(Long_t mod)
 
   for (int i = 0; i < 16; i++)
     {
-      for(int j = 0;j < 22;j++){
+      for(int j = 0;j < 21;j++){
         if(tmpckBtn[j][i]->IsDown())
 	  ChanParData = APP32_SetBit(j,ChanParData);
 	else 
@@ -331,11 +330,11 @@ int Csra::change_values(Long_t mod)
 void Csra::checkbutton(Long_t parm1)
 {
   // 添加功能类需要修改本函数
-  if(parm1 > 7116 || parm1 < 5000) return;
+  if(parm1 > 7016 || parm1 < 5000) return;
   if(parm1%100 == 16 ) // All
     {
       int k = parm1/100-50;//第几个功能类
-      if(k < 0 || k > 21) return;
+      if(k < 0 || k > 20) return;
       if(tmpckBtn[k][16]->IsDown()){
 	for(int i = 0;i < 16;i++)
 	  tmpckBtn[k][i]->SetState(kButtonDown);
@@ -347,7 +346,7 @@ void Csra::checkbutton(Long_t parm1)
   else //0-15
     {
       int k = parm1/100-50;
-      if(k < 0 || k > 21) return;
+      if(k < 0 || k > 20) return;
       int j = parm1%100;
       if(j < 0 || j > 15) return;
       if(!tmpckBtn[k][j]->IsDown()){
@@ -381,5 +380,5 @@ void Csra::getckbuttonaddress()
   tmpckBtn[18] = ckBtn_18;
   tmpckBtn[19] = ckBtn_19;
   tmpckBtn[20] = ckBtn_20;
-  tmpckBtn[21] = ckBtn_21;
+  // tmpckBtn[21] = ckBtn_21;
 }

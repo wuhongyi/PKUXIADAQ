@@ -90,7 +90,6 @@ enum Commands //commands for the menu bar popups
     FIND_WF,
     SCOPEDT,
     OFFLINEADJUSTPAR
-
   };
 
 class Detector;

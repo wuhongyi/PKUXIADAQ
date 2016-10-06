@@ -4,13 +4,14 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 10月  4 20:33:32 2016 (+0800)
-// Last-Updated: 三 10月  5 18:23:29 2016 (+0800)
+// Last-Updated: 四 10月  6 21:17:52 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 6
+//     Update #: 18
 // URL: http://wuhongyi.github.io 
 
 #include "MultiplicityMask.h"
 #include "Detector.h"
+#include "Global.h"
 #include "pixie16app_export.h"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -24,17 +25,17 @@ MultiplicityMask::MultiplicityMask(const TGWindow *p, const TGWindow * main, cha
     sprintf(n,"%2d",i);
     Labels[i]->SetText(n);
   }
-  CLabel[0]->SetText("Left");
+  CLabel[0]->SetText("Left[0-65535]");
   CLabel[0]->SetAlignment(kTextCenterX);
-  CLabel[1]->SetText("Itself");
+  CLabel[1]->SetText("Itself[0-65535]");
   CLabel[1]->SetAlignment(kTextCenterX);
-  CLabel[2]->SetText("Right");
+  CLabel[2]->SetText("Right[0-65535]");
   CLabel[2]->SetAlignment(kTextCenterX);
-  CLabel[3]->SetText("1st");
+  CLabel[3]->SetText("1st[0-7]");
   CLabel[3]->SetAlignment(kTextCenterX);
-  CLabel[4]->SetText("2nd");
+  CLabel[4]->SetText("2nd[0-7]");
   CLabel[4]->SetAlignment(kTextCenterX);
-  CLabel[5]->SetText("3rd");
+  CLabel[5]->SetText("3rd[0-7]");
   CLabel[5]->SetAlignment(kTextCenterX);  
    
   // ***** COPY BUTTON *********
@@ -181,52 +182,123 @@ Bool_t MultiplicityMask::ProcessMessage(Long_t msg,Long_t parm1, Long_t parm2){
 
 int MultiplicityMask::load_info(Long_t mod)
 {
-  // double ChanParData = -1;
-  // int retval;
-  // char text[20];
+  double ChanParData = -1;
+  unsigned int b;
+  int retval;
+  char text[20];
 
-  // for (int i = 0; i < 16; i++)
-  //   {
-  //     retval = Pixie16ReadSglChanPar((char*)"CFDDelay", &ChanParData, mod, i);
-  //     if(retval < 0) ErrorInfo("Cfd.cpp", "load_info(...)", "Pixie16ReadSglChanPar/CFDDelay", retval);
-  //     sprintf(text, "%1.2f", ChanParData);
-  //     NumEntry[1][i]->SetText(text);
+  for (int i = 0; i < 16; i++)
+    {
+      retval = Pixie16ReadSglChanPar((char*)"MultiplicityMaskL", &ChanParData, mod, i);
+      if(retval < 0) ErrorInfo("MultiplicityMask.cpp", "load_info(...)", "Pixie16ReadSglChanPar/MultiplicityMaskL", retval);
 
-  //     retval = Pixie16ReadSglChanPar((char*)"CFDScale", &ChanParData, mod, i);
-  //     if(retval < 0) ErrorInfo("Cfd.cpp", "load_info(...)", "Pixie16ReadSglChanPar/CFDScale", retval);  
-  //     sprintf(text, "%1.2f", ChanParData);
-  //     NumEntry[2][i]->SetText(text);
+      b = 0;
+      for (int j = 0; j < 16; j++)
+	{
+	  b += (APP32_TstBit(j, ChanParData)<<j);
+	}
+      sprintf(text, "%d", b);
+      NumEntry[2][i]->SetText(text);
 
-  //     retval = Pixie16ReadSglChanPar((char*)"CFDThresh", &ChanParData, mod, i);
-  //     if(retval < 0) ErrorInfo("Cfd.cpp", "load_info(...)", "Pixie16ReadSglChanPar/CFDThresh", retval);     
-  //     sprintf(text, "%1.2f", ChanParData);
-  //     NumEntry[3][i]->SetText(text);
+      b = 0;
+      for (int j = 0; j < 16; j++)
+	{
+	  b += (APP32_TstBit(j+16, ChanParData)<<j);
+	}
+      sprintf(text, "%d", b);
+      NumEntry[3][i]->SetText(text);
+
+      retval = Pixie16ReadSglChanPar((char*)"MultiplicityMaskH", &ChanParData, mod, i);
+      if(retval < 0) ErrorInfo("MultiplicityMask.cpp", "load_info(...)", "Pixie16ReadSglChanPar/MultiplicityMaskH", retval);
+
+      b = 0;
+      for (int j = 0; j < 16; j++)
+	{
+	  b += (APP32_TstBit(j, ChanParData)<<j);
+	}
+      sprintf(text, "%d", b);
+      NumEntry[1][i]->SetText(text);
+
+      b = (APP32_TstBit(24, ChanParData)<<2)+(APP32_TstBit(23, ChanParData)<<1)+APP32_TstBit(22, ChanParData);
+      sprintf(text, "%d", b);
+      NumEntry[4][i]->SetText(text);
+      
+      b = (APP32_TstBit(27, ChanParData)<<2)+(APP32_TstBit(26, ChanParData)<<1)+APP32_TstBit(25, ChanParData);
+      sprintf(text, "%d", b);
+      NumEntry[5][i]->SetText(text);
+
+      b = (APP32_TstBit(30, ChanParData)<<2)+(APP32_TstBit(29, ChanParData)<<1)+APP32_TstBit(28, ChanParData);
+      sprintf(text, "%d", b);
+      NumEntry[6][i]->SetText(text);      
      
-  //   }
+    }
   //  std::cout << "loading info\n";
   return 1;
 }
 
 int MultiplicityMask::change_values(Long_t mod)
 {
-  // double delay;
-  // double frac;
-  // double thres;
-  // int retval;
-  // for (int i = 0; i < 16; i++)
-  //   {
-  //     delay = NumEntry[1][i]->GetNumber();
-  //     retval = Pixie16WriteSglChanPar((char*)"CFDDelay", delay, mod, i);
-  //     if(retval < 0) ErrorInfo("Cfd.cpp", "change_values(...)", "Pixie16WriteSglChanPar/CFDDelay", retval);
+  double ChanParData = 0;
+  unsigned short d1,d2,d3,d4,d5,d6;
+  int retval;
+  int a;
+  for (int i = 0; i < 16; i++)
+    {
+      d2 = NumEntry[2][i]->GetNumber();
+      d3 = NumEntry[3][i]->GetNumber();
       
-  //     frac = NumEntry[2][i]->GetNumber();
-  //     retval = Pixie16WriteSglChanPar((char*)"CFDScale", frac, mod, i);
-  //     if(retval < 0) ErrorInfo("Cfd.cpp", "change_values(...)", "Pixie16WriteSglChanPar/CFDScale", retval);
+      d1 = NumEntry[1][i]->GetNumber();
+      d4 = NumEntry[4][i]->GetNumber();
+      d5 = NumEntry[5][i]->GetNumber();
+      d6 = NumEntry[6][i]->GetNumber();
       
-  //     thres = NumEntry[3][i]->GetNumber();
-  //     retval = Pixie16WriteSglChanPar((char*)"CFDThresh", thres, mod, i);
-  //     if(retval < 0) ErrorInfo("Cfd.cpp", "change_values(...)", "Pixie16WriteSglChanPar/CFDThresh", retval);
-  //   }
+      ChanParData = 0;
+      a = 0;
+      for (int j = 0; j < 16; j++)
+	{
+	  a = (1<<j);
+	  if(d2 & a) ChanParData = APP32_SetBit(j,ChanParData);
+	  else ChanParData = APP32_ClrBit(j,ChanParData);
+	  if(d3 & a) ChanParData = APP32_SetBit(j+16,ChanParData);
+	  else ChanParData = APP32_ClrBit(j+16,ChanParData);
+	}
+      
+      retval = Pixie16WriteSglChanPar((char*)"MultiplicityMaskL", ChanParData, mod, i);
+      if(retval < 0) ErrorInfo("MultiplicityMask.cpp", "change_values(...)", "Pixie16WriteSglChanPar/MultiplicityMaskL", retval);
+      
+      ChanParData = 0;
+      a = 0;
+      for (int j = 0; j < 16; j++)
+	{
+	  a = (1<<j);
+	  if(d1 & a) ChanParData = APP32_SetBit(j,ChanParData);
+	  else ChanParData = APP32_ClrBit(j,ChanParData);
+	}
+
+      if(d4&1) ChanParData = APP32_SetBit(22,ChanParData);
+      else ChanParData = APP32_ClrBit(22,ChanParData);
+      if(d4&2) ChanParData = APP32_SetBit(23,ChanParData);
+      else ChanParData = APP32_ClrBit(23,ChanParData);
+      if(d4&4) ChanParData = APP32_SetBit(24,ChanParData);
+      else ChanParData = APP32_ClrBit(24,ChanParData);
+
+      if(d5&1) ChanParData = APP32_SetBit(25,ChanParData);
+      else ChanParData = APP32_ClrBit(25,ChanParData);
+      if(d5&2) ChanParData = APP32_SetBit(26,ChanParData);
+      else ChanParData = APP32_ClrBit(26,ChanParData);
+      if(d5&4) ChanParData = APP32_SetBit(27,ChanParData);
+      else ChanParData = APP32_ClrBit(27,ChanParData);
+      
+      if(d6&1) ChanParData = APP32_SetBit(28,ChanParData);
+      else ChanParData = APP32_ClrBit(28,ChanParData);
+      if(d6&2) ChanParData = APP32_SetBit(29,ChanParData);
+      else ChanParData = APP32_ClrBit(29,ChanParData);
+      if(d6&4) ChanParData = APP32_SetBit(30,ChanParData);
+      else ChanParData = APP32_ClrBit(30,ChanParData);
+      retval = Pixie16WriteSglChanPar((char*)"MultiplicityMaskH", ChanParData, mod, i);
+      if(retval < 0) ErrorInfo("MultiplicityMask.cpp", "change_values(...)", "Pixie16WriteSglChanPar/MultiplicityMaskH", retval);
+      
+    }
   // std::cout << "change values\n";
 
   return 1;
@@ -236,3 +308,6 @@ int MultiplicityMask::change_values(Long_t mod)
 
 // 
 // MultiplicityMask.cpp ends here
+
+
+

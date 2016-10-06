@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:41 2016 (+0800)
-// Last-Updated: 二 10月  4 19:04:09 2016 (+0800)
+// Last-Updated: 三 10月  5 19:51:43 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 24
+//     Update #: 31
 // URL: http://wuhongyi.github.io 
 
 #ifndef _ONLINE_H_
@@ -35,13 +35,10 @@
 #include <cstring>
 #include <string>
 #include <sstream>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <unistd.h>
 #include <semaphore.h>
 #include <errno.h>
-#include <sys/time.h>
+
+using namespace std;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #define PRESET_MAX_MODULES 24
@@ -54,7 +51,6 @@ enum OnlineCommands
   {
     FILE_EXIT,
     INIT_BUTTON
-
   };
 
 class Online : public TGMainFrame

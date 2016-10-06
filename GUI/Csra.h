@@ -29,18 +29,20 @@ private:
     TGVerticalFrame *column1, *column2, *column3, *column4, *column5,
       *column6, *column7, *column8,*column9,*column10,*column11,*column12,
       *column13,*column14,*column15,*column16,*column17,*column18,*column19,
-      *column20,*column21,*column22,*column23;
+      *column20,*column21,*column22;//,*column23
+    
   ///////////////////////////////first column//////////////////////
     TGLabel *Labels[17];
+    
   //////////////////////////////second column/////////////////////
     TGCheckButton *ckBtn[17], *ckBtn_1[17], *ckBtn_2[17], *ckBtn_3[17],
       *ckBtn_4[17], *ckBtn_5[17], *ckBtn_6[17],*ckBtn_7[17],*ckBtn_8[17],
       *ckBtn_9[17],*ckBtn_10[17],*ckBtn_11[17],*ckBtn_12[17],*ckBtn_13[17],
-      *ckBtn_14[17],*ckBtn_15[17],*ckBtn_16[17],*ckBtn_17[17],*ckBtn_18[17],*ckBtn_19[17],*ckBtn_20[17],*ckBtn_21[17];
+      *ckBtn_14[17],*ckBtn_15[17],*ckBtn_16[17],*ckBtn_17[17],*ckBtn_18[17],*ckBtn_19[17],*ckBtn_20[17];//,*ckBtn_21[17]
 
     int make_columns (TGVerticalFrame * column, TGCheckButton * ckBtn_g[17],
 		    char *title, char *tooltip, int id);
-    TGCheckButton **tmpckBtn[22];
+    TGCheckButton **tmpckBtn[21];//
 
   ///////////////buttons//////////////////
     TGTextButton *LoadButton, *CancelButton;
