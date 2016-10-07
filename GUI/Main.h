@@ -33,7 +33,6 @@
 #include "TriggerFilter.h"
 #include "Baseline.h"
 #include "Tau.h"
-#include "MaxEvent.h"
 #include "ExpertMod.h"
 #include "LogicTrigger.h"
 #include "FPOutputs.h"
@@ -71,7 +70,6 @@ enum Commands //commands for the menu bar popups
     CFDP,
     QDCP,
     DECAY,
-    MAXEVENT,
     FILE_SAVE,
     MODVAR,
     LOGIC,
@@ -129,7 +127,6 @@ private:
   Offline *popupoffline;
   Pixel_t color;
   ScopedT *scopedt;
-  MaxEvent *maxevent;
   Histogram* histogram;
   int xmin, xmax, ymin, ymax;
   TGNumberEntry *numericMod, *numericCh;

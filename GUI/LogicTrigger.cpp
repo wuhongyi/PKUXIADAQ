@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 三 10月  5 18:19:55 2016 (+0800)
+// Last-Updated: 五 10月  7 13:04:04 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 70
+//     Update #: 75
 // URL: http://wuhongyi.github.io 
 
 #include "LogicTrigger.h"
@@ -85,8 +85,8 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   ChTri_ch0_3 = new TGComboBox(fV1);
   fV1->AddFrame(ChTri_ch0_3, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   ChTri_ch0_3->Resize(100, 20);
-  ChTri_ch0_3->AddEntry("GroupTri 0", 1);
-  ChTri_ch0_3->AddEntry("ExtFastTriGate", 2);
+  ChTri_ch0_3->AddEntry("ExtFastTriGate", 1);
+  ChTri_ch0_3->AddEntry("GroupTri 0", 2);
   ChTri_ch0_3->Select(1);
   
   TGTextEntry *LabelGroupTri0 = new TGTextEntry(fV1,new TGTextBuffer(100));
@@ -135,8 +135,8 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   ChTri_ch4_7 = new TGComboBox(fV2);
   fV2->AddFrame(ChTri_ch4_7, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   ChTri_ch4_7->Resize(100, 20);
-  ChTri_ch4_7->AddEntry("GroupTri 1", 1);
-  ChTri_ch4_7->AddEntry("ExtFastTriGate", 2);
+  ChTri_ch4_7->AddEntry("ExtFastTriGate", 1);
+  ChTri_ch4_7->AddEntry("GroupTri 1", 2);
   ChTri_ch4_7->Select(1);
   TGTextEntry *LabelGroupTri1 = new TGTextEntry(fV2,new TGTextBuffer(100));
   TGTextEntryAddStyle(LabelGroupTri1,(char *)"GroupTri 1:",(char *)"Select group trigger 1 from group trigger 1_0,group trigger 1_1,and group trigger 1_2");
@@ -185,8 +185,8 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   ChTri_ch8_11 = new TGComboBox(fV3);
   fV3->AddFrame(ChTri_ch8_11, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   ChTri_ch8_11->Resize(100, 20);
-  ChTri_ch8_11->AddEntry("GroupTri 2", 1);
-  ChTri_ch8_11->AddEntry("ExtFastTriGate", 2);
+  ChTri_ch8_11->AddEntry("ExtFastTriGate", 1);
+  ChTri_ch8_11->AddEntry("GroupTri 2", 2);
   ChTri_ch8_11->Select(1);  
   TGTextEntry *LabelGroupTri2 = new TGTextEntry(fV3,new TGTextBuffer(100));
   TGTextEntryAddStyle(LabelGroupTri2,(char *)"GroupTri 2:",(char *)"Select group trigger 2 from group trigger 2_0,group trigger 2_1,and group trigger 2_2");
@@ -235,8 +235,8 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   ChTri_ch12_15 = new TGComboBox(fV4);
   fV4->AddFrame(ChTri_ch12_15, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   ChTri_ch12_15->Resize(100, 20);
-  ChTri_ch12_15->AddEntry("GroupTri 3", 1);
-  ChTri_ch12_15->AddEntry("ExtFastTriGate", 2);
+  ChTri_ch12_15->AddEntry("ExtFastTriGate", 1);
+  ChTri_ch12_15->AddEntry("GroupTri 3", 2);
   ChTri_ch12_15->Select(1);  
   TGTextEntry *LabelGroupTri3 = new TGTextEntry(fV4,new TGTextBuffer(100));
   TGTextEntryAddStyle(LabelGroupTri3,(char *)"GroupTri 3:",(char *)"Select group trigger 3 from group trigger 3_0,group trigger 3_1,and group trigger 3_2");
@@ -355,11 +355,11 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   fVV4->AddFrame(LabelGlobalFastTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
   GlobalFastTrigger = new TGComboBox(fVV4);
   fVV4->AddFrame(GlobalFastTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
-  GlobalFastTrigger->Resize(100, 20);
-  GlobalFastTrigger->AddEntry("bit 00", 1);
-  GlobalFastTrigger->AddEntry("bit 01", 2);
-  GlobalFastTrigger->AddEntry("bit 10", 3);
-  GlobalFastTrigger->AddEntry("bit 11", 4);
+  GlobalFastTrigger->Resize(280, 20);
+  GlobalFastTrigger->AddEntry("current module", 1);
+  GlobalFastTrigger->AddEntry("a master module in the crate through the backplane", 2);
+  GlobalFastTrigger->AddEntry("trigger module between multiple crates", 3);
+  GlobalFastTrigger->AddEntry("a wired or bus line on the backplane", 4);
   GlobalFastTrigger->Select(1);  
 
   TGHorizontalFrame *fVV5 = new TGHorizontalFrame(mn_vert, 10, 10);
@@ -370,11 +370,11 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   fVV5->AddFrame(LabelGlobalValidationTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
   GlobalValidationTrigger = new TGComboBox(fVV5);
   fVV5->AddFrame(GlobalValidationTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
-  GlobalValidationTrigger->Resize(100, 20);
-  GlobalValidationTrigger->AddEntry("bit 00", 1);
-  GlobalValidationTrigger->AddEntry("bit 01", 2);
-  GlobalValidationTrigger->AddEntry("bit 10", 3);
-  GlobalValidationTrigger->AddEntry("bit 11", 4);
+  GlobalValidationTrigger->Resize(280, 20);
+  GlobalValidationTrigger->AddEntry("current module", 1);
+  GlobalValidationTrigger->AddEntry("a master module in the crate through the backplane", 2);
+  GlobalValidationTrigger->AddEntry("trigger module between multiple crates", 3);
+  GlobalValidationTrigger->AddEntry("a wired or bus line on the backplane", 4);
   GlobalValidationTrigger->Select(1);  
 
 
@@ -389,7 +389,7 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   ExternalValidationTrigger->Resize(100, 20);
   for (int i = 0; i < 16; ++i)
     {
-      sprintf(tempname,"%02d",i);
+      sprintf(tempname,"Ch %02d",i);
       ExternalValidationTrigger->AddEntry(tempname, i+1);
     }
   ExternalValidationTrigger->Select(1);

@@ -9,11 +9,11 @@ LIBS:=../software/libPixie16App.a  ../software/libPixie16Sys.a  $(PLX_SDK_DIR)/P
 
 
 
-INCLUDES:=Global.h AnalogSignal.h Detector.h ExpertMod.h MaxEvent.h Table.h Baseline.h displayEdit.h Histogram.h PulseShape.h Tau.h Csra.h EnergyFilter.h Main.h ScopedT.h TriggerFilter.h Popup.h Cfd.h Qdc.h LogicTrigger.h FPOutputs.h Offline.h MultiplicityMask.h
+INCLUDES:=Global.h AnalogSignal.h Detector.h ExpertMod.h Table.h Baseline.h displayEdit.h Histogram.h PulseShape.h Tau.h Csra.h EnergyFilter.h Main.h ScopedT.h TriggerFilter.h Popup.h Cfd.h Qdc.h LogicTrigger.h FPOutputs.h Offline.h MultiplicityMask.h
 
-OBJECTS:=Global.o AnalogSignal.o ExpertMod.o MaxEvent.o Baseline.o Histogram.o Csra.o Detector.o displayEdit.o EnergyFilter.o Main.o nscope.o PulseShape.o ScopedT.o Table.o Tau.o TriggerFilter.o Popup.o MainDict.o Cfd.o Qdc.o LogicTrigger.o FPOutputs.o Offline.o MultiplicityMask.o
+OBJECTS:=Global.o AnalogSignal.o ExpertMod.o Baseline.o Histogram.o Csra.o Detector.o displayEdit.o EnergyFilter.o Main.o main.o PulseShape.o ScopedT.o Table.o Tau.o TriggerFilter.o Popup.o MainDict.o Cfd.o Qdc.o LogicTrigger.o FPOutputs.o Offline.o MultiplicityMask.o
 
-SRCS:=Global.cpp AnalogSignal.cpp ExpertMod.cpp MaxEvent.cpp Baseline.cpp Histogram.cpp Csra.cpp Detector.cpp displayEdit.cpp EnergyFilter.cpp Main.cpp nscope.cpp PulseShape.cpp ScopedT.cpp Table.cpp Tau.cpp TriggerFilter.cpp Popup.cpp  MainDict.cpp Cfd.cpp Qdc.cpp LogicTrigger.cpp FPOutputs.cpp Offline.cpp MultiplicityMask.cpp
+SRCS:=Global.cpp AnalogSignal.cpp ExpertMod.cpp Baseline.cpp Histogram.cpp Csra.cpp Detector.cpp displayEdit.cpp EnergyFilter.cpp Main.cpp main.cpp PulseShape.cpp ScopedT.cpp Table.cpp Tau.cpp TriggerFilter.cpp Popup.cpp  MainDict.cpp Cfd.cpp Qdc.cpp LogicTrigger.cpp FPOutputs.cpp Offline.cpp MultiplicityMask.cpp
 
 all: $(OBJ)
 

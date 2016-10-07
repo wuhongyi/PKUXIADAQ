@@ -1,4 +1,4 @@
-#define MADE "v. 2.4,---> 11/13/07"
+#define MADE "v. 1.0,---> 2016.10.07"
 
 #include <unistd.h>
 #include <sys/stat.h>//stat(const char *file_name,struct stat *buf)
@@ -93,12 +93,11 @@ void Main::CreateMenuBar()
   MenuExpert->AddEntry("Logic Set", LOGIC);
   MenuExpert->AddEntry("Front Outputs", FRONTPANELOUTPUTS);
   MenuExpert->AddEntry("Multiplicity", MULTIPLICITYMASK);
-  // MenuExpert->AddEntry ("Channel Variables", CHANVAR);
   MenuExpert->Associate(this);
   MenuBar->AddPopup("&Expert", MenuExpert, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
   TGPopupMenu *MenuScope = new TGPopupMenu(fClient->GetRoot());
-  MenuScope->AddEntry("xy maxmin", MAXMIN);
+  // MenuScope->AddEntry("xy maxmin", MAXMIN);
   MenuScope->AddEntry("dT", SCOPEDT);
   MenuScope->Associate(this);
   MenuBar->AddPopup("&Scope", MenuScope, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
@@ -196,11 +195,9 @@ Bool_t Main::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      tau = new Tau(fClient->GetRoot(), NULL, (char*)"Decay Time", 3, 16, detector->NumModules);
 	      tau->load_info(0);
 	      break;
-	    case MAXEVENT:
-	      maxevent = new MaxEvent(fClient->GetRoot(), this);
-	      break;
 	    case MODVAR:
 	      expertmod = new ExpertMod(fClient->GetRoot(), this, (char*)"Expert MOD", detector->NumModules);
+	      expertmod->load_info(0);
 	      break;
 	    case LOGIC:
 	      logictrigger = new LogicTrigger(fClient->GetRoot(),this,(char*)"Logic Trigger", 6, 16, detector->NumModules);
