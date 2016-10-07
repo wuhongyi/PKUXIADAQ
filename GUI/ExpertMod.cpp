@@ -273,7 +273,7 @@ int ExpertMod::change_values(Long_t mod)
     ModParData = APP32_ClrBit(13,ModParData);
   
   retval = Pixie16WriteSglModPar((char*)"MODULE_CSRB",ModParData,mod);    
-  if(retval < 0) ErrorInfo("ExpertMod.cpp", "load_info(...)", "Pixie16ReadSglModPar/MODULE_CSRB", retval);
+  if(retval < 0) ErrorInfo("ExpertMod.cpp", "change_values(...)", "Pixie16ReadSglModPar/MODULE_CSRB", retval);
   
   return retval;
   

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 五 10月  7 12:37:35 2016 (+0800)
+// Last-Updated: 五 10月  7 21:30:35 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 88
+//     Update #: 104
 // URL: http://wuhongyi.github.io 
 
 #include "Online.hh"
@@ -167,7 +167,7 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
   TGHorizontalFrame *filepath = new TGHorizontalFrame(setgroup);
   TGLabel *filepathlabel = new TGLabel(filepath,"File Path: ");
   filepath->AddFrame(filepathlabel,new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 3, 4, 0));
-  filepathtext = new TGTextEntry(filepath,new TGTextBuffer(50));
+  filepathtext = new TGTextEntry(filepath,new TGTextBuffer(20));
   filepath->AddFrame(filepathtext,new TGLayoutHints(kLHintsExpandX|kLHintsTop, 10 ,3,4,0));
 
   TGLabel *filenamelabel = new TGLabel(filepath,"File Name: ");
@@ -191,7 +191,7 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
   StateMsg->SetFont("-adobe-helvetica-bold-r-*-*-11-*-*-*-*-*-iso8859-1", false);
   fClient->GetColorByName("green", color);
   StateMsg->SetTextColor(color, false);
-  StateMsg->SetText("Rxxxx Mxx");
+  StateMsg->SetText("Rxxxx     Mxx");
   StateMsg->SetEnabled(kFALSE);
   StateMsg->SetFrameDrawn(kFALSE);
 
@@ -402,7 +402,7 @@ void Online::StartStop()
     {
       fstartloop = true;
       startloop->SetText("RunStop");
-      PrevRateTime = get_time();
+      PrevTime = get_time();
       LoopRun();
     }
 }
@@ -416,11 +416,13 @@ void Online::LoopRun()
   std::stringstream ss;//sstream cstring
   ss.clear();//重复使用前一定要清空
 
+  PrevProtectionTime = get_time();
+  
   while(fstartloop)
     {
       
       CurrentTime = get_time();
-      ElapsedTime = CurrentTime - PrevRateTime; /* milliseconds */
+      ElapsedTime = CurrentTime - PrevTime; /* milliseconds */
       if (ElapsedTime > 1000)
 	{
 	  // 应该换成检索目录中的最新文件 这样才能支持非共享内存模式
@@ -439,18 +441,21 @@ void Online::LoopRun()
 		    }
 		}
 	    }
-	  PrevRateTime = CurrentTime;
+	  PrevTime = CurrentTime;
 	}
       
       // if(sem_wait(sem) == -1) continue;
       // sem_post(sem);
       sem_getvalue(sem, &val);
-      // printf("sem: %d\n",val);
+      printf("sem: %d\n",val);
       if(val > 0)
 	{
 	  memcpy(&tempN,ptr,4);
 	  if(number != tempN)
 	    {
+	      PrevProtectionTime = get_time();
+	      std::cout<<"get time 1"<<std::endl;
+	      
 	      memcpy(buf_new,ptr,(PRESET_MAX_MODULES*448*4)+10);
 	      if(number == UINT_MAX) 
 		{
@@ -520,7 +525,7 @@ void Online::LoopRun()
 
 	      memcpy(buf,buf_new,(PRESET_MAX_MODULES*448*4)+10);
 
-	      sprintf(charrunstate,"R%04d M%02d",RunNumber,ModNum);
+	      sprintf(charrunstate,"R%04d     M%02d",RunNumber,ModNum);
 	      StateMsg->SetText(charrunstate);
 	      if(flagrunnumber)
 		{
@@ -536,14 +541,27 @@ void Online::LoopRun()
 		}
 	      
 	    }
+
+	}
+      else
+	{
+	  std::cout<<"get time 2"<<std::endl;
+	  CurrentProtectionTime = get_time();
+	  ElapsedProtectionTime = CurrentProtectionTime - PrevProtectionTime;
+	  if(ElapsedProtectionTime > 5000)
+	    {
+	      StateMsg->SetText("NOT SHARE DATA");
+	      fClient->GetColorByName("yellow", color);
+	      StateMsg->SetTextColor(color, false);
+	    }
 	  
-	  // memcpy(&ModNum,ptr+4,2);
-	 
 	}
 
       gSystem->ProcessEvents();
+
+      usleep(400000);//sleep 400us
     }
-  // memcpy(buf,ptr,(PRESET_MAX_MODULES*448*4)+6);
+
 
 }
 

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:41 2016 (+0800)
-// Last-Updated: 五 10月  7 12:37:35 2016 (+0800)
+// Last-Updated: 五 10月  7 21:19:30 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 33
+//     Update #: 34
 // URL: http://wuhongyi.github.io 
 
 #ifndef _ONLINE_H_
@@ -87,10 +87,13 @@ private:
   TGTextEntry **Labels;
   
   uint64_t CurrentTime;
-  uint64_t PrevRateTime;
+  uint64_t PrevTime;
   uint64_t ElapsedTime;
   char  Filename[PRESET_MAX_MODULES][256];
 
+  uint64_t CurrentProtectionTime;
+  uint64_t PrevProtectionTime;
+  uint64_t ElapsedProtectionTime;  
   
   TGTextButton	*startloop;
   bool            fstartloop;
