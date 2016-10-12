@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:06 2016 (+0800)
-// Last-Updated: 日 10月  2 19:39:10 2016 (+0800)
+// Last-Updated: 三 10月 12 12:15:03 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 2
+//     Update #: 3
 // URL: http://wuhongyi.github.io 
 
 #ifndef _DECODER_H_
@@ -19,7 +19,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#define MAXTRACEN 10000 // maximum number of trace points
+#define MAXTRACEN 65535 // maximum number of trace points
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class decoder

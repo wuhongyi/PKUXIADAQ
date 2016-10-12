@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:52:00 2016 (+0800)
-// Last-Updated: 一 10月  3 10:12:43 2016 (+0800)
+// Last-Updated: 二 10月 11 16:02:39 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 21
+//     Update #: 22
 // URL: http://wuhongyi.github.io 
 
 #include "Detector.hh"
@@ -42,7 +42,7 @@ Detector::Detector()
       buffid[i] = 0;
       FILESIZE[i] = 0;
     }
-  ReadConfigFile((char*)"cfgPixie16.txt");
+  ReadConfigFile();
 }
 
 Detector::~Detector()

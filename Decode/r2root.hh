@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:31 2016 (+0800)
-// Last-Updated: 日 10月  2 21:25:10 2016 (+0800)
+// Last-Updated: 三 10月 12 12:16:01 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 15
+//     Update #: 16
 // URL: http://wuhongyi.github.io 
 
 #ifndef _R2ROOT_H_
@@ -24,7 +24,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <unistd.h> 
-#define MAXTRACEN 10000
+// #define MAXTRACEN 10000
 #define MAXBOARD  24  //预设最大24个
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
