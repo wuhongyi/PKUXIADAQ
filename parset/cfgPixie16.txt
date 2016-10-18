@@ -6,5 +6,5 @@
 ../firmware/fippixie16_revfgeneral_14b100m_r29406.bin
 FPGATrig
 ../firmware/Pixie16DSP_revfgeneral_14b100m_r34689.ldr
-../parset/201610121931.set
+../parset/20161007.set
 ../firmware/Pixie16DSP_revfgeneral_14b100m_r34689.var

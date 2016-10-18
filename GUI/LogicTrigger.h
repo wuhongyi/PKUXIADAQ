@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:36 2016 (+0800)
-// Last-Updated: 三 10月  5 18:19:55 2016 (+0800)
+// Last-Updated: 二 10月 18 21:50:35 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 22
+//     Update #: 23
 // URL: http://wuhongyi.github.io 
 
 #ifndef _LOGICTRIGGER_H_
@@ -46,7 +46,7 @@ protected:
   float ftrigoutdelay;
   float vetostretch;
   float chantrigstretch;
-
+  float fasttrigbacklen;
   
   TGComboBox *ChTri_ch0_3;//2 [24]
   TGComboBox *GroupTri0;//2 [17:16]

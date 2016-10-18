@@ -200,7 +200,7 @@ Bool_t Main::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      expertmod->load_info(0);
 	      break;
 	    case LOGIC:
-	      logictrigger = new LogicTrigger(fClient->GetRoot(),this,(char*)"Logic Trigger", 6, 16, detector->NumModules);
+	      logictrigger = new LogicTrigger(fClient->GetRoot(),this,(char*)"Logic Trigger", 7, 16, detector->NumModules);
 	      logictrigger->load_info(0);
 	      break;
 	    case MULTIPLICITYMASK:

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 五 10月  7 13:04:04 2016 (+0800)
+// Last-Updated: 二 10月 18 21:50:35 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 75
+//     Update #: 76
 // URL: http://wuhongyi.github.io 
 
 #include "LogicTrigger.h"
@@ -35,6 +35,8 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   CLabel[3]->SetAlignment(kTextCenterX);
   CLabel[4]->SetText("ChaTrigStr[us]");
   CLabel[4]->SetAlignment(kTextCenterX);
+  CLabel[5]->SetText("FastTriBaLen[us]");
+  CLabel[5]->SetAlignment(kTextCenterX);
   
   ////////////////////////Copy button//////////////////////////
   TGHorizontal3DLine *ln2 = new TGHorizontal3DLine(mn_vert, 200, 2);
@@ -496,6 +498,7 @@ Bool_t LogicTrigger::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      ftrigoutdelay = NumEntry[3][chanNumber]->GetNumber();
 	      vetostretch = NumEntry[4][chanNumber]->GetNumber();
 	      chantrigstretch = NumEntry[5][chanNumber]->GetNumber();
+	      fasttrigbacklen = NumEntry[6][chanNumber]->GetNumber();
 	      
 	      for(int i=0;i<16;i++)
 		{
@@ -512,6 +515,8 @@ Bool_t LogicTrigger::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		      NumEntry[4][i]->SetText(tmp);
 		      sprintf(tmp,"%1.3f",chantrigstretch);
 		      NumEntry[5][i]->SetText(tmp);
+		      sprintf(tmp,"%1.3f",fasttrigbacklen);
+		      NumEntry[6][i]->SetText(tmp);
 		    }
 		}  
 	      break;
@@ -582,7 +587,12 @@ int LogicTrigger::load_info(Long_t mod)
 	std::cout<<"Error: LogicTrigger.cpp - Pixie16ReadSglChanPar - ChanTrigStretch"<<std::endl;      
       sprintf(text, "%1.2f", ChanParData);
       NumEntry[5][i]->SetText(text);
-      
+
+      retval = Pixie16ReadSglChanPar((char*)"FASTTRIGBACKLEN", &ChanParData, mod, i);
+      if(retval < 0)
+	std::cout<<"Error: LogicTrigger.cpp - Pixie16ReadSglChanPar - FASTTRIGBACKLEN"<<std::endl;      
+      sprintf(text, "%1.2f", ChanParData);
+      NumEntry[6][i]->SetText(text);
     }
 
   retval = Pixie16ReadSglModPar((char*)"TrigConfig0", &ModParData, mod);
@@ -655,7 +665,11 @@ int LogicTrigger::change_values(Long_t mod)
   
       ChanParData = NumEntry[5][i]->GetNumber();
       retval = Pixie16WriteSglChanPar((char*)"ChanTrigStretch", ChanParData, mod, i);
-      if(retval < 0) ErrorInfo("LogicTrigger.cpp", "change_values(...)", "Pixie16WriteSglChanPar/ChanTrigStretch", retval);      
+      if(retval < 0) ErrorInfo("LogicTrigger.cpp", "change_values(...)", "Pixie16WriteSglChanPar/ChanTrigStretch", retval);
+      
+      ChanParData = NumEntry[6][i]->GetNumber();
+      retval = Pixie16WriteSglChanPar((char*)"FASTTRIGBACKLEN", ChanParData, mod, i);
+      if(retval < 0) ErrorInfo("LogicTrigger.cpp", "change_values(...)", "Pixie16WriteSglChanPar/FASTTRIGBACKLEN", retval);
     }
 
   retval = Pixie16ReadSglModPar((char*)"TrigConfig0", &ModParData, mod);
