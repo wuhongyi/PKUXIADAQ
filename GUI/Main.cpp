@@ -204,7 +204,7 @@ Bool_t Main::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      logictrigger->load_info(0);
 	      break;
 	    case MULTIPLICITYMASK:
-	      multiplicitymask = new MultiplicityMask(fClient->GetRoot(),this,(char*)"Multiplicity Mark", 7, 16, detector->NumModules);
+	      multiplicitymask = new MultiplicityMask(fClient->GetRoot(),this,(char*)"Multiplicity Mark", 10, 16, detector->NumModules);
 		multiplicitymask->load_info(0);
 	      break;
 	    case FRONTPANELOUTPUTS:

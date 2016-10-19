@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 二 10月 18 21:50:35 2016 (+0800)
+// Last-Updated: 三 10月 19 09:55:27 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 76
+//     Update #: 78
 // URL: http://wuhongyi.github.io 
 
 #include "LogicTrigger.h"
@@ -37,6 +37,13 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   CLabel[4]->SetAlignment(kTextCenterX);
   CLabel[5]->SetText("FastTriBaLen[us]");
   CLabel[5]->SetAlignment(kTextCenterX);
+
+  CLabel[0]->SetToolTipText("External trigger stretch length", 0);
+  CLabel[1]->SetToolTipText("Extern delay", 0);
+  CLabel[2]->SetToolTipText("Fast trigger delay length", 0);
+  CLabel[3]->SetToolTipText("Veto stretch length", 0);
+  CLabel[4]->SetToolTipText("Channel trigger stretch length", 0);
+  CLabel[5]->SetToolTipText("Fast trigger stretch length", 0);
   
   ////////////////////////Copy button//////////////////////////
   TGHorizontal3DLine *ln2 = new TGHorizontal3DLine(mn_vert, 200, 2);

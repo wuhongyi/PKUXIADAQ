@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 10月  4 20:33:32 2016 (+0800)
-// Last-Updated: 四 10月  6 21:17:52 2016 (+0800)
+// Last-Updated: 三 10月 19 10:32:33 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 18
+//     Update #: 25
 // URL: http://wuhongyi.github.io 
 
 #include "MultiplicityMask.h"
@@ -31,13 +31,33 @@ MultiplicityMask::MultiplicityMask(const TGWindow *p, const TGWindow * main, cha
   CLabel[1]->SetAlignment(kTextCenterX);
   CLabel[2]->SetText("Right[0-65535]");
   CLabel[2]->SetAlignment(kTextCenterX);
-  CLabel[3]->SetText("1st[0-7]");
+  CLabel[3]->SetText("Coin 1st[0-7]");
   CLabel[3]->SetAlignment(kTextCenterX);
-  CLabel[4]->SetText("2nd[0-7]");
+  CLabel[4]->SetText("Coin 2nd[0-7]");
   CLabel[4]->SetAlignment(kTextCenterX);
-  CLabel[5]->SetText("3rd[0-7]");
+  CLabel[5]->SetText("Coin 3rd[0-7]");
   CLabel[5]->SetAlignment(kTextCenterX);  
-   
+  CLabel[6]->SetText("MultiThre[0-31]");
+  CLabel[6]->SetAlignment(kTextCenterX);  
+  CLabel[7]->SetText("Sel Coin/Multi");
+  CLabel[7]->SetAlignment(kTextCenterX);  
+  CLabel[8]->SetText("Sel ChValidTrig");
+  CLabel[8]->SetAlignment(kTextCenterX);
+
+  fClient->GetColorByName("red", color);
+  CLabel[7]->SetTextColor(color, false);
+  CLabel[8]->SetTextColor(color, false);
+  
+  CLabel[0]->SetToolTipText("masking fast triggers from the module's left neighbor", 0);
+  CLabel[1]->SetToolTipText("masking fast triggers from the module itself", 0);
+  CLabel[2]->SetToolTipText("masking fast triggers from the module's right neighbor", 0);
+  CLabel[3]->SetToolTipText("Threshold for 1st 16-bit coincidence trigger", 0);
+  CLabel[4]->SetToolTipText("Threshold for 2nd 16-bit coincidence trigger", 0);
+  CLabel[5]->SetToolTipText("Threshold for 3rd 16-bit coincidence trigger", 0);
+  CLabel[6]->SetToolTipText("Threshold for the multiplicity trigger", 0);
+  CLabel[7]->SetToolTipText("Select eithor coincidence trigger(0) or multiplicity trigger(1) as the source of the the channel coincidence/multiplicity trigger", 0);
+  CLabel[8]->SetToolTipText("Select channel coincidence/multiplicity trigger(0) or other group trigger(1) as the source of the channel validation trigger", 0);
+
   // ***** COPY BUTTON *********
   TGHorizontal3DLine *ln2 = new TGHorizontal3DLine(mn_vert, 200, 2);
   mn_vert->AddFrame(ln2, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
@@ -146,21 +166,40 @@ Bool_t MultiplicityMask::ProcessMessage(Long_t msg,Long_t parm1, Long_t parm2){
 	      break;
 	      //////////////////////////////
 	    case (COPYBUTTON+1000):
-	      // tdelay = NumEntry[1][chanNumber]->GetNumber();
-	      // cfrac = NumEntry[2][chanNumber]->GetNumber();
-	      // thresh = NumEntry[3][chanNumber]->GetNumber();
-	      // for(int i = 0;i < 16;i++)
-	      // 	{
-	      // 	  if(i != (chanNumber))
-	      // 	    {
-	      // 	      sprintf(tmp,"%1.3f",tdelay);
-	      // 	      NumEntry[1][i]->SetText(tmp);
-	      // 	      sprintf(tmp,"%1.3f",cfrac);
-	      // 	      NumEntry[2][i]->SetText(tmp);
-	      // 	      sprintf(tmp,"%1.3f",thresh);
-	      // 	      NumEntry[3][i]->SetText(tmp);
-	      // 	    }
-	      // 	}  
+	     MultiLeft = NumEntry[1][chanNumber]->GetNumber();
+	     MultiItself = NumEntry[2][chanNumber]->GetNumber();
+	     MultiRight = NumEntry[3][chanNumber]->GetNumber();
+	     Multi1st = NumEntry[4][chanNumber]->GetNumber();
+	     Multi2nd = NumEntry[5][chanNumber]->GetNumber();
+	     Multi3rd = NumEntry[6][chanNumber]->GetNumber();
+	     MultiThreshold = NumEntry[7][chanNumber]->GetNumber();
+	     SelCoinMulti = NumEntry[8][chanNumber]->GetNumber();
+	     SelChValidTrig = NumEntry[9][chanNumber]->GetNumber();
+	       
+	      for(int i = 0;i < 16;i++)
+	      	{
+	      	  if(i != (chanNumber))
+	      	    {
+	      	      sprintf(tmp,"%d",MultiLeft);
+	      	      NumEntry[1][i]->SetText(tmp);
+	      	      sprintf(tmp,"%d",MultiItself);
+	      	      NumEntry[2][i]->SetText(tmp);
+		      sprintf(tmp,"%d",MultiRight);
+	      	      NumEntry[3][i]->SetText(tmp);
+		      sprintf(tmp,"%d",Multi1st);
+	      	      NumEntry[4][i]->SetText(tmp);
+		      sprintf(tmp,"%d",Multi2nd);
+	      	      NumEntry[5][i]->SetText(tmp);
+		      sprintf(tmp,"%d",Multi3rd);
+	      	      NumEntry[6][i]->SetText(tmp);
+		      sprintf(tmp,"%d",MultiThreshold);
+	      	      NumEntry[7][i]->SetText(tmp);
+		      sprintf(tmp,"%d",SelCoinMulti);
+	      	      NumEntry[8][i]->SetText(tmp);
+		      sprintf(tmp,"%d",SelChValidTrig);
+	      	      NumEntry[9][i]->SetText(tmp);
+	      	    }
+	      	}  
 	      
 	      break;
 	      
@@ -230,7 +269,18 @@ int MultiplicityMask::load_info(Long_t mod)
       b = (APP32_TstBit(30, ChanParData)<<2)+(APP32_TstBit(29, ChanParData)<<1)+APP32_TstBit(28, ChanParData);
       sprintf(text, "%d", b);
       NumEntry[6][i]->SetText(text);      
-     
+
+      b = (APP32_TstBit(21, ChanParData)<<4)+(APP32_TstBit(20, ChanParData)<<3)+(APP32_TstBit(19, ChanParData)<<2)+(APP32_TstBit(18, ChanParData)<<1)+APP32_TstBit(17, ChanParData);
+      sprintf(text, "%d", b);
+      NumEntry[7][i]->SetText(text);  
+
+      b = APP32_TstBit(16, ChanParData);
+      sprintf(text, "%d", b);
+      NumEntry[8][i]->SetText(text);
+      
+      b = APP32_TstBit(31, ChanParData);
+      sprintf(text, "%d", b);
+      NumEntry[9][i]->SetText(text);      
     }
   //  std::cout << "loading info\n";
   return 1;
@@ -239,7 +289,9 @@ int MultiplicityMask::load_info(Long_t mod)
 int MultiplicityMask::change_values(Long_t mod)
 {
   double ChanParData = 0;
-  unsigned short d1,d2,d3,d4,d5,d6;
+  unsigned short d1,d2,d3,d4,d5,d6,d7;
+  bool dd1,dd2;
+
   int retval;
   int a;
   for (int i = 0; i < 16; i++)
@@ -251,6 +303,10 @@ int MultiplicityMask::change_values(Long_t mod)
       d4 = NumEntry[4][i]->GetNumber();
       d5 = NumEntry[5][i]->GetNumber();
       d6 = NumEntry[6][i]->GetNumber();
+      d7 = NumEntry[7][i]->GetNumber();
+
+      dd1 = NumEntry[8][i]->GetNumber();
+      dd2 = NumEntry[9][i]->GetNumber();
       
       ChanParData = 0;
       a = 0;
@@ -295,6 +351,24 @@ int MultiplicityMask::change_values(Long_t mod)
       else ChanParData = APP32_ClrBit(29,ChanParData);
       if(d6&4) ChanParData = APP32_SetBit(30,ChanParData);
       else ChanParData = APP32_ClrBit(30,ChanParData);
+
+      if(d7&1) ChanParData = APP32_SetBit(17,ChanParData);
+      else ChanParData = APP32_ClrBit(17,ChanParData);
+      if(d7&2) ChanParData = APP32_SetBit(18,ChanParData);
+      else ChanParData = APP32_ClrBit(18,ChanParData);
+      if(d7&4) ChanParData = APP32_SetBit(19,ChanParData);
+      else ChanParData = APP32_ClrBit(19,ChanParData);
+      if(d7&8) ChanParData = APP32_SetBit(20,ChanParData);
+      else ChanParData = APP32_ClrBit(20,ChanParData);
+      if(d7&16) ChanParData = APP32_SetBit(21,ChanParData);
+      else ChanParData = APP32_ClrBit(21,ChanParData);
+
+      if(dd1) ChanParData = APP32_SetBit(16,ChanParData);
+      else ChanParData = APP32_ClrBit(16,ChanParData);
+
+      if(dd2) ChanParData = APP32_SetBit(31,ChanParData);
+      else ChanParData = APP32_ClrBit(31,ChanParData);
+      
       retval = Pixie16WriteSglChanPar((char*)"MultiplicityMaskH", ChanParData, mod, i);
       if(retval < 0) ErrorInfo("MultiplicityMask.cpp", "change_values(...)", "Pixie16WriteSglChanPar/MultiplicityMaskH", retval);
       
@@ -308,6 +382,3 @@ int MultiplicityMask::change_values(Long_t mod)
 
 // 
 // MultiplicityMask.cpp ends here
-
-
-

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 10月  4 20:33:42 2016 (+0800)
-// Last-Updated: 三 10月  5 18:23:29 2016 (+0800)
+// Last-Updated: 三 10月 19 10:32:34 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 3
+//     Update #: 6
 // URL: http://wuhongyi.github.io 
 
 #ifndef _MULTIPLICITYMASK_H_
@@ -34,8 +34,17 @@ protected:
   short int chanNumber;
   char tmp[10];
   TGNumberEntry* chanCopy;
-
-
+  Pixel_t color;
+  
+  int MultiLeft;
+  int MultiRight;
+  int MultiItself;
+  int Multi1st;
+  int Multi2nd;
+  int Multi3rd;
+  int MultiThreshold;
+  bool SelCoinMulti;
+  bool SelChValidTrig;
 };
 
 #endif /* _MULTIPLICITYMASK_H_ */
