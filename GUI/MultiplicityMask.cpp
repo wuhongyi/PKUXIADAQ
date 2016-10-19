@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 10月  4 20:33:32 2016 (+0800)
-// Last-Updated: 三 10月 19 10:32:33 2016 (+0800)
+// Last-Updated: 三 10月 19 13:09:23 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 25
+//     Update #: 44
 // URL: http://wuhongyi.github.io 
 
 #include "MultiplicityMask.h"
@@ -81,7 +81,39 @@ MultiplicityMask::MultiplicityMask(const TGWindow *p, const TGWindow * main, cha
   copyB->SetToolTipText("Copy the setup of the selected channel to all channels of the module", 0);
   CopyButton->AddFrame(copyB, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 0, 0));
 
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+ 
+  TGHorizontal3DLine *ln22 = new TGHorizontal3DLine(mn_vert, 200, 2);
+  mn_vert->AddFrame(ln22, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
+  TGHorizontalFrame *Backplane = new TGHorizontalFrame(mn_vert, 400, 300);
+  mn_vert->AddFrame(Backplane, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
+  TGHorizontalFrame *fVV1 = new TGHorizontalFrame(Backplane, 10, 10);
+  Backplane->AddFrame(fVV1, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  TGTextEntry *LabelFastTriggerBackplaneLeft = new TGTextEntry(fVV1,new TGTextBuffer(100));
+  LabelFastTriggerBackplaneLeft->SetText("FastTrigBackplaneLeft[0-65535]");
+  LabelFastTriggerBackplaneLeft->SetEnabled(kFALSE);
+  LabelFastTriggerBackplaneLeft->SetAlignment(kTextCenterX);
+  // LabelFastTriggerBackplaneLeft->SetToolTipText("", 0);
+  LabelFastTriggerBackplaneLeft->Resize(200, 20);
+  fVV1->AddFrame(LabelFastTriggerBackplaneLeft, new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
+
+  fasttriggerbackplaneena[0] = new TGNumberEntryField(fVV1, 0, 0, TGNumberFormat::kNESReal);
+  fVV1->AddFrame(fasttriggerbackplaneena[0], new TGLayoutHints( kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  
+  TGHorizontalFrame *fVV2 = new TGHorizontalFrame(Backplane, 10, 10);
+  Backplane->AddFrame(fVV2, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  TGTextEntry *LabelFastTriggerBackplaneRight = new TGTextEntry(fVV2,new TGTextBuffer(100));
+  LabelFastTriggerBackplaneRight->SetText("FastTrigBackplaneRight[0-65535]");
+  LabelFastTriggerBackplaneRight->SetEnabled(kFALSE);
+  LabelFastTriggerBackplaneRight->SetAlignment(kTextCenterX);
+  // LabelFastTriggerBackplaneRight->SetToolTipText("", 0);
+  LabelFastTriggerBackplaneRight->Resize(200, 20);
+  fVV2->AddFrame(LabelFastTriggerBackplaneRight, new TGLayoutHints(kLHintsCenterX, 20, 0, 0, 0));
+  fasttriggerbackplaneena[1] = new TGNumberEntryField(fVV2, 1, 0, TGNumberFormat::kNESReal);
+  fVV2->AddFrame(fasttriggerbackplaneena[1], new TGLayoutHints( kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  
+  
   chanNumber = 0;
   MapSubwindows();
   Resize();			// resize to default size
@@ -226,6 +258,25 @@ int MultiplicityMask::load_info(Long_t mod)
   int retval;
   char text[20];
 
+  unsigned int BackplaneEna = 0; 
+  retval = Pixie16ReadSglModPar((char*)"FastTrigBackplaneEna", &BackplaneEna, mod);
+  if(retval < 0) ErrorInfo("MultiplicityMask.cpp", "load_info(...)", "Pixie16ReadSglModPar/FastTrigBackplaneEna", retval);
+  b = 0;
+  for (int j = 0; j < 16; j++)
+    {
+      b += (APP32_TstBit(j, BackplaneEna)<<j);
+    }
+  sprintf(text, "%d", b);
+  fasttriggerbackplaneena[0]->SetText(text);
+  b = 0;
+  for (int j = 0; j < 16; j++)
+    {
+      b += (APP32_TstBit(j+16, BackplaneEna)<<j);
+    }
+  sprintf(text, "%d", b);
+  fasttriggerbackplaneena[1]->SetText(text);
+  
+  
   for (int i = 0; i < 16; i++)
     {
       retval = Pixie16ReadSglChanPar((char*)"MultiplicityMaskL", &ChanParData, mod, i);
@@ -294,6 +345,24 @@ int MultiplicityMask::change_values(Long_t mod)
 
   int retval;
   int a;
+  unsigned int BackplaneEna = 0;
+  unsigned int b1,b2;
+
+  b1 = fasttriggerbackplaneena[0]->GetNumber();
+  b2 = fasttriggerbackplaneena[1]->GetNumber();
+  a = 0;
+  for (int j = 0; j < 16; j++)
+    {
+      a = (1<<j);
+      if(b1 & a) BackplaneEna = APP32_SetBit(j,BackplaneEna);
+      else BackplaneEna = APP32_ClrBit(j,BackplaneEna);
+      if(b2 & a) BackplaneEna = APP32_SetBit(j+16,BackplaneEna);
+      else BackplaneEna = APP32_ClrBit(j+16,BackplaneEna);
+    }
+  retval = Pixie16WriteSglModPar((char*)"FastTrigBackplaneEna",BackplaneEna, mod);
+  if(retval < 0) ErrorInfo("MultiplicityMask.cpp", "change_values(...)", "Pixie16WriteSglModPar/FastTrigBackplaneEna", retval);
+
+  
   for (int i = 0; i < 16; i++)
     {
       d2 = NumEntry[2][i]->GetNumber();

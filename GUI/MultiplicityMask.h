@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 10月  4 20:33:42 2016 (+0800)
-// Last-Updated: 三 10月 19 10:32:34 2016 (+0800)
+// Last-Updated: 三 10月 19 12:28:47 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 6
+//     Update #: 7
 // URL: http://wuhongyi.github.io 
 
 #ifndef _MULTIPLICITYMASK_H_
@@ -35,6 +35,8 @@ protected:
   char tmp[10];
   TGNumberEntry* chanCopy;
   Pixel_t color;
+
+  TGNumberEntryField *fasttriggerbackplaneena[2];
   
   int MultiLeft;
   int MultiRight;
