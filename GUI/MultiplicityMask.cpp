@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 10月  4 20:33:32 2016 (+0800)
-// Last-Updated: 三 10月 19 13:09:23 2016 (+0800)
+// Last-Updated: 三 10月 19 14:38:38 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 44
+//     Update #: 45
 // URL: http://wuhongyi.github.io 
 
 #include "MultiplicityMask.h"
@@ -31,11 +31,11 @@ MultiplicityMask::MultiplicityMask(const TGWindow *p, const TGWindow * main, cha
   CLabel[1]->SetAlignment(kTextCenterX);
   CLabel[2]->SetText("Right[0-65535]");
   CLabel[2]->SetAlignment(kTextCenterX);
-  CLabel[3]->SetText("Coin 1st[0-7]");
+  CLabel[3]->SetText("ItselfCoin[0-7]");//1st
   CLabel[3]->SetAlignment(kTextCenterX);
-  CLabel[4]->SetText("Coin 2nd[0-7]");
+  CLabel[4]->SetText("RightCoin[0-7]");//2nd
   CLabel[4]->SetAlignment(kTextCenterX);
-  CLabel[5]->SetText("Coin 3rd[0-7]");
+  CLabel[5]->SetText("LeftCoin[0-7]");//3rd
   CLabel[5]->SetAlignment(kTextCenterX);  
   CLabel[6]->SetText("MultiThre[0-31]");
   CLabel[6]->SetAlignment(kTextCenterX);  
