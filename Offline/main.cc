@@ -4,13 +4,12 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 22 16:09:53 2016 (+0800)
-// Last-Updated: 一 10月 17 15:19:24 2016 (+0800)
+// Last-Updated: 六 10月 22 11:39:20 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 54
+//     Update #: 58
 // URL: http://wuhongyi.github.io 
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "algorithm.hh"
 
 #include "TRint.h"
 #include "TObject.h"
@@ -19,7 +18,9 @@
 #include "TChain.h"
 #include "TSystem.h"
 
-#include "algorithm.hh"
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 int main(int argc, char *argv[])
@@ -57,6 +58,8 @@ int main(int argc, char *argv[])
 
   algorithm *xia;
   xia = new algorithm();
+  xia->InitSystem(3,2);
+  
   xia->SetTTree(fChain);
   char  *FileName = (char *)"20161007.set";
   if(xia->LoadDSPParametersFromFile(FileName ) == 0)
@@ -67,6 +70,22 @@ int main(int argc, char *argv[])
   xia->Init_DSPVarAddress((char *)"Pixie16DSP_revfgeneral_14b100m_r33354.var", 2);
    
   xia->DrawEntry(500);
+
+  double ENERGY_RISETIME;
+  double ENERGY_FLATTOP;
+  unsigned int SLOW_FILTER_RANGE;
+  xia->ReadSglChanPar((char *)"ENERGY_RISETIME",&ENERGY_RISETIME,0,2);
+  xia->ReadSglChanPar((char *)"ENERGY_FLATTOP",&ENERGY_FLATTOP,0,2);
+  xia->ReadSglModPar((char *)"SLOW_FILTER_RANGE",&SLOW_FILTER_RANGE,0);
+  std::cout<<SLOW_FILTER_RANGE<<"  "<<ENERGY_RISETIME<<"  "<<ENERGY_FLATTOP<<std::endl;
+
+  SLOW_FILTER_RANGE = 1;
+  xia->WriteSglModPar((char *)"SLOW_FILTER_RANGE",SLOW_FILTER_RANGE,0);
+  xia->ReadSglChanPar((char *)"ENERGY_RISETIME",&ENERGY_RISETIME,0,2);
+  xia->ReadSglChanPar((char *)"ENERGY_FLATTOP",&ENERGY_FLATTOP,0,2);
+  xia->ReadSglModPar((char *)"SLOW_FILTER_RANGE",&SLOW_FILTER_RANGE,0);
+  std::cout<<SLOW_FILTER_RANGE<<"  "<<ENERGY_RISETIME<<"  "<<ENERGY_FLATTOP<<std::endl;  
+    
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   // and enter the event loop...
   theApp->Run();

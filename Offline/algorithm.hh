@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 22 21:08:06 2016 (+0800)
-// Last-Updated: 六 7月 23 20:24:49 2016 (+0800)
+// Last-Updated: 六 10月 22 11:14:38 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 10
+//     Update #: 25
 // URL: http://wuhongyi.github.io 
 
 #ifndef _ALGORITHM_H_
@@ -21,9 +21,101 @@
 
 
 #define N_DSP_PAR                   1280      // number of DSP parameters (32-bit word)
-#define PRESET_MAX_MODULES            24      // Preset maximum number of Pixie modules
 #define MAX_PAR_NAME_LENGTH     65  // Maximum length of parameter names
 #define DATA_MEMORY_ADDRESS      0x4A000      // DSP data memory address
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+/*-----------------------------------------------------------------
+    module specifications
+  -----------------------------------------------------------------*/
+
+#define PRESET_MAX_MODULES            24      // Preset maximum number of Pixie modules
+#define NUMBER_OF_CHANNELS            16
+
+#define DSP_CLOCK_MHZ                100      // DSP clock frequency in MHz
+#define SYSTEM_CLOCK_MHZ             100      // System FPGA clock frequency in MHz (used for real time counting)
+
+#define DAC_VOLTAGE_RANGE            3.0      // Pixie-16 DAC range is -1.5 V to +1.5 V
+
+#define MAX_ADC_TRACE_LEN           8192      // Maximum ADC trace length for a channel
+  
+/*------------------------------------- 
+	Length limits for certain DSP parameters
+ --------------------------------------*/ 
+
+#define FASTFILTER_MAX_LEN 127
+#define FAST_THRESHOLD_MAX 65535
+#define MIN_FASTLENGTH_LEN 2
+
+#define SLOWFILTER_MAX_LEN 127
+#define MIN_SLOWLENGTH_LEN 2
+#define MIN_SLOWGAP_LEN 3
+
+#define FASTFILTERRANGE_MAX 0
+#define FASTFILTERRANGE_MIN 0
+
+#define SLOWFILTERRANGE_MAX 6
+#define SLOWFILTERRANGE_MIN 1
+
+#define FASTTRIGBACKLEN_MAX 4095
+#define FASTTRIGBACKLEN_MIN_100MHZFIPCLK 1
+#define FASTTRIGBACKLEN_MIN_125MHZFIPCLK 2
+
+#define CFDDELAY_MAX 63
+#define CFDDELAY_MIN 1
+
+#define CFDSCALE_MAX 7
+
+#define CFDTHRESH_MAX 65535
+#define CFDTHRESH_MIN 1
+
+#define EXTTRIGSTRETCH_MAX 4095
+#define EXTTRIGSTRETCH_MIN 1
+
+#define VETOSTRETCH_MAX 4095
+#define VETOSTRETCH_MIN 1
+
+#define EXTDELAYLEN_MAX_REVBCD 255
+#define EXTDELAYLEN_MAX_REVF 511
+#define EXTDELAYLEN_MIN 0
+
+#define FASTTRIGBACKDELAY_MAX_REVBCD 255
+#define FASTTRIGBACKDELAY_MAX_REVF 511
+#define FASTTRIGBACKDELAY_MIN 0
+
+#define QDCLEN_MAX 32767
+#define QDCLEN_MIN 1
+
+#define TRACELEN_MIN_500MHZADC		10
+#define TRACELEN_MIN_250OR100MHZADC	4
+
+#define TRACEDELAY_MAX 1023
+
+#define CHANTRIGSTRETCH_MAX 4095
+#define CHANTRIGSTRETCH_MIN 1
+
+
+
+  
+/*------------------------------------- 
+  MODCSRB bits definitions
+  --------------------------------------*/ 
+
+#define MODCSRB_CPLDPULLUP      0   // Control pullups for PXI trigger lines on the backplane through CPLD
+#define MODCSRB_DIRMOD		4	// Set this module as the Director module (1) or non-Director module (0)
+#define MODCSRB_CHASSISMASTER 	6	// Control chassis master module: 1: chassis master module; 0: chassis non-master module
+#define MODCSRB_GFTSEL		7	// Select global fast trigger source
+#define MODCSRB_ETSEL		8	// Select external trigger source
+#define MODCSRB_INHIBITENA      10  // Control external INHIBIT signal: use INHIBIT (1) or don't use INHIBIT (0)
+#define MODCSRB_MULTCRATES      11  // Distribute clock and triggers in multiple crates: multiple crates (1) or only single crate (0)
+#define MODCSRB_SORTEVENTS      12  // Sort (1) or don't sort events based on their timestamps
+#define MODCSRB_BKPLFASTTRIG    13  // Enable connection of fast triggers to backplane
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+#define ROUND(x)    ((x) < 0.0 ? ceil((x) - 0.5) : floor((x) + 0.5))
+
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -33,11 +125,20 @@ public:
   algorithm();
   virtual ~algorithm();
   void SetTTree(TTree *tree);
+
+  int InitSystem(
+		 unsigned short NumModules,    // total number of Pixie16 modules in the system
+		 unsigned short OfflineMode );  // specify if the system is in offline mode
+
   
-  double IEEEFloating2Decimal(unsigned int IEEEFloatingNumber);
   int LoadDSPParametersFromFile(char  *FileName );
   int Init_DSPVarAddress(char *DSPVarFile, unsigned short ModNum);
   int Copy_DSPVarAddress(unsigned short SourceModNum, unsigned short DestinationModNum);
+
+
+
+
+  
   int ComputeFastFiltersOffline(
 				unsigned short ModuleNumber,       // the module whose events are to be analyzed
 				unsigned short ChannelNumber,      // the channel whose events are to be analyzed
@@ -52,7 +153,62 @@ public:
 				unsigned short *RcdTrace,          // recorded trace
 				double         *slowfilter );      // slow filter response
 
+
+
+
+  unsigned int GetModuleEvents(char *FileName);//return events
+  void GetEventsInfo(char *FileName, unsigned int *EventInformation);
+
+
+  int WriteSglModPar(
+		     char *ModParName,          // the name of the module parameter
+		     unsigned int   ModParData, // the module parameter value to be written to the module
+		     unsigned short ModNum );    // module number
+  int ReadSglModPar(
+  		    char *ModParName,           // the name of the module parameter
+  		    unsigned int   *ModParData, // the module parameter value to be read from the module
+  		    unsigned short ModNum );     // module number
+  int WriteSglChanPar(
+		      char *ChanParName,         // the name of the channel parameter
+		      double ChanParData,        // the channel parameter value to be written to the module
+		      unsigned short ModNum,     // module number
+		      unsigned short ChanNum );   // channel number
+  int ReadSglChanPar(
+  		     char *ChanParName,         // the name of the channel parameter
+  		     double *ChanParData,       // the channel parameter value to be read from the module
+  		     unsigned short ModNum,     // module number
+  		     unsigned short ChanNum );   // channel number
+  
+  
+  // Convert a IEEE 754 standrad floating point number (1-bit sign, 8-bit exponent, and 23-bit mantissa) to a decimal fractional number.
+  double IEEEFloating2Decimal(unsigned int IEEEFloatingNumber);
+  // Convert a decimal fractional number to a IEEE 754 standrad floating point number (1-bit sign, 8-bit exponent, and 23-bit mantissa).
+  unsigned int Decimal2IEEEFloating(double DecimalNumber);
+  
+  // Test a bit in a 16-bit unsigned integer.
+  unsigned short  TstBit_16(unsigned short bit,unsigned short value);
+  // Set a bit in a 16-bit unsigned integer.
+  unsigned short SetBit_16(unsigned short bit,unsigned short value);
+  // Clear a bit in a 16-bit unsigned integer.
+  unsigned short ClrBit_16(unsigned short bit,unsigned short value);
+  // Set a bit in a 32-bit unsigned integer.
+  unsigned int SetBit_32(unsigned short bit,unsigned int value);
+  // Clear a bit in a 32-bit unsigned integer.
+  unsigned int ClrBit_32(unsigned short bit,unsigned int value);
+  // Test a bit in a 32-bit unsigned integer.
+  unsigned int TstBit_32(unsigned short bit,unsigned int value );
+  
+  
   bool DrawEntry(Long64_t entry);
+
+private:
+  int ReadModuleInfo(
+		     unsigned short ModNum,			// module number
+		     unsigned short *ModRev,			// returned module revision
+		     unsigned int   *ModSerNum,		// returned module serial number
+		     unsigned short *ModADCBits,		// returned module ADC bits
+		     unsigned short *ModADCMSPS );	// returned module ADC sampling rate
+
   
 private:
   TTree *t;
@@ -115,6 +271,24 @@ public:
 
   // Define PRESET_MAX_MODULES Pixie devices
   struct Pixie_Configuration Pixie_Devices[PRESET_MAX_MODULES];
+
+  struct Module_Info
+  {
+    // Module information
+    unsigned short Module_Rev;
+    unsigned int   Module_SerNum;
+    unsigned short Module_ADCBits;
+    unsigned short Module_ADCMSPS;
+    unsigned short Module_OfflineVariant;
+  };
+
+  // Define PRESET_MAX_MODULES Pixie devices
+  struct Module_Info Module_Information[PRESET_MAX_MODULES];
+  
+
+private:
+  unsigned int Number_Modules;//实际插件数量
+
   
 private:
 
@@ -267,7 +441,7 @@ private:
   unsigned int U30_Address[PRESET_MAX_MODULES];          // U30
 
 
-
+  
 };
 
 
