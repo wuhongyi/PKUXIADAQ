@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月 23 15:38:41 2016 (+0800)
-// Last-Updated: 日 10月 23 16:16:15 2016 (+0800)
+// Last-Updated: 日 10月 23 23:00:25 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 4
+//     Update #: 7
 // URL: http://wuhongyi.github.io 
 
 #ifndef _MAINFRAME_H_
@@ -61,17 +61,46 @@
 #include "TRootHelpDialog.h"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+enum EMenuIds {
+   M_FILE_NEW,
+   M_FILE_CLOSE,
+   M_FILE_EXIT,
+
+   M_WINDOW_HOR,
+   M_WINDOW_VERT,
+   M_WINDOW_CASCADE,
+   M_WINDOW_OPAQUE,
+   M_WINDOW_ARRANGE,
+
+   M_HELP_CONTENTS,
+   M_HELP_ABOUT
+};
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 class MainFrame : public TGMainFrame
 {
 public:
-  MainFrame(const TGWindow * p);
+  MainFrame(const TGWindow * p, UInt_t w, UInt_t h);
   virtual ~MainFrame();
 
-  virtual Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t);//process message queue
+ 
+  void MakeFold1Panel(TGCompositeFrame *TabPanel);
+  void MakeFold2Panel(TGCompositeFrame *TabPanel);
 
+  void HandleMenu(Int_t id);
+
+  
   void SetTTree(TTree *tree);
-  bool DrawEntry(Long64_t entry);
+  Bool_t DrawEntry(Long64_t entry);
 
+private:
+  virtual Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t);//process message queue
+  void InitMenu();
+  
+  Bool_t IsDirectoryExists(const char *path);//判断文件夹是否存在
+  
+  
 private:
   TTree *t;
   // Declaration of leaf types

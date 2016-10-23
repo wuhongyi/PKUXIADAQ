@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月 23 15:43:08 2016 (+0800)
-// Last-Updated: 日 10月 23 16:43:41 2016 (+0800)
+// Last-Updated: 日 10月 23 22:59:09 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 8
+//     Update #: 13
 // URL: http://wuhongyi.github.io 
 
 #include "MainFrame.hh"
@@ -19,8 +19,12 @@
 
 ClassImp(MainFrame)
 
-MainFrame::MainFrame(const TGWindow * p)
+MainFrame::MainFrame(const TGWindow * p, UInt_t w, UInt_t h)
+: TGMainFrame(p, w, h)
 {
+  SetCleanup(kDeepCleanup);
+
+  
   //初始参数
   TString TreeName="tree";//这里为要处理的文件中 tree name
   // create first the chain with all the files
@@ -83,14 +87,16 @@ MainFrame::MainFrame(const TGWindow * p)
   xia->ReadSglChanPar((char *)"ENERGY_FLATTOP",&ENERGY_FLATTOP,0,2);
   xia->ReadSglModPar((char *)"SLOW_FILTER_RANGE",&SLOW_FILTER_RANGE,0);
   std::cout<<SLOW_FILTER_RANGE<<"  "<<ENERGY_RISETIME<<"  "<<ENERGY_FLATTOP<<std::endl; 
-  
+
+  InitMenu();
 
   SetWindowName("PKU Pixie16 Offline");
   MapSubwindows();
+  Resize(GetDefaultSize());
   MapWindow();
-  Resize(600, 500);
+  // Resize(600, 500);
   
-  AppendPad(); //foarte important
+  // AppendPad(); //foarte important
 
 
   DrawEntry(500);
@@ -132,7 +138,7 @@ void MainFrame::SetTTree(TTree *tree)
 }
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-bool MainFrame::DrawEntry(Long64_t entry)
+Bool_t MainFrame::DrawEntry(Long64_t entry)
 {
   // b_sid->GetEntry(entry);
   // b_ch->GetEntry(entry);
@@ -256,6 +262,103 @@ bool MainFrame::DrawEntry(Long64_t entry)
 	      
   return true; 
 }
+
+
+void MainFrame::InitMenu()
+{
+   // fMenuBarItemLayout = new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 4, 0, 0);
+
+   // fMenuFile = new TGPopupMenu(gClient->GetRoot());
+   // fMenuFile->AddEntry(new TGHotString("&New Window"), M_FILE_NEW);
+   // fMenuFile->AddEntry(new TGHotString("&Close Window"), M_FILE_CLOSE);
+   // fMenuFile->AddSeparator();
+   // fMenuFile->AddEntry(new TGHotString("E&xit"), M_FILE_EXIT);
+
+   // fMenuWindow = new TGPopupMenu(gClient->GetRoot());
+   // fMenuWindow->AddEntry(new TGHotString("Tile &Horizontally"), M_WINDOW_HOR);
+   // fMenuWindow->AddEntry(new TGHotString("Tile &Vertically"), M_WINDOW_VERT);
+   // fMenuWindow->AddEntry(new TGHotString("&Cascade"), M_WINDOW_CASCADE);
+   // fMenuWindow->AddSeparator();
+   // fMenuWindow->AddPopup(new TGHotString("&Windows"), fMainFrame->GetWinListMenu());
+   // fMenuWindow->AddSeparator();
+   // fMenuWindow->AddEntry(new TGHotString("&Arrange icons"), M_WINDOW_ARRANGE);
+   // fMenuWindow->AddSeparator();
+   // fMenuWindow->AddEntry(new TGHotString("&Opaque resize"), M_WINDOW_OPAQUE);
+
+   // fMenuWindow->CheckEntry(M_WINDOW_OPAQUE);
+
+   // fMenuHelp = new TGPopupMenu(gClient->GetRoot());
+   // fMenuHelp->AddEntry(new TGHotString("&Contents"), M_HELP_CONTENTS);
+   // fMenuHelp->AddSeparator();
+   // fMenuHelp->AddEntry(new TGHotString("&About"), M_HELP_ABOUT);
+
+   // fMenuHelp->DisableEntry(M_HELP_CONTENTS);
+   // fMenuHelp->DisableEntry(M_HELP_ABOUT);
+
+   // // menu message are handled by the class' HandleMenu() method
+   // fMenuFile->Connect("Activated(Int_t)", "TGAppMainFrame", this,
+   //                    "HandleMenu(Int_t)");
+   // fMenuWindow->Connect("Activated(Int_t)", "TGAppMainFrame", this,
+   //                      "HandleMenu(Int_t)");
+   // fMenuHelp->Connect("Activated(Int_t)", "TGAppMainFrame", this,
+   //                    "HandleMenu(Int_t)");
+
+   // fMenuBar->AddPopup(new TGHotString("&File"), fMenuFile, fMenuBarItemLayout);
+   // fMenuBar->AddPopup(new TGHotString("&Windows"),fMenuWindow,fMenuBarItemLayout);
+   // fMenuBar->AddPopup(new TGHotString("&Help"), fMenuHelp, fMenuBarItemLayout);
+
+}
+
+
+void MainFrame::HandleMenu(Int_t id)
+{
+   // Handle menu items.
+
+   // switch (id) {
+   //    case M_FILE_NEW:
+   //       new TGMdiFrame(fMainFrame, 200, 100);
+   //       break;
+
+   //    case M_FILE_CLOSE:
+   //       fMainFrame->Close(fMainFrame->GetCurrent());
+   //       break;
+
+   //    case M_FILE_EXIT:
+   //       CloseWindow();
+   //       break;
+
+   //    case M_WINDOW_HOR:
+   //       fMainFrame->TileHorizontal();
+   //       break;
+
+   //    case M_WINDOW_VERT:
+   //       fMainFrame->TileVertical();
+   //       break;
+
+   //    case M_WINDOW_CASCADE:
+   //       fMainFrame->Cascade();
+   //       break;
+
+   //    case M_WINDOW_ARRANGE:
+   //       fMainFrame->ArrangeMinimized();
+   //       break;
+
+   //    case M_WINDOW_OPAQUE:
+   //       if (fMenuWindow->IsEntryChecked(M_WINDOW_OPAQUE)) {
+   //          fMenuWindow->UnCheckEntry(M_WINDOW_OPAQUE);
+   //          fMainFrame->SetResizeMode(kMdiNonOpaque);
+   //       } else {
+   //          fMenuWindow->CheckEntry(M_WINDOW_OPAQUE);
+   //          fMainFrame->SetResizeMode(kMdiOpaque);
+   //       }
+   //       break;
+
+   //    default:
+   //       fMainFrame->SetCurrent(id);
+   //       break;
+   // }
+}
+
 
 // 
 // MainFrame.cc ends here

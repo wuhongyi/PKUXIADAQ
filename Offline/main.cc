@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 22 16:09:53 2016 (+0800)
-// Last-Updated: 日 10月 23 16:25:35 2016 (+0800)
+// Last-Updated: 日 10月 23 22:36:23 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 60
+//     Update #: 61
 // URL: http://wuhongyi.github.io 
 
 #include "MainFrame.hh"
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
   if(sizeof(int) != 4) std::cout<<"sizeof(int) != 4 The current compiler is not suitable for running the program！"<<std::endl;
   
   
-  MainFrame mainWindow(gClient->GetRoot());
+  MainFrame mainWindow(gClient->GetRoot(),600,500);
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   // and enter the event loop...
