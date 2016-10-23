@@ -4,21 +4,13 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 22 21:08:06 2016 (+0800)
-// Last-Updated: 六 10月 22 11:14:38 2016 (+0800)
+// Last-Updated: 日 10月 23 16:09:46 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 25
+//     Update #: 34
 // URL: http://wuhongyi.github.io 
 
 #ifndef _ALGORITHM_H_
 #define _ALGORITHM_H_
-
-#include "TString.h"
-#include "TTree.h"
-#include "TCanvas.h"
-#include "TMultiGraph.h"
-#include "TGraph.h"
-#include "TBranch.h"
-
 
 #define N_DSP_PAR                   1280      // number of DSP parameters (32-bit word)
 #define MAX_PAR_NAME_LENGTH     65  // Maximum length of parameter names
@@ -124,7 +116,6 @@ class algorithm
 public:
   algorithm();
   virtual ~algorithm();
-  void SetTTree(TTree *tree);
 
   int InitSystem(
 		 unsigned short NumModules,    // total number of Pixie16 modules in the system
@@ -136,7 +127,11 @@ public:
   int Copy_DSPVarAddress(unsigned short SourceModNum, unsigned short DestinationModNum);
 
 
-
+  // OfflineModuleEventsCount = GetModuleEvents(offlinefilename);
+  // OfflineEventInformation = new unsigned int[12*OfflineModuleEventsCount];
+  // GetEventsInfo(offlinefilename,OfflineEventInformation);      
+  unsigned int GetModuleEvents(char *FileName);//return events
+  void GetEventsInfo(char *FileName, unsigned int *EventInformation);
 
   
   int ComputeFastFiltersOffline(
@@ -154,30 +149,27 @@ public:
 				double         *slowfilter );      // slow filter response
 
 
+  int ReadSglModPar(
+  		    char *ModParName,           // the name of the module parameter
+  		    unsigned int   *ModParData, // the module parameter value to be read from the module
+  		    unsigned short ModNum );     // module number
 
-
-  unsigned int GetModuleEvents(char *FileName);//return events
-  void GetEventsInfo(char *FileName, unsigned int *EventInformation);
+  int ReadSglChanPar(
+  		     char *ChanParName,         // the name of the channel parameter
+  		     double *ChanParData,       // the channel parameter value to be read from the module
+  		     unsigned short ModNum,     // module number
+  		     unsigned short ChanNum );   // channel number
 
 
   int WriteSglModPar(
 		     char *ModParName,          // the name of the module parameter
 		     unsigned int   ModParData, // the module parameter value to be written to the module
 		     unsigned short ModNum );    // module number
-  int ReadSglModPar(
-  		    char *ModParName,           // the name of the module parameter
-  		    unsigned int   *ModParData, // the module parameter value to be read from the module
-  		    unsigned short ModNum );     // module number
   int WriteSglChanPar(
 		      char *ChanParName,         // the name of the channel parameter
 		      double ChanParData,        // the channel parameter value to be written to the module
 		      unsigned short ModNum,     // module number
 		      unsigned short ChanNum );   // channel number
-  int ReadSglChanPar(
-  		     char *ChanParName,         // the name of the channel parameter
-  		     double *ChanParData,       // the channel parameter value to be read from the module
-  		     unsigned short ModNum,     // module number
-  		     unsigned short ChanNum );   // channel number
   
   
   // Convert a IEEE 754 standrad floating point number (1-bit sign, 8-bit exponent, and 23-bit mantissa) to a decimal fractional number.
@@ -198,8 +190,6 @@ public:
   // Test a bit in a 32-bit unsigned integer.
   unsigned int TstBit_32(unsigned short bit,unsigned int value );
   
-  
-  bool DrawEntry(Long64_t entry);
 
 private:
   int ReadModuleInfo(
@@ -209,60 +199,23 @@ private:
 		     unsigned short *ModADCBits,		// returned module ADC bits
 		     unsigned short *ModADCMSPS );	// returned module ADC sampling rate
 
+
+  int ComputeFIFO(
+		  unsigned int   TraceDelay,	// current trace dealy value
+		  unsigned short ModNum,		// Pixie module number
+		  unsigned short ChanNum );	// Pixie channel number
+  
+  
+
   
 private:
-  TTree *t;
-  // Declaration of leaf types
-  Int_t           ch;
-  Int_t           sid;
-  Int_t           cid;
-  Bool_t          pileup;
-  ULong64_t       ts;
-  Int_t           cfd;
-  Int_t           evte;
-  Int_t           ltra;
-  Int_t           trae;
-  Int_t           leae;
-  Int_t           gape;
-  Int_t           base;
-  Int_t           qs[8];
-  Int_t           data[5000];   //[ltra]
-  Int_t           dt[5000];   //[ltra]
-  Int_t           nevt;
-
-  // List of branches
-  TBranch        *b_ch;   //!
-  TBranch        *b_sid;   //!
-  TBranch        *b_cid;   //!
-  TBranch        *b_pileup;   //!
-  TBranch        *b_ts;   //!
-  TBranch        *b_cfd;   //!
-  TBranch        *b_evte;   //!
-  TBranch        *b_ltra;   //!
-  TBranch        *b_trae;   //!
-  TBranch        *b_leae;   //!
-  TBranch        *b_gape;   //!
-  TBranch        *b_base;   //!
-  TBranch        *b_qs;   //!
-  TBranch        *b_data;   //!
-  TBranch        *b_dt;   //!
-  TBranch        *b_nevt;   //!
-
-private:
-  TCanvas *adjustCanvas;
-  TMultiGraph *offlinemultigraph;
-  TGraph *rawdata,*threshdata,*cfddata,*sfilterdata,*ffilterdata;
-  unsigned short *RcdTrace;//
-  double *doublesample;
-  double *doublethresh;
-  double *doublercdtrace;
-  double *doublefastfilter;//
-  double *doublecfd;//
-  double *doubleslowfilter;//
-
+  char offlinefilename[PRESET_MAX_MODULES][256];
+  unsigned int OfflineModuleEventsCount[PRESET_MAX_MODULES];
+  unsigned int *OfflineEventInformation[PRESET_MAX_MODULES];
 
   
-public:
+  
+private:
   struct Pixie_Configuration
   {	
     // DSP I/O parameter values
@@ -286,7 +239,6 @@ public:
   struct Module_Info Module_Information[PRESET_MAX_MODULES];
   
 
-private:
   unsigned int Number_Modules;//实际插件数量
 
   
