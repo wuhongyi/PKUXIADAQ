@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月 23 15:38:41 2016 (+0800)
-// Last-Updated: 日 10月 23 23:00:25 2016 (+0800)
+// Last-Updated: 三 10月 26 20:20:36 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 7
+//     Update #: 8
 // URL: http://wuhongyi.github.io 
 
 #ifndef _MAINFRAME_H_
@@ -102,42 +102,7 @@ private:
   
   
 private:
-  TTree *t;
-  // Declaration of leaf types
-  Int_t           ch;
-  Int_t           sid;
-  Int_t           cid;
-  Bool_t          pileup;
-  ULong64_t       ts;
-  Int_t           cfd;
-  Int_t           evte;
-  Int_t           ltra;
-  Int_t           trae;
-  Int_t           leae;
-  Int_t           gape;
-  Int_t           base;
-  Int_t           qs[8];
-  Int_t           data[5000];   //[ltra]
-  Int_t           dt[5000];   //[ltra]
-  Int_t           nevt;
 
-  // List of branches
-  TBranch        *b_ch;   //!
-  TBranch        *b_sid;   //!
-  TBranch        *b_cid;   //!
-  TBranch        *b_pileup;   //!
-  TBranch        *b_ts;   //!
-  TBranch        *b_cfd;   //!
-  TBranch        *b_evte;   //!
-  TBranch        *b_ltra;   //!
-  TBranch        *b_trae;   //!
-  TBranch        *b_leae;   //!
-  TBranch        *b_gape;   //!
-  TBranch        *b_base;   //!
-  TBranch        *b_qs;   //!
-  TBranch        *b_data;   //!
-  TBranch        *b_dt;   //!
-  TBranch        *b_nevt;   //!
 
 private:
   TCanvas *adjustCanvas;

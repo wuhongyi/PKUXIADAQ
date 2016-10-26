@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 22 21:08:06 2016 (+0800)
-// Last-Updated: 日 10月 23 16:09:46 2016 (+0800)
+// Last-Updated: 三 10月 26 20:16:25 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 34
+//     Update #: 35
 // URL: http://wuhongyi.github.io 
 
 #ifndef _ALGORITHM_H_
@@ -171,6 +171,9 @@ public:
 		      unsigned short ModNum,     // module number
 		      unsigned short ChanNum );   // channel number
   
+
+  int SaveDSPParametersToFile(char  *FileName ); // the DSP parameters file name (with complete path)
+
   
   // Convert a IEEE 754 standrad floating point number (1-bit sign, 8-bit exponent, and 23-bit mantissa) to a decimal fractional number.
   double IEEEFloating2Decimal(unsigned int IEEEFloatingNumber);

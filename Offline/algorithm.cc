@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 22 21:08:18 2016 (+0800)
-// Last-Updated: 日 10月 23 16:28:30 2016 (+0800)
+// Last-Updated: 三 10月 26 20:15:58 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 57
+//     Update #: 58
 // URL: http://wuhongyi.github.io 
 
 #include "algorithm.hh"
@@ -3656,6 +3656,45 @@ int algorithm::ComputeFIFO(
 	
   return(0);
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+
+// SaveDSPParametersToFile:
+// Save DSP parameters to a settings file.
+// Return Value:
+// 0 - Success
+// -1 - Failed to read DSP parameter values from the Pixie-16 modules
+// -2 - Failed to open the DSP parameters file
+int algorithm::SaveDSPParametersToFile(char  *FileName ) // the DSP parameters file name (with complete path)
+{
+  unsigned short ModNum;
+  FILE *DSPSettingsFile = NULL;
+  int retval;
+	
+  // Open the DSP parameters file
+  DSPSettingsFile = fopen(FileName, "wb");
+  if(DSPSettingsFile != NULL)
+    {	
+      // Write DSP parameter values to the settings file
+      for(ModNum = 0; ModNum < PRESET_MAX_MODULES; ModNum ++)
+	{
+	  fwrite(Pixie_Devices[ModNum].DSP_Parameter_Values, sizeof(unsigned int), N_DSP_PAR, DSPSettingsFile);
+	}
+		
+      // Close the file
+      fclose(DSPSettingsFile);
+		
+      return(0);
+    }
+  else
+    {
+      printf("*ERROR* (SaveDSPParametersToFile): failed to open DSP parameters file %s", FileName);
+      return(-2);
+    }
+}
+
+
 
 
 // 

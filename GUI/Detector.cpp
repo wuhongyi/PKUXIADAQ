@@ -96,7 +96,7 @@ bool Detector::BootSystem()
 			     DSPParFile,	// name of DSP parameter file
 			     DSPVarFile,	// name of DSP variable names file
 			     NumModules,	// pixie module number
-			     0x7F);	// boot pattern bit mask
+			     0x70);	// boot pattern bit mask
   
   if (retval != 0)
     {

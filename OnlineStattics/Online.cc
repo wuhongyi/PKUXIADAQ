@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 五 10月  7 21:30:35 2016 (+0800)
+// Last-Updated: 三 10月 26 21:50:44 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 104
+//     Update #: 105
 // URL: http://wuhongyi.github.io 
 
 #include "Online.hh"
@@ -28,7 +28,7 @@ Online::Online(const TGWindow * p)
   
   CreateMenuBar();
   
-  SetWindowName("Pixie16 DAQ Online");
+  SetWindowName("PKU Pixie16 DAQ Online");
   MapSubwindows();
   MapWindow();
   Resize(INITIAL_WIDTH, INITIAL_HIGHT);

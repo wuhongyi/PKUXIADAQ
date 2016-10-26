@@ -30,6 +30,8 @@ private:
       *column6, *column7, *column8,*column9,*column10,*column11,*column12,
       *column13,*column14,*column15,*column16,*column17,*column18,*column19,
       *column20,*column21,*column22;//,*column23
+
+    Pixel_t color;
     
   ///////////////////////////////first column//////////////////////
     TGLabel *Labels[17];
@@ -40,8 +42,10 @@ private:
       *ckBtn_9[17],*ckBtn_10[17],*ckBtn_11[17],*ckBtn_12[17],*ckBtn_13[17],
       *ckBtn_14[17],*ckBtn_15[17],*ckBtn_16[17],*ckBtn_17[17],*ckBtn_18[17],*ckBtn_19[17],*ckBtn_20[17];//,*ckBtn_21[17]
 
+
+    // 1=black   2=red   3=green   4=blue   5=yellow   6=hot pink
     int make_columns (TGVerticalFrame * column, TGCheckButton * ckBtn_g[17],
-		    char *title, char *tooltip, int id);
+		      char *title, char *tooltip, int id,int flagcolor = 1);
     TGCheckButton **tmpckBtn[21];//
 
   ///////////////buttons//////////////////

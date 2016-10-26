@@ -30,7 +30,7 @@ Main::Main(const TGWindow * p)
   ///////////////////////////////////////
   CreateMenuBar();
   //	SetWindowName("Pixie16 Oscilloscope");
-  SetWindowName("Pixie16 DAQ");
+  SetWindowName("PKU Pixie16 DAQ");
   MapSubwindows();
   MapWindow();
   Resize(INITIAL_WIDTH, INITIAL_HIGHT);
@@ -673,7 +673,8 @@ void Main::StartLSRun()
 	  cout<<"CANNOT start the LSM Run!"<<endl;
 	  return;
 	}
-      sleep(2);// wait 2 seconds for modules to be ready
+      usleep(100000); //delay for the DSP boot 
+      // sleep(2);// wait 2 seconds for modules to be ready
       // start a new run, not resume
       fstartdaq = 1;
       fstopdaq = 0;

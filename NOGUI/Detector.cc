@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:52:00 2016 (+0800)
-// Last-Updated: 二 10月 11 16:02:39 2016 (+0800)
+// Last-Updated: 三 10月 26 19:37:51 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 22
+//     Update #: 25
 // URL: http://wuhongyi.github.io 
 
 #include "Detector.hh"
@@ -122,9 +122,9 @@ bool Detector::BootSystem()
     }
 
   Sleep(1000);
-  retval = Pixie16BootModule (ComFPGAConfigFile, SPFPGAConfigFile,
-			      TrigFPGAConfigFile, DSPCodeFile, DSPParFile,
-			      DSPVarFile, NumModules, 0x7F);
+  retval = Pixie16BootModule(ComFPGAConfigFile, SPFPGAConfigFile,
+			     TrigFPGAConfigFile, DSPCodeFile, DSPParFile,
+			     DSPVarFile, NumModules, 0x70);
   
   if (retval != 0)
     {
@@ -143,7 +143,7 @@ int Detector::Syncronise()
   retval = Pixie16WriteSglModPar((char*)"IN_SYNCH", 0, 0);
   if (retval < 0)
     {
-      ErrorInfo("Detector.cpp", "Syncronise()", "Pixie16WriteSglModPar/IN_SYNCH", retval);
+      ErrorInfo("Detector.cc", "Syncronise()", "Pixie16WriteSglModPar/IN_SYNCH", retval);
       fprintf (stderr, "Failed to write IN_SYNCH");
     }
   return retval;
@@ -155,13 +155,12 @@ int Detector::StartLSMRun(int continue_run)
   // if(fonline&&shmfd<0) OpenSharedMemory();
   if(shmfd<0) OpenSharedMemory();//避免启动获取时候没开启，中途开启造成的bug问题。
 
-  
   int retval = 0;
   // All modules start acuqire and Stop acquire simultaneously
   retval = Pixie16WriteSglModPar((char*)"SYNCH_WAIT", 1, 0);
   if (retval < 0)
     {
-      ErrorInfo("Detector.cpp", "StartLSMRun(...)", "Pixie16WriteSglModPar/SYNCH_WAIT", retval);
+      ErrorInfo("Detector.cc", "StartLSMRun(...)", "Pixie16WriteSglModPar/SYNCH_WAIT", retval);
       fprintf(stderr, "Failed to write SYNCH_WAIT\n");
       return retval;
     }
@@ -171,7 +170,7 @@ int Detector::StartLSMRun(int continue_run)
     retval = Pixie16WriteSglModPar((char*)"IN_SYNCH", 0, 0);
     if (retval < 0)
       {
-	ErrorInfo("Detector.cpp", "StartLSMRun(...)", "Pixie16WriteSglModPar/IN_SYNCH", retval);
+	ErrorInfo("Detector.cc", "StartLSMRun(...)", "Pixie16WriteSglModPar/IN_SYNCH", retval);
         fprintf(stderr, "In Sync problem\n");
         return retval;
       }
@@ -186,12 +185,10 @@ int Detector::StartLSMRun(int continue_run)
     retval = Pixie16StartListModeRun(NumModules, 0x100,RESUME_RUN);
   if (retval < 0)
     {
-      ErrorInfo("Detector.cpp", "StartLSMRun(...)", "Pixie16StartListModeRun", retval);
+      ErrorInfo("Detector.cc", "StartLSMRun(...)", "Pixie16StartListModeRun", retval);
       fprintf(stderr, "Failed to start ListMode run in module");
       return retval;
     }
-
-
 
   return 0;
 }
@@ -262,7 +259,7 @@ void Detector::StatisticsForModule()
 
 int Detector::RunStatus()
 {
-  int sum=0;
+  int sum = 0;
   
   for(int i = 0;i < NumModules;i++)
     {

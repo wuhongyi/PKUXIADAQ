@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 22:19:02 2016 (+0800)
-// Last-Updated: 六 10月  8 13:32:52 2016 (+0800)
+// Last-Updated: 三 10月 26 19:32:47 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 30
+//     Update #: 31
 // URL: http://wuhongyi.github.io 
 
 #include "Manager.hh"
@@ -171,8 +171,8 @@ void Manager::CheckKeyboard()
 		    std::cout<<"CANNOT start the LSM Run!"<<std::endl;
 		    return;
 		  }
-		// usleep(100000); //delay for the DSP boot 
-		sleep(2);// wait 2 seconds for modules to be ready
+		usleep(100000); //delay for the DSP boot 
+		// sleep(2);// wait 2 seconds for modules to be ready
 		// start a new run, not resume
 
 	        AcqRun = true;
