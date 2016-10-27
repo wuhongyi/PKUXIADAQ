@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 三 10月 19 09:55:27 2016 (+0800)
+// Last-Updated: 四 10月 27 13:13:33 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 78
+//     Update #: 80
 // URL: http://wuhongyi.github.io 
 
 #include "LogicTrigger.h"
@@ -334,7 +334,7 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   ExternalFastTrigger->Resize(100, 20);
   for (int i = 0; i < 16; ++i)
     {
-      sprintf(tempname,"%02d",i);
+      sprintf(tempname,"Ch %02d",i);
       ExternalFastTrigger->AddEntry(tempname, i+1);
     }
   ExternalFastTrigger->Select(1);
@@ -720,9 +720,6 @@ int LogicTrigger::change_values(Long_t mod)
   SetMultipleBit(&ModParData,ChannelTrigger->GetSelected(),31,30,29,28);
   retval = Pixie16WriteSglModPar((char*)"TrigConfig2", ModParData, mod);
   if(retval < 0) ErrorInfo("LogicTrigger.cpp", "change_values(...)", "Pixie16WriteSglModPar/TrigConfig2", retval);
-  // unsigned int test = 0xFFFFFFFF;
-  // Pixie16WriteSglChanPar((char*)"MultiplicityMaskL", test, mod, 2);
-  // Pixie16WriteSglChanPar((char*)"MultiplicityMaskL", test, mod, 4);
   
   return 1;
 }

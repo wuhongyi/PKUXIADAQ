@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月 23 15:43:08 2016 (+0800)
-// Last-Updated: 三 10月 26 20:22:19 2016 (+0800)
+// Last-Updated: 四 10月 27 21:53:39 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 17
+//     Update #: 36
 // URL: http://wuhongyi.github.io 
 
 #include "MainFrame.hh"
@@ -15,6 +15,8 @@
 #include "TTree.h"
 #include "TChain.h"
 #include "TSystem.h"
+#include "TApplication.h"
+#include "TRootHelpDialog.h"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 ClassImp(MainFrame)
@@ -68,12 +70,17 @@ MainFrame::MainFrame(const TGWindow * p, UInt_t w, UInt_t h)
   std::cout<<SLOW_FILTER_RANGE<<"  "<<ENERGY_RISETIME<<"  "<<ENERGY_FLATTOP<<std::endl; 
 
   InitMenu();
-
+  TGTab *TabPanel = new TGTab(this);
+  this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
+  TGCompositeFrame *Tab1 = TabPanel->AddTab("Init");
+  MakeFoldPanelInit(Tab1);
+  
   SetWindowName("PKU Pixie16 Offline");
   MapSubwindows();
   Resize(GetDefaultSize());
-  MapWindow();
   // Resize(600, 500);
+  MapWindow();
+
   
   // AppendPad(); //foarte important
 
@@ -225,46 +232,29 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 
 void MainFrame::InitMenu()
 {
-   // fMenuBarItemLayout = new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 4, 0, 0);
+   fMenuBarItemLayout = new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 4, 0, 0);
+   TGMenuBar *fMenuBar = new TGMenuBar(this, 1, 1, kHorizontalFrame);
+   AddFrame(fMenuBar, new TGLayoutHints(kLHintsTop | kLHintsExpandX, 2, 2, 2, 5));
+   
+   fMenuFile = new TGPopupMenu(gClient->GetRoot());
+   fMenuFile->AddEntry(new TGHotString("&Open"), M_FILE_OPEN, 0, gClient->GetPicture("bld_open.png"));
+   fMenuFile->AddSeparator();
+   fMenuFile->AddEntry(new TGHotString("E&xit"), M_FILE_EXIT, 0, gClient->GetPicture("bld_exit.png"));
 
-   // fMenuFile = new TGPopupMenu(gClient->GetRoot());
-   // fMenuFile->AddEntry(new TGHotString("&New Window"), M_FILE_NEW);
-   // fMenuFile->AddEntry(new TGHotString("&Close Window"), M_FILE_CLOSE);
-   // fMenuFile->AddSeparator();
-   // fMenuFile->AddEntry(new TGHotString("E&xit"), M_FILE_EXIT);
+   fMenuHelp = new TGPopupMenu(gClient->GetRoot());
+   fMenuHelp->AddEntry(new TGHotString("&Contents"), M_HELP_CONTENTS);
+   fMenuHelp->AddSeparator();
+   fMenuHelp->AddEntry(new TGHotString("&About"), M_HELP_ABOUT);
 
-   // fMenuWindow = new TGPopupMenu(gClient->GetRoot());
-   // fMenuWindow->AddEntry(new TGHotString("Tile &Horizontally"), M_WINDOW_HOR);
-   // fMenuWindow->AddEntry(new TGHotString("Tile &Vertically"), M_WINDOW_VERT);
-   // fMenuWindow->AddEntry(new TGHotString("&Cascade"), M_WINDOW_CASCADE);
-   // fMenuWindow->AddSeparator();
-   // fMenuWindow->AddPopup(new TGHotString("&Windows"), fMainFrame->GetWinListMenu());
-   // fMenuWindow->AddSeparator();
-   // fMenuWindow->AddEntry(new TGHotString("&Arrange icons"), M_WINDOW_ARRANGE);
-   // fMenuWindow->AddSeparator();
-   // fMenuWindow->AddEntry(new TGHotString("&Opaque resize"), M_WINDOW_OPAQUE);
-
-   // fMenuWindow->CheckEntry(M_WINDOW_OPAQUE);
-
-   // fMenuHelp = new TGPopupMenu(gClient->GetRoot());
-   // fMenuHelp->AddEntry(new TGHotString("&Contents"), M_HELP_CONTENTS);
-   // fMenuHelp->AddSeparator();
-   // fMenuHelp->AddEntry(new TGHotString("&About"), M_HELP_ABOUT);
-
-   // fMenuHelp->DisableEntry(M_HELP_CONTENTS);
+   fMenuHelp->DisableEntry(M_HELP_CONTENTS);
    // fMenuHelp->DisableEntry(M_HELP_ABOUT);
 
-   // // menu message are handled by the class' HandleMenu() method
-   // fMenuFile->Connect("Activated(Int_t)", "TGAppMainFrame", this,
-   //                    "HandleMenu(Int_t)");
-   // fMenuWindow->Connect("Activated(Int_t)", "TGAppMainFrame", this,
-   //                      "HandleMenu(Int_t)");
-   // fMenuHelp->Connect("Activated(Int_t)", "TGAppMainFrame", this,
-   //                    "HandleMenu(Int_t)");
+   // menu message are handled by the class' HandleMenu() method
+   fMenuFile->Connect("Activated(Int_t)", "MainFrame", this, "HandleMenu(Int_t)");
+   fMenuHelp->Connect("Activated(Int_t)", "MainFrame", this, "HandleMenu(Int_t)");
 
-   // fMenuBar->AddPopup(new TGHotString("&File"), fMenuFile, fMenuBarItemLayout);
-   // fMenuBar->AddPopup(new TGHotString("&Windows"),fMenuWindow,fMenuBarItemLayout);
-   // fMenuBar->AddPopup(new TGHotString("&Help"), fMenuHelp, fMenuBarItemLayout);
+   fMenuBar->AddPopup(new TGHotString("&File"), fMenuFile, fMenuBarItemLayout);
+   fMenuBar->AddPopup(new TGHotString("&Help"), fMenuHelp, fMenuBarItemLayout);
 
 }
 
@@ -273,50 +263,93 @@ void MainFrame::HandleMenu(Int_t id)
 {
    // Handle menu items.
 
-   // switch (id) {
-   //    case M_FILE_NEW:
-   //       new TGMdiFrame(fMainFrame, 200, 100);
-   //       break;
+  TRootHelpDialog *hd;
+  // static TString dir(".");
+  // TGFileInfo fi;
+  // fi.fFileTypes = dnd_types;
+  // fi.fIniDir    = StrDup(dir);
 
-   //    case M_FILE_CLOSE:
-   //       fMainFrame->Close(fMainFrame->GetCurrent());
-   //       break;
+  switch (id)
+    {
+  case M_FILE_OPEN:
+    // new TGFileDialog(gClient->GetRoot(), this, kFDOpen, &fi);
+    // dir = fi.fIniDir;
+    // // doesn't do much, but can be used to open a root file...
+    break;
 
-   //    case M_FILE_EXIT:
-   //       CloseWindow();
-   //       break;
 
-   //    case M_WINDOW_HOR:
-   //       fMainFrame->TileHorizontal();
-   //       break;
 
-   //    case M_WINDOW_VERT:
-   //       fMainFrame->TileVertical();
-   //       break;
+  case M_FILE_EXIT:
+    CloseWindow();
+    break;
+	 
+  case M_HELP_CONTENTS:
+     
+    break;
+	 
+ 
+  case M_HELP_ABOUT:
+    hd = new TRootHelpDialog(this, "About PKU Pixie16 Offline", 550, 250);
+    hd->SetText(gHelpAbout);
+    hd->Popup();
+    break;
 
-   //    case M_WINDOW_CASCADE:
-   //       fMainFrame->Cascade();
-   //       break;
 
-   //    case M_WINDOW_ARRANGE:
-   //       fMainFrame->ArrangeMinimized();
-   //       break;
-
-   //    case M_WINDOW_OPAQUE:
-   //       if (fMenuWindow->IsEntryChecked(M_WINDOW_OPAQUE)) {
-   //          fMenuWindow->UnCheckEntry(M_WINDOW_OPAQUE);
-   //          fMainFrame->SetResizeMode(kMdiNonOpaque);
-   //       } else {
-   //          fMenuWindow->CheckEntry(M_WINDOW_OPAQUE);
-   //          fMainFrame->SetResizeMode(kMdiOpaque);
-   //       }
-   //       break;
-
-   //    default:
-   //       fMainFrame->SetCurrent(id);
-   //       break;
-   // }
+  }
 }
+
+void MainFrame::CloseWindow()
+{
+  gApplication->Terminate(0);
+}
+
+
+void MainFrame::MakeFoldPanelInit(TGCompositeFrame *TabPanel)
+{
+  // Set up for file store parametrs
+  TGGroupFrame *filesetgroup = new TGGroupFrame(TabPanel,"Setup");
+ 
+  // *** FILE path frame
+  TGHorizontalFrame *filepath = new TGHorizontalFrame(filesetgroup);
+  TGLabel *filepathlabel = new TGLabel(filepath,"File Path: ");
+  filepath->AddFrame(filepathlabel,new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 3, 4, 0));
+  filepathtext = new TGTextEntry(filepath,new TGTextBuffer(100));
+  filepath->AddFrame(filepathtext,new TGLayoutHints(kLHintsExpandX|kLHintsTop, 10 ,3,4,0));
+  
+  filesetgroup->AddFrame(filepath,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+
+  // *** File Name frame 
+  TGHorizontalFrame *filenamef = new TGHorizontalFrame(filesetgroup);
+
+  TGLabel *filenamelabel = new TGLabel(filenamef,"File Name: ");
+  filenamef->AddFrame(filenamelabel,new TGLayoutHints(kLHintsLeft | kLHintsTop, 10 ,3,4,0));
+  filenametext = new TGTextEntry(filenamef, new TGTextBuffer(20));
+  filenamef->AddFrame(filenametext,new TGLayoutHints(kLHintsLeft| kLHintsTop,10,3,4,0));
+
+  TGLabel *filerunlabel = new TGLabel(filenamef,"Run Num: ");
+  filenamef->AddFrame(filerunlabel,new TGLayoutHints(kLHintsLeft| kLHintsTop,0,3,5,0));
+
+  filerunnum = new TGNumberEntry(filenamef,0,5,999,TGNumberFormat::kNESInteger,TGNumberFormat::kNEANonNegative);
+  filerunnum->SetButtonToNum(1);
+  filenamef->AddFrame(filerunnum,new TGLayoutHints(kLHintsLeft|kLHintsTop,0,3,4,0));
+  filerunnum->Associate(this);
+
+  filesetdone = new TGTextButton(filenamef,"Complete");
+  filesetdone->Connect("Pressed()","MainFrame",this,"SetFileName()");
+  filenamef->AddFrame(filesetdone,new TGLayoutHints(kLHintsLeft|kLHintsTop,0,3,4,0));
+  filesetgroup->AddFrame(filenamef,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  
+  TabPanel->AddFrame(filesetgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+
+
+  
+}
+
+void MainFrame::SetFileName()
+{
+
+}
+
 
 
 // 
