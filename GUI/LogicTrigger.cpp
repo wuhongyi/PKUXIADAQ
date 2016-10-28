@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 四 10月 27 13:13:33 2016 (+0800)
+// Last-Updated: 五 10月 28 21:36:53 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 80
+//     Update #: 81
 // URL: http://wuhongyi.github.io 
 
 #include "LogicTrigger.h"
@@ -334,7 +334,7 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   ExternalFastTrigger->Resize(100, 20);
   for (int i = 0; i < 16; ++i)
     {
-      sprintf(tempname,"Ch %02d",i);
+      sprintf(tempname,"%02d",i);
       ExternalFastTrigger->AddEntry(tempname, i+1);
     }
   ExternalFastTrigger->Select(1);

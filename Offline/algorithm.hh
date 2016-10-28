@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 22 21:08:06 2016 (+0800)
-// Last-Updated: 三 10月 26 20:16:25 2016 (+0800)
+// Last-Updated: 五 10月 28 16:10:58 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 35
+//     Update #: 39
 // URL: http://wuhongyi.github.io 
 
 #ifndef _ALGORITHM_H_
@@ -117,22 +117,26 @@ public:
   algorithm();
   virtual ~algorithm();
 
-  int InitSystem(
-		 unsigned short NumModules,    // total number of Pixie16 modules in the system
-		 unsigned short OfflineMode );  // specify if the system is in offline mode
+public:
+  char offlinefilename[PRESET_MAX_MODULES][256];
+  unsigned int OfflineModuleEventsCount[PRESET_MAX_MODULES];//这个表示每个插件的事件数
+  unsigned int *OfflineEventInformation[PRESET_MAX_MODULES];// 每个事件信息长度 12 * unsigned int
+  // 0  Event
+  // 1  Channel 0-15
+  // 2  Slot 2-14 表示机箱的第几个插槽 实际插件标号应该在该数值上减2    
+  // 3  Crate 表示第几个机箱，我们只有一个机箱所以为0
+  // 4  Header length
+  // 5  Event length
+  // 6  Finish code
+  // 7  EventTime_Low  时间
+  // 8  EventTime_High 时间
+  // 9  Event Energy   能量
+  // 10 Trace Length  波形长度
+  // 11 Trace location 表示波形在文件中的位置
 
-  
-  int LoadDSPParametersFromFile(char  *FileName );
-  int Init_DSPVarAddress(char *DSPVarFile, unsigned short ModNum);
-  int Copy_DSPVarAddress(unsigned short SourceModNum, unsigned short DestinationModNum);
+public:
 
-
-  // OfflineModuleEventsCount = GetModuleEvents(offlinefilename);
-  // OfflineEventInformation = new unsigned int[12*OfflineModuleEventsCount];
-  // GetEventsInfo(offlinefilename,OfflineEventInformation);      
-  unsigned int GetModuleEvents(char *FileName);//return events
-  void GetEventsInfo(char *FileName, unsigned int *EventInformation);
-
+  // 以下几个函数用户可能用到
   
   int ComputeFastFiltersOffline(
 				unsigned short ModuleNumber,       // the module whose events are to be analyzed
@@ -149,6 +153,32 @@ public:
 				double         *slowfilter );      // slow filter response
 
 
+  // double ENERGY_RISETIME;
+  // double ENERGY_FLATTOP;
+  // unsigned int SLOW_FILTER_RANGE;
+  // xia->ReadSglChanPar((char *)"ENERGY_RISETIME",&ENERGY_RISETIME,0,2);
+  // xia->ReadSglChanPar((char *)"ENERGY_FLATTOP",&ENERGY_FLATTOP,0,2);
+  // xia->ReadSglModPar((char *)"SLOW_FILTER_RANGE",&SLOW_FILTER_RANGE,0);
+  // std::cout<<SLOW_FILTER_RANGE<<"  "<<ENERGY_RISETIME<<"  "<<ENERGY_FLATTOP<<std::endl;
+
+  // SLOW_FILTER_RANGE = 1;
+  // xia->WriteSglModPar((char *)"SLOW_FILTER_RANGE",SLOW_FILTER_RANGE,0);
+  // xia->ReadSglChanPar((char *)"ENERGY_RISETIME",&ENERGY_RISETIME,0,2);
+  // xia->ReadSglChanPar((char *)"ENERGY_FLATTOP",&ENERGY_FLATTOP,0,2);
+  // xia->ReadSglModPar((char *)"SLOW_FILTER_RANGE",&SLOW_FILTER_RANGE,0);
+  // std::cout<<SLOW_FILTER_RANGE<<"  "<<ENERGY_RISETIME<<"  "<<ENERGY_FLATTOP<<std::endl; 
+
+  // Mod Par
+  // SLOW_FILTER_RANGE  1-6
+
+  // ChanPar
+  // ENERGY_RISETIME 能量梯形上升时间
+  // ENERGY_FLATTOP  能量梯形平台时间
+  // TAU             衰减时间
+  // TRIGGER_THRESHOLD 阈值
+  // CFDDelay
+  // CFDScale
+  
   int ReadSglModPar(
   		    char *ModParName,           // the name of the module parameter
   		    unsigned int   *ModParData, // the module parameter value to be read from the module
@@ -192,6 +222,25 @@ public:
   unsigned int ClrBit_32(unsigned short bit,unsigned int value);
   // Test a bit in a 32-bit unsigned integer.
   unsigned int TstBit_32(unsigned short bit,unsigned int value );
+
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  // 以下部分用户不需要
+  
+public:
+  int InitSystem(
+		 unsigned short NumModules,    // total number of Pixie16 modules in the system
+		 unsigned short OfflineMode );  // specify if the system is in offline mode
+
+  
+  int LoadDSPParametersFromFile(char  *FileName );
+  int Init_DSPVarAddress(char *DSPVarFile, unsigned short ModNum);
+  int Copy_DSPVarAddress(unsigned short SourceModNum, unsigned short DestinationModNum);
+
+  
+  unsigned int GetModuleEvents(char *FileName);//return events
+  void GetEventsInfo(char *FileName, unsigned int *EventInformation);
+
   
 
 private:
@@ -211,10 +260,7 @@ private:
   
 
   
-private:
-  char offlinefilename[PRESET_MAX_MODULES][256];
-  unsigned int OfflineModuleEventsCount[PRESET_MAX_MODULES];
-  unsigned int *OfflineEventInformation[PRESET_MAX_MODULES];
+
 
   
   

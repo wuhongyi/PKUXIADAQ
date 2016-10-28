@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月 23 15:38:41 2016 (+0800)
-// Last-Updated: 四 10月 27 21:56:09 2016 (+0800)
+// Last-Updated: 五 10月 28 15:59:20 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 20
+//     Update #: 42
 // URL: http://wuhongyi.github.io 
 
 #ifndef _MAINFRAME_H_
@@ -59,6 +59,28 @@
 #include "TGWindow.h"
 #include "TRootEmbeddedCanvas.h"
 #include "TRootHelpDialog.h"
+
+#include <algorithm>
+#include <cfloat>
+#include <climits>
+#include <cmath>
+#include <complex>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
+#include <deque>
+#include <fstream>
+#include <iostream>
+#include <list>
+#include <map>
+#include <queue>
+#include <set>
+#include <sstream>
+#include <stack>
+#include <string>
+#include <vector>
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 enum EMenuIds
@@ -80,7 +102,7 @@ enum EMenuIds
 const char gHelpAbout[] = "\
                      Pixie16 Offline\n\
 The program developed by Peking University.\n\
-The program applies to offline analysis.\n\
+The program applies to offline analysis, only applicable to RevF 100 MHz.\n\
 Program developer:\n\
 ";
 
@@ -92,15 +114,11 @@ public:
   MainFrame(const TGWindow * p, UInt_t w, UInt_t h);
   virtual ~MainFrame();
 
- 
-  void MakeFold1Panel(TGCompositeFrame *TabPanel);
-  void MakeFold2Panel(TGCompositeFrame *TabPanel);
-
   void HandleMenu(Int_t id);
-
   void SetFileName();
-  // void SetTTree(TTree *tree);
-  // Bool_t DrawEntry(Long64_t entry);
+  void InitSet();
+  void FileInitSet();
+
 
 private:
   virtual Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t);//process message queue
@@ -108,28 +126,33 @@ private:
   void CloseWindow();
   
   Bool_t IsDirectoryExists(const char *path);//判断文件夹是否存在
-
+  bool IsFileExists(const char *name);  //判断文件是否存在
+  
   void MakeFoldPanelInit(TGCompositeFrame *TabPanel);
+
+  void ReadModule(int id);
+
   
 private:
 
 
 private:
-  TCanvas *adjustCanvas;
-  TMultiGraph *offlinemultigraph;
-  TGraph *rawdata,*threshdata,*cfddata,*sfilterdata,*ffilterdata;
-  unsigned short *RcdTrace;//
-  double *doublesample;
-  double *doublethresh;
-  double *doublercdtrace;
-  double *doublefastfilter;//
-  double *doublecfd;//
-  double *doubleslowfilter;//
+  // TCanvas *adjustCanvas;
+  // TMultiGraph *offlinemultigraph;
+  // TGraph *rawdata,*threshdata,*cfddata,*sfilterdata,*ffilterdata;
+  // unsigned short *RcdTrace;//
+  // double *doublesample;
+  // double *doublethresh;
+  // double *doublercdtrace;
+  // double *doublefastfilter;//
+  // double *doublecfd;//
+  // double *doubleslowfilter;//
 
 
 private:
   algorithm *xia;
 
+  char tempchar[256];
 
   // Menu
   TGLayoutHints   *fMenuBarItemLayout;
@@ -137,10 +160,21 @@ private:
   TGPopupMenu     *fMenuFile, *fMenuHelp;
 
   // Panel Init
-  TGTextEntry	*filepathtext;//
+  TGTextEntry	*filepathtext;
   TGTextEntry	*filenametext;
-  TGNumberEntry	*filerunnum;
   TGTextButton	*filesetdone;
+  
+  TGTextEntry	*filenamedsppar;
+  TGTextEntry	*filenamedspvar;
+  TGComboBox	*modnum;
+  TGTextButton	*initsetdone;
+  
+  TGNumberEntry	*filerunnum;
+  TGTextButton	*fileinitsetdone;
+  
+  TGTextEntry *ModStatusLabels[13];
+  TGTextButton	*modfilesetdone[14];// ID 100-113   预留 100-149
+  TGTextEntry *ModCountStatusLabels[13];
   
   
   ClassDef(MainFrame,1)

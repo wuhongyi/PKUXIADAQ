@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 22 21:08:18 2016 (+0800)
-// Last-Updated: 三 10月 26 20:15:58 2016 (+0800)
+// Last-Updated: 五 10月 28 16:25:58 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 58
+//     Update #: 62
 // URL: http://wuhongyi.github.io 
 
 #include "algorithm.hh"
@@ -18,11 +18,16 @@
 #include <cstring>
 #include <string>
 #include <cmath>
+#include <iostream>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 algorithm::algorithm()
 {
-
+  for (int i = 0; i < PRESET_MAX_MODULES; ++i)
+    {
+      OfflineModuleEventsCount[i] = 0;
+      OfflineEventInformation[i] = NULL;
+    }
 }
 
 algorithm::~algorithm()
@@ -1779,8 +1784,8 @@ void algorithm::GetEventsInfo(char *FileName, unsigned int *EventInformation)
 	  // Trace location
 	  EventInformation[12 * NumEvents + 11] = TotalSkippedWords + headerlength;
 
-	  // if(eventlength != headerlength + EventInformation[12 * NumEvents + 10]/2)
-	  //   std::cout<<"Data error..."<<std::endl;
+	  if(eventlength != headerlength + EventInformation[12 * NumEvents + 10]/2)
+	    std::cout<<"Data error...  eventlength != headerlength + Trace Length/2"<<std::endl;
 	  
 	  TotalSkippedWords += eventlength;
 	  NumEvents ++;
