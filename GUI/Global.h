@@ -7,7 +7,7 @@
 // Last-Updated: 二 8月  9 10:42:59 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 4
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 #ifndef _GLOBAL_H_
 #define _GLOBAL_H_

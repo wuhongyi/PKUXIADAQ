@@ -7,7 +7,7 @@
 // Last-Updated: 日 10月 23 15:59:17 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 1
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 #pragma link C++ class MainFrame+;
 

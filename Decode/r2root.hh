@@ -7,7 +7,7 @@
 // Last-Updated: 三 10月 12 12:16:01 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 16
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 #ifndef _R2ROOT_H_
 #define _R2ROOT_H_

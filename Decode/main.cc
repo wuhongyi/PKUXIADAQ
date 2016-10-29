@@ -7,7 +7,7 @@
 // Last-Updated: 日 10月  2 20:42:43 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 6
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 /************************************
  *  Decoder for XIA pixie-16

@@ -7,7 +7,7 @@
 // Last-Updated: 日 10月 23 22:36:23 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 61
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
 

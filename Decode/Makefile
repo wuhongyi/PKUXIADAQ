@@ -7,7 +7,7 @@
 ## Last-Updated: 日 10月  2 20:30:08 2016 (+0800)
 ##           By: Hongyi Wu(吴鸿毅)
 ##     Update #: 2
-## URL: http://wuhongyi.github.io 
+## URL: http://wuhongyi.cn 
 
 OBJ = decode
 sourcefile = main.cc decoder.hh decoder.cc r2root.hh r2root.cc

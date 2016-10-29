@@ -7,7 +7,7 @@
 ## Last-Updated: 五 10月  7 12:37:36 2016 (+0800)
 ##           By: Hongyi Wu(吴鸿毅)
 ##     Update #: 9
-## URL: http://wuhongyi.github.io 
+## URL: http://wuhongyi.cn 
 
 OBJ = online
 CXX=g++        

@@ -7,7 +7,7 @@
 // Last-Updated: 三 10月 26 19:32:47 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 31
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 #include "Manager.hh"
 

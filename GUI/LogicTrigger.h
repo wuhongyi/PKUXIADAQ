@@ -7,7 +7,7 @@
 // Last-Updated: 二 10月 18 21:50:35 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 23
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 #ifndef _LOGICTRIGGER_H_
 #define _LOGICTRIGGER_H_

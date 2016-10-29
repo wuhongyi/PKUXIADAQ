@@ -7,7 +7,7 @@
 // Last-Updated: 三 10月  5 19:56:18 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 16
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 // 当前Online仅适用于采样率100MHz插件
 

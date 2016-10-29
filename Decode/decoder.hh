@@ -7,7 +7,7 @@
 // Last-Updated: 三 10月 12 12:15:03 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 3
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 #ifndef _DECODER_H_
 #define _DECODER_H_

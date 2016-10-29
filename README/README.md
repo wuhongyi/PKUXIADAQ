@@ -7,7 +7,7 @@
 ;; Last-Updated: 日 9月  4 16:07:01 2016 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
 ;;     Update #: 48
-;; URL: http://wuhongyi.github.io -->
+;; URL: http://wuhongyi.cn -->
 
 **本说明书不适用于 Rev-A modules**
 

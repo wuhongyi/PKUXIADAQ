@@ -7,7 +7,7 @@
 // Last-Updated: 一 10月  3 19:57:56 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 5
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 #ifndef _DETECTOR_H_
 #define _DETECTOR_H_

@@ -7,7 +7,7 @@
 // Last-Updated: 三 10月  5 14:39:29 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 105
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 #include "Offline.h"
 #include "Detector.h"

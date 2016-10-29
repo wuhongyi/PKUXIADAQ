@@ -7,7 +7,7 @@
 // Last-Updated: 三 10月 19 14:38:38 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 45
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 #include "MultiplicityMask.h"
 #include "Detector.h"

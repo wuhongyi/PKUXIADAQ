@@ -7,7 +7,7 @@
 // Last-Updated: 五 10月  7 21:19:30 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 34
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 #ifndef _ONLINE_H_
 #define _ONLINE_H_

@@ -7,7 +7,7 @@
 ;; Last-Updated: 四 7月 21 18:51:29 2016 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
 ;;     Update #: 17
-;; URL: http://wuhongyi.github.io -->
+;; URL: http://wuhongyi.cn -->
 
 # XIA 获取当前进度
 

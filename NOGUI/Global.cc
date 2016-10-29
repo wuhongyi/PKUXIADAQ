@@ -7,7 +7,7 @@
 // Last-Updated: 三 9月 28 12:24:37 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 5
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 #include "Global.hh"
 

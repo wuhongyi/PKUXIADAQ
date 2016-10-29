@@ -7,7 +7,7 @@
 // Last-Updated: 五 10月 28 21:36:53 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 81
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 #include "LogicTrigger.h"
 

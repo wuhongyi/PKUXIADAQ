@@ -7,7 +7,7 @@
 // Last-Updated: 日 10月  2 20:11:02 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 5
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 #include "decoder.hh"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

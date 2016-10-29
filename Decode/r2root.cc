@@ -7,7 +7,7 @@
 // Last-Updated: 日 10月  2 21:26:21 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 38
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 #include "r2root.hh"
 

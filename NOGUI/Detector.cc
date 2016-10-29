@@ -7,7 +7,7 @@
 // Last-Updated: 三 10月 26 19:37:51 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
 //     Update #: 25
-// URL: http://wuhongyi.github.io 
+// URL: http://wuhongyi.cn 
 
 #include "Detector.hh"
 

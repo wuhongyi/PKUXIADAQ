@@ -7,7 +7,7 @@
 ;; Last-Updated: 三 8月 17 16:04:08 2016 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
 ;;     Update #: 4
-;; URL: http://wuhongyi.github.io -->
+;; URL: http://wuhongyi.cn -->
 
 # Front Panel
 
