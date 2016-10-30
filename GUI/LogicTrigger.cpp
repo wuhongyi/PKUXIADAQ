@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 五 10月 28 21:36:53 2016 (+0800)
+// Last-Updated: 日 10月 30 19:39:40 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 81
+//     Update #: 82
 // URL: http://wuhongyi.cn 
 
 #include "LogicTrigger.h"
@@ -799,12 +799,3 @@ void LogicTrigger::SetMultipleBit(unsigned int *Data,int Select,int bit3,int bit
 
 // 
 // LogicTrigger.cpp ends here
-
-
-
-
-
-
-
-
-
