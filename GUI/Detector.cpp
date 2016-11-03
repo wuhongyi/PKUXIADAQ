@@ -105,6 +105,18 @@ bool Detector::BootSystem()
       return false;
     }
 
+  // Adjust DC-Offsets
+  for(int k = 0; k < NumModules; k++)
+    {		
+      retval = Pixie16AdjustOffsets(k);
+      if (retval < 0)
+	{
+	  ErrorInfo("Detector.cpp", "BootSystem()", "Pixie16AdjustOffsets", retval);
+	  printf("Pixie16AdjustOffsets in module %d failed, retval = %d", k, retval);
+	  return false;
+	}
+    }
+  
    return true;
 
 }

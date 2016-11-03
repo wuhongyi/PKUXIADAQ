@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:52:00 2016 (+0800)
-// Last-Updated: 三 10月 26 19:37:51 2016 (+0800)
+// Last-Updated: 四 11月  3 09:41:26 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 25
+//     Update #: 26
 // URL: http://wuhongyi.cn 
 
 #include "Detector.hh"
@@ -133,6 +133,18 @@ bool Detector::BootSystem()
       return false;
     }
 
+  // Adjust DC-Offsets
+  for(int k = 0; k < NumModules; k++)
+    {		
+      retval = Pixie16AdjustOffsets(k);
+      if (retval < 0)
+	{
+	  ErrorInfo("Detector.cc", "BootSystem()", "Pixie16AdjustOffsets", retval);
+	  printf("Pixie16AdjustOffsets in module %d failed, retval = %d", k, retval);
+	  return false;
+	}
+    }
+  
   return true;
 
 }
