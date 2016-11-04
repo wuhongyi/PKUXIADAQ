@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:52:00 2016 (+0800)
-// Last-Updated: 四 11月  3 09:41:26 2016 (+0800)
+// Last-Updated: 五 11月  4 18:35:11 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 26
+//     Update #: 27
 // URL: http://wuhongyi.cn 
 
 #include "Detector.hh"
@@ -124,7 +124,7 @@ bool Detector::BootSystem()
   Sleep(1000);
   retval = Pixie16BootModule(ComFPGAConfigFile, SPFPGAConfigFile,
 			     TrigFPGAConfigFile, DSPCodeFile, DSPParFile,
-			     DSPVarFile, NumModules, 0x70);
+			     DSPVarFile, NumModules, 0x7F);
   
   if (retval != 0)
     {

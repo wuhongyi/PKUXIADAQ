@@ -3,8 +3,8 @@
 3
 4
 ../firmware/syspixie16_revfgeneral_adc100mhz_r33338.bin
-../firmware/fippixie16_revfgeneral_14b100m_r29406.bin
+../firmware/fippixie16_revfgeneral_14b100m_r36263.bin
 FPGATrig
-../firmware/Pixie16DSP_revfgeneral_14b100m_r34689.ldr
+../firmware/Pixie16DSP_revfgeneral_14b100m_r36264.ldr
 ../parset/20161007.set
-../firmware/Pixie16DSP_revfgeneral_14b100m_r34689.var
+../firmware/Pixie16DSP_revfgeneral_14b100m_r36264.var
