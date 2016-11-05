@@ -4,14 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:41 2016 (+0800)
-// Last-Updated: 五 10月  7 21:19:30 2016 (+0800)
+// Last-Updated: 六 11月  5 21:18:36 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 34
+//     Update #: 39
 // URL: http://wuhongyi.cn 
 
 #ifndef _ONLINE_H_
 #define _ONLINE_H_
 
+#include "TGComboBox.h"
 #include "TGFrame.h"
 #include "TGMenu.h"
 #include "TGTab.h"
@@ -25,7 +26,7 @@
 #include "TString.h"
 #include "TSystem.h"
 #include "TStyle.h"
-#include "TGFileDialog.h"
+// #include "TGFileDialog.h"
 #include "TCanvas.h"
 #include <iostream>
 #include <fstream>
@@ -42,7 +43,6 @@ using namespace std;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #define PRESET_MAX_MODULES 24
-#define SYSTEM_CLOCK_MHZ 100
 
 #define INITIAL_HIGHT 1000
 #define INITIAL_WIDTH 1200
@@ -67,7 +67,8 @@ private:
   void CloseWindow(); //close main window
   void CreateMenuBar(void); //creates menu bar of the main window
   void MakeFold1Panel(TGCompositeFrame *TabPanel);
-
+  void MakeFold2Panel(TGCompositeFrame *TabPanel);
+  
   void LoopRun();
   double GetFileSizeMB(const char *name);//返回MB
   bool IsFileExists(const char *name);//判断文件是否存在
@@ -85,6 +86,7 @@ private:
   TGTextEntry **ICR;//[0-207] Input rate   >=208 File size
   TGTextEntry **OCR;//[0-207] Output rate  >=208 not used
   TGTextEntry **Labels;
+  TGComboBox **SampleRate;
   
   uint64_t CurrentTime;
   uint64_t PrevTime;
@@ -115,6 +117,8 @@ private:
   unsigned char *buf_new;
   int val;
 
+  int SYSTEM_CLOCK_MHZ;
+  
   unsigned int Statistics[448];
   unsigned int Statistics_new[448];
 

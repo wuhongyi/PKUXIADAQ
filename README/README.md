@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 日 9月  4 16:07:01 2016 (+0800)
+;; Last-Updated: 六 11月  5 18:21:21 2016 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 48
+;;     Update #: 52
 ;; URL: http://wuhongyi.cn -->
 
 **本说明书不适用于 Rev-A modules**
@@ -408,6 +408,38 @@ BLCut 可手动/自动调节。自动调节到**Analog Signal Setup**按自动�
 	- Bit 21 : Enable (checked) or disable (unchecked) recording of external clock timestamps in event header
 
 
+
+----
+
+## coincidence/multiplicity trigger
+
+前提是自身fast filter得过域
+
+CSRA bit3=0 bit13=1
+选择左、中、右插件参与判断路
+
+设置 coincidence/multiplicity 阈值
+
+FastTrigBackplane 将trigger信号发给左右插件
+
+ChanTrigStretch 设置门宽
+
+## channel trigger veto
+
+CSRA bit6=1
+
+然后从 CSRA bit19 选择veto trigger 来源，0 为 front panel，1 为 channel validation trigger
+
+如果选择 channel validation trigger，channel validation trigger 设置与 符合等是一样的。
+
+需要设置 VetoSttretch 门宽
+
+
+## group trigger for channel validation trigger （可被动记录）
+
+select other group trigger as the source of channel validation trigger
+CSRA bit18 =1 select external group trigger from system FPGA
+对某4路选择group trigger，选择trigger 来源（左插件、自身插件、右插件），选择左右插件需要设置FastTrigBackplane
 
 
 <!-- | a | b | c | -->

@@ -24,7 +24,7 @@ AnalogSignal::AnalogSignal(const TGWindow * p, const TGWindow * main, char *name
 		    kRaisedFrame | kDoubleBorder, GetWhitePixel());
   LabelGain->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
 
-  LabelGain->Resize(40, 20);
+  LabelGain->Resize(80, 20);
   LabelGain->SetEnabled(kFALSE);
   LabelGain->SetFrameDrawn(kTRUE);
   ColumnGain->AddFrame(LabelGain, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
@@ -33,9 +33,9 @@ AnalogSignal::AnalogSignal(const TGWindow * p, const TGWindow * main, char *name
     {
       ColumnGain->AddFrame(lstBoxGain[i] = new TGComboBox(ColumnGain, 2755 + i), new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
       lstBoxGain[i]->Associate(this);
-      lstBoxGain[i]->AddEntry("4.0", 0);
-      lstBoxGain[i]->AddEntry("0.9", 1);
-      lstBoxGain[i]->Resize(40, 20);
+      lstBoxGain[i]->AddEntry("2.5", 0);
+      lstBoxGain[i]->AddEntry("0.625", 1);
+      lstBoxGain[i]->Resize(80, 20);
     }
 
   ColumnSign = new TGVerticalFrame(mn, 200, 300);

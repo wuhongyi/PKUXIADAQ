@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月 23 15:43:08 2016 (+0800)
-// Last-Updated: 五 10月 28 16:27:34 2016 (+0800)
+// Last-Updated: 六 11月  5 21:00:55 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 126
+//     Update #: 127
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -51,7 +51,7 @@ MainFrame::MainFrame(const TGWindow * p, UInt_t w, UInt_t h)
   TGCompositeFrame *Tab1 = TabPanel->AddTab("Init");
   MakeFoldPanelInit(Tab1);
   
-  SetWindowName("PKU Pixie16 Offline");
+  SetWindowName("PKU Pixie16-RevF Offline");
   MapSubwindows();
   Resize(GetDefaultSize());
   MapWindow();

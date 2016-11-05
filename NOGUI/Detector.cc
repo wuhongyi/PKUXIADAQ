@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:52:00 2016 (+0800)
-// Last-Updated: 五 11月  4 18:35:11 2016 (+0800)
+// Last-Updated: 六 11月  5 21:34:31 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 27
+//     Update #: 28
 // URL: http://wuhongyi.cn 
 
 #include "Detector.hh"
@@ -296,7 +296,7 @@ int Detector::OpenSaveFile(int n,const char *FileN)
 
 int Detector::SavetoFile(int nFile)
 {
-  cout<<"saving file ..."<<endl;
+  // cout<<"saving file ..."<<endl;
   if(fsave[nFile] == NULL) {
     cout<<"ERROR! No opened file found for store!"<<endl;
     cout<<"CAUTION! No data will be saved!"<<endl;
@@ -311,7 +311,7 @@ int Detector::SavetoFile(int nFile)
   }
   FILESIZE[nFile] += buffid[nFile];
   buffid[nFile] = 0;
-  cout<<"FILE: "<<nFile<<" SIZE: "<<FILESIZE[nFile]<<endl;
+  // cout<<"FILE: "<<nFile<<" SIZE: "<<FILESIZE[nFile]<<endl;
   return 0;
 }
 

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 三 10月 26 21:50:44 2016 (+0800)
+// Last-Updated: 六 11月  5 21:19:35 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 105
+//     Update #: 135
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -28,7 +28,7 @@ Online::Online(const TGWindow * p)
   
   CreateMenuBar();
   
-  SetWindowName("PKU Pixie16 DAQ Online");
+  SetWindowName("PKU Pixie16-RevF DAQ Online");
   MapSubwindows();
   MapWindow();
   Resize(INITIAL_WIDTH, INITIAL_HIGHT);
@@ -109,7 +109,8 @@ void Online::CreateMenuBar()
   this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
   TGCompositeFrame *Tab1 = TabPanel->AddTab("CountRate");
   MakeFold1Panel(Tab1);
-  
+  TGCompositeFrame *Tab2 = TabPanel->AddTab("Alert");
+  MakeFold2Panel(Tab2);
 }
 
 void Online::CloseWindow()
@@ -151,6 +152,16 @@ Bool_t Online::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    default:
 	      break;
 	    }
+	// case kCM_COMBOBOX:
+	//   switch (parm1)
+	//     {
+	//       std::cout<<"XXX: "<<parm1-100<<std::endl;
+
+	//       break;
+
+	//     default:
+	//       break;
+	//     }
 
 	}
 	           
@@ -206,6 +217,8 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
   ICR = new TGTextEntry *[224];
   OCR = new TGTextEntry *[224];
   Labels = new TGTextEntry *[224];
+  SampleRate = new TGComboBox *[13];
+  
   char nnn[10];
 
   TGGroupFrame *monitorgroup = new TGGroupFrame(TabPanel,"Monitor");
@@ -221,20 +234,20 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
       if(i < 7)
 	{
 	  Column1[3*i] = new TGVerticalFrame(horizontal1, 200, 300);
-	  horizontal1->AddFrame(Column1[3*i], new TGLayoutHints(kLHintsTop | kLHintsLeft, 10, 0, 0, 0));
+	  horizontal1->AddFrame(Column1[3*i], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 10, 0, 0, 0));
 	  Column1[3*i+1] = new TGVerticalFrame(horizontal1, 200, 300);
-	  horizontal1->AddFrame(Column1[3*i+1], new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+	  horizontal1->AddFrame(Column1[3*i+1], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
 	  Column1[3*i+2] = new TGVerticalFrame(horizontal1, 200, 300);
-	  horizontal1->AddFrame(Column1[3*i+2], new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+	  horizontal1->AddFrame(Column1[3*i+2], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
 	}
       else
 	{
 	  Column1[3*i] = new TGVerticalFrame(horizontal2, 200, 300);
-	  horizontal2->AddFrame(Column1[3*i], new TGLayoutHints(kLHintsTop | kLHintsLeft, 10, 0, 0, 0));
+	  horizontal2->AddFrame(Column1[3*i], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 10, 0, 0, 0));
 	  Column1[3*i+1] = new TGVerticalFrame(horizontal2, 200, 300);
-	  horizontal2->AddFrame(Column1[3*i+1], new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+	  horizontal2->AddFrame(Column1[3*i+1], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
 	  Column1[3*i+2] = new TGVerticalFrame(horizontal2, 200, 300);
-	  horizontal2->AddFrame(Column1[3*i+2], new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+	  horizontal2->AddFrame(Column1[3*i+2], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
 	}
       
       cl0[i] = new TGTextEntry(Column1[3*i], new TGTextBuffer(100), 10000,
@@ -346,7 +359,7 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
   LabelsI[13]->SetFrameDrawn(kTRUE);
   Column1[40]->AddFrame(LabelsI[13], new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
 
-  for (int j = 0; j < 14; j++)
+  for (int j = 0; j < 13; j++)
     {
       Labels[208+j] = new TGTextEntry(Column1[39], new TGTextBuffer(100), 10000,
 				       Labels[208+j]->GetDefaultGC()(),
@@ -369,7 +382,33 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
       ICR[208+j]->Resize(35, 20);
       ICR[208+j]->SetEnabled(kFALSE);
       // ICR[208+j]->SetFrameDrawn(kFALSE);
-      Column1[40]->AddFrame(ICR[208+j], new TGLayoutHints (kLHintsExpandX, 0, 0, 0, 0));
+      Column1[40]->AddFrame(ICR[208+j], new TGLayoutHints(kLHintsExpandX, 0, 0, 0, 0));
+    }
+
+
+
+  LabelsO[13] = new TGTextEntry(Column1[41], new TGTextBuffer(100), 10000,
+			       LabelsO[13]->GetDefaultGC()(),
+			       LabelsO[13]->GetDefaultFontStruct(),
+			       kRaisedFrame | kDoubleBorder, GetWhitePixel());
+  LabelsO[13]->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
+  LabelsO[13]->SetText("Sample/MHz");
+  LabelsO[13]->SetAlignment(kTextCenterX);
+  LabelsO[13]->Resize(90, 20);
+  LabelsO[13]->SetEnabled(kFALSE);
+  LabelsO[13]->SetFrameDrawn(kTRUE);
+  Column1[41]->AddFrame(LabelsO[13], new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+
+  for (int j = 0; j < 13; j++)
+    {
+      SampleRate[j] = new TGComboBox(Column1[41]);
+      Column1[41]->AddFrame(SampleRate[j], new TGLayoutHints(kLHintsExpandX, 0, 0, 0, 0));
+      SampleRate[j]->Associate(this);
+      SampleRate[j]->AddEntry("100", 1);
+      SampleRate[j]->AddEntry("250", 2);
+      SampleRate[j]->AddEntry("500", 3);
+      SampleRate[j]->Select(1);
+      SampleRate[j]->Resize(35, 20);
     }
   
   TabPanel->AddFrame(monitorgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
@@ -386,6 +425,16 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
   in.close();
 
 }
+
+void Online::MakeFold2Panel(TGCompositeFrame *TabPanel)
+{
+
+}
+
+
+
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void Online::StartStop()
 {
@@ -472,6 +521,12 @@ void Online::LoopRun()
      
 	      for(int i = 0; i < ModNum;i++)
 		{
+		  // SYSTEM_CLOCK_MHZ = 100;
+		  if(SampleRate[i]->GetSelected() == 1) SYSTEM_CLOCK_MHZ = 100;
+		  if(SampleRate[i]->GetSelected() == 2) SYSTEM_CLOCK_MHZ = 250;
+		  if(SampleRate[i]->GetSelected() == 3) SYSTEM_CLOCK_MHZ = 500;
+		  // std::cout<<"Mod: "<<i<<"  SYSTEM_CLOCK_MHZ: "<<SYSTEM_CLOCK_MHZ << "  " << SampleRate[i]->GetSelected() <<std::endl;
+		  
 		  memcpy(Statistics,buf+10+4*448*i,448*4);
 		  memcpy(Statistics_new,buf_new+10+4*448*i,448*4);
 
@@ -491,7 +546,7 @@ void Online::LoopRun()
 		    {
 		      LiveTime[j] = (double)Statistics[63+j] * pow(2.0, 32.0);
 		      LiveTime[j] += (double)Statistics[79+j];
-		      LiveTime[j] *= 1.0e-6 / (double)100;
+		      LiveTime[j] *= 1.0e-6 / (double)SYSTEM_CLOCK_MHZ;
 		      FastPeaks[j] = (double)Statistics[95+j] * pow(2.0, 32.0);
 		      FastPeaks[j] += (double)Statistics[111+j];
 		      ChanEvents[j] = (double)Statistics[223+j] * pow(2.0, 32.0);
@@ -500,7 +555,7 @@ void Online::LoopRun()
 
 		      LiveTime_new[j] = (double)Statistics_new[63+j] * pow(2.0, 32.0);
 		      LiveTime_new[j] += (double)Statistics_new[79+j];
-		      LiveTime_new[j] *= 1.0e-6 / (double)100;
+		      LiveTime_new[j] *= 1.0e-6 / (double)SYSTEM_CLOCK_MHZ;
 		      FastPeaks_new[j] = (double)Statistics_new[95+j] * pow(2.0, 32.0);
 		      FastPeaks_new[j] += (double)Statistics_new[111+j];
 		      ChanEvents_new[j] = (double)Statistics_new[223+j] * pow(2.0, 32.0);
@@ -561,8 +616,6 @@ void Online::LoopRun()
 
       usleep(400000);//sleep 400us
     }
-
-
 }
 
 double Online::GetFileSizeMB(const char *name)
@@ -611,13 +664,3 @@ long Online::get_time()
 
 // 
 // Online.cc ends here
-
-
-
-
-
-
-
-
-
-

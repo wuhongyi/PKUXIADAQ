@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 22:19:02 2016 (+0800)
-// Last-Updated: 三 10月 26 19:32:47 2016 (+0800)
+// Last-Updated: 六 11月  5 21:37:27 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 31
+//     Update #: 32
 // URL: http://wuhongyi.cn 
 
 #include "Manager.hh"
@@ -178,6 +178,10 @@ void Manager::CheckKeyboard()
 	        AcqRun = true;
 	      }
 	    break;
+	  }
+	case 'c':
+	  {
+	    PrintInterface();
 	  }
 	// case 'w' :
 	//   {

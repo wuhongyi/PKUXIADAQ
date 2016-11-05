@@ -130,7 +130,7 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   make_columns(column13, ckBtn_11, (char*)"MVS", (char*)"Require module validation trigger", 6100,4);
   make_columns(column14, ckBtn_12, (char*)"ERB", (char*)"Record raw energy sums and baseline in event header", 6200,2);
   make_columns(column15, ckBtn_13, (char*)"CVT", (char*)"Require channel validation trigger", 6300,4);
-  make_columns(column16, ckBtn_14, (char*)"IR", (char*)"Control input relay: 1: connect, 0: disconnect", 6400);
+  make_columns(column16, ckBtn_14, (char*)"IR", (char*)"Control input relay: => Gain 0.625/2.5", 6400);
   // bits[15:16]
   // 00: record all events (trace, timestamps, etc., but no energy for piled-up events)
   // 10: only record single events (trace, energy, timestamps, etc.) (i.e., reject piled-up events)

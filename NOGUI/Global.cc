@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:50:10 2016 (+0800)
-// Last-Updated: 三 9月 28 12:24:37 2016 (+0800)
+// Last-Updated: 六 11月  5 21:46:33 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 5
+//     Update #: 7
 // URL: http://wuhongyi.cn 
 
 #include "Global.hh"
@@ -106,13 +106,8 @@ void PrintInterface()
   printf("\n  [q]   Quit\n");
   printf("  [s]   Start/Stop acquisition\n");
   printf("  [o]   Send Shared Memory Online\n");
-  // printf("  [t]   Send a software trigger\n");
-  // printf("  [w]   Enable/Disable continuous writing to output file\n");
-  // printf("  [R]   Reload board parameters file and restart\n");
-  // printf("  [p]   Enable/Disable  plot mode\n");
-  // printf("  [0]   Plot recently single on plot mode \n");
-  // printf("  [2/8] Minus/Plus one channel on plot mode\n");
-  // printf("  [4/6] Minus/Plus one board on plot mode\n");
+  printf("  [c]   Clean Screen\n");
+
   printf("--------------------------------------------------------------------------\n");
 
 }

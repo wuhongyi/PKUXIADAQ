@@ -30,7 +30,7 @@ Main::Main(const TGWindow * p)
   ///////////////////////////////////////
   CreateMenuBar();
   //	SetWindowName("Pixie16 Oscilloscope");
-  SetWindowName("PKU Pixie16 DAQ");
+  SetWindowName("PKU Pixie16-RevF DAQ");
   MapSubwindows();
   MapWindow();
   Resize(INITIAL_WIDTH, INITIAL_HIGHT);
@@ -155,7 +155,7 @@ Bool_t Main::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 
 	    case ABOUT:
-	      about=new Popup(fClient->GetRoot(),this,(char*)MADE);
+	      about = new Popup(fClient->GetRoot(),this,(char*)MADE);
 	      break;
 
 	    case PULSE:
@@ -175,7 +175,7 @@ Bool_t Main::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      energyfilter->load_info(0);
 	      break;
 	    case ASG:
-	      analogsignal = new AnalogSignal(fClient->GetRoot (), this, (char*)"Analog Signal Setup", 3, 16, detector->NumModules);
+	      analogsignal = new AnalogSignal(fClient->GetRoot (), this, (char*)"Analog Signal Setup", 2, 16, detector->NumModules);
 	      analogsignal->load_info(0);
 	      break;
 	    case CSRA:
