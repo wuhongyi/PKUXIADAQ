@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 六 11月  5 18:21:21 2016 (+0800)
+;; Last-Updated: 日 11月  6 11:57:33 2016 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 52
+;;     Update #: 53
 ;; URL: http://wuhongyi.cn -->
 
 **本说明书不适用于 Rev-A modules**
@@ -413,7 +413,7 @@ BLCut 可手动/自动调节。自动调节到**Analog Signal Setup**按自动�
 
 ## coincidence/multiplicity trigger
 
-前提是自身fast filter得过域
+前提是自身fast filter得过阈值
 
 CSRA bit3=0 bit13=1
 选择左、中、右插件参与判断路

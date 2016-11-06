@@ -1,1 +1,1 @@
-#pragma link C++ class Main+;
+#pragma link C++ class MainFrame+;

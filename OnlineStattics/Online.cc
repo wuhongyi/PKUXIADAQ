@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 六 11月  5 21:19:35 2016 (+0800)
+// Last-Updated: 日 11月  6 10:36:11 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 135
+//     Update #: 136
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -459,7 +459,7 @@ void Online::StartStop()
 void Online::LoopRun()
 {
   double filesize;
-  double tempinputcountrate,tempoutputcountrate;
+  int tempinputcountrate,tempoutputcountrate;// double
   std::string tempstring;
   
   std::stringstream ss;//sstream cstring

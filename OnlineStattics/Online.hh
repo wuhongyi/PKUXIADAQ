@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:41 2016 (+0800)
-// Last-Updated: 六 11月  5 21:18:36 2016 (+0800)
+// Last-Updated: 日 11月  6 10:34:52 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 39
+//     Update #: 40
 // URL: http://wuhongyi.cn 
 
 #ifndef _ONLINE_H_
@@ -143,13 +143,3 @@ private:
 #endif /* _ONLINE_H_ */
 // 
 // Online.hh ends here
-
-
-
-
-
-
-
-
-
-

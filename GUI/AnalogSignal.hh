@@ -1,0 +1,33 @@
+#ifndef ANALOGSIGNAL_HH_
+#define ANALOGSIGNAL_HH_
+
+#include "Table.hh"
+
+#include "TGComboBox.h"
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+class AnalogSignal : public Table
+{
+public:
+  AnalogSignal(const TGWindow * p, const TGWindow * main, char *name, int columns,
+	       int rows, int NumModules);
+  virtual ~AnalogSignal();
+  
+  Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2);
+  int change_values(Long_t mod);
+  int load_info(Long_t mod);
+
+protected:
+  short int modNumber; 
+  short int chanNumber;
+  bool Load_Once;
+  Pixel_t color;
+  TGVerticalFrame* ColumnSign, *ColumnGain;
+  TGComboBox *lstBox[17], *lstBoxGain[17];
+  TGNumberEntry* chanCopy;
+  int pol_temp;
+  int gain_temp;
+  float offset_temp;
+};
+
+#endif /*ANALOGSIGNAL_HH_*/
