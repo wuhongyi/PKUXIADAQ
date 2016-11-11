@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:52:00 2016 (+0800)
-// Last-Updated: 六 11月  5 21:34:31 2016 (+0800)
+// Last-Updated: 五 11月 11 13:55:49 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 28
+//     Update #: 30
 // URL: http://wuhongyi.cn 
 
 #include "Detector.hh"
@@ -360,54 +360,6 @@ int Detector::StopLSMRun()
     }
   CloseFile();
 
-  unsigned int Statistics[448];
-  for(unsigned short i = 0;i < NumModules;i++)
-    {
-      retval = Pixie16ReadStatisticsFromModule(Statistics, i);
-      if(retval < 0)
-	{
-	  ErrorInfo("Detector.cc", "StopLSMRun(...)", "Pixie16ReadStatisticsFromModule", retval);
-	  cout<<"error in get statistics info"<<endl;
-	}
-      else
-	{
-	  cout<<"Mod: "<<i<<endl;
-
-	  cout<<"InputCountRate: ";
-	  for(unsigned short j=0;j<16;j++)
-	    {
-	      cout<<Pixie16ComputeInputCountRate(Statistics, i, j)<<" ";
-	    }
-	  cout<<endl;
-	      
-	  cout<<"LiveTime: ";
-	  for(unsigned short j=0;j<16;j++)
-	    {
-	      cout<<Pixie16ComputeLiveTime(Statistics, i, j)<<" ";
-	    }
-	  cout<<endl;
-
-	  cout<<"OutputCountRate: ";
-	  for(unsigned short j=0;j<16;j++)
-	    {
-	      cout<<Pixie16ComputeOutputCountRate(Statistics, i, j)<<" ";
-	    }
-	  cout<<endl;
-
-	  cout<<"FastPeaks ChanEvents: ";
-	  for(unsigned short j=0;j<16;j++)
-	    {
-	      cout<< ((unsigned long)(Statistics[95+j])<<32)+Statistics[111+j] <<" "<<((unsigned long)(Statistics[223+j])<<32)+Statistics[239+j]<<", ";
-	    }
-	  cout<<endl;
-	  
-	  cout<<"RealTime: ";
-	  cout<<Pixie16ComputeRealTime(Statistics, i)<<" ";
-	  cout<<endl<<endl;
-	      
-	}
-    }
-
   cout<<"Real Run Time:"<<StopTime-StartTime<<endl;
   return 0;
 }
@@ -489,6 +441,20 @@ int Detector::ExitSystem()
     ErrorInfo("Detector.cc", "ExitSystem()", "Pixie16ExitSystem", retval);
     return 1;
   }
+  return 0;
+}
+
+
+int Detector::SaveHistogram(char *fileN , int mod)
+{
+  
+  int retval ;
+
+  retval = Pixie16SaveHistogramToFile(fileN,mod);
+  if(retval <0 ) {
+    ErrorInfo("Detector.cc", "SaveHistogram(...)", "Pixie16SaveHistogramToFile", retval);
+  }
+
   return 0;
 }
 

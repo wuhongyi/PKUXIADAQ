@@ -216,7 +216,7 @@ int main(int argc, char *argv[])
 	    }
 	  nFIFOWords[k] += mod_numwordsread;
 	}
-      if(nFIFOWords[0] >= 20000000)//wuhongyi
+      if(nFIFOWords[1] >= 20000000)//wuhongyi
 	{
 	  sprintf(ErrMSG, "Number of events reached - stopping run");
 	  Pixie_Print_MSG(ErrMSG);

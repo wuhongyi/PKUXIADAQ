@@ -28,7 +28,7 @@ MainFrame::MainFrame(const TGWindow * p)
   channelNr = 0;
   size = 8192; //scope trace size
   detector = 0; 
-  runnum=0;
+  runnum = 0;
   ///////////////////////////////////////
   CreateMenuBar();
 
@@ -639,7 +639,8 @@ void MainFrame::SetLSFileName()
   for(int i = 0;i < detector->NumModules;i++)
     {
       sprintf(Filename[i],"%s%s_R%04d_M%02d.bin",path,filen,runnum,i);
-      cout<<i<<" "<<Filename[i]<<endl;
+      sprintf(Histogramname[i],"%s%s_histogram_R%04d_M%02d.bin",path,filen,runnum,i);
+      // cout<<i<<" "<<Filename[i]<<endl;
     }
 
   if(IsDirectoryExists(filepathtext->GetText()))
@@ -714,6 +715,12 @@ void MainFrame::LSRunReadData()
     counter++;
     if(counter>10) break;
   }
+
+  for(int i = 0;i < detector->NumModules;i++)
+    {
+      detector->SaveHistogram(Histogramname[i],i);
+    }
+  
   cout<<"finish!"<<endl;
 }
 

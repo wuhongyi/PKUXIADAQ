@@ -177,7 +177,8 @@ private:
   int parts[4];
 
   // ******** File Setup Variables *********
-  char  Filename[PRESET_MAX_MODULES][100];
+  char  Filename[PRESET_MAX_MODULES][256];
+  char  Histogramname[PRESET_MAX_MODULES][256];
   char  Histofile[100];
   char  Staticfile[100];
   int   runnum;

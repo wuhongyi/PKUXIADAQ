@@ -33,7 +33,7 @@ public:
   int StopLSMRun();
   int CloseFile();
   int SetOnlineF(bool flag);
-  int SaveHistogram(char *fileN);
+  int SaveHistogram(char *fileN,int mod);
   int OpenSharedMemory();
   int UpdateSharedMemory();
   void SetRunNumber(int r);

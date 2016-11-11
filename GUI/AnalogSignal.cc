@@ -36,8 +36,8 @@ AnalogSignal::AnalogSignal(const TGWindow * p, const TGWindow * main, char *name
     {
       ColumnGain->AddFrame(lstBoxGain[i] = new TGComboBox(ColumnGain, 2755 + i), new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
       lstBoxGain[i]->Associate(this);
-      lstBoxGain[i]->AddEntry("2.5", 0);
-      lstBoxGain[i]->AddEntry("0.625", 1);
+      lstBoxGain[i]->AddEntry("Larger", 0);
+      lstBoxGain[i]->AddEntry("Smaller", 1);
       lstBoxGain[i]->Resize(80, 20);
     }
 

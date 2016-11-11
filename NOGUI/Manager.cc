@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 22:19:02 2016 (+0800)
-// Last-Updated: 六 11月  5 21:37:27 2016 (+0800)
+// Last-Updated: 五 11月 11 13:53:57 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 32
+//     Update #: 34
 // URL: http://wuhongyi.cn 
 
 #include "Manager.hh"
@@ -91,7 +91,8 @@ void Manager::SetLSFileName()
   for(int i = 0;i < detector->NumModules;i++)
     {
       sprintf(Filename[i],"%s%s_R%04d_M%02d.bin",filepathtext.c_str(),filenametext.c_str(),runnum,i);
-      std::cout<<i<<" "<<Filename[i]<<std::endl;
+      sprintf(Histogramname[i],"%s%s_histogram_R%04d_M%02d.bin",filepathtext.c_str(),filenametext.c_str(),runnum,i);
+      // std::cout<<i<<" "<<Filename[i]<<std::endl;
     }
   fstartdaq = 0;
 }
@@ -142,6 +143,12 @@ void Manager::CheckKeyboard()
 		  counter++;
 		  if(counter > 10) break;
 		}
+
+		for(int i = 0;i < detector->NumModules;i++)
+		  {
+		    detector->SaveHistogram(Histogramname[i],i);
+		  }
+		
 		std::cout<<"finish!"<<std::endl;
 		
 	        AcqRun = false;

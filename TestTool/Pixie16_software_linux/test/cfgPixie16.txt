@@ -6,5 +6,5 @@
 ./fippixie16_revfgeneral_14b100m_r36263.bin
 FPGATrig
 ./Pixie16DSP_revfgeneral_14b100m_r36264.ldr
-./20161002.set
+./20161105Riken1pf20M.set
 ./Pixie16DSP_revfgeneral_14b100m_r36264.var

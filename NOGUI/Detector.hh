@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:51:04 2016 (+0800)
-// Last-Updated: 一 10月  3 19:57:56 2016 (+0800)
+// Last-Updated: 五 11月 11 13:52:33 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 5
+//     Update #: 6
 // URL: http://wuhongyi.cn 
 
 #ifndef _DETECTOR_H_
@@ -45,6 +45,7 @@ public:
   int StopLSMRun();
   int CloseFile();
   int SetOnlineF(bool flag);
+  int SaveHistogram(char *fileN,int mod);
   int OpenSharedMemory();
   int UpdateSharedMemory();
   void SetRunNumber(int r);

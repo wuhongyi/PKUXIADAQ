@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 22:17:54 2016 (+0800)
-// Last-Updated: 三 8月 17 15:51:47 2016 (+0800)
+// Last-Updated: 五 11月 11 13:51:03 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 11
+//     Update #: 12
 // URL: http://wuhongyi.cn 
 
 #ifndef _MANAGER_H_
@@ -44,7 +44,8 @@ protected:
   
 private:
   
-  char Filename[PRESET_MAX_MODULES][100];
+  char Filename[PRESET_MAX_MODULES][256];
+  char  Histogramname[PRESET_MAX_MODULES][256];
   
   std::string filepathtext;
   std::string filenametext;
@@ -67,9 +68,3 @@ private:
 #endif /* _MANAGER_H_ */
 // 
 // Manager.hh ends here
-
-
-
-
-
-

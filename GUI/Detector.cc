@@ -379,7 +379,7 @@ int Detector::StopLSMRun()
     return 1;
   }
   
-  int counter=0;
+  int counter = 0;
   while(RunStatus()){
     ReadDataFromModules(0);
     counter++;
@@ -388,61 +388,14 @@ int Detector::StopLSMRun()
   if(counter == 10*NumModules) {
     cout<<" ERROR! Some modules may not End Run correctly!"<<endl;
   }
+  
   // Make sure all data has been read out
   ReadDataFromModules(0,1); // end of run
-  for(unsigned short i=0;i<NumModules;i++)
+  for(unsigned short i = 0;i < NumModules;i++)
     {
       SavetoFile(i);
     }
   CloseFile();
-
-  unsigned int Statistics[448];
-  for(unsigned short i = 0;i < NumModules;i++)
-    {
-      retval = Pixie16ReadStatisticsFromModule(Statistics, i);
-      if(retval < 0)
-	{
-	  ErrorInfo("Detector.cc", "StopLSMRun(...)", "Pixie16ReadStatisticsFromModule", retval);
-	  cout<<"error in get statistics info"<<endl;
-	}
-      else
-	{
-	  cout<<"Mod: "<<i<<endl;
-
-	  cout<<"InputCountRate: ";
-	  for(unsigned short j=0;j<16;j++)
-	    {
-	      cout<<Pixie16ComputeInputCountRate(Statistics, i, j)<<" ";
-	    }
-	  cout<<endl;
-	      
-	  cout<<"LiveTime: ";
-	  for(unsigned short j=0;j<16;j++)
-	    {
-	      cout<<Pixie16ComputeLiveTime(Statistics, i, j)<<" ";
-	    }
-	  cout<<endl;
-
-	  cout<<"OutputCountRate: ";
-	  for(unsigned short j=0;j<16;j++)
-	    {
-	      cout<<Pixie16ComputeOutputCountRate(Statistics, i, j)<<" ";
-	    }
-	  cout<<endl;
-
-	  cout<<"FastPeaks ChanEvents: ";
-	  for(unsigned short j=0;j<16;j++)
-	    {
-	      cout<< ((unsigned long)(Statistics[95+j])<<32)+Statistics[111+j] <<" "<<((unsigned long)(Statistics[223+j])<<32)+Statistics[239+j]<<", ";
-	    }
-	  cout<<endl;
-	  
-	  cout<<"RealTime: ";
-	  cout<<Pixie16ComputeRealTime(Statistics, i)<<" ";
-	  cout<<endl<<endl;
-	      
-	}
-    }
 
   cout<<"Real Run Time:"<<StopTime-StartTime<<endl;
   return 0;
@@ -554,13 +507,14 @@ int Detector::ExitSystem()
   return 0;
 }
 
-int Detector::SaveHistogram(char *fileN){
+int Detector::SaveHistogram(char *fileN , int mod)
+{
+  
   int retval ;
-  for(int i=0;i<NumModules;i++){
-    retval = Pixie16SaveHistogramToFile(fileN,i);
-    if(retval<0) {
+
+  retval = Pixie16SaveHistogramToFile(fileN,mod);
+  if(retval <0 ) {
     ErrorInfo("Detector.cc", "SaveHistogram(...)", "Pixie16SaveHistogramToFile", retval);
-    }
   }
 
   return 0;
