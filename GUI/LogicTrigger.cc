@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 日 11月  6 20:11:53 2016 (+0800)
+// Last-Updated: 四 11月 17 13:07:41 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 84
+//     Update #: 85
 // URL: http://wuhongyi.cn 
 
 #include "LogicTrigger.hh"
@@ -336,14 +336,13 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   fVV2->AddFrame(LabelExternalFastTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
   ExternalFastTrigger = new TGComboBox(fVV2);
   fVV2->AddFrame(ExternalFastTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
-  ExternalFastTrigger->Resize(100, 20);
-  for (int i = 0; i < 16; ++i)
-    {
-      sprintf(tempname,"source %02d",i);
-      ExternalFastTrigger->AddEntry(tempname, i+1);
-    }
+  ExternalFastTrigger->Resize(150, 20);
+  ExternalFastTrigger->AddEntry("Ext_FastTrig_Sel", 1);
+  ExternalFastTrigger->AddEntry("Int_FastTrig_Sgl", 2);
+  ExternalFastTrigger->AddEntry("FTIN_Or", 3);
+  ExternalFastTrigger->AddEntry("LVDS_ValidTrig_FP", 4);
+  ExternalFastTrigger->AddEntry("ChanTrig_Sel", 5);
   ExternalFastTrigger->Select(1);
-
 
   TGHorizontalFrame *fVV4 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fVV4, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
@@ -389,12 +388,13 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   fVV6->AddFrame(LabelExternalValidationTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
   ExternalValidationTrigger = new TGComboBox(fVV6);
   fVV6->AddFrame(ExternalValidationTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
-  ExternalValidationTrigger->Resize(100, 20);
-  for (int i = 0; i < 16; ++i)
-    {
-      sprintf(tempname,"source %02d",i);
-      ExternalValidationTrigger->AddEntry(tempname, i+1);
-    }
+  ExternalValidationTrigger->Resize(150, 20);
+  ExternalValidationTrigger->AddEntry("Ext_ValidTrig_Sel", 1);
+  ExternalValidationTrigger->AddEntry("Int_ValidTrig_Sgl", 2);
+  ExternalValidationTrigger->AddEntry("FTIN_Or", 3);
+  ExternalValidationTrigger->AddEntry("LVDS_ValidTrig_FP", 4);
+  ExternalValidationTrigger->AddEntry("ChanTrig_Sel", 5);
+  
   ExternalValidationTrigger->Select(1);
 
   TGHorizontalFrame *fVV5 = new TGHorizontalFrame(mn_vert, 10, 10);
