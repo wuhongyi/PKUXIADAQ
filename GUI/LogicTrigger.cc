@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 四 11月 17 13:07:41 2016 (+0800)
+// Last-Updated: 四 11月 17 18:46:33 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 85
+//     Update #: 86
 // URL: http://wuhongyi.cn 
 
 #include "LogicTrigger.hh"
@@ -696,7 +696,7 @@ int LogicTrigger::change_values(Long_t mod)
   SetMultipleBit(&ModParData,InternalFastTrigger->GetSelected(),3,2,1,0);
   SetMultipleBit(&ModParData,ExternalFastTrigger->GetSelected(),7,6,5,4);
   SetMultipleBit(&ModParData,InternalValidationTrigger->GetSelected(),11,10,9,8);
-  SetMultipleBit(&ModParData,GlobalFastTrigger->GetSelected(),25.24);
+  SetMultipleBit(&ModParData,GlobalFastTrigger->GetSelected(),25,24);
   SetMultipleBit(&ModParData,GlobalValidationTrigger->GetSelected(),27,26);
   SetMultipleBit(&ModParData,ExternalValidationTrigger->GetSelected(),31,30,29,28);
   retval = Pixie16WriteSglModPar((char*)"TrigConfig0", ModParData, mod);
