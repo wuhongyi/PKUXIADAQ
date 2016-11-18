@@ -1,11 +1,22 @@
+// Base.cc --- 
+// 
+// Description: 
+// Author: Hongyi Wu(吴鸿毅)
+// Email: wuhongyi@qq.com 
+// Created: 五 11月 18 19:24:01 2016 (+0800)
+// Last-Updated: 五 11月 18 20:01:56 2016 (+0800)
+//           By: Hongyi Wu(吴鸿毅)
+//     Update #: 5
+// URL: http://wuhongyi.cn 
+
+#include "Base.hh"
 #include "Global.hh"
-#include "AnalogSignal.hh"
 
 #include "pixie16app_export.h"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-AnalogSignal::AnalogSignal(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, int NumModules)
-  :Table (p, main, columns, rows, name,NumModules)
+Base::Base(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, int NumModules)
+  : Table(p, main, columns, rows, name,NumModules)
 {
   char n[10];
   cl0->SetText("ch #");
@@ -16,6 +27,18 @@ AnalogSignal::AnalogSignal(const TGWindow * p, const TGWindow * main, char *name
     }
   CLabel[0]->SetText("DCOffset");
   CLabel[0]->SetAlignment(kTextCenterX);
+  CLabel[1]->SetText("BLcut");
+  CLabel[1]->SetAlignment(kTextCenterX);
+  CLabel[2]->SetText("Baseline[%]");
+  CLabel[2]->SetAlignment(kTextCenterX);
+  CLabel[3]->SetText("Thresh. [ADC u]");
+  CLabel[3]->SetAlignment(kTextCenterX);
+  CLabel[4]->SetText("Trace Length[us]");
+  CLabel[4]->SetAlignment(kTextCenterX);
+  CLabel[5]->SetText("Trace Delay[us]");
+  CLabel[5]->SetAlignment(kTextCenterX);
+
+  
 
   ColumnGain = new TGVerticalFrame(mn, 200, 300);
   mn->AddFrame(ColumnGain, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
@@ -104,17 +127,23 @@ AnalogSignal::AnalogSignal(const TGWindow * p, const TGWindow * main, char *name
   pol_temp = 0;
   gain_temp = 0;
   offset_temp = 0;
+  blcut = 0;
+  blpercent = 0;
+  thresh = 0;
+  tlength = 0;
+  tdelay = 0;
+  
 }
 
-/////////////////////////////////////////////////////////////////////////////////
-
-AnalogSignal::~AnalogSignal ()
+Base::~Base()
 {
+
 }
 
-/////////////////////////////////////////////////////////////////////////////////
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-Bool_t AnalogSignal::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
+
+Bool_t Base::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 {
   switch (GET_MSG(msg))
     {
@@ -186,15 +215,31 @@ Bool_t AnalogSignal::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      pol_temp = lstBox[chanNumber]->GetSelected();
 	      gain_temp = lstBoxGain[chanNumber]->GetSelected();
 	      offset_temp = NumEntry[1][chanNumber]->GetNumber();
-	      cout<<pol_temp<<" "<<gain_temp<<" "<<offset_temp<<endl;
+	      blcut = NumEntry[2][chanNumber]->GetNumber();
+	      blpercent = NumEntry[3][chanNumber]->GetNumber();
+	      thresh = NumEntry[4][chanNumber]->GetNumber();
+	      tlength = NumEntry[5][chanNumber]->GetNumber();
+	      tdelay = NumEntry[6][chanNumber]->GetNumber();
+	      
 	      for(int i  =0;i < 16;i++)
 		{
 		  if(i != (chanNumber))
 		    {
 		      lstBox[i]->Select(pol_temp);
 		      lstBoxGain[i]->Select(gain_temp);
-		      char tmp[10]; sprintf(tmp,"%1.3f",offset_temp);
+		      char tmp[10];
+		      sprintf(tmp,"%1.3f",offset_temp);
 		      NumEntry[1][i]->SetText(tmp);
+		      sprintf(tmp,"%1.3f",blcut);
+		      NumEntry[2][i]->SetText(tmp);	
+		      sprintf(tmp,"%1.3f",blpercent);
+		      NumEntry[3][i]->SetText(tmp);
+		      sprintf(tmp,"%1.3f",thresh);
+		      NumEntry[4][i]->SetText(tmp);
+		      sprintf(tmp,"%1.3f",tlength);
+		      NumEntry[5][i]->SetText(tmp);
+		      sprintf(tmp,"%1.3f",tdelay);
+		      NumEntry[6][i]->SetText(tmp);
 		    }
 		}  
 		    
@@ -203,7 +248,7 @@ Bool_t AnalogSignal::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      {
 		int retval = Pixie16AdjustOffsets(modNumber);
 		if(retval < 0){
-		  ErrorInfo("AnalogSignal.cc", "ProcessMessage(...)", "Pixie16AdjustOffsets", retval);
+		  ErrorInfo("Base.cc", "ProcessMessage(...)", "Pixie16AdjustOffsets", retval);
 		  break;
 		}
 		load_info(modNumber);
@@ -216,6 +261,19 @@ Bool_t AnalogSignal::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	default:
 	  break;
 	}
+    // case kC_TEXTENTRY:
+    //   switch (GET_SUBMSG(msg))
+    // 	{
+    // 	case kTE_TAB:
+    // 	  if (parm1 < 16)
+    // 	    NumEntry[3][parm1]->SetFocus();
+    // 	  if (parm1 > 15 && parm1 < 32)
+    // 	    {
+    // 	      if ((parm1 - 16) + 1 < 16)
+    // 		NumEntry[1][(parm1 - 16) + 1]->SetFocus();
+    // 	    }
+    // 	  break;
+    // 	}
       break;
     default:
       break;
@@ -224,8 +282,8 @@ Bool_t AnalogSignal::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
   return kTRUE;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-int AnalogSignal::load_info(Long_t mod)
+
+int Base::load_info(Long_t mod)
 {
   double ChanParData = -1;
 
@@ -238,7 +296,7 @@ int AnalogSignal::load_info(Long_t mod)
     {
       retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA", &ChanParData, mod, i);
       if(retval < 0)
-	ErrorInfo("AnalogSignal.cc", "load_info(...)", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);
+	ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);
       gain = APP32_TstBit(14, (unsigned int) ChanParData);
       if (gain == 1)
 	lstBoxGain[i]->Select(0);
@@ -253,58 +311,134 @@ int AnalogSignal::load_info(Long_t mod)
 
       retval = Pixie16ReadSglChanPar((char*)"VOFFSET", &ChanParData, mod, i);
       if(retval < 0)
-	ErrorInfo("AnalogSignal.cc", "load_info(...)", "Pixie16ReadSglChanPar/VOFFSET", retval);
+	ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/VOFFSET", retval);
       sprintf(text, "%1.3f", ChanParData);
       NumEntry[1][i]->SetText(text);
+
+      retval = Pixie16ReadSglChanPar((char*)"BLCUT", &ChanParData, mod, i);
+      if(retval < 0) ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/BLCUT", retval);  
+      sprintf(text, "%d", (int)ChanParData);
+      NumEntry[2][i]->SetText(text);
+
+      retval = Pixie16ReadSglChanPar((char*)"BASELINE_PERCENT", &ChanParData, mod, i);
+      if(retval < 0) ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/BASELINE_PERCENT", retval);  
+      sprintf(text, "%d", (int)ChanParData);
+      NumEntry[3][i]->SetText(text);
+
+      retval = Pixie16ReadSglChanPar((char*)"TRIGGER_THRESHOLD", &ChanParData, mod, i);
+      if(retval < 0) ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRIGGER_THRESHOLD", retval);
+      sprintf(text, "%d", (int)ChanParData);
+      NumEntry[4][i]->SetText(text);
+
+      retval = Pixie16ReadSglChanPar((char*)"TRACE_LENGTH", &ChanParData, mod, i);
+      if(retval < 0) ErrorInfo("PulseShape.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRACE_LENGTH", retval);
+      sprintf (text, "%1.2f", ChanParData);
+      NumEntry[5][i]->SetText(text);
+
+      retval = Pixie16ReadSglChanPar((char*)"TRACE_DELAY", &ChanParData, mod, i);
+      if(retval < 0) ErrorInfo("PulseShape.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRACE_DELAY", retval);
+      sprintf(text, "%1.2f", ChanParData);
+      NumEntry[6][i]->SetText(text);
+
+      
     }
   return 1;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-int AnalogSignal::change_values(Long_t mod)
+int Base::change_values(Long_t mod)
 {
   int retval;
   double offset;
   double ChanParData = -1;
   double gain;
   int pol = 0;
+  double cut;
+  double percent;
+  double thresh;
+  double length;
+  double delay;
+  
   for (int i = 0; i < 16; i++)
     {
       offset = NumEntry[1][i]->GetNumber();
 
       retval = Pixie16WriteSglChanPar((char*)"VOFFSET", offset, mod, i);
-      if(retval < 0) ErrorInfo("AnalogSignal.cc", "change_values(...)", "Pixie16WriteSglChanPar/VOFFSET", retval);
+      if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/VOFFSET", retval);
       retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA", &ChanParData, mod, i);
-      if(retval < 0) ErrorInfo("AnalogSignal.cc", "change_values(...)", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);     
+      if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);     
       pol = lstBox[i]->GetSelected();
       if (pol == 0)
 	{
 	  ChanParData = APP32_SetBit(5, (unsigned int) ChanParData);
 	  retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, mod, i);
-	  if(retval < 0) ErrorInfo("AnalogSignal.cc", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);   
+	  if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);   
 	}
       else
 	{
 	  ChanParData = APP32_ClrBit(5, (unsigned int) ChanParData);
 	  retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, mod, i);
-	  if(retval < 0) ErrorInfo("AnalogSignal.cc", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);   
+	  if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);   
 	}
 
       retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA", &ChanParData, mod, i);
-      if(retval < 0) ErrorInfo("AnalogSignal.cc", "change_values(...)", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);   
+      if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);   
       gain = lstBoxGain[i]->GetSelected();
       if (gain == 1)
 	{
 	  ChanParData = APP32_ClrBit(14, (unsigned int) ChanParData);
 	  retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, mod, i);
-	  if(retval < 0) ErrorInfo("AnalogSignal.cc", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);   
+	  if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);   
 	}
       else
 	{
 	  ChanParData = APP32_SetBit(14, (unsigned int) ChanParData);
 	  retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, mod, i);
-	  if(retval < 0) ErrorInfo("AnalogSignal.cc", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);   
+	  if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);   
 	}
+
+
+      cut = NumEntry[2][i]->GetNumber();
+      retval = Pixie16WriteSglChanPar((char*)"BLCUT", cut, mod, i);
+      if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/BLCUT", retval);  
+      percent = NumEntry[3][i]->GetNumber();
+      retval = Pixie16WriteSglChanPar((char*)"BASELINE_PERCENT", percent, mod, i);
+      if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/BASELINE_PERCENT", retval);  
+
+      thresh = NumEntry[4][i]->GetNumber();
+      retval = Pixie16WriteSglChanPar((char*)"TRIGGER_THRESHOLD", thresh, mod, i);
+      if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/TRIGGER_THRESHOLD", retval);
+
+
+      length = NumEntry[5][i]->GetNumber();
+      retval = Pixie16WriteSglChanPar((char*)"TRACE_LENGTH", length, mod, i);
+      if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/TRACE_LENGTH", retval);
+      delay = NumEntry[6][i]->GetNumber();
+      retval = Pixie16WriteSglChanPar((char*)"TRACE_DELAY", delay, mod, i);
+      if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/TRACE_DELAY", retval);
+
+
+
+
+
+
+
+      
     }
   return 1;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 
+// Base.cc ends here

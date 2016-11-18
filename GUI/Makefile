@@ -9,11 +9,11 @@ LIBS:=../software/libPixie16App.a  ../software/libPixie16Sys.a  $(PLX_SDK_DIR)/P
 
 
 
-INCLUDES:=Global.hh AnalogSignal.hh Detector.hh ExpertMod.hh Table.hh Baseline.hh displayEdit.hh Histogram.hh PulseShape.hh Tau.hh Csra.hh EnergyFilter.hh MainFrame.hh ScopedT.hh TriggerFilter.hh Cfd.hh Qdc.hh LogicTrigger.hh FPOutputs.hh Offline.hh MultiplicityMask.hh
+INCLUDES:=Global.hh Detector.hh ExpertMod.hh Table.hh Histogram.hh Csra.hh MainFrame.hh ScopedT.hh TriggerFilter.hh Cfd.hh Qdc.hh LogicTrigger.hh FPOutputs.hh Offline.hh MultiplicityMask.hh Base.hh Energy.hh
 
-OBJECTS:=Global.o AnalogSignal.o ExpertMod.o Baseline.o Histogram.o Csra.o Detector.o displayEdit.o EnergyFilter.o MainFrame.o main.o PulseShape.o ScopedT.o Table.o Tau.o TriggerFilter.o MainDict.o Cfd.o Qdc.o LogicTrigger.o FPOutputs.o Offline.o MultiplicityMask.o
+OBJECTS:=Global.o ExpertMod.o Histogram.o Csra.o Detector.o MainFrame.o main.o ScopedT.o Table.o TriggerFilter.o MainDict.o Cfd.o Qdc.o LogicTrigger.o FPOutputs.o Offline.o MultiplicityMask.o Base.o Energy.o
 
-SRCS:=Global.cc AnalogSignal.cc ExpertMod.cc Baseline.cc Histogram.cc Csra.cc Detector.cc displayEdit.cc EnergyFilter.cc MainFrame.cc main.cc PulseShape.cc ScopedT.cc Table.cc Tau.cc TriggerFilter.cc  MainDict.cc Cfd.cc Qdc.cc LogicTrigger.cc FPOutputs.cc Offline.cc MultiplicityMask.cc
+SRCS:=Global.cc ExpertMod.cc Histogram.cc Csra.cc Detector.cc MainFrame.cc main.cc ScopedT.cc Table.cc TriggerFilter.cc  MainDict.cc Cfd.cc Qdc.cc LogicTrigger.cc FPOutputs.cc Offline.cc MultiplicityMask.cc Base.cc Energy.cc
 
 all: $(OBJ)
 

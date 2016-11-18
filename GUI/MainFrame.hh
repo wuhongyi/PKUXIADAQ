@@ -22,21 +22,18 @@ Hui Tan\n\
 #define INITIAL_WIDTH 600
 #define MCA_SIZE 32768
 
-#include "AnalogSignal.hh"
-#include "Baseline.hh"
+#include "Base.hh"
 #include "Cfd.hh"
 #include "Csra.hh"
-#include "EnergyFilter.hh"
+#include "Energy.hh"
 #include "ExpertMod.hh"
 #include "FPOutputs.hh"
 #include "Histogram.hh"
 #include "LogicTrigger.hh"
 #include "MultiplicityMask.hh"
 #include "Offline.hh"
-#include "PulseShape.hh"
 #include "Qdc.hh"
 #include "ScopedT.hh"
-#include "Tau.hh"
 #include "TriggerFilter.hh"
 
 #include "../software/app/pixie16app_export.h"
@@ -80,15 +77,12 @@ enum Commands //commands for the menu bar popups
     MODULE_NUMBER_MCA,
     CHANNEL_NUMBER,
     CHANNEL_NUMBER_MCA,
-    ASG,
-    BASELINE,
-    EFILTER,
+    BASE,
+    ENERGY,
     TFILTER,
     CSRA,
-    PULSE,
     CFDP,
     QDCP,
-    DECAY,
     FILE_SAVE,
     MODVAR,
     LOGIC,
@@ -113,7 +107,6 @@ class Detector;
 class MainFrame : public TGMainFrame
 {
 public:
-  //	MainFrame();
   MainFrame(const TGWindow * p);
   virtual ~MainFrame();
 
@@ -128,17 +121,14 @@ private:
   TH1S  *fHpx_wave;
   TCanvas *dCanvasF1;
   //, *dCanvasMCA;
-  PulseShape *pulseshape;
   Cfd *cfd;
   Qdc *qdc;
 	
   TRootHelpDialog *about;
-  EnergyFilter *energyfilter;
-  AnalogSignal *analogsignal;
-  Baseline *baseline;
+  Energy *energy;
+  Base *base;
   Csra *csra;
   TriggerFilter *triggerfilter;
-  Tau *tau;
   ExpertMod *expertmod;
   LogicTrigger *logictrigger;
   FPOutputs *fpoutputs;

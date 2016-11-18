@@ -3,7 +3,6 @@
 #include "Detector.hh"
 #include "EnergyFilter.hh"
 #include "Global.hh"
-#include "PulseShape.hh"
 #include "TriggerFilter.hh"
 
 #include "pixie16app_export.h"
@@ -75,17 +74,13 @@ void MainFrame::CreateMenuBar()
   AddFrame(MenuBar, new TGLayoutHints (kLHintsTop | kLHintsLeft | kLHintsExpandX, 0, 0, 0, 0));
 
   TGPopupMenu *MenuSetup = new TGPopupMenu(fClient->GetRoot ());
-  MenuSetup->AddEntry("Ba&selines Setup", BASELINE);
-  MenuSetup->AddEntry("A&nalog Signal Conditioning", ASG);
-  MenuSetup->AddEntry("&Trigger Filter", TFILTER);
-  MenuSetup->AddEntry("&Energy Filter", EFILTER);
-  MenuSetup->AddEntry("&Decay Time", DECAY);
-  MenuSetup->AddEntry("&CSRA", CSRA);
-  MenuSetup->AddEntry("&Pulse Shape", PULSE);
-  MenuSetup->AddEntry("C&FD", CFDP);
+  MenuSetup->AddEntry("&Base Setup", BASE);
+  MenuSetup->AddEntry("&Energy", ENERGY);
+  MenuSetup->AddEntry("&CFD", CFDP);
   MenuSetup->AddEntry("&QDC", QDCP);
   MenuSetup->AddEntry("&Histogramming", HISTOGRAM);
   MenuSetup->AddEntry("dT", SCOPEDT);
+  MenuSetup->AddEntry("&Trigger Filter", TFILTER);
   MenuSetup->AddSeparator();
   MenuSetup->AddEntry("Save2File", FILE_SAVE);
   MenuSetup->Associate(this);
@@ -93,6 +88,7 @@ void MainFrame::CreateMenuBar()
 
   TGPopupMenu *MenuExpert = new TGPopupMenu(fClient->GetRoot());
   MenuExpert->AddEntry("Module Variables", MODVAR);
+  MenuExpert->AddEntry("&CSRA", CSRA);
   MenuExpert->AddEntry("Logic Set", LOGIC);
   MenuExpert->AddEntry("Multiplicity", MULTIPLICITYMASK);
   MenuExpert->AddEntry("Front Outputs", FRONTPANELOUTPUTS);
@@ -162,10 +158,9 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	     about->SetText(gAbout);
 	     about->Popup();
 	      break;
-
-	    case PULSE:
-	      pulseshape = new PulseShape(fClient->GetRoot(), this, (char*)"Pulse Shape", 3, 16, detector->NumModules);
-	      pulseshape->load_info(0);
+	    case BASE:
+	      base = new Base(fClient->GetRoot (), this, (char*)"Base Setup", 7, 16, detector->NumModules);
+	      base->load_info(0);
 	      break;
 	    case CFDP:
 	      cfd=new Cfd(fClient->GetRoot(),this,(char*)"Cfd Par.", 4, 16, detector->NumModules);
@@ -175,30 +170,17 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      qdc=new Qdc(fClient->GetRoot(),this,(char*)"Qdc Par.", 9, 16, detector->NumModules);
 	      qdc->load_info(0);
 	      break;
-	    case EFILTER:
-	      energyfilter = new EnergyFilter(fClient->GetRoot (), this, (char*)"Energy Filter", 3, 16, detector->NumModules);
-	      energyfilter->load_info(0);
-	      break;
-	    case ASG:
-	      analogsignal = new AnalogSignal(fClient->GetRoot (), this, (char*)"Analog Signal Setup", 2, 16, detector->NumModules);
-	      analogsignal->load_info(0);
+	    case ENERGY:
+	      energy = new Energy(fClient->GetRoot(), this, (char*)"Energy", 5, 16, detector->NumModules);
+	      energy->load_info(0);
 	      break;
 	    case CSRA:
 	      csra = new Csra(fClient->GetRoot(), this,detector->NumModules);
 	      csra->load_info(0);
 	      break;
 	    case TFILTER:
-	      triggerfilter = new TriggerFilter(fClient->GetRoot (), this, (char*)"Trigger Filter", 4, 16, detector->NumModules);
+	      triggerfilter = new TriggerFilter(fClient->GetRoot (), this, (char*)"Trigger Filter", 3, 16, detector->NumModules);
 	      triggerfilter->load_info(0);
-	      break;
-
-	    case BASELINE:
-	      baseline = new Baseline(fClient->GetRoot (), this, (char*)"Baseline Setup", 3, 16, detector->NumModules);
-	      baseline->load_info(0);
-	      break;
-	    case DECAY:
-	      tau = new Tau(fClient->GetRoot(), NULL, (char*)"Decay Time", 3, 16, detector->NumModules);
-	      tau->load_info(0);
 	      break;
 	    case MODVAR:
 	      expertmod = new ExpertMod(fClient->GetRoot(), this, (char*)"Expert MOD", detector->NumModules);
@@ -489,17 +471,9 @@ void MainFrame::NewTrace(unsigned long size, unsigned short module, unsigned sho
 
   fHpx_wave->Reset();
   for (int i = 0; i < (int)size; i++){
-    //		cout<<"T:"<< i <<" : " <<trace[i]<<endl;
     fHpx_wave->Fill(i, trace[i]);
-    //		fHpx_wave->Fill(i, (Double_t)i);
   }
 
-  //	if (!wave_once)
-  //	{
-  //		wave_once = true;
-  //		fHpx_wave->SetMaximum(ymax);
-  //		fHpx_wave->SetMinimum(ymin);
-  //	}
   dCanvasF1->cd();
   fHpx_wave->DrawCopy("hist");
   dCanvasF1->Modified();
