@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:51:04 2016 (+0800)
-// Last-Updated: 五 11月 11 13:52:33 2016 (+0800)
+// Last-Updated: 六 11月 19 12:48:43 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 6
+//     Update #: 7
 // URL: http://wuhongyi.cn 
 
 #ifndef _DETECTOR_H_
@@ -61,12 +61,12 @@ public:
 private:
   unsigned short *PXISlotMap;
   unsigned short OfflineMode;
-  char ComFPGAConfigFile[80];
-  char SPFPGAConfigFile[80];
-  char TrigFPGAConfigFile[80];
-  char DSPCodeFile[80];
-  char DSPParFile[80];
-  char DSPVarFile[80];
+  char ComFPGAConfigFile[256];
+  char SPFPGAConfigFile[256];
+  char TrigFPGAConfigFile[256];
+  char DSPCodeFile[256];
+  char DSPParFile[256];
+  char DSPVarFile[256];
   bool ReadConfigFile(char *config = (char*)"../parset/cfgPixie16.txt");
 	
   FILE *fsave[PRESET_MAX_MODULES];

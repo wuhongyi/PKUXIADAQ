@@ -1,9 +1,7 @@
 #include "MainFrame.hh"
 #include "Csra.hh"
 #include "Detector.hh"
-#include "EnergyFilter.hh"
 #include "Global.hh"
-#include "TriggerFilter.hh"
 
 #include "pixie16app_export.h"
 #include "pixie16sys_export.h"

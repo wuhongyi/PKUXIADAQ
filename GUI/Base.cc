@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 11月 18 19:24:01 2016 (+0800)
-// Last-Updated: 五 11月 18 20:01:56 2016 (+0800)
+// Last-Updated: 六 11月 19 12:24:21 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 5
+//     Update #: 20
 // URL: http://wuhongyi.cn 
 
 #include "Base.hh"
@@ -55,6 +55,8 @@ Base::Base(const TGWindow * p, const TGWindow * main, char *name, int columns, i
   LabelGain->SetFrameDrawn(kTRUE);
   ColumnGain->AddFrame(LabelGain, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
   LabelGain->SetText("Gain");
+  LabelGain->SetAlignment(kTextCenterX);
+  LabelGain->SetToolTipText((char*)"Control input relay: => Gain Smaller/Larger", 400);
   for (int i = 0; i < 16; i++)
     {
       ColumnGain->AddFrame(lstBoxGain[i] = new TGComboBox(ColumnGain, 2755 + i), new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
@@ -79,6 +81,8 @@ Base::Base(const TGWindow * p, const TGWindow * main, char *name, int columns, i
   LabelSign->SetFrameDrawn(kTRUE);
   ColumnSign->AddFrame(LabelSign, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
   LabelSign->SetText("Sign");
+  LabelSign->SetAlignment(kTextCenterX);
+  LabelSign->SetToolTipText((char*)"Input signal polarity control", 400);
   for (int i = 0; i < 16; i++)
     {
       ColumnSign->AddFrame(lstBox[i] = new TGComboBox(ColumnSign, 2555 + i), new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
@@ -88,6 +92,114 @@ Base::Base(const TGWindow * p, const TGWindow * main, char *name, int columns, i
       lstBox[i]->AddEntry("-", 1);
       lstBox[i]->Resize(40, 20);
     }
+
+  ColumnGC = new TGVerticalFrame(mn, 200, 300);
+  mn->AddFrame(ColumnGC, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  TGTextEntry *LabelGC =
+    new TGTextEntry(ColumnGC, new TGTextBuffer(100), 10000,
+		    LabelGC->GetDefaultGC()(),
+		    LabelGC->GetDefaultFontStruct(),
+		    kRaisedFrame | kDoubleBorder, GetWhitePixel());
+  LabelGC->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
+  LabelGC->Resize(40, 20);
+  LabelGC->SetEnabled(kFALSE);
+  LabelGC->SetFrameDrawn(kTRUE);
+  ColumnGC->AddFrame(LabelGC, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  LabelGC->SetText("GC");
+  LabelGC->SetAlignment(kTextCenterX);
+  LabelGC->SetToolTipText((char*)"Good channel", 400);
+  for (int i = 0; i < 16; i++)
+    {
+      ColumnGC->AddFrame(ckGC[i] = new TGCheckButton(ColumnGC,"", -1), new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 2));
+      ckGC[i]->Associate(this);
+    }
+
+
+  ColumnTC = new TGVerticalFrame(mn, 200, 300);
+  mn->AddFrame(ColumnTC, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  TGTextEntry *LabelTC =
+    new TGTextEntry(ColumnTC, new TGTextBuffer(100), 10000,
+		    LabelTC->GetDefaultGC()(),
+		    LabelTC->GetDefaultFontStruct(),
+		    kRaisedFrame | kDoubleBorder, GetWhitePixel());
+  LabelTC->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
+  LabelTC->Resize(40, 20);
+  LabelTC->SetEnabled(kFALSE);
+  LabelTC->SetFrameDrawn(kTRUE);
+  ColumnTC->AddFrame(LabelTC, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  LabelTC->SetText("TC");
+  LabelTC->SetAlignment(kTextCenterX);
+  LabelTC->SetToolTipText((char*)"Trace capture and associated header data", 400);
+  for (int i = 0; i < 16; i++)
+    {
+      ColumnTC->AddFrame(ckTC[i] = new TGCheckButton(ColumnTC,"", -1), new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 2));
+      ckTC[i]->Associate(this);
+    }
+  
+  ColumnEQS = new TGVerticalFrame(mn, 200, 300);
+  mn->AddFrame(ColumnEQS, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  TGTextEntry *LabelEQS =
+    new TGTextEntry(ColumnEQS, new TGTextBuffer(100), 10000,
+		    LabelEQS->GetDefaultGC()(),
+		    LabelEQS->GetDefaultFontStruct(),
+		    kRaisedFrame | kDoubleBorder, GetWhitePixel());
+  LabelEQS->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
+  LabelEQS->Resize(40, 20);
+  LabelEQS->SetEnabled(kFALSE);
+  LabelEQS->SetFrameDrawn(kTRUE);
+  ColumnEQS->AddFrame(LabelEQS, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  LabelEQS->SetText("EQS");
+  LabelEQS->SetAlignment(kTextCenterX);
+  LabelEQS->SetToolTipText((char*)"QDC summing and associated header data", 400);
+  for (int i = 0; i < 16; i++)
+    {
+      ColumnEQS->AddFrame(ckEQS[i] = new TGCheckButton(ColumnEQS,"", -1), new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 2));
+      ckEQS[i]->Associate(this);
+    }
+
+  ColumnECT = new TGVerticalFrame(mn, 200, 300);
+  mn->AddFrame(ColumnECT, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));  
+  TGTextEntry *LabelECT =
+    new TGTextEntry(ColumnECT, new TGTextBuffer(100), 10000,
+		    LabelECT->GetDefaultGC()(),
+		    LabelECT->GetDefaultFontStruct(),
+		    kRaisedFrame | kDoubleBorder, GetWhitePixel());
+  LabelECT->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
+  LabelECT->Resize(40, 20);
+  LabelECT->SetEnabled(kFALSE);
+  LabelECT->SetFrameDrawn(kTRUE);
+  ColumnECT->AddFrame(LabelECT, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  LabelECT->SetText("ECT");
+  LabelECT->SetAlignment(kTextCenterX);
+  LabelECT->SetToolTipText((char*)"CFD for real time, trace capture and QDC capture", 400);
+  for (int i = 0; i < 16; i++)
+    {
+      ColumnECT->AddFrame(ckECT[i] = new TGCheckButton(ColumnECT,"", -1), new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 2));
+      ckECT[i]->Associate(this);
+    }
+
+  ColumnERB = new TGVerticalFrame(mn, 200, 300);
+  mn->AddFrame(ColumnERB, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  TGTextEntry *LabelERB =
+    new TGTextEntry(ColumnERB, new TGTextBuffer(100), 10000,
+		    LabelERB->GetDefaultGC()(),
+		    LabelERB->GetDefaultFontStruct(),
+		    kRaisedFrame | kDoubleBorder, GetWhitePixel());
+  LabelERB->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
+  LabelERB->Resize(40, 20);
+  LabelERB->SetEnabled(kFALSE);
+  LabelERB->SetFrameDrawn(kTRUE);
+  ColumnERB->AddFrame(LabelERB, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  LabelERB->SetText("ERB");
+  LabelERB->SetAlignment(kTextCenterX);
+  LabelERB->SetToolTipText((char*)"Record raw energy sums and baseline in event header", 400);
+  for (int i = 0; i < 16; i++)
+    {
+      ColumnERB->AddFrame(ckERB[i] = new TGCheckButton(ColumnERB,"", -1), new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 2));
+      ckERB[i]->Associate(this);
+    }
+  
+  
   ////////////////Copy Button//////////////////////////////////////////////
   TGHorizontal3DLine *ln2 = new TGHorizontal3DLine(mn_vert, 200, 2);
   mn_vert->AddFrame(ln2, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
@@ -123,16 +235,7 @@ Base::Base(const TGWindow * p, const TGWindow * main, char *name, int columns, i
   Resize();			// resize to default size
 
   modNumber = 0;
-  Load_Once = true;
-  pol_temp = 0;
-  gain_temp = 0;
-  offset_temp = 0;
-  blcut = 0;
-  blpercent = 0;
-  thresh = 0;
-  tlength = 0;
-  tdelay = 0;
-  
+  Load_Once = true; 
 }
 
 Base::~Base()
@@ -212,33 +315,48 @@ Bool_t Base::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      DeleteWindow();
 	      break;
 	    case (COPYBUTTON+1000):
-	      pol_temp = lstBox[chanNumber]->GetSelected();
-	      gain_temp = lstBoxGain[chanNumber]->GetSelected();
-	      offset_temp = NumEntry[1][chanNumber]->GetNumber();
-	      blcut = NumEntry[2][chanNumber]->GetNumber();
-	      blpercent = NumEntry[3][chanNumber]->GetNumber();
-	      thresh = NumEntry[4][chanNumber]->GetNumber();
-	      tlength = NumEntry[5][chanNumber]->GetNumber();
-	      tdelay = NumEntry[6][chanNumber]->GetNumber();
-	      
 	      for(int i  =0;i < 16;i++)
 		{
 		  if(i != (chanNumber))
 		    {
-		      lstBox[i]->Select(pol_temp);
-		      lstBoxGain[i]->Select(gain_temp);
-		      char tmp[10];
-		      sprintf(tmp,"%1.3f",offset_temp);
+		      lstBox[i]->Select(lstBox[chanNumber]->GetSelected());
+		      lstBoxGain[i]->Select(lstBoxGain[chanNumber]->GetSelected());
+		      if(ckGC[chanNumber]->IsDown()) 
+			ckGC[i]->SetState(kButtonDown);
+		      else 
+			ckGC[i]->SetState(kButtonUp);
+		      
+		      if(ckTC[chanNumber]->IsDown()) 
+			ckTC[i]->SetState(kButtonDown);
+		      else 
+			ckTC[i]->SetState(kButtonUp);
+
+		      if(ckEQS[chanNumber]->IsDown()) 
+			ckEQS[i]->SetState(kButtonDown);
+		      else 
+			ckEQS[i]->SetState(kButtonUp);
+
+		      if(ckECT[chanNumber]->IsDown()) 
+			ckECT[i]->SetState(kButtonDown);
+		      else 
+			ckECT[i]->SetState(kButtonUp);
+
+		      if(ckERB[chanNumber]->IsDown()) 
+			ckERB[i]->SetState(kButtonDown);
+		      else 
+			ckERB[i]->SetState(kButtonUp);
+		      
+		      sprintf(tmp,"%1.3f",NumEntry[1][chanNumber]->GetNumber());
 		      NumEntry[1][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",blcut);
+		      sprintf(tmp,"%1.3f",NumEntry[2][chanNumber]->GetNumber());
 		      NumEntry[2][i]->SetText(tmp);	
-		      sprintf(tmp,"%1.3f",blpercent);
+		      sprintf(tmp,"%1.3f",NumEntry[3][chanNumber]->GetNumber());
 		      NumEntry[3][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",thresh);
+		      sprintf(tmp,"%1.3f",NumEntry[4][chanNumber]->GetNumber());
 		      NumEntry[4][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",tlength);
+		      sprintf(tmp,"%1.3f",NumEntry[5][chanNumber]->GetNumber());
 		      NumEntry[5][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",tdelay);
+		      sprintf(tmp,"%1.3f",NumEntry[6][chanNumber]->GetNumber());
 		      NumEntry[6][i]->SetText(tmp);
 		    }
 		}  
@@ -291,7 +409,8 @@ int Base::load_info(Long_t mod)
   char text[20];
   unsigned short gain;
   unsigned short pol;
-
+  unsigned short gt;
+  
   for (int i = 0; i < 16; i++)
     {
       retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA", &ChanParData, mod, i);
@@ -309,6 +428,36 @@ int Base::load_info(Long_t mod)
       else if (pol == 0)
 	lstBox[i]->Select(1);
 
+      gt = APP32_TstBit(2, ChanParData);
+      if(gt==0) 
+        ckGC[i]->SetState(kButtonUp);
+      else 
+	ckGC[i]->SetState(kButtonDown);
+
+      gt = APP32_TstBit(8, ChanParData);
+      if(gt==0) 
+        ckTC[i]->SetState(kButtonUp);
+      else 
+	ckTC[i]->SetState(kButtonDown);
+
+      gt = APP32_TstBit(9, ChanParData);
+      if(gt==0) 
+        ckEQS[i]->SetState(kButtonUp);
+      else 
+	ckEQS[i]->SetState(kButtonDown);
+
+      gt = APP32_TstBit(10, ChanParData);
+      if(gt==0) 
+        ckECT[i]->SetState(kButtonUp);
+      else 
+	ckECT[i]->SetState(kButtonDown);
+
+      gt = APP32_TstBit(12, ChanParData);
+      if(gt==0) 
+        ckERB[i]->SetState(kButtonUp);
+      else 
+	ckERB[i]->SetState(kButtonDown);
+      
       retval = Pixie16ReadSglChanPar((char*)"VOFFSET", &ChanParData, mod, i);
       if(retval < 0)
 	ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/VOFFSET", retval);
@@ -331,12 +480,12 @@ int Base::load_info(Long_t mod)
       NumEntry[4][i]->SetText(text);
 
       retval = Pixie16ReadSglChanPar((char*)"TRACE_LENGTH", &ChanParData, mod, i);
-      if(retval < 0) ErrorInfo("PulseShape.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRACE_LENGTH", retval);
+      if(retval < 0) ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRACE_LENGTH", retval);
       sprintf (text, "%1.2f", ChanParData);
       NumEntry[5][i]->SetText(text);
 
       retval = Pixie16ReadSglChanPar((char*)"TRACE_DELAY", &ChanParData, mod, i);
-      if(retval < 0) ErrorInfo("PulseShape.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRACE_DELAY", retval);
+      if(retval < 0) ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRACE_DELAY", retval);
       sprintf(text, "%1.2f", ChanParData);
       NumEntry[6][i]->SetText(text);
 
@@ -361,42 +510,58 @@ int Base::change_values(Long_t mod)
   for (int i = 0; i < 16; i++)
     {
       offset = NumEntry[1][i]->GetNumber();
-
       retval = Pixie16WriteSglChanPar((char*)"VOFFSET", offset, mod, i);
       if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/VOFFSET", retval);
+      
       retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA", &ChanParData, mod, i);
-      if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);     
+      if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);
+      
       pol = lstBox[i]->GetSelected();
       if (pol == 0)
-	{
-	  ChanParData = APP32_SetBit(5, (unsigned int) ChanParData);
-	  retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, mod, i);
-	  if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);   
-	}
+	ChanParData = APP32_SetBit(5, (unsigned int) ChanParData);
       else
-	{
-	  ChanParData = APP32_ClrBit(5, (unsigned int) ChanParData);
-	  retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, mod, i);
-	  if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);   
-	}
+	ChanParData = APP32_ClrBit(5, (unsigned int) ChanParData);
 
-      retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA", &ChanParData, mod, i);
-      if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);   
+      
       gain = lstBoxGain[i]->GetSelected();
       if (gain == 1)
-	{
-	  ChanParData = APP32_ClrBit(14, (unsigned int) ChanParData);
-	  retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, mod, i);
-	  if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);   
-	}
+	ChanParData = APP32_ClrBit(14, (unsigned int) ChanParData); 
       else
-	{
-	  ChanParData = APP32_SetBit(14, (unsigned int) ChanParData);
-	  retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, mod, i);
-	  if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);   
-	}
+	ChanParData = APP32_SetBit(14, (unsigned int) ChanParData); 
+
+      
+      if (ckGC[i]->IsDown())
+	ChanParData = APP32_SetBit(2, (unsigned int) ChanParData);
+      else
+	ChanParData = APP32_ClrBit(2, (unsigned int) ChanParData);
+
+      
+      if (ckTC[i]->IsDown())
+	ChanParData = APP32_SetBit(8, (unsigned int) ChanParData);
+      else
+	ChanParData = APP32_ClrBit(8, (unsigned int) ChanParData);
+
+      if (ckEQS[i]->IsDown())
+	ChanParData = APP32_SetBit(9, (unsigned int) ChanParData);
+      else
+	ChanParData = APP32_ClrBit(9, (unsigned int) ChanParData);
+
+      if (ckECT[i]->IsDown())
+	ChanParData = APP32_SetBit(10, (unsigned int) ChanParData);
+      else
+	ChanParData = APP32_ClrBit(10, (unsigned int) ChanParData);
 
 
+      if (ckERB[i]->IsDown())
+	ChanParData = APP32_SetBit(12, (unsigned int) ChanParData);
+      else
+	ChanParData = APP32_ClrBit(12, (unsigned int) ChanParData);
+      
+      
+      retval = Pixie16WriteSglChanPar((char*)"CHANNEL_CSRA", ChanParData, mod, i);
+      if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/CHANNEL_CSRA", retval);
+
+      
       cut = NumEntry[2][i]->GetNumber();
       retval = Pixie16WriteSglChanPar((char*)"BLCUT", cut, mod, i);
       if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/BLCUT", retval);  
@@ -417,27 +582,9 @@ int Base::change_values(Long_t mod)
       if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/TRACE_DELAY", retval);
 
 
-
-
-
-
-
-      
     }
   return 1;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // 

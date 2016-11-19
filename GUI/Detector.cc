@@ -32,7 +32,7 @@ Detector::~Detector()
 bool Detector::ReadConfigFile(char *config)
 {
   ifstream input;
-  char *temp = new char[80];
+  char *temp = new char[256];
   input.open(config, ios::in);
 
   if (input.fail ())
@@ -43,12 +43,12 @@ bool Detector::ReadConfigFile(char *config)
 
   input >> NumModules;
   cout << "\n\n" << NumModules << " modules, in slots:";
-  input.getline (temp, 80);
+  input.getline (temp, 256);
   PXISlotMap = new unsigned short[NumModules+1];
   for (int i = 0; i < NumModules; i++)
   {
     input >> PXISlotMap[i];
-    input.getline(temp, 80);
+    input.getline(temp, 256);
     cout << PXISlotMap[i] << " ";
   }
 
@@ -59,22 +59,22 @@ bool Detector::ReadConfigFile(char *config)
 
   cout << endl << "Firmware files: \n";
   input >> ComFPGAConfigFile;
-  input.getline (temp, 80);
+  input.getline (temp, 256);
   cout << "ComFPGAConfigFile:  " << ComFPGAConfigFile << endl;
   input >> SPFPGAConfigFile;
-  input.getline (temp, 80);
+  input.getline (temp, 256);
   cout << "SPFPGAConfigFile:   " << SPFPGAConfigFile << endl;
   input >> TrigFPGAConfigFile;
-  input.getline (temp, 80);
+  input.getline (temp, 256);
   cout << "TrigFPGAConfigFile: " << TrigFPGAConfigFile << endl;
   input >> DSPCodeFile;
-  input.getline (temp, 80);
+  input.getline (temp, 256);
   cout << "DSPCodeFile:        " << DSPCodeFile << endl;
   input >> DSPParFile;
-  input.getline (temp, 80);
+  input.getline (temp, 256);
   cout << "DSPParFile:         " << DSPParFile << endl;
   input >> DSPVarFile;
-  input.getline (temp, 80);
+  input.getline (temp, 256);
   cout << "DSPVarFile:         " << DSPVarFile << endl;
   cout << "--------------------------------------------------------\n\n";
   return true;

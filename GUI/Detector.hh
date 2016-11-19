@@ -53,12 +53,12 @@ public:
 private:
   unsigned short *PXISlotMap;
   unsigned short OfflineMode;
-  char ComFPGAConfigFile[80];
-  char SPFPGAConfigFile[80];
-  char TrigFPGAConfigFile[80];
-  char DSPCodeFile[80];
-  char DSPParFile[80];
-  char DSPVarFile[80];
+  char ComFPGAConfigFile[256];
+  char SPFPGAConfigFile[256];
+  char TrigFPGAConfigFile[256];
+  char DSPCodeFile[256];
+  char DSPParFile[256];
+  char DSPVarFile[256];
   bool ReadConfigFile(char *config = (char*)"../parset/cfgPixie16.txt");
 	
   FILE *fsave[PRESET_MAX_MODULES];

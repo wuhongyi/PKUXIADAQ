@@ -124,7 +124,7 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   make_columns(column4, ckBtn_2, (char*)"GC", (char*)"Good channel", 5200,2);
   make_columns(column5, ckBtn_3, (char*)"CSE", (char*)"Channel validation signal selection (channel validation trigger from System FPGA vs. channel GATE from front panel)", 5300,4);
   make_columns(column6, ckBtn_4, (char*)"BDA", (char*)"Block data acquisition if trace or header DPMs are full", 5400);
-  make_columns(column7, ckBtn_5, (char*)"SP", (char*)"Input signal polarity control", 5500);
+  make_columns(column7, ckBtn_5, (char*)"SP", (char*)"Input signal polarity control", 5500,2);
   make_columns(column8, ckBtn_6, (char*)"CTV", (char*)"Enable channel trigger veto", 5600,3);
   make_columns(column9, ckBtn_7, (char*)"HE", (char*)"Histograms energy in the on-chip MCA", 5700);
   make_columns(column10, ckBtn_8, (char*)"TC", (char*)"Trace capture and associated header data", 5800,2);
@@ -133,7 +133,7 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   make_columns(column13, ckBtn_11, (char*)"MVS", (char*)"Require module validation trigger", 6100,4);
   make_columns(column14, ckBtn_12, (char*)"ERB", (char*)"Record raw energy sums and baseline in event header", 6200,2);
   make_columns(column15, ckBtn_13, (char*)"CVT", (char*)"Require channel validation trigger", 6300,4);
-  make_columns(column16, ckBtn_14, (char*)"IR", (char*)"Control input relay: => Gain Smaller/Larger", 6400);
+  make_columns(column16, ckBtn_14, (char*)"IR", (char*)"Control input relay: => Gain Smaller/Larger", 6400,2);
   // bits[15:16]
   // 00: record all events (trace, timestamps, etc., but no energy for piled-up events)
   // 10: only record single events (trace, energy, timestamps, etc.) (i.e., reject piled-up events)

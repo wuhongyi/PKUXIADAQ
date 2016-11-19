@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 11月 18 19:23:48 2016 (+0800)
-// Last-Updated: 五 11月 18 20:01:56 2016 (+0800)
+// Last-Updated: 六 11月 19 12:24:20 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 3
+//     Update #: 7
 // URL: http://wuhongyi.cn 
 
 #ifndef _BASE_H_
@@ -33,16 +33,12 @@ protected:
   bool Load_Once;
   
   Pixel_t color;
-  TGVerticalFrame* ColumnSign, *ColumnGain;
-  TGComboBox *lstBox[17], *lstBoxGain[17];
+  TGVerticalFrame *ColumnSign, *ColumnGain;
+  TGVerticalFrame *ColumnGC, *ColumnTC,*ColumnEQS,*ColumnECT,*ColumnERB;
+  TGComboBox *lstBox[16], *lstBoxGain[16];
+  TGCheckButton *ckGC[16],*ckTC[16],*ckEQS[16],*ckECT[16],*ckERB[16];
 
-  int pol_temp;
-  int gain_temp;
-  float offset_temp;
-  float blcut,blpercent;
-  float thresh;
-  float tlength,tdelay;
-  
+  char tmp[10];
 };
 
 #endif /* _BASE_H_ */
