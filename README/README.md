@@ -4,12 +4,20 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 日 11月  6 11:57:33 2016 (+0800)
+;; Last-Updated: 六 11月 19 21:23:40 2016 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 53
+;;     Update #: 54
 ;; URL: http://wuhongyi.cn -->
 
-**本说明书不适用于 Rev-A modules**
+**本说明书仅适用于 XIA LLC Pixie16 RevF**
+
+说明书将包括这几部分：
+软件的安装，插件的跳线的设置，软件的使用，软件参数的意义。
+
+一级trigger，二级trigger
+
+
+
 
 ----
 
