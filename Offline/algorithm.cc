@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 22 21:08:18 2016 (+0800)
-// Last-Updated: 五 10月 28 16:25:58 2016 (+0800)
+// Last-Updated: 二 11月 22 21:04:08 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 62
+//     Update #: 64
 // URL: http://wuhongyi.cn 
 
 #include "algorithm.hh"
@@ -468,6 +468,103 @@ int algorithm::ComputeSlowFiltersOffline(
 	
   return(0);
 	
+}
+
+double algorithm::ComputeEnergyOffline(
+				    unsigned short ModuleNumber,       // the module whose events are to be analyzed
+				    unsigned short ChannelNumber,      // the channel whose events are to be analyzed
+				    unsigned short RcdTraceLength,     // recorded trace length
+				    unsigned short *RcdTrace)          // recorded trace
+{
+  double energy;
+
+  unsigned int SlowLen, SlowGap, SlowFilterRange, PreampTau_IEEE;
+  unsigned int esum0[32768], esum1[32768], esum2[32768];
+  unsigned int offset, x, y;
+  double preamptau, deltaT;
+  double b1, c0, c1, c2;
+  unsigned int bsum0, bsum1, bsum2;
+  double baseline;
+
+  // Check if RcdTrace is valid
+  if(RcdTrace == NULL)
+    {
+      printf("*Error* : Null pointer *RcdTrace\n");
+      return(-1);
+    }
+	
+  if(ModuleNumber >= PRESET_MAX_MODULES)
+    {
+      printf("*ERROR* : Target module number is invalid %d\n", ModuleNumber);
+      return(-3);
+    }
+  
+  // Retrieve channel parameters
+
+  SlowFilterRange = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowFilterRange_Address[ModuleNumber] - DATA_MEMORY_ADDRESS];
+  SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
+  SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
+  PreampTau_IEEE = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[PreampTau_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS];
+  preamptau = IEEEFloating2Decimal(PreampTau_IEEE);
+
+  // Check if trace length is sufficiently long
+  if(RcdTraceLength < ((2*SlowLen + SlowGap)*2))
+    {
+      printf("*Error* : the length of recorded trace is too short\n");
+      return(-4);
+    }
+
+  double *slowfilter = new double[RcdTraceLength];
+  
+  // Compute slow filter coefficients
+  deltaT = 1.0/((double)Module_Information[ModuleNumber].Module_ADCMSPS);
+  b1 = exp(-1.0 * deltaT / preamptau);
+  c0 = -(1.0 - b1) * pow(b1, (double)SlowLen) * 4.0 / (1.0 - pow(b1, (double)SlowLen));
+  c1 = (1.0 - b1) * 4.0;
+  c2 = (1.0 - b1) * 4.0 / (1.0 - pow(b1, (double)SlowLen));
+
+  // Compute baseline
+  bsum0 = 0;
+  for(y=0; y<SlowLen; y++)
+    {
+      bsum0 += RcdTrace[y];
+    }
+  bsum1 = 0;
+  for(y=SlowLen; y<SlowLen+SlowGap; y++)
+    {
+      bsum1 += RcdTrace[y];
+    }
+  bsum2 = 0;
+  for(y=(SlowLen+SlowGap); y<(2*SlowLen+SlowGap); y++)
+    {
+      bsum2 += RcdTrace[y];
+    }
+  baseline = c0 * (double)bsum0 + c1 * (double)bsum1 + c2 * (double)bsum2;
+
+  // Compute slow filter response
+  offset = 2*SlowLen + SlowGap - 1;
+  for(x=offset; x<RcdTraceLength; x++)
+    {
+      esum0[x] = 0;
+      for(y=(x-offset); y<(x-offset+SlowLen); y++)
+	{
+	  esum0[x] += RcdTrace[y];
+	}
+      esum1[x] = 0;
+      for(y=(x-offset+SlowLen); y<(x-offset+SlowLen+SlowGap); y++)
+	{
+	  esum1[x] += RcdTrace[y];
+	}
+      esum2[x] = 0;
+      for(y=(x-offset+SlowLen+SlowGap); y<(x-offset+2*SlowLen+SlowGap); y++)
+	{
+	  esum2[x] += RcdTrace[y];
+	}
+      slowfilter[x] = c0 * (double)esum0[x] + c1 * (double)esum1[x] + c2 * (double)esum2[x] - baseline;
+    }
+  
+  delete slowfilter;
+  return energy;
 }
 
 

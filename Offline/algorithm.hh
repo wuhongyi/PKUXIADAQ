@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 22 21:08:06 2016 (+0800)
-// Last-Updated: 五 10月 28 16:10:58 2016 (+0800)
+// Last-Updated: 二 11月 22 21:03:28 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 39
+//     Update #: 40
 // URL: http://wuhongyi.cn 
 
 #ifndef _ALGORITHM_H_
@@ -152,7 +152,15 @@ public:
 				unsigned short *RcdTrace,          // recorded trace
 				double         *slowfilter );      // slow filter response
 
+  double ComputeEnergyOffline(
+			   unsigned short ModuleNumber,       // the module whose events are to be analyzed
+			   unsigned short ChannelNumber,      // the channel whose events are to be analyzed
+			   unsigned short RcdTraceLength,     // recorded trace length
+			   unsigned short *RcdTrace);          // recorded trace
 
+
+
+  
   // double ENERGY_RISETIME;
   // double ENERGY_FLATTOP;
   // unsigned int SLOW_FILTER_RANGE;
