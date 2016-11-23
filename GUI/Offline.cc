@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 日 11月  6 20:32:48 2016 (+0800)
+// Last-Updated: 三 11月 23 12:47:08 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 106
+//     Update #: 107
 // URL: http://wuhongyi.cn 
 
 #include "Offline.hh"
@@ -853,13 +853,13 @@ void Offline::OfflineChangeValues(int mod,int ch)
   fgap = offlinefilters[1]->GetNumber();
   retval = Pixie16WriteSglChanPar((char*)"TRIGGER_FLATTOP", fgap, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineChangeValues(...)", "Pixie16WriteSglChanPar/TRIGGER_FLATTOP", retval);
-  slength = offlinefilters[2]->GetNumber ();
+  slength = offlinefilters[2]->GetNumber();
   retval = Pixie16WriteSglChanPar((char*)"ENERGY_RISETIME", slength, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineChangeValues(...)", "Pixie16WriteSglChanPar/ENERGY_RISETIME", retval);
-  sgap = offlinefilters[3]->GetNumber ();
+  sgap = offlinefilters[3]->GetNumber();
   retval = Pixie16WriteSglChanPar((char*)"ENERGY_FLATTOP", sgap, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineChangeValues(...)", "Pixie16WriteSglChanPar/ENERGY_FLATTOP", retval);
-  tau = offlinefilters[4]->GetNumber ();
+  tau = offlinefilters[4]->GetNumber();
   retval = Pixie16WriteSglChanPar((char*)"TAU", tau, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineChangeValues(...)", "Pixie16WriteSglChanPar/TAU", retval);
   delay = offlinefilters[5]->GetNumber();

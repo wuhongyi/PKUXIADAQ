@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:06 2016 (+0800)
-// Last-Updated: 六 11月  5 09:17:34 2016 (+0800)
+// Last-Updated: 三 11月 23 09:35:54 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 4
+//     Update #: 8
 // URL: http://wuhongyi.cn 
 
 #ifndef _DECODER_H_
@@ -45,9 +45,11 @@ public:
 
   inline unsigned long getts() {return ts;}
   inline int getcfd() {return cfd;}
+  inline bool getcfdft() {return cfdft;}
   inline int getevte() {return evte;}
   inline int getltra() {return ltra;}
-
+  inline bool getoutofr() {return outofr;}
+  
   inline bool getesumflag() {return esumf;}
   inline unsigned int gettrae() {return trae;}
   inline unsigned int getleae() {return leae;}
@@ -78,9 +80,12 @@ private:
 
   unsigned long ts; 	// timestamp of this event
   int cfd; 		// CFD fractional time
+  bool cfdft;//CFD forced trigger bit
+  
   int evte;  		// Event enrgy
   int ltra;		// Trace length
-	
+  bool outofr;//Trace Out-of-Range Flag
+  
   bool esumf;
   unsigned int trae;	// trailing energy sum
   unsigned int leae;	// leading energy sum
@@ -112,13 +117,18 @@ private:
   const static unsigned int kShifttslo =        0;
   const static unsigned int kMasktshi =         0x0000ffff;
   const static unsigned int kShifttshi =        0;
-  const static unsigned int kMaskcfd = 		0xffff0000;
+  const static unsigned int kMaskcfd = 		0x7fff0000;//wuhongyi
   const static unsigned int kShiftcfd =		16;
+  const static unsigned int kMaskcfdft =        0x80000000;//wuhongyi
+  const static unsigned int kShiftcfdft =       31;
+  
   const static unsigned int kMaskevte =         0x0000ffff;
   const static unsigned int kShiftevte =        0;
-  const static unsigned int kMaskltra =		0xffff0000;
+  const static unsigned int kMaskltra =		0x7fff0000;//wuhongyi
   const static unsigned int kShiftltra =        16;
-
+  const static unsigned int kMaskoutofr =       0x80000000;//wuhongyi
+  const static unsigned int kShiftoutofr =      31;
+  
   const static unsigned int kMaskesum =         0xffffffff;
   const static unsigned int kShiftesum =        0;
   const static unsigned int kMaskqs = 		0xffffffff;

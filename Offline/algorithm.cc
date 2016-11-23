@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 22 21:08:18 2016 (+0800)
-// Last-Updated: 二 11月 22 21:04:08 2016 (+0800)
+// Last-Updated: 三 11月 23 20:33:50 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 64
+//     Update #: 69
 // URL: http://wuhongyi.cn 
 
 #include "algorithm.hh"
@@ -476,7 +476,7 @@ double algorithm::ComputeEnergyOffline(
 				    unsigned short RcdTraceLength,     // recorded trace length
 				    unsigned short *RcdTrace)          // recorded trace
 {
-  double energy;
+  double energy = -1;
 
   unsigned int SlowLen, SlowGap, SlowFilterRange, PreampTau_IEEE;
   unsigned int esum0[32768], esum1[32768], esum2[32768];
@@ -545,6 +545,9 @@ double algorithm::ComputeEnergyOffline(
   offset = 2*SlowLen + SlowGap - 1;
   for(x=offset; x<RcdTraceLength; x++)
     {
+
+  // x = 800+SlowLen+SlowGap/2;
+  
       esum0[x] = 0;
       for(y=(x-offset); y<(x-offset+SlowLen); y++)
 	{
@@ -561,6 +564,10 @@ double algorithm::ComputeEnergyOffline(
 	  esum2[x] += RcdTrace[y];
 	}
       slowfilter[x] = c0 * (double)esum0[x] + c1 * (double)esum1[x] + c2 * (double)esum2[x] - baseline;
+
+      // energy = slowfilter[x];
+      
+      if(slowfilter[x] > energy) energy = slowfilter[x];
     }
   
   delete slowfilter;

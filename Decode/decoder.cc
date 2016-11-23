@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:18 2016 (+0800)
-// Last-Updated: 一 11月 21 14:36:10 2016 (+0800)
+// Last-Updated: 三 11月 23 09:26:07 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 6
+//     Update #: 8
 // URL: http://wuhongyi.cn 
 
 #include "decoder.hh"
@@ -34,9 +34,11 @@ void decoder::clearall()
 
   ts = 0;
   cfd = 0;
+  cfdft = 0;
   evte = 0;
   ltra = 0;
-
+  outofr = 0;
+  
   esumf = false;
   trae = 0;
   leae = 0;
@@ -116,7 +118,8 @@ bool decoder::decode()
     }
   ts = ts+((( buff & kMasktshi ) >> kShifttshi)*0xffffffff);
   cfd = ( buff & kMaskcfd ) >> kShiftcfd; 
-
+  cfdft = ( buff & kMaskcfdft ) >> kShiftcfdft; 
+  
   // decode 4th
   if(!getnextword())
     {
@@ -126,7 +129,8 @@ bool decoder::decode()
 
   evte = ( buff & kMaskevte ) >> kShiftevte;
   ltra = ( buff & kMaskltra ) >> kShiftltra;
-
+  outofr = ( buff & kMaskoutofr ) >> kShiftoutofr;
+  
   if(lhead == 4)
     {
       esumf = false;
@@ -148,7 +152,7 @@ bool decoder::decode()
 		     qsumf = true;
 		   }
 
-  if(ltra > 0) tracef=true;
+  if(ltra > 0) tracef = true;
 
   // decode esum
   if(esumf)

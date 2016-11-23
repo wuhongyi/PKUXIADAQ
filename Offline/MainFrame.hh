@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月 23 15:38:41 2016 (+0800)
-// Last-Updated: 五 10月 28 15:59:20 2016 (+0800)
+// Last-Updated: 三 11月 23 14:00:53 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 42
+//     Update #: 49
 // URL: http://wuhongyi.cn 
 
 #ifndef _MAINFRAME_H_
@@ -20,6 +20,7 @@
 #include "TMultiGraph.h"
 #include "TGraph.h"
 #include "TBranch.h"
+#include "TH1.h"
 
 
 #include "TG3DLine.h"
@@ -120,6 +121,12 @@ public:
   void FileInitSet();
 
 
+  void LoadPar_Energy();
+  void ApplyPar_Energy();
+  void Draw_Energy();
+
+  
+
 private:
   virtual Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t);//process message queue
   void InitMenu();
@@ -129,7 +136,8 @@ private:
   bool IsFileExists(const char *name);  //判断文件是否存在
   
   void MakeFoldPanelInit(TGCompositeFrame *TabPanel);
-
+  void MakeFoldPanelEnergy(TGCompositeFrame *TabPanel);
+  
   void ReadModule(int id);
 
   
@@ -175,7 +183,14 @@ private:
   TGTextEntry *ModStatusLabels[13];
   TGTextButton	*modfilesetdone[14];// ID 100-113   预留 100-149
   TGTextEntry *ModCountStatusLabels[13];
-  
+
+  // Panel Energy
+  TCanvas *energyCanvas;
+  TGNumberEntryField *energyfilter[4];// 0-slowlength  1-slowgap  2-preamptau 3-filterrange
+  TGComboBox *energymod;
+  TGComboBox *energych;
+  TGTextButton *energyLoad,*energyApply,*energyDraw;
+  TH1D *energyTH1_0,*energyTH1;
   
   ClassDef(MainFrame,1)
 };

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月 23 15:43:08 2016 (+0800)
-// Last-Updated: 六 11月  5 21:00:55 2016 (+0800)
+// Last-Updated: 三 11月 23 14:03:42 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 127
+//     Update #: 155
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -29,7 +29,9 @@ MainFrame::MainFrame(const TGWindow * p, UInt_t w, UInt_t h)
   SetCleanup(kDeepCleanup);
 
   xia = NULL;
-  
+  energyTH1 = NULL;
+  energyTH1_0 = NULL;
+
   // rawdata = NULL;
   // threshdata = NULL;
   // cfddata = NULL;
@@ -50,6 +52,10 @@ MainFrame::MainFrame(const TGWindow * p, UInt_t w, UInt_t h)
   this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
   TGCompositeFrame *Tab1 = TabPanel->AddTab("Init");
   MakeFoldPanelInit(Tab1);
+
+  TGCompositeFrame *Tab2 = TabPanel->AddTab("Energy");
+  MakeFoldPanelEnergy(Tab2);
+  
   
   SetWindowName("PKU Pixie16-RevF Offline");
   MapSubwindows();
@@ -116,6 +122,11 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 			  ReadModule(i);
 			  sprintf(tempchar,"%d",xia->OfflineModuleEventsCount[i]);
 			  ModCountStatusLabels[i]->SetText(tempchar);
+			  if(xia->OfflineModuleEventsCount[i] > 0)
+			    {
+			      sprintf(tempchar,"%02d",i);
+			      energymod->AddEntry(tempchar,i);
+			    }
 			  gSystem->ProcessEvents();
 			}
 		    }
@@ -123,8 +134,14 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      else
 		{
 		  ReadModule(parm1-100);
+
 		  sprintf(tempchar,"%d",xia->OfflineModuleEventsCount[int(parm1-100)]);
 		  ModCountStatusLabels[int(parm1-100)]->SetText(tempchar);
+		  if(xia->OfflineModuleEventsCount[int(parm1-100)] > 0)
+		  {
+		    sprintf(tempchar,"%02d",int(parm1-100));
+		    energymod->AddEntry(tempchar,int(parm1-100));
+		  }
 		}
 	    }
 	  else
@@ -444,6 +461,108 @@ void MainFrame::MakeFoldPanelInit(TGCompositeFrame *TabPanel)
   
 }
 
+
+void MainFrame::MakeFoldPanelEnergy(TGCompositeFrame *TabPanel)
+{
+
+  TGCompositeFrame *CanvasFrame = new TGCompositeFrame(TabPanel, 60, 60, kHorizontalFrame);
+  TabPanel->AddFrame(CanvasFrame, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1));
+  
+
+  TRootEmbeddedCanvas *EnergyCanvas = new TRootEmbeddedCanvas("Energyc1", CanvasFrame, 100, 100);
+  CanvasFrame->AddFrame(EnergyCanvas, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1));
+  
+  energyCanvas = EnergyCanvas->GetCanvas();
+  energyCanvas->SetBorderMode(0); //no red frame
+
+
+  
+
+
+
+  //make the buttons frame        
+  TGCompositeFrame *filterFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+  TabPanel->AddFrame(filterFrame, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+
+
+  // mod
+  TGLabel *mod = new TGLabel(filterFrame, "Mod:"); 
+  filterFrame->AddFrame(mod, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  
+  energymod = new TGComboBox(filterFrame);
+  filterFrame->AddFrame(energymod, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 0, 0));
+  energymod->Resize(50, 20);
+  
+
+  // ch
+  TGLabel *ch = new TGLabel(filterFrame, "Ch:"); 
+  filterFrame->AddFrame(ch, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  
+  energych = new TGComboBox(filterFrame);
+  filterFrame->AddFrame(energych, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 15, 0, 0));
+  energych->Resize(50, 20);
+  for (int i = 0; i < 16; ++i)
+    {
+      sprintf(tempchar,"%02d",i);
+      energych->AddEntry(tempchar,i);
+    }
+  energych->Select(0);
+
+
+
+
+
+  
+  // slowlength
+  TGLabel *lowlength = new TGLabel( filterFrame, "SLen:");
+  filterFrame->AddFrame(lowlength, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  energyfilter[0] = new TGNumberEntryField(filterFrame, -1, 0, TGNumberFormat::kNESReal);
+  filterFrame->AddFrame(energyfilter[0], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
+
+  // slowgap
+  TGLabel *lowgap = new TGLabel( filterFrame, "SGap:");
+  filterFrame->AddFrame(lowgap, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  energyfilter[1] = new TGNumberEntryField(filterFrame, -1, 0, TGNumberFormat::kNESReal);
+  filterFrame->AddFrame(energyfilter[1], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
+
+  // preamptau
+  TGLabel *preamptau = new TGLabel( filterFrame, "Tau:");
+  filterFrame->AddFrame(preamptau, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  energyfilter[2] = new TGNumberEntryField(filterFrame, -1, 0, TGNumberFormat::kNESReal);
+  filterFrame->AddFrame(energyfilter[2], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
+
+  // slowrange
+  TGLabel *slowrange = new TGLabel( filterFrame, "Range:");
+  filterFrame->AddFrame(slowrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  energyfilter[3] = new TGNumberEntryField(filterFrame, -1, 2, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 1, 6);
+  filterFrame->AddFrame(energyfilter[3], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
+
+
+
+  
+  energyLoad = new TGTextButton(filterFrame, "&Load");
+  filterFrame->AddFrame(energyLoad, new TGLayoutHints(kLHintsLeft | kLHintsTop, 200, 0, 0, 0));
+  energyLoad->Connect("Pressed()","MainFrame",this,"LoadPar_Energy()");
+
+  energyApply = new TGTextButton(filterFrame, "&Apply");
+  filterFrame->AddFrame(energyApply, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 0, 0, 0));
+  energyApply->Connect("Pressed()","MainFrame",this,"ApplyPar_Energy()");
+
+  energyDraw = new TGTextButton(filterFrame, "&Draw");
+  filterFrame->AddFrame(energyDraw, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 0, 0, 0));
+  energyDraw->Connect("Pressed()","MainFrame",this,"Draw_Energy()");
+  
+
+}
+
+
+
+
+
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+
 void MainFrame::SetFileName()
 {
   if(IsDirectoryExists(filepathtext->GetText()))
@@ -525,6 +644,8 @@ void MainFrame::FileInitSet()
 	}
     }
   modfilesetdone[13]->SetEnabled(1);
+
+  energymod->RemoveAll();
 }
 
  void MainFrame::ReadModule(int i)
@@ -560,6 +681,104 @@ bool MainFrame::IsFileExists(const char *name)
       return false;
     } 
 }
+
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void MainFrame::LoadPar_Energy()
+{
+  double ChanParData = -1;
+  unsigned int OfflinefRange;
+  int retval; 
+  char text[20];
+
+  retval = xia->ReadSglChanPar((char*)"ENERGY_RISETIME", &ChanParData, energymod->GetSelected(), energych->GetSelected());
+  sprintf(text, "%1.2f", ChanParData);
+  energyfilter[0]->SetText(text);
+
+  retval = xia->ReadSglChanPar((char*)"ENERGY_FLATTOP", &ChanParData, energymod->GetSelected(), energych->GetSelected());
+  sprintf(text, "%1.2f", ChanParData);
+  energyfilter[1]->SetText(text);
+
+  
+  retval = xia->ReadSglChanPar((char*)"TAU", &ChanParData, energymod->GetSelected(), energych->GetSelected());
+  sprintf(text, "%1.2f", ChanParData);
+  energyfilter[2]->SetText(text);
+
+  
+  retval = xia->ReadSglModPar((char*)"SLOW_FILTER_RANGE", &OfflinefRange, energymod->GetSelected());
+  energyfilter[3]->SetIntNumber(OfflinefRange);
+}
+
+void MainFrame::ApplyPar_Energy()
+{
+  double ChanParData = -1;
+  unsigned int OfflinefRange;
+  int retval; 
+  char text[20];
+  
+  OfflinefRange = (unsigned int)energyfilter[3]->GetIntNumber();
+  retval = xia->WriteSglModPar((char*)"SLOW_FILTER_RANGE", OfflinefRange, energymod->GetSelected());
+
+  ChanParData = energyfilter[0]->GetNumber();
+  retval = xia->WriteSglChanPar((char*)"ENERGY_RISETIME", ChanParData, energymod->GetSelected(), energych->GetSelected());
+
+  ChanParData = energyfilter[1]->GetNumber();
+  retval = xia->WriteSglChanPar((char*)"ENERGY_FLATTOP", ChanParData, energymod->GetSelected(), energych->GetSelected());
+
+  ChanParData = energyfilter[2]->GetNumber();
+  retval = xia->WriteSglChanPar((char*)"TAU", ChanParData, energymod->GetSelected(), energych->GetSelected());
+
+  LoadPar_Energy();
+}
+    
+void MainFrame::Draw_Energy()
+{
+  if(energyTH1 != NULL) delete energyTH1;
+  if(energyTH1_0 != NULL) delete energyTH1_0;
+  energyTH1_0 = new TH1D("energy_read","",8192,0,16384);
+  energyTH1_0->SetLineColor(1);
+  energyTH1 = new TH1D("energy_compute","",8192,0,16384);
+
+  // energymod->GetSelected(), energych->GetSelected()
+
+  unsigned short RcdTrace[10000];
+  
+  FILE *ListModeFile = NULL;
+  ListModeFile = fopen(xia->offlinefilename[energymod->GetSelected()], "rb");
+
+  
+  for (unsigned int i = 0; i < xia->OfflineModuleEventsCount[energymod->GetSelected()]; ++i)
+    {
+      if((unsigned int)energych->GetSelected() != xia->OfflineEventInformation[energymod->GetSelected()][12*i+1]) continue;
+
+      // Position ListModeFile to the requested trace location
+      fseek(ListModeFile, xia->OfflineEventInformation[energymod->GetSelected()][12*i+11]*4, SEEK_SET);
+				
+      // Read trace
+      fread(RcdTrace, 2, xia->OfflineEventInformation[energymod->GetSelected()][12*i+10], ListModeFile);
+		
+      energyTH1->Fill(xia->ComputeEnergyOffline(energymod->GetSelected(), energych->GetSelected(),xia->OfflineEventInformation[energymod->GetSelected()][12*i+10],RcdTrace));
+      energyTH1_0->Fill(xia->OfflineEventInformation[energymod->GetSelected()][12*i+9]);
+    }
+    
+  // Close file
+  fclose(ListModeFile);
+
+  energyCanvas->cd();
+  energyCanvas->Clear();
+
+  energyTH1_0->Draw();
+  energyTH1->Draw("same");
+  
+  energyCanvas->Modified();
+  energyCanvas->Update();
+  gSystem->ProcessEvents();
+}
+
+
+
+
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

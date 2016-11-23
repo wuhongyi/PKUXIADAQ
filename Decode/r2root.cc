@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:39 2016 (+0800)
-// Last-Updated: 日 10月  2 21:26:21 2016 (+0800)
+// Last-Updated: 三 11月 23 09:34:28 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 38
+//     Update #: 42
 // URL: http://wuhongyi.cn 
 
 #include "r2root.hh"
@@ -55,8 +55,10 @@ r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int run
   t->Branch("ts",&ts,"ts/l");
   
   t->Branch("cfd",&cfd,"cfd/I");
+  t->Branch("cfdft",&cfdft,"cfdft/O");
   t->Branch("evte",&evte,"evte/I");
   t->Branch("ltra",&ltra,"ltra/I");
+  t->Branch("outofr",&outofr,"outofr/O");
   t->Branch("trae",&trae,"trae/I");
   t->Branch("leae",&leae,"leae/I");
   t->Branch("gape",&gape,"gape/I");
@@ -111,8 +113,10 @@ void r2root::Process()
       pileup = rawdec[mark].getpileup();
       ts = rawdec[mark].getts();
       cfd = rawdec[mark].getcfd();
+      cfdft = rawdec[mark].getcfdft();
       evte = rawdec[mark].getevte();
       ltra = rawdec[mark].getltra();
+      outofr = rawdec[mark].getoutofr();
       if(rawdec[mark].getesumflag())
 	{
 	  trae = rawdec[mark].gettrae();
@@ -170,8 +174,10 @@ void r2root::clearopt()
   pileup = 0;
   ts = 0;
   cfd = 0;
+  cfdft = 0;
   evte = 0;
   ltra = 0;
+  outofr = 0;
   trae = 0;
   leae = 0;
   gape = 0;
