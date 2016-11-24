@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 22 21:08:06 2016 (+0800)
-// Last-Updated: 二 11月 22 21:03:28 2016 (+0800)
+// Last-Updated: 四 11月 24 18:45:13 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 40
+//     Update #: 41
 // URL: http://wuhongyi.cn 
 
 #ifndef _ALGORITHM_H_
@@ -109,6 +109,8 @@
 #define ROUND(x)    ((x) < 0.0 ? ceil((x) - 0.5) : floor((x) + 0.5))
 
 
+#define EVENTDATALENGTH 12
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class algorithm
@@ -120,7 +122,7 @@ public:
 public:
   char offlinefilename[PRESET_MAX_MODULES][256];
   unsigned int OfflineModuleEventsCount[PRESET_MAX_MODULES];//这个表示每个插件的事件数
-  unsigned int *OfflineEventInformation[PRESET_MAX_MODULES];// 每个事件信息长度 12 * unsigned int
+  unsigned int *OfflineEventInformation[PRESET_MAX_MODULES];// 每个事件信息长度 EVENTDATALENGTH * unsigned int
   // 0  Event
   // 1  Channel 0-15
   // 2  Slot 2-14 表示机箱的第几个插槽 实际插件标号应该在该数值上减2    

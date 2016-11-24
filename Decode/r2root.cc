@@ -4,15 +4,17 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:39 2016 (+0800)
-// Last-Updated: 三 11月 23 09:34:28 2016 (+0800)
+// Last-Updated: 四 11月 24 13:56:12 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 42
+//     Update #: 43
 // URL: http://wuhongyi.cn 
 
 #include "r2root.hh"
 
 #include <iostream>
 #include <climits>
+#include <cmath>
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int runnumber)
@@ -62,7 +64,7 @@ r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int run
   t->Branch("trae",&trae,"trae/I");
   t->Branch("leae",&leae,"leae/I");
   t->Branch("gape",&gape,"gape/I");
-  t->Branch("base",&base,"base/I");
+  t->Branch("base",&base,"base/D");
 
   t->Branch("qs",&qs,"qs[8]/I");
   t->Branch("data",&data,"data[ltra]/I");
@@ -122,7 +124,8 @@ void r2root::Process()
 	  trae = rawdec[mark].gettrae();
 	  leae = rawdec[mark].getleae();
 	  gape = rawdec[mark].getgape();
-	  base = rawdec[mark].getbase();
+	  // base = rawdec[mark].getbase();
+	  base = IEEEFloating2Decimal(rawdec[mark].getbase());
 	}
       if(rawdec[mark].getqsumflag())
 	{
@@ -188,5 +191,37 @@ void r2root::clearopt()
   memset(dt,0,sizeof(Int_t)*MAXTRACEN);
 }
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+// IEEEFloating2Decimal:
+// Convert a IEEE 754 standrad floating point number (1-bit sign, 8-bit exponent, and 23-bit mantissa) to a decimal fractional number.
+// Return Value:
+// the converted decimal fractional number
+double r2root::IEEEFloating2Decimal(unsigned int IEEEFloatingNumber)
+{
+  short signbit, exponent;
+  double mantissa, DecimalNumber;
+	
+  signbit = (short)(IEEEFloatingNumber >> 31);
+  exponent = (short)((IEEEFloatingNumber & 0x7F800000) >> 23) - 127;
+  mantissa = 1.0 + (double)(IEEEFloatingNumber & 0x7FFFFF) / std::pow(2.0, 23.0);
+  if(signbit == 0)
+    {
+      DecimalNumber = mantissa * std::pow(2.0, (double)exponent);
+    }
+  else
+    {
+      DecimalNumber = - mantissa * std::pow(2.0, (double)exponent);
+    }
+	
+  return(DecimalNumber);
+	
+}
+
+
+
 // 
 // r2root.cc ends here
+
+
+

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:31 2016 (+0800)
-// Last-Updated: 三 11月 23 09:34:28 2016 (+0800)
+// Last-Updated: 四 11月 24 13:56:13 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 19
+//     Update #: 20
 // URL: http://wuhongyi.cn 
 
 #ifndef _R2ROOT_H_
@@ -36,6 +36,9 @@ public:
 
   void Process();
 
+  // Convert a IEEE 754 standrad floating point number (1-bit sign, 8-bit exponent, and 23-bit mantissa) to a decimal fractional number.
+  double IEEEFloating2Decimal(unsigned int IEEEFloatingNumber);
+  
 private:  
   bool IsFileExists(const char *name);//判断文件是否存在
   void clearopt();
@@ -64,7 +67,7 @@ private:
   Int_t trae;
   UInt_t leae;	// leading energy sum
   UInt_t gape;	// Gap energy sum
-  UInt_t base;	// baseline value
+  double base;	// baseline value
 
   UInt_t qs[8];
   Int_t data[MAXTRACEN];

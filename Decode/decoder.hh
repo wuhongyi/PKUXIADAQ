@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:06 2016 (+0800)
-// Last-Updated: 三 11月 23 09:35:54 2016 (+0800)
+// Last-Updated: 四 11月 24 13:51:02 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 8
+//     Update #: 9
 // URL: http://wuhongyi.cn 
 
 #ifndef _DECODER_H_
@@ -117,16 +117,16 @@ private:
   const static unsigned int kShifttslo =        0;
   const static unsigned int kMasktshi =         0x0000ffff;
   const static unsigned int kShifttshi =        0;
-  const static unsigned int kMaskcfd = 		0x7fff0000;//wuhongyi
+  const static unsigned int kMaskcfd = 		0x7fff0000;
   const static unsigned int kShiftcfd =		16;
-  const static unsigned int kMaskcfdft =        0x80000000;//wuhongyi
+  const static unsigned int kMaskcfdft =        0x80000000;
   const static unsigned int kShiftcfdft =       31;
   
   const static unsigned int kMaskevte =         0x0000ffff;
   const static unsigned int kShiftevte =        0;
-  const static unsigned int kMaskltra =		0x7fff0000;//wuhongyi
+  const static unsigned int kMaskltra =		0x7fff0000;
   const static unsigned int kShiftltra =        16;
-  const static unsigned int kMaskoutofr =       0x80000000;//wuhongyi
+  const static unsigned int kMaskoutofr =       0x80000000;
   const static unsigned int kShiftoutofr =      31;
   
   const static unsigned int kMaskesum =         0xffffffff;

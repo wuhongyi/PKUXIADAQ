@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 22 21:08:18 2016 (+0800)
-// Last-Updated: 三 11月 23 20:33:50 2016 (+0800)
+// Last-Updated: 四 11月 24 18:45:13 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 69
+//     Update #: 74
 // URL: http://wuhongyi.cn 
 
 #include "algorithm.hh"
@@ -477,15 +477,19 @@ double algorithm::ComputeEnergyOffline(
 				    unsigned short *RcdTrace)          // recorded trace
 {
   double energy = -1;
-
+  unsigned int FastLen, FastGap, FastFilterRange;
   unsigned int SlowLen, SlowGap, SlowFilterRange, PreampTau_IEEE;
   unsigned int esum0[32768], esum1[32768], esum2[32768];
+  unsigned int fsum0[32768], fsum1[32768];
   unsigned int offset, x, y;
   double preamptau, deltaT;
   double b1, c0, c1, c2;
   unsigned int bsum0, bsum1, bsum2;
   double baseline;
-
+  double fastfilter;
+  double threshold;
+  double slowfilter;
+  
   // Check if RcdTrace is valid
   if(RcdTrace == NULL)
     {
@@ -500,7 +504,9 @@ double algorithm::ComputeEnergyOffline(
     }
   
   // Retrieve channel parameters
-
+  FastFilterRange = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastFilterRange_Address[ModuleNumber] - DATA_MEMORY_ADDRESS];
+  FastLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange);
+  FastGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange);
   SlowFilterRange = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowFilterRange_Address[ModuleNumber] - DATA_MEMORY_ADDRESS];
   SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
   SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
@@ -513,8 +519,6 @@ double algorithm::ComputeEnergyOffline(
       printf("*Error* : the length of recorded trace is too short\n");
       return(-4);
     }
-
-  double *slowfilter = new double[RcdTraceLength];
   
   // Compute slow filter coefficients
   deltaT = 1.0/((double)Module_Information[ModuleNumber].Module_ADCMSPS);
@@ -541,36 +545,50 @@ double algorithm::ComputeEnergyOffline(
     }
   baseline = c0 * (double)bsum0 + c1 * (double)bsum1 + c2 * (double)bsum2;
 
-  // Compute slow filter response
-  offset = 2*SlowLen + SlowGap - 1;
+  
+
+  offset = 2*FastLen + FastGap - 1;
+  ReadSglChanPar((char *)"TRIGGER_THRESHOLD",&threshold,ModuleNumber,ChannelNumber);
+
   for(x=offset; x<RcdTraceLength; x++)
     {
+      fsum0[x] = 0;
+      for(y=(x-offset); y<(x-offset+FastLen); y++)
+	{
+	  fsum0[x] += RcdTrace[y];
+	}
+      fsum1[x] = 0;
+      for(y=(x-offset+FastLen+FastGap); y<(x-offset+2*FastLen+FastGap); y++)
+	{
+	  fsum1[x] += RcdTrace[y];
+	}
+      fastfilter = ((double)fsum1[x] - (double)fsum0[x])/(double)FastLen;
 
-  // x = 800+SlowLen+SlowGap/2;
-  
-      esum0[x] = 0;
-      for(y=(x-offset); y<(x-offset+SlowLen); y++)
-	{
-	  esum0[x] += RcdTrace[y];
-	}
-      esum1[x] = 0;
-      for(y=(x-offset+SlowLen); y<(x-offset+SlowLen+SlowGap); y++)
-	{
-	  esum1[x] += RcdTrace[y];
-	}
-      esum2[x] = 0;
-      for(y=(x-offset+SlowLen+SlowGap); y<(x-offset+2*SlowLen+SlowGap); y++)
-	{
-	  esum2[x] += RcdTrace[y];
-	}
-      slowfilter[x] = c0 * (double)esum0[x] + c1 * (double)esum1[x] + c2 * (double)esum2[x] - baseline;
-
-      // energy = slowfilter[x];
-      
-      if(slowfilter[x] > energy) energy = slowfilter[x];
+      if(fastfilter > threshold) break;
+      if(x == RcdTraceLength-1) return 0;
     }
   
-  delete slowfilter;
+
+  x = x+SlowLen+SlowGap/2;
+  offset = 2*SlowLen + SlowGap - 1;
+  
+  esum0[x] = 0;
+  for(y=(x-offset); y<(x-offset+SlowLen); y++)
+    {
+      esum0[x] += RcdTrace[y];
+    }
+  esum1[x] = 0;
+  for(y=(x-offset+SlowLen); y<(x-offset+SlowLen+SlowGap); y++)
+    {
+      esum1[x] += RcdTrace[y];
+    }
+  esum2[x] = 0;
+  for(y=(x-offset+SlowLen+SlowGap); y<(x-offset+2*SlowLen+SlowGap); y++)
+    {
+      esum2[x] += RcdTrace[y];
+    }
+  energy = c0 * (double)esum0[x] + c1 * (double)esum1[x] + c2 * (double)esum2[x] - baseline;
+      
   return energy;
 }
 
@@ -1859,36 +1877,36 @@ void algorithm::GetEventsInfo(char *FileName, unsigned int *EventInformation)
 	{
 	  fread(&eventdata, 4, 1, ListModeFile);		
 	  // Event #
-	  EventInformation[12 * NumEvents]     = NumEvents;
+	  EventInformation[EVENTDATALENGTH * NumEvents]     = NumEvents;
 	  // Channel #
-	  EventInformation[12 * NumEvents + 1] = (eventdata & 0xF);	
+	  EventInformation[EVENTDATALENGTH * NumEvents + 1] = (eventdata & 0xF);	
 	  // Slot #
-	  EventInformation[12 * NumEvents + 2] = (eventdata & 0xF0) >> 4;	
+	  EventInformation[EVENTDATALENGTH * NumEvents + 2] = (eventdata & 0xF0) >> 4;	
 	  // Crate #
-	  EventInformation[12 * NumEvents + 3] = (eventdata & 0xF00) >> 8;	
+	  EventInformation[EVENTDATALENGTH * NumEvents + 3] = (eventdata & 0xF00) >> 8;	
 	  // Header length
 	  headerlength = (eventdata & 0x1F000) >> 12;
-	  EventInformation[12 * NumEvents + 4] = (eventdata & 0x1F000) >> 12;	
+	  EventInformation[EVENTDATALENGTH * NumEvents + 4] = (eventdata & 0x1F000) >> 12;	
 	  // Event length
 	  eventlength = (eventdata & 0x7FFE0000) >> 17;
-	  EventInformation[12 * NumEvents + 5] = (eventdata & 0x7FFE0000) >> 17;	
+	  EventInformation[EVENTDATALENGTH * NumEvents + 5] = (eventdata & 0x7FFE0000) >> 17;	
 	  // Finish code
-	  EventInformation[12 * NumEvents + 6] = (eventdata & 0x80000000) >> 31;	
+	  EventInformation[EVENTDATALENGTH * NumEvents + 6] = (eventdata & 0x80000000) >> 31;	
 	  fread(&eventdata, 4, 1, ListModeFile);
 	  // EventTime_Low
-	  EventInformation[12 * NumEvents + 7] = eventdata;	
+	  EventInformation[EVENTDATALENGTH * NumEvents + 7] = eventdata;	
 	  fread(&eventdata, 4, 1, ListModeFile);
 	  // EventTime_High
-	  EventInformation[12 * NumEvents + 8] = (eventdata & 0xFFFF);
+	  EventInformation[EVENTDATALENGTH * NumEvents + 8] = (eventdata & 0xFFFF);
 	  fread(&eventdata, 4, 1, ListModeFile);
 	  // Event Energy
-	  EventInformation[12 * NumEvents + 9] = (eventdata & 0xFFFF);
+	  EventInformation[EVENTDATALENGTH * NumEvents + 9] = (eventdata & 0xFFFF);
 	  // Trace Length
-	  EventInformation[12 * NumEvents + 10] = (eventdata & 0x7FFF0000) >> 16;
+	  EventInformation[EVENTDATALENGTH * NumEvents + 10] = (eventdata & 0x7FFF0000) >> 16;
 	  // Trace location
-	  EventInformation[12 * NumEvents + 11] = TotalSkippedWords + headerlength;
+	  EventInformation[EVENTDATALENGTH * NumEvents + 11] = TotalSkippedWords + headerlength;
 
-	  if(eventlength != headerlength + EventInformation[12 * NumEvents + 10]/2)
+	  if(eventlength != headerlength + EventInformation[EVENTDATALENGTH * NumEvents + 10]/2)
 	    std::cout<<"Data error...  eventlength != headerlength + Trace Length/2"<<std::endl;
 	  
 	  TotalSkippedWords += eventlength;

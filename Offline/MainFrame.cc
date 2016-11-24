@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月 23 15:43:08 2016 (+0800)
-// Last-Updated: 三 11月 23 14:03:42 2016 (+0800)
+// Last-Updated: 四 11月 24 18:45:08 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 155
+//     Update #: 162
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -537,7 +537,11 @@ void MainFrame::MakeFoldPanelEnergy(TGCompositeFrame *TabPanel)
   energyfilter[3] = new TGNumberEntryField(filterFrame, -1, 2, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 1, 6);
   filterFrame->AddFrame(energyfilter[3], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
-
+  // threshold
+  TGLabel *threshold = new TGLabel( filterFrame, "Thre:");
+  filterFrame->AddFrame(threshold, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  energyfilter[4] = new TGNumberEntryField(filterFrame, -1, 0, TGNumberFormat::kNESReal);
+  filterFrame->AddFrame(energyfilter[4], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
   
   energyLoad = new TGTextButton(filterFrame, "&Load");
@@ -655,7 +659,7 @@ void MainFrame::FileInitSet()
   if(xia->OfflineModuleEventsCount[i] > 0)
     {
       if(xia->OfflineEventInformation[i] != NULL) delete xia->OfflineEventInformation[i];
-      xia->OfflineEventInformation[i] = new unsigned int[12*xia->OfflineModuleEventsCount[i]];
+      xia->OfflineEventInformation[i] = new unsigned int[EVENTDATALENGTH*xia->OfflineModuleEventsCount[i]];
       xia->GetEventsInfo(xia->offlinefilename[i],xia->OfflineEventInformation[i]);
     }
 }
@@ -700,11 +704,14 @@ void MainFrame::LoadPar_Energy()
   sprintf(text, "%1.2f", ChanParData);
   energyfilter[1]->SetText(text);
 
-  
   retval = xia->ReadSglChanPar((char*)"TAU", &ChanParData, energymod->GetSelected(), energych->GetSelected());
   sprintf(text, "%1.2f", ChanParData);
   energyfilter[2]->SetText(text);
 
+   retval = xia->ReadSglChanPar((char*)"TRIGGER_THRESHOLD", &ChanParData, energymod->GetSelected(), energych->GetSelected());
+  sprintf(text, "%1.2f", ChanParData);
+  energyfilter[4]->SetText(text);
+ 
   
   retval = xia->ReadSglModPar((char*)"SLOW_FILTER_RANGE", &OfflinefRange, energymod->GetSelected());
   energyfilter[3]->SetIntNumber(OfflinefRange);
@@ -715,7 +722,6 @@ void MainFrame::ApplyPar_Energy()
   double ChanParData = -1;
   unsigned int OfflinefRange;
   int retval; 
-  char text[20];
   
   OfflinefRange = (unsigned int)energyfilter[3]->GetIntNumber();
   retval = xia->WriteSglModPar((char*)"SLOW_FILTER_RANGE", OfflinefRange, energymod->GetSelected());
@@ -729,6 +735,9 @@ void MainFrame::ApplyPar_Energy()
   ChanParData = energyfilter[2]->GetNumber();
   retval = xia->WriteSglChanPar((char*)"TAU", ChanParData, energymod->GetSelected(), energych->GetSelected());
 
+  ChanParData = energyfilter[4]->GetNumber();
+  retval = xia->WriteSglChanPar((char*)"TRIGGER_THRESHOLD", ChanParData, energymod->GetSelected(), energych->GetSelected());
+  
   LoadPar_Energy();
 }
     
@@ -736,9 +745,9 @@ void MainFrame::Draw_Energy()
 {
   if(energyTH1 != NULL) delete energyTH1;
   if(energyTH1_0 != NULL) delete energyTH1_0;
-  energyTH1_0 = new TH1D("energy_read","",8192,0,16384);
+  energyTH1_0 = new TH1D("energy_read","",4096,0,16384);
   energyTH1_0->SetLineColor(1);
-  energyTH1 = new TH1D("energy_compute","",8192,0,16384);
+  energyTH1 = new TH1D("energy_compute","",4096,0,16384);
 
   // energymod->GetSelected(), energych->GetSelected()
 
@@ -750,16 +759,18 @@ void MainFrame::Draw_Energy()
   
   for (unsigned int i = 0; i < xia->OfflineModuleEventsCount[energymod->GetSelected()]; ++i)
     {
-      if((unsigned int)energych->GetSelected() != xia->OfflineEventInformation[energymod->GetSelected()][12*i+1]) continue;
+      if((unsigned int)energych->GetSelected() != xia->OfflineEventInformation[energymod->GetSelected()][EVENTDATALENGTH*i+1]) continue;
 
       // Position ListModeFile to the requested trace location
-      fseek(ListModeFile, xia->OfflineEventInformation[energymod->GetSelected()][12*i+11]*4, SEEK_SET);
+      fseek(ListModeFile, xia->OfflineEventInformation[energymod->GetSelected()][EVENTDATALENGTH*i+11]*4, SEEK_SET);
 				
       // Read trace
-      fread(RcdTrace, 2, xia->OfflineEventInformation[energymod->GetSelected()][12*i+10], ListModeFile);
-		
-      energyTH1->Fill(xia->ComputeEnergyOffline(energymod->GetSelected(), energych->GetSelected(),xia->OfflineEventInformation[energymod->GetSelected()][12*i+10],RcdTrace));
-      energyTH1_0->Fill(xia->OfflineEventInformation[energymod->GetSelected()][12*i+9]);
+      fread(RcdTrace, 2, xia->OfflineEventInformation[energymod->GetSelected()][EVENTDATALENGTH*i+10], ListModeFile);
+
+      if(!xia->OfflineEventInformation[energymod->GetSelected()][EVENTDATALENGTH*i+6])
+	energyTH1->Fill(xia->ComputeEnergyOffline(energymod->GetSelected(), energych->GetSelected(),xia->OfflineEventInformation[energymod->GetSelected()][EVENTDATALENGTH*i+10],RcdTrace));
+      
+      energyTH1_0->Fill(xia->OfflineEventInformation[energymod->GetSelected()][EVENTDATALENGTH*i+9]);
     }
     
   // Close file

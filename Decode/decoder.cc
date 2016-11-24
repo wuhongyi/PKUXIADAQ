@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:18 2016 (+0800)
-// Last-Updated: 三 11月 23 09:26:07 2016 (+0800)
+// Last-Updated: 四 11月 24 18:43:37 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 8
+//     Update #: 9
 // URL: http://wuhongyi.cn 
 
 #include "decoder.hh"
@@ -204,8 +204,8 @@ bool decoder::decode()
       if(ltra > MAXTRACEN)
 	{
 	  printf("error, the array to store the trace is not big enough\n");
-	  // return false;
-	  ltra = (levt-lhead)*2;
+	  return false;
+	  // ltra = (levt-lhead)*2;
 	}
       for(int i = 0;i < ltra/2;i++)
 	{
