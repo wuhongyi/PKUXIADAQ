@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 22 21:08:18 2016 (+0800)
-// Last-Updated: 四 11月 24 18:45:13 2016 (+0800)
+// Last-Updated: 五 11月 25 10:00:29 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 74
+//     Update #: 76
 // URL: http://wuhongyi.cn 
 
 #include "algorithm.hh"
@@ -546,7 +546,6 @@ double algorithm::ComputeEnergyOffline(
   baseline = c0 * (double)bsum0 + c1 * (double)bsum1 + c2 * (double)bsum2;
 
   
-
   offset = 2*FastLen + FastGap - 1;
   ReadSglChanPar((char *)"TRIGGER_THRESHOLD",&threshold,ModuleNumber,ChannelNumber);
 
@@ -588,7 +587,7 @@ double algorithm::ComputeEnergyOffline(
       esum2[x] += RcdTrace[y];
     }
   energy = c0 * (double)esum0[x] + c1 * (double)esum1[x] + c2 * (double)esum2[x] - baseline;
-      
+
   return energy;
 }
 

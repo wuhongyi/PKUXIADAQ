@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月 23 15:43:08 2016 (+0800)
-// Last-Updated: 四 11月 24 18:45:08 2016 (+0800)
+// Last-Updated: 五 11月 25 10:58:17 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 162
+//     Update #: 163
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -726,11 +726,11 @@ void MainFrame::ApplyPar_Energy()
   OfflinefRange = (unsigned int)energyfilter[3]->GetIntNumber();
   retval = xia->WriteSglModPar((char*)"SLOW_FILTER_RANGE", OfflinefRange, energymod->GetSelected());
 
-  ChanParData = energyfilter[0]->GetNumber();
-  retval = xia->WriteSglChanPar((char*)"ENERGY_RISETIME", ChanParData, energymod->GetSelected(), energych->GetSelected());
-
   ChanParData = energyfilter[1]->GetNumber();
   retval = xia->WriteSglChanPar((char*)"ENERGY_FLATTOP", ChanParData, energymod->GetSelected(), energych->GetSelected());
+  
+  ChanParData = energyfilter[0]->GetNumber();
+  retval = xia->WriteSglChanPar((char*)"ENERGY_RISETIME", ChanParData, energymod->GetSelected(), energych->GetSelected());
 
   ChanParData = energyfilter[2]->GetNumber();
   retval = xia->WriteSglChanPar((char*)"TAU", ChanParData, energymod->GetSelected(), energych->GetSelected());
