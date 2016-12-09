@@ -1,7 +1,7 @@
 #include "Table.hh"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-Table::Table (const TGWindow * p, const TGWindow * main, int columns,
+Table::Table(const TGWindow * p, const TGWindow * main, int columns,
 	      int rows, char *name, int NumModules)
 {
   SetCleanup(kDeepCleanup);

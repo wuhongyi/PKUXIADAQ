@@ -157,7 +157,7 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	     about->Popup();
 	      break;
 	    case BASE:
-	      base = new Base(fClient->GetRoot (), this, (char*)"Base Setup", 7, 16, detector->NumModules);
+	      base = new Base(fClient->GetRoot(), this, (char*)"Base Setup", 7, 16, detector->NumModules);
 	      base->load_info(0);
 	      break;
 	    case CFDP:
@@ -372,7 +372,7 @@ void MainFrame::MakeFold1Panel(TGCompositeFrame * TabPanel)
   StateMsgFold1 = new TGTextEntry(StateMsgFrame,
 				  new TGTextBuffer(30), 10000,
 				  StateMsgFold1->GetDefaultGC()(),
-				  StateMsgFold1->GetDefaultFontStruct (),
+				  StateMsgFold1->GetDefaultFontStruct(),
 				  kRaisedFrame | kDoubleBorder,
 				  GetWhitePixel());
   StateMsgFold1->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
