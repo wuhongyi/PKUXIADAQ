@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月 23 15:43:08 2016 (+0800)
-// Last-Updated: 五 11月 25 10:58:17 2016 (+0800)
+// Last-Updated: 六 12月 10 09:38:00 2016 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 163
+//     Update #: 164
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -745,9 +745,9 @@ void MainFrame::Draw_Energy()
 {
   if(energyTH1 != NULL) delete energyTH1;
   if(energyTH1_0 != NULL) delete energyTH1_0;
-  energyTH1_0 = new TH1D("energy_read","",4096,0,16384);
+  energyTH1_0 = new TH1D("energy_read","",8192,0,65536);
   energyTH1_0->SetLineColor(1);
-  energyTH1 = new TH1D("energy_compute","",4096,0,16384);
+  energyTH1 = new TH1D("energy_compute","",8192,0,65536);
 
   // energymod->GetSelected(), energych->GetSelected()
 

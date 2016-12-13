@@ -4,7 +4,7 @@
 4
 5
 6
-../firmware/syspixie16_revfpku_adc100mhz_r36473/syspixie16_revfpku_adc100mhz_r36473.bin
+../firmware/syspixie16_revfpku_adc100mhz_r36481/syspixie16_revfpku_adc100mhz_r36481.bin
 ../firmware/pixie16_revf_14b100m_firmware_release_11032016/fippixie16_revfgeneral_14b100m_r36263.bin
 FPGATrig
 ../firmware/pixie16_revf_14b100m_firmware_release_11032016/Pixie16DSP_revfgeneral_14b100m_r36264.ldr
