@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 日 11月  6 10:36:11 2016 (+0800)
+// Last-Updated: 日 3月 12 14:35:24 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 136
+//     Update #: 137
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -496,14 +496,14 @@ void Online::LoopRun()
       // if(sem_wait(sem) == -1) continue;
       // sem_post(sem);
       sem_getvalue(sem, &val);
-      printf("sem: %d\n",val);
+      // printf("sem: %d\n",val);
       if(val > 0)
 	{
 	  memcpy(&tempN,ptr,4);
 	  if(number != tempN)
 	    {
 	      PrevProtectionTime = get_time();
-	      std::cout<<"get time 1"<<std::endl;
+	      // std::cout<<"get time 1"<<std::endl;
 	      
 	      memcpy(buf_new,ptr,(PRESET_MAX_MODULES*448*4)+10);
 	      if(number == UINT_MAX) 
@@ -600,7 +600,7 @@ void Online::LoopRun()
 	}
       else
 	{
-	  std::cout<<"get time 2"<<std::endl;
+	  // std::cout<<"get time 2"<<std::endl;
 	  CurrentProtectionTime = get_time();
 	  ElapsedProtectionTime = CurrentProtectionTime - PrevProtectionTime;
 	  if(ElapsedProtectionTime > 5000)

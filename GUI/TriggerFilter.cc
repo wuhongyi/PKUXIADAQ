@@ -19,11 +19,11 @@ TriggerFilter::TriggerFilter(const TGWindow * p, const TGWindow * main, char *na
   CLabel[1]->SetText("TGap[us]");
   CLabel[1]->SetAlignment(kTextCenterX);
 
-  for(int i=0;i<16;i++)
-    {
-      NumEntry[1][i]->SetEnabled(0);
-      NumEntry[2][i]->SetEnabled(0);
-    }
+  // for(int i=0;i<16;i++)
+  //   {
+  //     NumEntry[1][i]->SetEnabled(0);
+  //     NumEntry[2][i]->SetEnabled(0);
+  //   }
   
   modNumber = 0;
   Load_Once = false;

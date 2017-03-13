@@ -74,11 +74,11 @@ void MainFrame::CreateMenuBar()
   TGPopupMenu *MenuSetup = new TGPopupMenu(fClient->GetRoot ());
   MenuSetup->AddEntry("&Base Setup", BASE);
   MenuSetup->AddEntry("&Energy", ENERGY);
+  MenuSetup->AddEntry("&Trigger Filter", TFILTER);
   MenuSetup->AddEntry("&CFD", CFDP);
   MenuSetup->AddEntry("&QDC", QDCP);
   MenuSetup->AddEntry("&Histogramming", HISTOGRAM);
   MenuSetup->AddEntry("dT", SCOPEDT);
-  MenuSetup->AddEntry("&Trigger Filter", TFILTER);
   MenuSetup->AddSeparator();
   MenuSetup->AddEntry("Save2File", FILE_SAVE);
   MenuSetup->Associate(this);
