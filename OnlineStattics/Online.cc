@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 日 3月 12 14:35:24 2017 (+0800)
+// Last-Updated: 二 3月 14 12:25:02 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 137
+//     Update #: 138
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -461,7 +461,7 @@ void Online::LoopRun()
   double filesize;
   int tempinputcountrate,tempoutputcountrate;// double
   std::string tempstring;
-  
+  int OldRunNUmber = -1;
   std::stringstream ss;//sstream cstring
   ss.clear();//重复使用前一定要清空
 
@@ -518,7 +518,16 @@ void Online::LoopRun()
 	      memcpy(&ModNum,buf_new+4,2);
 	      memcpy(&RunNumber,buf_new+6,4);
 	      // printf("RunNumber: %d -- Num: %d\n",RunNumber,number);
-     
+	      if(OldRunNUmber != RunNumber)
+		{
+		  for (int i = 0; i < 208; ++i)
+		    {
+		      ICR[i]->SetText("0");
+		      OCR[i]->SetText("0");
+		    }
+		  OldRunNUmber = RunNumber;
+		}
+		
 	      for(int i = 0; i < ModNum;i++)
 		{
 		  // SYSTEM_CLOCK_MHZ = 100;

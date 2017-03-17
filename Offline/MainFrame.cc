@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月 23 15:43:08 2016 (+0800)
-// Last-Updated: 六 12月 10 09:38:00 2016 (+0800)
+// Last-Updated: 四 3月 16 21:19:51 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 164
+//     Update #: 167
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -511,7 +511,11 @@ void MainFrame::MakeFoldPanelEnergy(TGCompositeFrame *TabPanel)
 
 
 
-
+  // slowrange
+  TGLabel *slowrange = new TGLabel( filterFrame, "Range:");
+  filterFrame->AddFrame(slowrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  energyfilter[3] = new TGNumberEntryField(filterFrame, -1, 2, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 1, 6);
+  filterFrame->AddFrame(energyfilter[3], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
   
   // slowlength
   TGLabel *lowlength = new TGLabel( filterFrame, "SLen:");
@@ -531,17 +535,25 @@ void MainFrame::MakeFoldPanelEnergy(TGCompositeFrame *TabPanel)
   energyfilter[2] = new TGNumberEntryField(filterFrame, -1, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(energyfilter[2], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
-  // slowrange
-  TGLabel *slowrange = new TGLabel( filterFrame, "Range:");
-  filterFrame->AddFrame(slowrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
-  energyfilter[3] = new TGNumberEntryField(filterFrame, -1, 2, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 1, 6);
-  filterFrame->AddFrame(energyfilter[3], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
+
 
   // threshold
   TGLabel *threshold = new TGLabel( filterFrame, "Thre:");
   filterFrame->AddFrame(threshold, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
   energyfilter[4] = new TGNumberEntryField(filterFrame, -1, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(energyfilter[4], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
+
+  // fastlength
+  TGLabel *fastlength = new TGLabel( filterFrame, "FLen:");
+  filterFrame->AddFrame(fastlength, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  energyfilter[5] = new TGNumberEntryField(filterFrame, -1, 0, TGNumberFormat::kNESReal);
+  filterFrame->AddFrame(energyfilter[5], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
+
+  // fastgap
+  TGLabel *fastgap = new TGLabel( filterFrame, "FGap:");
+  filterFrame->AddFrame(fastgap, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  energyfilter[6] = new TGNumberEntryField(filterFrame, -1, 0, TGNumberFormat::kNESReal);
+  filterFrame->AddFrame(energyfilter[6], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
   
   energyLoad = new TGTextButton(filterFrame, "&Load");
@@ -712,6 +724,13 @@ void MainFrame::LoadPar_Energy()
   sprintf(text, "%1.2f", ChanParData);
   energyfilter[4]->SetText(text);
  
+   retval = xia->ReadSglChanPar((char*)"TRIGGER_RISETIME", &ChanParData, energymod->GetSelected(), energych->GetSelected());
+  sprintf(text, "%1.2f", ChanParData);
+  energyfilter[5]->SetText(text);
+
+     retval = xia->ReadSglChanPar((char*)"TRIGGER_FLATTOP", &ChanParData, energymod->GetSelected(), energych->GetSelected());
+  sprintf(text, "%1.2f", ChanParData);
+  energyfilter[6]->SetText(text);
   
   retval = xia->ReadSglModPar((char*)"SLOW_FILTER_RANGE", &OfflinefRange, energymod->GetSelected());
   energyfilter[3]->SetIntNumber(OfflinefRange);
@@ -737,6 +756,12 @@ void MainFrame::ApplyPar_Energy()
 
   ChanParData = energyfilter[4]->GetNumber();
   retval = xia->WriteSglChanPar((char*)"TRIGGER_THRESHOLD", ChanParData, energymod->GetSelected(), energych->GetSelected());
+
+  ChanParData = energyfilter[5]->GetNumber();
+  retval = xia->WriteSglChanPar((char*)"TRIGGER_RISETIME", ChanParData, energymod->GetSelected(), energych->GetSelected());
+  
+  ChanParData = energyfilter[6]->GetNumber();
+  retval = xia->WriteSglChanPar((char*)"TRIGGER_FLATTOP", ChanParData, energymod->GetSelected(), energych->GetSelected());
   
   LoadPar_Energy();
 }
@@ -745,6 +770,13 @@ void MainFrame::Draw_Energy()
 {
   if(energyTH1 != NULL) delete energyTH1;
   if(energyTH1_0 != NULL) delete energyTH1_0;
+
+  energyCanvas->cd();
+  energyCanvas->Clear();
+  energyCanvas->Modified();
+  energyCanvas->Update();
+  gSystem->ProcessEvents();
+  
   energyTH1_0 = new TH1D("energy_read","",8192,0,65536);
   energyTH1_0->SetLineColor(1);
   energyTH1 = new TH1D("energy_compute","",8192,0,65536);

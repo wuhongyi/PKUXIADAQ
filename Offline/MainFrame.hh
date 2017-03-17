@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月 23 15:38:41 2016 (+0800)
-// Last-Updated: 四 11月 24 09:07:57 2016 (+0800)
+// Last-Updated: 四 3月 16 20:51:11 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 50
+//     Update #: 51
 // URL: http://wuhongyi.cn 
 
 #ifndef _MAINFRAME_H_
@@ -186,7 +186,7 @@ private:
 
   // Panel Energy
   TCanvas *energyCanvas;
-  TGNumberEntryField *energyfilter[5];// 0-slowlength  1-slowgap  2-preamptau 3-filterrange 4-threshold
+  TGNumberEntryField *energyfilter[7];// 0-slowlength  1-slowgap  2-preamptau 3-filterrange 4-threshold 5-fastlength 6-fastgap
   TGComboBox *energymod;
   TGComboBox *energych;
   TGTextButton *energyLoad,*energyApply,*energyDraw;

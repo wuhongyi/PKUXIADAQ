@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 22 21:08:18 2016 (+0800)
-// Last-Updated: 五 11月 25 10:00:29 2016 (+0800)
+// Last-Updated: 二 3月 14 13:40:59 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 76
+//     Update #: 77
 // URL: http://wuhongyi.cn 
 
 #include "algorithm.hh"
@@ -567,8 +567,31 @@ double algorithm::ComputeEnergyOffline(
       if(x == RcdTraceLength-1) return 0;
     }
   
-
-  x = x+SlowLen+SlowGap/2;
+  switch(SlowFilterRange)
+    {
+    case 1:
+      x = x+SlowLen+SlowGap-3;
+      break;
+    case 2:
+      x = x+SlowLen+SlowGap-2;
+      break;
+    case 3:
+      x = x+SlowLen+SlowGap-2;
+      break;
+    case 4:
+      x = x+SlowLen+SlowGap-1;
+      break;
+    case 5:
+      x = x+SlowLen+SlowGap;
+      break;
+    case 6:
+      x = x+SlowLen+SlowGap+1;
+      break;
+    default:
+      x = x+SlowLen+SlowGap-2;
+      break;
+    }
+  // x = x+SlowLen+SlowGap/2;
   offset = 2*SlowLen + SlowGap - 1;
   
   esum0[x] = 0;
