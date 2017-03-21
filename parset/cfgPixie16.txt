@@ -8,5 +8,5 @@
 ../firmware/pixie16_revf_14b100m_firmware_release_11032016/fippixie16_revfgeneral_14b100m_r36263.bin
 FPGATrig
 ../firmware/pixie16_revf_14b100m_firmware_release_11032016/Pixie16DSP_revfgeneral_14b100m_r36264.ldr
-../parset/20170317SiCoin.set
+../parset/20170321base.set
 ../firmware/pixie16_revf_14b100m_firmware_release_11032016/Pixie16DSP_revfgeneral_14b100m_r36264.var
