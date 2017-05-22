@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:18 2016 (+0800)
-// Last-Updated: 四 11月 24 18:43:37 2016 (+0800)
+// Last-Updated: 一 5月 22 14:07:13 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 9
+//     Update #: 10
 // URL: http://wuhongyi.cn 
 
 #include "decoder.hh"
@@ -48,7 +48,7 @@ void decoder::clearall()
   qsumf = false;
   memset(qs,0,sizeof(unsigned int)*8);
   tracef = false;
-  memset(data,0,sizeof(int)*MAXTRACEN);
+  memset(data,0,sizeof(unsigned short)*MAXTRACEN);
 }
 
 bool decoder::openfile(const char* fileN)

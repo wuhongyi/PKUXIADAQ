@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月 23 15:43:08 2016 (+0800)
-// Last-Updated: 四 3月 16 21:19:51 2017 (+0800)
+// Last-Updated: 六 5月 20 15:10:27 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 167
+//     Update #: 168
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -777,9 +777,9 @@ void MainFrame::Draw_Energy()
   energyCanvas->Update();
   gSystem->ProcessEvents();
   
-  energyTH1_0 = new TH1D("energy_read","",8192,0,65536);
+  energyTH1_0 = new TH1D("energy_read","",65536,0,65536);
   energyTH1_0->SetLineColor(1);
-  energyTH1 = new TH1D("energy_compute","",8192,0,65536);
+  energyTH1 = new TH1D("energy_compute","",65536,0,65536);
 
   // energymod->GetSelected(), energych->GetSelected()
 

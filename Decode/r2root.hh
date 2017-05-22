@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:31 2016 (+0800)
-// Last-Updated: 四 11月 24 13:56:13 2016 (+0800)
+// Last-Updated: 一 5月 22 14:24:49 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 20
+//     Update #: 21
 // URL: http://wuhongyi.cn 
 
 #ifndef _R2ROOT_H_
@@ -54,24 +54,24 @@ private:
   TBenchmark *benchmark;
   
 private:
-  Int_t ch;
-  Int_t sid;
-  Int_t cid;
+  Short_t ch;
+  Short_t sid;
+  Short_t cid;
   Bool_t pileup;
   ULong64_t ts;
-  Int_t cfd;
+  UShort_t cfd;
   Bool_t cfdft;//CFD forced trigger bit
-  Int_t evte;
-  Int_t ltra;
+  UShort_t evte;
+  UShort_t ltra;
   Bool_t outofr;//Trace Out-of-Range Flag
-  Int_t trae;
+  UInt_t trae;  // trailing energy sum
   UInt_t leae;	// leading energy sum
   UInt_t gape;	// Gap energy sum
   double base;	// baseline value
 
   UInt_t qs[8];
-  Int_t data[MAXTRACEN];
-  Int_t dt[MAXTRACEN];
+  UShort_t data[MAXTRACEN];
+  UShort_t dt[MAXTRACEN];
 };
 
 #endif /* _R2ROOT_H_ */

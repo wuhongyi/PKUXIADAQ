@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:06 2016 (+0800)
-// Last-Updated: 四 11月 24 13:51:02 2016 (+0800)
+// Last-Updated: 一 5月 22 14:07:12 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 9
+//     Update #: 10
 // URL: http://wuhongyi.cn 
 
 #ifndef _DECODER_H_
@@ -36,18 +36,18 @@ public:
 
   bool getnextevt();
 
-  inline int getch() {return ch;}
-  inline int getsid() {return sid;}
-  inline int getcid() {return cid;}
-  inline int getlhead() {return lhead;}
-  inline int getlevt() {return levt;}
+  inline short getch() {return ch;}
+  inline short getsid() {return sid;}
+  inline short getcid() {return cid;}
+  inline unsigned short getlhead() {return lhead;}
+  inline unsigned short getlevt() {return levt;}
   inline bool getpileup() {return pileup;}
 
   inline unsigned long getts() {return ts;}
-  inline int getcfd() {return cfd;}
+  inline unsigned short getcfd() {return cfd;}
   inline bool getcfdft() {return cfdft;}
-  inline int getevte() {return evte;}
-  inline int getltra() {return ltra;}
+  inline unsigned short getevte() {return evte;}
+  inline unsigned short getltra() {return ltra;}
   inline bool getoutofr() {return outofr;}
   
   inline bool getesumflag() {return esumf;}
@@ -59,7 +59,7 @@ public:
   inline bool getqsumflag() {return qsumf;}
   inline void getqs(unsigned int *qqs) {memcpy(qqs,qs,sizeof(unsigned int)*8);}
   inline bool gettraceflag() {return tracef;}
-  inline void gettrace(int *da) {memcpy(da,data,sizeof(int)*ltra);}
+  inline void gettrace(unsigned short *da) {memcpy(da,data,sizeof(unsigned short)*ltra);}
 
 private:
   bool readword();
@@ -71,20 +71,20 @@ private:
   //Decoded values
   //_____________________________________________
 	
-  int ch;  		// channel number
-  int sid; 		// slot id
-  int cid; 		// crate id
-  int lhead; 		// header length
-  int levt; 		// event length
+  short ch;  		// channel number
+  short sid; 		// slot id
+  short cid; 		// crate id
+  unsigned short lhead; // header length
+  unsigned short levt;  // event length
   bool pileup; 		// 0-->good event 1-->pileup event
 
   unsigned long ts; 	// timestamp of this event
-  int cfd; 		// CFD fractional time
+  unsigned short cfd;   // CFD fractional time
   bool cfdft;//CFD forced trigger bit
   
-  int evte;  		// Event enrgy
-  int ltra;		// Trace length
-  bool outofr;//Trace Out-of-Range Flag
+  unsigned short evte;  // Event enrgy
+  unsigned short ltra;  // Trace length
+  bool outofr;          //Trace Out-of-Range Flag
   
   bool esumf;
   unsigned int trae;	// trailing energy sum
@@ -97,7 +97,7 @@ private:
 
   // pulse shape (trace enabled)
   bool tracef;
-  int  data[MAXTRACEN];
+  unsigned short  data[MAXTRACEN];
 
   // const parameters for decoder
   const static unsigned int kMaskchannel =	0x0000000f;
