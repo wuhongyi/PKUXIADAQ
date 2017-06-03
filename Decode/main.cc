@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:01:31 2016 (+0800)
-// Last-Updated: 三 11月 23 09:34:28 2016 (+0800)
+// Last-Updated: 六 6月  3 10:35:15 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 7
+//     Update #: 8
 // URL: http://wuhongyi.cn 
 
 /************************************
@@ -28,16 +28,16 @@
 
 int main(int argc, char *argv[])
 {
-  if(argc != 3)
+  if(argc != 2)
     {
-      std::cout<<"error(argc != 3)      ./"<<argv[0]<<" [FileName]  [RuNnumber]"<<std::endl;
+      std::cout<<"error(argc != 2)      "<<argv[0]<<" [RuNnumber]"<<std::endl;
       return 0;
     }
 
   TString rawfilepath = "/home/wuhongyi/data/";
   TString rootfilepath = "/home/wuhongyi/data/";
-  TString filename(argv[1]);
-  TString RunNumber(argv[2]);
+  TString filename = "data";
+  TString RunNumber(argv[1]);
   int  runnumber = RunNumber.Atoi();
 
   r2root *r2r=new r2root(rawfilepath,rootfilepath,filename,runnumber);
@@ -49,6 +49,8 @@ int main(int argc, char *argv[])
 
 // 
 // main.cc ends here
+
+
 
 
 

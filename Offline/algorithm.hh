@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 22 21:08:06 2016 (+0800)
-// Last-Updated: 四 11月 24 18:45:13 2016 (+0800)
+// Last-Updated: 六 6月  3 13:40:41 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 41
+//     Update #: 42
 // URL: http://wuhongyi.cn 
 
 #ifndef _ALGORITHM_H_
@@ -266,13 +266,7 @@ private:
 		  unsigned int   TraceDelay,	// current trace dealy value
 		  unsigned short ModNum,		// Pixie module number
 		  unsigned short ChanNum );	// Pixie channel number
-  
-  
-
-  
-
-
-  
+   
   
 private:
   struct Pixie_Configuration
