@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 6月  3 09:27:02 2017 (+0800)
-// Last-Updated: 六 6月  3 12:31:55 2017 (+0800)
+// Last-Updated: 日 8月 13 17:05:35 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 19
+//     Update #: 20
 // URL: http://wuhongyi.cn 
 
 #include "sort.hh"
@@ -17,10 +17,9 @@
 #include <cstdlib>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-sort::sort(TString rawfilepath,TString outfilepath,TString filename,int runnumber,int timewindows,int modulenumber)
+sort::sort(TString rawfilepath,TString outfilepath,TString filename,int runnumber,int timewindows)
 {
   windows = timewindows;
-  module = modulenumber;
   flag = false;
   nevt = 0;
 
@@ -48,64 +47,15 @@ sort::sort(TString rawfilepath,TString outfilepath,TString filename,int runnumbe
   file_out = new TFile(tempfilename,"RECREATE");
   t_out = new TTree("t","PKU XIA Pixie-16 Event Data");
   t_out->Branch("nevt",&nevt,"nevt/I");
-  switch(modulenumber)
-    {
-    case 1:
-      t_out->Branch("adc",&adc,"adc[1][16]/s");
-      t_out->Branch("tdc",&tdc,"tdc[1][16]/l");
-      break;
-    case 2:
-      t_out->Branch("adc",&adc,"adc[2][16]/s");
-      t_out->Branch("tdc",&tdc,"tdc[2][16]/l");
-      break;
-    case 3:
-      t_out->Branch("adc",&adc,"adc[3][16]/s");
-      t_out->Branch("tdc",&tdc,"tdc[3][16]/l");
-      break;
-    case 4:
-      t_out->Branch("adc",&adc,"adc[4][16]/s");
-      t_out->Branch("tdc",&tdc,"tdc[4][16]/l");
-      break;
-    case 5:
-      t_out->Branch("adc",&adc,"adc[5][16]/s");
-      t_out->Branch("tdc",&tdc,"tdc[5][16]/l");
-      break;
-    case 6:
-      t_out->Branch("adc",&adc,"adc[6][16]/s");
-      t_out->Branch("tdc",&tdc,"tdc[6][16]/l");
-      break;
-    case 7:
-      t_out->Branch("adc",&adc,"adc[7][16]/s");
-      t_out->Branch("tdc",&tdc,"tdc[7][16]/l");
-      break;
-    case 8:
-      t_out->Branch("adc",&adc,"adc[8][16]/s");
-      t_out->Branch("tdc",&tdc,"tdc[8][16]/l");
-      break;
-    case 9:
-      t_out->Branch("adc",&adc,"adc[9][16]/s");
-      t_out->Branch("tdc",&tdc,"tdc[9][16]/l");
-      break;
-    case 10:
-      t_out->Branch("adc",&adc,"adc[10][16]/s");
-      t_out->Branch("tdc",&tdc,"tdc[10][16]/l");
-      break;
-    case 11:
-      t_out->Branch("adc",&adc,"adc[11][16]/s");
-      t_out->Branch("tdc",&tdc,"tdc[11][16]/l");
-      break;
-    case 12:
-      t_out->Branch("adc",&adc,"adc[12][16]/s");
-      t_out->Branch("tdc",&tdc,"tdc[12][16]/l");
-      break;
-    case 13:
-      t_out->Branch("adc",&adc,"adc[13][16]/s");
-      t_out->Branch("tdc",&tdc,"tdc[13][16]/l");
-      break;
-    default:
-      std::cout<<"Module Number Error !!!"<<std::endl;
-      break;
-    }
+
+#if BOARDNUMBER > 1
+  t_out->Branch("adc",&adc,TString::Format("adc[%d][16]/s",BOARDNUMBER).Data());
+  t_out->Branch("tdc",&tdc,TString::Format("tdc[%d][16]/l",BOARDNUMBER).Data());
+#else
+  t_out->Branch("adc",&adc,"adc[16]/s");
+  t_out->Branch("tdc",&tdc,"tdc[16]/l");
+#endif
+  
   // t_out->Print();
   
 }
@@ -119,8 +69,8 @@ sort::~sort()
 
 void sort::clearopt()
 {
-  memset(adc,0,sizeof(UShort_t)*MAXBOARD*16);
-  memset(tdc,0,sizeof(ULong64_t)*MAXBOARD*16);
+  memset(adc,0,sizeof(adc));
+  memset(tdc,0,sizeof(tdc));
 }
 
 void sort::Process()
@@ -174,20 +124,38 @@ void sort::InitEvent()
   clearopt();
   inittime = ts*10;
 
+#if BOARDNUMBER > 1
   if(evte > adc[sid-2][ch])
     {
       adc[sid-2][ch] = evte;
       tdc[sid-2][ch] = ts*10;
     }
+#else
+  if(evte > adc[ch])
+    {
+      adc[ch] = evte;
+      tdc[ch] = ts*10;
+    }
+#endif
+
 }
 
 void sort::ProcessEntry()
 {
+#if BOARDNUMBER > 1
   if(evte > adc[sid-2][ch])
     {
       adc[sid-2][ch] = evte;
       tdc[sid-2][ch] = ts*10;
     }
+#else
+  if(evte > adc[ch])
+    {
+      adc[ch] = evte;
+      tdc[ch] = ts*10;
+    }
+#endif
+
 }
 
 // 

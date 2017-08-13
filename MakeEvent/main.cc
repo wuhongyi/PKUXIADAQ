@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 6月  3 09:24:39 2017 (+0800)
-// Last-Updated: 六 6月  3 12:34:39 2017 (+0800)
+// Last-Updated: 日 8月 13 18:08:53 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 6
+//     Update #: 9
 // URL: http://wuhongyi.cn 
 
 #include "sort.hh"
@@ -21,31 +21,38 @@
 
 int main(int argc, char *argv[])
 {
-  if(argc != 4)
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  // 以下部分用户需要修改
+  TString rawfilepath = "/home/wuhongyi/data/";
+  TString outfilepath = "/home/wuhongyi/data/";
+
+  TString filename = "data";
+  // 以上部分用户需要修改
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+
+
+  
+  if(argc != 3)
     {
-      std::cout<<"error(argc != 4)      "<<argv[0]<<"  [ModuleNumber]  [RuNnumber]  [windows]"<<std::endl;
+      std::cout<<"error(argc != 3)      "<<argv[0]<<"  [RunNnumber]  [windows]"<<std::endl;
       return 1;
     }
   std::cout<<"Tips: The software is only applicable to a crate!" <<std::endl;
 
-  
-  TString rawfilepath = "/home/wuhongyi/data/";
-  TString outfilepath = "/home/wuhongyi/data/";
-  TString filename = "data";
-  TString ModuleNumber(argv[1]);
-  int modulenumber = ModuleNumber.Atoi();
-  TString RunNumber(argv[2]);
+
+  TString RunNumber(argv[1]);
   int  runnumber = RunNumber.Atoi();
-  TString TimeWindows(argv[3]);
+  TString TimeWindows(argv[2]);
   int timewindows = TimeWindows.Atoi();
 
-  if(modulenumber < 0 || modulenumber > 13)
+  if(BOARDNUMBER < 0 || BOARDNUMBER > 13)
     {
-      std::cout<<"Error: Input parameter ModuleNumber not in range 1 - 13 !!!"<<std::endl;
+      std::cout<<"Error: Parameter 'BOARDNUMBER' in file sort.hh not in range 1 - 13 !!!"<<std::endl;
 	return 1;
     }
   
-  sort *tran = new sort(rawfilepath,outfilepath,filename,runnumber,timewindows,modulenumber);
+  sort *tran = new sort(rawfilepath,outfilepath,filename,runnumber,timewindows);
   tran->Process();
   delete tran;
   
