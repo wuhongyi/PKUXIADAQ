@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 日 11月  6 20:36:57 2016 (+0800)
+// Last-Updated: 一 8月 21 15:55:22 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 30
+//     Update #: 33
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -56,10 +56,11 @@ private:
   TGDoubleHSlider *dslider;
 
   TMultiGraph *offlinemultigraph;
-  TGraph *rawdata,*threshdata,*cfddata,*sfilterdata,*ffilterdata;
+  TGraph *rawdata,*threshdata,*cfddata,*cfdthreshdata,*sfilterdata,*ffilterdata;
   unsigned short *RcdTrace;//
   double *doublesample;
   double *doublethresh;
+  double *doublecfdthresh;
   double *doublercdtrace;
   double *doublefastfilter;//
   double *doublecfd;//
@@ -80,8 +81,8 @@ private:
   unsigned int OfflineCurrentCount;
   
   unsigned int OfflinefRange;
-  // 0-fastlength 1-fastgap  2-slowlength  3-slowgap  4-preamptau  5-cfddelay  6-cfdscale 7-threshold
-  TGNumberEntryField *offlinefilters[8];
+  // 0-fastlength 1-fastgap  2-slowlength  3-slowgap  4-preamptau  5-cfddelay  6-cfdscale 7-fast filterthreshold 8-cfd threshold
+  TGNumberEntryField *offlinefilters[9];
 
   TGTextEntry* OfflineFileStatus;
   TGTextEntry* OfflineCurrentCountText;
@@ -115,6 +116,7 @@ private:
       OFFLINEPREAMPTAU,
       OFFLINECFDDELAY,
       OFFLINECFDSCALE,
+      OFFLINECFDTHRESH,
       OFFLINETHRESH,
       OFFLINEFILTERRANGE
     };
@@ -134,10 +136,11 @@ private:
   unsigned int *OfflineEventInformation2;
   unsigned int OfflineCurrentCount2[16];
   
-  TGraph *rawdata2[16],*threshdata2[16],*cfddata2[16],*sfilterdata2[16],*ffilterdata2[16];
+  TGraph *rawdata2[16],*threshdata2[16],*cfdthreshdata2[16],*cfddata2[16],*sfilterdata2[16],*ffilterdata2[16];
   unsigned short *RcdTrace2[16];//
   double *doublesample2[16];
   double *doublethresh2[16];
+  double *doublecfdthresh2[16];
   double *doublercdtrace2[16];
   double *doublefastfilter2[16];//
   double *doublecfd2[16];//

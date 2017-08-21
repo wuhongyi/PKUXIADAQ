@@ -11,9 +11,11 @@
 using namespace std;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-Detector::Detector()
+Detector::Detector(int mode)
   :evtlen(0),shmfd(-1),fonline(0)
 {
+  OfflineMode = (unsigned short)mode;
+  
   for(int i = 0; i < PRESET_MAX_MODULES;i++)
     {
       fsave[i] = NULL;
@@ -82,8 +84,17 @@ bool Detector::ReadConfigFile(char *config)
 
 bool Detector::BootSystem()
 {
+  if(OfflineMode == 0)
+    {
+      cout<<"---------- Init System Mode: Online ----------"<<endl;
+    }
+  else
+    {
+      cout<<"---------- Init System Mode: Offline ----------"<<endl;
+    }
+  
   int retval = 0;
-  retval = Pixie16InitSystem(NumModules, PXISlotMap, 0);
+  retval = Pixie16InitSystem(NumModules, PXISlotMap, OfflineMode);
 
   if (retval != 0)
     {

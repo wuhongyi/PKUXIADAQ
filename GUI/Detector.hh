@@ -20,7 +20,7 @@
 class Detector
 {
 public:
-  Detector();
+  Detector(int mode);
   virtual ~Detector();
   
   int Syncronise();

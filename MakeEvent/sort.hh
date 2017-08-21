@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 6月  3 09:26:49 2017 (+0800)
-// Last-Updated: 日 8月 13 17:05:36 2017 (+0800)
+// Last-Updated: 一 8月 14 19:15:27 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 5
+//     Update #: 6
 // URL: http://wuhongyi.cn 
 
 #ifndef _SORT_H_
@@ -53,10 +53,15 @@ private:
   TBranch *b_sid;
   TBranch *b_evte;
   TBranch *b_ts;
+  TBranch *b_cfd;
+  TBranch *b_cfdft;
   UShort_t evte;
   ULong64_t ts;
   Short_t ch;
   Short_t sid;
+  UShort_t cfd_;   // CFD fractional time
+  bool cfdft_;//CFD forced trigger bit
+  
 
   TFile *file_out;
   TTree *t_out;
@@ -64,9 +69,13 @@ private:
 #if BOARDNUMBER > 1
   UShort_t adc[BOARDNUMBER][16];
   ULong64_t tdc[BOARDNUMBER][16];
+  UShort_t cfd[BOARDNUMBER][16]; 
+  bool cfdft[BOARDNUMBER][16];
 #else
   UShort_t adc[16];
   ULong64_t tdc[16];
+  UShort_t cfd[16];
+  bool cfdft[16];
 #endif
 
   bool flag;

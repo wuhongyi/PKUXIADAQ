@@ -113,7 +113,8 @@ public:
   void SetLSFileName();
   void StartLSRun();
   void SetLSonlinedataf();
-
+  void SetOnlineMode();
+  
 private:
   //variables
   TGTextEntry *StateMsgFold1;
@@ -173,6 +174,8 @@ private:
   char  Staticfile[100];
   int   runnum;
 
+  TGCheckButton   *onlinemode;
+  int flagonlinemode;//0 online 1 offline
   TGTextEntry	*filepathtext;
   TGTextEntry	*filenametext;
   TGNumberEntry	*filerunnum;

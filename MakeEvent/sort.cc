@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 6月  3 09:27:02 2017 (+0800)
-// Last-Updated: 日 8月 13 17:05:35 2017 (+0800)
+// Last-Updated: 五 8月 18 20:03:32 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 20
+//     Update #: 23
 // URL: http://wuhongyi.cn 
 
 #include "sort.hh"
@@ -38,6 +38,8 @@ sort::sort(TString rawfilepath,TString outfilepath,TString filename,int runnumbe
   t_in->SetBranchAddress("ts",&ts,&b_ts);
   t_in->SetBranchAddress("ch",&ch,&b_ch);
   t_in->SetBranchAddress("sid",&sid,&b_sid);
+  t_in->SetBranchAddress("cfd",&cfd_,&b_cfd);
+  t_in->SetBranchAddress("cfdft",&cfdft_,&b_cfdft);
   TotalEntry = t_in->GetEntries();
   // t_in->Print();
   // std::cout<<"TotalEntry: "<<TotalEntry<<std::endl;
@@ -51,9 +53,13 @@ sort::sort(TString rawfilepath,TString outfilepath,TString filename,int runnumbe
 #if BOARDNUMBER > 1
   t_out->Branch("adc",&adc,TString::Format("adc[%d][16]/s",BOARDNUMBER).Data());
   t_out->Branch("tdc",&tdc,TString::Format("tdc[%d][16]/l",BOARDNUMBER).Data());
+  t_out->Branch("cfd",&cfd,TString::Format("cfd[%d][16]/s",BOARDNUMBER).Data());
+  t_out->Branch("cfdft",&cfdft,TString::Format("cfdft[%d][16]/O",BOARDNUMBER).Data());
 #else
   t_out->Branch("adc",&adc,"adc[16]/s");
   t_out->Branch("tdc",&tdc,"tdc[16]/l");
+  t_out->Branch("cfd",&cfd,"cfd[16]/s");
+  t_out->Branch("cfdft",&cfdft,"cfdft[16]/O");
 #endif
   
   // t_out->Print();
@@ -71,6 +77,8 @@ void sort::clearopt()
 {
   memset(adc,0,sizeof(adc));
   memset(tdc,0,sizeof(tdc));
+  memset(cfd,0,sizeof(cfd));
+  memset(cfdft,0,sizeof(cfdft));
 }
 
 void sort::Process()
@@ -128,13 +136,17 @@ void sort::InitEvent()
   if(evte > adc[sid-2][ch])
     {
       adc[sid-2][ch] = evte;
-      tdc[sid-2][ch] = ts*10;
+      tdc[sid-2][ch] = ts;
+      cfd[sid-2][ch] = cfd_;
+      cfdft[sid-2][ch] = cfdft_;
     }
 #else
   if(evte > adc[ch])
     {
       adc[ch] = evte;
-      tdc[ch] = ts*10;
+      tdc[ch] = ts;
+      cfd[ch] = cfd_;
+      cfdft[ch] = cfdft_;
     }
 #endif
 
@@ -146,13 +158,17 @@ void sort::ProcessEntry()
   if(evte > adc[sid-2][ch])
     {
       adc[sid-2][ch] = evte;
-      tdc[sid-2][ch] = ts*10;
+      tdc[sid-2][ch] = ts;
+      cfd[sid-2][ch] = cfd_;
+      cfdft[sid-2][ch] = cfdft_;
     }
 #else
   if(evte > adc[ch])
     {
       adc[ch] = evte;
-      tdc[ch] = ts*10;
+      tdc[ch] = ts;
+      cfd[ch] = cfd_;
+      cfdft[ch] = cfdft_;
     }
 #endif
 

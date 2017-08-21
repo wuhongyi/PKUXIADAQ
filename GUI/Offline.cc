@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 三 11月 23 12:47:08 2016 (+0800)
+// Last-Updated: 一 8月 21 18:53:05 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 107
+//     Update #: 117
 // URL: http://wuhongyi.cn 
 
 #include "Offline.hh"
@@ -37,11 +37,13 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   OfflineCurrentCount = -1;
   rawdata = NULL;
   threshdata = NULL;
+  cfdthreshdata = NULL;
   cfddata = NULL;
   sfilterdata = NULL;
   ffilterdata = NULL;
   RcdTrace = NULL;
   doublethresh = NULL;
+  doublecfdthresh = NULL;
   doublesample = NULL;
   doublercdtrace = NULL;
   doublefastfilter = NULL;
@@ -58,6 +60,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
       
       rawdata2[i] = NULL;
       threshdata2[i] = NULL;
+      cfdthreshdata2[i] = NULL;
       cfddata2[i] = NULL;
       sfilterdata2[i] = NULL;
       ffilterdata2[i] = NULL;
@@ -106,6 +109,8 @@ Offline::~Offline()
     delete threshdata;
   if(cfddata != NULL)
     delete cfddata;
+  if(cfdthreshdata != NULL)
+    delete cfdthreshdata;
   if(sfilterdata != NULL)
     delete sfilterdata;
   if(ffilterdata != NULL)
@@ -114,6 +119,8 @@ Offline::~Offline()
     delete []RcdTrace;
   if(doublethresh != NULL)
     delete []doublethresh;
+  if(doublecfdthresh != NULL)
+    delete []doublecfdthresh;
   if(doublesample != NULL)
     delete []doublesample;
   if(doublercdtrace != NULL)
@@ -131,6 +138,8 @@ Offline::~Offline()
   	delete rawdata2[i];
       if(threshdata2[i] != NULL)
   	delete threshdata2[i];
+      if(cfdthreshdata2[i] != NULL)
+  	delete cfdthreshdata2[i];
       if(cfddata2[i] != NULL)
   	delete cfddata2[i];
       if(sfilterdata2[i] != NULL)
@@ -200,55 +209,86 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
 
   // fastlength
   TGLabel *fastlength = new TGLabel( filterFrame, "FLen:");
+  fClient->GetColorByName("blue", color);
+  fastlength->SetTextColor(color, false);
   filterFrame->AddFrame(fastlength, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
   offlinefilters[0] = new TGNumberEntryField(filterFrame, OFFLINEFASTLENGTH, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[0], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
   // fastgap
   TGLabel *fastgap = new TGLabel( filterFrame, "FGap:");
+  fClient->GetColorByName("blue", color);
+  fastgap->SetTextColor(color, false);
   filterFrame->AddFrame(fastgap, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
   offlinefilters[1] = new TGNumberEntryField(filterFrame, OFFLINEFASTGAP, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[1], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
-  // slowlength
-  TGLabel *lowlength = new TGLabel( filterFrame, "SLen:");
-  filterFrame->AddFrame(lowlength, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
-  offlinefilters[2] = new TGNumberEntryField(filterFrame, OFFLINESLOWLENGTH, 0, TGNumberFormat::kNESReal);
-  filterFrame->AddFrame(offlinefilters[2], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
+  // fast filter thresh
+  TGLabel *thresh = new TGLabel( filterFrame, "FFThr:");
+  fClient->GetColorByName("blue", color);
+  thresh->SetTextColor(color, false);
+  filterFrame->AddFrame(thresh, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  offlinefilters[7] = new TGNumberEntryField(filterFrame, OFFLINETHRESH, 0, TGNumberFormat::kNESReal);
+  filterFrame->AddFrame(offlinefilters[7], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
-  // slowgap
-  TGLabel *lowgap = new TGLabel( filterFrame, "SGap:");
-  filterFrame->AddFrame(lowgap, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
-  offlinefilters[3] = new TGNumberEntryField(filterFrame, OFFLINESLOWGAP, 0, TGNumberFormat::kNESReal);
-  filterFrame->AddFrame(offlinefilters[3], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
-  // preamptau
-  TGLabel *preamptau = new TGLabel( filterFrame, "Tau:");
-  filterFrame->AddFrame(preamptau, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
-  offlinefilters[4] = new TGNumberEntryField(filterFrame, OFFLINEPREAMPTAU, 0, TGNumberFormat::kNESReal);
-  filterFrame->AddFrame(offlinefilters[4], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
   // cfddelay
   TGLabel *cfddelay = new TGLabel( filterFrame, "CFDDe:");
+  fClient->GetColorByName("red", color);
+  cfddelay->SetTextColor(color, false);
   filterFrame->AddFrame(cfddelay, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
   offlinefilters[5] = new TGNumberEntryField(filterFrame, OFFLINECFDDELAY, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[5], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
   // cfdscale
   TGLabel *cfdscale = new TGLabel( filterFrame, "CFDSc:");
+  fClient->GetColorByName("red", color);
+  cfdscale->SetTextColor(color, false);
   filterFrame->AddFrame(cfdscale, new TGLayoutHints (kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
   offlinefilters[6] = new TGNumberEntryField(filterFrame, OFFLINECFDSCALE, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[6], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
-  // thresh
-  TGLabel *thresh = new TGLabel( filterFrame, "Thresh:");
-  filterFrame->AddFrame(thresh, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
-  offlinefilters[7] = new TGNumberEntryField(filterFrame, OFFLINETHRESH, 0, TGNumberFormat::kNESReal);
-  filterFrame->AddFrame(offlinefilters[7], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
+  // cfd thresh
+  TGLabel *cfdthresh = new TGLabel( filterFrame, "CFDThr:");
+  fClient->GetColorByName("red", color);
+  cfdthresh->SetTextColor(color, false);
+  filterFrame->AddFrame(cfdthresh, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  offlinefilters[8] = new TGNumberEntryField(filterFrame, OFFLINECFDTHRESH, 0, TGNumberFormat::kNESReal);
+  filterFrame->AddFrame(offlinefilters[8], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
+  
+  
+  // slowlength
+  TGLabel *lowlength = new TGLabel( filterFrame, "SLen:");
+  fClient->GetColorByName("green", color);
+  lowlength->SetTextColor(color, false);
+  filterFrame->AddFrame(lowlength, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  offlinefilters[2] = new TGNumberEntryField(filterFrame, OFFLINESLOWLENGTH, 0, TGNumberFormat::kNESReal);
+  filterFrame->AddFrame(offlinefilters[2], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
+
+  // slowgap
+  TGLabel *lowgap = new TGLabel( filterFrame, "SGap:");
+  fClient->GetColorByName("green", color);
+  lowgap->SetTextColor(color, false);
+  filterFrame->AddFrame(lowgap, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  offlinefilters[3] = new TGNumberEntryField(filterFrame, OFFLINESLOWGAP, 0, TGNumberFormat::kNESReal);
+  filterFrame->AddFrame(offlinefilters[3], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
+
+  // preamptau
+  TGLabel *preamptau = new TGLabel( filterFrame, "Tau:");
+  fClient->GetColorByName("green", color);
+  preamptau->SetTextColor(color, false);
+  filterFrame->AddFrame(preamptau, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  offlinefilters[4] = new TGNumberEntryField(filterFrame, OFFLINEPREAMPTAU, 0, TGNumberFormat::kNESReal);
+  filterFrame->AddFrame(offlinefilters[4], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
+
+
+
+  
   // slowfilterrange
   TGLabel *slowfilterrange = new TGLabel(filterFrame, "FilRan:");
-  fClient->GetColorByName("red", color);
+  fClient->GetColorByName("purple", color);
   slowfilterrange->SetTextColor(color, false);
   filterFrame->AddFrame(slowfilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
   offlinefilterrange = new TGNumberEntry(filterFrame, 0, 2, OFFLINEFILTERRANGE, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 1, 6);
@@ -847,6 +887,7 @@ void Offline::OfflineChangeValues(int mod,int ch)
   double delay;
   double frac;
   double thresh;
+  double thres;
   flength = offlinefilters[0]->GetNumber();
   retval = Pixie16WriteSglChanPar((char*)"TRIGGER_RISETIME", flength, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineChangeValues(...)", "Pixie16WriteSglChanPar/TRIGGER_RISETIME", retval);
@@ -871,6 +912,10 @@ void Offline::OfflineChangeValues(int mod,int ch)
   thresh = offlinefilters[7]->GetNumber();
   retval = Pixie16WriteSglChanPar((char*)"TRIGGER_THRESHOLD", thresh, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineChangeValues(...)", "Pixie16WriteSglChanPar/TRIGGER_THRESHOLD", retval);
+  thres = offlinefilters[8]->GetNumber();
+  retval = Pixie16WriteSglChanPar((char*)"CFDThresh", thres, mod, ch);
+  if(retval < 0) ErrorInfo("Offline.cc", "OfflineChangeValues(...)", "Pixie16WriteSglChanPar/CFDThresh", retval);
+  
 }
 
 void Offline::OfflineLoadValues(int mod,int ch)
@@ -918,6 +963,12 @@ void Offline::OfflineLoadValues(int mod,int ch)
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/TRIGGER_THRESHOLD", retval);
   sprintf (text, "%d", (int)ChanParData);
   offlinefilters[7]->SetText(text);
+
+  retval = Pixie16ReadSglChanPar((char*)"CFDThresh", &ChanParData, mod, ch);
+  if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/CFDThresh", retval);     
+  sprintf(text, "%d", (int)ChanParData);
+  offlinefilters[8]->SetText(text);
+
 
   
   retval = Pixie16ReadSglModPar((char*)"SLOW_FILTER_RANGE", &OfflinefRange, mod);
@@ -1048,6 +1099,11 @@ void Offline::Panel1Draw()
       delete cfddata;
       cfddata = NULL;
     }
+  if(cfdthreshdata != NULL)
+    {
+      delete cfdthreshdata;
+      cfdthreshdata = NULL;
+    }
   if(sfilterdata != NULL)
     {
       delete sfilterdata;
@@ -1067,6 +1123,11 @@ void Offline::Panel1Draw()
     {
       delete []doublethresh;
       doublethresh = NULL;
+    }
+  if(doublecfdthresh != NULL)
+    {
+      delete []doublecfdthresh;
+      doublecfdthresh = NULL;
     }
   if(doublesample != NULL)
     {
@@ -1145,6 +1206,7 @@ void Offline::Panel1Draw()
 	      
   RcdTrace = new unsigned short[OfflineEventInformation[12*OfflineCurrentCount+10]];
   doublethresh = new double[OfflineEventInformation[12*OfflineCurrentCount+10]];
+  doublecfdthresh = new double[OfflineEventInformation[12*OfflineCurrentCount+10]];
   doublesample = new double[OfflineEventInformation[12*OfflineCurrentCount+10]];
   doublercdtrace = new double[OfflineEventInformation[12*OfflineCurrentCount+10]];
   doublefastfilter = new double[OfflineEventInformation[12*OfflineCurrentCount+10]];
@@ -1160,26 +1222,33 @@ void Offline::Panel1Draw()
   double ChanParData;
   retval = Pixie16ReadSglChanPar((char*)"TRIGGER_THRESHOLD", &ChanParData, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber());
   if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "Pixie16ReadSglChanPar/TRIGGER_THRESHOLD", retval);
+  doublethresh[0] = ChanParData;
+  retval = Pixie16ReadSglChanPar((char*)"CFDThresh", &ChanParData, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber());
+  if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "Pixie16ReadSglChanPar/CFDThresh", retval);
+  doublecfdthresh[0] = ChanParData;
   
   for (unsigned int i = 0; i < OfflineEventInformation[12*OfflineCurrentCount+10]; ++i)
     {
       doublesample[i] = i;
       doublercdtrace[i] = (double)RcdTrace[i];
-      doublethresh[i] = ChanParData;
+      doublethresh[i] = doublethresh[0];
+      doublecfdthresh[i] = doublecfdthresh[0];
     }
 
   rawdata = new TGraph(OfflineEventInformation[12*OfflineCurrentCount+10],doublesample,doublercdtrace);
   threshdata = new TGraph(OfflineEventInformation[12*OfflineCurrentCount+10],doublesample,doublethresh);
   cfddata = new TGraph(OfflineEventInformation[12*OfflineCurrentCount+10],doublesample,doublecfd);
+  cfdthreshdata = new TGraph(OfflineEventInformation[12*OfflineCurrentCount+10],doublesample,doublecfdthresh);
   sfilterdata = new TGraph(OfflineEventInformation[12*OfflineCurrentCount+10],doublesample,doubleslowfilter);
   ffilterdata  = new TGraph(OfflineEventInformation[12*OfflineCurrentCount+10],doublesample,doublefastfilter);
 
   adjustCanvas->cd();
   adjustCanvas->Clear();
   cfddata->SetLineColor(2);
+  cfdthreshdata->SetLineColor(2);
   sfilterdata->SetLineColor(3);
   ffilterdata->SetLineColor(4);
-  threshdata->SetLineColor(5);
+  threshdata->SetLineColor(4);
   // rawdata->SetLineWidth(3);
   // cfddata->SetLineWidth(3);
   // sfilterdata->SetLineWidth(3);
@@ -1188,6 +1257,7 @@ void Offline::Panel1Draw()
   offlinemultigraph->Add(rawdata);
   offlinemultigraph->Add(threshdata);
   offlinemultigraph->Add(cfddata);
+  offlinemultigraph->Add(cfdthreshdata);
   offlinemultigraph->Add(sfilterdata);
   offlinemultigraph->Add(ffilterdata);
   offlinemultigraph->Draw("AL");
@@ -1210,6 +1280,11 @@ void Offline::Panel2Draw()
 	{
 	  delete threshdata2[i];
 	  threshdata2[i] = NULL;
+	}
+      if(cfdthreshdata2[i] != NULL)
+	{
+	  delete cfdthreshdata2[i];
+	  cfdthreshdata2[i] = NULL;
 	}
       if(cfddata2[i] != NULL)
 	{
@@ -1295,6 +1370,7 @@ void Offline::Panel2Draw()
 	{
 	  RcdTrace2[i] = new unsigned short[OfflineEventInformation2[12*OfflineCurrentCount2[i]+10]];
 	  doublethresh2[i] = new double[OfflineEventInformation2[12*OfflineCurrentCount2[i]+10]];
+	  doublecfdthresh2[i] = new double[OfflineEventInformation2[12*OfflineCurrentCount2[i]+10]];
 	  doublesample2[i] = new double[OfflineEventInformation2[12*OfflineCurrentCount2[i]+10]];
 	  doublercdtrace2[i] = new double[OfflineEventInformation2[12*OfflineCurrentCount2[i]+10]];
 	  doublefastfilter2[i] = new double[OfflineEventInformation2[12*OfflineCurrentCount2[i]+10]];
@@ -1309,26 +1385,36 @@ void Offline::Panel2Draw()
 	  double ChanParData;
 	  retval = Pixie16ReadSglChanPar((char*)"TRIGGER_THRESHOLD", &ChanParData, (unsigned short)offlinemodnum2->GetIntNumber(), (unsigned short)i);
 	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "Pixie16ReadSglChanPar/TRIGGER_THRESHOLD", retval);
+	  doublethresh2[i][0] = ChanParData;
+	  retval = Pixie16ReadSglChanPar((char*)"CFDThresh", &ChanParData, (unsigned short)offlinemodnum2->GetIntNumber(), (unsigned short)i);
+	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "Pixie16ReadSglChanPar/CFDThresh", retval);
+	  doublecfdthresh2[i][0] = ChanParData;
+
+	  
 	  for (unsigned int j = 0; j < OfflineEventInformation2[12*OfflineCurrentCount2[i]+10]; ++j)
 	    {
 	      doublesample2[i][j] = j;
 	      doublercdtrace2[i][j] = (double)RcdTrace2[i][j];
-	      doublethresh2[i][j] = ChanParData;
+	      doublethresh2[i][j] = doublethresh2[i][0];
+	      doublecfdthresh2[i][j] = doublecfdthresh2[i][0];
 	    }
 
 	  rawdata2[i] = new TGraph(OfflineEventInformation2[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublercdtrace2[i]);
 	  threshdata2[i] = new TGraph(OfflineEventInformation2[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublethresh2[i]);
+	  cfdthreshdata2[i] = new TGraph(OfflineEventInformation2[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublecfdthresh2[i]);
 	  cfddata2[i] = new TGraph(OfflineEventInformation2[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublecfd2[i]);
 	  sfilterdata2[i] = new TGraph(OfflineEventInformation2[12*OfflineCurrentCount2[i]+10],doublesample2[i],doubleslowfilter2[i]);
 	  ffilterdata2[i] = new TGraph(OfflineEventInformation2[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublefastfilter2[i]);
 
 	  cfddata2[i]->SetLineColor(2);
+	  cfdthreshdata2[i]->SetLineColor(2);
 	  sfilterdata2[i]->SetLineColor(3);
 	  ffilterdata2[i]->SetLineColor(4);
-	  threshdata2[i]->SetLineColor(5);
+	  threshdata2[i]->SetLineColor(4);
 	  offlinemultigraph2[i]->Clear();
 	  offlinemultigraph2[i]->Add(rawdata2[i]);
 	  offlinemultigraph2[i]->Add(threshdata2[i]);
+	  offlinemultigraph2[i]->Add(cfdthreshdata2[i]);
 	  offlinemultigraph2[i]->Add(cfddata2[i]);
 	  offlinemultigraph2[i]->Add(sfilterdata2[i]);
 	  offlinemultigraph2[i]->Add(ffilterdata2[i]);
@@ -1362,7 +1448,7 @@ void Offline::Panel3Draw()
 	}
       char th1dname[16];
       sprintf(th1dname,"ch%02d",i);
-      offlineth1d3[i] = new TH1D(th1dname,"",16384,0,16384);
+      offlineth1d3[i] = new TH1D(th1dname,"",65536,0,8192);
     }
   
   

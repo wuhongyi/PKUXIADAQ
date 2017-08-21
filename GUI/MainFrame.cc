@@ -53,6 +53,8 @@ MainFrame::MainFrame(const TGWindow * p)
   range = 480;
   separation = 480;
   fraction = 0.0002;
+
+  flagonlinemode = 0;
 }
 
 MainFrame::~MainFrame()
@@ -231,7 +233,7 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      StateMsgFold1->SetText("booting ...");
 	      gSystem->ProcessEvents();
 	      gPad->SetCursor(kWatch);
-	      if(detector == 0) detector = new Detector();
+	      if(detector == 0) detector = new Detector(flagonlinemode);
 	      if(detector->BootSystem()){
 		fClient->GetColorByName("green", color);
 		StateMsgFold1->SetTextColor(color, false);
@@ -357,6 +359,15 @@ void MainFrame::MakeFold1Panel(TGCompositeFrame * TabPanel)
 {
   //make the buttons frame        
   TGCompositeFrame *ButtonFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+
+  // Online mode
+  onlinemode = new TGCheckButton(ButtonFrame,"&Online Mode");
+  fClient->GetColorByName("red", color);
+  onlinemode->SetTextColor(color);
+  onlinemode->SetState(kButtonDown);
+  onlinemode->Connect("Clicked()","MainFrame",this,"SetOnlineMode()");
+  ButtonFrame->AddFrame(onlinemode,new TGLayoutHints(kLHintsLeft|kLHintsTop,5,10,10,0));
+  
   // BOOT button//////////////////////////////////////////////////////////////    
   TGTextButton *bootB = new TGTextButton(ButtonFrame, "Boot", BOOT_BUTTON);
   bootB->SetFont("-adobe-helvetica-medium-r-*-*-12-*-*-*-*-*-iso8859-1", false);
@@ -564,7 +575,7 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel){
   startdaq->SetEnabled(0);
   cgrouphframe->AddFrame(startdaq,new TGLayoutHints(kLHintsLeft|kLHintsTop));
   // send/not send online data stream box
-  onlinechk=new TGCheckButton(cgrouphframe,"&Online data");
+  onlinechk = new TGCheckButton(cgrouphframe,"&Online data");
   fClient->GetColorByName("black", color);
   onlinechk->SetTextColor(color);
   onlinechk->SetState(kButtonDown);
@@ -694,6 +705,18 @@ void MainFrame::LSRunReadData()
     }
   
   cout<<"finish!"<<endl;
+}
+
+void MainFrame::SetOnlineMode()
+{
+  if(onlinemode->IsOn())
+    {
+      flagonlinemode = 0;
+    }
+  else
+    {
+      flagonlinemode = 1;
+    }
 }
 
 void MainFrame::SetLSonlinedataf()
