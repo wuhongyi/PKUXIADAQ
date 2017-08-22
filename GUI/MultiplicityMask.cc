@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 10月  4 20:33:32 2016 (+0800)
-// Last-Updated: 日 11月  6 20:31:37 2016 (+0800)
+// Last-Updated: 二 8月 22 21:01:59 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 46
+//     Update #: 56
 // URL: http://wuhongyi.cn 
 
 #include "MultiplicityMask.hh"
@@ -26,11 +26,11 @@ MultiplicityMask::MultiplicityMask(const TGWindow *p, const TGWindow * main, cha
     sprintf(n,"%2d",i);
     Labels[i]->SetText(n);
   }
-  CLabel[0]->SetText("Left[0-65535]");
+  CLabel[0]->SetText("Left[0-FFFF]");
   CLabel[0]->SetAlignment(kTextCenterX);
-  CLabel[1]->SetText("Itself[0-65535]");
+  CLabel[1]->SetText("Itself[0-FFFF]");
   CLabel[1]->SetAlignment(kTextCenterX);
-  CLabel[2]->SetText("Right[0-65535]");
+  CLabel[2]->SetText("Right[0-FFFF]");
   CLabel[2]->SetAlignment(kTextCenterX);
   CLabel[3]->SetText("ItselfCoin[0-7]");//1st
   CLabel[3]->SetAlignment(kTextCenterX);
@@ -59,6 +59,14 @@ MultiplicityMask::MultiplicityMask(const TGWindow *p, const TGWindow * main, cha
   CLabel[7]->SetToolTipText("Select eithor coincidence trigger(0) or multiplicity trigger(1) as the source of the the channel coincidence/multiplicity trigger", 0);
   CLabel[8]->SetToolTipText("Select channel coincidence/multiplicity trigger(0) or other group trigger(1) as the source of the channel validation trigger", 0);
 
+  for (int i = 1; i < 4; ++i)
+    for (int j = 0; j < 16; ++j)
+      {
+	NumEntry[i][j]->SetFormat(TGNumberFormat::kNESHex);
+	NumEntry[i][j]->SetLimits(TGNumberFormat::kNELLimitMinMax,0, 65535);
+      }
+
+  
   // ***** COPY BUTTON *********
   TGHorizontal3DLine *ln2 = new TGHorizontal3DLine(mn_vert, 200, 2);
   mn_vert->AddFrame(ln2, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
@@ -92,26 +100,28 @@ MultiplicityMask::MultiplicityMask(const TGWindow *p, const TGWindow * main, cha
   TGHorizontalFrame *fVV1 = new TGHorizontalFrame(Backplane, 10, 10);
   Backplane->AddFrame(fVV1, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   TGTextEntry *LabelFastTriggerBackplaneLeft = new TGTextEntry(fVV1,new TGTextBuffer(100));
-  LabelFastTriggerBackplaneLeft->SetText("FastTrigBackplaneLeft[0-65535]");
+  LabelFastTriggerBackplaneLeft->SetText("FastTrigBackplaneLeft[0-FFFF]");
   LabelFastTriggerBackplaneLeft->SetEnabled(kFALSE);
   LabelFastTriggerBackplaneLeft->SetAlignment(kTextCenterX);
   // LabelFastTriggerBackplaneLeft->SetToolTipText("", 0);
   LabelFastTriggerBackplaneLeft->Resize(200, 20);
   fVV1->AddFrame(LabelFastTriggerBackplaneLeft, new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
 
-  fasttriggerbackplaneena[0] = new TGNumberEntryField(fVV1, 0, 0, TGNumberFormat::kNESReal);
+  fasttriggerbackplaneena[0] = new TGNumberEntryField(fVV1, 0, 0, TGNumberFormat::kNESHex);
+  fasttriggerbackplaneena[0]->SetLimits(TGNumberFormat::kNELLimitMinMax,0, 65535);
   fVV1->AddFrame(fasttriggerbackplaneena[0], new TGLayoutHints( kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
   
   TGHorizontalFrame *fVV2 = new TGHorizontalFrame(Backplane, 10, 10);
   Backplane->AddFrame(fVV2, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   TGTextEntry *LabelFastTriggerBackplaneRight = new TGTextEntry(fVV2,new TGTextBuffer(100));
-  LabelFastTriggerBackplaneRight->SetText("FastTrigBackplaneRight[0-65535]");
+  LabelFastTriggerBackplaneRight->SetText("FastTrigBackplaneRight[0-FFFF]");
   LabelFastTriggerBackplaneRight->SetEnabled(kFALSE);
   LabelFastTriggerBackplaneRight->SetAlignment(kTextCenterX);
   // LabelFastTriggerBackplaneRight->SetToolTipText("", 0);
   LabelFastTriggerBackplaneRight->Resize(200, 20);
   fVV2->AddFrame(LabelFastTriggerBackplaneRight, new TGLayoutHints(kLHintsCenterX, 20, 0, 0, 0));
-  fasttriggerbackplaneena[1] = new TGNumberEntryField(fVV2, 1, 0, TGNumberFormat::kNESReal);
+  fasttriggerbackplaneena[1] = new TGNumberEntryField(fVV2, 1, 0, TGNumberFormat::kNESHex);
+  fasttriggerbackplaneena[1]->SetLimits(TGNumberFormat::kNELLimitMinMax,0, 65535);
   fVV2->AddFrame(fasttriggerbackplaneena[1], new TGLayoutHints( kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
   
   
@@ -213,11 +223,11 @@ Bool_t MultiplicityMask::ProcessMessage(Long_t msg,Long_t parm1, Long_t parm2){
 	      	{
 	      	  if(i != (chanNumber))
 	      	    {
-	      	      sprintf(tmp,"%d",MultiLeft);
+	      	      sprintf(tmp,"%04X",MultiLeft);
 	      	      NumEntry[1][i]->SetText(tmp);
-	      	      sprintf(tmp,"%d",MultiItself);
+	      	      sprintf(tmp,"%04X",MultiItself);
 	      	      NumEntry[2][i]->SetText(tmp);
-		      sprintf(tmp,"%d",MultiRight);
+		      sprintf(tmp,"%04X",MultiRight);
 	      	      NumEntry[3][i]->SetText(tmp);
 		      sprintf(tmp,"%d",Multi1st);
 	      	      NumEntry[4][i]->SetText(tmp);
@@ -267,14 +277,14 @@ int MultiplicityMask::load_info(Long_t mod)
     {
       b += (APP32_TstBit(j, BackplaneEna)<<j);
     }
-  sprintf(text, "%d", b);
+  sprintf(text, "%04X", b);
   fasttriggerbackplaneena[0]->SetText(text);
   b = 0;
   for (int j = 0; j < 16; j++)
     {
       b += (APP32_TstBit(j+16, BackplaneEna)<<j);
     }
-  sprintf(text, "%d", b);
+  sprintf(text, "%04X", b);
   fasttriggerbackplaneena[1]->SetText(text);
   
   
@@ -288,7 +298,7 @@ int MultiplicityMask::load_info(Long_t mod)
 	{
 	  b += (APP32_TstBit(j, ChanParData)<<j);
 	}
-      sprintf(text, "%d", b);
+      sprintf(text, "%04X", b);
       NumEntry[2][i]->SetText(text);
 
       b = 0;
@@ -296,7 +306,7 @@ int MultiplicityMask::load_info(Long_t mod)
 	{
 	  b += (APP32_TstBit(j+16, ChanParData)<<j);
 	}
-      sprintf(text, "%d", b);
+      sprintf(text, "%04X", b);
       NumEntry[3][i]->SetText(text);
 
       retval = Pixie16ReadSglChanPar((char*)"MultiplicityMaskH", &ChanParData, mod, i);
@@ -307,7 +317,7 @@ int MultiplicityMask::load_info(Long_t mod)
 	{
 	  b += (APP32_TstBit(j, ChanParData)<<j);
 	}
-      sprintf(text, "%d", b);
+      sprintf(text, "%04X", b);
       NumEntry[1][i]->SetText(text);
 
       b = (APP32_TstBit(24, ChanParData)<<2)+(APP32_TstBit(23, ChanParData)<<1)+APP32_TstBit(22, ChanParData);

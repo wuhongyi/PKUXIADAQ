@@ -366,10 +366,10 @@ void MainFrame::MakeFold1Panel(TGCompositeFrame * TabPanel)
   onlinemode->SetTextColor(color);
   onlinemode->SetState(kButtonDown);
   onlinemode->Connect("Clicked()","MainFrame",this,"SetOnlineMode()");
-  ButtonFrame->AddFrame(onlinemode,new TGLayoutHints(kLHintsLeft|kLHintsTop,5,10,10,0));
+  ButtonFrame->AddFrame(onlinemode,new TGLayoutHints(kLHintsLeft|kLHintsTop,5,10,15,0));
   
   // BOOT button//////////////////////////////////////////////////////////////    
-  TGTextButton *bootB = new TGTextButton(ButtonFrame, "Boot", BOOT_BUTTON);
+  TGTextButton *bootB = new TGTextButton(ButtonFrame, "  Boot  ", BOOT_BUTTON);
   bootB->SetFont("-adobe-helvetica-medium-r-*-*-12-*-*-*-*-*-iso8859-1", false);
   fClient->GetColorByName("blue", color);
   bootB->SetTextColor(color, false);
@@ -391,7 +391,7 @@ void MainFrame::MakeFold1Panel(TGCompositeFrame * TabPanel)
   fClient->GetColorByName("red", color);
   StateMsgFold1->SetTextColor(color, false);
   StateMsgFold1->SetText("System not booted");
-  StateMsgFold1->Resize(100, 12);
+  StateMsgFold1->Resize(150, 12);
   StateMsgFold1->SetEnabled(kFALSE);
   StateMsgFold1->SetFrameDrawn(kFALSE);
 
@@ -401,7 +401,7 @@ void MainFrame::MakeFold1Panel(TGCompositeFrame * TabPanel)
 
   //////////////////////////////////////////////////////////////////////////
   TGTextButton *acquireB = new TGTextButton(ButtonFrame, "Read WF", READ_WF);
-  fClient->GetColorByName("blue", color);
+  fClient->GetColorByName("purple", color);
   acquireB->SetTextColor(color, false);
   acquireB->Associate(this);
   ButtonFrame->AddFrame(acquireB, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 10, 10, 0));
@@ -409,7 +409,7 @@ void MainFrame::MakeFold1Panel(TGCompositeFrame * TabPanel)
 
   TGTextButton *saveB = new TGTextButton(ButtonFrame, "  Save  ", SAVE_SEC);
   saveB->Associate(this);
-  fClient->GetColorByName("blue", color);
+  fClient->GetColorByName("purple", color);
   saveB->SetTextColor(color, false);
   saveB->SetToolTipText("Save waveform to radware .sec file", 0);
   ButtonFrame->AddFrame(saveB, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 10, 10, 0));
@@ -537,7 +537,7 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel){
   TGHorizontalFrame *filepath = new TGHorizontalFrame(filesetgroup);
   TGLabel *filepathlabel = new TGLabel(filepath,"File Path: ");
   filepath->AddFrame(filepathlabel,new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 3, 4, 0));
-  filepathtext = new TGTextEntry(filepath,new TGTextBuffer(100));
+  filepathtext = new TGTextEntry(filepath,new TGTextBuffer(120));
   filepath->AddFrame(filepathtext,new TGLayoutHints(kLHintsExpandX|kLHintsTop, 10 ,3,4,0));
   
   filesetgroup->AddFrame(filepath,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
@@ -571,17 +571,22 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel){
   // start/stop LSM run button
   TGHorizontalFrame *cgrouphframe=new TGHorizontalFrame(controlgroup);
   startdaq = new TGTextButton(cgrouphframe,"LSRunStart");
+  fClient->GetColorByName("red", color);
+  startdaq->SetTextColor(color, false);
+  startdaq->SetFont("-adobe-helvetica-medium-r-*-*-20-*-*-*-*-*-iso8859-1", false);
   startdaq->Connect("Pressed()","MainFrame",this,"StartLSRun()");
   startdaq->SetEnabled(0);
-  cgrouphframe->AddFrame(startdaq,new TGLayoutHints(kLHintsLeft|kLHintsTop));
+  startdaq->Resize(110,110);
+  startdaq->ChangeOptions(startdaq->GetOptions() | kFixedSize);
+  cgrouphframe->AddFrame(startdaq,new TGLayoutHints(kLHintsCenterX|kLHintsTop));
   // send/not send online data stream box
   onlinechk = new TGCheckButton(cgrouphframe,"&Online data");
-  fClient->GetColorByName("black", color);
+  fClient->GetColorByName("red", color);
   onlinechk->SetTextColor(color);
   onlinechk->SetState(kButtonDown);
   fonlinedata = 1;
   onlinechk->Connect("Clicked()","MainFrame",this,"SetLSonlinedataf()");
-  cgrouphframe->AddFrame(onlinechk,new TGLayoutHints(kLHintsLeft|kLHintsTop,10,4,3,3));
+  cgrouphframe->AddFrame(onlinechk,new TGLayoutHints(kLHintsLeft|kLHintsTop,10,4,50,3));
 
   // save hitogram
 
@@ -590,6 +595,8 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel){
 
   TabPanel->AddFrame(controlgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
 
+
+  
   // restore last run's file information
   char tmp[200];
   ifstream in("../parset/Run.config");
@@ -605,6 +612,31 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel){
   inrunnumber.getline(tmp,200);
   filerunnum->SetText(tmp);
   inrunnumber.close();
+
+  
+  // run information
+  TGGroupFrame *informationgroup = new TGGroupFrame(TabPanel,"Information");
+
+  
+  TGHorizontalFrame *lastruninfor = new TGHorizontalFrame(informationgroup);
+  lastruntextinfor = new TGTextEntry(lastruninfor,new TGTextBuffer(30), 10000);
+  lastruntextinfor-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
+  fClient->GetColorByName("blue", color);
+  lastruntextinfor->SetTextColor(color, false);
+  lastruntextinfor->SetText(TString::Format("Last run number: %d",int(filerunnum->GetIntNumber())-1).Data());
+  lastruntextinfor->Resize(200, 12);
+  lastruntextinfor->SetEnabled(kFALSE);
+  lastruntextinfor->SetFrameDrawn(kFALSE);
+  lastruninfor->AddFrame(lastruntextinfor, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+  informationgroup->AddFrame(lastruninfor,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+
+
+
+  
+  TabPanel->AddFrame(informationgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+
+
+
 }
 
 
@@ -680,6 +712,8 @@ void MainFrame::StartLSRun()
       ofstream outrunnumber("../parset/RunNumber");
       outrunnumber<<filerunnum->GetIntNumber();
       outrunnumber.close();
+
+      lastruntextinfor->SetText(TString::Format("Last run number: %d",int(filerunnum->GetIntNumber())-1).Data());
     }
 }
 

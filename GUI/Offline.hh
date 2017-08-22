@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 一 8月 21 15:55:22 2017 (+0800)
+// Last-Updated: 二 8月 22 21:43:56 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 33
+//     Update #: 46
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -14,6 +14,7 @@
 
 #include "TCanvas.h"
 #include "TGApplication.h"
+#include "TGComboBox.h"
 #include "TGDoubleSlider.h"
 #include "TGFrame.h"
 #include "TGLabel.h"
@@ -40,10 +41,14 @@ public:
 
   virtual Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t);//process message queue
 
-  void MakeFold1Panel(TGCompositeFrame *TabPanel);
-  void MakeFold2Panel(TGCompositeFrame *TabPanel);
-  void MakeFold3Panel(TGCompositeFrame *TabPanel);
+  void MakeFold0Panel(TGCompositeFrame *TabPanel);//InitData
+  void MakeFold1Panel(TGCompositeFrame *TabPanel);//Adjust Par
+  void MakeFold2Panel(TGCompositeFrame *TabPanel);//Chan-16
+  void MakeFold3Panel(TGCompositeFrame *TabPanel);//Energy-16
+  void MakeFold4Panel(TGCompositeFrame *TabPanel);//Energy
+  void MakeFold5Panel(TGCompositeFrame *TabPanel);//FF Thre
 
+  
 private:
   Pixel_t color;
   Detector *detector;
@@ -95,20 +100,17 @@ private:
     {
       ADJUSTPARSLIDER,
       OFFLINERUNNUM,
-      OFFLINERUNNUM2,
-      OFFLINERUNNUM3,
       OFFLINEMODNUM,
-      OFFLINEMODNUM2,
-      OFFLINEMODNUM3,
       OFFLINECHNUM,
+      OFFLINECHNUM4,
       OFFLINEREAD,
-      OFFLINEREAD2,
-      OFFLINEREAD3,
       OFFLINELOAD,
       OFFLINEAPPLY,
       OFFLINEDRAW,
       OFFLINEDRAW2,
       OFFLINEDRAW3,
+      OFFLINEDRAW4,
+      OFFLINEDRAW5,
       OFFLINEFASTLENGTH,
       OFFLINEFASTGAP,
       OFFLINESLOWLENGTH,
@@ -121,19 +123,14 @@ private:
       OFFLINEFILTERRANGE
     };
 
+  // Fold0
+  
+
+  
   // Fold2
   TCanvas *canvas2;
-  TGNumberEntry	*offlinefilerunnum2;
-  TGNumberEntry	*offlinemodnum2;
-  TGTextButton* OfflineReadFileButton2;
-  TGTextEntry* OfflineFileStatus2;
   TGTextButton* OfflineDrawButton2;
   TMultiGraph *offlinemultigraph2[16];
-
-  char offlinefilename2[256];
-  int fileRunNum2,modNumber2;
-  unsigned int OfflineModuleEventsCount2;
-  unsigned int *OfflineEventInformation2;
   unsigned int OfflineCurrentCount2[16];
   
   TGraph *rawdata2[16],*threshdata2[16],*cfdthreshdata2[16],*cfddata2[16],*sfilterdata2[16],*ffilterdata2[16];
@@ -148,26 +145,33 @@ private:
 
   // Fold3
   TCanvas *canvas3;
-  TGNumberEntry	*offlinefilerunnum3;
-  TGNumberEntry	*offlinemodnum3;
-  TGTextButton* OfflineReadFileButton3;
-  TGTextEntry* OfflineFileStatus3;
   TGTextButton* OfflineDrawButton3;  
   TH1D *offlineth1d3[16];
   
-  char offlinefilename3[256];
-  int fileRunNum3,modNumber3;
-  unsigned int OfflineModuleEventsCount3;
-  unsigned int *OfflineEventInformation3;
+  // Fold4
+  TCanvas *canvas4;
+  TGTextButton* OfflineDrawButton4;  
+  TH1D *offlineth1d4;
+  TGNumberEntry	*offlinechnum4;//int
+  int chanNumber4;
+  TGComboBox *chooseth1dbin4;
+
+  // Fold5
+  TCanvas *canvas5;
+  TGTextButton* OfflineDrawButton5;  
+  TH1D *offlineth2d5;
+  TGNumberEntry	*offlinechnum5;//int
+  int chanNumber5;
 
   
   // function
   void Panel1Draw();
   void Panel2Draw();
   void Panel3Draw();
-  void Panel1ReadFile();
-  void Panel2ReadFile();
-  void Panel3ReadFile();
+  void Panel4Draw();
+  void Panel5Draw();
+  void Panel0ReadFile();
+
 
   
 };

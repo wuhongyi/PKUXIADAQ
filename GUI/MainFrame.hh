@@ -19,7 +19,7 @@ Hui Tan\n\
 ";
 
 #define INITIAL_HIGHT 500
-#define INITIAL_WIDTH 600
+#define INITIAL_WIDTH 700
 #define MCA_SIZE 32768
 
 #include "Base.hh"
@@ -187,6 +187,11 @@ private:
   bool            fonlinedata;
   bool            fstartdaq;
   bool            fstopdaq;
+
+  // ******* information *******
+  TGTextEntry* lastruntextinfor;
+
+  
   void 	        LSRunReadData();
   bool IsDirectoryExists(const char *path);//判断文件夹是否存在
   

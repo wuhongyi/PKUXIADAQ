@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 一 8月 21 18:53:05 2017 (+0800)
+// Last-Updated: 二 8月 22 22:00:53 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 117
+//     Update #: 189
 // URL: http://wuhongyi.cn 
 
 #include "Offline.hh"
@@ -17,6 +17,7 @@
 #include "pixie16sys_export.h"
 
 #include "TGTab.h"
+#include "TString.h"
 
 #include <iostream>
 using namespace std;
@@ -31,6 +32,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
 
   modNumber = 0;
   chanNumber = 0;
+  chanNumber4 = 0;
   fileRunNum = 0;
   
   OfflineEventInformation = NULL;
@@ -51,8 +53,6 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   doubleslowfilter = NULL;
   offlinemultigraph = new TMultiGraph();
 
-  fileRunNum2 = 0;
-  modNumber2 = 0;
   for (int i = 0; i < 16; ++i)
     {
       offlinemultigraph2[i] = new TMultiGraph();
@@ -72,28 +72,33 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
       doublecfd2[i] = NULL;
       doubleslowfilter2[i] = NULL;
     }
-  OfflineEventInformation2 = NULL;
 
-  fileRunNum3 = 0;
-  modNumber3 = 0;
   for (int i = 0; i < 16; ++i)
     {
       offlineth1d3[i] = NULL;
     }
-  OfflineEventInformation3 = NULL;
 
+  offlineth1d4 = NULL;
   
   TGTab *TabPanel = new TGTab(this);
   this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
+  TGCompositeFrame *Tab0 = TabPanel->AddTab("InitData");
+  MakeFold0Panel(Tab0);
+  
   TGCompositeFrame *Tab1 = TabPanel->AddTab("Adjust Par");
   MakeFold1Panel(Tab1);
 
-  TGCompositeFrame *Tab2 = TabPanel->AddTab("16 Chan");
+  TGCompositeFrame *Tab5 = TabPanel->AddTab("FF Thre");
+  MakeFold5Panel(Tab5);
+  
+  TGCompositeFrame *Tab2 = TabPanel->AddTab("Chan-16");
   MakeFold2Panel(Tab2);
 
-  TGCompositeFrame *Tab3 = TabPanel->AddTab("Energy");
+  TGCompositeFrame *Tab3 = TabPanel->AddTab("Energy-16");
   MakeFold3Panel(Tab3);
 
+  TGCompositeFrame *Tab4 = TabPanel->AddTab("Energy");
+  MakeFold4Panel(Tab4);
 
   SetWindowName("Adjust Par");
   MapSubwindows();
@@ -162,21 +167,9 @@ Offline::~Offline()
   	delete []doubleslowfilter2[i];
     }
 
-  // for (int i = 0; i < 16; ++i)
-  //   {
-  //     if(offlineth1d3[i] != NULL)
-  // 	delete offlineth1d3[i];
-  //   }
-  
-
   if(OfflineEventInformation != NULL)
     delete []OfflineEventInformation;
-  if(OfflineEventInformation2 != NULL)
-    delete []OfflineEventInformation2;
-  if(OfflineEventInformation3 != NULL)
-    delete []OfflineEventInformation3;
-
-      
+     
   if(offlinemultigraph != NULL)
     delete offlinemultigraph;
 
@@ -190,8 +183,52 @@ Offline::~Offline()
 	  delete offlineth1d3[i];
 	}
     }
-  
+
+  if(offlineth1d4 != NULL)
+    delete offlineth1d4;
 }
+
+void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
+{
+  TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+
+  // run
+  TGLabel *run = new TGLabel( parFrame, "Run:");
+  parFrame->AddFrame(run, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  offlinefilerunnum = new TGNumberEntry(parFrame, 0, 4, OFFLINERUNNUM, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 9999);
+  offlinefilerunnum->SetButtonToNum(0);
+  offlinefilerunnum->Associate(this);
+  parFrame->AddFrame(offlinefilerunnum, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
+
+  // mod
+  TGLabel *mod = new TGLabel( parFrame, "Mod:"); 
+  parFrame->AddFrame(mod, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  offlinemodnum = new TGNumberEntry (parFrame, 0, 2, OFFLINEMODNUM, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, PRESET_MAX_MODULES-1);
+  offlinemodnum->SetButtonToNum(0);
+  offlinemodnum->Associate(this);
+  parFrame->AddFrame(offlinemodnum, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
+
+  // read
+  OfflineReadFileButton = new TGTextButton( parFrame, "&Read", OFFLINEREAD);
+  OfflineReadFileButton->Associate (this);
+  parFrame->AddFrame(OfflineReadFileButton, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
+
+  // status
+  OfflineFileStatus = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  OfflineFileStatus-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
+  fClient->GetColorByName("blue", color);
+  OfflineFileStatus->SetTextColor(color, false);
+  OfflineFileStatus->SetText("NOT READ");
+  OfflineFileStatus->Resize(200, 12);
+  OfflineFileStatus->SetEnabled(kFALSE);
+  OfflineFileStatus->SetFrameDrawn(kFALSE);
+  parFrame->AddFrame(OfflineFileStatus, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 6, 0));// 
+
+
+  
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+}
+
 
 void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
 {
@@ -211,7 +248,7 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   TGLabel *fastlength = new TGLabel( filterFrame, "FLen:");
   fClient->GetColorByName("blue", color);
   fastlength->SetTextColor(color, false);
-  filterFrame->AddFrame(fastlength, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  filterFrame->AddFrame(fastlength, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
   offlinefilters[0] = new TGNumberEntryField(filterFrame, OFFLINEFASTLENGTH, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[0], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
@@ -219,7 +256,7 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   TGLabel *fastgap = new TGLabel( filterFrame, "FGap:");
   fClient->GetColorByName("blue", color);
   fastgap->SetTextColor(color, false);
-  filterFrame->AddFrame(fastgap, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  filterFrame->AddFrame(fastgap, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
   offlinefilters[1] = new TGNumberEntryField(filterFrame, OFFLINEFASTGAP, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[1], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
@@ -227,17 +264,16 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   TGLabel *thresh = new TGLabel( filterFrame, "FFThr:");
   fClient->GetColorByName("blue", color);
   thresh->SetTextColor(color, false);
-  filterFrame->AddFrame(thresh, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  filterFrame->AddFrame(thresh, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
   offlinefilters[7] = new TGNumberEntryField(filterFrame, OFFLINETHRESH, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[7], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
-
 
 
   // cfddelay
   TGLabel *cfddelay = new TGLabel( filterFrame, "CFDDe:");
   fClient->GetColorByName("red", color);
   cfddelay->SetTextColor(color, false);
-  filterFrame->AddFrame(cfddelay, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  filterFrame->AddFrame(cfddelay, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
   offlinefilters[5] = new TGNumberEntryField(filterFrame, OFFLINECFDDELAY, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[5], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
@@ -245,7 +281,7 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   TGLabel *cfdscale = new TGLabel( filterFrame, "CFDSc:");
   fClient->GetColorByName("red", color);
   cfdscale->SetTextColor(color, false);
-  filterFrame->AddFrame(cfdscale, new TGLayoutHints (kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  filterFrame->AddFrame(cfdscale, new TGLayoutHints (kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
   offlinefilters[6] = new TGNumberEntryField(filterFrame, OFFLINECFDSCALE, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[6], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
@@ -253,17 +289,15 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   TGLabel *cfdthresh = new TGLabel( filterFrame, "CFDThr:");
   fClient->GetColorByName("red", color);
   cfdthresh->SetTextColor(color, false);
-  filterFrame->AddFrame(cfdthresh, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  filterFrame->AddFrame(cfdthresh, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
   offlinefilters[8] = new TGNumberEntryField(filterFrame, OFFLINECFDTHRESH, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[8], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
-
-  
   
   // slowlength
   TGLabel *lowlength = new TGLabel( filterFrame, "SLen:");
   fClient->GetColorByName("green", color);
   lowlength->SetTextColor(color, false);
-  filterFrame->AddFrame(lowlength, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  filterFrame->AddFrame(lowlength, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
   offlinefilters[2] = new TGNumberEntryField(filterFrame, OFFLINESLOWLENGTH, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[2], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
@@ -271,7 +305,7 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   TGLabel *lowgap = new TGLabel( filterFrame, "SGap:");
   fClient->GetColorByName("green", color);
   lowgap->SetTextColor(color, false);
-  filterFrame->AddFrame(lowgap, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  filterFrame->AddFrame(lowgap, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
   offlinefilters[3] = new TGNumberEntryField(filterFrame, OFFLINESLOWGAP, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[3], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
@@ -279,18 +313,16 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   TGLabel *preamptau = new TGLabel( filterFrame, "Tau:");
   fClient->GetColorByName("green", color);
   preamptau->SetTextColor(color, false);
-  filterFrame->AddFrame(preamptau, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  filterFrame->AddFrame(preamptau, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
   offlinefilters[4] = new TGNumberEntryField(filterFrame, OFFLINEPREAMPTAU, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[4], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
 
-
-  
   // slowfilterrange
   TGLabel *slowfilterrange = new TGLabel(filterFrame, "FilRan:");
   fClient->GetColorByName("purple", color);
   slowfilterrange->SetTextColor(color, false);
-  filterFrame->AddFrame(slowfilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
+  filterFrame->AddFrame(slowfilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
   offlinefilterrange = new TGNumberEntry(filterFrame, 0, 2, OFFLINEFILTERRANGE, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 1, 6);
   filterFrame->AddFrame(offlinefilterrange, new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
   offlinefilterrange->SetButtonToNum(0);
@@ -303,64 +335,6 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
 
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 
-  // run
-  TGLabel *run = new TGLabel( parFrame, "Run:");
-  parFrame->AddFrame(run, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
-  offlinefilerunnum = new TGNumberEntry(parFrame, 0, 4, OFFLINERUNNUM, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 9999);
-  offlinefilerunnum->SetButtonToNum(0);
-  offlinefilerunnum->Associate(this);
-  parFrame->AddFrame(offlinefilerunnum, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-
-  // mod
-  TGLabel *mod = new TGLabel( parFrame, "Mod:"); 
-  parFrame->AddFrame(mod, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
-  offlinemodnum = new TGNumberEntry (parFrame, 0, 2, OFFLINEMODNUM, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, PRESET_MAX_MODULES-1);
-  offlinemodnum->SetButtonToNum(0);
-  offlinemodnum->Associate(this);
-  parFrame->AddFrame(offlinemodnum, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-
-  
-  // read
-  OfflineReadFileButton = new TGTextButton( parFrame, "&Read", OFFLINEREAD);
-  OfflineReadFileButton->Associate (this);
-  parFrame->AddFrame(OfflineReadFileButton, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-
-  // status
-  OfflineFileStatus = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
-  OfflineFileStatus-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
-  fClient->GetColorByName("blue", color);
-  OfflineFileStatus->SetTextColor(color, false);
-  OfflineFileStatus->SetText("NOT READ");
-  OfflineFileStatus->Resize(100, 12);
-  OfflineFileStatus->SetEnabled(kFALSE);
-  OfflineFileStatus->SetFrameDrawn(kFALSE);
-  parFrame->AddFrame(OfflineFileStatus, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 6, 0));// 
-  
-  // ch
-  TGLabel *ch = new TGLabel( parFrame, "Ch:"); 
-  parFrame->AddFrame(ch, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
-  offlinechnum = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
-  parFrame->AddFrame(offlinechnum, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-  offlinechnum->SetButtonToNum(0);
-  offlinechnum->Associate(this);
-
-
-  
-  // load
-  OfflineLoadButton = new TGTextButton( parFrame, "&Load", OFFLINELOAD);
-  OfflineLoadButton->Associate(this);
-  parFrame->AddFrame( OfflineLoadButton, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-  // apply
-  OfflineApplyButton = new TGTextButton( parFrame, "&Apply", OFFLINEAPPLY);
-  OfflineApplyButton->Associate(this);
-  parFrame->AddFrame( OfflineApplyButton , new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-  // draw
-  OfflineDrawButton = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW);
-  OfflineDrawButton->SetEnabled(0);
-  OfflineDrawButton->Associate(this);
-  parFrame->AddFrame(OfflineDrawButton, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-
-
   // current count
   OfflineCurrentCountText = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
   OfflineCurrentCountText-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
@@ -370,7 +344,39 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   OfflineCurrentCountText->Resize(100, 12);
   OfflineCurrentCountText->SetEnabled(kFALSE);
   OfflineCurrentCountText->SetFrameDrawn(kFALSE);
-  parFrame->AddFrame(OfflineCurrentCountText, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 6, 0));
+  parFrame->AddFrame(OfflineCurrentCountText, new TGLayoutHints(kLHintsRight | kLHintsTop, 10, 0, 6, 0));
+
+  // draw
+  OfflineDrawButton = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW);
+  OfflineDrawButton->SetEnabled(0);
+  OfflineDrawButton->Associate(this);
+  parFrame->AddFrame(OfflineDrawButton, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
+
+  // apply
+  OfflineApplyButton = new TGTextButton( parFrame, "&Apply", OFFLINEAPPLY);
+  OfflineApplyButton->Associate(this);
+  parFrame->AddFrame( OfflineApplyButton , new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 5, 0, 0));
+
+  // load
+  OfflineLoadButton = new TGTextButton( parFrame, "&Load", OFFLINELOAD);
+  OfflineLoadButton->Associate(this);
+  parFrame->AddFrame( OfflineLoadButton, new TGLayoutHints(kLHintsRight | kLHintsTop, 20, 5, 0, 0));
+
+  // ch
+  offlinechnum = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  parFrame->AddFrame(offlinechnum, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 0, 0, 0));
+  offlinechnum->SetButtonToNum(0);
+  offlinechnum->Associate(this);
+  TGLabel *ch = new TGLabel( parFrame, "Ch:"); 
+  parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+
+
+
+
+
+
+
+
 
   
   TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
@@ -397,13 +403,22 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   //GOTO 
   // connect to canvas
   TabPanel->AddFrame(sbfold3, new TGLayoutHints(kLHintsBottom | kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
-
-
-  
 }
 
 void Offline::MakeFold2Panel(TGCompositeFrame *TabPanel)
 {
+  TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+  
+  // draw
+  OfflineDrawButton2 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW2);
+  OfflineDrawButton2->SetEnabled(0);
+  OfflineDrawButton2->Associate(this);
+  parFrame->AddFrame(OfflineDrawButton2, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
+
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
   TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
   TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
 
@@ -413,55 +428,22 @@ void Offline::MakeFold2Panel(TGCompositeFrame *TabPanel)
   canvas2->Divide(4,4);
   adCanvasFrame->AddFrame(adjCanvas, Hint);
   TabPanel->AddFrame(adCanvasFrame, Hint);
-
-
-  
-  TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-
-  // run
-  TGLabel *run = new TGLabel( parFrame, "Run:");
-  parFrame->AddFrame(run, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
-  offlinefilerunnum2 = new TGNumberEntry(parFrame, 0, 4, OFFLINERUNNUM2, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 9999);
-  offlinefilerunnum2->SetButtonToNum(0);
-  offlinefilerunnum2->Associate(this);
-  parFrame->AddFrame(offlinefilerunnum2, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-
-  // mod
-  TGLabel *mod = new TGLabel( parFrame, "Mod:"); 
-  parFrame->AddFrame(mod, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
-  offlinemodnum2 = new TGNumberEntry(parFrame, 0, 2, OFFLINEMODNUM2, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, PRESET_MAX_MODULES-1);
-  offlinemodnum2->SetButtonToNum(0);
-  offlinemodnum2->Associate(this);
-  parFrame->AddFrame(offlinemodnum2, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-
-  // read
-  OfflineReadFileButton2 = new TGTextButton( parFrame, "&Read", OFFLINEREAD2);
-  OfflineReadFileButton2->Associate (this);
-  parFrame->AddFrame(OfflineReadFileButton2, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-
-  // status
-  OfflineFileStatus2 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
-  OfflineFileStatus2-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
-  fClient->GetColorByName("blue", color);
-  OfflineFileStatus2->SetTextColor(color, false);
-  OfflineFileStatus2->SetText("NOT READ");
-  OfflineFileStatus2->Resize(100, 12);
-  OfflineFileStatus2->SetEnabled(kFALSE);
-  OfflineFileStatus2->SetFrameDrawn(kFALSE);
-  parFrame->AddFrame(OfflineFileStatus2, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 6, 0));// 
-  // draw
-  OfflineDrawButton2 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW2);
-  OfflineDrawButton2->SetEnabled(0);
-  OfflineDrawButton2->Associate(this);
-  parFrame->AddFrame(OfflineDrawButton2, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-
-
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
-  
 }
 
 void Offline::MakeFold3Panel(TGCompositeFrame *TabPanel)
 {
+  TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+
+  // draw
+  OfflineDrawButton3 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW3);
+  OfflineDrawButton3->SetEnabled(0);
+  OfflineDrawButton3->Associate(this);
+  parFrame->AddFrame(OfflineDrawButton3, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
+
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
   TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
   TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
 
@@ -471,50 +453,86 @@ void Offline::MakeFold3Panel(TGCompositeFrame *TabPanel)
   adCanvasFrame->AddFrame(adjCanvas, Hint);
   TabPanel->AddFrame(adCanvasFrame, Hint);
 
+}
+
+void Offline::MakeFold4Panel(TGCompositeFrame *TabPanel)
+{
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 
-  // run
-  TGLabel *run = new TGLabel( parFrame, "Run:");
-  parFrame->AddFrame(run, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
-  offlinefilerunnum3 = new TGNumberEntry(parFrame, 0, 4, OFFLINERUNNUM3, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 9999);
-  offlinefilerunnum3->SetButtonToNum(0);
-  offlinefilerunnum3->Associate(this);
-  parFrame->AddFrame(offlinefilerunnum3, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-
-  // mod
-  TGLabel *mod = new TGLabel( parFrame, "Mod:"); 
-  parFrame->AddFrame(mod, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 0, 0));
-  offlinemodnum3 = new TGNumberEntry(parFrame, 0, 2, OFFLINEMODNUM3, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, PRESET_MAX_MODULES-1);
-  offlinemodnum3->SetButtonToNum(0);
-  offlinemodnum3->Associate(this);
-  parFrame->AddFrame(offlinemodnum3, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-
-  // read
-  OfflineReadFileButton3 = new TGTextButton( parFrame, "&Read", OFFLINEREAD3);
-  OfflineReadFileButton3->Associate(this);
-  parFrame->AddFrame(OfflineReadFileButton3, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-
-  // status
-  OfflineFileStatus3 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
-  OfflineFileStatus3-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
-  fClient->GetColorByName("blue", color);
-  OfflineFileStatus3->SetTextColor(color, false);
-  OfflineFileStatus3->SetText("NOT READ");
-  OfflineFileStatus3->Resize(100, 12);
-  OfflineFileStatus3->SetEnabled(kFALSE);
-  OfflineFileStatus3->SetFrameDrawn(kFALSE);
-  parFrame->AddFrame(OfflineFileStatus3, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 6, 0));// 
   // draw
-  OfflineDrawButton3 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW3);
-  OfflineDrawButton3->SetEnabled(0);
-  OfflineDrawButton3->Associate(this);
-  parFrame->AddFrame(OfflineDrawButton3, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  OfflineDrawButton4 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW4);
+  OfflineDrawButton4->SetEnabled(0);
+  OfflineDrawButton4->Associate(this);
+  parFrame->AddFrame(OfflineDrawButton4, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
+
+  // ch
+  offlinechnum4 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM4, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  parFrame->AddFrame(offlinechnum4, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
+  offlinechnum4->SetButtonToNum(0);
+  offlinechnum4->Associate(this);
+  TGLabel *ch = new TGLabel( parFrame, "Ch:"); 
+  parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+  
+
+  
+  // bin
+  chooseth1dbin4 = new TGComboBox(parFrame);
+  parFrame->AddFrame(chooseth1dbin4, new TGLayoutHints(kLHintsRight, 5, 25, 2, 2));
+  chooseth1dbin4->Resize(80, 20);
+  chooseth1dbin4->AddEntry("65536", 1);
+  chooseth1dbin4->AddEntry("32768", 2);
+  chooseth1dbin4->AddEntry("16384", 3);
+  chooseth1dbin4->AddEntry("8192", 4);
+  chooseth1dbin4->AddEntry("4096", 5);
+  chooseth1dbin4->AddEntry("2048", 6);
+  chooseth1dbin4->AddEntry("1024", 7);
+  chooseth1dbin4->Select(1);
+  TGTextEntry *LabelBinNumber = new TGTextEntry(parFrame,new TGTextBuffer(30));
+  LabelBinNumber->SetText("Bin:");
+  LabelBinNumber->Resize(30,15);
+  LabelBinNumber->SetEnabled(kFALSE);
+  LabelBinNumber->SetToolTipText("Choose TH1D bin number.");
+  parFrame->AddFrame(LabelBinNumber, new TGLayoutHints(kLHintsRight | kLHintsExpandY, 0, 0, 3, 0));
 
 
   TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
 
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  
+  TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
+  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
+
+  TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas4", adCanvasFrame, 100, 100);
+
+  canvas4 = adjCanvas->GetCanvas();
+  adCanvasFrame->AddFrame(adjCanvas, Hint);
+  TabPanel->AddFrame(adCanvasFrame, Hint);
+
   
 }
+
+void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
+{
+  TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+
+
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
+  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
+
+  TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas5", adCanvasFrame, 100, 100);
+
+  canvas5 = adjCanvas->GetCanvas();
+  adCanvasFrame->AddFrame(adjCanvas, Hint);
+  TabPanel->AddFrame(adCanvasFrame, Hint);
+}
+
+
 
 Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 {
@@ -530,12 +548,12 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	  switch(parm1)
 	    {
 	    case ADJUSTPARSLIDER:
-	      std::cout<<"Slider Pos -  min:"<<dslider->GetMinPosition()<<" max:"<<dslider->GetMaxPosition()<<std::endl;
-
-	      // adjustCanvas->Modified();
-	      // adjustCanvas->Update();
-	      // adCanvas->GetCanvas()->Modified();
-	      // adCanvas->GetCanvas()->Update();
+	      offlinemultigraph->GetXaxis()->SetRangeUser(dslider->GetMinPosition(),dslider->GetMaxPosition());
+	      
+	      // std::cout<<"Slider Pos -  min:"<<dslider->GetMinPosition()<<" max:"<<dslider->GetMaxPosition()<<std::endl;
+	      
+	      adjustCanvas->Modified();
+	      adjustCanvas->Update();
 	      break;
 	    default:
 	      break;
@@ -553,13 +571,16 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	  switch (parm1)
 	    {
 	    case OFFLINEREAD:
-	      Panel1ReadFile();
-	      break;
-	    case OFFLINEREAD2:
-	      Panel2ReadFile();
-	      break;
-	    case OFFLINEREAD3:
-	      Panel3ReadFile();
+	      Panel0ReadFile();
+	      for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)//将默认的ch横坐标范围与sample对应
+		{
+		  if(offlinechnum->GetIntNumber() == OfflineEventInformation[12*i+1])
+		    {
+		      dslider->SetRange(0,OfflineEventInformation[12*i+10]);
+		      dslider->SetPosition(0,OfflineEventInformation[12*i+10]);
+		      break;
+		    }
+		}
 	      break;
 	    case OFFLINELOAD:
 	      OfflineLoadValues(offlinemodnum->GetIntNumber(),offlinechnum->GetIntNumber());
@@ -576,6 +597,13 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    case OFFLINEDRAW3:
 	      Panel3Draw();
 	      break;
+	    case OFFLINEDRAW4:
+	      Panel4Draw();
+	      break;
+	    case OFFLINEDRAW5:
+	      Panel5Draw();
+	      break;
+	      
 	    case OFFLINEFILTERRANGE:
 	      if (parm2 == 0)
 	      	{
@@ -607,6 +635,9 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;  
 	    case OFFLINERUNNUM:
 	      OfflineDrawButton->SetEnabled(0);
+	      OfflineDrawButton2->SetEnabled(0);
+	      OfflineDrawButton3->SetEnabled(0);
+	      OfflineDrawButton4->SetEnabled(0);
 	      if (parm2 == 0)
 		{
 		  ++fileRunNum;
@@ -622,42 +653,11 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		    }
 		}
 	      break;
-	    case OFFLINERUNNUM2:
-	      OfflineDrawButton2->SetEnabled(0);
-	      if(parm2 == 0)
-		{
-		  ++fileRunNum2;
-		  offlinefilerunnum2->SetIntNumber(fileRunNum2);
-		}
-	      else
-		{
-		  if(fileRunNum2 != 0)
-		    {
-		      if(--fileRunNum2 == 0)
-			fileRunNum2 = 0;
-		      offlinefilerunnum2->SetIntNumber(fileRunNum2);
-		    }
-		}
-	      break;
-	    case OFFLINERUNNUM3:
-	      OfflineDrawButton3->SetEnabled(0);
-	      if(parm2 == 0)
-		{
-		  ++fileRunNum3;
-		  offlinefilerunnum3->SetIntNumber(fileRunNum3);
-		}
-	      else
-		{
-		  if(fileRunNum3 != 0)
-		    {
-		      if(--fileRunNum3 == 0)
-			fileRunNum3 = 0;
-		      offlinefilerunnum3->SetIntNumber(fileRunNum3);
-		    }
-		}
-	      break;
 	    case OFFLINEMODNUM:
 	      OfflineDrawButton->SetEnabled(0);
+	      OfflineDrawButton2->SetEnabled(0);
+	      OfflineDrawButton3->SetEnabled(0);
+	      OfflineDrawButton4->SetEnabled(0);
 	      if (parm2 == 0)
 		{
 		  if (modNumber != detector->NumModules-1)
@@ -676,46 +676,6 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		    }
 		}
 	      break;
-	    case OFFLINEMODNUM2:
-	      OfflineDrawButton2->SetEnabled(0);
-	      if (parm2 == 0)
-		{
-		  if (modNumber2 != detector->NumModules-1)
-		    {
-		      ++modNumber2;
-		      offlinemodnum2->SetIntNumber(modNumber2);
-		    }
-		}
-	      else
-		{
-		  if (modNumber2 != 0)
-		    {
-		      if (--modNumber2 == 0)
-			modNumber2 = 0;
-		      offlinemodnum2->SetIntNumber(modNumber2);
-		    }
-		}
-	      break;
-	    case OFFLINEMODNUM3:
-	      OfflineDrawButton3->SetEnabled(0);
-	      if (parm2 == 0)
-		{
-		  if (modNumber3 != detector->NumModules-1)
-		    {
-		      ++modNumber3;
-		      offlinemodnum3->SetIntNumber(modNumber3);
-		    }
-		}
-	      else
-		{
-		  if (modNumber3 != 0)
-		    {
-		      if (--modNumber3 == 0)
-			modNumber3 = 0;
-		      offlinemodnum3->SetIntNumber(modNumber3);
-		    }
-		}
-	      break;	      
 	    case OFFLINECHNUM:
 	      if (parm2 == 0)
 		{
@@ -734,7 +694,36 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		      offlinechnum->SetIntNumber(chanNumber);
 		    }
 		}
+	      for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)//每次改变channel，横坐标范围都回到全部sample
+		{
+		  if(offlinechnum->GetIntNumber() == OfflineEventInformation[12*i+1])
+		    {
+		      dslider->SetRange(0,OfflineEventInformation[12*i+10]);
+		      dslider->SetPosition(0,OfflineEventInformation[12*i+10]);
+		      break;
+		    }
+		}
 	      break;
+	    case OFFLINECHNUM4:
+	      if (parm2 == 0)
+		{
+		  if (chanNumber4 != 15)
+		    {
+		      ++chanNumber4;
+		      offlinechnum4->SetIntNumber(chanNumber4);
+		    }
+		}
+	      else
+		{
+		  if (chanNumber4 != 0)
+		    {
+		      if (--chanNumber4 == 0)
+			chanNumber4 = 0;
+		      offlinechnum4->SetIntNumber(chanNumber4);
+		    }
+		}
+	      break;
+
 	      
 	      
 	    default:
@@ -752,38 +741,13 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    {
 	    case kTE_ENTER:
 	      OfflineDrawButton->SetEnabled(0);
+	      OfflineDrawButton2->SetEnabled(0);
+	      OfflineDrawButton3->SetEnabled(0);
+	      OfflineDrawButton4->SetEnabled(0);
 	      modNumber = offlinemodnum->GetIntNumber();
 	      if(modNumber > detector->NumModules-1) modNumber = detector->NumModules-1;
 	      if(modNumber < 0) modNumber = 0;
 	      offlinemodnum->SetIntNumber(modNumber);
-	      break;
-	    default:
-	      break;
-	    }
-	  break;
-	case OFFLINEMODNUM2:
-	  switch (GET_SUBMSG(msg))
-	    {
-	    case kTE_ENTER:
-	      OfflineDrawButton2->SetEnabled(0);
-	      modNumber2 = offlinemodnum2->GetIntNumber();
-	      if(modNumber2 > detector->NumModules-1) modNumber2 = detector->NumModules-1;
-	      if(modNumber2 < 0) modNumber2 = 0;
-	      offlinemodnum2->SetIntNumber(modNumber2);
-	      break;
-	    default:
-	      break;
-	    }
-	  break;
-	case OFFLINEMODNUM3:
-	  switch (GET_SUBMSG(msg))
-	    {
-	    case kTE_ENTER:
-	      OfflineDrawButton3->SetEnabled(0);
-	      modNumber3 = offlinemodnum3->GetIntNumber();
-	      if(modNumber3 > detector->NumModules-1) modNumber3 = detector->NumModules-1;
-	      if(modNumber3 < 0) modNumber3 = 0;
-	      offlinemodnum3->SetIntNumber(modNumber3);
 	      break;
 	    default:
 	      break;
@@ -802,6 +766,20 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 	    }
 	  break;
+	case OFFLINECHNUM4:
+	  switch (GET_SUBMSG(msg))
+	    {
+	    case kTE_ENTER:
+	      chanNumber4 = offlinechnum4->GetIntNumber();
+	      if(chanNumber4 > 15) chanNumber4 = 15;
+	      if(chanNumber4 < 0) chanNumber4 = 0;
+	      offlinechnum4->SetIntNumber(chanNumber4);
+	      break;
+	    default:
+	      break;
+	    }
+	  break;
+	  
 	case OFFLINEFILTERRANGE:
 	  switch (GET_SUBMSG(msg))
 	    {
@@ -825,37 +803,14 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    {
 	    case kTE_ENTER:
 	      OfflineDrawButton->SetEnabled(0);
+	      OfflineDrawButton2->SetEnabled(0);
+	      OfflineDrawButton3->SetEnabled(0);
+	      OfflineDrawButton4->SetEnabled(0);
 	      fileRunNum = offlinefilerunnum->GetIntNumber();
 	      if(fileRunNum < 0) fileRunNum = 0;
 	      offlinefilerunnum->SetIntNumber(fileRunNum);
 	      break;
 	      
-	    default:
-	      break;
-	    }
-	  break;
-	case OFFLINERUNNUM2:
-	  switch (GET_SUBMSG(msg))
-	    {
-	    case kTE_ENTER:
-	      OfflineDrawButton2->SetEnabled(0);
-	      fileRunNum2 = offlinefilerunnum2->GetIntNumber();
-	      if(fileRunNum2 < 0) fileRunNum2 = 0;
-	      offlinefilerunnum2->SetIntNumber(fileRunNum2);
-	      break;
-	    default:
-	      break;
-	    }
-	  break;
-	case OFFLINERUNNUM3:
-	  switch (GET_SUBMSG(msg))
-	    {
-	    case kTE_ENTER:
-	      OfflineDrawButton3->SetEnabled(0);
-	      fileRunNum3 = offlinefilerunnum3->GetIntNumber();
-	      if(fileRunNum3 < 0) fileRunNum3 = 0;
-	      offlinefilerunnum3->SetIntNumber(fileRunNum3);
-	      break;
 	    default:
 	      break;
 	    }
@@ -991,7 +946,6 @@ unsigned int Offline::GetModuleEvents(char *FileName)
       // Get file length
       fseek(ListModeFile, 0, SEEK_END);
       TotalWords = (ftell(ListModeFile) + 1) / 4;
-      
       
       // Point ListModeFile to the beginning of file
       fseek(ListModeFile, 0, SEEK_SET);
@@ -1200,8 +1154,8 @@ void Offline::Panel1Draw()
 	      
   fClient->GetColorByName("blue", color);
   OfflineCurrentCountText->SetTextColor(color, false);
-  char stacurr[20];
-  sprintf(stacurr,"%d",OfflineCurrentCount+1);
+  char stacurr[128];
+  sprintf(stacurr,"%d / %d",OfflineCurrentCount+1,OfflineModuleEventsCount);
   OfflineCurrentCountText->SetText(stacurr);
 	      
   RcdTrace = new unsigned short[OfflineEventInformation[12*OfflineCurrentCount+10]];
@@ -1261,6 +1215,8 @@ void Offline::Panel1Draw()
   offlinemultigraph->Add(sfilterdata);
   offlinemultigraph->Add(ffilterdata);
   offlinemultigraph->Draw("AL");
+  offlinemultigraph->GetXaxis()->SetRangeUser(double(dslider->GetMinPosition()),double(dslider->GetMaxPosition()));
+  // offlinemultigraph->Draw("AL");
   adjustCanvas->Modified();
   adjustCanvas->Update();
 
@@ -1354,44 +1310,44 @@ void Offline::Panel2Draw()
 	{
 	  OfflineCurrentCount2[i]++;
 	  tempN12[i]++;
-	  if(tempN12[i] > OfflineModuleEventsCount2-1)
+	  if(tempN12[i] > OfflineModuleEventsCount-1)
 	    {
 	      offlinedatastatus2[i] = true;
 	      break;
 	    }
-	  if(OfflineCurrentCount2[i] >= OfflineModuleEventsCount2) OfflineCurrentCount2[i] = 0;
+	  if(OfflineCurrentCount2[i] >= OfflineModuleEventsCount) OfflineCurrentCount2[i] = 0;
 
-	  if(i == OfflineEventInformation2[12*OfflineCurrentCount2[i]+1]) break;
+	  if(i == OfflineEventInformation[12*OfflineCurrentCount2[i]+1]) break;
 	}
 
       // cout<<"Ch: "<<i<<"  N: "<<OfflineCurrentCount2[i]<<endl;
       int retval;
       if(!offlinedatastatus2[i])
 	{
-	  RcdTrace2[i] = new unsigned short[OfflineEventInformation2[12*OfflineCurrentCount2[i]+10]];
-	  doublethresh2[i] = new double[OfflineEventInformation2[12*OfflineCurrentCount2[i]+10]];
-	  doublecfdthresh2[i] = new double[OfflineEventInformation2[12*OfflineCurrentCount2[i]+10]];
-	  doublesample2[i] = new double[OfflineEventInformation2[12*OfflineCurrentCount2[i]+10]];
-	  doublercdtrace2[i] = new double[OfflineEventInformation2[12*OfflineCurrentCount2[i]+10]];
-	  doublefastfilter2[i] = new double[OfflineEventInformation2[12*OfflineCurrentCount2[i]+10]];
-	  doublecfd2[i] = new double[OfflineEventInformation2[12*OfflineCurrentCount2[i]+10]];
-	  doubleslowfilter2[i] = new double[OfflineEventInformation2[12*OfflineCurrentCount2[i]+10]];
+	  RcdTrace2[i] = new unsigned short[OfflineEventInformation[12*OfflineCurrentCount2[i]+10]];
+	  doublethresh2[i] = new double[OfflineEventInformation[12*OfflineCurrentCount2[i]+10]];
+	  doublecfdthresh2[i] = new double[OfflineEventInformation[12*OfflineCurrentCount2[i]+10]];
+	  doublesample2[i] = new double[OfflineEventInformation[12*OfflineCurrentCount2[i]+10]];
+	  doublercdtrace2[i] = new double[OfflineEventInformation[12*OfflineCurrentCount2[i]+10]];
+	  doublefastfilter2[i] = new double[OfflineEventInformation[12*OfflineCurrentCount2[i]+10]];
+	  doublecfd2[i] = new double[OfflineEventInformation[12*OfflineCurrentCount2[i]+10]];
+	  doubleslowfilter2[i] = new double[OfflineEventInformation[12*OfflineCurrentCount2[i]+10]];
 
-	  retval = Pixie16ComputeFastFiltersOffline(offlinefilename2, (unsigned short)offlinemodnum2->GetIntNumber(), (unsigned short) i, OfflineEventInformation2[12*OfflineCurrentCount2[i]+11], OfflineEventInformation2[12*OfflineCurrentCount2[i]+10], RcdTrace2[i], doublefastfilter2[i], doublecfd2[i] );
+	  retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) i, OfflineEventInformation[12*OfflineCurrentCount2[i]+11], OfflineEventInformation[12*OfflineCurrentCount2[i]+10], RcdTrace2[i], doublefastfilter2[i], doublecfd2[i] );
 	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "Pixie16ComputeFastFiltersOffline", retval);
-	  retval = Pixie16ComputeSlowFiltersOffline(offlinefilename2, (unsigned short)offlinemodnum2->GetIntNumber(), (unsigned short) i, OfflineEventInformation2[12*OfflineCurrentCount2[i]+11], OfflineEventInformation2[12*OfflineCurrentCount2[i]+10], RcdTrace2[i],doubleslowfilter2[i] );
+	  retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) i, OfflineEventInformation[12*OfflineCurrentCount2[i]+11], OfflineEventInformation[12*OfflineCurrentCount2[i]+10], RcdTrace2[i],doubleslowfilter2[i] );
 	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
 	  
 	  double ChanParData;
-	  retval = Pixie16ReadSglChanPar((char*)"TRIGGER_THRESHOLD", &ChanParData, (unsigned short)offlinemodnum2->GetIntNumber(), (unsigned short)i);
+	  retval = Pixie16ReadSglChanPar((char*)"TRIGGER_THRESHOLD", &ChanParData, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)i);
 	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "Pixie16ReadSglChanPar/TRIGGER_THRESHOLD", retval);
 	  doublethresh2[i][0] = ChanParData;
-	  retval = Pixie16ReadSglChanPar((char*)"CFDThresh", &ChanParData, (unsigned short)offlinemodnum2->GetIntNumber(), (unsigned short)i);
+	  retval = Pixie16ReadSglChanPar((char*)"CFDThresh", &ChanParData, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)i);
 	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "Pixie16ReadSglChanPar/CFDThresh", retval);
 	  doublecfdthresh2[i][0] = ChanParData;
 
 	  
-	  for (unsigned int j = 0; j < OfflineEventInformation2[12*OfflineCurrentCount2[i]+10]; ++j)
+	  for (unsigned int j = 0; j < OfflineEventInformation[12*OfflineCurrentCount2[i]+10]; ++j)
 	    {
 	      doublesample2[i][j] = j;
 	      doublercdtrace2[i][j] = (double)RcdTrace2[i][j];
@@ -1399,13 +1355,14 @@ void Offline::Panel2Draw()
 	      doublecfdthresh2[i][j] = doublecfdthresh2[i][0];
 	    }
 
-	  rawdata2[i] = new TGraph(OfflineEventInformation2[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublercdtrace2[i]);
-	  threshdata2[i] = new TGraph(OfflineEventInformation2[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublethresh2[i]);
-	  cfdthreshdata2[i] = new TGraph(OfflineEventInformation2[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublecfdthresh2[i]);
-	  cfddata2[i] = new TGraph(OfflineEventInformation2[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublecfd2[i]);
-	  sfilterdata2[i] = new TGraph(OfflineEventInformation2[12*OfflineCurrentCount2[i]+10],doublesample2[i],doubleslowfilter2[i]);
-	  ffilterdata2[i] = new TGraph(OfflineEventInformation2[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublefastfilter2[i]);
+	  rawdata2[i] = new TGraph(OfflineEventInformation[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublercdtrace2[i]);
+	  threshdata2[i] = new TGraph(OfflineEventInformation[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublethresh2[i]);
+	  cfdthreshdata2[i] = new TGraph(OfflineEventInformation[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublecfdthresh2[i]);
+	  cfddata2[i] = new TGraph(OfflineEventInformation[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublecfd2[i]);
+	  sfilterdata2[i] = new TGraph(OfflineEventInformation[12*OfflineCurrentCount2[i]+10],doublesample2[i],doubleslowfilter2[i]);
+	  ffilterdata2[i] = new TGraph(OfflineEventInformation[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublefastfilter2[i]);
 
+	  
 	  cfddata2[i]->SetLineColor(2);
 	  cfdthreshdata2[i]->SetLineColor(2);
 	  sfilterdata2[i]->SetLineColor(3);
@@ -1419,17 +1376,15 @@ void Offline::Panel2Draw()
 	  offlinemultigraph2[i]->Add(sfilterdata2[i]);
 	  offlinemultigraph2[i]->Add(ffilterdata2[i]);
 	  canvas2->cd(1+i);
+	  offlinemultigraph2[i]->SetTitle(TString::Format("Event: %d",OfflineCurrentCount2[i]).Data());
+	  std::cout<<TString::Format("%d",OfflineCurrentCount2[i]).Data()<<std::endl;
 	  offlinemultigraph2[i]->Draw("AL");
- 
 	}
-
     }
-
 
   canvas2->Modified();
   canvas2->Update();
   gSystem->ProcessEvents();
-
 }
 
 
@@ -1448,13 +1403,12 @@ void Offline::Panel3Draw()
 	}
       char th1dname[16];
       sprintf(th1dname,"ch%02d",i);
-      offlineth1d3[i] = new TH1D(th1dname,"",65536,0,8192);
+      offlineth1d3[i] = new TH1D(th1dname,"",8192,0,65536);
     }
   
-  
-  for (unsigned int i = 0; i < OfflineModuleEventsCount3; ++i)
+  for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
     {
-      offlineth1d3[OfflineEventInformation3[12*i+1]]->Fill(OfflineEventInformation3[12*i+9]);
+      offlineth1d3[OfflineEventInformation[12*i+1]]->Fill(OfflineEventInformation[12*i+9]);
     }
 
   for (int i = 0; i < 16; ++i)
@@ -1463,6 +1417,9 @@ void Offline::Panel3Draw()
 	{
 	  canvas3->cd(i+1);
 	  offlineth1d3[i]->Draw();
+	  offlineth1d3[i]->GetXaxis()->SetTitle("ch");
+	  offlineth1d3[i]->GetXaxis()->SetLabelSize(0.06);
+	  offlineth1d3[i]->GetYaxis()->SetLabelSize(0.06);
 	}
     }
     
@@ -1471,7 +1428,73 @@ void Offline::Panel3Draw()
   gSystem->ProcessEvents();
 }
 
-void Offline::Panel1ReadFile()
+void Offline::Panel4Draw()
+{
+  canvas4->cd();
+  canvas4->Clear();
+
+  if(offlineth1d4 != NULL)
+    {
+      delete offlineth1d4;
+      offlineth1d4 = NULL;
+    }
+
+  int intth1dbin4;
+  switch(chooseth1dbin4->GetSelected())
+    {
+    case 1 :
+      intth1dbin4 = 65536;
+      break;
+    case 2 :
+      intth1dbin4 = 32768;
+      break;
+    case 3 :
+      intth1dbin4 = 16384;
+      break;
+    case 4 :
+      intth1dbin4 = 8192;
+      break;
+    case 5 :
+      intth1dbin4 = 4096;
+      break;
+    case 6 :
+      intth1dbin4 = 2048;
+      break;
+    case 7 :
+      intth1dbin4 = 1024;
+      break;
+    default:
+      intth1dbin4 = 65536;
+      break;
+    }
+  
+  offlineth1d4 = new TH1D("offlineth1d4","",intth1dbin4,0,65536);
+  
+  for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
+    {
+      if(offlinechnum4->GetIntNumber() == OfflineEventInformation[12*i+1])
+	{
+	  offlineth1d4->Fill(OfflineEventInformation[12*i+9]);
+	}
+    }
+  
+  offlineth1d4->Draw();
+  offlineth1d4->SetTitle(TString::Format("Ch: %d",int(offlinechnum4->GetIntNumber())).Data());
+  offlineth1d4->GetXaxis()->SetTitle("ch");
+
+  canvas4->Modified();
+  canvas4->Update();
+  gSystem->ProcessEvents();
+}
+
+void Offline::Panel5Draw()
+{
+
+
+}
+
+
+void Offline::Panel0ReadFile()
 {
   OfflineCurrentCount = -1;
   fClient->GetColorByName("green", color);
@@ -1499,10 +1522,13 @@ void Offline::Panel1ReadFile()
       fClient->GetColorByName("red", color);
       OfflineFileStatus->SetTextColor(color, false);
       char staok[20];
-      sprintf(staok,"N %d",OfflineModuleEventsCount);
+      sprintf(staok,"Total Events: %d",OfflineModuleEventsCount);
       OfflineFileStatus->SetText(staok);
 	      
       OfflineDrawButton->SetEnabled(1);
+      OfflineDrawButton2->SetEnabled(1);
+      OfflineDrawButton3->SetEnabled(1);
+      OfflineDrawButton4->SetEnabled(1);
     }
   else
     {
@@ -1512,92 +1538,7 @@ void Offline::Panel1ReadFile()
     }
 }
 
-void Offline::Panel2ReadFile()
-{
-  for (int i = 0; i < 16; ++i)
-    {
-      OfflineCurrentCount2[i] = -1;
-    }
-  fClient->GetColorByName("green", color);
-  OfflineFileStatus2->SetTextColor(color, false);
-  OfflineFileStatus2->SetText("Waitting...");
-  gSystem->ProcessEvents();
 
-  sprintf(offlinefilename2,"%s%s_R%04d_M%02d.bin",filepathtext->GetText(),filenametext->GetText(),int(offlinefilerunnum2->GetIntNumber()),int(offlinemodnum2->GetIntNumber()));
-  // GOTO need check file 
-  OfflineModuleEventsCount2 = GetModuleEvents(offlinefilename2);
-
-  if(OfflineModuleEventsCount2 > 0)
-    {
-
-      cout<<"!!!!!: "<<OfflineModuleEventsCount2<<endl;
-
-      if(OfflineEventInformation2 != NULL)
-	{
-	  delete []OfflineEventInformation2;
-	  OfflineEventInformation2 = NULL;
-	}
-      OfflineEventInformation2 = new unsigned int[12*OfflineModuleEventsCount2];
-      GetEventsInfo(offlinefilename2,OfflineEventInformation2);
-	      
-      //
-      fClient->GetColorByName("red", color);
-      OfflineFileStatus2->SetTextColor(color, false);
-      char staok[20];
-      sprintf(staok,"N %d",OfflineModuleEventsCount2);
-      OfflineFileStatus2->SetText(staok);
-	      
-      OfflineDrawButton2->SetEnabled(1);
-    }
-  else
-    {
-      fClient->GetColorByName("red", color);
-      OfflineFileStatus2->SetTextColor(color, false);
-      OfflineFileStatus2->SetText("READ ERROR");
-    }
-}
-
-void Offline::Panel3ReadFile()
-{
-  fClient->GetColorByName("green", color);
-  OfflineFileStatus3->SetTextColor(color, false);
-  OfflineFileStatus3->SetText("Waitting...");
-  gSystem->ProcessEvents();
-
-  sprintf(offlinefilename3,"%s%s_R%04d_M%02d.bin",filepathtext->GetText(),filenametext->GetText(),int(offlinefilerunnum3->GetIntNumber()),int(offlinemodnum3->GetIntNumber()));
-  // GOTO need check file 
-  OfflineModuleEventsCount3 = GetModuleEvents(offlinefilename3);
-
-  if(OfflineModuleEventsCount3 > 0)
-    {
-      cout<<"!!!!!!!!: "<<OfflineModuleEventsCount3<<endl;
-
-      if(OfflineEventInformation3 != NULL)
-	{
-	  delete []OfflineEventInformation3;
-	  OfflineEventInformation3 = NULL;
-	}
-      OfflineEventInformation3 = new unsigned int[12*OfflineModuleEventsCount3];
-      GetEventsInfo(offlinefilename3,OfflineEventInformation3);
-	      
-      //
-      fClient->GetColorByName("red", color);
-      OfflineFileStatus3->SetTextColor(color, false);
-      char staok[20];
-      sprintf(staok,"N %d",OfflineModuleEventsCount3);
-      OfflineFileStatus3->SetText(staok);
-	      
-      OfflineDrawButton3->SetEnabled(1);
-
-    }
-  else
-    {
-      fClient->GetColorByName("red", color);
-      OfflineFileStatus3->SetTextColor(color, false);
-      OfflineFileStatus3->SetText("READ ERROR");
-    }
-  
-}
 
 
 
