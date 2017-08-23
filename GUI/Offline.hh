@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 二 8月 22 21:43:56 2017 (+0800)
+// Last-Updated: 三 8月 23 21:22:25 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 46
+//     Update #: 52
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -17,12 +17,14 @@
 #include "TGComboBox.h"
 #include "TGDoubleSlider.h"
 #include "TGFrame.h"
+#include "TGImageMap.h"
 #include "TGLabel.h"
 #include "TGNumberEntry.h"
 #include "TGraph.h"
 #include "TGStatusBar.h"
 #include "TGTextEntry.h"
 #include "TH1.h"
+#include "TH2.h"
 #include "TObject.h"
 #include "TString.h"
 #include "TStyle.h"
@@ -43,10 +45,11 @@ public:
 
   void MakeFold0Panel(TGCompositeFrame *TabPanel);//InitData
   void MakeFold1Panel(TGCompositeFrame *TabPanel);//Adjust Par
-  void MakeFold2Panel(TGCompositeFrame *TabPanel);//Chan-16
+  void MakeFold2Panel(TGCompositeFrame *TabPanel);//Wave-16
   void MakeFold3Panel(TGCompositeFrame *TabPanel);//Energy-16
   void MakeFold4Panel(TGCompositeFrame *TabPanel);//Energy
-  void MakeFold5Panel(TGCompositeFrame *TabPanel);//FF Thre
+  void MakeFold5Panel(TGCompositeFrame *TabPanel);//FF Thre/CFD Thre
+  void MakeFold6Panel(TGCompositeFrame *TabPanel);//
 
   
 private:
@@ -103,6 +106,8 @@ private:
       OFFLINEMODNUM,
       OFFLINECHNUM,
       OFFLINECHNUM4,
+      OFFLINECHNUM5,
+      OFFLINECHNUM6,
       OFFLINEREAD,
       OFFLINELOAD,
       OFFLINEAPPLY,
@@ -111,6 +116,7 @@ private:
       OFFLINEDRAW3,
       OFFLINEDRAW4,
       OFFLINEDRAW5,
+      OFFLINEDRAW6,
       OFFLINEFASTLENGTH,
       OFFLINEFASTGAP,
       OFFLINESLOWLENGTH,
@@ -124,7 +130,6 @@ private:
     };
 
   // Fold0
-  
 
   
   // Fold2
@@ -159,10 +164,25 @@ private:
   // Fold5
   TCanvas *canvas5;
   TGTextButton* OfflineDrawButton5;  
-  TH1D *offlineth2d5;
+  TH2D *offlineth2d5_0;
+  TH2D *offlineth2d5_1;
   TGNumberEntry	*offlinechnum5;//int
   int chanNumber5;
+  unsigned short *RcdTrace5;//
+  double *doublefastfilter5;//
+  double *doublecfd5;//
 
+  
+  // Fold6
+  TCanvas *canvas6;
+  TGTextButton* OfflineDrawButton6;  
+  TH2D *offlineth2d6;
+  TGNumberEntry	*offlinechnum6;//int
+  int chanNumber6;
+
+
+  // Fold7
+  
   
   // function
   void Panel1Draw();
@@ -170,10 +190,10 @@ private:
   void Panel3Draw();
   void Panel4Draw();
   void Panel5Draw();
+  void Panel6Draw();
+
   void Panel0ReadFile();
 
-
-  
 };
 
 #endif /* _OFFLINE_HH_ */

@@ -5,16 +5,16 @@ const char gAbout[] = "\
 Version: 1.0 ---> 2016.11.06\n\
 \n\
 The program developed by Peking University.\n\
-The program applies to Pixie16-RevF.\n\
+The program applies to XIA Pixie16-RevF.\n\
 \n\
 \n\
 Program Developer:\n\
-Hongyi Wu (wuhongyi@qq.com)\n\
+Hongyi Wu(wuhongyi@qq.com)\n\
 Jing Li (lijinger02@163.com)\n\
 \n\
 Other Contributor:\n\
 Zhihuan Li\n\
-Hui Tan\n\
+Hui Tan(XIA LLC)\n\
 \n\
 ";
 
@@ -44,6 +44,7 @@ Hui Tan\n\
 #include "TGDoubleSlider.h"
 #include "TGFileDialog.h"
 #include "TGFrame.h"
+#include "TGImageMap.h"
 #include "TGMenu.h"
 #include "TGNumberEntry.h"
 #include "TGLabel.h"

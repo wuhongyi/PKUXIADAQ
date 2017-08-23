@@ -357,6 +357,22 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 
 void MainFrame::MakeFold1Panel(TGCompositeFrame * TabPanel)
 {
+  TGCompositeFrame *LogoFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+
+  TGImageMap* fImagePKU = new TGImageMap(LogoFrame, "pkulogo100.jpg");
+  fImagePKU->Resize(100,100);
+  fImagePKU->ChangeOptions(fImagePKU->GetOptions() | kFixedSize);
+  LogoFrame->AddFrame(fImagePKU,new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 0, 0));
+
+  TGImageMap* fImageWHY = new TGImageMap(LogoFrame, "why.jpg");
+  fImageWHY->Resize(100,100);
+  fImageWHY->ChangeOptions(fImageWHY->GetOptions() | kFixedSize);
+  LogoFrame->AddFrame(fImageWHY,new TGLayoutHints(kLHintsTop | kLHintsRight, 100, 0, 0, 0));
+
+  TabPanel->AddFrame(LogoFrame, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
   //make the buttons frame        
   TGCompositeFrame *ButtonFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 

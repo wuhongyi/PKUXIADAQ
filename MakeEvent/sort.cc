@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 6月  3 09:27:02 2017 (+0800)
-// Last-Updated: 五 8月 18 20:03:32 2017 (+0800)
+// Last-Updated: 三 8月 23 14:00:19 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 23
+//     Update #: 24
 // URL: http://wuhongyi.cn 
 
 #include "sort.hh"
@@ -133,7 +133,7 @@ void sort::InitEvent()
   inittime = ts*10;
 
 #if BOARDNUMBER > 1
-  if(evte > adc[sid-2][ch])
+  if(evte >= adc[sid-2][ch])
     {
       adc[sid-2][ch] = evte;
       tdc[sid-2][ch] = ts;
@@ -141,7 +141,7 @@ void sort::InitEvent()
       cfdft[sid-2][ch] = cfdft_;
     }
 #else
-  if(evte > adc[ch])
+  if(evte >= adc[ch])
     {
       adc[ch] = evte;
       tdc[ch] = ts;
@@ -155,7 +155,7 @@ void sort::InitEvent()
 void sort::ProcessEntry()
 {
 #if BOARDNUMBER > 1
-  if(evte > adc[sid-2][ch])
+  if(evte >= adc[sid-2][ch])
     {
       adc[sid-2][ch] = evte;
       tdc[sid-2][ch] = ts;
@@ -163,7 +163,7 @@ void sort::ProcessEntry()
       cfdft[sid-2][ch] = cfdft_;
     }
 #else
-  if(evte > adc[ch])
+  if(evte >= adc[ch])
     {
       adc[ch] = evte;
       tdc[ch] = ts;
