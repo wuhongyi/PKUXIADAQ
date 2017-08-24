@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 四 8月 24 18:53:16 2017 (+0800)
+// Last-Updated: 四 8月 24 22:39:45 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 62
+//     Update #: 70
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -48,10 +48,10 @@ public:
   void MakeFold1Panel(TGCompositeFrame *TabPanel);//Adjust Par
   void MakeFold2Panel(TGCompositeFrame *TabPanel);//Wave-16
   void MakeFold3Panel(TGCompositeFrame *TabPanel);//Energy-16
-  void MakeFold4Panel(TGCompositeFrame *TabPanel);//Energy
+  void MakeFold4Panel(TGCompositeFrame *TabPanel);//Orig Energy
   void MakeFold5Panel(TGCompositeFrame *TabPanel);//FF Thre/CFD Thre
-  void MakeFold6Panel(TGCompositeFrame *TabPanel);//
-
+  void MakeFold6Panel(TGCompositeFrame *TabPanel);//Calc Energy
+  void MakeFold7Panel(TGCompositeFrame *TabPanel);//QCD
   
 private:
   Pixel_t color;
@@ -118,6 +118,7 @@ private:
       OFFLINEDRAW4,
       OFFLINEDRAW5,
       OFFLINEDRAW6,
+      OFFLINEDRAW7,
       OFFLINEFASTLENGTH,
       OFFLINEFASTGAP,
       OFFLINESLOWLENGTH,
@@ -131,7 +132,8 @@ private:
       OFFLINEPROJECTYFF5,
       OFFLINEPROJECTYCFD5,
       OFFLINEORIGINALCFD5,
-      OFFLINECALCULATECFD5
+      OFFLINECALCULATECFD5,
+      OFFLINESTOPDRAW6
     };
 
   // Fold0
@@ -188,14 +190,26 @@ private:
   
   // Fold6
   TCanvas *canvas6;
-  TGTextButton* OfflineDrawButton6;  
-  TH2D *offlineth2d6;
+  TGTextButton* OfflineDrawButton6;
+  TGTextButton* OfflineStopButton6;
+  TH1D *offlineth1d6;
   TGNumberEntry	*offlinechnum6;//int
   int chanNumber6;
+  TGComboBox *chooseth1dbin6;
+  TGTextEntry* printtextinfor6;
+  unsigned short *RcdTrace6;//
+  double *doublefastfilter6;//
+  double *doublecfd6;//
+  double *doubleslowfilter6;//
+  bool flagdrawstop6;
+  // 需要设置一个采样率选择器
 
-
-  // Fold7
   
+  // Fold7
+  TCanvas *canvas7;
+
+
+
   
   // function
   void Panel1Draw();
@@ -204,15 +218,16 @@ private:
   void Panel4Draw();
   void Panel5Draw();
   void Panel6Draw();
-
+  void Panel7Draw();
+  
   void Panel0ReadFile();
 
   void FFShowProjectY5();
   void CFDShowProjectY5();
   void OriginalCFDShow5();
   void CalculateCFDShow5();
+  void Panel6StopDraw();
   
-  // Name->ToggleEventStatus();//底端信息栏
 };
 
 #endif /* _OFFLINE_HH_ */

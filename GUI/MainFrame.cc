@@ -101,8 +101,9 @@ void MainFrame::CreateMenuBar()
   // MenuScope->Associate(this);
   // MenuBar->AddPopup("&Scope", MenuScope, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
-  TGPopupMenu *MenuOffline = new TGPopupMenu(fClient->GetRoot ());
+  TGPopupMenu *MenuOffline = new TGPopupMenu(fClient->GetRoot());
   MenuOffline->AddEntry("Adjust Par", OFFLINEADJUSTPAR);
+  MenuOffline->AddEntry("Simulation", SIMULATION);
   MenuOffline->Associate(this);
   MenuBar->AddPopup("&Offline", MenuOffline, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
       
@@ -209,6 +210,10 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    case OFFLINEADJUSTPAR:
 	      popupoffline = new Offline(fClient->GetRoot(), this, detector,filepathtext,filenametext);
 	      break;
+	    case SIMULATION:
+	      simulation = new Simulation(fClient->GetRoot(), this/*, detector,filepathtext,filenametext*/); //TODO
+	      break;
+	      
 	    case FILE_SAVE:
 	      {
 	    	static TString dir2(".");

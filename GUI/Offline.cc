@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 四 8月 24 19:16:17 2017 (+0800)
+// Last-Updated: 四 8月 24 22:42:27 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 262
+//     Update #: 283
 // URL: http://wuhongyi.cn 
 
 #include "Offline.hh"
@@ -15,6 +15,7 @@
 
 #include "pixie16app_export.h"
 #include "pixie16sys_export.h"
+#include "xia_common.h"
 
 #include "TGTab.h"
 #include "TString.h"
@@ -23,7 +24,7 @@
 using namespace std;
 
 
-#define EventHeaderLength 13
+#define EventHeaderLength 13  //可根据需要扩展
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextEntry *filepath, TGTextEntry *filename)
@@ -91,8 +92,11 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   RcdTrace5 = NULL;
   doublefastfilter5 = NULL;
   doublecfd5 = NULL;
-  offlineth2d6 = NULL;
-
+  offlineth1d6 = NULL;
+  RcdTrace6 = NULL;
+  doublefastfilter6 = NULL;
+  doublecfd6 = NULL;
+  doubleslowfilter6 = NULL;
   
   TGTab *TabPanel = new TGTab(this);
   this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
@@ -108,16 +112,21 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   TGCompositeFrame *Tab3 = TabPanel->AddTab("Energy-16");
   MakeFold3Panel(Tab3);
 
-  TGCompositeFrame *Tab4 = TabPanel->AddTab("Energy");
+  TGCompositeFrame *Tab4 = TabPanel->AddTab("Orig Energy");
   MakeFold4Panel(Tab4);
 
+  TGCompositeFrame *Tab6 = TabPanel->AddTab("Calc Energy");
+  MakeFold6Panel(Tab6);
+  
   TGCompositeFrame *Tab5 = TabPanel->AddTab("FF/CFD Thre");
   MakeFold5Panel(Tab5);
   
-  TGCompositeFrame *Tab6 = TabPanel->AddTab("test");
-  MakeFold6Panel(Tab6);
+  TGCompositeFrame *Tab7 = TabPanel->AddTab("QCD");
+  MakeFold7Panel(Tab7);
+
   
-  SetWindowName("Adjust Par");
+  
+  SetWindowName("Review & Adjust Par");
   MapSubwindows();
   MapWindow();
   Resize();
@@ -162,6 +171,15 @@ Offline::~Offline()
     delete []doublefastfilter5;
   if(doublecfd5 != NULL)
     delete []doublecfd5;
+
+  if(RcdTrace6 != NULL)
+    delete []RcdTrace6;
+    if(doublefastfilter6 != NULL)
+    delete []doublefastfilter6;
+  if(doublecfd6 != NULL)
+    delete []doublecfd6;
+  if(doubleslowfilter6 != NULL)
+    delete []doubleslowfilter6;
   
   for (int i = 0; i < 16; ++i)
     {
@@ -221,8 +239,8 @@ Offline::~Offline()
   if(calculatecfdth1d5 != NULL)
     delete calculatecfdth1d5;
   
-  if(offlineth2d6 != NULL)
-    delete offlineth2d6;
+  if(offlineth1d6 != NULL)
+    delete offlineth1d6;
 }
 
 void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
@@ -393,8 +411,9 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   OfflineCurrentCountText-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
   fClient->GetColorByName("blue", color);
   OfflineCurrentCountText->SetTextColor(color, false);
+  OfflineCurrentCountText->SetAlignment(kTextCenterX);
   OfflineCurrentCountText->SetText("-1");
-  OfflineCurrentCountText->Resize(100, 12);
+  OfflineCurrentCountText->Resize(200, 12);
   OfflineCurrentCountText->SetEnabled(kFALSE);
   OfflineCurrentCountText->SetFrameDrawn(kFALSE);
   parFrame->AddFrame(OfflineCurrentCountText, new TGLayoutHints(kLHintsRight | kLHintsTop, 10, 0, 6, 0));
@@ -518,9 +537,7 @@ void Offline::MakeFold4Panel(TGCompositeFrame *TabPanel)
   offlinechnum4->Associate(this);
   TGLabel *ch = new TGLabel( parFrame, "Ch:"); 
   parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-  
-
-  
+   
   // bin
   chooseth1dbin4 = new TGComboBox(parFrame);
   parFrame->AddFrame(chooseth1dbin4, new TGLayoutHints(kLHintsRight, 5, 25, 2, 2));
@@ -643,6 +660,24 @@ void Offline::MakeFold6Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 
+  // text
+  printtextinfor6 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  printtextinfor6-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
+  fClient->GetColorByName("blue", color);
+  printtextinfor6->SetTextColor(color, false);
+  printtextinfor6->SetText("Choose 'Bin' and 'Ch' then enter button 'Draw'.");
+  printtextinfor6->Resize(500, 12);
+  printtextinfor6->SetEnabled(kFALSE);
+  printtextinfor6->SetFrameDrawn(kFALSE);
+  parFrame->AddFrame(printtextinfor6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+
+    // stop
+  OfflineStopButton6 = new TGTextButton( parFrame, "&Stop", OFFLINESTOPDRAW6);
+  OfflineStopButton6->SetEnabled(0);
+  OfflineStopButton6->Associate(this);
+  parFrame->AddFrame(OfflineStopButton6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
+  
+  
   // draw
   OfflineDrawButton6 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW6);
   OfflineDrawButton6->SetEnabled(0);
@@ -656,6 +691,26 @@ void Offline::MakeFold6Panel(TGCompositeFrame *TabPanel)
   offlinechnum6->Associate(this);
   TGLabel *ch = new TGLabel( parFrame, "Ch:"); 
   parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+
+  // bin
+  chooseth1dbin6 = new TGComboBox(parFrame);
+  parFrame->AddFrame(chooseth1dbin6, new TGLayoutHints(kLHintsRight, 5, 25, 2, 2));
+  chooseth1dbin6->Resize(80, 20);
+  chooseth1dbin6->AddEntry("65536", 1);
+  chooseth1dbin6->AddEntry("32768", 2);
+  chooseth1dbin6->AddEntry("16384", 3);
+  chooseth1dbin6->AddEntry("8192", 4);
+  chooseth1dbin6->AddEntry("4096", 5);
+  chooseth1dbin6->AddEntry("2048", 6);
+  chooseth1dbin6->AddEntry("1024", 7);
+  chooseth1dbin6->Select(1);
+  TGTextEntry *LabelBinNumber = new TGTextEntry(parFrame,new TGTextBuffer(30));
+  LabelBinNumber->SetText("Bin:");
+  LabelBinNumber->Resize(30,15);
+  LabelBinNumber->SetEnabled(kFALSE);
+  LabelBinNumber->SetToolTipText("Choose TH1D bin number.");
+  parFrame->AddFrame(LabelBinNumber, new TGLayoutHints(kLHintsRight | kLHintsExpandY, 0, 0, 3, 0));
+
   
 
   TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
@@ -668,6 +723,40 @@ void Offline::MakeFold6Panel(TGCompositeFrame *TabPanel)
   TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas6", adCanvasFrame, 100, 100);
 
   canvas6 = adjCanvas->GetCanvas();
+  adCanvasFrame->AddFrame(adjCanvas, Hint);
+  TabPanel->AddFrame(adCanvasFrame, Hint);
+}
+
+
+void Offline::MakeFold7Panel(TGCompositeFrame *TabPanel)
+{
+  TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+
+  // // draw
+  // OfflineDrawButton6 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW6);
+  // OfflineDrawButton6->SetEnabled(0);
+  // OfflineDrawButton6->Associate(this);
+  // parFrame->AddFrame(OfflineDrawButton6, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
+
+  //   // ch
+  // offlinechnum6 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM6, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  // parFrame->AddFrame(offlinechnum6, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
+  // offlinechnum6->SetButtonToNum(0);
+  // offlinechnum6->Associate(this);
+  // TGLabel *ch = new TGLabel( parFrame, "Ch:"); 
+  // parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+  
+
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
+  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
+
+  TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas7", adCanvasFrame, 100, 100);
+
+  canvas7 = adjCanvas->GetCanvas();
   adCanvasFrame->AddFrame(adjCanvas, Hint);
   TabPanel->AddFrame(adCanvasFrame, Hint);
 }
@@ -749,7 +838,12 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    case OFFLINEDRAW6:
 	      Panel6Draw();
 	      break;
-
+	    case OFFLINEDRAW7:
+	      Panel7Draw();
+	      break;
+	    case OFFLINESTOPDRAW6:
+	      Panel6StopDraw();
+	      break;	      
 	      
 	    case OFFLINEPROJECTYFF5:
 	      FFShowProjectY5();
@@ -1732,7 +1826,7 @@ void Offline::Panel5Draw()
   calculatecfd5->SetEnabled(0);
   if(RcdTrace5 != NULL)
     {
-      delete [] RcdTrace5;
+      delete []RcdTrace5;
       RcdTrace5 = NULL;
     }
   if(doublefastfilter5 != NULL)
@@ -1750,7 +1844,9 @@ void Offline::Panel5Draw()
   canvas5->Clear();
   canvas5->Modified();
   canvas5->Update();
-
+  gSystem->ProcessEvents();
+  canvas5->Divide(2,1);
+  
   if(OriginalCFDcanvas5 != NULL)
     {
       TCanvas *c = ((TCanvas *)(gROOT->GetListOfCanvases()->FindObject("OriginalCFDcanvas5")));
@@ -1763,10 +1859,6 @@ void Offline::Panel5Draw()
       if(c) delete CalculateCFDcanvas5;
       CalculateCFDcanvas5 = NULL;
     }
-
-  gSystem->ProcessEvents();
-  canvas5->Divide(2,1);
-    
   if(offlineth2d5_0 != NULL)
     {
       delete offlineth2d5_0;
@@ -1844,7 +1936,7 @@ void Offline::Panel5Draw()
 	      originalcfdth1d5->Fill(OfflineEventInformation[EventHeaderLength*i+12]);
 	    }
 
-	  if(i%1000 == 0)
+	  if(i%500 == 0)
 	    {
 	      printtextinfor5->SetText(TString::Format("Drawing...please wait a moment. ==> %d/%d",i,OfflineModuleEventsCount).Data());
 	      gSystem->ProcessEvents();
@@ -1875,7 +1967,188 @@ void Offline::Panel5Draw()
   OfflineDrawButton5->SetEnabled(1);
 }
 
+void Offline::Panel6StopDraw()
+{
+  flagdrawstop6 = true;
+}
+
 void Offline::Panel6Draw()
+{
+  OfflineDrawButton6->SetEnabled(0);
+  OfflineStopButton6->SetEnabled(1);
+  flagdrawstop6 = false;
+  canvas6->cd();
+  canvas6->Clear();
+  canvas6->Modified();
+  canvas6->Update();
+  gSystem->ProcessEvents();
+  
+  if(RcdTrace6 != NULL)
+    {
+      delete []RcdTrace6;
+      RcdTrace6 = NULL;
+    }
+  if(doublefastfilter6 != NULL)
+    {
+      delete []doublefastfilter6;
+      doublefastfilter6 = NULL;
+    }
+  if(doublecfd6 != NULL)
+    {
+      delete []doublecfd6;
+      doublecfd6 = NULL;
+    }
+  if(doubleslowfilter6 != NULL)
+    {
+      delete []doubleslowfilter6;
+      doubleslowfilter6 = NULL;
+    }
+  if(offlineth1d6 != NULL)
+    {
+      delete offlineth1d6;
+      offlineth1d6 = NULL;
+    }
+
+  int intth1dbin6;
+  switch(chooseth1dbin6->GetSelected())
+    {
+    case 1 :
+      intth1dbin6 = 65536;
+      break;
+    case 2 :
+      intth1dbin6 = 32768;
+      break;
+    case 3 :
+      intth1dbin6 = 16384;
+      break;
+    case 4 :
+      intth1dbin6 = 8192;
+      break;
+    case 5 :
+      intth1dbin6 = 4096;
+      break;
+    case 6 :
+      intth1dbin6 = 2048;
+      break;
+    case 7 :
+      intth1dbin6 = 1024;
+      break;
+    default:
+      intth1dbin6 = 65536;
+      break;
+    }
+
+  int inttracelength = -1;
+  for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
+    {
+      if(offlinechnum6->GetIntNumber() == OfflineEventInformation[EventHeaderLength*i+1])
+	{
+	  inttracelength = OfflineEventInformation[EventHeaderLength*i+10];
+	  break;
+	}
+    }
+
+  if(inttracelength > -1)
+    {
+      offlineth1d6 = new TH1D("offlineth1d6","",intth1dbin6,0,65536);
+      RcdTrace6 = new unsigned short[inttracelength];
+      doublefastfilter6 = new double[inttracelength];
+      doublecfd6 = new double[inttracelength];
+      doubleslowfilter6 = new double[inttracelength];
+      
+      int retval;
+      double ChanParTrig;
+      unsigned int SlowLen, SlowGap, SlowFilterRange;
+      double ChanParData;
+      retval = Pixie16ReadSglChanPar((char*)"TRIGGER_THRESHOLD", &ChanParTrig, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)offlinechnum6->GetIntNumber());
+      if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ReadSglChanPar/TRIGGER_THRESHOLD", retval);
+
+      retval = Pixie16ReadSglModPar((char*)"SLOW_FILTER_RANGE", &SlowFilterRange, (unsigned short)offlinemodnum->GetIntNumber());
+      if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ReadSglModPar/SLOW_FILTER_RANGE", retval);
+      
+      retval = Pixie16ReadSglChanPar((char*)"ENERGY_RISETIME", &ChanParData, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)offlinechnum6->GetIntNumber());
+      if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ReadSglChanPar/ENERGY_RISETIME", retval);
+      SlowLen = ROUND(ChanParData*100 /std::pow(2.0, (double)SlowFilterRange))*std::pow(2.0, (double)SlowFilterRange);// TODO  100/250/500=>100/125/100
+      
+      retval = Pixie16ReadSglChanPar((char*)"ENERGY_FLATTOP", &ChanParData, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)offlinechnum6->GetIntNumber());
+      if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ReadSglChanPar/ENERGY_FLATTOP", retval);  
+      SlowGap = ROUND(ChanParData*100 /std::pow(2.0, (double)SlowFilterRange))*std::pow(2.0, (double)SlowFilterRange);// TODO  100/250/500=>100/125/100
+
+      int intflagenergy;
+      switch(SlowFilterRange)
+	{
+	case 1:
+	  intflagenergy = SlowLen+SlowGap-3;
+	  break;
+	case 2:
+	  intflagenergy = SlowLen+SlowGap-2;
+	  break;
+	case 3:
+	  intflagenergy = SlowLen+SlowGap-2;
+	  break;
+	case 4:
+	  intflagenergy = SlowLen+SlowGap-1;
+	  break;
+	case 5:
+	  intflagenergy = SlowLen+SlowGap;
+	  break;
+	case 6:
+	  intflagenergy = SlowLen+SlowGap+1;
+	  break;
+	default:
+	  intflagenergy = SlowLen+SlowGap-2;
+	  break;
+	}
+  
+      for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
+	{
+	  if(offlinechnum6->GetIntNumber() == OfflineEventInformation[EventHeaderLength*i+1])
+	    {
+	      retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum6->GetIntNumber(), OfflineEventInformation[EventHeaderLength*i+11], OfflineEventInformation[EventHeaderLength*i+10], RcdTrace6, doublefastfilter6, doublecfd6);
+	      if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ComputeFastFiltersOffline", retval);
+	      retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum6->GetIntNumber(), OfflineEventInformation[EventHeaderLength*i+11], OfflineEventInformation[EventHeaderLength*i+10], RcdTrace6,doubleslowfilter6);
+	      if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
+
+	      
+	      int intflagtrigger = -1;
+	      for (int j = 0; j < inttracelength; ++j)
+		{
+		  if(doublefastfilter6[j] >= ChanParTrig)
+		    {
+		      intflagtrigger = j;
+		      break;
+		    }
+		  if(j == inttracelength-1) intflagtrigger = -1;
+		}
+	      if(intflagtrigger == -1) continue;
+	      
+	      intflagtrigger += intflagenergy;
+	      offlineth1d6->Fill(doubleslowfilter6[intflagtrigger]);
+	    }
+
+	  if(i%500 == 0)
+	    {
+	      if(flagdrawstop6) break;
+	      printtextinfor6->SetText(TString::Format("Drawing...please wait a moment. ==> %d/%d",i,OfflineModuleEventsCount).Data());
+	      gSystem->ProcessEvents();
+	    }
+	}
+
+      
+      offlineth1d6->Draw();
+      offlineth1d6->SetTitle(TString::Format("Ch: %d",int(offlinechnum6->GetIntNumber())).Data());
+      offlineth1d6->GetXaxis()->SetTitle("ch");
+    }
+
+  printtextinfor6->SetText("Draw Done!");
+  canvas6->Modified();
+  canvas6->Update();
+  gSystem->ProcessEvents();
+  OfflineDrawButton6->SetEnabled(1);
+  OfflineStopButton6->SetEnabled(0);
+}
+
+void Offline::Panel7Draw()
 {
 
 

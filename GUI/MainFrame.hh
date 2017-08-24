@@ -34,6 +34,7 @@ Hui Tan(XIA LLC)\n\
 #include "Offline.hh"
 #include "Qdc.hh"
 #include "ScopedT.hh"
+#include "Simulation.hh"
 #include "TriggerFilter.hh"
 
 #include "../software/app/pixie16app_export.h"
@@ -101,7 +102,8 @@ enum Commands //commands for the menu bar popups
     MAXMIN,
     FIND_WF,
     SCOPEDT,
-    OFFLINEADJUSTPAR
+    OFFLINEADJUSTPAR,
+    SIMULATION
   };
 
 class Detector;
@@ -136,6 +138,7 @@ private:
   FPOutputs *fpoutputs;
   MultiplicityMask *multiplicitymask;
   Offline *popupoffline;
+  Simulation *simulation;
   Pixel_t color;
   ScopedT *scopedt;
   Histogram* histogram;

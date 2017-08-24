@@ -9,11 +9,11 @@ LIBS:=../software/libPixie16App.a  ../software/libPixie16Sys.a  $(PLX_SDK_DIR)/P
 
 
 
-INCLUDES:=Global.hh Detector.hh ExpertMod.hh Table.hh Histogram.hh Csra.hh MainFrame.hh ScopedT.hh TriggerFilter.hh Cfd.hh Qdc.hh LogicTrigger.hh FPOutputs.hh Offline.hh MultiplicityMask.hh Base.hh Energy.hh
+INCLUDES:=Global.hh Detector.hh ExpertMod.hh Table.hh Histogram.hh Csra.hh MainFrame.hh ScopedT.hh TriggerFilter.hh Cfd.hh Qdc.hh LogicTrigger.hh FPOutputs.hh Offline.hh MultiplicityMask.hh Base.hh Energy.hh Simulation.hh
 
-OBJECTS:=Global.o ExpertMod.o Histogram.o Csra.o Detector.o MainFrame.o main.o ScopedT.o Table.o TriggerFilter.o MainDict.o Cfd.o Qdc.o LogicTrigger.o FPOutputs.o Offline.o MultiplicityMask.o Base.o Energy.o
+OBJECTS:=Global.o ExpertMod.o Histogram.o Csra.o Detector.o MainFrame.o main.o ScopedT.o Table.o TriggerFilter.o MainDict.o Cfd.o Qdc.o LogicTrigger.o FPOutputs.o Offline.o MultiplicityMask.o Base.o Energy.o Simulation.o
 
-SRCS:=Global.cc ExpertMod.cc Histogram.cc Csra.cc Detector.cc MainFrame.cc main.cc ScopedT.cc Table.cc TriggerFilter.cc  MainDict.cc Cfd.cc Qdc.cc LogicTrigger.cc FPOutputs.cc Offline.cc MultiplicityMask.cc Base.cc Energy.cc
+SRCS:=Global.cc ExpertMod.cc Histogram.cc Csra.cc Detector.cc MainFrame.cc main.cc ScopedT.cc Table.cc TriggerFilter.cc  MainDict.cc Cfd.cc Qdc.cc LogicTrigger.cc FPOutputs.cc Offline.cc MultiplicityMask.cc Base.cc Energy.cc Simulation.cc
 
 all: $(OBJ)
 
