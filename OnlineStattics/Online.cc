@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 二 3月 14 12:25:02 2017 (+0800)
+// Last-Updated: 四 8月 24 10:16:56 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 138
+//     Update #: 141
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -561,7 +561,6 @@ void Online::LoopRun()
 		      ChanEvents[j] = (double)Statistics[223+j] * pow(2.0, 32.0);
 		      ChanEvents[j] += (double)Statistics[239+j];
 
-
 		      LiveTime_new[j] = (double)Statistics_new[63+j] * pow(2.0, 32.0);
 		      LiveTime_new[j] += (double)Statistics_new[79+j];
 		      LiveTime_new[j] *= 1.0e-6 / (double)SYSTEM_CLOCK_MHZ;
@@ -571,8 +570,8 @@ void Online::LoopRun()
 		      ChanEvents_new[j] += (double)Statistics_new[239+j];
 
 		      // std::cout<<j<<"  "<<LiveTime_new[j] <<"  "<<(FastPeaks_new[j]-FastPeaks[j])/(LiveTime_new[j]-LiveTime[j])<<"  "<<(ChanEvents_new[j]-ChanEvents[j])/(RealTime_new-RealTime)<<std::endl;
-		      tempinputcountrate = (FastPeaks_new[j]-FastPeaks[j])/(LiveTime_new[j]-LiveTime[j]);
-		      tempoutputcountrate = (ChanEvents_new[j]-ChanEvents[j])/(RealTime_new-RealTime);
+		      tempinputcountrate = int((FastPeaks_new[j]-FastPeaks[j])/(LiveTime_new[j]-LiveTime[j]) + 0.5);
+		      tempoutputcountrate = int((ChanEvents_new[j]-ChanEvents[j])/(RealTime_new-RealTime) +0.5);
 
 		      ss.clear();//重复使用前一定要清空
 		      ss<<tempinputcountrate;
@@ -583,8 +582,6 @@ void Online::LoopRun()
 		      ss>>tempstring;
 		      OCR[16*i+j]->SetText(tempstring.c_str());
 		    }
-
-
 		}
 
 	      memcpy(buf,buf_new,(PRESET_MAX_MODULES*448*4)+10);
@@ -603,9 +600,7 @@ void Online::LoopRun()
 		  StateMsg->SetTextColor(color, false);
 		  flagrunnumber = true;
 		}
-	      
 	    }
-
 	}
       else
 	{

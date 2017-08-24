@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:41 2016 (+0800)
-// Last-Updated: 日 11月  6 10:34:52 2016 (+0800)
+// Last-Updated: 四 8月 24 10:16:57 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 40
+//     Update #: 41
 // URL: http://wuhongyi.cn 
 
 #ifndef _ONLINE_H_
@@ -136,7 +136,6 @@ private:
   int RunNumber;
   unsigned int tempN;
 
-  
   ClassDef(Online,1)
 };
 

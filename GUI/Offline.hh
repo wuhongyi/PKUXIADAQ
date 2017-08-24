@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 三 8月 23 21:22:25 2017 (+0800)
+// Last-Updated: 四 8月 24 15:54:04 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 52
+//     Update #: 60
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -126,7 +126,11 @@ private:
       OFFLINECFDSCALE,
       OFFLINECFDTHRESH,
       OFFLINETHRESH,
-      OFFLINEFILTERRANGE
+      OFFLINEFILTERRANGE,
+      OFFLINEPROJECTYFF5,
+      OFFLINEPROJECTYCFD5,
+      OFFLINEORIGINALCFD5,
+      OFFLINECALCULATECFD5
     };
 
   // Fold0
@@ -163,6 +167,8 @@ private:
 
   // Fold5
   TCanvas *canvas5;
+  TCanvas * OriginalCFDcanvas5;
+  TCanvas * CalculateCFDcanvas5;
   TGTextButton* OfflineDrawButton5;  
   TH2D *offlineth2d5_0;
   TH2D *offlineth2d5_1;
@@ -171,7 +177,13 @@ private:
   unsigned short *RcdTrace5;//
   double *doublefastfilter5;//
   double *doublecfd5;//
-
+  TGTextEntry* printtextinfor5;
+  TGTextButton* showprojectyFF5; 
+  TGTextButton* showprojectyCFD5; 
+  TGTextButton* originalcfd5;
+  TGTextButton* calculatecfd5;
+  TH1D* originalcfdth1d5;
+  TH1D* calculatecfdth1d5;
   
   // Fold6
   TCanvas *canvas6;
@@ -194,6 +206,12 @@ private:
 
   void Panel0ReadFile();
 
+  void FFShowProjectY5();
+  void CFDShowProjectY5();
+  void OriginalCFDShow5();
+  void CalculateCFDShow5();
+  
+  // Name->ToggleEventStatus();//底端信息栏
 };
 
 #endif /* _OFFLINE_HH_ */

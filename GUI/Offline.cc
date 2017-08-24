@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 三 8月 23 21:46:58 2017 (+0800)
+// Last-Updated: 四 8月 24 15:54:29 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 212
+//     Update #: 234
 // URL: http://wuhongyi.cn 
 
 #include "Offline.hh"
@@ -83,6 +83,8 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   offlineth1d4 = NULL;
   offlineth2d5_0 = NULL;
   offlineth2d5_1 = NULL;
+  originalcfdth1d5 = NULL;
+  calculatecfdth1d5 = NULL;
   RcdTrace5 = NULL;
   doublefastfilter5 = NULL;
   doublecfd5 = NULL;
@@ -97,10 +99,6 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   TGCompositeFrame *Tab1 = TabPanel->AddTab("Adjust Par");
   MakeFold1Panel(Tab1);
 
-  TGCompositeFrame *Tab5 = TabPanel->AddTab("FF/CFD Thre");
-  MakeFold5Panel(Tab5);
-
-  
   TGCompositeFrame *Tab2 = TabPanel->AddTab("Wave-16");
   MakeFold2Panel(Tab2);
 
@@ -110,6 +108,9 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   TGCompositeFrame *Tab4 = TabPanel->AddTab("Energy");
   MakeFold4Panel(Tab4);
 
+  TGCompositeFrame *Tab5 = TabPanel->AddTab("FF/CFD Thre");
+  MakeFold5Panel(Tab5);
+  
   TGCompositeFrame *Tab6 = TabPanel->AddTab("test");
   MakeFold6Panel(Tab6);
   
@@ -117,6 +118,8 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   MapSubwindows();
   MapWindow();
   Resize();
+
+  gStyle->SetOptStat(0);//不显示统计框
 }
 
 Offline::~Offline()
@@ -210,8 +213,12 @@ Offline::~Offline()
     delete offlineth2d5_0;
   if(offlineth2d5_1 != NULL)
     delete offlineth2d5_1;
+  if(originalcfdth1d5 != NULL)
+    delete originalcfdth1d5;
+  if(calculatecfdth1d5 != NULL)
+    delete calculatecfdth1d5;
   
-    if(offlineth2d6 != NULL)
+  if(offlineth2d6 != NULL)
     delete offlineth2d6;
 }
 
@@ -414,13 +421,6 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
 
 
-
-
-
-
-
-
-
   
   TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
 
@@ -560,6 +560,47 @@ void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 
+  // text
+  printtextinfor5 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  printtextinfor5-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
+  fClient->GetColorByName("blue", color);
+  printtextinfor5->SetTextColor(color, false);
+  printtextinfor5->SetText("Choose 'Ch' then enter button 'Draw'.");
+  printtextinfor5->Resize(400, 12);
+  printtextinfor5->SetEnabled(kFALSE);
+  printtextinfor5->SetFrameDrawn(kFALSE);
+  parFrame->AddFrame(printtextinfor5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+
+
+  // FFProjectY
+  showprojectyFF5 = new TGTextButton(parFrame, "&FFProjectY", OFFLINEPROJECTYFF5);
+  showprojectyFF5->SetEnabled(0);
+  showprojectyFF5->Associate(this);
+  parFrame->AddFrame(showprojectyFF5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 0, 0));
+
+  // CFDProjectY
+  showprojectyCFD5 = new TGTextButton(parFrame, "&CFDProjectY", OFFLINEPROJECTYCFD5);
+  showprojectyCFD5->SetEnabled(0);
+  showprojectyCFD5->Associate(this);
+  parFrame->AddFrame(showprojectyCFD5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 0, 0));
+
+
+  // OriginalCFD
+  originalcfd5 = new TGTextButton(parFrame, "&OriginalCFD", OFFLINEORIGINALCFD5);
+  originalcfd5->SetEnabled(0);
+  originalcfd5->Associate(this);
+  parFrame->AddFrame(originalcfd5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 0, 0));
+
+  // CalculateCFD
+  calculatecfd5 = new TGTextButton(parFrame, "&CalculateCFD", OFFLINECALCULATECFD5);
+  calculatecfd5->SetEnabled(0);
+  calculatecfd5->Associate(this);
+  parFrame->AddFrame(calculatecfd5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 0, 0));
+
+
+
+  
+  
   // draw
   OfflineDrawButton5 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW5);
   OfflineDrawButton5->SetEnabled(0);
@@ -588,6 +629,12 @@ void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
   canvas5 = adjCanvas->GetCanvas();
   adCanvasFrame->AddFrame(adjCanvas, Hint);
   TabPanel->AddFrame(adCanvasFrame, Hint);
+
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+  OriginalCFDcanvas5 = new TCanvas("","",600,400);
+  CalculateCFDcanvas5 = new TCanvas("","",600,400);
 }
 
 void Offline::MakeFold6Panel(TGCompositeFrame *TabPanel)
@@ -698,8 +745,22 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      Panel5Draw();
 	      break;
 	    case OFFLINEDRAW6:
-	      Panel5Draw();
+	      Panel6Draw();
 	      break;
+
+	      
+	    case OFFLINEPROJECTYFF5:
+	      FFShowProjectY5();
+	      break;	      
+	    case OFFLINEPROJECTYCFD5:
+	      CFDShowProjectY5();
+	      break;	  
+	    case OFFLINEORIGINALCFD5:
+	      OriginalCFDShow5();
+	      break;	  
+	    case OFFLINECALCULATECFD5:
+	      CalculateCFDShow5();
+	      break;	
 	      
 	    case OFFLINEFILTERRANGE:
 	      if (parm2 == 0)
@@ -1657,6 +1718,11 @@ void Offline::Panel4Draw()
 
 void Offline::Panel5Draw()
 {
+  OfflineDrawButton5->SetEnabled(0);
+  showprojectyFF5->SetEnabled(0);
+  showprojectyCFD5->SetEnabled(0);
+  originalcfd5->SetEnabled(0);
+  calculatecfd5->SetEnabled(0);
   if(RcdTrace5 != NULL)
     {
       delete [] RcdTrace5;
@@ -1675,9 +1741,13 @@ void Offline::Panel5Draw()
   
   canvas5->cd();
   canvas5->Clear();
-
   canvas5->Modified();
   canvas5->Update();
+  
+  OriginalCFDcanvas5->cd();
+  OriginalCFDcanvas5->Clear();
+  CalculateCFDcanvas5->cd();
+  CalculateCFDcanvas5->Clear();
   gSystem->ProcessEvents();
   canvas5->Divide(2,1);
     
@@ -1690,6 +1760,16 @@ void Offline::Panel5Draw()
     {
       delete offlineth2d5_1;
       offlineth2d5_1 = NULL;
+    }
+  if(originalcfdth1d5 != NULL)
+    {
+      delete originalcfdth1d5;
+      originalcfdth1d5 = NULL;
+    }
+  if(calculatecfdth1d5 != NULL)
+    {
+      delete calculatecfdth1d5;
+      calculatecfdth1d5 = NULL;
     }
 
   
@@ -1711,6 +1791,9 @@ void Offline::Panel5Draw()
 
       offlineth2d5_0 = new TH2D("offlineth2d5_0","",inttracelength,0,inttracelength,1000,-100,900);
       offlineth2d5_1 = new TH2D("offlineth2d5_1","",inttracelength,0,inttracelength,1000,-100,900);
+
+      originalcfdth1d5 = new TH1D("originalcfdth1d5","",65536,0,65536);
+      calculatecfdth1d5 = new TH1D("calculatecfdth1d5","",65536,0,65536);
       
       int retval;
       for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
@@ -1725,6 +1808,17 @@ void Offline::Panel5Draw()
 		  offlineth2d5_0->Fill(j,doublefastfilter5[j]);
 		  offlineth2d5_1->Fill(j,doublecfd5[j]);
 		}
+
+	      // originalcfdth1d5->Dill(OfflineEventInformation[12*i+10]);
+
+	      
+	      // calculatecfdth1d5->Fill();
+	    }
+
+	  if(i%1000 == 0)
+	    {
+	      printtextinfor5->SetText(TString::Format("Drawing...please wait a moment. ==> %d/%d",i,OfflineModuleEventsCount).Data());
+	      gSystem->ProcessEvents();
 	    }
 	}
   
@@ -1732,18 +1826,21 @@ void Offline::Panel5Draw()
       offlineth2d5_0->Draw("colz");
       offlineth2d5_0->SetTitle(TString::Format("FF  Ch: %d",int(offlinechnum5->GetIntNumber())).Data());
       offlineth2d5_0->GetXaxis()->SetTitle("sample");
-
+      
       canvas5->cd(2);
       offlineth2d5_1->Draw("colz");
       offlineth2d5_1->SetTitle(TString::Format("CFD  Ch: %d",int(offlinechnum5->GetIntNumber())).Data());
       offlineth2d5_1->GetXaxis()->SetTitle("sample");
-      
+
+      showprojectyFF5->SetEnabled(1);
+      showprojectyCFD5->SetEnabled(1);
     }
-  
+
+  printtextinfor5->SetText("Draw Done!");
   canvas5->Modified();
   canvas5->Update();
   gSystem->ProcessEvents();
-  
+  OfflineDrawButton5->SetEnabled(1);
 }
 
 void Offline::Panel6Draw()
@@ -1799,6 +1896,30 @@ void Offline::Panel0ReadFile()
     }
 }
 
+void Offline::FFShowProjectY5()
+{
+  offlineth2d5_0->SetShowProjectionY(1);
+}
+
+void Offline::CFDShowProjectY5()
+{
+  offlineth2d5_1->SetShowProjectionY(1);
+}
+
+void Offline::OriginalCFDShow5()
+{
+  OriginalCFDcanvas5->cd();
+  originalcfdth1d5->Draw();
+  OriginalCFDcanvas5->Update();
+
+}
+
+void Offline::CalculateCFDShow5()
+{
+  CalculateCFDcanvas5->cd();
+  calculatecfdth1d5->Draw();
+  CalculateCFDcanvas5->Update();
+}
 
 
 
