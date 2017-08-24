@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:18 2016 (+0800)
-// Last-Updated: 一 5月 22 14:07:13 2017 (+0800)
+// Last-Updated: 四 8月 24 16:34:35 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 10
+//     Update #: 11
 // URL: http://wuhongyi.cn 
 
 #include "decoder.hh"
@@ -116,7 +116,7 @@ bool decoder::decode()
       printf("error! 3rd word in header is missing!");
       return false;
     }
-  ts = ts+((( buff & kMasktshi ) >> kShifttshi)*0xffffffff);
+  ts = ts+(((unsigned long)( buff & kMasktshi ) >> kShifttshi)*0xffffffff);
   cfd = ( buff & kMaskcfd ) >> kShiftcfd; 
   cfdft = ( buff & kMaskcfdft ) >> kShiftcfdft; 
   

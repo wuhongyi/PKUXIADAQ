@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 四 8月 24 15:54:29 2017 (+0800)
+// Last-Updated: 四 8月 24 19:16:17 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 234
+//     Update #: 262
 // URL: http://wuhongyi.cn 
 
 #include "Offline.hh"
@@ -21,6 +21,9 @@
 
 #include <iostream>
 using namespace std;
+
+
+#define EventHeaderLength 13
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextEntry *filepath, TGTextEntry *filename)
@@ -566,7 +569,7 @@ void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
   fClient->GetColorByName("blue", color);
   printtextinfor5->SetTextColor(color, false);
   printtextinfor5->SetText("Choose 'Ch' then enter button 'Draw'.");
-  printtextinfor5->Resize(400, 12);
+  printtextinfor5->Resize(500, 12);
   printtextinfor5->SetEnabled(kFALSE);
   printtextinfor5->SetFrameDrawn(kFALSE);
   parFrame->AddFrame(printtextinfor5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
@@ -576,7 +579,7 @@ void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
   showprojectyFF5 = new TGTextButton(parFrame, "&FFProjectY", OFFLINEPROJECTYFF5);
   showprojectyFF5->SetEnabled(0);
   showprojectyFF5->Associate(this);
-  parFrame->AddFrame(showprojectyFF5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 0, 0));
+  parFrame->AddFrame(showprojectyFF5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
 
   // CFDProjectY
   showprojectyCFD5 = new TGTextButton(parFrame, "&CFDProjectY", OFFLINEPROJECTYCFD5);
@@ -589,7 +592,7 @@ void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
   originalcfd5 = new TGTextButton(parFrame, "&OriginalCFD", OFFLINEORIGINALCFD5);
   originalcfd5->SetEnabled(0);
   originalcfd5->Associate(this);
-  parFrame->AddFrame(originalcfd5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 0, 0));
+  parFrame->AddFrame(originalcfd5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
 
   // CalculateCFD
   calculatecfd5 = new TGTextButton(parFrame, "&CalculateCFD", OFFLINECALCULATECFD5);
@@ -629,12 +632,11 @@ void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
   canvas5 = adjCanvas->GetCanvas();
   adCanvasFrame->AddFrame(adjCanvas, Hint);
   TabPanel->AddFrame(adCanvasFrame, Hint);
-
-
+  
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-  OriginalCFDcanvas5 = new TCanvas("","",600,400);
-  CalculateCFDcanvas5 = new TCanvas("","",600,400);
+  
+  OriginalCFDcanvas5 = NULL;
+  CalculateCFDcanvas5 = NULL;
 }
 
 void Offline::MakeFold6Panel(TGCompositeFrame *TabPanel)
@@ -715,10 +717,10 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      Panel0ReadFile();
 	      for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)//将默认的ch横坐标范围与sample对应
 		{
-		  if(offlinechnum->GetIntNumber() == OfflineEventInformation[12*i+1])
+		  if(offlinechnum->GetIntNumber() == OfflineEventInformation[EventHeaderLength*i+1])
 		    {
-		      dslider->SetRange(0,OfflineEventInformation[12*i+10]);
-		      dslider->SetPosition(0,OfflineEventInformation[12*i+10]);
+		      dslider->SetRange(0,OfflineEventInformation[EventHeaderLength*i+10]);
+		      dslider->SetPosition(0,OfflineEventInformation[EventHeaderLength*i+10]);
 		      break;
 		    }
 		}
@@ -858,10 +860,10 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		}
 	      for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)//每次改变channel，横坐标范围都回到全部sample
 		{
-		  if(offlinechnum->GetIntNumber() == OfflineEventInformation[12*i+1])
+		  if(offlinechnum->GetIntNumber() == OfflineEventInformation[EventHeaderLength*i+1])
 		    {
-		      dslider->SetRange(0,OfflineEventInformation[12*i+10]);
-		      dslider->SetPosition(0,OfflineEventInformation[12*i+10]);
+		      dslider->SetRange(0,OfflineEventInformation[EventHeaderLength*i+10]);
+		      dslider->SetPosition(0,OfflineEventInformation[EventHeaderLength*i+10]);
 		      break;
 		    }
 		}
@@ -1226,36 +1228,41 @@ void Offline::GetEventsInfo(char *FileName, unsigned int *EventInformation)
 	{
 	  fread(&eventdata, 4, 1, ListModeFile);		
 	  // Event #
-	  EventInformation[12 * NumEvents]     = NumEvents;
+	  EventInformation[EventHeaderLength*NumEvents]     = NumEvents;
 	  // Channel #
-	  EventInformation[12 * NumEvents + 1] = (eventdata & 0xF);	
+	  EventInformation[EventHeaderLength*NumEvents + 1] = (eventdata & 0xF);
 	  // Slot #
-	  EventInformation[12 * NumEvents + 2] = (eventdata & 0xF0) >> 4;	
+	  EventInformation[EventHeaderLength*NumEvents + 2] = (eventdata & 0xF0) >> 4;
 	  // Crate #
-	  EventInformation[12 * NumEvents + 3] = (eventdata & 0xF00) >> 8;	
+	  EventInformation[EventHeaderLength*NumEvents + 3] = (eventdata & 0xF00) >> 8;
 	  // Header length
 	  headerlength = (eventdata & 0x1F000) >> 12;
-	  EventInformation[12 * NumEvents + 4] = (eventdata & 0x1F000) >> 12;	
+	  EventInformation[EventHeaderLength*NumEvents + 4] = (eventdata & 0x1F000) >> 12;	
 	  // Event length
 	  eventlength = (eventdata & 0x7FFE0000) >> 17;
-	  EventInformation[12 * NumEvents + 5] = (eventdata & 0x7FFE0000) >> 17;	
+	  EventInformation[EventHeaderLength*NumEvents + 5] = (eventdata & 0x7FFE0000) >> 17;	
 	  // Finish code
-	  EventInformation[12 * NumEvents + 6] = (eventdata & 0x80000000) >> 31;	
+	  EventInformation[EventHeaderLength*NumEvents + 6] = (eventdata & 0x80000000) >> 31;
+	  
 	  fread(&eventdata, 4, 1, ListModeFile);
 	  // EventTime_Low
-	  EventInformation[12 * NumEvents + 7] = eventdata;	
+	  EventInformation[EventHeaderLength*NumEvents + 7] = eventdata;
+	  
 	  fread(&eventdata, 4, 1, ListModeFile);
 	  // EventTime_High
-	  EventInformation[12 * NumEvents + 8] = (eventdata & 0xFFFF);
+	  EventInformation[EventHeaderLength*NumEvents + 8] = (eventdata & 0xFFFF);
+	  // CFD wuhongyi
+	  EventInformation[EventHeaderLength*NumEvents + 12] = (eventdata & 0x7FFF0000) >> 16;
+	  
 	  fread(&eventdata, 4, 1, ListModeFile);
 	  // Event Energy
-	  EventInformation[12 * NumEvents + 9] = (eventdata & 0xFFFF);
+	  EventInformation[EventHeaderLength*NumEvents + 9] = (eventdata & 0xFFFF);
 	  // Trace Length
-	  EventInformation[12 * NumEvents + 10] = (eventdata & 0x7FFF0000) >> 16;
+	  EventInformation[EventHeaderLength*NumEvents + 10] = (eventdata & 0x7FFF0000) >> 16;
 	  // Trace location
-	  EventInformation[12 * NumEvents + 11] = TotalSkippedWords + headerlength;
+	  EventInformation[EventHeaderLength*NumEvents + 11] = TotalSkippedWords + headerlength;
 
-	  // if(eventlength != headerlength + EventInformation[12 * NumEvents + 10]/2)
+	  // if(eventlength != headerlength + EventInformation[EventHeaderLength*NumEvents + 10]/2)
 	  //   std::cout<<"Data error..."<<std::endl;
 	  
 	  TotalSkippedWords += eventlength;
@@ -1355,14 +1362,14 @@ void Offline::Panel1Draw()
 	}
       if(OfflineCurrentCount == OfflineModuleEventsCount) OfflineCurrentCount = 0;
 
-      if(offlinechnum->GetIntNumber() == OfflineEventInformation[12*OfflineCurrentCount+1]) break;
+      if(offlinechnum->GetIntNumber() == OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+1]) break;
     }
   // do
   // 	{
   // 	  OfflineCurrentCount++;
   // 	  if(OfflineCurrentCount == OfflineModuleEventsCount) OfflineCurrentCount = 0;
 		  
-  // 	}while(offlinechnum->GetIntNumber() != OfflineEventInformation[12*OfflineCurrentCount+1]);
+  // 	}while(offlinechnum->GetIntNumber() != OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+1]);
   cout<<"N: "<<OfflineCurrentCount<<endl;
 	      
   if(offlinedatastatus)
@@ -1387,19 +1394,19 @@ void Offline::Panel1Draw()
   sprintf(stacurr,"%d / %d",OfflineCurrentCount+1,OfflineModuleEventsCount);
   OfflineCurrentCountText->SetText(stacurr);
 	      
-  RcdTrace = new unsigned short[OfflineEventInformation[12*OfflineCurrentCount+10]];
-  doublethresh = new double[OfflineEventInformation[12*OfflineCurrentCount+10]];
-  doublecfdthresh = new double[OfflineEventInformation[12*OfflineCurrentCount+10]];
-  doublesample = new double[OfflineEventInformation[12*OfflineCurrentCount+10]];
-  doublercdtrace = new double[OfflineEventInformation[12*OfflineCurrentCount+10]];
-  doublefastfilter = new double[OfflineEventInformation[12*OfflineCurrentCount+10]];
-  doublecfd = new double[OfflineEventInformation[12*OfflineCurrentCount+10]];
-  doubleslowfilter = new double[OfflineEventInformation[12*OfflineCurrentCount+10]];
+  RcdTrace = new unsigned short[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]];
+  doublethresh = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]];
+  doublecfdthresh = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]];
+  doublesample = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]];
+  doublercdtrace = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]];
+  doublefastfilter = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]];
+  doublecfd = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]];
+  doubleslowfilter = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]];
 
   int retval;
-  retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), OfflineEventInformation[12*OfflineCurrentCount+11], OfflineEventInformation[12*OfflineCurrentCount+10], RcdTrace, doublefastfilter, doublecfd );
+  retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+11], OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10], RcdTrace, doublefastfilter, doublecfd );
   if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "Pixie16ComputeFastFiltersOffline", retval);
-  retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), OfflineEventInformation[12*OfflineCurrentCount+11], OfflineEventInformation[12*OfflineCurrentCount+10], RcdTrace,doubleslowfilter );
+  retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+11], OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10], RcdTrace,doubleslowfilter );
   if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
   
   double ChanParData;
@@ -1410,7 +1417,7 @@ void Offline::Panel1Draw()
   if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "Pixie16ReadSglChanPar/CFDThresh", retval);
   doublecfdthresh[0] = ChanParData;
   
-  for (unsigned int i = 0; i < OfflineEventInformation[12*OfflineCurrentCount+10]; ++i)
+  for (unsigned int i = 0; i < OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]; ++i)
     {
       doublesample[i] = i;
       doublercdtrace[i] = (double)RcdTrace[i];
@@ -1418,12 +1425,12 @@ void Offline::Panel1Draw()
       doublecfdthresh[i] = doublecfdthresh[0];
     }
 
-  rawdata = new TGraph(OfflineEventInformation[12*OfflineCurrentCount+10],doublesample,doublercdtrace);
-  threshdata = new TGraph(OfflineEventInformation[12*OfflineCurrentCount+10],doublesample,doublethresh);
-  cfddata = new TGraph(OfflineEventInformation[12*OfflineCurrentCount+10],doublesample,doublecfd);
-  cfdthreshdata = new TGraph(OfflineEventInformation[12*OfflineCurrentCount+10],doublesample,doublecfdthresh);
-  sfilterdata = new TGraph(OfflineEventInformation[12*OfflineCurrentCount+10],doublesample,doubleslowfilter);
-  ffilterdata  = new TGraph(OfflineEventInformation[12*OfflineCurrentCount+10],doublesample,doublefastfilter);
+  rawdata = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10],doublesample,doublercdtrace);
+  threshdata = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10],doublesample,doublethresh);
+  cfddata = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10],doublesample,doublecfd);
+  cfdthreshdata = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10],doublesample,doublecfdthresh);
+  sfilterdata = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10],doublesample,doubleslowfilter);
+  ffilterdata  = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10],doublesample,doublefastfilter);
 
   adjustCanvas->cd();
   adjustCanvas->Clear();
@@ -1546,25 +1553,25 @@ void Offline::Panel2Draw()
 	    }
 	  if(OfflineCurrentCount2[i] >= OfflineModuleEventsCount) OfflineCurrentCount2[i] = 0;
 
-	  if(i == OfflineEventInformation[12*OfflineCurrentCount2[i]+1]) break;
+	  if(i == OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+1]) break;
 	}
 
       // cout<<"Ch: "<<i<<"  N: "<<OfflineCurrentCount2[i]<<endl;
       int retval;
       if(!offlinedatastatus2[i])
 	{
-	  RcdTrace2[i] = new unsigned short[OfflineEventInformation[12*OfflineCurrentCount2[i]+10]];
-	  doublethresh2[i] = new double[OfflineEventInformation[12*OfflineCurrentCount2[i]+10]];
-	  doublecfdthresh2[i] = new double[OfflineEventInformation[12*OfflineCurrentCount2[i]+10]];
-	  doublesample2[i] = new double[OfflineEventInformation[12*OfflineCurrentCount2[i]+10]];
-	  doublercdtrace2[i] = new double[OfflineEventInformation[12*OfflineCurrentCount2[i]+10]];
-	  doublefastfilter2[i] = new double[OfflineEventInformation[12*OfflineCurrentCount2[i]+10]];
-	  doublecfd2[i] = new double[OfflineEventInformation[12*OfflineCurrentCount2[i]+10]];
-	  doubleslowfilter2[i] = new double[OfflineEventInformation[12*OfflineCurrentCount2[i]+10]];
+	  RcdTrace2[i] = new unsigned short[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]];
+	  doublethresh2[i] = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]];
+	  doublecfdthresh2[i] = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]];
+	  doublesample2[i] = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]];
+	  doublercdtrace2[i] = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]];
+	  doublefastfilter2[i] = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]];
+	  doublecfd2[i] = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]];
+	  doubleslowfilter2[i] = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]];
 
-	  retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) i, OfflineEventInformation[12*OfflineCurrentCount2[i]+11], OfflineEventInformation[12*OfflineCurrentCount2[i]+10], RcdTrace2[i], doublefastfilter2[i], doublecfd2[i] );
+	  retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) i, OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+11], OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10], RcdTrace2[i], doublefastfilter2[i], doublecfd2[i] );
 	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "Pixie16ComputeFastFiltersOffline", retval);
-	  retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) i, OfflineEventInformation[12*OfflineCurrentCount2[i]+11], OfflineEventInformation[12*OfflineCurrentCount2[i]+10], RcdTrace2[i],doubleslowfilter2[i] );
+	  retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) i, OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+11], OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10], RcdTrace2[i],doubleslowfilter2[i] );
 	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
 	  
 	  double ChanParData;
@@ -1576,7 +1583,7 @@ void Offline::Panel2Draw()
 	  doublecfdthresh2[i][0] = ChanParData;
 
 	  
-	  for (unsigned int j = 0; j < OfflineEventInformation[12*OfflineCurrentCount2[i]+10]; ++j)
+	  for (unsigned int j = 0; j < OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]; ++j)
 	    {
 	      doublesample2[i][j] = j;
 	      doublercdtrace2[i][j] = (double)RcdTrace2[i][j];
@@ -1584,12 +1591,12 @@ void Offline::Panel2Draw()
 	      doublecfdthresh2[i][j] = doublecfdthresh2[i][0];
 	    }
 
-	  rawdata2[i] = new TGraph(OfflineEventInformation[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublercdtrace2[i]);
-	  threshdata2[i] = new TGraph(OfflineEventInformation[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublethresh2[i]);
-	  cfdthreshdata2[i] = new TGraph(OfflineEventInformation[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublecfdthresh2[i]);
-	  cfddata2[i] = new TGraph(OfflineEventInformation[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublecfd2[i]);
-	  sfilterdata2[i] = new TGraph(OfflineEventInformation[12*OfflineCurrentCount2[i]+10],doublesample2[i],doubleslowfilter2[i]);
-	  ffilterdata2[i] = new TGraph(OfflineEventInformation[12*OfflineCurrentCount2[i]+10],doublesample2[i],doublefastfilter2[i]);
+	  rawdata2[i] = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10],doublesample2[i],doublercdtrace2[i]);
+	  threshdata2[i] = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10],doublesample2[i],doublethresh2[i]);
+	  cfdthreshdata2[i] = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10],doublesample2[i],doublecfdthresh2[i]);
+	  cfddata2[i] = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10],doublesample2[i],doublecfd2[i]);
+	  sfilterdata2[i] = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10],doublesample2[i],doubleslowfilter2[i]);
+	  ffilterdata2[i] = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10],doublesample2[i],doublefastfilter2[i]);
 
 	  
 	  cfddata2[i]->SetLineColor(2);
@@ -1637,7 +1644,7 @@ void Offline::Panel3Draw()
   
   for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
     {
-      offlineth1d3[OfflineEventInformation[12*i+1]]->Fill(OfflineEventInformation[12*i+9]);
+      offlineth1d3[OfflineEventInformation[EventHeaderLength*i+1]]->Fill(OfflineEventInformation[EventHeaderLength*i+9]);
     }
 
   for (int i = 0; i < 16; ++i)
@@ -1701,9 +1708,9 @@ void Offline::Panel4Draw()
   
   for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
     {
-      if(offlinechnum4->GetIntNumber() == OfflineEventInformation[12*i+1])
+      if(offlinechnum4->GetIntNumber() == OfflineEventInformation[EventHeaderLength*i+1])
 	{
-	  offlineth1d4->Fill(OfflineEventInformation[12*i+9]);
+	  offlineth1d4->Fill(OfflineEventInformation[EventHeaderLength*i+9]);
 	}
     }
   
@@ -1743,11 +1750,20 @@ void Offline::Panel5Draw()
   canvas5->Clear();
   canvas5->Modified();
   canvas5->Update();
-  
-  OriginalCFDcanvas5->cd();
-  OriginalCFDcanvas5->Clear();
-  CalculateCFDcanvas5->cd();
-  CalculateCFDcanvas5->Clear();
+
+  if(OriginalCFDcanvas5 != NULL)
+    {
+      TCanvas *c = ((TCanvas *)(gROOT->GetListOfCanvases()->FindObject("OriginalCFDcanvas5")));
+      if(c) delete OriginalCFDcanvas5;
+      OriginalCFDcanvas5 = NULL;
+    }
+  if(CalculateCFDcanvas5 != NULL)
+    {
+      TCanvas *c = ((TCanvas *)(gROOT->GetListOfCanvases()->FindObject("CalculateCFDcanvas5"))); 
+      if(c) delete CalculateCFDcanvas5;
+      CalculateCFDcanvas5 = NULL;
+    }
+
   gSystem->ProcessEvents();
   canvas5->Divide(2,1);
     
@@ -1776,9 +1792,9 @@ void Offline::Panel5Draw()
   int inttracelength = -1;
   for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
     {
-      if(offlinechnum5->GetIntNumber() == OfflineEventInformation[12*i+1])
+      if(offlinechnum5->GetIntNumber() == OfflineEventInformation[EventHeaderLength*i+1])
 	{
-	  inttracelength = OfflineEventInformation[12*i+10];
+	  inttracelength = OfflineEventInformation[EventHeaderLength*i+10];
 	  break;
 	}
     }
@@ -1792,27 +1808,40 @@ void Offline::Panel5Draw()
       offlineth2d5_0 = new TH2D("offlineth2d5_0","",inttracelength,0,inttracelength,1000,-100,900);
       offlineth2d5_1 = new TH2D("offlineth2d5_1","",inttracelength,0,inttracelength,1000,-100,900);
 
-      originalcfdth1d5 = new TH1D("originalcfdth1d5","",65536,0,65536);
-      calculatecfdth1d5 = new TH1D("calculatecfdth1d5","",65536,0,65536);
+      originalcfdth1d5 = new TH1D("originalcfdth1d5","",330,0,33000);//32768
+      calculatecfdth1d5 = new TH1D("calculatecfdth1d5","",330,0,33000);//32768
       
       int retval;
       for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
 	{
-	  if(offlinechnum5->GetIntNumber() == OfflineEventInformation[12*i+1])
+	  if(offlinechnum5->GetIntNumber() == OfflineEventInformation[EventHeaderLength*i+1])
 	    {
-	      retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum5->GetIntNumber(), OfflineEventInformation[12*i+11], OfflineEventInformation[12*i+10], RcdTrace5, doublefastfilter5, doublecfd5);
+	      retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum5->GetIntNumber(), OfflineEventInformation[EventHeaderLength*i+11], OfflineEventInformation[EventHeaderLength*i+10], RcdTrace5, doublefastfilter5, doublecfd5);
 	      if(retval < 0) ErrorInfo("Offline.cc", "Panel5Draw()", "Pixie16ComputeFastFiltersOffline", retval);
-	      
+	      int intmaxcfd = -1;
+	      double doublemaxcfd = -1;
 	      for (int j = 0; j < inttracelength; ++j)
 		{
 		  offlineth2d5_0->Fill(j,doublefastfilter5[j]);
 		  offlineth2d5_1->Fill(j,doublecfd5[j]);
+
+		  if(doublecfd5[j] > doublemaxcfd)
+		    {
+		      doublemaxcfd = doublecfd5[j];
+		      intmaxcfd = j;
+		    }
 		}
 
-	      // originalcfdth1d5->Dill(OfflineEventInformation[12*i+10]);
-
+	      for (int j = intmaxcfd; j < inttracelength; ++j)
+		{
+		  if(doublecfd5[j]>= 0 && doublecfd5[j+1] < 0)
+		    {
+		      calculatecfdth1d5->Fill(doublecfd5[j]/(doublecfd5[j]-doublecfd5[j+1])*32768);
+		      break;
+		    }
+		}
 	      
-	      // calculatecfdth1d5->Fill();
+	      originalcfdth1d5->Fill(OfflineEventInformation[EventHeaderLength*i+12]);
 	    }
 
 	  if(i%1000 == 0)
@@ -1832,8 +1861,11 @@ void Offline::Panel5Draw()
       offlineth2d5_1->SetTitle(TString::Format("CFD  Ch: %d",int(offlinechnum5->GetIntNumber())).Data());
       offlineth2d5_1->GetXaxis()->SetTitle("sample");
 
+      
       showprojectyFF5->SetEnabled(1);
       showprojectyCFD5->SetEnabled(1);
+      originalcfd5->SetEnabled(1);
+      calculatecfd5->SetEnabled(1);
     }
 
   printtextinfor5->SetText("Draw Done!");
@@ -1863,15 +1895,12 @@ void Offline::Panel0ReadFile()
   OfflineModuleEventsCount = GetModuleEvents(offlinefilename);
   if(OfflineModuleEventsCount > 0)
     {
-
-      cout<<"!!!: "<<OfflineModuleEventsCount<<endl;
-
       if(OfflineEventInformation != NULL)
 	{
 	  delete []OfflineEventInformation;
 	  OfflineEventInformation = NULL;
 	}
-      OfflineEventInformation = new unsigned int[12*OfflineModuleEventsCount];
+      OfflineEventInformation = new unsigned int[EventHeaderLength*OfflineModuleEventsCount];
       GetEventsInfo(offlinefilename,OfflineEventInformation);
 	      
       //
@@ -1908,14 +1937,17 @@ void Offline::CFDShowProjectY5()
 
 void Offline::OriginalCFDShow5()
 {
+  TCanvas *c = ((TCanvas *)(gROOT->GetListOfCanvases()->FindObject("OriginalCFDcanvas5")));
+  if(!c) OriginalCFDcanvas5 = new TCanvas("OriginalCFDcanvas5","Original CFD",600,400);
   OriginalCFDcanvas5->cd();
   originalcfdth1d5->Draw();
   OriginalCFDcanvas5->Update();
-
 }
 
 void Offline::CalculateCFDShow5()
 {
+  TCanvas *c = ((TCanvas *)(gROOT->GetListOfCanvases()->FindObject("CalculateCFDcanvas5")));
+  if(!c) CalculateCFDcanvas5 = new TCanvas("CalculateCFDcanvas5","Calculate CFD",600,400);
   CalculateCFDcanvas5->cd();
   calculatecfdth1d5->Draw();
   CalculateCFDcanvas5->Update();

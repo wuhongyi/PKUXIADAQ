@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 四 8月 24 15:54:04 2017 (+0800)
+// Last-Updated: 四 8月 24 18:53:16 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 60
+//     Update #: 62
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -26,6 +26,7 @@
 #include "TH1.h"
 #include "TH2.h"
 #include "TObject.h"
+#include "TROOT.h"
 #include "TString.h"
 #include "TStyle.h"
 #include "TSystem.h"
