@@ -4,10 +4,14 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:06 2016 (+0800)
-// Last-Updated: 一 5月 22 14:07:12 2017 (+0800)
+// Last-Updated: 五 8月 25 13:28:16 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 10
+//     Update #: 13
 // URL: http://wuhongyi.cn 
+
+// 20170825 add external clock timestamp 
+
+
 
 #ifndef _DECODER_H_
 #define _DECODER_H_
@@ -58,6 +62,10 @@ public:
 
   inline bool getqsumflag() {return qsumf;}
   inline void getqs(unsigned int *qqs) {memcpy(qqs,qs,sizeof(unsigned int)*8);}
+
+  inline bool getetsflag() {return etsf;}
+  inline unsigned long getets() {return ets;}
+  
   inline bool gettraceflag() {return tracef;}
   inline void gettrace(unsigned short *da) {memcpy(da,data,sizeof(unsigned short)*ltra);}
 
@@ -95,6 +103,9 @@ private:
   bool qsumf;
   unsigned int qs[8];	// qdc sum #0-#7
 
+  bool etsf;
+  unsigned long ets; 	// external clock timestamp
+  
   // pulse shape (trace enabled)
   bool tracef;
   unsigned short  data[MAXTRACEN];
@@ -133,6 +144,11 @@ private:
   const static unsigned int kShiftesum =        0;
   const static unsigned int kMaskqs = 		0xffffffff;
   const static unsigned int kShiftqs = 		0;
+
+  const static unsigned int kMasketslo =         0xffffffff;
+  const static unsigned int kShiftetslo =        0;
+  const static unsigned int kMasketshi =         0x0000ffff;
+  const static unsigned int kShiftetshi =        0;
 
   const static unsigned int kMaskdata1 =       	0x0000ffff;
   const static unsigned int kShiftdata1 = 	0;

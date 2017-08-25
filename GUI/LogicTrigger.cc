@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 四 11月 17 18:46:33 2016 (+0800)
+// Last-Updated: 五 8月 25 22:25:30 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 86
+//     Update #: 88
 // URL: http://wuhongyi.cn 
 
 #include "LogicTrigger.hh"
@@ -29,17 +29,30 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
     }
   CLabel[0]->SetText("ExtTrigStr[us]");
   CLabel[0]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("blue", color);
+  CLabel[0]->SetTextColor(color, false);
   CLabel[1]->SetText("ExtDelLen[us]");
   CLabel[1]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("green", color);
+  CLabel[1]->SetTextColor(color, false);
   CLabel[2]->SetText("FtrigoutDel[us]");
   CLabel[2]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("red", color);
+  CLabel[2]->SetTextColor(color, false);
   CLabel[3]->SetText("VetoStr[us]");
   CLabel[3]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("purple", color);
+  CLabel[3]->SetTextColor(color, false);
   CLabel[4]->SetText("ChaTrigStr[us]");
   CLabel[4]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("blue", color);
+  CLabel[4]->SetTextColor(color, false);
   CLabel[5]->SetText("FastTriBaLen[us]");
   CLabel[5]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("red", color);
+  CLabel[5]->SetTextColor(color, false);
 
+  
   CLabel[0]->SetToolTipText("External trigger stretch length", 0);
   CLabel[1]->SetToolTipText("Extern delay", 0);
   CLabel[2]->SetToolTipText("Fast trigger delay length", 0);

@@ -171,6 +171,18 @@ private:
   TObject *selected;
   int parts[4];
 
+
+
+
+  TGPopupMenu *MenuFile;
+  TGPopupMenu *MenuSetup;
+  TGPopupMenu *MenuExpert;
+  TGPopupMenu *MenuOffline;
+  TGTextButton *bootB;
+  TGTextButton *acquireB;
+  TGTextButton *saveB;
+
+  
   // ******** File Setup Variables *********
   char  Filename[PRESET_MAX_MODULES][256];
   char  Histogramname[PRESET_MAX_MODULES][256];

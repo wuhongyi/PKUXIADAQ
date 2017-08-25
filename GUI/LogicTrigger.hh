@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:36 2016 (+0800)
-// Last-Updated: 日 11月  6 20:12:32 2016 (+0800)
+// Last-Updated: 五 8月 25 22:17:48 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 24
+//     Update #: 25
 // URL: http://wuhongyi.cn 
 
 #ifndef _LOGICTRIGGER_HH_
@@ -81,6 +81,9 @@ protected:
   TGComboBox *GlobalFastTrigger;//0 [25:24]
   TGComboBox *GlobalValidationTrigger;//0 [27:26]
   TGComboBox *ExternalValidationTrigger;//0 [31:28]
+
+private:
+  Pixel_t color;
 };
 
 #endif /* _LOGICTRIGGER_HH_ */

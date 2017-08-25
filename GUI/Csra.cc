@@ -46,7 +46,7 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   column20 = new TGVerticalFrame(mn, 400, 300);
   column21 = new TGVerticalFrame(mn, 400, 300);
   column22 = new TGVerticalFrame(mn, 400, 300);
-  // column23 = new TGVerticalFrame(mn, 400, 300);
+  column23 = new TGVerticalFrame(mn, 400, 300);
   
   buttons = new TGHorizontalFrame(mn_vert, 400, 300);
 
@@ -72,7 +72,7 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   mn->AddFrame(column20, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   mn->AddFrame(column21, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   mn->AddFrame(column22, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  // mn->AddFrame(column23, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  mn->AddFrame(column23, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
   //////////////////////////first column////////////////////////
 
@@ -145,7 +145,7 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   make_columns(column20, ckBtn_18, (char*)"GTS", (char*)"Group trigger selection (local FiPPI trigger vs. external group trigger from System FPGA)", 6800,5);
   make_columns(column21, ckBtn_19, (char*)"CVS", (char*)"Channel veto selection (front panel channel GATE vs. channel validation trigger)", 6900,3);
   make_columns(column22, ckBtn_20, (char*)"MVS", (char*)"Module veto selection (front panel module GATE vs. module validation trigger)", 7000,3);
-  // make_columns(column23, ckBtn_21, (char*)"ECT", (char*)"Enable (checked) or disable (unchecked) recording of external clock timestamps in event header", 7100);
+  make_columns(column23, ckBtn_21, (char*)"ECT", (char*)"Enable (checked) or disable (unchecked) recording of external clock timestamps in event header", 7100);
 
   
   /////////////////////////////module entry///////////////////////////////
@@ -327,7 +327,7 @@ int Csra::load_info(Long_t mod)
       retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Csra.cc", "load_info(...)", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);
       
-      for(int j = 0;j < 21;j++){
+      for(int j = 0;j < CCSRAUSEDBITBUMBER;j++){
         gt = APP32_TstBit(j, ChanParData);
 	if(gt==0) 
 	  tmpckBtn[j][i]->SetState(kButtonUp);
@@ -347,7 +347,7 @@ int Csra::change_values(Long_t mod)
 
   for (int i = 0; i < 16; i++)
     {
-      for(int j = 0;j < 21;j++){
+      for(int j = 0;j < CCSRAUSEDBITBUMBER;j++){
         if(tmpckBtn[j][i]->IsDown())
 	  ChanParData = APP32_SetBit(j,ChanParData);
 	else 
@@ -414,5 +414,5 @@ void Csra::getckbuttonaddress()
   tmpckBtn[18] = ckBtn_18;
   tmpckBtn[19] = ckBtn_19;
   tmpckBtn[20] = ckBtn_20;
-  // tmpckBtn[21] = ckBtn_21;
+  tmpckBtn[21] = ckBtn_21;
 }

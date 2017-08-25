@@ -24,7 +24,7 @@ MainFrame::MainFrame(const TGWindow * p)
   moduleNr = 0;
   channelNr = 0;
   size = 8192; //scope trace size
-  detector = 0; 
+  detector = NULL; 
   runnum = 0;
   ///////////////////////////////////////
   CreateMenuBar();
@@ -65,15 +65,16 @@ MainFrame::~MainFrame()
 void MainFrame::CreateMenuBar()
 {
   TGMenuBar *MenuBar = new TGMenuBar(this, 1, 1, kHorizontalFrame);
-  TGPopupMenu *MenuFile = new TGPopupMenu(fClient->GetRoot());
-  MenuFile->AddEntry("E&xit", FILE_EXIT);
+
+  MenuFile = new TGPopupMenu(fClient->GetRoot());
+MenuFile->AddEntry("E&xit", FILE_EXIT,0,gClient->GetPicture("bld_exit.png"));
   MenuFile->AddSeparator();
   MenuFile->AddEntry("&About", ABOUT);
   MenuFile->Associate(this);
   MenuBar->AddPopup("&File", MenuFile, new TGLayoutHints (kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   AddFrame(MenuBar, new TGLayoutHints (kLHintsTop | kLHintsLeft | kLHintsExpandX, 0, 0, 0, 0));
 
-  TGPopupMenu *MenuSetup = new TGPopupMenu(fClient->GetRoot ());
+  MenuSetup = new TGPopupMenu(fClient->GetRoot ());
   MenuSetup->AddEntry("&Base Setup", BASE);
   MenuSetup->AddEntry("&Energy", ENERGY);
   MenuSetup->AddEntry("&Trigger Filter", TFILTER);
@@ -85,8 +86,16 @@ void MainFrame::CreateMenuBar()
   MenuSetup->AddEntry("Save2File", FILE_SAVE);
   MenuSetup->Associate(this);
   MenuBar->AddPopup("&UV_Setup", MenuSetup, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  MenuSetup->DisableEntry(BASE);
+  MenuSetup->DisableEntry(ENERGY);
+  MenuSetup->DisableEntry(TFILTER);
+  MenuSetup->DisableEntry(CFDP);
+  MenuSetup->DisableEntry(QDCP);
+  MenuSetup->DisableEntry(HISTOGRAM);
+  MenuSetup->DisableEntry(SCOPEDT);
+  MenuSetup->DisableEntry(FILE_SAVE);
 
-  TGPopupMenu *MenuExpert = new TGPopupMenu(fClient->GetRoot());
+  MenuExpert = new TGPopupMenu(fClient->GetRoot());
   MenuExpert->AddEntry("Module Variables", MODVAR);
   MenuExpert->AddEntry("&CSRA", CSRA);
   MenuExpert->AddEntry("Logic Set", LOGIC);
@@ -94,6 +103,11 @@ void MainFrame::CreateMenuBar()
   MenuExpert->AddEntry("Front Outputs", FRONTPANELOUTPUTS);
   MenuExpert->Associate(this);
   MenuBar->AddPopup("&Expert", MenuExpert, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  MenuExpert->DisableEntry(MODVAR);
+  MenuExpert->DisableEntry(CSRA);
+  MenuExpert->DisableEntry(LOGIC);
+  MenuExpert->DisableEntry(MULTIPLICITYMASK);
+  MenuExpert->DisableEntry(FRONTPANELOUTPUTS);
 
   // TGPopupMenu *MenuScope = new TGPopupMenu(fClient->GetRoot());
   // // MenuScope->AddEntry("xy maxmin", MAXMIN);
@@ -101,12 +115,16 @@ void MainFrame::CreateMenuBar()
   // MenuScope->Associate(this);
   // MenuBar->AddPopup("&Scope", MenuScope, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
-  TGPopupMenu *MenuOffline = new TGPopupMenu(fClient->GetRoot());
+  MenuOffline = new TGPopupMenu(fClient->GetRoot());
   MenuOffline->AddEntry("Adjust Par", OFFLINEADJUSTPAR);
   MenuOffline->AddEntry("Simulation", SIMULATION);
   MenuOffline->Associate(this);
   MenuBar->AddPopup("&Offline", MenuOffline, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-      
+  MenuOffline->DisableEntry(OFFLINEADJUSTPAR);
+  MenuOffline->DisableEntry(SIMULATION);
+
+
+
   TGTab *TabPanel = new TGTab(this);
   this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
   TGCompositeFrame *Tab1 = TabPanel->AddTab("Oscilloscope");
@@ -119,7 +137,7 @@ void MainFrame::CreateMenuBar()
 
 void MainFrame::CloseWindow()
 {
-  if(detector !=0) delete detector;
+  if(detector != NULL) delete detector;
   gApplication->Terminate(0);
 }
 
@@ -233,22 +251,50 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	  switch (parm1)
 	    {	      
 	    case BOOT_BUTTON:
+	      bootB->SetEnabled(0);
 	      fClient->GetColorByName("red", color);
 	      StateMsgFold1->SetTextColor(color, false);
 	      StateMsgFold1->SetText("booting ...");
 	      gSystem->ProcessEvents();
 	      gPad->SetCursor(kWatch);
-	      if(detector == 0) detector = new Detector(flagonlinemode);
-	      if(detector->BootSystem()){
-		fClient->GetColorByName("green", color);
-		StateMsgFold1->SetTextColor(color, false);
-		StateMsgFold1->SetText("Booted system");
-		gPad->SetCursor (kPointer);
-	      } else {
-		fClient->GetColorByName("blue", color);
-		StateMsgFold1->SetTextColor(color, false);
-		StateMsgFold1->SetText("boot Failed...");
-	      }
+	      if(detector != 0) delete detector;
+	      detector = new Detector(flagonlinemode);
+	      if(detector->BootSystem())
+		{
+		  fClient->GetColorByName("green", color);
+		  StateMsgFold1->SetTextColor(color, false);
+		  StateMsgFold1->SetText("Booted system");
+		  gPad->SetCursor(kPointer);
+
+		  if(flagonlinemode == 0)
+		    {
+		      acquireB->SetEnabled(1);
+		      saveB->SetEnabled(1);
+		    }
+
+		  MenuSetup->EnableEntry(BASE);
+		  MenuSetup->EnableEntry(ENERGY);
+		  MenuSetup->EnableEntry(TFILTER);
+		  MenuSetup->EnableEntry(CFDP);
+		  MenuSetup->EnableEntry(QDCP);
+		  MenuSetup->EnableEntry(HISTOGRAM);
+		  MenuSetup->EnableEntry(SCOPEDT);
+		  MenuSetup->EnableEntry(FILE_SAVE);
+		  MenuExpert->EnableEntry(MODVAR);
+		  MenuExpert->EnableEntry(CSRA);
+		  MenuExpert->EnableEntry(LOGIC);
+		  MenuExpert->EnableEntry(MULTIPLICITYMASK);
+		  MenuExpert->EnableEntry(FRONTPANELOUTPUTS);
+		  MenuOffline->EnableEntry(OFFLINEADJUSTPAR);
+		  MenuOffline->EnableEntry(SIMULATION);
+		}
+	      else
+		{
+		  fClient->GetColorByName("blue", color);
+		  StateMsgFold1->SetTextColor(color, false);
+		  StateMsgFold1->SetText("boot Failed...");
+		  bootB->SetEnabled(1);
+		}
 	      break;
 	    case READ_WF:
 	      {
@@ -390,7 +436,7 @@ void MainFrame::MakeFold1Panel(TGCompositeFrame * TabPanel)
   ButtonFrame->AddFrame(onlinemode,new TGLayoutHints(kLHintsLeft|kLHintsTop,5,10,15,0));
   
   // BOOT button//////////////////////////////////////////////////////////////    
-  TGTextButton *bootB = new TGTextButton(ButtonFrame, "  Boot  ", BOOT_BUTTON);
+  bootB = new TGTextButton(ButtonFrame, "  Boot  ", BOOT_BUTTON);
   bootB->SetFont("-adobe-helvetica-medium-r-*-*-12-*-*-*-*-*-iso8859-1", false);
   fClient->GetColorByName("blue", color);
   bootB->SetTextColor(color, false);
@@ -409,7 +455,7 @@ void MainFrame::MakeFold1Panel(TGCompositeFrame * TabPanel)
 				  GetWhitePixel());
   StateMsgFold1->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
 
-  fClient->GetColorByName("red", color);
+  fClient->GetColorByName("blue", color);
   StateMsgFold1->SetTextColor(color, false);
   StateMsgFold1->SetText("System not booted");
   StateMsgFold1->Resize(150, 12);
@@ -421,14 +467,16 @@ void MainFrame::MakeFold1Panel(TGCompositeFrame * TabPanel)
   ButtonFrame->AddFrame(StateMsgFrame, new TGLayoutHints(kLHintsTop | kLHintsLeft, 2, 5, 1, 5));
 
   //////////////////////////////////////////////////////////////////////////
-  TGTextButton *acquireB = new TGTextButton(ButtonFrame, "Read WF", READ_WF);
+  acquireB = new TGTextButton(ButtonFrame, "Read WF", READ_WF);
+  acquireB->SetEnabled(0);
   fClient->GetColorByName("purple", color);
   acquireB->SetTextColor(color, false);
   acquireB->Associate(this);
   ButtonFrame->AddFrame(acquireB, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 10, 10, 0));
   //////////////////////////////////////////////////////////////////////////////
 
-  TGTextButton *saveB = new TGTextButton(ButtonFrame, "  Save  ", SAVE_SEC);
+  saveB = new TGTextButton(ButtonFrame, "  Save  ", SAVE_SEC);
+  saveB->SetEnabled(0);
   saveB->Associate(this);
   fClient->GetColorByName("purple", color);
   saveB->SetTextColor(color, false);
@@ -663,7 +711,7 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel){
 
 void MainFrame::SetLSFileName()
 {
-  if(detector == 0){
+  if(detector == NULL){
     cout<<"Modules not booted!"<<endl;
     return ;
   }
@@ -699,6 +747,26 @@ void MainFrame::StartLSRun()
 {
   if(fstartdaq == 0)
     {
+      onlinemode->SetEnabled(0);
+      acquireB->SetEnabled(0);
+      saveB->SetEnabled(0);
+      filesetdone->SetEnabled(0);
+      MenuSetup->DisableEntry(BASE);
+      MenuSetup->DisableEntry(ENERGY);
+      MenuSetup->DisableEntry(TFILTER);
+      MenuSetup->DisableEntry(CFDP);
+      MenuSetup->DisableEntry(QDCP);
+      MenuSetup->DisableEntry(HISTOGRAM);
+      MenuSetup->DisableEntry(SCOPEDT);
+      MenuSetup->DisableEntry(FILE_SAVE);
+      MenuExpert->DisableEntry(MODVAR);
+      MenuExpert->DisableEntry(CSRA);
+      MenuExpert->DisableEntry(LOGIC);
+      MenuExpert->DisableEntry(MULTIPLICITYMASK);
+      MenuExpert->DisableEntry(FRONTPANELOUTPUTS);
+      MenuOffline->DisableEntry(OFFLINEADJUSTPAR);
+      MenuOffline->DisableEntry(SIMULATION);
+      
       SetLSFileName();
       detector->SetOnlineF(fonlinedata);
 
@@ -735,6 +803,26 @@ void MainFrame::StartLSRun()
       outrunnumber.close();
 
       lastruntextinfor->SetText(TString::Format("Last run number: %d",int(filerunnum->GetIntNumber())-1).Data());
+
+      MenuSetup->EnableEntry(BASE);
+      MenuSetup->EnableEntry(ENERGY);
+      MenuSetup->EnableEntry(TFILTER);
+      MenuSetup->EnableEntry(CFDP);
+      MenuSetup->EnableEntry(QDCP);
+      MenuSetup->EnableEntry(HISTOGRAM);
+      MenuSetup->EnableEntry(SCOPEDT);
+      MenuSetup->EnableEntry(FILE_SAVE);
+      MenuExpert->EnableEntry(MODVAR);
+      MenuExpert->EnableEntry(CSRA);
+      MenuExpert->EnableEntry(LOGIC);
+      MenuExpert->EnableEntry(MULTIPLICITYMASK);
+      MenuExpert->EnableEntry(FRONTPANELOUTPUTS);
+      MenuOffline->EnableEntry(OFFLINEADJUSTPAR);
+      MenuOffline->EnableEntry(SIMULATION);
+      acquireB->SetEnabled(1);
+      saveB->SetEnabled(1);
+      onlinemode->SetEnabled(1);
+      filesetdone->SetEnabled(1);
     }
 }
 
@@ -772,6 +860,31 @@ void MainFrame::SetOnlineMode()
     {
       flagonlinemode = 1;
     }
+
+  MenuSetup->DisableEntry(BASE);
+  MenuSetup->DisableEntry(ENERGY);
+  MenuSetup->DisableEntry(TFILTER);
+  MenuSetup->DisableEntry(CFDP);
+  MenuSetup->DisableEntry(QDCP);
+  MenuSetup->DisableEntry(HISTOGRAM);
+  MenuSetup->DisableEntry(SCOPEDT);
+  MenuSetup->DisableEntry(FILE_SAVE);
+  MenuExpert->DisableEntry(MODVAR);
+  MenuExpert->DisableEntry(CSRA);
+  MenuExpert->DisableEntry(LOGIC);
+  MenuExpert->DisableEntry(MULTIPLICITYMASK);
+  MenuExpert->DisableEntry(FRONTPANELOUTPUTS);
+  MenuOffline->DisableEntry(OFFLINEADJUSTPAR);
+  MenuOffline->DisableEntry(SIMULATION);
+  bootB->SetEnabled(1);
+
+  fClient->GetColorByName("blue", color);
+  StateMsgFold1->SetTextColor(color, false);
+  StateMsgFold1->SetText("System not booted");
+
+  acquireB->SetEnabled(0);
+  saveB->SetEnabled(0);
+  startdaq->SetEnabled(0);
 }
 
 void MainFrame::SetLSonlinedataf()

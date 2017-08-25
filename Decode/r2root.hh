@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:31 2016 (+0800)
-// Last-Updated: 一 5月 22 14:24:49 2017 (+0800)
+// Last-Updated: 五 8月 25 13:28:16 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 21
+//     Update #: 22
 // URL: http://wuhongyi.cn 
 
 #ifndef _R2ROOT_H_
@@ -70,6 +70,7 @@ private:
   double base;	// baseline value
 
   UInt_t qs[8];
+  ULong64_t ets;
   UShort_t data[MAXTRACEN];
   UShort_t dt[MAXTRACEN];
 };

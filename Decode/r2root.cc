@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:39 2016 (+0800)
-// Last-Updated: 一 5月 22 14:48:39 2017 (+0800)
+// Last-Updated: 五 8月 25 13:28:16 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 45
+//     Update #: 46
 // URL: http://wuhongyi.cn 
 
 #include "r2root.hh"
@@ -50,28 +50,32 @@ r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int run
   sprintf(tempfilename,"%s%s_R%04d.root",rootfilepath.Data(),filename.Data(),runnumber);
   file = new TFile(tempfilename,"RECREATE");
   t = new TTree("tree","PKU XIA Pixie-16 Data");
-  t->Branch("ch",&ch,"ch/S");
-  t->Branch("sid",&sid,"sid/S");
-  t->Branch("cid",&cid,"cid/S");
+
   t->Branch("pileup",&pileup,"pileup/O");
+  t->Branch("outofr",&outofr,"outofr/O");
+
+  t->Branch("cid",&cid,"cid/S");
+  t->Branch("sid",&sid,"sid/S");
+  t->Branch("ch",&ch,"ch/S");
+  t->Branch("evte",&evte,"evte/s");
   t->Branch("ts",&ts,"ts/l");
+  t->Branch("ets",&ets,"ets/l");
   
   t->Branch("cfd",&cfd,"cfd/s");
   t->Branch("cfdft",&cfdft,"cfdft/O");
-  t->Branch("evte",&evte,"evte/s");
-  t->Branch("ltra",&ltra,"ltra/s");
-  t->Branch("outofr",&outofr,"outofr/O");
+  
   t->Branch("trae",&trae,"trae/i");
   t->Branch("leae",&leae,"leae/i");
   t->Branch("gape",&gape,"gape/i");
   t->Branch("base",&base,"base/D");
 
   t->Branch("qs",&qs,"qs[8]/i");
+
+  t->Branch("ltra",&ltra,"ltra/s");
   t->Branch("data",&data,"data[ltra]/s");
   t->Branch("dt",&dt,"dt[ltra]/s");
 
   t->Branch("nevt",&nevt,"nevt/I");
-
 }
 
 r2root::~r2root()
@@ -131,6 +135,10 @@ void r2root::Process()
 	{
 	  rawdec[mark].getqs(qs);
 	}
+      if(rawdec[mark].getetsflag())
+	{
+	  ets = rawdec[mark].getets();
+	}
       if(rawdec[mark].gettraceflag())
 	{
 	  rawdec[mark].gettrace(data);
@@ -185,7 +193,7 @@ void r2root::clearopt()
   leae = 0;
   gape = 0;
   base = 0;
-  
+  ets = 0;
   memset(qs,0,sizeof(UInt_t)*8);
   memset(data,0,sizeof(UShort_t)*MAXTRACEN);
   memset(dt,0,sizeof(UShort_t)*MAXTRACEN);

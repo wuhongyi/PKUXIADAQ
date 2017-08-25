@@ -4,10 +4,14 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 四 8月 24 22:42:27 2017 (+0800)
+// Last-Updated: 五 8月 25 17:21:59 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 283
+//     Update #: 292
 // URL: http://wuhongyi.cn 
+
+// TODO
+// EventHeaderLength 定义了长度13，太浪费内存空间，不利于加载大文件以及没有波形的文件
+// 应该重新定义数据结构，4headr+1location，并扩展支持 2+4+8数据（在数据初始化位置可选）
 
 #include "Offline.hh"
 #include "Detector.hh"
@@ -120,10 +124,15 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   
   TGCompositeFrame *Tab5 = TabPanel->AddTab("FF/CFD Thre");
   MakeFold5Panel(Tab5);
+
+  TGCompositeFrame *Tab8 = TabPanel->AddTab("Auto Thre");
+  MakeFold8Panel(Tab8);
   
   TGCompositeFrame *Tab7 = TabPanel->AddTab("QCD");
   MakeFold7Panel(Tab7);
 
+  TGCompositeFrame *Tab9 = TabPanel->AddTab("FFT");
+  MakeFold9Panel(Tab9);
   
   
   SetWindowName("Review & Adjust Par");
@@ -136,111 +145,64 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
 
 Offline::~Offline()
 {
-  if(rawdata != NULL)
-    delete rawdata;
-  if(threshdata != NULL)
-    delete threshdata;
-  if(cfddata != NULL)
-    delete cfddata;
-  if(cfdthreshdata != NULL)
-    delete cfdthreshdata;
-  if(sfilterdata != NULL)
-    delete sfilterdata;
-  if(ffilterdata != NULL)
-    delete ffilterdata;
-  if(RcdTrace != NULL)
-    delete []RcdTrace;
-  if(doublethresh != NULL)
-    delete []doublethresh;
-  if(doublecfdthresh != NULL)
-    delete []doublecfdthresh;
-  if(doublesample != NULL)
-    delete []doublesample;
-  if(doublercdtrace != NULL)
-    delete []doublercdtrace;
-  if(doublefastfilter != NULL)
-    delete []doublefastfilter;
-  if(doublecfd != NULL)
-    delete []doublecfd;
-  if(doubleslowfilter != NULL)
-    delete []doubleslowfilter;
+  if(rawdata != NULL) delete rawdata;
+  if(threshdata != NULL) delete threshdata;
+  if(cfddata != NULL) delete cfddata;
+  if(cfdthreshdata != NULL) delete cfdthreshdata;
+  if(sfilterdata != NULL) delete sfilterdata;
+  if(ffilterdata != NULL) delete ffilterdata;
+  if(RcdTrace != NULL) delete []RcdTrace;
+  if(doublethresh != NULL) delete []doublethresh;
+  if(doublecfdthresh != NULL) delete []doublecfdthresh;
+  if(doublesample != NULL) delete []doublesample;
+  if(doublercdtrace != NULL) delete []doublercdtrace;
+  if(doublefastfilter != NULL) delete []doublefastfilter;
+  if(doublecfd != NULL) delete []doublecfd;
+  if(doubleslowfilter != NULL) delete []doubleslowfilter;
 
-  if(RcdTrace5 != NULL)
-    delete []RcdTrace5;
-    if(doublefastfilter5 != NULL)
-    delete []doublefastfilter5;
-  if(doublecfd5 != NULL)
-    delete []doublecfd5;
+  if(RcdTrace5 != NULL) delete []RcdTrace5;
+  if(doublefastfilter5 != NULL) delete []doublefastfilter5;
+  if(doublecfd5 != NULL) delete []doublecfd5;
 
-  if(RcdTrace6 != NULL)
-    delete []RcdTrace6;
-    if(doublefastfilter6 != NULL)
-    delete []doublefastfilter6;
-  if(doublecfd6 != NULL)
-    delete []doublecfd6;
-  if(doubleslowfilter6 != NULL)
-    delete []doubleslowfilter6;
+  if(RcdTrace6 != NULL) delete []RcdTrace6;
+  if(doublefastfilter6 != NULL) delete []doublefastfilter6;
+  if(doublecfd6 != NULL) delete []doublecfd6;
+  if(doubleslowfilter6 != NULL) delete []doubleslowfilter6;
   
   for (int i = 0; i < 16; ++i)
     {
-      if(rawdata2[i] != NULL)
-  	delete rawdata2[i];
-      if(threshdata2[i] != NULL)
-  	delete threshdata2[i];
-      if(cfdthreshdata2[i] != NULL)
-  	delete cfdthreshdata2[i];
-      if(cfddata2[i] != NULL)
-  	delete cfddata2[i];
-      if(sfilterdata2[i] != NULL)
-  	delete sfilterdata2[i];
-      if(ffilterdata2[i] != NULL)
-  	delete ffilterdata2[i];
-      if(RcdTrace2[i] != NULL)
-  	delete []RcdTrace2[i];
-      if(doublethresh2[i] != NULL)
-  	delete []doublethresh2[i];
-      if(doublesample2[i] != NULL)
-  	delete []doublesample2[i];	      
-      if(doublercdtrace2[i] != NULL)
-  	delete []doublercdtrace2[i];
-      if(doublefastfilter2[i] != NULL)
-  	delete []doublefastfilter2[i];
-      if(doublecfd2[i] != NULL)
-  	delete []doublecfd2[i];
-      if(doubleslowfilter2[i] != NULL)
-  	delete []doubleslowfilter2[i];
+      if(rawdata2[i] != NULL) delete rawdata2[i];
+      if(threshdata2[i] != NULL) delete threshdata2[i];
+      if(cfdthreshdata2[i] != NULL) delete cfdthreshdata2[i];
+      if(cfddata2[i] != NULL) delete cfddata2[i];
+      if(sfilterdata2[i] != NULL) delete sfilterdata2[i];
+      if(ffilterdata2[i] != NULL) delete ffilterdata2[i];
+      if(RcdTrace2[i] != NULL) delete []RcdTrace2[i];
+      if(doublethresh2[i] != NULL) delete []doublethresh2[i];
+      if(doublesample2[i] != NULL) delete []doublesample2[i];	      
+      if(doublercdtrace2[i] != NULL) delete []doublercdtrace2[i];
+      if(doublefastfilter2[i] != NULL) delete []doublefastfilter2[i];
+      if(doublecfd2[i] != NULL) delete []doublecfd2[i];
+      if(doubleslowfilter2[i] != NULL) delete []doubleslowfilter2[i];
     }
 
-  if(OfflineEventInformation != NULL)
-    delete []OfflineEventInformation;
+  if(OfflineEventInformation != NULL) delete []OfflineEventInformation;
      
-  if(offlinemultigraph != NULL)
-    delete offlinemultigraph;
+  if(offlinemultigraph != NULL) delete offlinemultigraph;
 
   for (int i = 0; i < 16; ++i)
     {
-      if(offlinemultigraph2[i] != NULL)
-	delete offlinemultigraph2[i];
-      
-      if(offlineth1d3[i] != NULL)
-	{
-	  delete offlineth1d3[i];
-	}
+      if(offlinemultigraph2[i] != NULL) delete offlinemultigraph2[i];
+      if(offlineth1d3[i] != NULL) delete offlineth1d3[i];
     }
 
-  if(offlineth1d4 != NULL)
-    delete offlineth1d4;
-  if(offlineth2d5_0 != NULL)
-    delete offlineth2d5_0;
-  if(offlineth2d5_1 != NULL)
-    delete offlineth2d5_1;
-  if(originalcfdth1d5 != NULL)
-    delete originalcfdth1d5;
-  if(calculatecfdth1d5 != NULL)
-    delete calculatecfdth1d5;
+  if(offlineth1d4 != NULL) delete offlineth1d4;
+  if(offlineth2d5_0 != NULL) delete offlineth2d5_0;
+  if(offlineth2d5_1 != NULL) delete offlineth2d5_1;
+  if(originalcfdth1d5 != NULL) delete originalcfdth1d5;
+  if(calculatecfdth1d5 != NULL) delete calculatecfdth1d5;
   
-  if(offlineth1d6 != NULL)
-    delete offlineth1d6;
+  if(offlineth1d6 != NULL) delete offlineth1d6;
 }
 
 void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
@@ -453,7 +415,7 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   dslider->SetRange(0,5000);
   dslider->SetPosition(0,5000);
   TabPanel->AddFrame(dslider, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
-  // GOTO
+  // TODO
   // connect to picture
 
 
@@ -465,7 +427,7 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   temp[2] = 10;
   temp[3] = 47;
   sbfold3->SetParts(temp,4);
-  //GOTO 
+  //TODO
   // connect to canvas
   TabPanel->AddFrame(sbfold3, new TGLayoutHints(kLHintsBottom | kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
 }
@@ -762,6 +724,73 @@ void Offline::MakeFold7Panel(TGCompositeFrame *TabPanel)
 }
 
 
+void Offline::MakeFold8Panel(TGCompositeFrame *TabPanel)
+{
+  TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+
+  // // draw
+  // OfflineDrawButton6 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW6);
+  // OfflineDrawButton6->SetEnabled(0);
+  // OfflineDrawButton6->Associate(this);
+  // parFrame->AddFrame(OfflineDrawButton6, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
+
+  //   // ch
+  // offlinechnum6 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM6, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  // parFrame->AddFrame(offlinechnum6, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
+  // offlinechnum6->SetButtonToNum(0);
+  // offlinechnum6->Associate(this);
+  // TGLabel *ch = new TGLabel( parFrame, "Ch:"); 
+  // parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+  
+
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
+  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
+
+  TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas8", adCanvasFrame, 100, 100);
+
+  canvas8 = adjCanvas->GetCanvas();
+  adCanvasFrame->AddFrame(adjCanvas, Hint);
+  TabPanel->AddFrame(adCanvasFrame, Hint);
+}
+
+void Offline::MakeFold9Panel(TGCompositeFrame *TabPanel)
+{
+  TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+
+  // // draw
+  // OfflineDrawButton6 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW6);
+  // OfflineDrawButton6->SetEnabled(0);
+  // OfflineDrawButton6->Associate(this);
+  // parFrame->AddFrame(OfflineDrawButton6, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
+
+  //   // ch
+  // offlinechnum6 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM6, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  // parFrame->AddFrame(offlinechnum6, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
+  // offlinechnum6->SetButtonToNum(0);
+  // offlinechnum6->Associate(this);
+  // TGLabel *ch = new TGLabel( parFrame, "Ch:"); 
+  // parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+  
+
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
+  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
+
+  TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas9", adCanvasFrame, 100, 100);
+
+  canvas9 = adjCanvas->GetCanvas();
+  adCanvasFrame->AddFrame(adjCanvas, Hint);
+  TabPanel->AddFrame(adCanvasFrame, Hint);
+}
+
+
 
 
 
@@ -841,6 +870,15 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    case OFFLINEDRAW7:
 	      Panel7Draw();
 	      break;
+	    case OFFLINEDRAW8:
+	      Panel8Draw();
+	      break;
+	    case OFFLINEDRAW9:
+	      Panel9Draw();
+	      break;
+
+
+	      
 	    case OFFLINESTOPDRAW6:
 	      Panel6StopDraw();
 	      break;	      
@@ -1859,6 +1897,7 @@ void Offline::Panel5Draw()
       if(c) delete CalculateCFDcanvas5;
       CalculateCFDcanvas5 = NULL;
     }
+  
   if(offlineth2d5_0 != NULL)
     {
       delete offlineth2d5_0;
@@ -2154,6 +2193,17 @@ void Offline::Panel7Draw()
 
 }
 
+void Offline::Panel8Draw()
+{
+
+
+}
+
+void Offline::Panel9Draw()
+{
+
+
+}
 
 void Offline::Panel0ReadFile()
 {

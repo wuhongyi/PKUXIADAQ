@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:18 2016 (+0800)
-// Last-Updated: 四 8月 24 16:34:35 2017 (+0800)
+// Last-Updated: 五 8月 25 13:29:18 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 11
+//     Update #: 24
 // URL: http://wuhongyi.cn 
 
 #include "decoder.hh"
@@ -47,6 +47,10 @@ void decoder::clearall()
   
   qsumf = false;
   memset(qs,0,sizeof(unsigned int)*8);
+
+  etsf = false;
+  ets = 0;
+  
   tracef = false;
   memset(data,0,sizeof(unsigned short)*MAXTRACEN);
 }
@@ -130,28 +134,55 @@ bool decoder::decode()
   evte = ( buff & kMaskevte ) >> kShiftevte;
   ltra = ( buff & kMaskltra ) >> kShiftltra;
   outofr = ( buff & kMaskoutofr ) >> kShiftoutofr;
-  
-  if(lhead == 4)
+
+  // printf("ch: %d  lhead: %d\n",ch,lhead);
+  switch(int(lhead))
     {
+    case 4:
       esumf = false;
       qsumf = false;
+      etsf = false;
+      break;
+    case 6:
+      esumf = false;
+      qsumf = false;
+      etsf = true;
+      break;
+    case 8:
+      esumf = true;
+      qsumf = false;
+      etsf = false;
+      break;
+    case 10:
+      esumf = true;
+      qsumf = false;
+      etsf = true;
+      break;
+    case 12:
+      esumf = false;
+      qsumf = true;
+      etsf = false;
+      break;
+    case 14:
+      esumf = false;
+      qsumf = true;
+      etsf = true;
+      break;
+    case 16:
+      esumf = true;
+      qsumf = true;
+      etsf = false;
+      break;
+    case 18:
+      esumf = true;
+      qsumf = true;
+      etsf = true;
+      break;
+    default:
+      printf("error! Header Length: %d\n",lhead);
+      break;
     }
-  else if(lhead == 8)
-         {
-	   esumf = true;
-	   qsumf = false;
-	 }
-       else if(lhead == 12)
-	      {
-		esumf = false;
-		qsumf = true;
-	      }
-            else if(lhead == 16)
-	           {
-		     esumf = true;
-		     qsumf = true;
-		   }
-
+  
   if(ltra > 0) tracef = true;
 
   // decode esum
@@ -163,25 +194,27 @@ bool decoder::decode()
 	  return false;
 	}
       trae = ( buff & kMaskesum ) >> kShiftesum;
+      
       if(!getnextword())
 	{
 	  printf("error! 2nd word in esum is missing!\n");
 	  return false;
 	}
       leae = ( buff & kMaskesum ) >> kShiftesum;
+      
       if(!getnextword())
 	{
 	  printf("error! 3rd word in esum is missing!\n");
 	  return false;
 	}
       gape = ( buff & kMaskesum ) >> kShiftesum;
+      
       if(!getnextword())
 	{
 	  printf("error! 4th word in esum is missing!\n");
 	  return false;
 	}
       base = ( buff & kMaskesum ) >> kShiftesum;
-    
     }
 
   // decode qsum
@@ -198,6 +231,24 @@ bool decoder::decode()
 	}
     }
 
+  // decode ets
+  if(etsf)
+    {
+      if(!getnextword())
+	{
+	  printf("error! 1st word in ets is missing!\n");
+	  return false;
+	}
+      ets = ( buff & kMasketslo ) >> kShiftetslo;
+      
+      if(!getnextword())
+	{
+	  printf("error! 2nd word in ets is missing!\n");
+	  return false;
+	}
+      ets = ets+(((unsigned long)( buff & kMasketshi ) >> kShiftetshi)*0xffffffff);
+    }
+  
   // decode trac.
   if(tracef)
     {

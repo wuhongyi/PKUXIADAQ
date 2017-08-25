@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 四 8月 24 22:39:45 2017 (+0800)
+// Last-Updated: 五 8月 25 14:43:30 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 70
+//     Update #: 76
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -52,6 +52,9 @@ public:
   void MakeFold5Panel(TGCompositeFrame *TabPanel);//FF Thre/CFD Thre
   void MakeFold6Panel(TGCompositeFrame *TabPanel);//Calc Energy
   void MakeFold7Panel(TGCompositeFrame *TabPanel);//QCD
+  void MakeFold8Panel(TGCompositeFrame *TabPanel);//Auto Thre
+  void MakeFold9Panel(TGCompositeFrame *TabPanel);//FFT
+
   
 private:
   Pixel_t color;
@@ -119,6 +122,8 @@ private:
       OFFLINEDRAW5,
       OFFLINEDRAW6,
       OFFLINEDRAW7,
+      OFFLINEDRAW8,
+      OFFLINEDRAW9,
       OFFLINEFASTLENGTH,
       OFFLINEFASTGAP,
       OFFLINESLOWLENGTH,
@@ -209,6 +214,12 @@ private:
   TCanvas *canvas7;
 
 
+  // Fold8
+  TCanvas *canvas8;
+
+  // Fold9
+  TCanvas *canvas9;  
+
 
   
   // function
@@ -219,6 +230,9 @@ private:
   void Panel5Draw();
   void Panel6Draw();
   void Panel7Draw();
+  void Panel8Draw();
+  void Panel9Draw();
+
   
   void Panel0ReadFile();
 
@@ -227,7 +241,8 @@ private:
   void OriginalCFDShow5();
   void CalculateCFDShow5();
   void Panel6StopDraw();
-  
+
+
 };
 
 #endif /* _OFFLINE_HH_ */

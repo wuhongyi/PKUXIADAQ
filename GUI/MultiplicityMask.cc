@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 10月  4 20:33:32 2016 (+0800)
-// Last-Updated: 二 8月 22 21:01:59 2017 (+0800)
+// Last-Updated: 五 8月 25 22:30:11 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 56
+//     Update #: 57
 // URL: http://wuhongyi.cn 
 
 #include "MultiplicityMask.hh"
@@ -28,18 +28,32 @@ MultiplicityMask::MultiplicityMask(const TGWindow *p, const TGWindow * main, cha
   }
   CLabel[0]->SetText("Left[0-FFFF]");
   CLabel[0]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("purple", color);
+  CLabel[0]->SetTextColor(color, false);
   CLabel[1]->SetText("Itself[0-FFFF]");
   CLabel[1]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("blue", color);
+  CLabel[1]->SetTextColor(color, false);
   CLabel[2]->SetText("Right[0-FFFF]");
   CLabel[2]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("pink", color);
+  CLabel[2]->SetTextColor(color, false);
   CLabel[3]->SetText("ItselfCoin[0-7]");//1st
   CLabel[3]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("blue", color);
+  CLabel[3]->SetTextColor(color, false);
   CLabel[4]->SetText("RightCoin[0-7]");//2nd
   CLabel[4]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("pink", color);
+  CLabel[4]->SetTextColor(color, false);
   CLabel[5]->SetText("LeftCoin[0-7]");//3rd
-  CLabel[5]->SetAlignment(kTextCenterX);  
+  CLabel[5]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("purple", color);
+  CLabel[5]->SetTextColor(color, false);
   CLabel[6]->SetText("MultiThre[0-31]");
-  CLabel[6]->SetAlignment(kTextCenterX);  
+  CLabel[6]->SetAlignment(kTextCenterX);
+
+  
   CLabel[7]->SetText("Sel Coin/Multi");
   CLabel[7]->SetAlignment(kTextCenterX);  
   CLabel[8]->SetText("Sel ChValidTrig");
