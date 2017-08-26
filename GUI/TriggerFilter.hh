@@ -21,7 +21,7 @@ protected:
   TGNumberEntry* chanCopy;
   bool Load_Once;
   char tmp[10];
-  float tpeak,tgap;
+  float tpeak,tgap,thre;
 };
 
 #endif /*TRIGGERFILTER_HH_*/

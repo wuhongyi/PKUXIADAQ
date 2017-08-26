@@ -69,7 +69,7 @@ void MainFrame::CreateMenuBar()
   MenuFile = new TGPopupMenu(fClient->GetRoot());
 MenuFile->AddEntry("E&xit", FILE_EXIT,0,gClient->GetPicture("bld_exit.png"));
   MenuFile->AddSeparator();
-  MenuFile->AddEntry("&About", ABOUT);
+MenuFile->AddEntry("&About", ABOUT,0,gClient->GetPicture("ed_help.png"));
   MenuFile->Associate(this);
   MenuBar->AddPopup("&File", MenuFile, new TGLayoutHints (kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   AddFrame(MenuBar, new TGLayoutHints (kLHintsTop | kLHintsLeft | kLHintsExpandX, 0, 0, 0, 0));
@@ -83,7 +83,7 @@ MenuFile->AddEntry("E&xit", FILE_EXIT,0,gClient->GetPicture("bld_exit.png"));
   MenuSetup->AddEntry("&Histogramming", HISTOGRAM);
   MenuSetup->AddEntry("dT", SCOPEDT);
   MenuSetup->AddSeparator();
-  MenuSetup->AddEntry("Save2File", FILE_SAVE);
+MenuSetup->AddEntry("Save2File", FILE_SAVE,0,gClient->GetPicture("save.xpm"));
   MenuSetup->Associate(this);
   MenuBar->AddPopup("&UV_Setup", MenuSetup, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   MenuSetup->DisableEntry(BASE);
@@ -178,7 +178,7 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	     about->Popup();
 	      break;
 	    case BASE:
-	      base = new Base(fClient->GetRoot(), this, (char*)"Base Setup", 7, 16, detector->NumModules);
+	      base = new Base(fClient->GetRoot(), this, (char*)"Base Setup", 6, 16, detector->NumModules);
 	      base->load_info(0);
 	      break;
 	    case CFDP:
@@ -198,7 +198,7 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      csra->load_info(0);
 	      break;
 	    case TFILTER:
-	      triggerfilter = new TriggerFilter(fClient->GetRoot (), this, (char*)"Trigger Filter", 3, 16, detector->NumModules);
+	      triggerfilter = new TriggerFilter(fClient->GetRoot (), this, (char*)"Trigger Filter", 4, 16, detector->NumModules);
 	      triggerfilter->load_info(0);
 	      break;
 	    case MODVAR:
@@ -206,7 +206,7 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      expertmod->load_info(0);
 	      break;
 	    case LOGIC:
-	      logictrigger = new LogicTrigger(fClient->GetRoot(),this,(char*)"Logic Trigger", 7, 16, detector->NumModules);
+	      logictrigger = new LogicTrigger(fClient->GetRoot(),this,(char*)"Logic Trigger", 16/*7*/, 16, detector->NumModules);
 	      logictrigger->load_info(0);
 	      break;
 	    case MULTIPLICITYMASK:
@@ -782,8 +782,32 @@ void MainFrame::StartLSRun()
       if(detector->StartLSMRun(0))
 	{
 	  cout<<"CANNOT start the LSM Run!"<<endl;
+
+	  MenuSetup->EnableEntry(BASE);
+	  MenuSetup->EnableEntry(ENERGY);
+	  MenuSetup->EnableEntry(TFILTER);
+	  MenuSetup->EnableEntry(CFDP);
+	  MenuSetup->EnableEntry(QDCP);
+	  MenuSetup->EnableEntry(HISTOGRAM);
+	  MenuSetup->EnableEntry(SCOPEDT);
+	  MenuSetup->EnableEntry(FILE_SAVE);
+	  MenuExpert->EnableEntry(MODVAR);
+	  MenuExpert->EnableEntry(CSRA);
+	  MenuExpert->EnableEntry(LOGIC);
+	  MenuExpert->EnableEntry(MULTIPLICITYMASK);
+	  MenuExpert->EnableEntry(FRONTPANELOUTPUTS);
+	  MenuOffline->EnableEntry(OFFLINEADJUSTPAR);
+	  MenuOffline->EnableEntry(SIMULATION);
+	  acquireB->SetEnabled(1);
+	  saveB->SetEnabled(1);
+	  onlinemode->SetEnabled(1);
+	  filesetdone->SetEnabled(1);
+	  
 	  return;
 	}
+
+
+      
       usleep(100000); //delay for the DSP boot 
       // sleep(2);// wait 2 seconds for modules to be ready
       // start a new run, not resume

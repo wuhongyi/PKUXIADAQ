@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 11月 18 19:24:01 2016 (+0800)
-// Last-Updated: 六 11月 19 12:24:21 2016 (+0800)
+// Last-Updated: 六 8月 26 19:31:25 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 20
+//     Update #: 26
 // URL: http://wuhongyi.cn 
 
 #include "Base.hh"
@@ -27,16 +27,24 @@ Base::Base(const TGWindow * p, const TGWindow * main, char *name, int columns, i
     }
   CLabel[0]->SetText("DCOffset");
   CLabel[0]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("purple", color);
+  CLabel[0]->SetTextColor(color, false);
   CLabel[1]->SetText("BLcut");
   CLabel[1]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("purple", color);
+  CLabel[1]->SetTextColor(color, false);
   CLabel[2]->SetText("Baseline[%]");
   CLabel[2]->SetAlignment(kTextCenterX);
-  CLabel[3]->SetText("Thresh. [ADC u]");
+  fClient->GetColorByName("blue", color);
+  CLabel[2]->SetTextColor(color, false);
+  CLabel[3]->SetText("TraceDelay[us]");
   CLabel[3]->SetAlignment(kTextCenterX);
-  CLabel[4]->SetText("Trace Length[us]");
+  fClient->GetColorByName("green", color);
+  CLabel[3]->SetTextColor(color, false);  
+  CLabel[4]->SetText("TraceLength[us]");
   CLabel[4]->SetAlignment(kTextCenterX);
-  CLabel[5]->SetText("Trace Delay[us]");
-  CLabel[5]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("green", color);
+  CLabel[4]->SetTextColor(color, false);
 
   
 
@@ -106,6 +114,8 @@ Base::Base(const TGWindow * p, const TGWindow * main, char *name, int columns, i
   LabelGC->SetFrameDrawn(kTRUE);
   ColumnGC->AddFrame(LabelGC, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
   LabelGC->SetText("GC");
+  fClient->GetColorByName("pink", color);
+  LabelGC->SetTextColor(color, false);
   LabelGC->SetAlignment(kTextCenterX);
   LabelGC->SetToolTipText((char*)"Good channel", 400);
   for (int i = 0; i < 16; i++)
@@ -128,6 +138,8 @@ Base::Base(const TGWindow * p, const TGWindow * main, char *name, int columns, i
   LabelTC->SetFrameDrawn(kTRUE);
   ColumnTC->AddFrame(LabelTC, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
   LabelTC->SetText("TC");
+  fClient->GetColorByName("red", color);
+  LabelTC->SetTextColor(color, false);
   LabelTC->SetAlignment(kTextCenterX);
   LabelTC->SetToolTipText((char*)"Trace capture and associated header data", 400);
   for (int i = 0; i < 16; i++)
@@ -149,6 +161,8 @@ Base::Base(const TGWindow * p, const TGWindow * main, char *name, int columns, i
   LabelEQS->SetFrameDrawn(kTRUE);
   ColumnEQS->AddFrame(LabelEQS, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
   LabelEQS->SetText("EQS");
+  fClient->GetColorByName("red", color);
+  LabelEQS->SetTextColor(color, false);
   LabelEQS->SetAlignment(kTextCenterX);
   LabelEQS->SetToolTipText((char*)"QDC summing and associated header data", 400);
   for (int i = 0; i < 16; i++)
@@ -191,6 +205,8 @@ Base::Base(const TGWindow * p, const TGWindow * main, char *name, int columns, i
   LabelERB->SetFrameDrawn(kTRUE);
   ColumnERB->AddFrame(LabelERB, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
   LabelERB->SetText("ERB");
+  fClient->GetColorByName("red", color);
+  LabelERB->SetTextColor(color, false);
   LabelERB->SetAlignment(kTextCenterX);
   LabelERB->SetToolTipText((char*)"Record raw energy sums and baseline in event header", 400);
   for (int i = 0; i < 16; i++)
@@ -349,15 +365,13 @@ Bool_t Base::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		      sprintf(tmp,"%1.3f",NumEntry[1][chanNumber]->GetNumber());
 		      NumEntry[1][i]->SetText(tmp);
 		      sprintf(tmp,"%1.3f",NumEntry[2][chanNumber]->GetNumber());
-		      NumEntry[2][i]->SetText(tmp);	
+		      NumEntry[2][i]->SetText(tmp);
 		      sprintf(tmp,"%1.3f",NumEntry[3][chanNumber]->GetNumber());
 		      NumEntry[3][i]->SetText(tmp);
 		      sprintf(tmp,"%1.3f",NumEntry[4][chanNumber]->GetNumber());
 		      NumEntry[4][i]->SetText(tmp);
 		      sprintf(tmp,"%1.3f",NumEntry[5][chanNumber]->GetNumber());
 		      NumEntry[5][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",NumEntry[6][chanNumber]->GetNumber());
-		      NumEntry[6][i]->SetText(tmp);
 		    }
 		}  
 		    
@@ -474,22 +488,15 @@ int Base::load_info(Long_t mod)
       sprintf(text, "%d", (int)ChanParData);
       NumEntry[3][i]->SetText(text);
 
-      retval = Pixie16ReadSglChanPar((char*)"TRIGGER_THRESHOLD", &ChanParData, mod, i);
-      if(retval < 0) ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRIGGER_THRESHOLD", retval);
-      sprintf(text, "%d", (int)ChanParData);
+      retval = Pixie16ReadSglChanPar((char*)"TRACE_DELAY", &ChanParData, mod, i);
+      if(retval < 0) ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRACE_DELAY", retval);
+      sprintf(text, "%1.2f", ChanParData);
       NumEntry[4][i]->SetText(text);
 
       retval = Pixie16ReadSglChanPar((char*)"TRACE_LENGTH", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRACE_LENGTH", retval);
       sprintf (text, "%1.2f", ChanParData);
-      NumEntry[5][i]->SetText(text);
-
-      retval = Pixie16ReadSglChanPar((char*)"TRACE_DELAY", &ChanParData, mod, i);
-      if(retval < 0) ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRACE_DELAY", retval);
-      sprintf(text, "%1.2f", ChanParData);
-      NumEntry[6][i]->SetText(text);
-
-      
+      NumEntry[5][i]->SetText(text);      
     }
   return 1;
 }
@@ -503,7 +510,6 @@ int Base::change_values(Long_t mod)
   int pol = 0;
   double cut;
   double percent;
-  double thresh;
   double length;
   double delay;
   
@@ -569,19 +575,13 @@ int Base::change_values(Long_t mod)
       retval = Pixie16WriteSglChanPar((char*)"BASELINE_PERCENT", percent, mod, i);
       if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/BASELINE_PERCENT", retval);  
 
-      thresh = NumEntry[4][i]->GetNumber();
-      retval = Pixie16WriteSglChanPar((char*)"TRIGGER_THRESHOLD", thresh, mod, i);
-      if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/TRIGGER_THRESHOLD", retval);
-
+      delay = NumEntry[4][i]->GetNumber();
+      retval = Pixie16WriteSglChanPar((char*)"TRACE_DELAY", delay, mod, i);
+      if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/TRACE_DELAY", retval);
 
       length = NumEntry[5][i]->GetNumber();
       retval = Pixie16WriteSglChanPar((char*)"TRACE_LENGTH", length, mod, i);
       if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/TRACE_LENGTH", retval);
-      delay = NumEntry[6][i]->GetNumber();
-      retval = Pixie16WriteSglChanPar((char*)"TRACE_DELAY", delay, mod, i);
-      if(retval < 0) ErrorInfo("Base.cc", "change_values(...)", "Pixie16WriteSglChanPar/TRACE_DELAY", retval);
-
-
     }
   return 1;
 }

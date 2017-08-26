@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:36 2016 (+0800)
-// Last-Updated: 五 8月 25 22:17:48 2017 (+0800)
+// Last-Updated: 六 8月 26 21:53:28 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 25
+//     Update #: 26
 // URL: http://wuhongyi.cn 
 
 #ifndef _LOGICTRIGGER_HH_
@@ -82,6 +82,19 @@ protected:
   TGComboBox *GlobalValidationTrigger;//0 [27:26]
   TGComboBox *ExternalValidationTrigger;//0 [31:28]
 
+
+  TGNumberEntryField *fasttriggerbackplaneena[2];
+  
+  int MultiLeft;
+  int MultiRight;
+  int MultiItself;
+  int Multi1st;
+  int Multi2nd;
+  int Multi3rd;
+  int MultiThreshold;
+  bool SelCoinMulti;
+  bool SelChValidTrig;
+  
 private:
   Pixel_t color;
 };

@@ -48,23 +48,33 @@ ExpertMod::ExpertMod(const TGWindow * p, const TGWindow * main, char *name,int N
       column1->AddFrame (Labels[i], new TGLayoutHints(kLHintsCenterX, 0, 3, 5, 0));
     }
 
-  Labels[0]->SetText("CPLDPULLUP");
+  Labels[0]->SetText("CPLDPULLUP[0]");
   Labels[0]->SetToolTipText("Control pullups for PXI trigger lines on the backplane", 0);
-  Labels[1]->SetText("DIRMOD");
+  Labels[1]->SetText("DIRMOD[4]");
   Labels[1]->SetToolTipText("Set this module as the Director", 0);
-  Labels[2]->SetText("CHASSISMASTER");
+  fClient->GetColorByName("pink", color);
+  Labels[1]->SetTextColor(color, false);
+  Labels[2]->SetText("CHASSISMASTER[6]");
   Labels[2]->SetToolTipText("Set this module as chassis master", 0);
-  Labels[3]->SetText("GFTSEL");
+  fClient->GetColorByName("purple", color);
+  Labels[2]->SetTextColor(color, false);
+  Labels[3]->SetText("GFTSEL[7]");
   Labels[3]->SetToolTipText("Select global fast trigger source (external validation trigger vs. external fast trigger, in case these two signals are swapped at the front panel)", 0);
-  Labels[4]->SetText("ETSEL");
+  fClient->GetColorByName("blue", color);
+  Labels[3]->SetTextColor(color, false);
+  Labels[4]->SetText("ETSEL[8]");
   Labels[4]->SetToolTipText("Select external trigger source (external fast trigger vs. external validation trigger, in case these two signals are swapped at the front panel)", 0);
-  Labels[5]->SetText("INHIBITENA");
+  fClient->GetColorByName("blue", color);
+  Labels[4]->SetTextColor(color, false);
+  Labels[5]->SetText("INHIBITENA[10]");
   Labels[5]->SetToolTipText("Control the use of external INHIBIT signal", 0);
-  Labels[6]->SetText("MULTCRATES");
+  fClient->GetColorByName("red", color);
+  Labels[5]->SetTextColor(color, false);
+  Labels[6]->SetText("MULTCRATES[11]");
   Labels[6]->SetToolTipText("Distribute clock and triggers in multiple crates", 0);
-  Labels[7]->SetText("SORTEVENTS");
+  Labels[7]->SetText("SORTEVENTS[12]");
   Labels[7]->SetToolTipText("Sort events based on their timestamps", 0);
-  Labels[8]->SetText("BKPLFASTTRIG");
+  Labels[8]->SetText("BKPLFASTTRIG[13]");
   Labels[8]->SetToolTipText("Enable connection of fast triggers to backplane (only one module can enable this option in each PCI bus segment of a crate)", 0);
 
 

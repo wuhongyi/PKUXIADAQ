@@ -34,7 +34,8 @@ private:
   short int modNumber;
   bool Load_Once;
   int change_values(Long_t mod);
-
+  Pixel_t color;
+  
   enum Commands
     {
       LOAD,

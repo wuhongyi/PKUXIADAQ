@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 五 8月 25 22:25:30 2017 (+0800)
+// Last-Updated: 六 8月 26 23:15:03 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 88
+//     Update #: 120
 // URL: http://wuhongyi.cn 
 
 #include "LogicTrigger.hh"
@@ -16,6 +16,7 @@
 
 #include <iostream>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+#define MULTIPLICITYOFFSET 6
 
 LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, int columns, int rows,int NumModules)
   : Table(p,main,columns,rows,name, NumModules)
@@ -51,18 +52,69 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   CLabel[5]->SetAlignment(kTextCenterX);
   fClient->GetColorByName("red", color);
   CLabel[5]->SetTextColor(color, false);
-
-  
   CLabel[0]->SetToolTipText("External trigger stretch length", 0);
   CLabel[1]->SetToolTipText("Extern delay", 0);
   CLabel[2]->SetToolTipText("Fast trigger delay length", 0);
   CLabel[3]->SetToolTipText("Veto stretch length", 0);
   CLabel[4]->SetToolTipText("Channel trigger stretch length", 0);
   CLabel[5]->SetToolTipText("Fast trigger stretch length", 0);
+
+  //-----------------------------------
+
+  CLabel[MULTIPLICITYOFFSET+0]->SetText("Left[0-FFFF]");
+  CLabel[MULTIPLICITYOFFSET+0]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("orange", color);
+  CLabel[MULTIPLICITYOFFSET+0]->SetTextColor(color, false);
+  CLabel[MULTIPLICITYOFFSET+1]->SetText("Itself[0-FFFF]");
+  CLabel[MULTIPLICITYOFFSET+1]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("orange", color);
+  CLabel[MULTIPLICITYOFFSET+1]->SetTextColor(color, false);
+  CLabel[MULTIPLICITYOFFSET+2]->SetText("Right[0-FFFF]");
+  CLabel[MULTIPLICITYOFFSET+2]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("orange", color);
+  CLabel[MULTIPLICITYOFFSET+2]->SetTextColor(color, false);
+  CLabel[MULTIPLICITYOFFSET+3]->SetText("ItselfCoin[0-7]");//1st
+  CLabel[MULTIPLICITYOFFSET+3]->SetTextColor(color, false);
+  CLabel[MULTIPLICITYOFFSET+4]->SetText("RightCoin[0-7]");//2nd
+  CLabel[MULTIPLICITYOFFSET+4]->SetTextColor(color, false);
+  CLabel[MULTIPLICITYOFFSET+5]->SetText("LeftCoin[0-7]");//3rd
+  CLabel[MULTIPLICITYOFFSET+5]->SetTextColor(color, false);
+  CLabel[MULTIPLICITYOFFSET+6]->SetText("MultiThre[0-31]");
+  CLabel[MULTIPLICITYOFFSET+6]->SetAlignment(kTextCenterX);
+
+  CLabel[MULTIPLICITYOFFSET+7]->SetText("Sel Coin/Multi");
+  CLabel[MULTIPLICITYOFFSET+7]->SetAlignment(kTextCenterX);  
+  CLabel[MULTIPLICITYOFFSET+8]->SetText("Sel ChValidTrig");
+  CLabel[MULTIPLICITYOFFSET+8]->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("red", color);
+  CLabel[MULTIPLICITYOFFSET+7]->SetTextColor(color, false);
+  CLabel[MULTIPLICITYOFFSET+8]->SetTextColor(color, false);
+  
+  CLabel[MULTIPLICITYOFFSET+0]->SetToolTipText("masking fast triggers from the module's left neighbor", 0);
+  CLabel[MULTIPLICITYOFFSET+1]->SetToolTipText("masking fast triggers from the module itself", 0);
+  CLabel[MULTIPLICITYOFFSET+2]->SetToolTipText("masking fast triggers from the module's right neighbor", 0);
+  CLabel[MULTIPLICITYOFFSET+3]->SetToolTipText("Threshold for 1st 16-bit coincidence trigger", 0);
+  CLabel[MULTIPLICITYOFFSET+4]->SetToolTipText("Threshold for 2nd 16-bit coincidence trigger", 0);
+  CLabel[MULTIPLICITYOFFSET+5]->SetToolTipText("Threshold for 3rd 16-bit coincidence trigger", 0);
+  CLabel[MULTIPLICITYOFFSET+6]->SetToolTipText("Threshold for the multiplicity trigger", 0);
+  CLabel[MULTIPLICITYOFFSET+7]->SetToolTipText("Select eithor coincidence trigger(0) or multiplicity trigger(1) as the source of the the channel coincidence/multiplicity trigger", 0);
+  CLabel[MULTIPLICITYOFFSET+8]->SetToolTipText("Select channel coincidence/multiplicity trigger(0) or other group trigger(1) as the source of the channel validation trigger", 0);
+
+  for (int i = MULTIPLICITYOFFSET+1; i < MULTIPLICITYOFFSET+4; ++i)
+    for (int j = 0; j < 16; ++j)
+      {
+	NumEntry[MULTIPLICITYOFFSET+i][j]->SetFormat(TGNumberFormat::kNESHex);
+	NumEntry[MULTIPLICITYOFFSET+i][j]->SetLimits(TGNumberFormat::kNELLimitMinMax,0, 65535);
+      }
+  
+
+
   
   ////////////////////////Copy button//////////////////////////
   TGHorizontal3DLine *ln2 = new TGHorizontal3DLine(mn_vert, 200, 2);
-  mn_vert->AddFrame(ln2, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10)); 
+  mn_vert->AddFrame(ln2, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
+
+  
   TGHorizontalFrame *CopyButton = new TGHorizontalFrame(mn_vert, 400, 300);
   mn_vert->AddFrame(CopyButton, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
@@ -83,22 +135,80 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   copyB->SetToolTipText("Copy the setup of the selected channel to all channels of the module", 0);
   CopyButton->AddFrame(copyB, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 0, 0));
 
-
+  
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
   TGHorizontal3DLine *ln22 = new TGHorizontal3DLine(mn_vert, 200, 2);
   mn_vert->AddFrame(ln22, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
-  TGHorizontalFrame *TrigConfig = new TGHorizontalFrame(mn_vert, 400, 300);
-  mn_vert->AddFrame(TrigConfig, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
-  TGVerticalFrame *fV1 = new TGVerticalFrame(TrigConfig, 10, 10);
-  TGVerticalFrame *fV2 = new TGVerticalFrame(TrigConfig, 10, 10);
-  TGVerticalFrame *fV3 = new TGVerticalFrame(TrigConfig, 10, 10);
-  TGVerticalFrame *fV4 = new TGVerticalFrame(TrigConfig, 10, 10);
-  TrigConfig->AddFrame(fV1, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  TrigConfig->AddFrame(fV2, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  TrigConfig->AddFrame(fV3, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  TrigConfig->AddFrame(fV4, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  TGHorizontalFrame *Backplane = new TGHorizontalFrame(mn_vert, 400, 300);
+  mn_vert->AddFrame(Backplane, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 10));
+
+  TGHorizontalFrame *fVV1_ = new TGHorizontalFrame(Backplane, 10, 10);
+  Backplane->AddFrame(fVV1_, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  TGTextEntry *LabelFastTriggerBackplaneLeft = new TGTextEntry(fVV1_,new TGTextBuffer(100));
+  LabelFastTriggerBackplaneLeft->SetText("FastTrigBackplaneLeft[0-FFFF]");
+  LabelFastTriggerBackplaneLeft->SetEnabled(kFALSE);
+  LabelFastTriggerBackplaneLeft->SetAlignment(kTextCenterX);
+  // LabelFastTriggerBackplaneLeft->SetToolTipText("", 0);
+  LabelFastTriggerBackplaneLeft->Resize(200, 20);
+  fVV1_->AddFrame(LabelFastTriggerBackplaneLeft, new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
+  fasttriggerbackplaneena[0] = new TGNumberEntryField(fVV1_, 0, 0, TGNumberFormat::kNESHex);
+  fasttriggerbackplaneena[0]->SetLimits(TGNumberFormat::kNELLimitMinMax,0, 65535);
+  fVV1_->AddFrame(fasttriggerbackplaneena[0], new TGLayoutHints( kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  
+  TGHorizontalFrame *fVV2_ = new TGHorizontalFrame(Backplane, 10, 10);
+  Backplane->AddFrame(fVV2_, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  TGTextEntry *LabelFastTriggerBackplaneRight = new TGTextEntry(fVV2_,new TGTextBuffer(100));
+  LabelFastTriggerBackplaneRight->SetText("FastTrigBackplaneRight[0-FFFF]");
+  LabelFastTriggerBackplaneRight->SetEnabled(kFALSE);
+  LabelFastTriggerBackplaneRight->SetAlignment(kTextCenterX);
+  // LabelFastTriggerBackplaneRight->SetToolTipText("", 0);
+  LabelFastTriggerBackplaneRight->Resize(200, 20);
+  fVV2_->AddFrame(LabelFastTriggerBackplaneRight, new TGLayoutHints(kLHintsCenterX, 20, 0, 0, 0));
+  fasttriggerbackplaneena[1] = new TGNumberEntryField(fVV2_, 1, 0, TGNumberFormat::kNESHex);
+  fasttriggerbackplaneena[1]->SetLimits(TGNumberFormat::kNELLimitMinMax,0, 65535);
+  fVV2_->AddFrame(fasttriggerbackplaneena[1], new TGLayoutHints( kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  TGHorizontalFrame *fVV00000 = new TGHorizontalFrame(mn_vert, 10, 10);
+  mn_vert->AddFrame(fVV00000, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+
+  TGTextEntry *textchannelvalidationtrigger = new TGTextEntry(fVV00000,new TGTextBuffer(30));
+  fClient->GetColorByName("red", color);
+  textchannelvalidationtrigger->SetTextColor(color, false);
+  textchannelvalidationtrigger->SetText("Channel Validation Trigger(group trigger):  (ExtFastTriGate => 'FT' AND 'Ext_Fast_Trig_In(module fast trigger)')");
+  textchannelvalidationtrigger->Resize(800, 12);
+  textchannelvalidationtrigger->SetEnabled(kFALSE);
+  textchannelvalidationtrigger->SetFrameDrawn(kFALSE);
+  fVV00000->AddFrame(textchannelvalidationtrigger, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+
+
+  
+  // TGHorizontalFrame *TrigConfig = new TGHorizontalFrame(mn_vert, 400, 300);
+  // mn_vert->AddFrame(TrigConfig, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  // TGVerticalFrame *fV1 = new TGVerticalFrame(TrigConfig, 10, 10);
+  // TGVerticalFrame *fV2 = new TGVerticalFrame(TrigConfig, 10, 10);
+  // TGVerticalFrame *fV3 = new TGVerticalFrame(TrigConfig, 10, 10);
+  // TGVerticalFrame *fV4 = new TGVerticalFrame(TrigConfig, 10, 10);
+  // TrigConfig->AddFrame(fV1, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  // TrigConfig->AddFrame(fV2, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  // TrigConfig->AddFrame(fV3, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  // TrigConfig->AddFrame(fV4, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+
+  
+  TGHorizontalFrame *fV1 = new TGHorizontalFrame(mn_vert, 10, 10);
+  TGHorizontalFrame *fV2 = new TGHorizontalFrame(mn_vert, 10, 10);
+  TGHorizontalFrame *fV3 = new TGHorizontalFrame(mn_vert, 10, 10);
+  TGHorizontalFrame *fV4 = new TGHorizontalFrame(mn_vert, 10, 10);
+  mn_vert->AddFrame(fV1, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  mn_vert->AddFrame(fV2, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  mn_vert->AddFrame(fV3, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  mn_vert->AddFrame(fV4, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+
 
   char tempname[16];
   
@@ -302,34 +412,62 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   GroupTri3_2->Select(1);
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
   TGHorizontal3DLine *ln222 = new TGHorizontal3DLine(mn_vert, 200, 2);
   mn_vert->AddFrame(ln222, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
 
-  
-  TGHorizontalFrame *fVV0 = new TGHorizontalFrame(mn_vert, 10, 10);
-  mn_vert->AddFrame(fVV0, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  TGTextEntry *LabelChannelTrigger = new TGTextEntry(fVV0,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelChannelTrigger,(char *)"Channel Trigger:",(char *)"Select source channel for the channel trigger from one of 16 channel triggers");
-  LabelChannelTrigger->Resize(200, 20);
-  fVV0->AddFrame(LabelChannelTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
-  ChannelTrigger = new TGComboBox(fVV0);
-  fVV0->AddFrame(ChannelTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
-  ChannelTrigger->Resize(100, 20);
-  for (int i = 0; i < 16; ++i)
-    {
-      sprintf(tempname,"Ch %02d",i);
-      ChannelTrigger->AddEntry(tempname, i+1);
-    }
-  ChannelTrigger->Select(1);
 
-  TGHorizontal3DLine *ln333 = new TGHorizontal3DLine(mn_vert, 200, 2);
-  mn_vert->AddFrame(ln333, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
+  int intlengthlabelmoduletrigger = 160;
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
+  TGHorizontalFrame *fVV00 = new TGHorizontalFrame(mn_vert, 10, 10);
+  mn_vert->AddFrame(fVV00, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+
+  TGTextEntry *textmodulefasttrigger = new TGTextEntry(fVV00,new TGTextBuffer(30));
+  fClient->GetColorByName("blue", color);
+  textmodulefasttrigger->SetTextColor(color, false);
+  textmodulefasttrigger->SetText("Module Fast Trigger:");
+  textmodulefasttrigger->Resize(200, 12);
+  textmodulefasttrigger->SetEnabled(kFALSE);
+  textmodulefasttrigger->SetFrameDrawn(kFALSE);
+  fVV00->AddFrame(textmodulefasttrigger, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+
+  TGHorizontalFrame *fVV4 = new TGHorizontalFrame(mn_vert, 10, 10);
+  mn_vert->AddFrame(fVV4, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  TGTextEntry *LabelGlobalFastTrigger = new TGTextEntry(fVV4,new TGTextBuffer(100));
+  TGTextEntryAddStyle(LabelGlobalFastTrigger,(char *)"Source",(char *)"Select source for global fast trigger");
+  LabelGlobalFastTrigger->Resize(intlengthlabelmoduletrigger, 20);
+  fVV4->AddFrame(LabelGlobalFastTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  GlobalFastTrigger = new TGComboBox(fVV4);
+  fVV4->AddFrame(GlobalFastTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
+  GlobalFastTrigger->Resize(500, 20);
+  GlobalFastTrigger->AddEntry("current module (Ext_FastTrig_In)", 1);
+  GlobalFastTrigger->AddEntry("a master module in the crate through the backplane (FT_LocalCrate_BP)", 2);
+  GlobalFastTrigger->AddEntry("trigger module between multiple crates (FT_In_BP)", 3);
+  GlobalFastTrigger->AddEntry("a wired or bus line on the backplane (FT_WiredOr)", 4);
+  GlobalFastTrigger->Select(1);  
+
+  TGHorizontalFrame *fVV2 = new TGHorizontalFrame(mn_vert, 10, 10);
+  mn_vert->AddFrame(fVV2, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  TGTextEntry *LabelExternalFastTrigger = new TGTextEntry(fVV2,new TGTextBuffer(100));
+  TGTextEntryAddStyle(LabelExternalFastTrigger,(char *)"Current Module",(char *)"Select source for external fast trigger");
+  LabelExternalFastTrigger->Resize(intlengthlabelmoduletrigger, 20);
+  fVV2->AddFrame(LabelExternalFastTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  ExternalFastTrigger = new TGComboBox(fVV2);
+  fVV2->AddFrame(ExternalFastTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
+  ExternalFastTrigger->Resize(320, 20);
+  ExternalFastTrigger->AddEntry("Ext_FastTrig_Sel(front panel TTL)", 1);
+  ExternalFastTrigger->AddEntry("Int_FastTrig_Sgl(1 out of 16 fast trigger)", 2);
+  ExternalFastTrigger->AddEntry("FTIN_Or(OR of 16 fast trigger)", 3);
+  ExternalFastTrigger->AddEntry("LVDS_ValidTrig_FP(front panel Ethernet cables)", 4);
+  ExternalFastTrigger->AddEntry("ChanTrig_Sel(1 out of 16 valid trigger)", 5);
+  ExternalFastTrigger->Select(1);
+
   TGHorizontalFrame *fVV1 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fVV1, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   TGTextEntry *LabelInternalFastTrigger = new TGTextEntry(fVV1,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelInternalFastTrigger,(char *)"Internal Fast Trigger:",(char *)"Select source channel for the internal fast trigger from one of the 16 local channels(0-15)");
-  LabelInternalFastTrigger->Resize(200, 20);
+  TGTextEntryAddStyle(LabelInternalFastTrigger,(char *)"Int_FastTrig_Sgl",(char *)"Select source channel for the internal fast trigger from one of the 16 local channels(0-15)");
+  LabelInternalFastTrigger->Resize(intlengthlabelmoduletrigger, 20);
   fVV1->AddFrame(LabelInternalFastTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
   InternalFastTrigger = new TGComboBox(fVV1);
   fVV1->AddFrame(InternalFastTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
@@ -341,46 +479,61 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
     }
   InternalFastTrigger->Select(1);
 
-  TGHorizontalFrame *fVV2 = new TGHorizontalFrame(mn_vert, 10, 10);
-  mn_vert->AddFrame(fVV2, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  TGTextEntry *LabelExternalFastTrigger = new TGTextEntry(fVV2,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelExternalFastTrigger,(char *)"External Fast Trigger:",(char *)"Select source for external fast trigger");
-  LabelExternalFastTrigger->Resize(200, 20);
-  fVV2->AddFrame(LabelExternalFastTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
-  ExternalFastTrigger = new TGComboBox(fVV2);
-  fVV2->AddFrame(ExternalFastTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
-  ExternalFastTrigger->Resize(150, 20);
-  ExternalFastTrigger->AddEntry("Ext_FastTrig_Sel", 1);
-  ExternalFastTrigger->AddEntry("Int_FastTrig_Sgl", 2);
-  ExternalFastTrigger->AddEntry("FTIN_Or", 3);
-  ExternalFastTrigger->AddEntry("LVDS_ValidTrig_FP", 4);
-  ExternalFastTrigger->AddEntry("ChanTrig_Sel", 5);
-  ExternalFastTrigger->Select(1);
 
-  TGHorizontalFrame *fVV4 = new TGHorizontalFrame(mn_vert, 10, 10);
-  mn_vert->AddFrame(fVV4, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  TGTextEntry *LabelGlobalFastTrigger = new TGTextEntry(fVV4,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGlobalFastTrigger,(char *)"Global Fast Trigger:",(char *)"Select source for global fast trigger");
-  LabelGlobalFastTrigger->Resize(200, 20);
-  fVV4->AddFrame(LabelGlobalFastTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
-  GlobalFastTrigger = new TGComboBox(fVV4);
-  fVV4->AddFrame(GlobalFastTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
-  GlobalFastTrigger->Resize(280, 20);
-  GlobalFastTrigger->AddEntry("current module", 1);
-  GlobalFastTrigger->AddEntry("a master module in the crate through the backplane", 2);
-  GlobalFastTrigger->AddEntry("trigger module between multiple crates", 3);
-  GlobalFastTrigger->AddEntry("a wired or bus line on the backplane", 4);
-  GlobalFastTrigger->Select(1);  
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+  TGHorizontal3DLine *ln333 = new TGHorizontal3DLine(mn_vert, 200, 2);
+  mn_vert->AddFrame(ln333, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
 
-  TGHorizontal3DLine *ln444 = new TGHorizontal3DLine(mn_vert, 200, 2);
-  mn_vert->AddFrame(ln444, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+  TGHorizontalFrame *fVV000 = new TGHorizontalFrame(mn_vert, 10, 10);
+  mn_vert->AddFrame(fVV000, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  TGTextEntry *textmodulevalidationtrigger = new TGTextEntry(fVV000,new TGTextBuffer(30));
+  fClient->GetColorByName("blue", color);
+  textmodulevalidationtrigger->SetTextColor(color, false);
+  textmodulevalidationtrigger->SetText("Module Validation Trigger:");
+  textmodulevalidationtrigger->Resize(200, 12);
+  textmodulevalidationtrigger->SetEnabled(kFALSE);
+  textmodulevalidationtrigger->SetFrameDrawn(kFALSE);
+  fVV000->AddFrame(textmodulevalidationtrigger, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
   
+  TGHorizontalFrame *fVV5 = new TGHorizontalFrame(mn_vert, 10, 10);
+  mn_vert->AddFrame(fVV5, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  TGTextEntry *LabelGlobalValidationTrigger = new TGTextEntry(fVV5,new TGTextBuffer(100));
+  TGTextEntryAddStyle(LabelGlobalValidationTrigger,(char *)"source",(char *)"Select source for global validation trigger");
+  LabelGlobalValidationTrigger->Resize(intlengthlabelmoduletrigger, 20);
+  fVV5->AddFrame(LabelGlobalValidationTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  GlobalValidationTrigger = new TGComboBox(fVV5);
+  fVV5->AddFrame(GlobalValidationTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
+  GlobalValidationTrigger->Resize(500, 20);
+  GlobalValidationTrigger->AddEntry("current module (Ext_VaildTrig_In)", 1);
+  GlobalValidationTrigger->AddEntry("a master module in the crate through the backplane (ET_LocalCrate_BP)", 2);
+  GlobalValidationTrigger->AddEntry("trigger module between multiple crates (ET_In_BP)", 3);
+  GlobalValidationTrigger->AddEntry("a wired or bus line on the backplane (ET_WiredOr)", 4);
+  GlobalValidationTrigger->Select(1);  
+
+  TGHorizontalFrame *fVV6 = new TGHorizontalFrame(mn_vert, 10, 10);
+  mn_vert->AddFrame(fVV6, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  TGTextEntry *LabelExternalValidationTrigger = new TGTextEntry(fVV6,new TGTextBuffer(100));
+  TGTextEntryAddStyle(LabelExternalValidationTrigger,(char *)"Current Module",(char *)"Select source for external validation trigger");
+  LabelExternalValidationTrigger->Resize(intlengthlabelmoduletrigger, 20);
+  fVV6->AddFrame(LabelExternalValidationTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  ExternalValidationTrigger = new TGComboBox(fVV6);
+  fVV6->AddFrame(ExternalValidationTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
+  ExternalValidationTrigger->Resize(320, 20);
+  ExternalValidationTrigger->AddEntry("Ext_ValidTrig_Sel(front panel TTL)", 1);
+  ExternalValidationTrigger->AddEntry("Int_ValidTrig_Sgl(1 out of 16 fast trigger)", 2);
+  ExternalValidationTrigger->AddEntry("FTIN_Or(OR of 16 fast trigger)", 3);
+  ExternalValidationTrigger->AddEntry("LVDS_ValidTrig_FP(front panel Ethernet cables)", 4);
+  ExternalValidationTrigger->AddEntry("ChanTrig_Sel(1 out of 16 valid trigger)", 5);
+  ExternalValidationTrigger->Select(1);
+
   TGHorizontalFrame *fVV3 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fVV3, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   TGTextEntry *LabelInternalValidationTrigger = new TGTextEntry(fVV3,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelInternalValidationTrigger,(char *)"Internal Validation Trigger:",(char *)"Select source channel for the internal validation trigger from one of the 16 local channels(0-15)");
-  LabelInternalValidationTrigger->Resize(200, 20);
+  TGTextEntryAddStyle(LabelInternalValidationTrigger,(char *)"Int_ValidTrig_Sgl",(char *)"Select source channel for the internal validation trigger from one of the 16 local channels(0-15)");
+  LabelInternalValidationTrigger->Resize(intlengthlabelmoduletrigger, 20);
   fVV3->AddFrame(LabelInternalValidationTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
   InternalValidationTrigger = new TGComboBox(fVV3);
   fVV3->AddFrame(InternalValidationTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
@@ -393,41 +546,40 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   InternalValidationTrigger->Select(1);
   
 
-  TGHorizontalFrame *fVV6 = new TGHorizontalFrame(mn_vert, 10, 10);
-  mn_vert->AddFrame(fVV6, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  TGTextEntry *LabelExternalValidationTrigger = new TGTextEntry(fVV6,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelExternalValidationTrigger,(char *)"External Validation Trigger:",(char *)"Select source for external validation trigger");
-  LabelExternalValidationTrigger->Resize(200, 20);
-  fVV6->AddFrame(LabelExternalValidationTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
-  ExternalValidationTrigger = new TGComboBox(fVV6);
-  fVV6->AddFrame(ExternalValidationTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
-  ExternalValidationTrigger->Resize(150, 20);
-  ExternalValidationTrigger->AddEntry("Ext_ValidTrig_Sel", 1);
-  ExternalValidationTrigger->AddEntry("Int_ValidTrig_Sgl", 2);
-  ExternalValidationTrigger->AddEntry("FTIN_Or", 3);
-  ExternalValidationTrigger->AddEntry("LVDS_ValidTrig_FP", 4);
-  ExternalValidationTrigger->AddEntry("ChanTrig_Sel", 5);
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+  TGHorizontal3DLine *ln444 = new TGHorizontal3DLine(mn_vert, 200, 2);
+  mn_vert->AddFrame(ln444, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
-  ExternalValidationTrigger->Select(1);
-
-  TGHorizontalFrame *fVV5 = new TGHorizontalFrame(mn_vert, 10, 10);
-  mn_vert->AddFrame(fVV5, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  TGTextEntry *LabelGlobalValidationTrigger = new TGTextEntry(fVV5,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGlobalValidationTrigger,(char *)"Global Validation Trigger:",(char *)"Select source for global validation trigger");
-  LabelGlobalValidationTrigger->Resize(200, 20);
-  fVV5->AddFrame(LabelGlobalValidationTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
-  GlobalValidationTrigger = new TGComboBox(fVV5);
-  fVV5->AddFrame(GlobalValidationTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
-  GlobalValidationTrigger->Resize(280, 20);
-  GlobalValidationTrigger->AddEntry("current module", 1);
-  GlobalValidationTrigger->AddEntry("a master module in the crate through the backplane", 2);
-  GlobalValidationTrigger->AddEntry("trigger module between multiple crates", 3);
-  GlobalValidationTrigger->AddEntry("a wired or bus line on the backplane", 4);
-  GlobalValidationTrigger->Select(1);  
-
-
-
-
+  TGHorizontalFrame *fVV0000 = new TGHorizontalFrame(mn_vert, 10, 10);
+  mn_vert->AddFrame(fVV0000, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  TGTextEntry *textmoduletriggerchantrigsel = new TGTextEntry(fVV0000,new TGTextBuffer(30));
+  fClient->GetColorByName("blue", color);
+  textmoduletriggerchantrigsel->SetTextColor(color, false);
+  textmoduletriggerchantrigsel->SetText("Module Fast/Validation Trigger ChanTrig_Sel:");
+  textmoduletriggerchantrigsel->Resize(300, 12);
+  textmoduletriggerchantrigsel->SetEnabled(kFALSE);
+  textmoduletriggerchantrigsel->SetFrameDrawn(kFALSE);
+  fVV0000->AddFrame(textmoduletriggerchantrigsel, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+  
+  TGHorizontalFrame *fVV0 = new TGHorizontalFrame(mn_vert, 10, 10);
+  mn_vert->AddFrame(fVV0, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  TGTextEntry *LabelChannelTrigger = new TGTextEntry(fVV0,new TGTextBuffer(100));
+  TGTextEntryAddStyle(LabelChannelTrigger,(char *)"Channel Trigger:",(char *)"Select source channel for the channel trigger from one of 16 channel triggers");
+  LabelChannelTrigger->Resize(intlengthlabelmoduletrigger, 20);
+  fVV0->AddFrame(LabelChannelTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  ChannelTrigger = new TGComboBox(fVV0);
+  fVV0->AddFrame(ChannelTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
+  ChannelTrigger->Resize(100, 20);
+  for (int i = 0; i < 16; ++i)
+    {
+      sprintf(tempname,"Ch %02d",i);
+      ChannelTrigger->AddEntry(tempname, i+1);
+    }
+  ChannelTrigger->Select(1);
+  
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
     
@@ -532,6 +684,16 @@ Bool_t LogicTrigger::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      chantrigstretch = NumEntry[5][chanNumber]->GetNumber();
 	      fasttrigbacklen = NumEntry[6][chanNumber]->GetNumber();
 	      
+	      MultiLeft = NumEntry[MULTIPLICITYOFFSET+1][chanNumber]->GetNumber();
+	      MultiItself = NumEntry[MULTIPLICITYOFFSET+2][chanNumber]->GetNumber();
+	      MultiRight = NumEntry[MULTIPLICITYOFFSET+3][chanNumber]->GetNumber();
+	      Multi1st = NumEntry[MULTIPLICITYOFFSET+4][chanNumber]->GetNumber();
+	      Multi2nd = NumEntry[MULTIPLICITYOFFSET+5][chanNumber]->GetNumber();
+	      Multi3rd = NumEntry[MULTIPLICITYOFFSET+6][chanNumber]->GetNumber();
+	      MultiThreshold = NumEntry[MULTIPLICITYOFFSET+7][chanNumber]->GetNumber();
+	      SelCoinMulti = NumEntry[MULTIPLICITYOFFSET+8][chanNumber]->GetNumber();
+	      SelChValidTrig = NumEntry[MULTIPLICITYOFFSET+9][chanNumber]->GetNumber();
+	      
 	      for(int i=0;i<16;i++)
 		{
 		  if(i != (chanNumber))
@@ -549,6 +711,25 @@ Bool_t LogicTrigger::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		      NumEntry[5][i]->SetText(tmp);
 		      sprintf(tmp,"%1.3f",fasttrigbacklen);
 		      NumEntry[6][i]->SetText(tmp);
+		      
+	      	      sprintf(tmp,"%04X",MultiLeft);
+	      	      NumEntry[MULTIPLICITYOFFSET+1][i]->SetText(tmp);
+	      	      sprintf(tmp,"%04X",MultiItself);
+	      	      NumEntry[MULTIPLICITYOFFSET+2][i]->SetText(tmp);
+		      sprintf(tmp,"%04X",MultiRight);
+	      	      NumEntry[MULTIPLICITYOFFSET+3][i]->SetText(tmp);
+		      sprintf(tmp,"%d",Multi1st);
+	      	      NumEntry[MULTIPLICITYOFFSET+4][i]->SetText(tmp);
+		      sprintf(tmp,"%d",Multi2nd);
+	      	      NumEntry[MULTIPLICITYOFFSET+5][i]->SetText(tmp);
+		      sprintf(tmp,"%d",Multi3rd);
+	      	      NumEntry[MULTIPLICITYOFFSET+6][i]->SetText(tmp);
+		      sprintf(tmp,"%d",MultiThreshold);
+	      	      NumEntry[MULTIPLICITYOFFSET+7][i]->SetText(tmp);
+		      sprintf(tmp,"%d",SelCoinMulti);
+	      	      NumEntry[MULTIPLICITYOFFSET+8][i]->SetText(tmp);
+		      sprintf(tmp,"%d",SelChValidTrig);
+	      	      NumEntry[MULTIPLICITYOFFSET+9][i]->SetText(tmp);
 		    }
 		}  
 	      break;
@@ -585,6 +766,7 @@ int LogicTrigger::load_info(Long_t mod)
 {
   double ChanParData = -1;
   unsigned int ModParData;
+  unsigned int b;
   int retval;
   char text[20];
 
@@ -627,6 +809,86 @@ int LogicTrigger::load_info(Long_t mod)
       NumEntry[6][i]->SetText(text);
     }
 
+  //=============================
+
+  unsigned int BackplaneEna = 0; 
+  retval = Pixie16ReadSglModPar((char*)"FastTrigBackplaneEna", &BackplaneEna, mod);
+  if(retval < 0) ErrorInfo("MultiplicityMask.cc", "load_info(...)", "Pixie16ReadSglModPar/FastTrigBackplaneEna", retval);
+  b = 0;
+  for (int j = 0; j < 16; j++)
+    {
+      b += (APP32_TstBit(j, BackplaneEna)<<j);
+    }
+  sprintf(text, "%04X", b);
+  fasttriggerbackplaneena[0]->SetText(text);
+  b = 0;
+  for (int j = 0; j < 16; j++)
+    {
+      b += (APP32_TstBit(j+16, BackplaneEna)<<j);
+    }
+  sprintf(text, "%04X", b);
+  fasttriggerbackplaneena[1]->SetText(text);
+  
+  
+  for (int i = 0; i < 16; i++)
+    {
+      retval = Pixie16ReadSglChanPar((char*)"MultiplicityMaskL", &ChanParData, mod, i);
+      if(retval < 0) ErrorInfo("MultiplicityMask.cc", "load_info(...)", "Pixie16ReadSglChanPar/MultiplicityMaskL", retval);
+
+      b = 0;
+      for (int j = 0; j < 16; j++)
+	{
+	  b += (APP32_TstBit(j, ChanParData)<<j);
+	}
+      sprintf(text, "%04X", b);
+      NumEntry[MULTIPLICITYOFFSET+2][i]->SetText(text);
+
+      b = 0;
+      for (int j = 0; j < 16; j++)
+	{
+	  b += (APP32_TstBit(j+16, ChanParData)<<j);
+	}
+      sprintf(text, "%04X", b);
+      NumEntry[MULTIPLICITYOFFSET+3][i]->SetText(text);
+
+      retval = Pixie16ReadSglChanPar((char*)"MultiplicityMaskH", &ChanParData, mod, i);
+      if(retval < 0) ErrorInfo("MultiplicityMask.cc", "load_info(...)", "Pixie16ReadSglChanPar/MultiplicityMaskH", retval);
+
+      b = 0;
+      for (int j = 0; j < 16; j++)
+	{
+	  b += (APP32_TstBit(j, ChanParData)<<j);
+	}
+      sprintf(text, "%04X", b);
+      NumEntry[MULTIPLICITYOFFSET+1][i]->SetText(text);
+
+      b = (APP32_TstBit(24, ChanParData)<<2)+(APP32_TstBit(23, ChanParData)<<1)+APP32_TstBit(22, ChanParData);
+      sprintf(text, "%d", b);
+      NumEntry[MULTIPLICITYOFFSET+4][i]->SetText(text);
+      
+      b = (APP32_TstBit(27, ChanParData)<<2)+(APP32_TstBit(26, ChanParData)<<1)+APP32_TstBit(25, ChanParData);
+      sprintf(text, "%d", b);
+      NumEntry[MULTIPLICITYOFFSET+5][i]->SetText(text);
+
+      b = (APP32_TstBit(30, ChanParData)<<2)+(APP32_TstBit(29, ChanParData)<<1)+APP32_TstBit(28, ChanParData);
+      sprintf(text, "%d", b);
+      NumEntry[MULTIPLICITYOFFSET+6][i]->SetText(text);      
+
+      b = (APP32_TstBit(21, ChanParData)<<4)+(APP32_TstBit(20, ChanParData)<<3)+(APP32_TstBit(19, ChanParData)<<2)+(APP32_TstBit(18, ChanParData)<<1)+APP32_TstBit(17, ChanParData);
+      sprintf(text, "%d", b);
+      NumEntry[MULTIPLICITYOFFSET+7][i]->SetText(text);  
+
+      b = APP32_TstBit(16, ChanParData);
+      sprintf(text, "%d", b);
+      NumEntry[MULTIPLICITYOFFSET+8][i]->SetText(text);
+      
+      b = APP32_TstBit(31, ChanParData);
+      sprintf(text, "%d", b);
+      NumEntry[MULTIPLICITYOFFSET+9][i]->SetText(text);      
+    }
+
+  //=============================
+  
   retval = Pixie16ReadSglModPar((char*)"TrigConfig0", &ModParData, mod);
   if(retval < 0)
     std::cout<<"Error: LogicTrigger.cc - Pixie16ReadSglModPar - TrigConfig0"<<std::endl;        
@@ -676,6 +938,13 @@ int LogicTrigger::change_values(Long_t mod)
   double ChanParData = -1;
   unsigned int ModParData;
   int retval;
+
+  unsigned short d1,d2,d3,d4,d5,d6,d7;
+  bool dd1,dd2;
+  int a;
+  unsigned int BackplaneEna = 0;
+  unsigned int b1,b2;
+
   
   for (int i = 0; i < 16; i++)
     {
@@ -745,7 +1014,103 @@ int LogicTrigger::change_values(Long_t mod)
   SetMultipleBit(&ModParData,ChannelTrigger->GetSelected(),31,30,29,28);
   retval = Pixie16WriteSglModPar((char*)"TrigConfig2", ModParData, mod);
   if(retval < 0) ErrorInfo("LogicTrigger.cc", "change_values(...)", "Pixie16WriteSglModPar/TrigConfig2", retval);
+
+  //==================
+
+  b1 = fasttriggerbackplaneena[0]->GetNumber();
+  b2 = fasttriggerbackplaneena[1]->GetNumber();
+  a = 0;
+  for (int j = 0; j < 16; j++)
+    {
+      a = (1<<j);
+      if(b1 & a) BackplaneEna = APP32_SetBit(j,BackplaneEna);
+      else BackplaneEna = APP32_ClrBit(j,BackplaneEna);
+      if(b2 & a) BackplaneEna = APP32_SetBit(j+16,BackplaneEna);
+      else BackplaneEna = APP32_ClrBit(j+16,BackplaneEna);
+    }
+  retval = Pixie16WriteSglModPar((char*)"FastTrigBackplaneEna",BackplaneEna, mod);
+  if(retval < 0) ErrorInfo("MultiplicityMask.cc", "change_values(...)", "Pixie16WriteSglModPar/FastTrigBackplaneEna", retval);
+
   
+  for (int i = 0; i < 16; i++)
+    {
+      d2 = NumEntry[MULTIPLICITYOFFSET+2][i]->GetNumber();
+      d3 = NumEntry[MULTIPLICITYOFFSET+3][i]->GetNumber();
+      
+      d1 = NumEntry[MULTIPLICITYOFFSET+1][i]->GetNumber();
+      d4 = NumEntry[MULTIPLICITYOFFSET+4][i]->GetNumber();
+      d5 = NumEntry[MULTIPLICITYOFFSET+5][i]->GetNumber();
+      d6 = NumEntry[MULTIPLICITYOFFSET+6][i]->GetNumber();
+      d7 = NumEntry[MULTIPLICITYOFFSET+7][i]->GetNumber();
+
+      dd1 = NumEntry[MULTIPLICITYOFFSET+8][i]->GetNumber();
+      dd2 = NumEntry[MULTIPLICITYOFFSET+9][i]->GetNumber();
+      
+      ChanParData = 0;
+      a = 0;
+      for (int j = 0; j < 16; j++)
+	{
+	  a = (1<<j);
+	  if(d2 & a) ChanParData = APP32_SetBit(j,ChanParData);
+	  else ChanParData = APP32_ClrBit(j,ChanParData);
+	  if(d3 & a) ChanParData = APP32_SetBit(j+16,ChanParData);
+	  else ChanParData = APP32_ClrBit(j+16,ChanParData);
+	}
+      
+      retval = Pixie16WriteSglChanPar((char*)"MultiplicityMaskL", ChanParData, mod, i);
+      if(retval < 0) ErrorInfo("MultiplicityMask.cc", "change_values(...)", "Pixie16WriteSglChanPar/MultiplicityMaskL", retval);
+      
+      ChanParData = 0;
+      a = 0;
+      for (int j = 0; j < 16; j++)
+	{
+	  a = (1<<j);
+	  if(d1 & a) ChanParData = APP32_SetBit(j,ChanParData);
+	  else ChanParData = APP32_ClrBit(j,ChanParData);
+	}
+
+      if(d4&1) ChanParData = APP32_SetBit(22,ChanParData);
+      else ChanParData = APP32_ClrBit(22,ChanParData);
+      if(d4&2) ChanParData = APP32_SetBit(23,ChanParData);
+      else ChanParData = APP32_ClrBit(23,ChanParData);
+      if(d4&4) ChanParData = APP32_SetBit(24,ChanParData);
+      else ChanParData = APP32_ClrBit(24,ChanParData);
+
+      if(d5&1) ChanParData = APP32_SetBit(25,ChanParData);
+      else ChanParData = APP32_ClrBit(25,ChanParData);
+      if(d5&2) ChanParData = APP32_SetBit(26,ChanParData);
+      else ChanParData = APP32_ClrBit(26,ChanParData);
+      if(d5&4) ChanParData = APP32_SetBit(27,ChanParData);
+      else ChanParData = APP32_ClrBit(27,ChanParData);
+      
+      if(d6&1) ChanParData = APP32_SetBit(28,ChanParData);
+      else ChanParData = APP32_ClrBit(28,ChanParData);
+      if(d6&2) ChanParData = APP32_SetBit(29,ChanParData);
+      else ChanParData = APP32_ClrBit(29,ChanParData);
+      if(d6&4) ChanParData = APP32_SetBit(30,ChanParData);
+      else ChanParData = APP32_ClrBit(30,ChanParData);
+
+      if(d7&1) ChanParData = APP32_SetBit(17,ChanParData);
+      else ChanParData = APP32_ClrBit(17,ChanParData);
+      if(d7&2) ChanParData = APP32_SetBit(18,ChanParData);
+      else ChanParData = APP32_ClrBit(18,ChanParData);
+      if(d7&4) ChanParData = APP32_SetBit(19,ChanParData);
+      else ChanParData = APP32_ClrBit(19,ChanParData);
+      if(d7&8) ChanParData = APP32_SetBit(20,ChanParData);
+      else ChanParData = APP32_ClrBit(20,ChanParData);
+      if(d7&16) ChanParData = APP32_SetBit(21,ChanParData);
+      else ChanParData = APP32_ClrBit(21,ChanParData);
+
+      if(dd1) ChanParData = APP32_SetBit(16,ChanParData);
+      else ChanParData = APP32_ClrBit(16,ChanParData);
+
+      if(dd2) ChanParData = APP32_SetBit(31,ChanParData);
+      else ChanParData = APP32_ClrBit(31,ChanParData);
+      
+      retval = Pixie16WriteSglChanPar((char*)"MultiplicityMaskH", ChanParData, mod, i);
+      if(retval < 0) ErrorInfo("MultiplicityMask.cc", "change_values(...)", "Pixie16WriteSglChanPar/MultiplicityMaskH", retval);
+    }
+    
   return 1;
 }
 
