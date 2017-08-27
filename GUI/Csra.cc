@@ -130,7 +130,7 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   make_columns(column10, ckBtn_8, (char*)"TC", (char*)"Trace capture and associated header data", 5800,2);
   make_columns(column11, ckBtn_9, (char*)"EQS", (char*)"QDC summing and associated header data", 5900,2);
   make_columns(column12, ckBtn_10, (char*)"ECT", (char*)"CFD for real time, trace capture and QDC capture", 6000,2);
-  make_columns(column13, ckBtn_11, (char*)"MVS", (char*)"Require module validation trigger", 6100,4);
+  make_columns(column13, ckBtn_11, (char*)"MVT", (char*)"Require module validation trigger", 6100,4);
   make_columns(column14, ckBtn_12, (char*)"ERB", (char*)"Record raw energy sums and baseline in event header", 6200,2);
   make_columns(column15, ckBtn_13, (char*)"CVT", (char*)"Require channel validation trigger", 6300,4);
   make_columns(column16, ckBtn_14, (char*)"IR", (char*)"Control input relay: => Gain Smaller/Larger", 6400,2);
@@ -145,7 +145,7 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   make_columns(column20, ckBtn_18, (char*)"GTS", (char*)"Group trigger selection (local FiPPI trigger vs. external group trigger from System FPGA)", 6800,5);
   make_columns(column21, ckBtn_19, (char*)"CVS", (char*)"Channel veto selection (front panel channel GATE vs. channel validation trigger)", 6900,3);
   make_columns(column22, ckBtn_20, (char*)"MVS", (char*)"Module veto selection (front panel module GATE vs. module validation trigger)", 7000,3);
-  make_columns(column23, ckBtn_21, (char*)"EST", (char*)"Enable (checked) or disable (unchecked) recording of external clock timestamps in event header", 7100);
+  make_columns(column23, ckBtn_21, (char*)"ETS", (char*)"Enable (checked) or disable (unchecked) recording of external clock timestamps in event header", 7100);
 
   
   /////////////////////////////module entry///////////////////////////////

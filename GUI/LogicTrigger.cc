@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 六 8月 26 23:15:03 2017 (+0800)
+// Last-Updated: 日 8月 27 14:58:01 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 120
+//     Update #: 145
 // URL: http://wuhongyi.cn 
 
 #include "LogicTrigger.hh"
@@ -21,6 +21,7 @@
 LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, int columns, int rows,int NumModules)
   : Table(p,main,columns,rows,name, NumModules)
 {
+  char tempname[16];
   char n[10];
   cl0->SetText("ch #");
   for(int i=0;i<rows;i++)
@@ -170,7 +171,59 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   fVV2_->AddFrame(LabelFastTriggerBackplaneRight, new TGLayoutHints(kLHintsCenterX, 20, 0, 0, 0));
   fasttriggerbackplaneena[1] = new TGNumberEntryField(fVV2_, 1, 0, TGNumberFormat::kNESHex);
   fasttriggerbackplaneena[1]->SetLimits(TGNumberFormat::kNELLimitMinMax,0, 65535);
-  fVV2_->AddFrame(fasttriggerbackplaneena[1], new TGLayoutHints( kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  fVV2_->AddFrame(fasttriggerbackplaneena[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+
+
+  TGHorizontalFrame *frontpaneloutputframe = new TGHorizontalFrame(Backplane, 10, 10);
+  Backplane->AddFrame(frontpaneloutputframe, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+
+  TGTextEntry *LabelFrontPanelOutput = new TGTextEntry(frontpaneloutputframe,new TGTextBuffer(100));
+  LabelFrontPanelOutput->SetText("Front Panel Monitor");
+  LabelFrontPanelOutput->SetEnabled(kFALSE);
+  LabelFrontPanelOutput->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("yellow", color);
+  LabelFrontPanelOutput->SetBackgroundColor(color);
+  // LabelFrontPanelOutput->SetToolTipText("", 0);
+  LabelFrontPanelOutput->Resize(200, 20);
+  frontpaneloutputframe->AddFrame(LabelFrontPanelOutput, new TGLayoutHints(kLHintsCenterX, 20, 0, 0, 0));
+
+
+  
+  EnableDisableOfTestSignals = new TGComboBox(frontpaneloutputframe);
+  frontpaneloutputframe->AddFrame(EnableDisableOfTestSignals, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  EnableDisableOfTestSignals->Resize(100, 20);
+  EnableDisableOfTestSignals->AddEntry("Disable", 1);
+  EnableDisableOfTestSignals->AddEntry("Enable", 2);
+  EnableDisableOfTestSignals->Select(1);
+
+  GroupOfTestSignals = new TGComboBox(frontpaneloutputframe);
+  frontpaneloutputframe->AddFrame(GroupOfTestSignals, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  GroupOfTestSignals->Resize(100, 20);
+  GroupOfTestSignals->AddEntry("Group 000", 1);
+  GroupOfTestSignals->AddEntry("Group 001", 2);
+  GroupOfTestSignals->Select(1);
+
+  ChannelOfTestSignals = new TGComboBox(frontpaneloutputframe);
+  frontpaneloutputframe->AddFrame(ChannelOfTestSignals, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  ChannelOfTestSignals->Resize(100, 20);
+  for (int i = 0; i < 16; ++i)
+    {
+      sprintf(tempname,"Ch %02d",i);
+      ChannelOfTestSignals->AddEntry(tempname, i+1);
+    }
+  ChannelOfTestSignals->Select(1);
+
+  TestSignals = new TGComboBox(frontpaneloutputframe);
+  frontpaneloutputframe->AddFrame(TestSignals, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  TestSignals->Resize(100, 20);
+  for (int i = 0; i < 16; ++i)
+    {
+      sprintf(tempname,"TestSig %02d",i);
+      TestSignals->AddEntry(tempname, i+1);
+    }
+  TestSignals->Select(1);
+  
+  
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
@@ -180,8 +233,8 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   TGTextEntry *textchannelvalidationtrigger = new TGTextEntry(fVV00000,new TGTextBuffer(30));
   fClient->GetColorByName("red", color);
   textchannelvalidationtrigger->SetTextColor(color, false);
-  textchannelvalidationtrigger->SetText("Channel Validation Trigger(group trigger):  (ExtFastTriGate => 'FT' AND 'Ext_Fast_Trig_In(module fast trigger)')");
-  textchannelvalidationtrigger->Resize(800, 12);
+  textchannelvalidationtrigger->SetText("Channel Validation Trigger(System FPGA group trigger):  (ExtFastTriGate => 'FT' AND 'Ext_Fast_Trig_In(module fast trigger)') [Choose 'System FPGA' or 'front panel channel GATE' in CSRA]");
+  textchannelvalidationtrigger->Resize(1300, 12);
   textchannelvalidationtrigger->SetEnabled(kFALSE);
   textchannelvalidationtrigger->SetFrameDrawn(kFALSE);
   fVV00000->AddFrame(textchannelvalidationtrigger, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
@@ -198,8 +251,6 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   // TrigConfig->AddFrame(fV2, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   // TrigConfig->AddFrame(fV3, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   // TrigConfig->AddFrame(fV4, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-
-  
   TGHorizontalFrame *fV1 = new TGHorizontalFrame(mn_vert, 10, 10);
   TGHorizontalFrame *fV2 = new TGHorizontalFrame(mn_vert, 10, 10);
   TGHorizontalFrame *fV3 = new TGHorizontalFrame(mn_vert, 10, 10);
@@ -208,9 +259,6 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   mn_vert->AddFrame(fV2, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   mn_vert->AddFrame(fV3, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   mn_vert->AddFrame(fV4, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-
-
-  char tempname[16];
   
   // 0 - 3
   TGTextEntry *ch_0_3 = new TGTextEntry(fV1,new TGTextBuffer(100));
@@ -463,6 +511,14 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   ExternalFastTrigger->AddEntry("ChanTrig_Sel(1 out of 16 valid trigger)", 5);
   ExternalFastTrigger->Select(1);
 
+  TGTextEntry *LabelExternalFastTriggerNotes = new TGTextEntry(fVV2,new TGTextBuffer(100));
+  LabelExternalFastTriggerNotes->Resize(600, 20);
+  fVV2->AddFrame(LabelExternalFastTriggerNotes, new TGLayoutHints(kLHintsLeft, 10, 0, 3, 0));  
+  LabelExternalFastTriggerNotes->SetText("FT_LocalCrate_BP from MODCSRB[6]=1 module / FT_In_BP from MODCSRB[4]=1 module");
+  LabelExternalFastTriggerNotes->SetEnabled(kFALSE);
+  LabelExternalFastTriggerNotes->SetFrameDrawn(kFALSE);
+
+  
   TGHorizontalFrame *fVV1 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fVV1, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   TGTextEntry *LabelInternalFastTrigger = new TGTextEntry(fVV1,new TGTextBuffer(100));
@@ -492,8 +548,8 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   TGTextEntry *textmodulevalidationtrigger = new TGTextEntry(fVV000,new TGTextBuffer(30));
   fClient->GetColorByName("blue", color);
   textmodulevalidationtrigger->SetTextColor(color, false);
-  textmodulevalidationtrigger->SetText("Module Validation Trigger:");
-  textmodulevalidationtrigger->Resize(200, 12);
+  textmodulevalidationtrigger->SetText("Module Validation Trigger(System FPGA):  [Choose 'System FPGA' or 'front panel module GATE' in CSRA]");
+  textmodulevalidationtrigger->Resize(1000, 12);
   textmodulevalidationtrigger->SetEnabled(kFALSE);
   textmodulevalidationtrigger->SetFrameDrawn(kFALSE);
   fVV000->AddFrame(textmodulevalidationtrigger, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
@@ -529,6 +585,15 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   ExternalValidationTrigger->AddEntry("ChanTrig_Sel(1 out of 16 valid trigger)", 5);
   ExternalValidationTrigger->Select(1);
 
+  TGTextEntry *LabelExternalValidationTriggerNotes = new TGTextEntry(fVV6,new TGTextBuffer(100));
+  LabelExternalValidationTriggerNotes->Resize(600, 20);
+  fVV6->AddFrame(LabelExternalValidationTriggerNotes, new TGLayoutHints(kLHintsLeft, 10, 0, 3, 0));  
+  LabelExternalValidationTriggerNotes->SetText("ET_LocalCrate_BP from MODCSRB[6]=1 module / ET_In_BP from MODCSRB[4]=1 module");
+  LabelExternalValidationTriggerNotes->SetEnabled(kFALSE);
+  LabelExternalValidationTriggerNotes->SetFrameDrawn(kFALSE);
+
+  
+  
   TGHorizontalFrame *fVV3 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fVV3, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   TGTextEntry *LabelInternalValidationTrigger = new TGTextEntry(fVV3,new TGTextBuffer(100));
@@ -579,7 +644,28 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
       ChannelTrigger->AddEntry(tempname, i+1);
     }
   ChannelTrigger->Select(1);
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+  TGHorizontal3DLine *ln555 = new TGHorizontal3DLine(mn_vert, 200, 2);
+  mn_vert->AddFrame(ln555, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
+  
+  TGHorizontalFrame *fVV000000 = new TGHorizontalFrame(mn_vert, 10, 10);
+  mn_vert->AddFrame(fVV000000, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  TGTextEntry *textaboutveto = new TGTextEntry(fVV000000,new TGTextBuffer(30));
+  fClient->GetColorByName("purple", color);
+  textaboutveto->SetTextColor(color, false);
+  textaboutveto->SetText("Module/Channel Veto: [Choose 'front panel module/channel GATE' or 'module/channel vilidation trigger' in CSRA, channel veto need choose enable/disable]");
+  textaboutveto->Resize(1300, 12);
+  textaboutveto->SetEnabled(kFALSE);
+  textaboutveto->SetFrameDrawn(kFALSE);
+  fVV000000->AddFrame(textaboutveto, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+  
+
+
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
     
@@ -769,51 +855,59 @@ int LogicTrigger::load_info(Long_t mod)
   unsigned int b;
   int retval;
   char text[20];
-
+  unsigned short gt;
+  
   for (int i = 0; i < 16; i++)
     {
       retval = Pixie16ReadSglChanPar((char*)"ExtTrigStretch", &ChanParData, mod, i);
-      if(retval < 0)
-	std::cout<<"Error: LogicTrigger.cc - Pixie16ReadSglChanPar - ExtTrigStretch"<<std::endl;      
+      if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/ExtTrigStretch", retval);
       sprintf(text, "%1.2f", ChanParData);
       NumEntry[1][i]->SetText(text);
 
       retval = Pixie16ReadSglChanPar((char*)"ExternDelayLen", &ChanParData, mod, i);
-      if(retval < 0)
-	std::cout<<"Error: LogicTrigger.cc - Pixie16ReadSglChanPar - ExternDelayLen"<<std::endl;            
+      if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/ExternDelayLen", retval);
       sprintf(text, "%1.2f", ChanParData);
       NumEntry[2][i]->SetText(text);
 
       retval = Pixie16ReadSglChanPar((char*)"FtrigoutDelay", &ChanParData, mod, i);
-      if(retval < 0)
-	std::cout<<"Error: LogicTrigger.cc - Pixie16ReadSglChanPar - FtrigoutDelay"<<std::endl;            
+      if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/FtrigoutDelay", retval);    
       sprintf(text, "%1.2f", ChanParData);
       NumEntry[3][i]->SetText(text);
 
       retval = Pixie16ReadSglChanPar((char*)"VetoStretch", &ChanParData, mod, i);
-      if(retval < 0)
-	std::cout<<"Error: LogicTrigger.cc - Pixie16ReadSglChanPar - VetoStretch"<<std::endl;            
+      if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/VetoStretch", retval);
       sprintf(text, "%1.2f", ChanParData);
       NumEntry[4][i]->SetText(text);
 
       retval = Pixie16ReadSglChanPar((char*)"ChanTrigStretch", &ChanParData, mod, i);
-      if(retval < 0)
-	std::cout<<"Error: LogicTrigger.cc - Pixie16ReadSglChanPar - ChanTrigStretch"<<std::endl;      
+      if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/ChanTrigStretch", retval);
       sprintf(text, "%1.2f", ChanParData);
       NumEntry[5][i]->SetText(text);
 
       retval = Pixie16ReadSglChanPar((char*)"FASTTRIGBACKLEN", &ChanParData, mod, i);
-      if(retval < 0)
-	std::cout<<"Error: LogicTrigger.cc - Pixie16ReadSglChanPar - FASTTRIGBACKLEN"<<std::endl;      
+      if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/FASTTRIGBACKLEN", retval);     
       sprintf(text, "%1.2f", ChanParData);
       NumEntry[6][i]->SetText(text);
     }
 
   //=============================
 
+  retval = Pixie16ReadSglModPar((char*)"TrigConfig0", &ModParData, mod);
+  if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/TrigConfig0", retval);
+  gt = APP32_TstBit(15, ModParData);
+  EnableDisableOfTestSignals->Select(gt+1);
+
+  GroupOfTestSignals->Select((APP32_TstBit(14, ModParData) << 2) + (APP32_TstBit(13, ModParData) << 1) + APP32_TstBit(12, ModParData) + 1);
+  
+  ChannelOfTestSignals->Select((APP32_TstBit(19, ModParData) << 3) + (APP32_TstBit(18, ModParData) << 2) + (APP32_TstBit(17, ModParData) << 1) + APP32_TstBit(16, ModParData) + 1);
+
+  TestSignals->Select((APP32_TstBit(23, ModParData) << 3) + (APP32_TstBit(22, ModParData) << 2) + (APP32_TstBit(21, ModParData) << 1) + APP32_TstBit(20, ModParData) + 1);
+  
+  //=============================
+
   unsigned int BackplaneEna = 0; 
   retval = Pixie16ReadSglModPar((char*)"FastTrigBackplaneEna", &BackplaneEna, mod);
-  if(retval < 0) ErrorInfo("MultiplicityMask.cc", "load_info(...)", "Pixie16ReadSglModPar/FastTrigBackplaneEna", retval);
+  if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglModPar/FastTrigBackplaneEna", retval);
   b = 0;
   for (int j = 0; j < 16; j++)
     {
@@ -833,7 +927,7 @@ int LogicTrigger::load_info(Long_t mod)
   for (int i = 0; i < 16; i++)
     {
       retval = Pixie16ReadSglChanPar((char*)"MultiplicityMaskL", &ChanParData, mod, i);
-      if(retval < 0) ErrorInfo("MultiplicityMask.cc", "load_info(...)", "Pixie16ReadSglChanPar/MultiplicityMaskL", retval);
+      if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/MultiplicityMaskL", retval);
 
       b = 0;
       for (int j = 0; j < 16; j++)
@@ -852,7 +946,7 @@ int LogicTrigger::load_info(Long_t mod)
       NumEntry[MULTIPLICITYOFFSET+3][i]->SetText(text);
 
       retval = Pixie16ReadSglChanPar((char*)"MultiplicityMaskH", &ChanParData, mod, i);
-      if(retval < 0) ErrorInfo("MultiplicityMask.cc", "load_info(...)", "Pixie16ReadSglChanPar/MultiplicityMaskH", retval);
+      if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/MultiplicityMaskH", retval);
 
       b = 0;
       for (int j = 0; j < 16; j++)
@@ -890,8 +984,7 @@ int LogicTrigger::load_info(Long_t mod)
   //=============================
   
   retval = Pixie16ReadSglModPar((char*)"TrigConfig0", &ModParData, mod);
-  if(retval < 0)
-    std::cout<<"Error: LogicTrigger.cc - Pixie16ReadSglModPar - TrigConfig0"<<std::endl;        
+  if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglModPar/TrigConfig0", retval);    
   InternalFastTrigger->Select((APP32_TstBit(3, ModParData) << 3) + (APP32_TstBit(2, ModParData) << 2) + (APP32_TstBit(1, ModParData) << 1) + APP32_TstBit(0, ModParData) + 1);
   ExternalFastTrigger->Select((APP32_TstBit(7, ModParData) << 3) + (APP32_TstBit(6, ModParData) << 2) + (APP32_TstBit(5, ModParData) << 1) + APP32_TstBit(4, ModParData) + 1);
   InternalValidationTrigger->Select((APP32_TstBit(11, ModParData) << 3) + (APP32_TstBit(10, ModParData) << 2) + (APP32_TstBit(9, ModParData) << 1) + APP32_TstBit(8, ModParData) + 1);
@@ -900,8 +993,7 @@ int LogicTrigger::load_info(Long_t mod)
   ExternalValidationTrigger->Select((APP32_TstBit(31, ModParData) << 3) + (APP32_TstBit(30, ModParData) << 2) + (APP32_TstBit(29, ModParData) << 1) + APP32_TstBit(28, ModParData) + 1);
 
   retval = Pixie16ReadSglModPar((char*)"TrigConfig1", &ModParData, mod);
-  if(retval < 0)
-    std::cout<<"Error: LogicTrigger.cc - Pixie16ReadSglModPar - TrigConfig1"<<std::endl; 
+  if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglModPar/TrigConfig1", retval);
   GroupTri0_0->Select((APP32_TstBit(3, ModParData) << 3) + (APP32_TstBit(2, ModParData) << 2) + (APP32_TstBit(1, ModParData) << 1) + APP32_TstBit(0, ModParData) + 1);
   GroupTri0_1->Select((APP32_TstBit(7, ModParData) << 3) + (APP32_TstBit(6, ModParData) << 2) + (APP32_TstBit(5, ModParData) << 1) + APP32_TstBit(4, ModParData) + 1);
   GroupTri0_2->Select((APP32_TstBit(11, ModParData) << 3) + (APP32_TstBit(10, ModParData) << 2) + (APP32_TstBit(9, ModParData) << 1) + APP32_TstBit(8, ModParData) + 1);
@@ -912,8 +1004,7 @@ int LogicTrigger::load_info(Long_t mod)
   GroupTri2_1->Select((APP32_TstBit(31, ModParData) << 3) + (APP32_TstBit(30, ModParData) << 2) + (APP32_TstBit(29, ModParData) << 1) + APP32_TstBit(28, ModParData) + 1);
 
   retval = Pixie16ReadSglModPar((char*)"TrigConfig2", &ModParData, mod);
-  if(retval < 0)
-    std::cout<<"Error: LogicTrigger.cc - Pixie16ReadSglModPar - TrigConfig2"<<std::endl; 
+  if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglModPar/TrigConfig2", retval);
   ChTri_ch0_3->Select(APP32_TstBit(24, ModParData)+1);
   ChTri_ch4_7->Select(APP32_TstBit(25, ModParData)+1);
   ChTri_ch8_11->Select(APP32_TstBit(26, ModParData)+1);
@@ -928,7 +1019,7 @@ int LogicTrigger::load_info(Long_t mod)
   GroupTri3_2->Select((APP32_TstBit(15, ModParData) << 3) + (APP32_TstBit(14, ModParData) << 2) + (APP32_TstBit(13, ModParData) << 1) + APP32_TstBit(12, ModParData) + 1);
   ChannelTrigger->Select((APP32_TstBit(31, ModParData) << 3) + (APP32_TstBit(30, ModParData) << 2) + (APP32_TstBit(29, ModParData) << 1) + APP32_TstBit(28, ModParData) + 1);
   //  std::cout << "loading info for module " << module << std::endl;
-
+    
   return 1;
 }
 
@@ -1110,7 +1201,88 @@ int LogicTrigger::change_values(Long_t mod)
       retval = Pixie16WriteSglChanPar((char*)"MultiplicityMaskH", ChanParData, mod, i);
       if(retval < 0) ErrorInfo("MultiplicityMask.cc", "change_values(...)", "Pixie16WriteSglChanPar/MultiplicityMaskH", retval);
     }
-    
+
+
+  //=============================
+
+  retval = Pixie16ReadSglModPar((char*)"TrigConfig0", &ModParData, mod);
+  if(retval < 0) ErrorInfo("LogicTrigger.cc", "change_values(...)", "Pixie16ReadSglModPar/TrigConfig0", retval);
+
+  if(EnableDisableOfTestSignals->GetSelected() == 1)
+    ModParData = APP32_ClrBit(15, ModParData);
+  else
+    ModParData = APP32_SetBit(15, ModParData);
+
+  
+  if((GroupOfTestSignals->GetSelected()-1) >> 2)
+    ModParData = APP32_SetBit(14, ModParData);
+  else
+    ModParData = APP32_ClrBit(14, ModParData);
+
+  if(((GroupOfTestSignals->GetSelected()-1)&2) >> 1)
+    ModParData = APP32_SetBit(13, ModParData);
+  else
+    ModParData = APP32_ClrBit(13, ModParData);
+
+  if((GroupOfTestSignals->GetSelected()-1)&1)
+    ModParData = APP32_SetBit(12, ModParData);
+  else
+    ModParData = APP32_ClrBit(12, ModParData);  
+
+
+  if((ChannelOfTestSignals->GetSelected()-1) >> 3)
+    ModParData = APP32_SetBit(19, ModParData);
+  else
+    ModParData = APP32_ClrBit(19, ModParData);
+
+  if(((ChannelOfTestSignals->GetSelected()-1)&4) >> 2)
+    ModParData = APP32_SetBit(18, ModParData);
+  else
+    ModParData = APP32_ClrBit(18, ModParData);
+
+  if(((ChannelOfTestSignals->GetSelected()-1)&2) >> 1)
+    ModParData = APP32_SetBit(17, ModParData);
+  else
+    ModParData = APP32_ClrBit(17, ModParData);
+
+  if((ChannelOfTestSignals->GetSelected()-1)&1)
+    ModParData = APP32_SetBit(16, ModParData);
+  else
+    ModParData = APP32_ClrBit(16, ModParData);
+
+  //
+  if((TestSignals->GetSelected()-1) >> 3)
+    ModParData = APP32_SetBit(23, ModParData);
+  else
+    ModParData = APP32_ClrBit(23, ModParData);
+
+  if(((TestSignals->GetSelected()-1)&4) >> 2)
+    ModParData = APP32_SetBit(22, ModParData);
+  else
+    ModParData = APP32_ClrBit(22, ModParData);
+
+  if(((TestSignals->GetSelected()-1)&2) >> 1)
+    ModParData = APP32_SetBit(21, ModParData);
+  else
+    ModParData = APP32_ClrBit(21, ModParData);
+
+  if((TestSignals->GetSelected()-1)&1)
+    ModParData = APP32_SetBit(20, ModParData);
+  else
+    ModParData = APP32_ClrBit(20, ModParData);
+  
+  retval = Pixie16WriteSglModPar((char*)"TrigConfig0", ModParData, mod);
+  if(retval < 0) ErrorInfo("LogicTrigger.cc", "change_values(...)", "Pixie16WriteSglModPar/TrigConfig0", retval);
+
+  load_info(mod);
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  // unsigned int test = 0xFFFFFFFF;
+  // Pixie16WriteSglChanPar((char*)"MultiplicityMaskL", test, modNumber, 2);
+  // Pixie16WriteSglChanPar((char*)"MultiplicityMaskL", test, modNumber, 4);
+
+  
   return 1;
 }
 

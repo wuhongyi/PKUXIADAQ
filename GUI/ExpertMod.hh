@@ -23,9 +23,9 @@ public:
 private:
   Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2);
   TGVerticalFrame* mn_vert;
-  TGHorizontalFrame * mn,* Buttons;
+  TGHorizontalFrame *mn,* Buttons;
 
-  TGVerticalFrame *column1, *column2;
+  TGVerticalFrame *column1, *column2, *column3;
   TGCheckButton *ckBtn[9];
     
   TGNumberEntry *numericMod;

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 五 8月 25 17:21:59 2017 (+0800)
+// Last-Updated: 日 8月 27 19:01:59 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 292
+//     Update #: 304
 // URL: http://wuhongyi.cn 
 
 // TODO
@@ -26,9 +26,6 @@
 
 #include <iostream>
 using namespace std;
-
-
-#define EventHeaderLength 13  //可根据需要扩展
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextEntry *filepath, TGTextEntry *filename)
@@ -38,6 +35,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   filepathtext = filepath;
   filenametext = filename;
 
+  EventHeaderLength = 13;//可根据需要扩展
   modNumber = 0;
   chanNumber = 0;
   chanNumber4 = 0;
@@ -225,9 +223,58 @@ void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
 
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 
+  // MHz
+  choosesamplemhz0 = new TGComboBox(parFrame);
+  parFrame->AddFrame(choosesamplemhz0, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  choosesamplemhz0->Resize(50, 20);
+  choosesamplemhz0->AddEntry("100", 1);
+  choosesamplemhz0->AddEntry("250", 2);
+  choosesamplemhz0->AddEntry("500", 3);
+  choosesamplemhz0->Select(1);
+
+  TGTextEntry *LabelMHz = new TGTextEntry(parFrame,new TGTextBuffer(30));
+  LabelMHz->SetText("MHz");
+  LabelMHz->Resize(30,20);
+  LabelMHz->SetEnabled(kFALSE);
+  // LabelMHz->SetToolTipText("Choose module ");
+  parFrame->AddFrame(LabelMHz, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 20, 0, 0));
+  
+
+  // choose header length
+  TGLabel *additionalanalysis = new TGLabel(parFrame, "Additional analysis:");
+  parFrame->AddFrame(additionalanalysis, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  fClient->GetColorByName("orange", color);
+  additionalanalysis->SetTextColor(color, false);
+  headerrawenergysumsandbaseline = new TGCheckButton(parFrame, "raw E sums/baseline");
+  headerrawenergysumsandbaseline->SetOn(kFALSE);
+  headerrawenergysumsandbaseline->Connect("Toggled(Bool_t)", "Offline", this, "SelectRawEnergySumsBaseline(Bool_t)");
+  fClient->GetColorByName("orange", color);
+  headerrawenergysumsandbaseline->SetTextColor(color, false);
+  parFrame->AddFrame(headerrawenergysumsandbaseline, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+
+  headerqdcsums = new TGCheckButton(parFrame, "QDC sums");
+  headerqdcsums->SetOn(kFALSE);
+  headerqdcsums->Connect("Toggled(Bool_t)", "Offline", this, "SelectQDCSums(Bool_t)");
+  fClient->GetColorByName("orange", color);
+  headerqdcsums->SetTextColor(color, false);
+  parFrame->AddFrame(headerqdcsums, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+
+  headerexternaltimestamp = new TGCheckButton(parFrame, "external timestamp");
+  headerexternaltimestamp->SetOn(kFALSE);
+  headerexternaltimestamp->Connect("Toggled(Bool_t)", "Offline", this, "SelectExternalTimestamp(Bool_t)");
+  fClient->GetColorByName("orange", color);
+  headerexternaltimestamp->SetTextColor(color, false);
+  parFrame->AddFrame(headerexternaltimestamp, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 3, 0));
+  
+   
+   
+  
   // run
   TGLabel *run = new TGLabel( parFrame, "Run:");
   parFrame->AddFrame(run, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  fClient->GetColorByName("red", color);
+  run->SetTextColor(color, false);
+  
   offlinefilerunnum = new TGNumberEntry(parFrame, 0, 4, OFFLINERUNNUM, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 9999);
   offlinefilerunnum->SetButtonToNum(0);
   offlinefilerunnum->Associate(this);
@@ -236,6 +283,9 @@ void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
   // mod
   TGLabel *mod = new TGLabel( parFrame, "Mod:"); 
   parFrame->AddFrame(mod, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  fClient->GetColorByName("red", color);
+  mod->SetTextColor(color, false);
+  
   offlinemodnum = new TGNumberEntry (parFrame, 0, 2, OFFLINEMODNUM, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, PRESET_MAX_MODULES-1);
   offlinemodnum->SetButtonToNum(0);
   offlinemodnum->Associate(this);
@@ -1332,7 +1382,6 @@ unsigned int Offline::GetModuleEvents(char *FileName)
   
   if(TotalWords == 0) ModuleEvents = 0;
   return ModuleEvents;
-  
 }
 
 void Offline::GetEventsInfo(char *FileName, unsigned int *EventInformation)
@@ -2107,11 +2156,37 @@ void Offline::Panel6Draw()
       
       retval = Pixie16ReadSglChanPar((char*)"ENERGY_RISETIME", &ChanParData, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)offlinechnum6->GetIntNumber());
       if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ReadSglChanPar/ENERGY_RISETIME", retval);
-      SlowLen = ROUND(ChanParData*100 /std::pow(2.0, (double)SlowFilterRange))*std::pow(2.0, (double)SlowFilterRange);// TODO  100/250/500=>100/125/100
+      switch(choosesamplemhz0->GetSelected())
+	{
+	case 1 ://100
+	  SlowLen = ROUND(ChanParData*100/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
+	  break;
+	case 2 ://250
+	  SlowLen = ROUND(ChanParData*125/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
+	  break;	  
+	case 3 ://500
+	  SlowLen = ROUND(ChanParData*100/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
+	  break;
+	default:
+	  break;
+	}
       
       retval = Pixie16ReadSglChanPar((char*)"ENERGY_FLATTOP", &ChanParData, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)offlinechnum6->GetIntNumber());
-      if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ReadSglChanPar/ENERGY_FLATTOP", retval);  
-      SlowGap = ROUND(ChanParData*100 /std::pow(2.0, (double)SlowFilterRange))*std::pow(2.0, (double)SlowFilterRange);// TODO  100/250/500=>100/125/100
+      if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ReadSglChanPar/ENERGY_FLATTOP", retval);
+      switch(choosesamplemhz0->GetSelected())
+	{
+	case 1 ://100
+	  SlowGap = ROUND(ChanParData*100/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
+	  break;
+	case 2 ://250
+	  SlowGap = ROUND(ChanParData*125/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
+	  break;	  
+	case 3 ://500
+	  SlowGap = ROUND(ChanParData*100/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
+	  break;
+	default:
+	  break;
+	}
 
       int intflagenergy;
       switch(SlowFilterRange)
@@ -2224,6 +2299,7 @@ void Offline::Panel0ReadFile()
 	  OfflineEventInformation = NULL;
 	}
       OfflineEventInformation = new unsigned int[EventHeaderLength*OfflineModuleEventsCount];
+      memset(OfflineEventInformation, 0, sizeof(unsigned int)*OfflineModuleEventsCount*EventHeaderLength);
       GetEventsInfo(offlinefilename,OfflineEventInformation);
 	      
       //
@@ -2276,8 +2352,26 @@ void Offline::CalculateCFDShow5()
   CalculateCFDcanvas5->Update();
 }
 
+void Offline::SelectRawEnergySumsBaseline(Bool_t on)
+{
+  std::cout<<"SelectRawEnergySumsBaseline: "<<headerrawenergysumsandbaseline->IsOn()<<std::endl;
+}
 
+void Offline::SelectQDCSums(Bool_t on)
+{
+  std::cout<<"SelectRawEnergySumsBaseline: "<<headerqdcsums->IsOn()<<std::endl;
+}
+
+void Offline::SelectExternalTimestamp(Bool_t on)
+{
+  std::cout<<"SelectExternalTimestamp: "<<headerexternaltimestamp->IsOn()<<std::endl;
+}
 
 
 // 
 // Offline.cc ends here
+
+
+
+
+

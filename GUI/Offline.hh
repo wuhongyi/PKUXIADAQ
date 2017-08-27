@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 五 8月 25 14:43:30 2017 (+0800)
+// Last-Updated: 日 8月 27 19:01:59 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 76
+//     Update #: 81
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -55,53 +55,25 @@ public:
   void MakeFold8Panel(TGCompositeFrame *TabPanel);//Auto Thre
   void MakeFold9Panel(TGCompositeFrame *TabPanel);//FFT
 
+
+  void SelectRawEnergySumsBaseline(Bool_t on);
+  void SelectQDCSums(Bool_t on);
+  void SelectExternalTimestamp(Bool_t on);
   
 private:
   Pixel_t color;
   Detector *detector;
+  int EventHeaderLength;
   TObject *selected;
   TGTextEntry *filepathtext;
   TGTextEntry *filenametext;
-  
-  TCanvas *adjustCanvas;
-  TGStatusBar* sbfold3;
-  TGDoubleHSlider *dslider;
-
-  TMultiGraph *offlinemultigraph;
-  TGraph *rawdata,*threshdata,*cfddata,*cfdthreshdata,*sfilterdata,*ffilterdata;
-  unsigned short *RcdTrace;//
-  double *doublesample;
-  double *doublethresh;
-  double *doublecfdthresh;
-  double *doublercdtrace;
-  double *doublefastfilter;//
-  double *doublecfd;//
-  double *doubleslowfilter;//
-
   char offlinefilename[256];
-  int modNumber, chanNumber,fileRunNum;//the par used to offline
-  TGNumberEntry	*offlinefilerunnum;//int
-  TGNumberEntry	*offlinemodnum;//int
-  TGNumberEntry	*offlinechnum;//int
-  TGNumberEntry* offlinefilterrange;
+  int modNumber, chanNumber,fileRunNum;
+
   void OfflineChangeValues(int mod,int ch);
   void OfflineLoadValues(int mod,int ch);
   unsigned int GetModuleEvents(char *FileName);//return events
   void GetEventsInfo(char *FileName, unsigned int *EventInformation);
-  unsigned int *OfflineEventInformation;
-  unsigned int OfflineModuleEventsCount;
-  unsigned int OfflineCurrentCount;
-  
-  unsigned int OfflinefRange;
-  // 0-fastlength 1-fastgap  2-slowlength  3-slowgap  4-preamptau  5-cfddelay  6-cfdscale 7-fast filterthreshold 8-cfd threshold
-  TGNumberEntryField *offlinefilters[9];
-
-  TGTextEntry* OfflineFileStatus;
-  TGTextEntry* OfflineCurrentCountText;
-  TGTextButton* OfflineReadFileButton;
-  TGTextButton* OfflineLoadButton;
-  TGTextButton* OfflineApplyButton;
-  TGTextButton* OfflineDrawButton;
 
   enum Commands
     {
@@ -142,7 +114,46 @@ private:
     };
 
   // Fold0
+  TGTextEntry* OfflineFileStatus;
+  TGTextButton* OfflineReadFileButton;
+  
+  TGNumberEntry	*offlinefilerunnum;//int
+  TGNumberEntry	*offlinemodnum;//int
+  
+  unsigned int *OfflineEventInformation;
+  unsigned int OfflineModuleEventsCount;
+  unsigned int OfflineCurrentCount;
 
+  TGComboBox *choosesamplemhz0;
+  TGCheckButton * headerrawenergysumsandbaseline;
+  TGCheckButton * headerqdcsums;
+  TGCheckButton * headerexternaltimestamp;
+  
+  // Fold1
+  TGTextButton* OfflineLoadButton;
+  TGTextButton* OfflineApplyButton;
+  TGTextButton* OfflineDrawButton;
+  TGTextEntry* OfflineCurrentCountText;
+  TGNumberEntry	*offlinechnum;//int
+  
+  // 0-fastlength 1-fastgap  2-slowlength  3-slowgap  4-preamptau  5-cfddelay  6-cfdscale 7-fast filterthreshold 8-cfd threshold
+  TGNumberEntryField *offlinefilters[9];
+  TGNumberEntry* offlinefilterrange;
+  TCanvas *adjustCanvas;
+  TGStatusBar* sbfold3;
+  TGDoubleHSlider *dslider;
+
+  TMultiGraph *offlinemultigraph;
+  TGraph *rawdata,*threshdata,*cfddata,*cfdthreshdata,*sfilterdata,*ffilterdata;
+  unsigned short *RcdTrace;//
+  double *doublesample;
+  double *doublethresh;
+  double *doublecfdthresh;
+  double *doublercdtrace;
+  double *doublefastfilter;//
+  double *doublecfd;//
+  double *doubleslowfilter;//
+  unsigned int OfflinefRange;
   
   // Fold2
   TCanvas *canvas2;

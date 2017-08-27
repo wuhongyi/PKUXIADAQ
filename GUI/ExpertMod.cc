@@ -13,14 +13,18 @@ ExpertMod::ExpertMod(const TGWindow * p, const TGWindow * main, char *name,int N
   numModules = NumModules;
 
   mn_vert = new TGVerticalFrame(this, 200, 300);
-
+  AddFrame(mn_vert, new TGLayoutHints(kLHintsTop | kLHintsLeft, 2, 2, 2, 2));
+  
   mn = new TGHorizontalFrame(mn_vert, 200, 300);
   mn_vert->AddFrame(mn, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  AddFrame(mn_vert, new TGLayoutHints(kLHintsTop | kLHintsLeft, 2, 2, 2, 2));
+
   column1 = new TGVerticalFrame(mn, 200, 300);
   column2 = new TGVerticalFrame(mn, 200, 300);
+  column3 = new TGVerticalFrame(mn, 200, 300);
   mn->AddFrame(column1, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   mn->AddFrame(column2, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  mn->AddFrame(column3, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+
   
   TGTextEntry *te = new TGTextEntry(column1, new TGTextBuffer(100), 10000,
 				    te->GetDefaultGC()(),
@@ -31,7 +35,7 @@ ExpertMod::ExpertMod(const TGWindow * p, const TGWindow * main, char *name,int N
   te->Resize(100, 20);
   te->SetEnabled(kFALSE);
   te->SetFrameDrawn(kTRUE);
-  column1->AddFrame(te, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  column1->AddFrame(te, new TGLayoutHints(kLHintsCenterX, 0, 0, 5, 0));
   
   TGTextEntry *Labels[9];
   for (int i = 0; i < 9; i++)
@@ -45,7 +49,7 @@ ExpertMod::ExpertMod(const TGWindow * p, const TGWindow * main, char *name,int N
       Labels[i]->SetEnabled(kFALSE);
       Labels[i]->SetFrameDrawn(kTRUE);
       Labels[i]->SetAlignment(kTextCenterX);
-      column1->AddFrame (Labels[i], new TGLayoutHints(kLHintsCenterX, 0, 3, 5, 0));
+      column1->AddFrame(Labels[i],new TGLayoutHints(kLHintsCenterX, 0, 3, 5, 0));
     }
 
   Labels[0]->SetText("CPLDPULLUP[0]");
@@ -88,7 +92,7 @@ ExpertMod::ExpertMod(const TGWindow * p, const TGWindow * main, char *name,int N
   ra->SetEnabled(kFALSE);
   ra->SetFrameDrawn(kTRUE);
   ra->SetAlignment(kTextCenterX);
-  column2->AddFrame(ra, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 3));
+  column2->AddFrame(ra, new TGLayoutHints(kLHintsCenterX, 0, 0, 5, 3));
 
   for (int i = 0; i < 9; i++)
     {
@@ -99,6 +103,32 @@ ExpertMod::ExpertMod(const TGWindow * p, const TGWindow * main, char *name,int N
     }
   
   Buttons = new TGHorizontalFrame(mn_vert, 400, 300);
+
+
+
+  TGTextEntry *LabelsNotes[10];
+  for (int i = 0; i < 10; i++)
+    {
+      LabelsNotes[i] = new TGTextEntry(column3, new TGTextBuffer(100), 10000,
+				  LabelsNotes[i]->GetDefaultGC()(),
+				  LabelsNotes[i]->GetDefaultFontStruct(),
+				  kRaisedFrame | kDoubleBorder,
+				  GetWhitePixel());
+      LabelsNotes[i]->Resize(90, 20);
+      LabelsNotes[i]->SetEnabled(kFALSE);
+      LabelsNotes[i]->SetFrameDrawn(kFALSE);
+      LabelsNotes[i]->SetAlignment(kTextCenterX);
+      column3->AddFrame(LabelsNotes[i],new TGLayoutHints(kLHintsCenterX, 0, 3, 5, 0));
+    }
+  LabelsNotes[1]->SetText("Tip");
+  LabelsNotes[2]->SetText("Tip");
+  LabelsNotes[3]->SetText("Tip");
+  LabelsNotes[6]->SetText("Tip");
+  LabelsNotes[1]->SetToolTipText("Keep the select module 0. Only 1 module can select per crate.", 0);
+  LabelsNotes[2]->SetToolTipText("Only 1 module can select in all crates. Send its Ext_FastTrig_In/Ext_ValidTrig_In to all crates for Module Fast/Validation Trigger.", 0);
+  LabelsNotes[3]->SetToolTipText("Only 1 module can select per crate. Send its Ext_FastTrig_In/Ext_ValidTrig_In to the crate backplane for Module Fast/Validation Trigger.", 0);
+  LabelsNotes[6]->SetToolTipText("Just choose 1 module and singal from it. When 'is was selected and front panel signal in high level', run inhibit", 0);
+
   
   /////////////////////////////module entry///////////////////////////////
 

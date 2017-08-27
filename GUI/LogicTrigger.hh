@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:36 2016 (+0800)
-// Last-Updated: 六 8月 26 21:53:28 2017 (+0800)
+// Last-Updated: 日 8月 27 10:14:43 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 26
+//     Update #: 27
 // URL: http://wuhongyi.cn 
 
 #ifndef _LOGICTRIGGER_HH_
@@ -84,7 +84,6 @@ protected:
 
 
   TGNumberEntryField *fasttriggerbackplaneena[2];
-  
   int MultiLeft;
   int MultiRight;
   int MultiItself;
@@ -94,6 +93,13 @@ protected:
   int MultiThreshold;
   bool SelCoinMulti;
   bool SelChValidTrig;
+
+
+  TGComboBox *EnableDisableOfTestSignals;
+  TGComboBox *GroupOfTestSignals;
+  TGComboBox *ChannelOfTestSignals;
+  TGComboBox *TestSignals;
+
   
 private:
   Pixel_t color;

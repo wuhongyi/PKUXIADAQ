@@ -18,7 +18,7 @@ Cfd::Cfd(const TGWindow *p, const TGWindow * main, char *name, int columns, int 
   }
   CLabel[0]->SetText("CFD Delay[us]");
   CLabel[0]->SetAlignment(kTextCenterX);
-  CLabel[1]->SetText("CFD Frac");
+  CLabel[1]->SetText("CFD Frac[0-7]");
   CLabel[1]->SetAlignment(kTextCenterX);
   CLabel[2]->SetText("CFD Thre");
   CLabel[2]->SetAlignment(kTextCenterX);

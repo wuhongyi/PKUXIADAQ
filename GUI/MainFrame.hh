@@ -27,10 +27,8 @@ Hui Tan(XIA LLC)\n\
 #include "Csra.hh"
 #include "Energy.hh"
 #include "ExpertMod.hh"
-#include "FPOutputs.hh"
 #include "Histogram.hh"
 #include "LogicTrigger.hh"
-#include "MultiplicityMask.hh"
 #include "Offline.hh"
 #include "Qdc.hh"
 #include "ScopedT.hh"
@@ -88,8 +86,6 @@ enum Commands //commands for the menu bar popups
     FILE_SAVE,
     MODVAR,
     LOGIC,
-    MULTIPLICITYMASK,
-    FRONTPANELOUTPUTS,
     CHANVAR,
     CLEARMCA,
     SAVEMCA,
@@ -135,8 +131,6 @@ private:
   TriggerFilter *triggerfilter;
   ExpertMod *expertmod;
   LogicTrigger *logictrigger;
-  FPOutputs *fpoutputs;
-  MultiplicityMask *multiplicitymask;
   Offline *popupoffline;
   Simulation *simulation;
   Pixel_t color;

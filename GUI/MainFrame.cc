@@ -76,8 +76,8 @@ MenuFile->AddEntry("&About", ABOUT,0,gClient->GetPicture("ed_help.png"));
 
   MenuSetup = new TGPopupMenu(fClient->GetRoot ());
   MenuSetup->AddEntry("&Base Setup", BASE);
-  MenuSetup->AddEntry("&Energy", ENERGY);
   MenuSetup->AddEntry("&Trigger Filter", TFILTER);
+  MenuSetup->AddEntry("&Energy", ENERGY);
   MenuSetup->AddEntry("&CFD", CFDP);
   MenuSetup->AddEntry("&QDC", QDCP);
   MenuSetup->AddEntry("&Histogramming", HISTOGRAM);
@@ -99,15 +99,11 @@ MenuSetup->AddEntry("Save2File", FILE_SAVE,0,gClient->GetPicture("save.xpm"));
   MenuExpert->AddEntry("Module Variables", MODVAR);
   MenuExpert->AddEntry("&CSRA", CSRA);
   MenuExpert->AddEntry("Logic Set", LOGIC);
-  MenuExpert->AddEntry("Multiplicity", MULTIPLICITYMASK);
-  MenuExpert->AddEntry("Front Outputs", FRONTPANELOUTPUTS);
   MenuExpert->Associate(this);
   MenuBar->AddPopup("&Expert", MenuExpert, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   MenuExpert->DisableEntry(MODVAR);
   MenuExpert->DisableEntry(CSRA);
   MenuExpert->DisableEntry(LOGIC);
-  MenuExpert->DisableEntry(MULTIPLICITYMASK);
-  MenuExpert->DisableEntry(FRONTPANELOUTPUTS);
 
   // TGPopupMenu *MenuScope = new TGPopupMenu(fClient->GetRoot());
   // // MenuScope->AddEntry("xy maxmin", MAXMIN);
@@ -209,14 +205,6 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      logictrigger = new LogicTrigger(fClient->GetRoot(),this,(char*)"Logic Trigger", 16/*7*/, 16, detector->NumModules);
 	      logictrigger->load_info(0);
 	      break;
-	    case MULTIPLICITYMASK:
-	      multiplicitymask = new MultiplicityMask(fClient->GetRoot(),this,(char*)"Multiplicity Mark", 10, 16, detector->NumModules);
-		multiplicitymask->load_info(0);
-	      break;
-	    case FRONTPANELOUTPUTS:
-	      fpoutputs = new FPOutputs(fClient->GetRoot(), this, detector->NumModules);
-	      fpoutputs->load_info(0);
-	      break;
 	    case HISTOGRAM:
 	      histogram = new Histogram(fClient->GetRoot(), this, (char*)"Histogramming", 3, 16, detector->NumModules);
 	      histogram->load_info(0);
@@ -283,8 +271,6 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		  MenuExpert->EnableEntry(MODVAR);
 		  MenuExpert->EnableEntry(CSRA);
 		  MenuExpert->EnableEntry(LOGIC);
-		  MenuExpert->EnableEntry(MULTIPLICITYMASK);
-		  MenuExpert->EnableEntry(FRONTPANELOUTPUTS);
 		  MenuOffline->EnableEntry(OFFLINEADJUSTPAR);
 		  MenuOffline->EnableEntry(SIMULATION);
 		}
@@ -762,8 +748,6 @@ void MainFrame::StartLSRun()
       MenuExpert->DisableEntry(MODVAR);
       MenuExpert->DisableEntry(CSRA);
       MenuExpert->DisableEntry(LOGIC);
-      MenuExpert->DisableEntry(MULTIPLICITYMASK);
-      MenuExpert->DisableEntry(FRONTPANELOUTPUTS);
       MenuOffline->DisableEntry(OFFLINEADJUSTPAR);
       MenuOffline->DisableEntry(SIMULATION);
       
@@ -794,8 +778,6 @@ void MainFrame::StartLSRun()
 	  MenuExpert->EnableEntry(MODVAR);
 	  MenuExpert->EnableEntry(CSRA);
 	  MenuExpert->EnableEntry(LOGIC);
-	  MenuExpert->EnableEntry(MULTIPLICITYMASK);
-	  MenuExpert->EnableEntry(FRONTPANELOUTPUTS);
 	  MenuOffline->EnableEntry(OFFLINEADJUSTPAR);
 	  MenuOffline->EnableEntry(SIMULATION);
 	  acquireB->SetEnabled(1);
@@ -839,8 +821,6 @@ void MainFrame::StartLSRun()
       MenuExpert->EnableEntry(MODVAR);
       MenuExpert->EnableEntry(CSRA);
       MenuExpert->EnableEntry(LOGIC);
-      MenuExpert->EnableEntry(MULTIPLICITYMASK);
-      MenuExpert->EnableEntry(FRONTPANELOUTPUTS);
       MenuOffline->EnableEntry(OFFLINEADJUSTPAR);
       MenuOffline->EnableEntry(SIMULATION);
       acquireB->SetEnabled(1);
@@ -896,8 +876,6 @@ void MainFrame::SetOnlineMode()
   MenuExpert->DisableEntry(MODVAR);
   MenuExpert->DisableEntry(CSRA);
   MenuExpert->DisableEntry(LOGIC);
-  MenuExpert->DisableEntry(MULTIPLICITYMASK);
-  MenuExpert->DisableEntry(FRONTPANELOUTPUTS);
   MenuOffline->DisableEntry(OFFLINEADJUSTPAR);
   MenuOffline->DisableEntry(SIMULATION);
   bootB->SetEnabled(1);
