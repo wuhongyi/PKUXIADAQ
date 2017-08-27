@@ -4,14 +4,31 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 日 8月 27 19:01:59 2017 (+0800)
+// Last-Updated: 日 8月 27 21:40:25 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 304
+//     Update #: 314
 // URL: http://wuhongyi.cn 
 
-// TODO
-// EventHeaderLength 定义了长度13，太浪费内存空间，不利于加载大文件以及没有波形的文件
-// 应该重新定义数据结构，4headr+1location，并扩展支持 2+4+8数据（在数据初始化位置可选）
+
+// 重新定义数据结构，4headr+1location
+// 扩展支持 2+4+8数据（在数据初始化位置可选）  TODO
+
+//ch (OfflineEventInformation[EventHeaderLength*i] & 0xF)
+//slot ((OfflineEventInformation[EventHeaderLength*i] & 0xF0) >> 4)
+//crate ((OfflineEventInformation[EventHeaderLength*i] & 0xF00) >> 8)
+// Header length ((OfflineEventInformation[EventHeaderLength*i] & 0x1F000) >> 12)
+// Event length((OfflineEventInformation[EventHeaderLength*i] & 0x7FFE0000) >> 17)
+// Finish code ((OfflineEventInformation[EventHeaderLength*i] & 0x80000000) >> 31)
+
+// EventTime_Low  OfflineEventInformation[EventHeaderLength*i+1]
+
+// EventTime_High  (OfflineEventInformation[EventHeaderLength*i+2] & 0xFFFF)
+//cfd ((OfflineEventInformation[EventHeaderLength*i+2] & 0x7FFF0000)>>16)
+//cfd forced trigger bit ((OfflineEventInformation[EventHeaderLength*i+2] & 0x80000000) >> 31)
+
+//trace length ((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16)
+//event energy (OfflineEventInformation[EventHeaderLength*i+3] & 0xFFFF)
+//trace out-of-range flag ((OfflineEventInformation[EventHeaderLength*i+3] & 0x80000000) >> 31)
 
 #include "Offline.hh"
 #include "Detector.hh"
@@ -35,7 +52,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   filepathtext = filepath;
   filenametext = filename;
 
-  EventHeaderLength = 13;//可根据需要扩展
+  EventHeaderLength = 5;//可根据需要扩展
   modNumber = 0;
   chanNumber = 0;
   chanNumber4 = 0;
@@ -231,7 +248,9 @@ void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
   choosesamplemhz0->AddEntry("250", 2);
   choosesamplemhz0->AddEntry("500", 3);
   choosesamplemhz0->Select(1);
+  // choosesamplemhz0->Connect("Selected(Int_t id)", "Offline", this, "SelectSamplingFrequency(Int_t id)");
 
+  
   TGTextEntry *LabelMHz = new TGTextEntry(parFrame,new TGTextBuffer(30));
   LabelMHz->SetText("MHz");
   LabelMHz->Resize(30,20);
@@ -860,9 +879,7 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    {
 	    case ADJUSTPARSLIDER:
 	      offlinemultigraph->GetXaxis()->SetRangeUser(dslider->GetMinPosition(),dslider->GetMaxPosition());
-	      
 	      // std::cout<<"Slider Pos -  min:"<<dslider->GetMinPosition()<<" max:"<<dslider->GetMaxPosition()<<std::endl;
-	      
 	      adjustCanvas->Modified();
 	      adjustCanvas->Update();
 	      break;
@@ -885,10 +902,10 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      Panel0ReadFile();
 	      for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)//将默认的ch横坐标范围与sample对应
 		{
-		  if(offlinechnum->GetIntNumber() == OfflineEventInformation[EventHeaderLength*i+1])
+		  if(offlinechnum->GetIntNumber() == (OfflineEventInformation[EventHeaderLength*i] & 0xF))//ch
 		    {
-		      dslider->SetRange(0,OfflineEventInformation[EventHeaderLength*i+10]);
-		      dslider->SetPosition(0,OfflineEventInformation[EventHeaderLength*i+10]);
+		      dslider->SetRange(0,((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16));//trace length
+		      dslider->SetPosition(0,((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16));//trace length
 		      break;
 		    }
 		}
@@ -976,6 +993,7 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      	}
 	      break;  
 	    case OFFLINERUNNUM:
+	      OfflineFileStatus->SetText("NOT READ");
 	      OfflineDrawButton->SetEnabled(0);
 	      OfflineDrawButton2->SetEnabled(0);
 	      OfflineDrawButton3->SetEnabled(0);
@@ -998,6 +1016,7 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		}
 	      break;
 	    case OFFLINEMODNUM:
+	      OfflineFileStatus->SetText("NOT READ");
 	      OfflineDrawButton->SetEnabled(0);
 	      OfflineDrawButton2->SetEnabled(0);
 	      OfflineDrawButton3->SetEnabled(0);
@@ -1042,10 +1061,10 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		}
 	      for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)//每次改变channel，横坐标范围都回到全部sample
 		{
-		  if(offlinechnum->GetIntNumber() == OfflineEventInformation[EventHeaderLength*i+1])
+		  if(offlinechnum->GetIntNumber() == (OfflineEventInformation[EventHeaderLength*i] & 0xF))//ch
 		    {
-		      dslider->SetRange(0,OfflineEventInformation[EventHeaderLength*i+10]);
-		      dslider->SetPosition(0,OfflineEventInformation[EventHeaderLength*i+10]);
+		      dslider->SetRange(0,((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16));//trace length
+		      dslider->SetPosition(0,((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16));//trace length
 		      break;
 		    }
 		}
@@ -1124,6 +1143,7 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	  switch (GET_SUBMSG(msg))
 	    {
 	    case kTE_ENTER:
+	      OfflineFileStatus->SetText("NOT READ");
 	      OfflineDrawButton->SetEnabled(0);
 	      OfflineDrawButton2->SetEnabled(0);
 	      OfflineDrawButton3->SetEnabled(0);
@@ -1215,6 +1235,7 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	  switch (GET_SUBMSG(msg))
 	    {
 	    case kTE_ENTER:
+	      OfflineFileStatus->SetText("NOT READ");
 	      OfflineDrawButton->SetEnabled(0);
 	      OfflineDrawButton2->SetEnabled(0);
 	      OfflineDrawButton3->SetEnabled(0);
@@ -1387,6 +1408,7 @@ unsigned int Offline::GetModuleEvents(char *FileName)
 void Offline::GetEventsInfo(char *FileName, unsigned int *EventInformation)
 {
   unsigned int eventdata, headerlength, eventlength;
+  // unsigned int tracelength;
   unsigned int  NumEvents;
   long TotalWords, TotalSkippedWords;
   FILE *ListModeFile = NULL;
@@ -1404,53 +1426,37 @@ void Offline::GetEventsInfo(char *FileName, unsigned int *EventInformation)
       // Initialize indicator and counter
       TotalSkippedWords = 0;
       NumEvents = 0;
-		
+      
+      // if(EventHeaderLength == 5)
+      // 	{
       do
 	{
-	  fread(&eventdata, 4, 1, ListModeFile);		
-	  // Event #
-	  EventInformation[EventHeaderLength*NumEvents]     = NumEvents;
-	  // Channel #
-	  EventInformation[EventHeaderLength*NumEvents + 1] = (eventdata & 0xF);
-	  // Slot #
-	  EventInformation[EventHeaderLength*NumEvents + 2] = (eventdata & 0xF0) >> 4;
-	  // Crate #
-	  EventInformation[EventHeaderLength*NumEvents + 3] = (eventdata & 0xF00) >> 8;
-	  // Header length
-	  headerlength = (eventdata & 0x1F000) >> 12;
-	  EventInformation[EventHeaderLength*NumEvents + 4] = (eventdata & 0x1F000) >> 12;	
-	  // Event length
-	  eventlength = (eventdata & 0x7FFE0000) >> 17;
-	  EventInformation[EventHeaderLength*NumEvents + 5] = (eventdata & 0x7FFE0000) >> 17;	
-	  // Finish code
-	  EventInformation[EventHeaderLength*NumEvents + 6] = (eventdata & 0x80000000) >> 31;
-	  
 	  fread(&eventdata, 4, 1, ListModeFile);
-	  // EventTime_Low
-	  EventInformation[EventHeaderLength*NumEvents + 7] = eventdata;
-	  
+	  EventInformation[EventHeaderLength*NumEvents] = eventdata;
+	  headerlength = (eventdata & 0x1F000) >> 12;// Header length
+	  eventlength = (eventdata & 0x7FFE0000) >> 17;// Event length
+	      
 	  fread(&eventdata, 4, 1, ListModeFile);
-	  // EventTime_High
-	  EventInformation[EventHeaderLength*NumEvents + 8] = (eventdata & 0xFFFF);
-	  // CFD wuhongyi
-	  EventInformation[EventHeaderLength*NumEvents + 12] = (eventdata & 0x7FFF0000) >> 16;
-	  
-	  fread(&eventdata, 4, 1, ListModeFile);
-	  // Event Energy
-	  EventInformation[EventHeaderLength*NumEvents + 9] = (eventdata & 0xFFFF);
-	  // Trace Length
-	  EventInformation[EventHeaderLength*NumEvents + 10] = (eventdata & 0x7FFF0000) >> 16;
-	  // Trace location
-	  EventInformation[EventHeaderLength*NumEvents + 11] = TotalSkippedWords + headerlength;
+	  EventInformation[EventHeaderLength*NumEvents+1] = eventdata;
 
-	  // if(eventlength != headerlength + EventInformation[EventHeaderLength*NumEvents + 10]/2)
+	  fread(&eventdata, 4, 1, ListModeFile);
+	  EventInformation[EventHeaderLength*NumEvents+2] = eventdata;
+
+	  fread(&eventdata, 4, 1, ListModeFile);
+	  EventInformation[EventHeaderLength*NumEvents+3] = eventdata;
+	  // tracelength = (eventdata & 0x7FFF0000) >> 16;// Trace Length
+	  
+	  EventInformation[EventHeaderLength*NumEvents+4] = TotalSkippedWords+headerlength;// Trace location
+
+	  // if(eventlength != headerlength + tracelength/2)
 	  //   std::cout<<"Data error..."<<std::endl;
 	  
 	  TotalSkippedWords += eventlength;
-	  NumEvents ++;
-	  fseek(ListModeFile, (eventlength - 4) * 4, SEEK_CUR);
-	}while( TotalSkippedWords < TotalWords );
-		
+	  NumEvents++;
+	  fseek(ListModeFile, (eventlength-4)*4, SEEK_CUR);
+	}while(TotalSkippedWords < TotalWords);
+	// }
+
       fclose(ListModeFile);
     }
 }
@@ -1529,6 +1535,7 @@ void Offline::Panel1Draw()
     }
   bool offlinedatastatus;
   unsigned int tempN1;
+  int tracelength;
   tempN1 = -1;
   offlinedatastatus = false;
 
@@ -1543,15 +1550,10 @@ void Offline::Panel1Draw()
 	}
       if(OfflineCurrentCount == OfflineModuleEventsCount) OfflineCurrentCount = 0;
 
-      if(offlinechnum->GetIntNumber() == OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+1]) break;
+      if(offlinechnum->GetIntNumber() == (OfflineEventInformation[EventHeaderLength*OfflineCurrentCount] & 0xF)) break;//ch  
     }
-  // do
-  // 	{
-  // 	  OfflineCurrentCount++;
-  // 	  if(OfflineCurrentCount == OfflineModuleEventsCount) OfflineCurrentCount = 0;
-		  
-  // 	}while(offlinechnum->GetIntNumber() != OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+1]);
-  cout<<"N: "<<OfflineCurrentCount<<endl;
+
+  // cout<<"N: "<<OfflineCurrentCount<<endl;
 	      
   if(offlinedatastatus)
     {
@@ -1574,20 +1576,21 @@ void Offline::Panel1Draw()
   char stacurr[128];
   sprintf(stacurr,"%d / %d",OfflineCurrentCount+1,OfflineModuleEventsCount);
   OfflineCurrentCountText->SetText(stacurr);
-	      
-  RcdTrace = new unsigned short[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]];
-  doublethresh = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]];
-  doublecfdthresh = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]];
-  doublesample = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]];
-  doublercdtrace = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]];
-  doublefastfilter = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]];
-  doublecfd = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]];
-  doubleslowfilter = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]];
+
+  tracelength = ((OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+3] & 0x7FFF0000)>>16);//trace length  
+  RcdTrace = new unsigned short[tracelength];
+  doublethresh = new double[tracelength];
+  doublecfdthresh = new double[tracelength];
+  doublesample = new double[tracelength];
+  doublercdtrace = new double[tracelength];
+  doublefastfilter = new double[tracelength];
+  doublecfd = new double[tracelength];
+  doubleslowfilter = new double[tracelength];
 
   int retval;
-  retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+11], OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10], RcdTrace, doublefastfilter, doublecfd );
+  retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+4],tracelength, RcdTrace, doublefastfilter, doublecfd );//trace length/trace location
   if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "Pixie16ComputeFastFiltersOffline", retval);
-  retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+11], OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10], RcdTrace,doubleslowfilter );
+  retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+4], tracelength, RcdTrace,doubleslowfilter );//trace length/trace location
   if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
   
   double ChanParData;
@@ -1597,21 +1600,20 @@ void Offline::Panel1Draw()
   retval = Pixie16ReadSglChanPar((char*)"CFDThresh", &ChanParData, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber());
   if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "Pixie16ReadSglChanPar/CFDThresh", retval);
   doublecfdthresh[0] = ChanParData;
-  
-  for (unsigned int i = 0; i < OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10]; ++i)
+
+  for (int i = 0; i < tracelength; ++i)
     {
       doublesample[i] = i;
       doublercdtrace[i] = (double)RcdTrace[i];
       doublethresh[i] = doublethresh[0];
       doublecfdthresh[i] = doublecfdthresh[0];
     }
-
-  rawdata = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10],doublesample,doublercdtrace);
-  threshdata = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10],doublesample,doublethresh);
-  cfddata = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10],doublesample,doublecfd);
-  cfdthreshdata = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10],doublesample,doublecfdthresh);
-  sfilterdata = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10],doublesample,doubleslowfilter);
-  ffilterdata  = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+10],doublesample,doublefastfilter);
+  rawdata = new TGraph(tracelength,doublesample,doublercdtrace);
+  threshdata = new TGraph(tracelength,doublesample,doublethresh);
+  cfddata = new TGraph(tracelength,doublesample,doublecfd);
+  cfdthreshdata = new TGraph(tracelength,doublesample,doublecfdthresh);
+  sfilterdata = new TGraph(tracelength,doublesample,doubleslowfilter);
+  ffilterdata  = new TGraph(tracelength,doublesample,doublefastfilter);
 
   adjustCanvas->cd();
   adjustCanvas->Clear();
@@ -1713,7 +1715,7 @@ void Offline::Panel2Draw()
 
   bool offlinedatastatus2[16];
   unsigned int tempN12[16];
-  
+  int tracelength;
   canvas2->cd();
   canvas2->Clear();
   canvas2->Divide(4,4);
@@ -1734,25 +1736,26 @@ void Offline::Panel2Draw()
 	    }
 	  if(OfflineCurrentCount2[i] >= OfflineModuleEventsCount) OfflineCurrentCount2[i] = 0;
 
-	  if(i == OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+1]) break;
+	  if(i == (OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]] & 0xF)) break;//ch  
 	}
 
       // cout<<"Ch: "<<i<<"  N: "<<OfflineCurrentCount2[i]<<endl;
       int retval;
       if(!offlinedatastatus2[i])
 	{
-	  RcdTrace2[i] = new unsigned short[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]];
-	  doublethresh2[i] = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]];
-	  doublecfdthresh2[i] = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]];
-	  doublesample2[i] = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]];
-	  doublercdtrace2[i] = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]];
-	  doublefastfilter2[i] = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]];
-	  doublecfd2[i] = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]];
-	  doubleslowfilter2[i] = new double[OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]];
+	  tracelength = ((OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+3] & 0x7FFF0000)>>16);//trace length  
+	  RcdTrace2[i] = new unsigned short[tracelength];
+	  doublethresh2[i] = new double[tracelength];
+	  doublecfdthresh2[i] = new double[tracelength];
+	  doublesample2[i] = new double[tracelength];
+	  doublercdtrace2[i] = new double[tracelength];
+	  doublefastfilter2[i] = new double[tracelength];
+	  doublecfd2[i] = new double[tracelength];
+	  doubleslowfilter2[i] = new double[tracelength];
 
-	  retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) i, OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+11], OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10], RcdTrace2[i], doublefastfilter2[i], doublecfd2[i] );
+	  retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)i, OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+4], tracelength, RcdTrace2[i], doublefastfilter2[i], doublecfd2[i]);//trace location
 	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "Pixie16ComputeFastFiltersOffline", retval);
-	  retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) i, OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+11], OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10], RcdTrace2[i],doubleslowfilter2[i] );
+	  retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)i, OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+4], tracelength, RcdTrace2[i],doubleslowfilter2[i]);//trace localtion
 	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
 	  
 	  double ChanParData;
@@ -1764,20 +1767,19 @@ void Offline::Panel2Draw()
 	  doublecfdthresh2[i][0] = ChanParData;
 
 	  
-	  for (unsigned int j = 0; j < OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10]; ++j)
+	  for (int j = 0; j < tracelength; ++j)
 	    {
 	      doublesample2[i][j] = j;
 	      doublercdtrace2[i][j] = (double)RcdTrace2[i][j];
 	      doublethresh2[i][j] = doublethresh2[i][0];
 	      doublecfdthresh2[i][j] = doublecfdthresh2[i][0];
 	    }
-
-	  rawdata2[i] = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10],doublesample2[i],doublercdtrace2[i]);
-	  threshdata2[i] = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10],doublesample2[i],doublethresh2[i]);
-	  cfdthreshdata2[i] = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10],doublesample2[i],doublecfdthresh2[i]);
-	  cfddata2[i] = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10],doublesample2[i],doublecfd2[i]);
-	  sfilterdata2[i] = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10],doublesample2[i],doubleslowfilter2[i]);
-	  ffilterdata2[i] = new TGraph(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+10],doublesample2[i],doublefastfilter2[i]);
+	  rawdata2[i] = new TGraph(tracelength,doublesample2[i],doublercdtrace2[i]);
+	  threshdata2[i] = new TGraph(tracelength,doublesample2[i],doublethresh2[i]);
+	  cfdthreshdata2[i] = new TGraph(tracelength,doublesample2[i],doublecfdthresh2[i]);
+	  cfddata2[i] = new TGraph(tracelength,doublesample2[i],doublecfd2[i]);
+	  sfilterdata2[i] = new TGraph(tracelength,doublesample2[i],doubleslowfilter2[i]);
+	  ffilterdata2[i] = new TGraph(tracelength,doublesample2[i],doublefastfilter2[i]);
 
 	  
 	  cfddata2[i]->SetLineColor(2);
@@ -1825,7 +1827,7 @@ void Offline::Panel3Draw()
   
   for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
     {
-      offlineth1d3[OfflineEventInformation[EventHeaderLength*i+1]]->Fill(OfflineEventInformation[EventHeaderLength*i+9]);
+      offlineth1d3[(OfflineEventInformation[EventHeaderLength*i] & 0xF)]->Fill((OfflineEventInformation[EventHeaderLength*i+3] & 0xFFFF));//ch/event energy
     }
 
   for (int i = 0; i < 16; ++i)
@@ -1889,9 +1891,9 @@ void Offline::Panel4Draw()
   
   for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
     {
-      if(offlinechnum4->GetIntNumber() == OfflineEventInformation[EventHeaderLength*i+1])
+      if(offlinechnum4->GetIntNumber() == (OfflineEventInformation[EventHeaderLength*i] & 0xF))//ch
 	{
-	  offlineth1d4->Fill(OfflineEventInformation[EventHeaderLength*i+9]);
+	  offlineth1d4->Fill((OfflineEventInformation[EventHeaderLength*i+3] & 0xFFFF));//event energy
 	}
     }
   
@@ -1967,14 +1969,13 @@ void Offline::Panel5Draw()
       delete calculatecfdth1d5;
       calculatecfdth1d5 = NULL;
     }
-
-  
+    
   int inttracelength = -1;
   for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
     {
-      if(offlinechnum5->GetIntNumber() == OfflineEventInformation[EventHeaderLength*i+1])
+      if(offlinechnum5->GetIntNumber() == (OfflineEventInformation[EventHeaderLength*i] & 0xF))//ch
 	{
-	  inttracelength = OfflineEventInformation[EventHeaderLength*i+10];
+	  inttracelength = ((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16);//trace length
 	  break;
 	}
     }
@@ -1992,11 +1993,21 @@ void Offline::Panel5Draw()
       calculatecfdth1d5 = new TH1D("calculatecfdth1d5","",330,0,33000);//32768
       
       int retval;
+      cfdevenycount5 = 0;
+      originalcfdvalidcount5 = 0;
+      calculatecfdvalidcount5 = 0;
+      double ChanCFDThre;
+      retval = Pixie16ReadSglChanPar((char*)"CFDThresh", &ChanCFDThre, offlinemodnum->GetIntNumber(), offlinechnum5->GetIntNumber());
+      if(retval < 0) ErrorInfo("Offline.cc", "Panel5Draw()", "Pixie16ReadSglChanPar/CFDThresh", retval);
+  
       for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
 	{
-	  if(offlinechnum5->GetIntNumber() == OfflineEventInformation[EventHeaderLength*i+1])
+	  if(offlinechnum5->GetIntNumber() == (OfflineEventInformation[EventHeaderLength*i] & 0xF))//ch
 	    {
-	      retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum5->GetIntNumber(), OfflineEventInformation[EventHeaderLength*i+11], OfflineEventInformation[EventHeaderLength*i+10], RcdTrace5, doublefastfilter5, doublecfd5);
+	      cfdevenycount5++;
+	      if(((OfflineEventInformation[EventHeaderLength*i+2] & 0x80000000) >> 31) == 0) originalcfdvalidcount5++;
+	      
+	      retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum5->GetIntNumber(), OfflineEventInformation[EventHeaderLength*i+4], ((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16), RcdTrace5, doublefastfilter5, doublecfd5);//trace location/trace length
 	      if(retval < 0) ErrorInfo("Offline.cc", "Panel5Draw()", "Pixie16ComputeFastFiltersOffline", retval);
 	      int intmaxcfd = -1;
 	      double doublemaxcfd = -1;
@@ -2011,17 +2022,20 @@ void Offline::Panel5Draw()
 		      intmaxcfd = j;
 		    }
 		}
-
-	      for (int j = intmaxcfd; j < inttracelength; ++j)
+	      if(doublecfd5[intmaxcfd] >= ChanCFDThre)
 		{
-		  if(doublecfd5[j]>= 0 && doublecfd5[j+1] < 0)
+		  calculatecfdvalidcount5++;
+		  for (int j = intmaxcfd; j < inttracelength; ++j)
 		    {
-		      calculatecfdth1d5->Fill(doublecfd5[j]/(doublecfd5[j]-doublecfd5[j+1])*32768);
-		      break;
+		      if(doublecfd5[j]>= 0 && doublecfd5[j+1] < 0)
+			{
+			  calculatecfdth1d5->Fill(doublecfd5[j]/(doublecfd5[j]-doublecfd5[j+1])*32768);
+			  break;
+			}
 		    }
 		}
 	      
-	      originalcfdth1d5->Fill(OfflineEventInformation[EventHeaderLength*i+12]);
+	      originalcfdth1d5->Fill(((OfflineEventInformation[EventHeaderLength*i+2] & 0x7FFF0000)>>16));//cfd
 	    }
 
 	  if(i%500 == 0)
@@ -2030,6 +2044,9 @@ void Offline::Panel5Draw()
 	      gSystem->ProcessEvents();
 	    }
 	}
+
+      originalcfdth1d5->SetTitle(TString::Format("Vaild: %d / %d",originalcfdvalidcount5,cfdevenycount5).Data());
+      calculatecfdth1d5->SetTitle(TString::Format("Vaild: %d / %d",calculatecfdvalidcount5,cfdevenycount5).Data());
   
       canvas5->cd(1);
       offlineth2d5_0->Draw("colz");
@@ -2041,7 +2058,6 @@ void Offline::Panel5Draw()
       offlineth2d5_1->SetTitle(TString::Format("CFD  Ch: %d",int(offlinechnum5->GetIntNumber())).Data());
       offlineth2d5_1->GetXaxis()->SetTitle("sample");
 
-      
       showprojectyFF5->SetEnabled(1);
       showprojectyCFD5->SetEnabled(1);
       originalcfd5->SetEnabled(1);
@@ -2129,9 +2145,9 @@ void Offline::Panel6Draw()
   int inttracelength = -1;
   for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
     {
-      if(offlinechnum6->GetIntNumber() == OfflineEventInformation[EventHeaderLength*i+1])
+      if(offlinechnum6->GetIntNumber() == (OfflineEventInformation[EventHeaderLength*i] & 0xF))//ch
 	{
-	  inttracelength = OfflineEventInformation[EventHeaderLength*i+10];
+	  inttracelength = ((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16);//trace length
 	  break;
 	}
     }
@@ -2216,11 +2232,11 @@ void Offline::Panel6Draw()
   
       for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
 	{
-	  if(offlinechnum6->GetIntNumber() == OfflineEventInformation[EventHeaderLength*i+1])
+	  if(offlinechnum6->GetIntNumber() == (OfflineEventInformation[EventHeaderLength*i] & 0xF))//ch
 	    {
-	      retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum6->GetIntNumber(), OfflineEventInformation[EventHeaderLength*i+11], OfflineEventInformation[EventHeaderLength*i+10], RcdTrace6, doublefastfilter6, doublecfd6);
+	      retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum6->GetIntNumber(), OfflineEventInformation[EventHeaderLength*i+4], ((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16), RcdTrace6, doublefastfilter6, doublecfd6);//trace location/trace length
 	      if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ComputeFastFiltersOffline", retval);
-	      retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum6->GetIntNumber(), OfflineEventInformation[EventHeaderLength*i+11], OfflineEventInformation[EventHeaderLength*i+10], RcdTrace6,doubleslowfilter6);
+	      retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum6->GetIntNumber(), OfflineEventInformation[EventHeaderLength*i+4], ((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16), RcdTrace6,doubleslowfilter6);//trace location/trace length
 	      if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
 
 	      
@@ -2354,24 +2370,41 @@ void Offline::CalculateCFDShow5()
 
 void Offline::SelectRawEnergySumsBaseline(Bool_t on)
 {
-  std::cout<<"SelectRawEnergySumsBaseline: "<<headerrawenergysumsandbaseline->IsOn()<<std::endl;
+  std::cout<<"GOTO  =  SelectRawEnergySumsBaseline: "<<headerrawenergysumsandbaseline->IsOn()<<std::endl;
+
+  OfflineDrawButton->SetEnabled(0);
+  OfflineDrawButton2->SetEnabled(0);
+  OfflineDrawButton3->SetEnabled(0);
+  OfflineDrawButton4->SetEnabled(0);
+  OfflineDrawButton5->SetEnabled(0);
+  OfflineDrawButton6->SetEnabled(0);
+  // OfflineFileStatus->SetText("NOT READ");
 }
 
 void Offline::SelectQDCSums(Bool_t on)
 {
-  std::cout<<"SelectRawEnergySumsBaseline: "<<headerqdcsums->IsOn()<<std::endl;
+  std::cout<<"GOTO  =  SelectRawEnergySumsBaseline: "<<headerqdcsums->IsOn()<<std::endl;
+  OfflineDrawButton->SetEnabled(0);
+  OfflineDrawButton2->SetEnabled(0);
+  OfflineDrawButton3->SetEnabled(0);
+  OfflineDrawButton4->SetEnabled(0);
+  OfflineDrawButton5->SetEnabled(0);
+  OfflineDrawButton6->SetEnabled(0);
+  // OfflineFileStatus->SetText("NOT READ");
 }
 
 void Offline::SelectExternalTimestamp(Bool_t on)
 {
-  std::cout<<"SelectExternalTimestamp: "<<headerexternaltimestamp->IsOn()<<std::endl;
+  std::cout<<"GOTO  =  SelectExternalTimestamp: "<<headerexternaltimestamp->IsOn()<<std::endl;
+  OfflineDrawButton->SetEnabled(0);
+  OfflineDrawButton2->SetEnabled(0);
+  OfflineDrawButton3->SetEnabled(0);
+  OfflineDrawButton4->SetEnabled(0);
+  OfflineDrawButton5->SetEnabled(0);
+  OfflineDrawButton6->SetEnabled(0);
+  // OfflineFileStatus->SetText("NOT READ");
 }
 
 
 // 
 // Offline.cc ends here
-
-
-
-
-

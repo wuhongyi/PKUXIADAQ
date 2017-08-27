@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 日 8月 27 19:01:59 2017 (+0800)
+// Last-Updated: 日 8月 27 21:40:25 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 81
+//     Update #: 83
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -59,6 +59,7 @@ public:
   void SelectRawEnergySumsBaseline(Bool_t on);
   void SelectQDCSums(Bool_t on);
   void SelectExternalTimestamp(Bool_t on);
+  // void SelectSamplingFrequency(Int_t id);
   
 private:
   Pixel_t color;
@@ -203,6 +204,9 @@ private:
   TGTextButton* calculatecfd5;
   TH1D* originalcfdth1d5;
   TH1D* calculatecfdth1d5;
+  int cfdevenycount5;
+  int originalcfdvalidcount5;
+  int calculatecfdvalidcount5;
   
   // Fold6
   TCanvas *canvas6;
