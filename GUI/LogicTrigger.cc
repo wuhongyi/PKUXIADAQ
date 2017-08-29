@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 日 8月 27 14:58:01 2017 (+0800)
+// Last-Updated: 一 8月 28 10:59:39 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 145
+//     Update #: 146
 // URL: http://wuhongyi.cn 
 
 #include "LogicTrigger.hh"
@@ -101,7 +101,7 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   CLabel[MULTIPLICITYOFFSET+7]->SetToolTipText("Select eithor coincidence trigger(0) or multiplicity trigger(1) as the source of the the channel coincidence/multiplicity trigger", 0);
   CLabel[MULTIPLICITYOFFSET+8]->SetToolTipText("Select channel coincidence/multiplicity trigger(0) or other group trigger(1) as the source of the channel validation trigger", 0);
 
-  for (int i = MULTIPLICITYOFFSET+1; i < MULTIPLICITYOFFSET+4; ++i)
+  for (int i = 1; i < 4; ++i)
     for (int j = 0; j < 16; ++j)
       {
 	NumEntry[MULTIPLICITYOFFSET+i][j]->SetFormat(TGNumberFormat::kNESHex);
