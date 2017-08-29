@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 日 8月 27 21:40:25 2017 (+0800)
+// Last-Updated: 二 8月 29 21:57:43 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 83
+//     Update #: 84
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -176,6 +176,8 @@ private:
   TCanvas *canvas3;
   TGTextButton* OfflineDrawButton3;  
   TH1D *offlineth1d3[16];
+  int traceoutofrangecount3[16];
+  int channeleventcount3[16];
   
   // Fold4
   TCanvas *canvas4;

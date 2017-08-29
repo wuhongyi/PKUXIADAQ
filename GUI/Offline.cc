@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 日 8月 27 21:40:25 2017 (+0800)
+// Last-Updated: 二 8月 29 22:03:20 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 314
+//     Update #: 317
 // URL: http://wuhongyi.cn 
 
 
@@ -1815,6 +1815,8 @@ void Offline::Panel3Draw()
 
   for (int i = 0; i < 16; ++i)
     {
+      traceoutofrangecount3[i] = 0;
+      channeleventcount3[i] = 0;
       if(offlineth1d3[i] != NULL)
 	{
 	  delete offlineth1d3[i];
@@ -1827,7 +1829,15 @@ void Offline::Panel3Draw()
   
   for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
     {
-      offlineth1d3[(OfflineEventInformation[EventHeaderLength*i] & 0xF)]->Fill((OfflineEventInformation[EventHeaderLength*i+3] & 0xFFFF));//ch/event energy
+      channeleventcount3[(OfflineEventInformation[EventHeaderLength*i] & 0xF)]++;
+      if(((OfflineEventInformation[EventHeaderLength*i+3] & 0x80000000) >> 31) == 1)//out of range
+	{
+	  traceoutofrangecount3[(OfflineEventInformation[EventHeaderLength*i] & 0xF)]++;
+	}
+      else
+	{
+	  offlineth1d3[(OfflineEventInformation[EventHeaderLength*i] & 0xF)]->Fill((OfflineEventInformation[EventHeaderLength*i+3] & 0xFFFF));//ch/event energy
+	}
     }
 
   for (int i = 0; i < 16; ++i)
@@ -1836,6 +1846,7 @@ void Offline::Panel3Draw()
 	{
 	  canvas3->cd(i+1);
 	  offlineth1d3[i]->Draw();
+	  offlineth1d3[i]->SetTitle(TString::Format("Ch: %d   Trae out-of-range: %d / %d",i,traceoutofrangecount3[i],channeleventcount3[i]).Data());
 	  offlineth1d3[i]->GetXaxis()->SetTitle("ch");
 	  offlineth1d3[i]->GetXaxis()->SetLabelSize(0.06);
 	  offlineth1d3[i]->GetYaxis()->SetLabelSize(0.06);
