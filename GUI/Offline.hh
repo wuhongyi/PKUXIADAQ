@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 二 8月 29 21:57:43 2017 (+0800)
+// Last-Updated: 日 9月  3 21:14:36 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 84
+//     Update #: 100
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -19,6 +19,7 @@
 #include "TGFrame.h"
 #include "TGImageMap.h"
 #include "TGLabel.h"
+#include "TLatex.h"
 #include "TGNumberEntry.h"
 #include "TGraph.h"
 #include "TGStatusBar.h"
@@ -55,10 +56,10 @@ public:
   void MakeFold8Panel(TGCompositeFrame *TabPanel);//Auto Thre
   void MakeFold9Panel(TGCompositeFrame *TabPanel);//FFT
 
-
   void SelectRawEnergySumsBaseline(Bool_t on);
   void SelectQDCSums(Bool_t on);
   void SelectExternalTimestamp(Bool_t on);
+  void SelectDrawOPtionPanel1(Bool_t on);
   // void SelectSamplingFrequency(Int_t id);
   
 private:
@@ -107,6 +108,7 @@ private:
       OFFLINECFDTHRESH,
       OFFLINETHRESH,
       OFFLINEFILTERRANGE,
+      OFFLINEGAUSFIT4,
       OFFLINEPROJECTYFF5,
       OFFLINEPROJECTYCFD5,
       OFFLINEORIGINALCFD5,
@@ -126,9 +128,9 @@ private:
   unsigned int OfflineCurrentCount;
 
   TGComboBox *choosesamplemhz0;
-  TGCheckButton * headerrawenergysumsandbaseline;
-  TGCheckButton * headerqdcsums;
-  TGCheckButton * headerexternaltimestamp;
+  TGCheckButton *headerrawenergysumsandbaseline;
+  TGCheckButton *headerqdcsums;
+  TGCheckButton *headerexternaltimestamp;
   
   // Fold1
   TGTextButton* OfflineLoadButton;
@@ -136,6 +138,8 @@ private:
   TGTextButton* OfflineDrawButton;
   TGTextEntry* OfflineCurrentCountText;
   TGNumberEntry	*offlinechnum;//int
+  TGCheckButton *offlinedrawoption1[6];//0-wave 1-slow filter 2-fast filter 3-thres 4-cfd 5-cfd thres
+
   
   // 0-fastlength 1-fastgap  2-slowlength  3-slowgap  4-preamptau  5-cfddelay  6-cfdscale 7-fast filterthreshold 8-cfd threshold
   TGNumberEntryField *offlinefilters[9];
@@ -144,6 +148,7 @@ private:
   TGStatusBar* sbfold3;
   TGDoubleHSlider *dslider;
 
+  int tracelength;
   TMultiGraph *offlinemultigraph;
   TGraph *rawdata,*threshdata,*cfddata,*cfdthreshdata,*sfilterdata,*ffilterdata;
   unsigned short *RcdTrace;//
@@ -181,7 +186,8 @@ private:
   
   // Fold4
   TCanvas *canvas4;
-  TGTextButton* OfflineDrawButton4;  
+  TGTextButton* OfflineDrawButton4;
+  TGTextButton* GausFitButton4;
   TH1D *offlineth1d4;
   TGNumberEntry	*offlinechnum4;//int
   int chanNumber4;
@@ -206,6 +212,12 @@ private:
   TGTextButton* calculatecfd5;
   TH1D* originalcfdth1d5;
   TH1D* calculatecfdth1d5;
+  TF1* fitoriginalcfdth1d5;
+  TF1* fitcalculatecfdth1d5;
+  TLatex *ltxoriginalcfdth1d5;
+  TLatex *ltxcalculatecfdth1d5;
+  bool falgshowprojectyFF5;
+  bool flagshowprojectyCFD5;
   int cfdevenycount5;
   int originalcfdvalidcount5;
   int calculatecfdvalidcount5;
@@ -253,14 +265,19 @@ private:
   
   void Panel0ReadFile();
 
+  void GausFit4();
   void FFShowProjectY5();
   void CFDShowProjectY5();
   void OriginalCFDShow5();
   void CalculateCFDShow5();
   void Panel6StopDraw();
 
-
 };
+
+void DynamicFFShowProjectY5();
+void DynamicCFDShowProjectY5();
+void TestGausFit();
+
 
 #endif /* _OFFLINE_HH_ */
 // 

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 二 8月 29 22:03:20 2017 (+0800)
+// Last-Updated: 日 9月  3 22:46:30 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 317
+//     Update #: 409
 // URL: http://wuhongyi.cn 
 
 
@@ -40,6 +40,7 @@
 
 #include "TGTab.h"
 #include "TString.h"
+#include "TFitResultPtr.h"
 
 #include <iostream>
 using namespace std;
@@ -76,8 +77,9 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   doublefastfilter = NULL;
   doublecfd = NULL;
   doubleslowfilter = NULL;
+  offlinemultigraph = NULL;
   offlinemultigraph = new TMultiGraph();
-
+  
   for (int i = 0; i < 16; ++i)
     {
       offlinemultigraph2[i] = new TMultiGraph();
@@ -108,6 +110,13 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   offlineth2d5_1 = NULL;
   originalcfdth1d5 = NULL;
   calculatecfdth1d5 = NULL;
+  fitoriginalcfdth1d5 = NULL;
+  fitcalculatecfdth1d5 = NULL;
+  ltxoriginalcfdth1d5 = NULL;
+  ltxcalculatecfdth1d5 = NULL;
+  falgshowprojectyFF5 = false;
+  flagshowprojectyCFD5 = false;
+  
   RcdTrace5 = NULL;
   doublefastfilter5 = NULL;
   doublecfd5 = NULL;
@@ -116,6 +125,8 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   doublefastfilter6 = NULL;
   doublecfd6 = NULL;
   doubleslowfilter6 = NULL;
+
+
   
   TGTab *TabPanel = new TGTab(this);
   this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
@@ -178,7 +189,7 @@ Offline::~Offline()
   if(RcdTrace5 != NULL) delete []RcdTrace5;
   if(doublefastfilter5 != NULL) delete []doublefastfilter5;
   if(doublecfd5 != NULL) delete []doublecfd5;
-
+  
   if(RcdTrace6 != NULL) delete []RcdTrace6;
   if(doublefastfilter6 != NULL) delete []doublefastfilter6;
   if(doublecfd6 != NULL) delete []doublecfd6;
@@ -216,6 +227,11 @@ Offline::~Offline()
   if(offlineth2d5_1 != NULL) delete offlineth2d5_1;
   if(originalcfdth1d5 != NULL) delete originalcfdth1d5;
   if(calculatecfdth1d5 != NULL) delete calculatecfdth1d5;
+  if(fitoriginalcfdth1d5 != NULL) delete fitoriginalcfdth1d5;
+  if(fitcalculatecfdth1d5 != NULL) delete fitcalculatecfdth1d5;
+  if(ltxoriginalcfdth1d5 != NULL) delete ltxoriginalcfdth1d5;
+  if(ltxcalculatecfdth1d5 != NULL) delete ltxcalculatecfdth1d5;
+
   
   if(offlineth1d6 != NULL) delete offlineth1d6;
 }
@@ -437,6 +453,54 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
 
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 
+  // Draw option
+  TGLabel *drawoptionlabel = new TGLabel(parFrame, "Draw option:");
+  parFrame->AddFrame(drawoptionlabel, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  fClient->GetColorByName("red", color);
+  drawoptionlabel->SetTextColor(color, false);
+
+  offlinedrawoption1[0] = new TGCheckButton(parFrame, "Wave");
+  offlinedrawoption1[0]->SetOn(kTRUE);
+  offlinedrawoption1[0]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel1(Bool_t)");
+  parFrame->AddFrame(offlinedrawoption1[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+
+  offlinedrawoption1[1] = new TGCheckButton(parFrame, "Slow Filter");
+  offlinedrawoption1[1]->SetOn(kTRUE);
+  offlinedrawoption1[1]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel1(Bool_t)");
+  fClient->GetColorByName("green", color);
+  offlinedrawoption1[1]->SetTextColor(color, false);
+  parFrame->AddFrame(offlinedrawoption1[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+
+  offlinedrawoption1[2] = new TGCheckButton(parFrame, "Fast Filter");
+  offlinedrawoption1[2]->SetOn(kTRUE);
+  offlinedrawoption1[2]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel1(Bool_t)");
+  fClient->GetColorByName("blue", color);
+  offlinedrawoption1[2]->SetTextColor(color, false);
+  parFrame->AddFrame(offlinedrawoption1[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+
+  offlinedrawoption1[3] = new TGCheckButton(parFrame, "Thres");
+  offlinedrawoption1[3]->SetOn(kTRUE);
+  offlinedrawoption1[3]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel1(Bool_t)");
+  fClient->GetColorByName("blue", color);
+  offlinedrawoption1[3]->SetTextColor(color, false);
+  parFrame->AddFrame(offlinedrawoption1[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));  
+
+  offlinedrawoption1[4] = new TGCheckButton(parFrame, "CFD");
+  offlinedrawoption1[4]->SetOn(kTRUE);
+  offlinedrawoption1[4]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel1(Bool_t)");
+  fClient->GetColorByName("red", color);
+  offlinedrawoption1[4]->SetTextColor(color, false);
+  parFrame->AddFrame(offlinedrawoption1[4], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+
+  offlinedrawoption1[5] = new TGCheckButton(parFrame, "CFD Thres");
+  offlinedrawoption1[5]->SetOn(kTRUE);
+  offlinedrawoption1[5]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel1(Bool_t)");
+  fClient->GetColorByName("red", color);
+  offlinedrawoption1[5]->SetTextColor(color, false);
+  parFrame->AddFrame(offlinedrawoption1[5], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+
+  
+  
   // current count
   OfflineCurrentCountText = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
   OfflineCurrentCountText-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
@@ -501,6 +565,73 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   TabPanel->AddFrame(sbfold3, new TGLayoutHints(kLHintsBottom | kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
 }
 
+void Offline::SelectDrawOPtionPanel1(Bool_t on)
+{
+  if(rawdata != NULL || threshdata != NULL || cfddata != NULL || cfdthreshdata != NULL || sfilterdata != NULL || ffilterdata != NULL)
+    {
+      if(rawdata != NULL)
+	{
+	  delete rawdata;
+	  rawdata = new TGraph(tracelength,doublesample,doublercdtrace);
+	}
+      if(threshdata != NULL)
+	{
+	  delete threshdata;
+	  threshdata = new TGraph(tracelength,doublesample,doublethresh);
+	}
+      if(cfddata != NULL)
+	{
+	  delete cfddata;
+	  cfddata = new TGraph(tracelength,doublesample,doublecfd);
+	}
+      if(cfdthreshdata != NULL)
+	{
+	  delete cfdthreshdata;
+	  cfdthreshdata = new TGraph(tracelength,doublesample,doublecfdthresh);
+	}
+      if(sfilterdata != NULL)
+	{
+	  delete sfilterdata;
+	  sfilterdata = new TGraph(tracelength,doublesample,doubleslowfilter);
+	}
+      if(ffilterdata != NULL)
+	{
+	  delete ffilterdata;
+	  ffilterdata  = new TGraph(tracelength,doublesample,doublefastfilter);
+	}
+      
+      cfddata->SetLineColor(2);
+      cfdthreshdata->SetLineColor(2);
+      sfilterdata->SetLineColor(3);
+      ffilterdata->SetLineColor(4);
+      threshdata->SetLineColor(4);
+      if(offlinedrawoption1[0]->IsOn())
+	offlinemultigraph->Add(rawdata);
+      if(offlinedrawoption1[3]->IsOn())
+	offlinemultigraph->Add(threshdata);
+      if(offlinedrawoption1[4]->IsOn())
+	offlinemultigraph->Add(cfddata);
+      if(offlinedrawoption1[5]->IsOn())
+	offlinemultigraph->Add(cfdthreshdata);
+      if(offlinedrawoption1[1]->IsOn())
+	offlinemultigraph->Add(sfilterdata);
+      if(offlinedrawoption1[2]->IsOn())
+	offlinemultigraph->Add(ffilterdata);
+      
+      adjustCanvas->cd();
+      adjustCanvas->Clear();
+      offlinemultigraph->Draw("AL");
+      if(offlinedrawoption1[0]->IsOn() || offlinedrawoption1[1]->IsOn() || offlinedrawoption1[2]->IsOn() || offlinedrawoption1[3]->IsOn() || offlinedrawoption1[4]->IsOn() || offlinedrawoption1[5]->IsOn())
+	offlinemultigraph->GetXaxis()->SetRangeUser(double(dslider->GetMinPosition()),double(dslider->GetMaxPosition()));
+      adjustCanvas->Modified();
+      adjustCanvas->Update();
+    }
+
+  // gSystem->ProcessEvents();
+
+}
+
+
 void Offline::MakeFold2Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
@@ -555,6 +686,13 @@ void Offline::MakeFold4Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 
+  // Fit
+  GausFitButton4 = new TGTextButton( parFrame, "&Fit", OFFLINEGAUSFIT4);
+  // GausFitButton4->SetEnabled(0);
+  GausFitButton4->Associate(this);
+  parFrame->AddFrame(GausFitButton4, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 0, 0));
+  
+  
   // draw
   OfflineDrawButton4 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW4);
   OfflineDrawButton4->SetEnabled(0);
@@ -607,6 +745,46 @@ void Offline::MakeFold4Panel(TGCompositeFrame *TabPanel)
   
 }
 
+void Offline::GausFit4()
+{
+  canvas4->AddExec("dynamic","TestGausFit()");
+
+
+  // canvas3->DeleteExec("dynamic");
+
+}
+
+void TestGausFit()
+{
+  // TODO
+  // 11为一次点击
+  // 第二次点击之后执行动作
+  
+  int pe = gPad->GetEvent();
+  if(pe == 51) return;
+  // std::cout<<pe<<std::endl;
+  // TObject *select = gPad->GetSelected();
+  // if(!select) return;
+  // if (!select->InheritsFrom(TH1::Class())) {/*gPad->SetUniqueID(0);*/ return;}
+  // TH1 *h = (TH1*)select;
+  gPad->GetCanvas()->FeedbackMode(kTRUE);
+
+  int pxold = gPad->GetUniqueID();
+  int px = gPad->GetEventX();
+  float uymin = gPad->GetUymin();
+  float uymax = gPad->GetUymax();
+  int pymin = gPad->YtoAbsPixel(uymin);
+  int pymax = gPad->YtoAbsPixel(uymax);
+  if(pxold) gVirtualX->DrawLine(pxold,pymin,pxold,pymax);
+  gVirtualX->DrawLine(px,pymin,px,pymax);
+  gPad->SetUniqueID(px);
+  Float_t upx = gPad->AbsPixeltoX(px);
+  Float_t x = gPad->PadtoX(upx);
+ 
+  std::cout<<"click!!!"<<"  "<<pe<<"  "<<px<<"  "<<upx<<"  "<<x<<std::endl;
+}
+
+  
 void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
@@ -944,7 +1122,9 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      Panel9Draw();
 	      break;
 
-
+	    case OFFLINEGAUSFIT4:
+	      GausFit4();
+	      break;
 	      
 	    case OFFLINESTOPDRAW6:
 	      Panel6StopDraw();
@@ -1535,7 +1715,6 @@ void Offline::Panel1Draw()
     }
   bool offlinedatastatus;
   unsigned int tempN1;
-  int tracelength;
   tempN1 = -1;
   offlinedatastatus = false;
 
@@ -1626,15 +1805,22 @@ void Offline::Panel1Draw()
   // cfddata->SetLineWidth(3);
   // sfilterdata->SetLineWidth(3);
   // cfddata->SetLineWidth(3);
-  offlinemultigraph->Clear();
-  offlinemultigraph->Add(rawdata);
-  offlinemultigraph->Add(threshdata);
-  offlinemultigraph->Add(cfddata);
-  offlinemultigraph->Add(cfdthreshdata);
-  offlinemultigraph->Add(sfilterdata);
-  offlinemultigraph->Add(ffilterdata);
+  // offlinemultigraph->Clear();
+  if(offlinedrawoption1[0]->IsOn())
+    offlinemultigraph->Add(rawdata);
+  if(offlinedrawoption1[3]->IsOn())
+    offlinemultigraph->Add(threshdata);
+  if(offlinedrawoption1[4]->IsOn())
+    offlinemultigraph->Add(cfddata);
+  if(offlinedrawoption1[5]->IsOn())
+    offlinemultigraph->Add(cfdthreshdata);
+  if(offlinedrawoption1[1]->IsOn())
+    offlinemultigraph->Add(sfilterdata);
+  if(offlinedrawoption1[2]->IsOn())
+    offlinemultigraph->Add(ffilterdata);
   offlinemultigraph->Draw("AL");
-  offlinemultigraph->GetXaxis()->SetRangeUser(double(dslider->GetMinPosition()),double(dslider->GetMaxPosition()));
+  if(offlinedrawoption1[0]->IsOn() || offlinedrawoption1[1]->IsOn() || offlinedrawoption1[2]->IsOn() || offlinedrawoption1[3]->IsOn() || offlinedrawoption1[4]->IsOn() || offlinedrawoption1[5]->IsOn())
+    offlinemultigraph->GetXaxis()->SetRangeUser(double(dslider->GetMinPosition()),double(dslider->GetMaxPosition()));
   // offlinemultigraph->Draw("AL");
   adjustCanvas->Modified();
   adjustCanvas->Update();
@@ -1924,6 +2110,10 @@ void Offline::Panel5Draw()
   showprojectyCFD5->SetEnabled(0);
   originalcfd5->SetEnabled(0);
   calculatecfd5->SetEnabled(0);
+
+  falgshowprojectyFF5 = false;
+  flagshowprojectyCFD5 = false;
+  
   if(RcdTrace5 != NULL)
     {
       delete []RcdTrace5;
@@ -1939,6 +2129,26 @@ void Offline::Panel5Draw()
       delete []doublecfd5;
       doublecfd5 = NULL;
     }
+  if(fitoriginalcfdth1d5 != NULL)
+    {
+      delete fitoriginalcfdth1d5;
+      fitoriginalcfdth1d5 = NULL;
+    }
+  if(fitcalculatecfdth1d5 != NULL)
+    {
+      delete fitcalculatecfdth1d5;
+      fitcalculatecfdth1d5 = NULL;
+    }
+  if(ltxoriginalcfdth1d5 != NULL)
+    {
+      delete ltxoriginalcfdth1d5;
+      ltxoriginalcfdth1d5 = NULL;
+    }
+  if(ltxcalculatecfdth1d5 != NULL)
+    {
+      delete ltxcalculatecfdth1d5;
+      ltxcalculatecfdth1d5 = NULL;
+    }
   
   canvas5->cd();
   canvas5->Clear();
@@ -1946,6 +2156,8 @@ void Offline::Panel5Draw()
   canvas5->Update();
   gSystem->ProcessEvents();
   canvas5->Divide(2,1);
+
+
   
   if(OriginalCFDcanvas5 != NULL)
     {
@@ -2002,6 +2214,20 @@ void Offline::Panel5Draw()
 
       originalcfdth1d5 = new TH1D("originalcfdth1d5","",330,0,33000);//32768
       calculatecfdth1d5 = new TH1D("calculatecfdth1d5","",330,0,33000);//32768
+
+      fitoriginalcfdth1d5 = new TF1("fitoriginalcfdth1d5","pol1");
+      fitcalculatecfdth1d5 = new TF1("fitcalculatecfdth1d5","pol1");
+      ltxoriginalcfdth1d5 = new TLatex();
+      ltxoriginalcfdth1d5->SetNDC(kTRUE);
+      ltxoriginalcfdth1d5->SetTextFont(22);
+      ltxoriginalcfdth1d5->SetTextSize(0.06);
+      ltxoriginalcfdth1d5->SetTextColor(4);
+      ltxcalculatecfdth1d5 = new TLatex();
+      ltxcalculatecfdth1d5 ->SetNDC(kTRUE);
+      ltxcalculatecfdth1d5 ->SetTextFont(22);
+      ltxcalculatecfdth1d5 ->SetTextSize(0.06);
+      ltxcalculatecfdth1d5 ->SetTextColor(4);
+
       
       int retval;
       cfdevenycount5 = 0;
@@ -2351,14 +2577,42 @@ void Offline::Panel0ReadFile()
     }
 }
 
+
+
 void Offline::FFShowProjectY5()
 {
-  offlineth2d5_0->SetShowProjectionY(1);
+  // offlineth2d5_0->SetShowProjectionY(1);
+  
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+  if(falgshowprojectyFF5)
+    {
+      falgshowprojectyFF5 = false;
+      canvas5->cd(1)->DeleteExec("dynamicFFShowProjectY5");
+    }
+  else
+    {
+      falgshowprojectyFF5 = true;
+      canvas5->cd(1)->AddExec("dynamicFFShowProjectY5","DynamicFFShowProjectY5()");
+    }
 }
 
 void Offline::CFDShowProjectY5()
 {
-  offlineth2d5_1->SetShowProjectionY(1);
+  // offlineth2d5_1->SetShowProjectionY(1);
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+  if(flagshowprojectyCFD5)
+    {
+      flagshowprojectyCFD5 = false;
+      canvas5->cd(2)->DeleteExec("dynamicCFDShowProjectY5");
+    }
+  else
+    {
+      flagshowprojectyCFD5 = true;
+      canvas5->cd(2)->AddExec("dynamicCFDShowProjectY5","DynamicCFDShowProjectY5()");
+    }
 }
 
 void Offline::OriginalCFDShow5()
@@ -2367,6 +2621,8 @@ void Offline::OriginalCFDShow5()
   if(!c) OriginalCFDcanvas5 = new TCanvas("OriginalCFDcanvas5","Original CFD",600,400);
   OriginalCFDcanvas5->cd();
   originalcfdth1d5->Draw();
+  originalcfdth1d5->Fit("fitoriginalcfdth1d5", "Q");
+  ltxoriginalcfdth1d5->DrawLatex(0.1,0.1,TString::Format("Chi2: %0.3f  NDF: %d  Chi2/NDF: %0.3f",fitoriginalcfdth1d5->GetChisquare(),fitoriginalcfdth1d5->GetNDF(),fitoriginalcfdth1d5->GetChisquare()/fitoriginalcfdth1d5->GetNDF()).Data());
   OriginalCFDcanvas5->Update();
 }
 
@@ -2376,6 +2632,8 @@ void Offline::CalculateCFDShow5()
   if(!c) CalculateCFDcanvas5 = new TCanvas("CalculateCFDcanvas5","Calculate CFD",600,400);
   CalculateCFDcanvas5->cd();
   calculatecfdth1d5->Draw();
+  calculatecfdth1d5->Fit("fitcalculatecfdth1d5", "Q");
+  ltxcalculatecfdth1d5->DrawLatex(0.1,0.1,TString::Format("Chi2: %0.3f  NDF: %d  Chi2/NDF: %0.3f",fitcalculatecfdth1d5->GetChisquare(),fitcalculatecfdth1d5->GetNDF(),fitcalculatecfdth1d5->GetChisquare()/fitcalculatecfdth1d5->GetNDF()).Data());
   CalculateCFDcanvas5->Update();
 }
 
@@ -2416,6 +2674,109 @@ void Offline::SelectExternalTimestamp(Bool_t on)
   // OfflineFileStatus->SetText("NOT READ");
 }
 
+
+
+void DynamicFFShowProjectY5()
+{
+  TObject *select = gPad->GetSelected();
+  if(!select) return;
+  if (!select->InheritsFrom(TH2::Class())) {gPad->SetUniqueID(0); return;}
+  TH2 *h = (TH2*)select;
+  gPad->GetCanvas()->FeedbackMode(kTRUE);
+
+  int pyold = gPad->GetUniqueID();
+  int px = gPad->GetEventX();
+  // int py = gPad->GetEventY();
+  float uymin = gPad->GetUymin();
+  float uymax = gPad->GetUymax();
+  int pymin = gPad->YtoAbsPixel(uymin);
+  int pymax = gPad->YtoAbsPixel(uymax);
+  if(pyold) gVirtualX->DrawLine(pyold,pymin,pyold,pymax);
+  gVirtualX->DrawLine(px,pymin,px,pymax);
+  gPad->SetUniqueID(px);
+  Float_t upx = gPad->AbsPixeltoX(px);
+  Float_t x = gPad->PadtoX(upx);
+
+  TVirtualPad *padsav = gPad;
+  TCanvas *c2 = (TCanvas*)gROOT->GetListOfCanvases()->FindObject("FFShowProjectY5");
+  if(c2) delete c2->GetPrimitive("Projection");
+  else c2 = new TCanvas("FFShowProjectY5","Fast Filter ShowProjectY",710,10,700,500);
+  c2->SetGrid();
+  c2->cd();
+
+  Int_t binx = h->GetXaxis()->FindBin(x);
+  TH1D *hp = h->ProjectionY("",binx,binx);
+  hp->SetFillColor(38);
+  char title[80];
+  sprintf(title,"Projection of bin X = %d",binx);
+  hp->SetName("ProjectionFF5");
+  hp->SetTitle(title);
+  TLatex *ltx = new TLatex();
+  if(hp->Fit("gaus","QL") == 0)
+    {
+      hp->GetFunction("gaus")->SetNpx(1000);
+      hp->GetFunction("gaus")->SetLineColor(kRed);
+      ltx->SetNDC(kTRUE);
+      ltx->SetTextFont(22);
+      ltx->SetTextSize(0.06);
+      ltx->SetTextColor(4);
+      ltx->DrawLatex(0.01,0.9,TString::Format("Mean: %0.3f  Sigma: %0.3f       Rec Thre: %d",hp->GetFunction("gaus")->GetParameter(1),hp->GetFunction("gaus")->GetParameter(2),int(hp->GetFunction("gaus")->GetParameter(1)+3*hp->GetFunction("gaus")->GetParameter(2)+1)).Data());
+    }
+  c2->Update();
+  padsav->cd();
+  delete ltx;
+}
+
+void DynamicCFDShowProjectY5()
+{
+  TObject *select = gPad->GetSelected();
+  if(!select) return;
+  if (!select->InheritsFrom(TH2::Class())) {gPad->SetUniqueID(0); return;}
+  TH2 *h = (TH2*)select;
+  gPad->GetCanvas()->FeedbackMode(kTRUE);
+
+  int pyold = gPad->GetUniqueID();
+  int px = gPad->GetEventX();
+  // int py = gPad->GetEventY();
+  float uymin = gPad->GetUymin();
+  float uymax = gPad->GetUymax();
+  int pymin = gPad->YtoAbsPixel(uymin);
+  int pymax = gPad->YtoAbsPixel(uymax);
+  if(pyold) gVirtualX->DrawLine(pyold,pymin,pyold,pymax);
+  gVirtualX->DrawLine(px,pymin,px,pymax);
+  gPad->SetUniqueID(px);
+  Float_t upx = gPad->AbsPixeltoX(px);
+  Float_t x = gPad->PadtoX(upx);
+
+  TVirtualPad *padsav = gPad;
+  TCanvas *c2 = (TCanvas*)gROOT->GetListOfCanvases()->FindObject("CFDShowProjectY5");
+  if(c2) delete c2->GetPrimitive("Projection");
+  else c2 = new TCanvas("CFDShowProjectY5","CFD ShowProjectY",710,10,700,500);
+  c2->SetGrid();
+  c2->cd();
+
+  Int_t binx = h->GetXaxis()->FindBin(x);
+  TH1D *hp = h->ProjectionY("",binx,binx);
+  hp->SetFillColor(38);
+  char title[80];
+  sprintf(title,"Projection of bin X = %d",binx);
+  hp->SetName("ProjectionCFD5");
+  hp->SetTitle(title);
+  TLatex *ltx = new TLatex();
+  if(hp->Fit("gaus","QL") == 0)
+    {
+      hp->GetFunction("gaus")->SetNpx(1000);
+      hp->GetFunction("gaus")->SetLineColor(kRed);
+      ltx->SetNDC(kTRUE);
+      ltx->SetTextFont(22);
+      ltx->SetTextSize(0.06);
+      ltx->SetTextColor(4);
+      ltx->DrawLatex(0.01,0.9,TString::Format("Mean: %0.3f  Sigma: %0.3f       Rec Thre: %d",hp->GetFunction("gaus")->GetParameter(1),hp->GetFunction("gaus")->GetParameter(2),int(hp->GetFunction("gaus")->GetParameter(1)+3*hp->GetFunction("gaus")->GetParameter(2)+1)).Data());
+    }
+  c2->Update();
+  padsav->cd();
+  delete ltx;
+}
 
 // 
 // Offline.cc ends here
