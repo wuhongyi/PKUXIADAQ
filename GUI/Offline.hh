@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 日 9月  3 21:14:36 2017 (+0800)
+// Last-Updated: 一 9月  4 16:46:35 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 100
+//     Update #: 105
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -109,6 +109,7 @@ private:
       OFFLINETHRESH,
       OFFLINEFILTERRANGE,
       OFFLINEGAUSFIT4,
+      OFFLINEGAUSFIT6,
       OFFLINEPROJECTYFF5,
       OFFLINEPROJECTYCFD5,
       OFFLINEORIGINALCFD5,
@@ -188,6 +189,7 @@ private:
   TCanvas *canvas4;
   TGTextButton* OfflineDrawButton4;
   TGTextButton* GausFitButton4;
+  bool falggausfit4;
   TH1D *offlineth1d4;
   TGNumberEntry	*offlinechnum4;//int
   int chanNumber4;
@@ -206,6 +208,7 @@ private:
   double *doublefastfilter5;//
   double *doublecfd5;//
   TGTextEntry* printtextinfor5;
+  // TGComboBox *recommendedsigma5; // TODO
   TGTextButton* showprojectyFF5; 
   TGTextButton* showprojectyCFD5; 
   TGTextButton* originalcfd5;
@@ -227,6 +230,8 @@ private:
   TGTextButton* OfflineDrawButton6;
   TGTextButton* OfflineStopButton6;
   TH1D *offlineth1d6;
+  TGTextButton* GausFitButton6;
+  bool falggausfit6;
   TGNumberEntry	*offlinechnum6;//int
   int chanNumber6;
   TGComboBox *chooseth1dbin6;
@@ -236,7 +241,7 @@ private:
   double *doublecfd6;//
   double *doubleslowfilter6;//
   bool flagdrawstop6;
-  // 需要设置一个采样率选择器
+
 
   
   // Fold7
@@ -266,6 +271,7 @@ private:
   void Panel0ReadFile();
 
   void GausFit4();
+  void GausFit6();
   void FFShowProjectY5();
   void CFDShowProjectY5();
   void OriginalCFDShow5();
@@ -276,7 +282,7 @@ private:
 
 void DynamicFFShowProjectY5();
 void DynamicCFDShowProjectY5();
-void TestGausFit();
+void PanelGausFit();
 
 
 #endif /* _OFFLINE_HH_ */

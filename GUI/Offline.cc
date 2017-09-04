@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 日 9月  3 22:46:30 2017 (+0800)
+// Last-Updated: 一 9月  4 16:46:35 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 409
+//     Update #: 439
 // URL: http://wuhongyi.cn 
 
 
@@ -106,6 +106,8 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
     }
 
   offlineth1d4 = NULL;
+  falggausfit4 = false;
+  
   offlineth2d5_0 = NULL;
   offlineth2d5_1 = NULL;
   originalcfdth1d5 = NULL;
@@ -125,7 +127,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   doublefastfilter6 = NULL;
   doublecfd6 = NULL;
   doubleslowfilter6 = NULL;
-
+  falggausfit6 = false;
 
   
   TGTab *TabPanel = new TGTab(this);
@@ -456,8 +458,8 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   // Draw option
   TGLabel *drawoptionlabel = new TGLabel(parFrame, "Draw option:");
   parFrame->AddFrame(drawoptionlabel, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
-  fClient->GetColorByName("red", color);
-  drawoptionlabel->SetTextColor(color, false);
+  // fClient->GetColorByName("red", color);
+  // drawoptionlabel->SetTextColor(color, false);
 
   offlinedrawoption1[0] = new TGCheckButton(parFrame, "Wave");
   offlinedrawoption1[0]->SetOn(kTRUE);
@@ -687,8 +689,8 @@ void Offline::MakeFold4Panel(TGCompositeFrame *TabPanel)
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 
   // Fit
-  GausFitButton4 = new TGTextButton( parFrame, "&Fit", OFFLINEGAUSFIT4);
-  // GausFitButton4->SetEnabled(0);
+  GausFitButton4 = new TGTextButton( parFrame, "Open  Fit", OFFLINEGAUSFIT4);
+  GausFitButton4->SetEnabled(0);
   GausFitButton4->Associate(this);
   parFrame->AddFrame(GausFitButton4, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 0, 0));
   
@@ -747,41 +749,76 @@ void Offline::MakeFold4Panel(TGCompositeFrame *TabPanel)
 
 void Offline::GausFit4()
 {
-  canvas4->AddExec("dynamic","TestGausFit()");
-
-
-  // canvas3->DeleteExec("dynamic");
-
+  if(falggausfit4)
+    {
+      GausFitButton4->SetText("Open  Fit");
+      // offlineth1d4->SetTitle("");
+      falggausfit4 = false;
+      canvas4->DeleteExec("dynamicPanel4GausFit");
+    }
+  else
+    {
+      GausFitButton4->SetText("Close Fit");
+      falggausfit4 = true;
+      canvas4->AddExec("dynamicPanel4GausFit","PanelGausFit()");
+    }
 }
 
-void TestGausFit()
+void Offline::GausFit6()
 {
-  // TODO
-  // 11为一次点击
-  // 第二次点击之后执行动作
-  
+  if(falggausfit6)
+    {
+      GausFitButton6->SetText("Open  Fit");
+      falggausfit6 = false;
+      canvas6->DeleteExec("dynamicPanel6GausFit");
+    }
+  else
+    {
+      GausFitButton6->SetText("Close Fit");
+      falggausfit6 = true;
+      canvas6->AddExec("dynamicPanel6GausFit","PanelGausFit()");
+    }
+}
+
+void PanelGausFit()
+{
+  // TODO  可以加显示选择的线
   int pe = gPad->GetEvent();
-  if(pe == 51) return;
-  // std::cout<<pe<<std::endl;
-  // TObject *select = gPad->GetSelected();
-  // if(!select) return;
-  // if (!select->InheritsFrom(TH1::Class())) {/*gPad->SetUniqueID(0);*/ return;}
-  // TH1 *h = (TH1*)select;
+  if(pe != 11) return;
   gPad->GetCanvas()->FeedbackMode(kTRUE);
 
-  int pxold = gPad->GetUniqueID();
-  int px = gPad->GetEventX();
-  float uymin = gPad->GetUymin();
-  float uymax = gPad->GetUymax();
-  int pymin = gPad->YtoAbsPixel(uymin);
-  int pymax = gPad->YtoAbsPixel(uymax);
-  if(pxold) gVirtualX->DrawLine(pxold,pymin,pxold,pymax);
-  gVirtualX->DrawLine(px,pymin,px,pymax);
-  gPad->SetUniqueID(px);
-  Float_t upx = gPad->AbsPixeltoX(px);
-  Float_t x = gPad->PadtoX(upx);
- 
-  std::cout<<"click!!!"<<"  "<<pe<<"  "<<px<<"  "<<upx<<"  "<<x<<std::endl;
+  if(gPad->GetUniqueID() == 0)
+    {
+      gPad->SetUniqueID(gPad->GetEventX());
+    }
+  else
+    {
+      int pxold = gPad->GetUniqueID();
+      Float_t upxold = gPad->AbsPixeltoX(pxold);
+      int px = gPad->GetEventX();
+      Float_t upx = gPad->AbsPixeltoX(px);
+
+      TObject *select = gPad->GetSelected();
+      if(!select) {gPad->SetUniqueID(0); return;}
+      if (!select->InheritsFrom(TH1::Class())) {gPad->SetUniqueID(0); return;}
+      TH1 *h = (TH1*)select;					      
+      if(upxold > upx)
+	{
+	  Float_t temp;
+	  temp = upxold;
+	  upxold = upx;
+	  upx = temp;
+	}
+      if(h->Fit("gaus","QL","",upxold,upx) == 0)
+	{
+	  h->SetTitle(TString::Format("Peak: %0.2f  #DeltaE/E: %0.2f%%",h->GetFunction("gaus")->GetParameter(1),h->GetFunction("gaus")->GetParameter(2)*2.355/h->GetFunction("gaus")->GetParameter(1)*100.0).Data());
+	}
+      else
+	{
+	  h->SetTitle("Please choose Fit range again.");
+	}
+      gPad->SetUniqueID(0);
+    }
 }
 
   
@@ -791,7 +828,7 @@ void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
 
   // text
   printtextinfor5 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
-  printtextinfor5-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
+  printtextinfor5->SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
   fClient->GetColorByName("blue", color);
   printtextinfor5->SetTextColor(color, false);
   printtextinfor5->SetText("Choose 'Ch' then enter button 'Draw'.");
@@ -800,7 +837,25 @@ void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
   printtextinfor5->SetFrameDrawn(kFALSE);
   parFrame->AddFrame(printtextinfor5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
 
-
+  // TODO
+  // Sigma
+  // TGLabel *sigma = new TGLabel( parFrame, "RecomSigma:"); 
+  // parFrame->AddFrame(sigma, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+  // recommendedsigma5 = new TGComboBox(parFrame);
+  // parFrame->AddFrame(recommendedsigma5, new TGLayoutHints(kLHintsLeft, 0, 10, 2, 2));
+  // recommendedsigma5->Resize(40, 20);
+  // recommendedsigma5->AddEntry("x 1", 1);
+  // recommendedsigma5->AddEntry("x 2", 2);
+  // recommendedsigma5->AddEntry("x 3", 3);
+  // recommendedsigma5->AddEntry("x 4", 4);
+  // recommendedsigma5->AddEntry("x 5", 5);
+  // recommendedsigma5->AddEntry("x 6", 6);
+  // recommendedsigma5->AddEntry("x 7", 7);
+  // recommendedsigma5->AddEntry("x 8", 8);
+  // recommendedsigma5->AddEntry("x 9", 9);
+  // recommendedsigma5->AddEntry("x10", 10);
+  // recommendedsigma5->Select(3);
+  
   // FFProjectY
   showprojectyFF5 = new TGTextButton(parFrame, "&FFProjectY", OFFLINEPROJECTYFF5);
   showprojectyFF5->SetEnabled(0);
@@ -885,7 +940,15 @@ void Offline::MakeFold6Panel(TGCompositeFrame *TabPanel)
   OfflineStopButton6->SetEnabled(0);
   OfflineStopButton6->Associate(this);
   parFrame->AddFrame(OfflineStopButton6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
+
+
+  // Fit
+  GausFitButton6 = new TGTextButton( parFrame, "Open  Fit", OFFLINEGAUSFIT6);
+  GausFitButton6->SetEnabled(0);
+  GausFitButton6->Associate(this);
+  parFrame->AddFrame(GausFitButton6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 30, 0, 0));
   
+ 
   
   // draw
   OfflineDrawButton6 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW6);
@@ -1124,6 +1187,9 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 
 	    case OFFLINEGAUSFIT4:
 	      GausFit4();
+	      break;
+	    case OFFLINEGAUSFIT6:
+	      GausFit6();
 	      break;
 	      
 	    case OFFLINESTOPDRAW6:
@@ -1643,6 +1709,7 @@ void Offline::GetEventsInfo(char *FileName, unsigned int *EventInformation)
 
 void Offline::Panel1Draw()
 {
+  OfflineReadFileButton->SetEnabled(0);
   if(rawdata != NULL)
     {
       delete rawdata;
@@ -1824,12 +1891,13 @@ void Offline::Panel1Draw()
   // offlinemultigraph->Draw("AL");
   adjustCanvas->Modified();
   adjustCanvas->Update();
-
+  OfflineReadFileButton->SetEnabled(1);
   gSystem->ProcessEvents();
 }
 
 void Offline::Panel2Draw()
 {
+  OfflineReadFileButton->SetEnabled(0);
   for (int i = 0; i < 16; ++i)
     {
       if(rawdata2[i] != NULL)
@@ -1989,12 +2057,14 @@ void Offline::Panel2Draw()
 
   canvas2->Modified();
   canvas2->Update();
+  OfflineReadFileButton->SetEnabled(1);
   gSystem->ProcessEvents();
 }
 
 
 void Offline::Panel3Draw()
 {
+  OfflineReadFileButton->SetEnabled(0);
   canvas3->cd();
   canvas3->Clear();
   canvas3->Divide(4,4);
@@ -2041,14 +2111,21 @@ void Offline::Panel3Draw()
     
   canvas3->Modified();
   canvas3->Update();
+  OfflineReadFileButton->SetEnabled(1);
   gSystem->ProcessEvents();
 }
 
 void Offline::Panel4Draw()
 {
+  OfflineReadFileButton->SetEnabled(0);
+  GausFitButton4->SetEnabled(0);
+  GausFitButton4->SetText("Open  Fit");
+  canvas4->DeleteExec("dynamicPanel4GausFit");
+  falggausfit4 = false;
   canvas4->cd();
   canvas4->Clear();
-
+  gPad->SetUniqueID(0);
+  
   if(offlineth1d4 != NULL)
     {
       delete offlineth1d4;
@@ -2100,11 +2177,14 @@ void Offline::Panel4Draw()
 
   canvas4->Modified();
   canvas4->Update();
+  GausFitButton4->SetEnabled(1);
+  OfflineReadFileButton->SetEnabled(1);
   gSystem->ProcessEvents();
 }
 
 void Offline::Panel5Draw()
 {
+  OfflineReadFileButton->SetEnabled(0);
   OfflineDrawButton5->SetEnabled(0);
   showprojectyFF5->SetEnabled(0);
   showprojectyCFD5->SetEnabled(0);
@@ -2304,6 +2384,7 @@ void Offline::Panel5Draw()
   printtextinfor5->SetText("Draw Done!");
   canvas5->Modified();
   canvas5->Update();
+  OfflineReadFileButton->SetEnabled(1);
   gSystem->ProcessEvents();
   OfflineDrawButton5->SetEnabled(1);
 }
@@ -2315,6 +2396,12 @@ void Offline::Panel6StopDraw()
 
 void Offline::Panel6Draw()
 {
+  OfflineReadFileButton->SetEnabled(0);
+  GausFitButton6->SetEnabled(0);
+  GausFitButton6->SetText("Open  Fit");
+  canvas6->DeleteExec("dynamicPanel6GausFit");
+  falggausfit6 = false;
+  
   OfflineDrawButton6->SetEnabled(0);
   OfflineStopButton6->SetEnabled(1);
   flagdrawstop6 = false;
@@ -2322,6 +2409,7 @@ void Offline::Panel6Draw()
   canvas6->Clear();
   canvas6->Modified();
   canvas6->Update();
+  gPad->SetUniqueID(0);
   gSystem->ProcessEvents();
   
   if(RcdTrace6 != NULL)
@@ -2510,6 +2598,8 @@ void Offline::Panel6Draw()
   printtextinfor6->SetText("Draw Done!");
   canvas6->Modified();
   canvas6->Update();
+  GausFitButton6->SetEnabled(1);
+  OfflineReadFileButton->SetEnabled(1);
   gSystem->ProcessEvents();
   OfflineDrawButton6->SetEnabled(1);
   OfflineStopButton6->SetEnabled(0);
@@ -2517,20 +2607,26 @@ void Offline::Panel6Draw()
 
 void Offline::Panel7Draw()
 {
+  OfflineReadFileButton->SetEnabled(0);
 
-
+  
+  OfflineReadFileButton->SetEnabled(1);
 }
 
 void Offline::Panel8Draw()
 {
+  OfflineReadFileButton->SetEnabled(0);
 
-
+  
+  OfflineReadFileButton->SetEnabled(1);
 }
 
 void Offline::Panel9Draw()
 {
+  OfflineReadFileButton->SetEnabled(0);
 
-
+  
+  OfflineReadFileButton->SetEnabled(1);
 }
 
 void Offline::Panel0ReadFile()
