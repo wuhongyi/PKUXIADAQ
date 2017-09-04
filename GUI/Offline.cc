@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 一 9月  4 16:46:35 2017 (+0800)
+// Last-Updated: 一 9月  4 22:02:14 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 439
+//     Update #: 442
 // URL: http://wuhongyi.cn 
 
 
@@ -826,6 +826,12 @@ void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 
+  // stop
+  OfflineStopButton5 = new TGTextButton( parFrame, "&Stop", OFFLINESTOPDRAW5);
+  OfflineStopButton5->SetEnabled(0);
+  OfflineStopButton5->Associate(this);
+  parFrame->AddFrame(OfflineStopButton5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
+  
   // text
   printtextinfor5 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
   printtextinfor5->SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
@@ -837,6 +843,8 @@ void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
   printtextinfor5->SetFrameDrawn(kFALSE);
   parFrame->AddFrame(printtextinfor5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
 
+
+  
   // TODO
   // Sigma
   // TGLabel *sigma = new TGLabel( parFrame, "RecomSigma:"); 
@@ -924,6 +932,12 @@ void Offline::MakeFold6Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 
+  // stop
+  OfflineStopButton6 = new TGTextButton( parFrame, "&Stop", OFFLINESTOPDRAW6);
+  OfflineStopButton6->SetEnabled(0);
+  OfflineStopButton6->Associate(this);
+  parFrame->AddFrame(OfflineStopButton6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
+  
   // text
   printtextinfor6 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
   printtextinfor6-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
@@ -935,11 +949,6 @@ void Offline::MakeFold6Panel(TGCompositeFrame *TabPanel)
   printtextinfor6->SetFrameDrawn(kFALSE);
   parFrame->AddFrame(printtextinfor6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
 
-    // stop
-  OfflineStopButton6 = new TGTextButton( parFrame, "&Stop", OFFLINESTOPDRAW6);
-  OfflineStopButton6->SetEnabled(0);
-  OfflineStopButton6->Associate(this);
-  parFrame->AddFrame(OfflineStopButton6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
 
 
   // Fit
@@ -1191,7 +1200,10 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    case OFFLINEGAUSFIT6:
 	      GausFit6();
 	      break;
-	      
+
+	    case OFFLINESTOPDRAW5:
+	      Panel5StopDraw();
+	      break;
 	    case OFFLINESTOPDRAW6:
 	      Panel6StopDraw();
 	      break;	      
@@ -2182,15 +2194,21 @@ void Offline::Panel4Draw()
   gSystem->ProcessEvents();
 }
 
+void Offline::Panel5StopDraw()
+{
+  flagdrawstop5 = true;
+}
+
 void Offline::Panel5Draw()
 {
   OfflineReadFileButton->SetEnabled(0);
   OfflineDrawButton5->SetEnabled(0);
+  OfflineStopButton5->SetEnabled(1);
   showprojectyFF5->SetEnabled(0);
   showprojectyCFD5->SetEnabled(0);
   originalcfd5->SetEnabled(0);
   calculatecfd5->SetEnabled(0);
-
+  flagdrawstop5 = false;
   falgshowprojectyFF5 = false;
   flagshowprojectyCFD5 = false;
   
@@ -2357,6 +2375,7 @@ void Offline::Panel5Draw()
 
 	  if(i%500 == 0)
 	    {
+	      if(flagdrawstop5) break;
 	      printtextinfor5->SetText(TString::Format("Drawing...please wait a moment. ==> %d/%d",i,OfflineModuleEventsCount).Data());
 	      gSystem->ProcessEvents();
 	    }
@@ -2384,9 +2403,10 @@ void Offline::Panel5Draw()
   printtextinfor5->SetText("Draw Done!");
   canvas5->Modified();
   canvas5->Update();
+  OfflineDrawButton5->SetEnabled(1);
+  OfflineStopButton5->SetEnabled(0);
   OfflineReadFileButton->SetEnabled(1);
   gSystem->ProcessEvents();
-  OfflineDrawButton5->SetEnabled(1);
 }
 
 void Offline::Panel6StopDraw()
@@ -2718,7 +2738,7 @@ void Offline::OriginalCFDShow5()
   OriginalCFDcanvas5->cd();
   originalcfdth1d5->Draw();
   originalcfdth1d5->Fit("fitoriginalcfdth1d5", "Q");
-  ltxoriginalcfdth1d5->DrawLatex(0.1,0.1,TString::Format("Chi2: %0.3f  NDF: %d  Chi2/NDF: %0.3f",fitoriginalcfdth1d5->GetChisquare(),fitoriginalcfdth1d5->GetNDF(),fitoriginalcfdth1d5->GetChisquare()/fitoriginalcfdth1d5->GetNDF()).Data());
+  ltxoriginalcfdth1d5->DrawLatex(0.1,0.9,TString::Format("Chi2: %0.2f  NDF: %d  Chi2/NDF: %0.3f",fitoriginalcfdth1d5->GetChisquare(),fitoriginalcfdth1d5->GetNDF(),fitoriginalcfdth1d5->GetChisquare()/fitoriginalcfdth1d5->GetNDF()).Data());
   OriginalCFDcanvas5->Update();
 }
 
@@ -2729,7 +2749,7 @@ void Offline::CalculateCFDShow5()
   CalculateCFDcanvas5->cd();
   calculatecfdth1d5->Draw();
   calculatecfdth1d5->Fit("fitcalculatecfdth1d5", "Q");
-  ltxcalculatecfdth1d5->DrawLatex(0.1,0.1,TString::Format("Chi2: %0.3f  NDF: %d  Chi2/NDF: %0.3f",fitcalculatecfdth1d5->GetChisquare(),fitcalculatecfdth1d5->GetNDF(),fitcalculatecfdth1d5->GetChisquare()/fitcalculatecfdth1d5->GetNDF()).Data());
+  ltxcalculatecfdth1d5->DrawLatex(0.1,0.9,TString::Format("Chi2: %0.2f  NDF: %d  Chi2/NDF: %0.3f",fitcalculatecfdth1d5->GetChisquare(),fitcalculatecfdth1d5->GetNDF(),fitcalculatecfdth1d5->GetChisquare()/fitcalculatecfdth1d5->GetNDF()).Data());
   CalculateCFDcanvas5->Update();
 }
 

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 一 9月  4 16:46:35 2017 (+0800)
+// Last-Updated: 一 9月  4 21:35:54 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 105
+//     Update #: 106
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -114,6 +114,7 @@ private:
       OFFLINEPROJECTYCFD5,
       OFFLINEORIGINALCFD5,
       OFFLINECALCULATECFD5,
+      OFFLINESTOPDRAW5,
       OFFLINESTOPDRAW6
     };
 
@@ -199,7 +200,8 @@ private:
   TCanvas *canvas5;
   TCanvas * OriginalCFDcanvas5;
   TCanvas * CalculateCFDcanvas5;
-  TGTextButton* OfflineDrawButton5;  
+  TGTextButton* OfflineDrawButton5;
+  TGTextButton* OfflineStopButton5;
   TH2D *offlineth2d5_0;
   TH2D *offlineth2d5_1;
   TGNumberEntry	*offlinechnum5;//int
@@ -224,6 +226,7 @@ private:
   int cfdevenycount5;
   int originalcfdvalidcount5;
   int calculatecfdvalidcount5;
+  bool flagdrawstop5;
   
   // Fold6
   TCanvas *canvas6;
@@ -276,6 +279,7 @@ private:
   void CFDShowProjectY5();
   void OriginalCFDShow5();
   void CalculateCFDShow5();
+  void Panel5StopDraw();
   void Panel6StopDraw();
 
 };
