@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 一 9月  4 22:02:14 2017 (+0800)
+// Last-Updated: 日 10月  1 13:40:12 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 442
+//     Update #: 443
 // URL: http://wuhongyi.cn 
 
 
@@ -2136,7 +2136,11 @@ void Offline::Panel4Draw()
   falggausfit4 = false;
   canvas4->cd();
   canvas4->Clear();
+  canvas4->Modified();
+  canvas4->Update();
   gPad->SetUniqueID(0);
+  gSystem->ProcessEvents();
+
   
   if(offlineth1d4 != NULL)
     {
