@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 日 10月  1 13:40:12 2017 (+0800)
+// Last-Updated: 二 10月 10 23:15:47 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 443
+//     Update #: 464
 // URL: http://wuhongyi.cn 
 
 
@@ -59,6 +59,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   chanNumber4 = 0;
   chanNumber5 = 0;
   chanNumber6 = 0;
+  chanNumber8 = 0;
   fileRunNum = 0;
   
   OfflineEventInformation = NULL;
@@ -122,13 +123,18 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   RcdTrace5 = NULL;
   doublefastfilter5 = NULL;
   doublecfd5 = NULL;
+  
   offlineth1d6 = NULL;
   RcdTrace6 = NULL;
   doublefastfilter6 = NULL;
   doublecfd6 = NULL;
   doubleslowfilter6 = NULL;
   falggausfit6 = false;
-
+  
+  RcdTrace8 = NULL;
+  doublefastfilter8 = NULL;
+  energyfffirst8 = NULL;
+  energyffsecond8 = NULL;
   
   TGTab *TabPanel = new TGTab(this);
   this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
@@ -153,7 +159,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   TGCompositeFrame *Tab5 = TabPanel->AddTab("FF/CFD Thre");
   MakeFold5Panel(Tab5);
 
-  TGCompositeFrame *Tab8 = TabPanel->AddTab("Auto Thre");
+  TGCompositeFrame *Tab8 = TabPanel->AddTab("Energy-FF");
   MakeFold8Panel(Tab8);
   
   TGCompositeFrame *Tab7 = TabPanel->AddTab("QCD");
@@ -196,6 +202,11 @@ Offline::~Offline()
   if(doublefastfilter6 != NULL) delete []doublefastfilter6;
   if(doublecfd6 != NULL) delete []doublecfd6;
   if(doubleslowfilter6 != NULL) delete []doubleslowfilter6;
+
+  if(RcdTrace8 != NULL) delete []RcdTrace8;
+  if(doublefastfilter8 != NULL) delete []doublefastfilter8;
+  if(energyfffirst8 != NULL) delete energyfffirst8;
+  if(energyffsecond8 != NULL) delete energyffsecond8;
   
   for (int i = 0; i < 16; ++i)
     {
@@ -827,7 +838,7 @@ void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 
   // stop
-  OfflineStopButton5 = new TGTextButton( parFrame, "&Stop", OFFLINESTOPDRAW5);
+  OfflineStopButton5 = new TGTextButton(parFrame, "&Stop", OFFLINESTOPDRAW5);
   OfflineStopButton5->SetEnabled(0);
   OfflineStopButton5->Associate(this);
   parFrame->AddFrame(OfflineStopButton5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
@@ -965,7 +976,7 @@ void Offline::MakeFold6Panel(TGCompositeFrame *TabPanel)
   OfflineDrawButton6->Associate(this);
   parFrame->AddFrame(OfflineDrawButton6, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
 
-    // ch
+  // ch
   offlinechnum6 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM6, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
   parFrame->AddFrame(offlinechnum6, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
   offlinechnum6->SetButtonToNum(0);
@@ -1047,19 +1058,37 @@ void Offline::MakeFold8Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 
-  // // draw
-  // OfflineDrawButton6 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW6);
-  // OfflineDrawButton6->SetEnabled(0);
-  // OfflineDrawButton6->Associate(this);
-  // parFrame->AddFrame(OfflineDrawButton6, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
+  // stop
+  OfflineStopButton8 = new TGTextButton(parFrame, "&Stop", OFFLINESTOPDRAW8);
+  OfflineStopButton8->SetEnabled(0);
+  OfflineStopButton8->Associate(this);
+  parFrame->AddFrame(OfflineStopButton8, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
+  
+  // text
+  printtextinfor8 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  printtextinfor8->SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
+  fClient->GetColorByName("blue", color);
+  printtextinfor8->SetTextColor(color, false);
+  printtextinfor8->SetText("Choose 'Ch' then enter button 'Draw'.");
+  printtextinfor8->Resize(500, 12);
+  printtextinfor8->SetEnabled(kFALSE);
+  printtextinfor8->SetFrameDrawn(kFALSE);
+  parFrame->AddFrame(printtextinfor8, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
 
-  //   // ch
-  // offlinechnum6 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM6, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
-  // parFrame->AddFrame(offlinechnum6, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
-  // offlinechnum6->SetButtonToNum(0);
-  // offlinechnum6->Associate(this);
-  // TGLabel *ch = new TGLabel( parFrame, "Ch:"); 
-  // parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+  
+  // draw
+  OfflineDrawButton8 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW8);
+  OfflineDrawButton8->SetEnabled(0);
+  OfflineDrawButton8->Associate(this);
+  parFrame->AddFrame(OfflineDrawButton8, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
+
+  // ch
+  offlinechnum8 = new TGNumberEntry(parFrame, 0, 2, OFFLINECHNUM8, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  parFrame->AddFrame(offlinechnum8, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
+  offlinechnum8->SetButtonToNum(0);
+  offlinechnum8->Associate(this);
+  TGLabel *ch = new TGLabel(parFrame, "Ch:"); 
+  parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
   
 
   TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
@@ -1207,6 +1236,10 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    case OFFLINESTOPDRAW6:
 	      Panel6StopDraw();
 	      break;	      
+	    case OFFLINESTOPDRAW8:
+	      Panel8StopDraw();
+	      break;	
+
 	      
 	    case OFFLINEPROJECTYFF5:
 	      FFShowProjectY5();
@@ -1258,6 +1291,7 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      OfflineDrawButton4->SetEnabled(0);
 	      OfflineDrawButton5->SetEnabled(0);
 	      OfflineDrawButton6->SetEnabled(0);
+	      OfflineDrawButton8->SetEnabled(0);
 	      if (parm2 == 0)
 		{
 		  ++fileRunNum;
@@ -1281,6 +1315,7 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      OfflineDrawButton4->SetEnabled(0);
 	      OfflineDrawButton5->SetEnabled(0);
 	      OfflineDrawButton6->SetEnabled(0);
+	      OfflineDrawButton8->SetEnabled(0);
 	      if (parm2 == 0)
 		{
 		  if (modNumber != detector->NumModules-1)
@@ -1384,6 +1419,26 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		    }
 		}
 	      break;
+	    case OFFLINECHNUM8:
+	      if (parm2 == 0)
+		{
+		  if (chanNumber8 != 15)
+		    {
+		      ++chanNumber8;
+		      offlinechnum8->SetIntNumber(chanNumber8);
+		    }
+		}
+	      else
+		{
+		  if (chanNumber8 != 0)
+		    {
+		      if (--chanNumber8 == 0)
+			chanNumber8 = 0;
+		      offlinechnum8->SetIntNumber(chanNumber8);
+		    }
+		}
+	      break;
+
 	      
 	      
 	      
@@ -1408,6 +1463,7 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      OfflineDrawButton4->SetEnabled(0);
 	      OfflineDrawButton5->SetEnabled(0);
 	      OfflineDrawButton6->SetEnabled(0);
+	      OfflineDrawButton8->SetEnabled(0);
 	      modNumber = offlinemodnum->GetIntNumber();
 	      if(modNumber > detector->NumModules-1) modNumber = detector->NumModules-1;
 	      if(modNumber < 0) modNumber = 0;
@@ -1500,6 +1556,7 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      OfflineDrawButton4->SetEnabled(0);
 	      OfflineDrawButton5->SetEnabled(0);
 	      OfflineDrawButton6->SetEnabled(0);
+	      OfflineDrawButton8->SetEnabled(0);
 	      fileRunNum = offlinefilerunnum->GetIntNumber();
 	      if(fileRunNum < 0) fileRunNum = 0;
 	      offlinefilerunnum->SetIntNumber(fileRunNum);
@@ -1713,7 +1770,7 @@ void Offline::GetEventsInfo(char *FileName, unsigned int *EventInformation)
 	  NumEvents++;
 	  fseek(ListModeFile, (eventlength-4)*4, SEEK_CUR);
 	}while(TotalSkippedWords < TotalWords);
-	// }
+      // }
 
       fclose(ListModeFile);
     }
@@ -2259,7 +2316,6 @@ void Offline::Panel5Draw()
   gSystem->ProcessEvents();
   canvas5->Divide(2,1);
 
-
   
   if(OriginalCFDcanvas5 != NULL)
     {
@@ -2533,6 +2589,7 @@ void Offline::Panel6Draw()
 	  SlowLen = ROUND(ChanParData*100/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
 	  break;
 	default:
+	  std::cout<<"ERROR: Please call Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
 	  break;
 	}
       
@@ -2637,12 +2694,222 @@ void Offline::Panel7Draw()
   OfflineReadFileButton->SetEnabled(1);
 }
 
+void Offline::Panel8StopDraw()
+{
+  flagdrawstop8 = true;
+}
+
 void Offline::Panel8Draw()
 {
   OfflineReadFileButton->SetEnabled(0);
+  OfflineDrawButton8->SetEnabled(0);
+  OfflineStopButton8->SetEnabled(1);
+  flagdrawstop8 = false;
 
-  
+  countenergyff8[0] = 0;
+  countenergyff8[1] = 0;
+  if(energyfffirst8 != NULL)
+    {
+      delete energyfffirst8;
+      energyfffirst8 = NULL;
+    }
+  if(energyffsecond8 != NULL)
+    {
+      delete energyffsecond8;
+      energyffsecond8 = NULL;
+    }
+  energyfffirst8 = new TGraph();
+  energyffsecond8 = new TGraph();
+
+  if(RcdTrace8 != NULL)
+    {
+      delete []RcdTrace8;
+      RcdTrace8 = NULL;
+    }
+  if(doublefastfilter8 != NULL)
+    {
+      delete []doublefastfilter8;
+      doublefastfilter8 = NULL;
+    }
+
+  canvas8->cd();
+  canvas8->Clear();
+  canvas8->Modified();
+  canvas8->Update();
+  gSystem->ProcessEvents();
+  canvas8->Divide(2,1);
+
+  int inttracelength = -1;
+  for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
+    {
+      if(offlinechnum8->GetIntNumber() == (OfflineEventInformation[EventHeaderLength*i] & 0xF))//ch
+	{
+	  inttracelength = ((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16);//trace length
+	  break;
+	}
+    }
+
+  if(inttracelength > -1)
+    {
+      RcdTrace8 = new unsigned short[inttracelength];
+      doublefastfilter8 = new double[inttracelength];
+
+      int retval;
+      unsigned int FastLen, FastGap, FastFilterRange;
+      double ChanParData;
+
+      retval = Pixie16ReadSglModPar((char*)"FAST_FILTER_RANGE", &FastFilterRange, (unsigned short)offlinemodnum->GetIntNumber());
+      if(retval < 0) ErrorInfo("Offline.cc", "Panel8Draw()", "Pixie16ReadSglModPar/FAST_FILTER_RANGE", retval);
+
+      retval = Pixie16ReadSglChanPar((char*)"TRIGGER_RISETIME", &ChanParData, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)offlinechnum8->GetIntNumber());
+      if(retval < 0) ErrorInfo("Offline.cc", "Panel8Draw()", "Pixie16ReadSglChanPar/TRIGGER_RISETIME", retval);
+      switch(choosesamplemhz0->GetSelected())
+	{
+	case 1 ://100
+	  FastLen = ROUND(ChanParData*100/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
+	  break;
+	case 2 ://250
+	  FastLen = ROUND(ChanParData*125/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
+	  break;	  
+	case 3 ://500
+	  FastLen = ROUND(ChanParData*100/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
+	  break;
+	default:
+	  std::cout<<"ERROR: Please call Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
+	  break;
+	}
+
+      retval = Pixie16ReadSglChanPar((char*)"TRIGGER_FLATTOP", &ChanParData, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)offlinechnum8->GetIntNumber());
+      if(retval < 0) ErrorInfo("Offline.cc", "Panel8Draw()", "Pixie16ReadSglChanPar/TRIGGER_FLATTOP", retval);
+      switch(choosesamplemhz0->GetSelected())
+	{
+	case 1 ://100
+	  FastGap = ROUND(ChanParData*100/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
+	  break;
+	case 2 ://250
+	  FastGap = ROUND(ChanParData*125/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
+	  break;	  
+	case 3 ://500
+	  FastGap = ROUND(ChanParData*100/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
+	  break;
+	default:
+	  std::cout<<"ERROR: Please call Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
+	  break;
+	}
+
+      FILE *ListModeFile = NULL;
+      unsigned int fsum0, fsum1;
+      unsigned int offset, x, y;
+      for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
+	{
+	  if(offlinechnum6->GetIntNumber() == (OfflineEventInformation[EventHeaderLength*i] & 0xF))//ch
+	    {
+	      ListModeFile = fopen(offlinefilename, "rb");
+	      if(ListModeFile != NULL)
+		{
+		  fseek(ListModeFile, OfflineEventInformation[EventHeaderLength*i+4]*4, SEEK_SET);// Position ListModeFile to the requested trace location
+		  fread(RcdTrace8, 2, ((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16), ListModeFile);// Read trace
+		  fclose(ListModeFile);// Close file
+		  ListModeFile = NULL;
+		
+		  // Compute fast filter response
+		  offset = 2*FastLen + FastGap - 1;
+		  for(x = offset; x < ((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16); x++)
+		    {
+		      fsum0 = 0;
+		      for(y = (x-offset); y < (x-offset+FastLen); y++)
+			{
+			  fsum0 += RcdTrace8[y];
+			}
+		      fsum1 = 0;
+		      for(y = (x-offset+FastLen+FastGap); y < (x-offset+2*FastLen+FastGap); y++)
+			{
+			  fsum1 += RcdTrace8[y];
+			}
+		      doublefastfilter8[x] = ((double)fsum1 - (double)fsum0)/(double)FastLen;
+		    }
+
+		  for(x = 0; x < offset; x++)
+		    {
+		      doublefastfilter8[x] = doublefastfilter8[offset];
+		    }
+
+		  int flagfffirst = -1;
+		  double fffirst = -1;
+		  double ffsecond = -1;
+		  for (int z = 0; z < (int)((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16); ++z)
+		    {
+		      if(doublefastfilter8[z] > fffirst)
+			{
+			  fffirst = doublefastfilter8[z];
+			  flagfffirst = z;
+			}
+		    }
+
+		  if(flagfffirst-(FastLen+FastGap)/2 > 0)
+		    {
+		      for (int z = 0; z < flagfffirst-(int(FastLen+FastGap))/2; ++z)
+			{
+			  if(doublefastfilter8[z] > ffsecond)
+			    {
+			      ffsecond = doublefastfilter8[z];
+			    }
+			}
+		    }
+		  if(flagfffirst+(FastLen+FastGap)/2 < ((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16))
+		    {
+		      for (int z = flagfffirst+(int(FastLen+FastGap))/2; z < (int)((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16); ++z)
+			{
+			  if(doublefastfilter8[z] > ffsecond)
+			    {
+			      ffsecond = doublefastfilter8[z];
+			    }
+			}
+		    }
+
+		  if(fffirst > 0)
+		    {
+		      energyfffirst8->SetPoint(countenergyff8[0],fffirst,(double(OfflineEventInformation[EventHeaderLength*i+3]&0xFFFF)));
+		      countenergyff8[0]++;
+		    }
+		  if(ffsecond > 0)
+		    {
+		      energyffsecond8->SetPoint(countenergyff8[1],ffsecond,(double(OfflineEventInformation[EventHeaderLength*i+3]&0xFFFF)));
+		      countenergyff8[1]++;
+		    }
+		}//fast filter
+
+	      
+	    }//ch
+
+	  if(i%500 == 0)
+	    {
+	      if(flagdrawstop8) break;
+	      printtextinfor8->SetText(TString::Format("Drawing...please wait a moment. ==> %d/%d",i,OfflineModuleEventsCount).Data());
+	      gSystem->ProcessEvents();
+	    }
+
+	}//for i
+
+      // Draw
+      canvas8->cd(1);
+      energyfffirst8->Draw("AP*");
+      energyfffirst8->GetXaxis()->SetTitle("First Peak FF");
+      energyfffirst8->GetYaxis()->SetTitle("Orig Energy[ch]");
+      canvas8->cd(2);
+      energyffsecond8->Draw("AP*");
+      energyffsecond8->GetXaxis()->SetTitle("Second Peak FF");
+      energyffsecond8->GetYaxis()->SetTitle("Orig Energy[ch]");
+    }// inttracelength > -1
+      
+
+  printtextinfor8->SetText("Draw Done!");
+  canvas8->Modified();
+  canvas8->Update();
+  OfflineDrawButton8->SetEnabled(1);
+  OfflineStopButton8->SetEnabled(0);
   OfflineReadFileButton->SetEnabled(1);
+  gSystem->ProcessEvents();
 }
 
 void Offline::Panel9Draw()
@@ -2688,6 +2955,7 @@ void Offline::Panel0ReadFile()
       OfflineDrawButton4->SetEnabled(1);
       OfflineDrawButton5->SetEnabled(1);
       OfflineDrawButton6->SetEnabled(1);
+      OfflineDrawButton8->SetEnabled(1);
     }
   else
     {
@@ -2767,6 +3035,7 @@ void Offline::SelectRawEnergySumsBaseline(Bool_t on)
   OfflineDrawButton4->SetEnabled(0);
   OfflineDrawButton5->SetEnabled(0);
   OfflineDrawButton6->SetEnabled(0);
+  OfflineDrawButton8->SetEnabled(0);
   // OfflineFileStatus->SetText("NOT READ");
 }
 
@@ -2779,6 +3048,7 @@ void Offline::SelectQDCSums(Bool_t on)
   OfflineDrawButton4->SetEnabled(0);
   OfflineDrawButton5->SetEnabled(0);
   OfflineDrawButton6->SetEnabled(0);
+  OfflineDrawButton8->SetEnabled(0);
   // OfflineFileStatus->SetText("NOT READ");
 }
 
@@ -2791,6 +3061,7 @@ void Offline::SelectExternalTimestamp(Bool_t on)
   OfflineDrawButton4->SetEnabled(0);
   OfflineDrawButton5->SetEnabled(0);
   OfflineDrawButton6->SetEnabled(0);
+  OfflineDrawButton8->SetEnabled(0);
   // OfflineFileStatus->SetText("NOT READ");
 }
 
@@ -2826,6 +3097,7 @@ void DynamicFFShowProjectY5()
 
   Int_t binx = h->GetXaxis()->FindBin(x);
   TH1D *hp = h->ProjectionY("",binx,binx);
+  // TH1D *hpp = h->ProjectionY("_pxpx",0,binx);
   hp->SetFillColor(38);
   char title[80];
   sprintf(title,"Projection of bin X = %d",binx);
@@ -2842,6 +3114,7 @@ void DynamicFFShowProjectY5()
       ltx->SetTextColor(4);
       ltx->DrawLatex(0.01,0.9,TString::Format("Mean: %0.3f  Sigma: %0.3f       Rec Thre: %d",hp->GetFunction("gaus")->GetParameter(1),hp->GetFunction("gaus")->GetParameter(2),int(hp->GetFunction("gaus")->GetParameter(1)+3*hp->GetFunction("gaus")->GetParameter(2)+1)).Data());
     }
+  // hpp->Draw("same");
   c2->Update();
   padsav->cd();
   delete ltx;

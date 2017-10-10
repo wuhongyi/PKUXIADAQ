@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 一 9月  4 21:35:54 2017 (+0800)
+// Last-Updated: 二 10月 10 22:42:21 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 106
+//     Update #: 111
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -53,7 +53,7 @@ public:
   void MakeFold5Panel(TGCompositeFrame *TabPanel);//FF Thre/CFD Thre
   void MakeFold6Panel(TGCompositeFrame *TabPanel);//Calc Energy
   void MakeFold7Panel(TGCompositeFrame *TabPanel);//QCD
-  void MakeFold8Panel(TGCompositeFrame *TabPanel);//Auto Thre
+  void MakeFold8Panel(TGCompositeFrame *TabPanel);//Energy-FF
   void MakeFold9Panel(TGCompositeFrame *TabPanel);//FFT
 
   void SelectRawEnergySumsBaseline(Bool_t on);
@@ -86,6 +86,7 @@ private:
       OFFLINECHNUM4,
       OFFLINECHNUM5,
       OFFLINECHNUM6,
+      OFFLINECHNUM8,
       OFFLINEREAD,
       OFFLINELOAD,
       OFFLINEAPPLY,
@@ -115,7 +116,8 @@ private:
       OFFLINEORIGINALCFD5,
       OFFLINECALCULATECFD5,
       OFFLINESTOPDRAW5,
-      OFFLINESTOPDRAW6
+      OFFLINESTOPDRAW6,
+      OFFLINESTOPDRAW8
     };
 
   // Fold0
@@ -253,7 +255,17 @@ private:
 
   // Fold8
   TCanvas *canvas8;
-
+  TGTextButton* OfflineDrawButton8;
+  TGTextButton* OfflineStopButton8;
+  TGNumberEntry	*offlinechnum8;//int
+  int chanNumber8;//
+  unsigned short *RcdTrace8;//
+  double *doublefastfilter8;//
+  TGTextEntry* printtextinfor8;
+  bool flagdrawstop8;
+  TGraph *energyfffirst8,*energyffsecond8;
+  int countenergyff8[2];
+  
   // Fold9
   TCanvas *canvas9;  
 
@@ -281,7 +293,8 @@ private:
   void CalculateCFDShow5();
   void Panel5StopDraw();
   void Panel6StopDraw();
-
+  void Panel8StopDraw();
+  
 };
 
 void DynamicFFShowProjectY5();
