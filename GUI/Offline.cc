@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 二 10月 10 23:15:47 2017 (+0800)
+// Last-Updated: 四 10月 12 21:01:42 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 464
+//     Update #: 465
 // URL: http://wuhongyi.cn 
 
 
@@ -2846,9 +2846,9 @@ void Offline::Panel8Draw()
 			}
 		    }
 
-		  if(flagfffirst-(FastLen+FastGap)/2 > 0)
+		  if(flagfffirst-(FastLen+FastGap)*2 > 0)
 		    {
-		      for (int z = 0; z < flagfffirst-(int(FastLen+FastGap))/2; ++z)
+		      for (int z = 0; z < flagfffirst-(int(FastLen+FastGap))*2; ++z)
 			{
 			  if(doublefastfilter8[z] > ffsecond)
 			    {
@@ -2856,9 +2856,9 @@ void Offline::Panel8Draw()
 			    }
 			}
 		    }
-		  if(flagfffirst+(FastLen+FastGap)/2 < ((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16))
+		  if(flagfffirst+(FastLen+FastGap)*2 < ((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16))
 		    {
-		      for (int z = flagfffirst+(int(FastLen+FastGap))/2; z < (int)((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16); ++z)
+		      for (int z = flagfffirst+(int(FastLen+FastGap))*2; z < (int)((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16); ++z)
 			{
 			  if(doublefastfilter8[z] > ffsecond)
 			    {
