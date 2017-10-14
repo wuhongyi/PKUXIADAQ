@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 四 10月 12 21:01:42 2017 (+0800)
+// Last-Updated: 六 10月 14 22:10:05 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 465
+//     Update #: 472
 // URL: http://wuhongyi.cn 
 
 
@@ -519,15 +519,21 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   OfflineCurrentCountText-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
   fClient->GetColorByName("blue", color);
   OfflineCurrentCountText->SetTextColor(color, false);
-  OfflineCurrentCountText->SetAlignment(kTextCenterX);
-  OfflineCurrentCountText->SetText("-1");
-  OfflineCurrentCountText->Resize(200, 12);
+  // OfflineCurrentCountText->SetAlignment(kTextCenterX);
+  OfflineCurrentCountText->SetText("/-1");
+  OfflineCurrentCountText->Resize(150, 12);
   OfflineCurrentCountText->SetEnabled(kFALSE);
   OfflineCurrentCountText->SetFrameDrawn(kFALSE);
-  parFrame->AddFrame(OfflineCurrentCountText, new TGLayoutHints(kLHintsRight | kLHintsTop, 10, 0, 6, 0));
+  parFrame->AddFrame(OfflineCurrentCountText, new TGLayoutHints(kLHintsRight | kLHintsTop, 0, 0, 6, 0));
 
+
+  // CurrentCount
+  offlinecurrentcountentry = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESInteger,TGNumberFormat::kNEANonNegative);
+  parFrame->AddFrame(offlinecurrentcountentry, new TGLayoutHints(kLHintsRight | kLHintsTop, 20, 0, 0, 0));
+  
+  
   // draw
-  OfflineDrawButton = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW);
+  OfflineDrawButton = new TGTextButton(parFrame, "&Draw", OFFLINEDRAW);
   OfflineDrawButton->SetEnabled(0);
   OfflineDrawButton->Associate(this);
   parFrame->AddFrame(OfflineDrawButton, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
@@ -1854,6 +1860,15 @@ void Offline::Panel1Draw()
   tempN1 = -1;
   offlinedatastatus = false;
 
+  if(offlinecurrentcountentry->GetIntNumber() >= OfflineModuleEventsCount)
+    {
+      OfflineCurrentCount = 0;
+    }
+  else
+    {
+      OfflineCurrentCount = offlinecurrentcountentry->GetIntNumber()-1;
+    }
+  
   for(;;)
     {
       OfflineCurrentCount++;
@@ -1889,9 +1904,10 @@ void Offline::Panel1Draw()
   fClient->GetColorByName("blue", color);
   OfflineCurrentCountText->SetTextColor(color, false);
   char stacurr[128];
-  sprintf(stacurr,"%d / %d",OfflineCurrentCount+1,OfflineModuleEventsCount);
+  sprintf(stacurr,"/ %d",OfflineModuleEventsCount);
   OfflineCurrentCountText->SetText(stacurr);
-
+  offlinecurrentcountentry->SetIntNumber(Long_t(OfflineCurrentCount+1));
+  
   tracelength = ((OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+3] & 0x7FFF0000)>>16);//trace length  
   RcdTrace = new unsigned short[tracelength];
   doublethresh = new double[tracelength];
@@ -2895,11 +2911,11 @@ void Offline::Panel8Draw()
       canvas8->cd(1);
       energyfffirst8->Draw("AP*");
       energyfffirst8->GetXaxis()->SetTitle("First Peak FF");
-      energyfffirst8->GetYaxis()->SetTitle("Orig Energy[ch]");
+      energyfffirst8->GetYaxis()->SetTitle("Orig E[ch]");
       canvas8->cd(2);
       energyffsecond8->Draw("AP*");
       energyffsecond8->GetXaxis()->SetTitle("Second Peak FF");
-      energyffsecond8->GetYaxis()->SetTitle("Orig Energy[ch]");
+      energyffsecond8->GetYaxis()->SetTitle("Orig E[ch]");
     }// inttracelength > -1
       
 

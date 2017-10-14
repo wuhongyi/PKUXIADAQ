@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 二 10月 10 22:42:21 2017 (+0800)
+// Last-Updated: 六 10月 14 21:39:27 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 111
+//     Update #: 112
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -148,6 +148,7 @@ private:
   // 0-fastlength 1-fastgap  2-slowlength  3-slowgap  4-preamptau  5-cfddelay  6-cfdscale 7-fast filterthreshold 8-cfd threshold
   TGNumberEntryField *offlinefilters[9];
   TGNumberEntry* offlinefilterrange;
+  TGNumberEntryField *offlinecurrentcountentry;
   TCanvas *adjustCanvas;
   TGStatusBar* sbfold3;
   TGDoubleHSlider *dslider;
