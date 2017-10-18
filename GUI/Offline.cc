@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 六 10月 14 22:10:05 2017 (+0800)
+// Last-Updated: 三 10月 18 21:15:22 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 472
+//     Update #: 494
 // URL: http://wuhongyi.cn 
 
 
@@ -650,10 +650,171 @@ void Offline::SelectDrawOPtionPanel1(Bool_t on)
 
 }
 
+void Offline::SelectDrawOPtionPanel2(Bool_t on)
+{
+  // canvas2->cd();
+  canvas2->Clear();
+  canvas2->Divide(4,4);
+  
+  bool tempstatus[16];
+  for (unsigned int i = 0; i < 16; ++i)
+    {
+      tempstatus[i] = false;
+      if(rawdata2[i] != NULL || threshdata2[i] != NULL || cfddata2[i] != NULL || cfdthreshdata2[i] != NULL || sfilterdata2[i] != NULL || ffilterdata2[i] != NULL)
+	{
+	  tempstatus[i] = true;
+	  if(rawdata2[i] != NULL)
+	    {
+	      delete rawdata2[i];
+	      rawdata2[i] = NULL;
+	    }
+	  if(threshdata2[i] != NULL)
+	    {
+	      delete threshdata2[i];
+	      threshdata2[i] = NULL;
+	    }
+	  if(cfddata2[i] != NULL)
+	    {
+	      delete cfddata2[i];
+	      cfddata2[i] = NULL;
+	    }
+	  if(cfdthreshdata2[i] != NULL)
+	    {
+	      delete cfdthreshdata2[i];
+	      cfdthreshdata2[i] = NULL;
+	    }
+	  if(sfilterdata2[i] != NULL)
+	    {
+	      delete sfilterdata2[i];
+	      sfilterdata2[i]  = NULL;
+	    }
+	  if(ffilterdata2[i] != NULL)
+	    {
+	      delete ffilterdata2[i];
+	      ffilterdata2[i] = NULL;
+	    }
+	}
+
+    }
+  for (unsigned int i = 0; i < 16; ++i)
+    {
+      if(tempstatus[i] /*rawdata2[i] != NULL || threshdata2[i] != NULL || cfddata2[i] != NULL || cfdthreshdata2[i] != NULL || sfilterdata2[i] != NULL || ffilterdata2[i] != NULL*/)
+	{
+	  // if(rawdata2[i] != NULL)
+	  //   {
+	  //     delete rawdata2[i];
+	  //     rawdata2[i] = NULL;
+	  //   }
+	  // if(threshdata2[i] != NULL)
+	  //   {
+	  //     delete threshdata2[i];
+	  //     threshdata2[i] = NULL;
+	  //   }
+	  // if(cfddata2[i] != NULL)
+	  //   {
+	  //     delete cfddata2[i];
+	  //     cfddata2[i] = NULL;
+	  //   }
+	  // if(cfdthreshdata2[i] != NULL)
+	  //   {
+	  //     delete cfdthreshdata2[i];
+	  //     cfdthreshdata2[i] = NULL;
+	  //   }
+	  // if(sfilterdata2[i] != NULL)
+	  //   {
+	  //     delete sfilterdata2[i];
+	  //     sfilterdata2[i]  = NULL;
+	  //   }
+	  // if(ffilterdata2[i] != NULL)
+	  //   {
+	  //     delete ffilterdata2[i];
+	  //     ffilterdata2[i] = NULL;
+	  //   }
+	  rawdata2[i] = new TGraph(tracelength2[i],doublesample2[i],doublercdtrace2[i]);
+	  threshdata2[i] = new TGraph(tracelength2[i],doublesample2[i],doublethresh2[i]);
+	  cfddata2[i] = new TGraph(tracelength2[i],doublesample2[i],doublecfd2[i]);
+	  cfdthreshdata2[i] = new TGraph(tracelength2[i],doublesample2[i],doublecfdthresh2[i]);
+	  sfilterdata2[i] = new TGraph(tracelength2[i],doublesample2[i],doubleslowfilter2[i]);
+	  ffilterdata2[i] = new TGraph(tracelength2[i],doublesample2[i],doublefastfilter2[i]);
+	  cfddata2[i]->SetLineColor(2);
+	  cfdthreshdata2[i]->SetLineColor(2);
+	  sfilterdata2[i]->SetLineColor(3);
+	  ffilterdata2[i]->SetLineColor(4);
+	  threshdata2[i]->SetLineColor(4);
+	  offlinemultigraph2[i]->Clear();
+	  if(offlinedrawoption2[0]->IsOn())
+	    offlinemultigraph2[i]->Add(rawdata2[i]);
+	  if(offlinedrawoption2[3]->IsOn())
+	    offlinemultigraph2[i]->Add(threshdata2[i]);
+	  if(offlinedrawoption2[5]->IsOn())
+	    offlinemultigraph2[i]->Add(cfdthreshdata2[i]);
+	  if(offlinedrawoption2[4]->IsOn())
+	    offlinemultigraph2[i]->Add(cfddata2[i]);
+	  if(offlinedrawoption2[1]->IsOn())
+	    offlinemultigraph2[i]->Add(sfilterdata2[i]);
+	  if(offlinedrawoption2[2]->IsOn())
+	    offlinemultigraph2[i]->Add(ffilterdata2[i]);
+	  canvas2->cd(1+i);
+	  offlinemultigraph2[i]->SetTitle(TString::Format("Event: %d",OfflineCurrentCount2[i]).Data());
+	  // std::cout<<TString::Format("%d",OfflineCurrentCount2[i]).Data()<<std::endl;
+	  offlinemultigraph2[i]->Draw("AL");
+	} //!= NULL
+    } //0-15
+
+  canvas2->Modified();
+  canvas2->Update();//!!!!
+}
 
 void Offline::MakeFold2Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+
+  // Draw option
+  TGLabel *drawoptionlabel = new TGLabel(parFrame, "Draw option:");
+  parFrame->AddFrame(drawoptionlabel, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  // fClient->GetColorByName("red", color);
+  // drawoptionlabel->SetTextColor(color, false);
+
+  offlinedrawoption2[0] = new TGCheckButton(parFrame, "Wave");
+  offlinedrawoption2[0]->SetOn(kTRUE);
+  offlinedrawoption2[0]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel2(Bool_t)");
+  parFrame->AddFrame(offlinedrawoption2[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+
+  offlinedrawoption2[1] = new TGCheckButton(parFrame, "Slow Filter");
+  offlinedrawoption2[1]->SetOn(kTRUE);
+  offlinedrawoption2[1]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel2(Bool_t)");
+  fClient->GetColorByName("green", color);
+  offlinedrawoption2[1]->SetTextColor(color, false);
+  parFrame->AddFrame(offlinedrawoption2[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+
+  offlinedrawoption2[2] = new TGCheckButton(parFrame, "Fast Filter");
+  offlinedrawoption2[2]->SetOn(kTRUE);
+  offlinedrawoption2[2]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel2(Bool_t)");
+  fClient->GetColorByName("blue", color);
+  offlinedrawoption2[2]->SetTextColor(color, false);
+  parFrame->AddFrame(offlinedrawoption2[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+
+  offlinedrawoption2[3] = new TGCheckButton(parFrame, "Thres");
+  offlinedrawoption2[3]->SetOn(kTRUE);
+  offlinedrawoption2[3]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel2(Bool_t)");
+  fClient->GetColorByName("blue", color);
+  offlinedrawoption2[3]->SetTextColor(color, false);
+  parFrame->AddFrame(offlinedrawoption2[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));  
+
+  offlinedrawoption2[4] = new TGCheckButton(parFrame, "CFD");
+  offlinedrawoption2[4]->SetOn(kTRUE);
+  offlinedrawoption2[4]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel2(Bool_t)");
+  fClient->GetColorByName("red", color);
+  offlinedrawoption2[4]->SetTextColor(color, false);
+  parFrame->AddFrame(offlinedrawoption2[4], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+
+  offlinedrawoption2[5] = new TGCheckButton(parFrame, "CFD Thres");
+  offlinedrawoption2[5]->SetOn(kTRUE);
+  offlinedrawoption2[5]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel2(Bool_t)");
+  fClient->GetColorByName("red", color);
+  offlinedrawoption2[5]->SetTextColor(color, false);
+  parFrame->AddFrame(offlinedrawoption2[5], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+
   
   // draw
   OfflineDrawButton2 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW2);
@@ -2052,9 +2213,7 @@ void Offline::Panel2Draw()
 	}
     }
 
-  bool offlinedatastatus2[16];
   unsigned int tempN12[16];
-  int tracelength;
   canvas2->cd();
   canvas2->Clear();
   canvas2->Divide(4,4);
@@ -2082,19 +2241,19 @@ void Offline::Panel2Draw()
       int retval;
       if(!offlinedatastatus2[i])
 	{
-	  tracelength = ((OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+3] & 0x7FFF0000)>>16);//trace length  
-	  RcdTrace2[i] = new unsigned short[tracelength];
-	  doublethresh2[i] = new double[tracelength];
-	  doublecfdthresh2[i] = new double[tracelength];
-	  doublesample2[i] = new double[tracelength];
-	  doublercdtrace2[i] = new double[tracelength];
-	  doublefastfilter2[i] = new double[tracelength];
-	  doublecfd2[i] = new double[tracelength];
-	  doubleslowfilter2[i] = new double[tracelength];
+	  tracelength2[i] = ((OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+3] & 0x7FFF0000)>>16);//trace length  
+	  RcdTrace2[i] = new unsigned short[tracelength2[i]];
+	  doublethresh2[i] = new double[tracelength2[i]];
+	  doublecfdthresh2[i] = new double[tracelength2[i]];
+	  doublesample2[i] = new double[tracelength2[i]];
+	  doublercdtrace2[i] = new double[tracelength2[i]];
+	  doublefastfilter2[i] = new double[tracelength2[i]];
+	  doublecfd2[i] = new double[tracelength2[i]];
+	  doubleslowfilter2[i] = new double[tracelength2[i]];
 
-	  retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)i, OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+4], tracelength, RcdTrace2[i], doublefastfilter2[i], doublecfd2[i]);//trace location
+	  retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)i, OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+4], tracelength2[i], RcdTrace2[i], doublefastfilter2[i], doublecfd2[i]);//trace location
 	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "Pixie16ComputeFastFiltersOffline", retval);
-	  retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)i, OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+4], tracelength, RcdTrace2[i],doubleslowfilter2[i]);//trace localtion
+	  retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)i, OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+4], tracelength2[i], RcdTrace2[i],doubleslowfilter2[i]);//trace localtion
 	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
 	  
 	  double ChanParData;
@@ -2106,19 +2265,19 @@ void Offline::Panel2Draw()
 	  doublecfdthresh2[i][0] = ChanParData;
 
 	  
-	  for (int j = 0; j < tracelength; ++j)
+	  for (int j = 0; j < tracelength2[i]; ++j)
 	    {
 	      doublesample2[i][j] = j;
 	      doublercdtrace2[i][j] = (double)RcdTrace2[i][j];
 	      doublethresh2[i][j] = doublethresh2[i][0];
 	      doublecfdthresh2[i][j] = doublecfdthresh2[i][0];
 	    }
-	  rawdata2[i] = new TGraph(tracelength,doublesample2[i],doublercdtrace2[i]);
-	  threshdata2[i] = new TGraph(tracelength,doublesample2[i],doublethresh2[i]);
-	  cfdthreshdata2[i] = new TGraph(tracelength,doublesample2[i],doublecfdthresh2[i]);
-	  cfddata2[i] = new TGraph(tracelength,doublesample2[i],doublecfd2[i]);
-	  sfilterdata2[i] = new TGraph(tracelength,doublesample2[i],doubleslowfilter2[i]);
-	  ffilterdata2[i] = new TGraph(tracelength,doublesample2[i],doublefastfilter2[i]);
+	  rawdata2[i] = new TGraph(tracelength2[i],doublesample2[i],doublercdtrace2[i]);
+	  threshdata2[i] = new TGraph(tracelength2[i],doublesample2[i],doublethresh2[i]);
+	  cfdthreshdata2[i] = new TGraph(tracelength2[i],doublesample2[i],doublecfdthresh2[i]);
+	  cfddata2[i] = new TGraph(tracelength2[i],doublesample2[i],doublecfd2[i]);
+	  sfilterdata2[i] = new TGraph(tracelength2[i],doublesample2[i],doubleslowfilter2[i]);
+	  ffilterdata2[i] = new TGraph(tracelength2[i],doublesample2[i],doublefastfilter2[i]);
 
 	  
 	  cfddata2[i]->SetLineColor(2);
@@ -2127,15 +2286,21 @@ void Offline::Panel2Draw()
 	  ffilterdata2[i]->SetLineColor(4);
 	  threshdata2[i]->SetLineColor(4);
 	  offlinemultigraph2[i]->Clear();
-	  offlinemultigraph2[i]->Add(rawdata2[i]);
+	  if(offlinedrawoption2[0]->IsOn())
+	    offlinemultigraph2[i]->Add(rawdata2[i]);
+	  if(offlinedrawoption2[3]->IsOn())
 	  offlinemultigraph2[i]->Add(threshdata2[i]);
-	  offlinemultigraph2[i]->Add(cfdthreshdata2[i]);
-	  offlinemultigraph2[i]->Add(cfddata2[i]);
-	  offlinemultigraph2[i]->Add(sfilterdata2[i]);
-	  offlinemultigraph2[i]->Add(ffilterdata2[i]);
+	  if(offlinedrawoption2[5]->IsOn())
+	    offlinemultigraph2[i]->Add(cfdthreshdata2[i]);
+	  if(offlinedrawoption2[4]->IsOn())
+	    offlinemultigraph2[i]->Add(cfddata2[i]);
+	  if(offlinedrawoption2[1]->IsOn())
+	    offlinemultigraph2[i]->Add(sfilterdata2[i]);
+	  if(offlinedrawoption2[2]->IsOn())
+	    offlinemultigraph2[i]->Add(ffilterdata2[i]);
 	  canvas2->cd(1+i);
 	  offlinemultigraph2[i]->SetTitle(TString::Format("Event: %d",OfflineCurrentCount2[i]).Data());
-	  std::cout<<TString::Format("%d",OfflineCurrentCount2[i]).Data()<<std::endl;
+	  // std::cout<<TString::Format("%d",OfflineCurrentCount2[i]).Data()<<std::endl;
 	  offlinemultigraph2[i]->Draw("AL");
 	}
     }

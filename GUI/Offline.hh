@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 六 10月 14 21:39:27 2017 (+0800)
+// Last-Updated: 三 10月 18 20:56:51 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 112
+//     Update #: 116
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -60,6 +60,7 @@ public:
   void SelectQDCSums(Bool_t on);
   void SelectExternalTimestamp(Bool_t on);
   void SelectDrawOPtionPanel1(Bool_t on);
+  void SelectDrawOPtionPanel2(Bool_t on);
   // void SelectSamplingFrequency(Int_t id);
   
 private:
@@ -168,11 +169,14 @@ private:
   
   // Fold2
   TCanvas *canvas2;
+  TGCheckButton *offlinedrawoption2[6];//0-wave 1-slow filter 2-fast filter 3-thres 4-cfd 5-cfd thres
   TGTextButton* OfflineDrawButton2;
+  bool offlinedatastatus2[16];
   TMultiGraph *offlinemultigraph2[16];
   unsigned int OfflineCurrentCount2[16];
   
   TGraph *rawdata2[16],*threshdata2[16],*cfdthreshdata2[16],*cfddata2[16],*sfilterdata2[16],*ffilterdata2[16];
+  int tracelength2[16];
   unsigned short *RcdTrace2[16];//
   double *doublesample2[16];
   double *doublethresh2[16];
