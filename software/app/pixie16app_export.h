@@ -338,6 +338,20 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16ComputeSlowFiltersOffline (
 	unsigned short *RcdTrace,          // recorded trace
 	double         *slowfilter );      // slow filter response
 
+
+PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
+	char           *FileName,          // the list mode data file name (with complete path)
+	unsigned short ModuleNumber,       // the module whose events are to be analyzed
+	unsigned short ChannelNumber,      // the channel whose events are to be analyzed
+	unsigned int   FileLocation,       // the location of the trace in the file
+	unsigned short RcdTraceLength,     // recorded trace length
+	unsigned short *RcdTrace,          // recorded trace
+	double         *slowfilter,        // slow filter response
+	unsigned int   bl,
+	double         sl,
+	double         sg );
+  
+
 #ifdef __cplusplus
 }
 #endif	// End of notice for C++ compilers

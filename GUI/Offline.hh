@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 三 10月 18 20:56:51 2017 (+0800)
+// Last-Updated: 四 10月 19 22:48:10 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 116
+//     Update #: 126
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -14,6 +14,7 @@
 
 #include "TCanvas.h"
 #include "TGApplication.h"
+#include "TGButtonGroup.h"
 #include "TGComboBox.h"
 #include "TGDoubleSlider.h"
 #include "TGFrame.h"
@@ -59,8 +60,8 @@ public:
   void SelectRawEnergySumsBaseline(Bool_t on);
   void SelectQDCSums(Bool_t on);
   void SelectExternalTimestamp(Bool_t on);
-  void SelectDrawOPtionPanel1(Bool_t on);
-  void SelectDrawOPtionPanel2(Bool_t on);
+  void SelectDrawOptionPanel1(Bool_t on);
+  void SelectDrawOptionPanel2(Bool_t on);
   // void SelectSamplingFrequency(Int_t id);
   
 private:
@@ -154,6 +155,9 @@ private:
   TGStatusBar* sbfold3;
   TGDoubleHSlider *dslider;
 
+  TGComboBox *chooseslowfilterbaseline;
+  TGNumberEntryField *oldslowfilterparameter[2];
+  
   int tracelength;
   TMultiGraph *offlinemultigraph;
   TGraph *rawdata,*threshdata,*cfddata,*cfdthreshdata,*sfilterdata,*ffilterdata;
@@ -269,7 +273,12 @@ private:
   TGTextEntry* printtextinfor8;
   bool flagdrawstop8;
   TGraph *energyfffirst8,*energyffsecond8;
+  TH2D *histenergyfffirst8,*histenergyffsecond8;
   int countenergyff8[2];
+  TGComboBox *choosedrawstyle8;//0-Graph 1-Hist
+  TGNumberEntryField *histxyminmax8[4];//0-xmin 1-xmax 2-ymin 3-ymax
+  TGComboBox *choosehistbinxy[2];
+  
   
   // Fold9
   TCanvas *canvas9;  

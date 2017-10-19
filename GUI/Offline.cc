@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 三 10月 18 21:15:22 2017 (+0800)
+// Last-Updated: 四 10月 19 23:07:08 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 494
+//     Update #: 578
 // URL: http://wuhongyi.cn 
 
 
@@ -30,6 +30,23 @@
 //event energy (OfflineEventInformation[EventHeaderLength*i+3] & 0xFFFF)
 //trace out-of-range flag ((OfflineEventInformation[EventHeaderLength*i+3] & 0x80000000) >> 31)
 
+//trailing energy sum
+//leading energy sum
+//gap energy sum
+//baseline value
+
+//qdc sum 0
+//qdc sum 1
+//qdc sum 2
+//qdc sum 3
+//qdc sum 4
+//qdc sum 5
+//qdc sum 6
+//qdc sum 7
+
+//exttime_lo
+//exttime_hi
+
 #include "Offline.hh"
 #include "Detector.hh"
 #include "Global.hh"
@@ -42,9 +59,12 @@
 #include "TString.h"
 #include "TFitResultPtr.h"
 
+#include <cstring>
 #include <iostream>
 using namespace std;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+#define BaseEventHeaderLength 5  //4headr+1location
 
 Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextEntry *filepath, TGTextEntry *filename)
 {
@@ -53,7 +73,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   filepathtext = filepath;
   filenametext = filename;
 
-  EventHeaderLength = 5;//可根据需要扩展
+  EventHeaderLength = BaseEventHeaderLength;//可根据需要扩展
   modNumber = 0;
   chanNumber = 0;
   chanNumber4 = 0;
@@ -135,6 +155,8 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   doublefastfilter8 = NULL;
   energyfffirst8 = NULL;
   energyffsecond8 = NULL;
+  histenergyfffirst8 = NULL;
+  histenergyffsecond8 = NULL;
   
   TGTab *TabPanel = new TGTab(this);
   this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
@@ -207,6 +229,9 @@ Offline::~Offline()
   if(doublefastfilter8 != NULL) delete []doublefastfilter8;
   if(energyfffirst8 != NULL) delete energyfffirst8;
   if(energyffsecond8 != NULL) delete energyffsecond8;
+  if(histenergyfffirst8 != NULL) delete histenergyfffirst8;
+  if(histenergyffsecond8 != NULL) delete histenergyffsecond8;
+
   
   for (int i = 0; i < 16; ++i)
     {
@@ -474,45 +499,72 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
 
   offlinedrawoption1[0] = new TGCheckButton(parFrame, "Wave");
   offlinedrawoption1[0]->SetOn(kTRUE);
-  offlinedrawoption1[0]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel1(Bool_t)");
+  offlinedrawoption1[0]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel1(Bool_t)");
   parFrame->AddFrame(offlinedrawoption1[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
 
   offlinedrawoption1[1] = new TGCheckButton(parFrame, "Slow Filter");
   offlinedrawoption1[1]->SetOn(kTRUE);
-  offlinedrawoption1[1]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel1(Bool_t)");
+  offlinedrawoption1[1]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel1(Bool_t)");
   fClient->GetColorByName("green", color);
   offlinedrawoption1[1]->SetTextColor(color, false);
   parFrame->AddFrame(offlinedrawoption1[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
 
   offlinedrawoption1[2] = new TGCheckButton(parFrame, "Fast Filter");
   offlinedrawoption1[2]->SetOn(kTRUE);
-  offlinedrawoption1[2]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel1(Bool_t)");
+  offlinedrawoption1[2]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel1(Bool_t)");
   fClient->GetColorByName("blue", color);
   offlinedrawoption1[2]->SetTextColor(color, false);
   parFrame->AddFrame(offlinedrawoption1[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
 
   offlinedrawoption1[3] = new TGCheckButton(parFrame, "Thres");
   offlinedrawoption1[3]->SetOn(kTRUE);
-  offlinedrawoption1[3]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel1(Bool_t)");
+  offlinedrawoption1[3]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel1(Bool_t)");
   fClient->GetColorByName("blue", color);
   offlinedrawoption1[3]->SetTextColor(color, false);
   parFrame->AddFrame(offlinedrawoption1[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));  
 
   offlinedrawoption1[4] = new TGCheckButton(parFrame, "CFD");
   offlinedrawoption1[4]->SetOn(kTRUE);
-  offlinedrawoption1[4]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel1(Bool_t)");
+  offlinedrawoption1[4]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel1(Bool_t)");
   fClient->GetColorByName("red", color);
   offlinedrawoption1[4]->SetTextColor(color, false);
   parFrame->AddFrame(offlinedrawoption1[4], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
 
   offlinedrawoption1[5] = new TGCheckButton(parFrame, "CFD Thres");
   offlinedrawoption1[5]->SetOn(kTRUE);
-  offlinedrawoption1[5]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel1(Bool_t)");
+  offlinedrawoption1[5]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel1(Bool_t)");
   fClient->GetColorByName("red", color);
   offlinedrawoption1[5]->SetTextColor(color, false);
   parFrame->AddFrame(offlinedrawoption1[5], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
 
-  
+
+  //slow filter baseline
+  TGLabel *LabelChooseSlowFIlterBaseline = new TGLabel(parFrame, "SF BL:"); 
+  parFrame->AddFrame(LabelChooseSlowFIlterBaseline, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelChooseSlowFIlterBaseline->SetTextColor(color, false);
+  chooseslowfilterbaseline = new TGComboBox(parFrame);
+  parFrame->AddFrame(chooseslowfilterbaseline, new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
+  chooseslowfilterbaseline->Resize(80, 20);
+  chooseslowfilterbaseline->AddEntry("Calculate", 0);
+  chooseslowfilterbaseline->AddEntry("Old Baseline", 1);
+  chooseslowfilterbaseline->Select(0);
+
+  TGLabel *LabelOldSlowFilterSL = new TGLabel(parFrame," 'Old BL' choose -> SL:");
+  parFrame->AddFrame(LabelOldSlowFilterSL, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelOldSlowFilterSL->SetTextColor(color, false);
+  oldslowfilterparameter[0] = new TGNumberEntryField(parFrame, -1, 3.04, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.04,81.28);
+  parFrame->AddFrame(oldslowfilterparameter[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  oldslowfilterparameter[0]->Resize(40, 20);
+  TGLabel *LabelOldSlowFilterSG = new TGLabel(parFrame,"SG:");
+  parFrame->AddFrame(LabelOldSlowFilterSG, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelOldSlowFilterSG->SetTextColor(color, false);
+  oldslowfilterparameter[1] = new TGNumberEntryField(parFrame, -1, 0.64, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.06,81.28);
+  parFrame->AddFrame(oldslowfilterparameter[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 20, 2, 0));
+  oldslowfilterparameter[1]->Resize(40, 20);
+
   
   // current count
   OfflineCurrentCountText = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
@@ -584,7 +636,7 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   TabPanel->AddFrame(sbfold3, new TGLayoutHints(kLHintsBottom | kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
 }
 
-void Offline::SelectDrawOPtionPanel1(Bool_t on)
+void Offline::SelectDrawOptionPanel1(Bool_t on)
 {
   if(rawdata != NULL || threshdata != NULL || cfddata != NULL || cfdthreshdata != NULL || sfilterdata != NULL || ffilterdata != NULL)
     {
@@ -650,12 +702,81 @@ void Offline::SelectDrawOPtionPanel1(Bool_t on)
 
 }
 
-void Offline::SelectDrawOPtionPanel2(Bool_t on)
+
+void Offline::MakeFold2Panel(TGCompositeFrame *TabPanel)
 {
-  // canvas2->cd();
-  canvas2->Clear();
-  canvas2->Divide(4,4);
+  TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+
+  // Draw option
+  TGLabel *drawoptionlabel = new TGLabel(parFrame, "Draw option:");
+  parFrame->AddFrame(drawoptionlabel, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  // fClient->GetColorByName("red", color);
+  // drawoptionlabel->SetTextColor(color, false);
+
+  offlinedrawoption2[0] = new TGCheckButton(parFrame, "Wave");
+  offlinedrawoption2[0]->SetOn(kTRUE);
+  offlinedrawoption2[0]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel2(Bool_t)");
+  parFrame->AddFrame(offlinedrawoption2[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+
+  offlinedrawoption2[1] = new TGCheckButton(parFrame, "Slow Filter");
+  offlinedrawoption2[1]->SetOn(kTRUE);
+  offlinedrawoption2[1]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel2(Bool_t)");
+  fClient->GetColorByName("green", color);
+  offlinedrawoption2[1]->SetTextColor(color, false);
+  parFrame->AddFrame(offlinedrawoption2[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+
+  offlinedrawoption2[2] = new TGCheckButton(parFrame, "Fast Filter");
+  offlinedrawoption2[2]->SetOn(kTRUE);
+  offlinedrawoption2[2]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel2(Bool_t)");
+  fClient->GetColorByName("blue", color);
+  offlinedrawoption2[2]->SetTextColor(color, false);
+  parFrame->AddFrame(offlinedrawoption2[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+
+  offlinedrawoption2[3] = new TGCheckButton(parFrame, "Thres");
+  offlinedrawoption2[3]->SetOn(kTRUE);
+  offlinedrawoption2[3]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel2(Bool_t)");
+  fClient->GetColorByName("blue", color);
+  offlinedrawoption2[3]->SetTextColor(color, false);
+  parFrame->AddFrame(offlinedrawoption2[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));  
+
+  offlinedrawoption2[4] = new TGCheckButton(parFrame, "CFD");
+  offlinedrawoption2[4]->SetOn(kTRUE);
+  offlinedrawoption2[4]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel2(Bool_t)");
+  fClient->GetColorByName("red", color);
+  offlinedrawoption2[4]->SetTextColor(color, false);
+  parFrame->AddFrame(offlinedrawoption2[4], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+
+  offlinedrawoption2[5] = new TGCheckButton(parFrame, "CFD Thres");
+  offlinedrawoption2[5]->SetOn(kTRUE);
+  offlinedrawoption2[5]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel2(Bool_t)");
+  fClient->GetColorByName("red", color);
+  offlinedrawoption2[5]->SetTextColor(color, false);
+  parFrame->AddFrame(offlinedrawoption2[5], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+
   
+  // draw
+  OfflineDrawButton2 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW2);
+  OfflineDrawButton2->SetEnabled(0);
+  OfflineDrawButton2->Associate(this);
+  parFrame->AddFrame(OfflineDrawButton2, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
+
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
+  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
+
+  TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas2", adCanvasFrame, 100, 100);
+
+  canvas2 = adjCanvas->GetCanvas();
+  canvas2->Divide(4,4);
+  adCanvasFrame->AddFrame(adjCanvas, Hint);
+  TabPanel->AddFrame(adCanvasFrame, Hint);
+}
+
+void Offline::SelectDrawOptionPanel2(Bool_t on)
+{
   bool tempstatus[16];
   for (unsigned int i = 0; i < 16; ++i)
     {
@@ -694,42 +815,11 @@ void Offline::SelectDrawOPtionPanel2(Bool_t on)
 	      ffilterdata2[i] = NULL;
 	    }
 	}
-
     }
   for (unsigned int i = 0; i < 16; ++i)
     {
-      if(tempstatus[i] /*rawdata2[i] != NULL || threshdata2[i] != NULL || cfddata2[i] != NULL || cfdthreshdata2[i] != NULL || sfilterdata2[i] != NULL || ffilterdata2[i] != NULL*/)
+      if(tempstatus[i])
 	{
-	  // if(rawdata2[i] != NULL)
-	  //   {
-	  //     delete rawdata2[i];
-	  //     rawdata2[i] = NULL;
-	  //   }
-	  // if(threshdata2[i] != NULL)
-	  //   {
-	  //     delete threshdata2[i];
-	  //     threshdata2[i] = NULL;
-	  //   }
-	  // if(cfddata2[i] != NULL)
-	  //   {
-	  //     delete cfddata2[i];
-	  //     cfddata2[i] = NULL;
-	  //   }
-	  // if(cfdthreshdata2[i] != NULL)
-	  //   {
-	  //     delete cfdthreshdata2[i];
-	  //     cfdthreshdata2[i] = NULL;
-	  //   }
-	  // if(sfilterdata2[i] != NULL)
-	  //   {
-	  //     delete sfilterdata2[i];
-	  //     sfilterdata2[i]  = NULL;
-	  //   }
-	  // if(ffilterdata2[i] != NULL)
-	  //   {
-	  //     delete ffilterdata2[i];
-	  //     ffilterdata2[i] = NULL;
-	  //   }
 	  rawdata2[i] = new TGraph(tracelength2[i],doublesample2[i],doublercdtrace2[i]);
 	  threshdata2[i] = new TGraph(tracelength2[i],doublesample2[i],doublethresh2[i]);
 	  cfddata2[i] = new TGraph(tracelength2[i],doublesample2[i],doublecfd2[i]);
@@ -756,85 +846,11 @@ void Offline::SelectDrawOPtionPanel2(Bool_t on)
 	    offlinemultigraph2[i]->Add(ffilterdata2[i]);
 	  canvas2->cd(1+i);
 	  offlinemultigraph2[i]->SetTitle(TString::Format("Event: %d",OfflineCurrentCount2[i]).Data());
-	  // std::cout<<TString::Format("%d",OfflineCurrentCount2[i]).Data()<<std::endl;
 	  offlinemultigraph2[i]->Draw("AL");
 	} //!= NULL
     } //0-15
-
   canvas2->Modified();
-  canvas2->Update();//!!!!
-}
-
-void Offline::MakeFold2Panel(TGCompositeFrame *TabPanel)
-{
-  TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-
-  // Draw option
-  TGLabel *drawoptionlabel = new TGLabel(parFrame, "Draw option:");
-  parFrame->AddFrame(drawoptionlabel, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
-  // fClient->GetColorByName("red", color);
-  // drawoptionlabel->SetTextColor(color, false);
-
-  offlinedrawoption2[0] = new TGCheckButton(parFrame, "Wave");
-  offlinedrawoption2[0]->SetOn(kTRUE);
-  offlinedrawoption2[0]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel2(Bool_t)");
-  parFrame->AddFrame(offlinedrawoption2[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
-
-  offlinedrawoption2[1] = new TGCheckButton(parFrame, "Slow Filter");
-  offlinedrawoption2[1]->SetOn(kTRUE);
-  offlinedrawoption2[1]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel2(Bool_t)");
-  fClient->GetColorByName("green", color);
-  offlinedrawoption2[1]->SetTextColor(color, false);
-  parFrame->AddFrame(offlinedrawoption2[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
-
-  offlinedrawoption2[2] = new TGCheckButton(parFrame, "Fast Filter");
-  offlinedrawoption2[2]->SetOn(kTRUE);
-  offlinedrawoption2[2]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel2(Bool_t)");
-  fClient->GetColorByName("blue", color);
-  offlinedrawoption2[2]->SetTextColor(color, false);
-  parFrame->AddFrame(offlinedrawoption2[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
-
-  offlinedrawoption2[3] = new TGCheckButton(parFrame, "Thres");
-  offlinedrawoption2[3]->SetOn(kTRUE);
-  offlinedrawoption2[3]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel2(Bool_t)");
-  fClient->GetColorByName("blue", color);
-  offlinedrawoption2[3]->SetTextColor(color, false);
-  parFrame->AddFrame(offlinedrawoption2[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));  
-
-  offlinedrawoption2[4] = new TGCheckButton(parFrame, "CFD");
-  offlinedrawoption2[4]->SetOn(kTRUE);
-  offlinedrawoption2[4]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel2(Bool_t)");
-  fClient->GetColorByName("red", color);
-  offlinedrawoption2[4]->SetTextColor(color, false);
-  parFrame->AddFrame(offlinedrawoption2[4], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
-
-  offlinedrawoption2[5] = new TGCheckButton(parFrame, "CFD Thres");
-  offlinedrawoption2[5]->SetOn(kTRUE);
-  offlinedrawoption2[5]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOPtionPanel2(Bool_t)");
-  fClient->GetColorByName("red", color);
-  offlinedrawoption2[5]->SetTextColor(color, false);
-  parFrame->AddFrame(offlinedrawoption2[5], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
-
-  
-  // draw
-  OfflineDrawButton2 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW2);
-  OfflineDrawButton2->SetEnabled(0);
-  OfflineDrawButton2->Associate(this);
-  parFrame->AddFrame(OfflineDrawButton2, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
-
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
-  
-  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-  
-  TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
-  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
-
-  TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas2", adCanvasFrame, 100, 100);
-
-  canvas2 = adjCanvas->GetCanvas();
-  canvas2->Divide(4,4);
-  adCanvasFrame->AddFrame(adjCanvas, Hint);
-  TabPanel->AddFrame(adCanvasFrame, Hint);
+  canvas2->Update();
 }
 
 void Offline::MakeFold3Panel(TGCompositeFrame *TabPanel)
@@ -1237,11 +1253,85 @@ void Offline::MakeFold8Panel(TGCompositeFrame *TabPanel)
   fClient->GetColorByName("blue", color);
   printtextinfor8->SetTextColor(color, false);
   printtextinfor8->SetText("Choose 'Ch' then enter button 'Draw'.");
-  printtextinfor8->Resize(500, 12);
+  printtextinfor8->Resize(450, 12);
   printtextinfor8->SetEnabled(kFALSE);
   printtextinfor8->SetFrameDrawn(kFALSE);
   parFrame->AddFrame(printtextinfor8, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
 
+  
+  // Draw Style
+  TGLabel *LabelChooseDrawStyle = new TGLabel(parFrame, "Draw Style:"); 
+  parFrame->AddFrame(LabelChooseDrawStyle, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("red", color);
+  LabelChooseDrawStyle->SetTextColor(color, false);
+  choosedrawstyle8 = new TGComboBox(parFrame);
+  parFrame->AddFrame(choosedrawstyle8, new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
+  choosedrawstyle8->Resize(50, 20);
+  choosedrawstyle8->AddEntry("Graph", 0);
+  choosedrawstyle8->AddEntry("Hist", 1);
+  choosedrawstyle8->Select(0);
+
+  TGLabel *LabelChooseHistBinX = new TGLabel(parFrame,"  'Hist' mode choose -> BinX:");
+  parFrame->AddFrame(LabelChooseHistBinX, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelChooseHistBinX->SetTextColor(color, false);
+  choosehistbinxy[0] = new TGComboBox(parFrame);
+  parFrame->AddFrame(choosehistbinxy[0], new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
+  choosehistbinxy[0]->Resize(50, 20);
+  choosehistbinxy[0]->AddEntry("100", 100);
+  choosehistbinxy[0]->AddEntry("200", 200);
+  choosehistbinxy[0]->AddEntry("500", 500);
+  choosehistbinxy[0]->AddEntry("1000", 1000);
+  choosehistbinxy[0]->AddEntry("1500", 1500);
+  choosehistbinxy[0]->AddEntry("2000", 2000);
+  choosehistbinxy[0]->Select(1000);
+
+  TGLabel *LabelChooseHistXmin = new TGLabel(parFrame,"Xmin:");
+  parFrame->AddFrame(LabelChooseHistXmin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelChooseHistXmin->SetTextColor(color, false);
+  histxyminmax8[0] = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  parFrame->AddFrame(histxyminmax8[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  histxyminmax8[0]->Resize(40, 20);
+  
+  TGLabel *LabelChooseHistXmax = new TGLabel(parFrame,"Xmax:");
+  parFrame->AddFrame(LabelChooseHistXmax, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelChooseHistXmax->SetTextColor(color, false);
+  histxyminmax8[1] = new TGNumberEntryField(parFrame, -1, 1000, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  parFrame->AddFrame(histxyminmax8[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  histxyminmax8[1]->Resize(40, 20);  
+
+  TGLabel *LabelChooseHistBinY = new TGLabel(parFrame,"BinY:");
+  parFrame->AddFrame(LabelChooseHistBinY, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelChooseHistBinY->SetTextColor(color, false);
+  choosehistbinxy[1] = new TGComboBox(parFrame);
+  parFrame->AddFrame(choosehistbinxy[1], new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
+  choosehistbinxy[1]->Resize(50, 20);
+  choosehistbinxy[1]->AddEntry("512", 512);
+  choosehistbinxy[1]->AddEntry("1024", 1024);
+  choosehistbinxy[1]->AddEntry("2048", 2048);
+  choosehistbinxy[1]->Select(1024);
+
+  TGLabel *LabelChooseHistYmin = new TGLabel(parFrame,"Ymin:");
+  parFrame->AddFrame(LabelChooseHistYmin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelChooseHistYmin->SetTextColor(color, false);
+  histxyminmax8[2] = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  parFrame->AddFrame(histxyminmax8[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  histxyminmax8[2]->Resize(40, 20);
+
+  TGLabel *LabelChooseHistYmax = new TGLabel(parFrame,"Ymax:");
+  parFrame->AddFrame(LabelChooseHistYmax, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelChooseHistYmax->SetTextColor(color, false);
+  histxyminmax8[3] = new TGNumberEntryField(parFrame, -1, 65536, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  parFrame->AddFrame(histxyminmax8[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  histxyminmax8[3]->Resize(40, 20);
+
+
+  
   
   // draw
   OfflineDrawButton8 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW8);
@@ -1909,36 +1999,197 @@ void Offline::GetEventsInfo(char *FileName, unsigned int *EventInformation)
       TotalSkippedWords = 0;
       NumEvents = 0;
       
-      // if(EventHeaderLength == 5)
-      // 	{
-      do
-	{
-	  fread(&eventdata, 4, 1, ListModeFile);
-	  EventInformation[EventHeaderLength*NumEvents] = eventdata;
-	  headerlength = (eventdata & 0x1F000) >> 12;// Header length
-	  eventlength = (eventdata & 0x7FFE0000) >> 17;// Event length
+      if(EventHeaderLength == BaseEventHeaderLength)
+      	{
+	  do
+	    {
+	      fread(&eventdata, 4, 1, ListModeFile);
+	      EventInformation[EventHeaderLength*NumEvents] = eventdata;
+	      headerlength = (eventdata & 0x1F000) >> 12;// Header length
+	      eventlength = (eventdata & 0x7FFE0000) >> 17;// Event length
 	      
-	  fread(&eventdata, 4, 1, ListModeFile);
-	  EventInformation[EventHeaderLength*NumEvents+1] = eventdata;
+	      fread(&eventdata, 4, 1, ListModeFile);
+	      EventInformation[EventHeaderLength*NumEvents+1] = eventdata;
 
-	  fread(&eventdata, 4, 1, ListModeFile);
-	  EventInformation[EventHeaderLength*NumEvents+2] = eventdata;
+	      fread(&eventdata, 4, 1, ListModeFile);
+	      EventInformation[EventHeaderLength*NumEvents+2] = eventdata;
 
-	  fread(&eventdata, 4, 1, ListModeFile);
-	  EventInformation[EventHeaderLength*NumEvents+3] = eventdata;
-	  // tracelength = (eventdata & 0x7FFF0000) >> 16;// Trace Length
+	      fread(&eventdata, 4, 1, ListModeFile);
+	      EventInformation[EventHeaderLength*NumEvents+3] = eventdata;
+	      // tracelength = (eventdata & 0x7FFF0000) >> 16;// Trace Length
 	  
-	  EventInformation[EventHeaderLength*NumEvents+4] = TotalSkippedWords+headerlength;// Trace location
+	      EventInformation[EventHeaderLength*NumEvents+4] = TotalSkippedWords+headerlength;// Trace location
 
-	  // if(eventlength != headerlength + tracelength/2)
-	  //   std::cout<<"Data error..."<<std::endl;
+	      // if(eventlength != headerlength + tracelength/2)
+	      //   std::cout<<"Data error..."<<std::endl;
 	  
-	  TotalSkippedWords += eventlength;
-	  NumEvents++;
-	  fseek(ListModeFile, (eventlength-4)*4, SEEK_CUR);
-	}while(TotalSkippedWords < TotalWords);
-      // }
+	      TotalSkippedWords += eventlength;
+	      NumEvents++;
+	      fseek(ListModeFile, (eventlength-4)*4, SEEK_CUR);
+	    }while(TotalSkippedWords < TotalWords);
+	}
+      else
+	{
+	  unsigned int eventdatarawenergysumsandbaseline[4];
+	  unsigned int eventdataqdcsums[8];
+	  unsigned int eventdataexternaltimestamp[2];
+	  int offsetheaderrawenergysumsandbaseline = BaseEventHeaderLength;
+	  int offsetheaderqdcsums = BaseEventHeaderLength+4*int(headerrawenergysumsandbaseline->IsOn());
+	  int offsetheaderexternaltimestamp = BaseEventHeaderLength+4*int(headerrawenergysumsandbaseline->IsOn())+8*int(headerqdcsums->IsOn());
+	  do
+	    {
+	      fread(&eventdata, 4, 1, ListModeFile);
+	      EventInformation[EventHeaderLength*NumEvents] = eventdata;
+	      headerlength = (eventdata & 0x1F000) >> 12;// Header length
+	      eventlength = (eventdata & 0x7FFE0000) >> 17;// Event length
+	      
+	      fread(&eventdata, 4, 1, ListModeFile);
+	      EventInformation[EventHeaderLength*NumEvents+1] = eventdata;
 
+	      fread(&eventdata, 4, 1, ListModeFile);
+	      EventInformation[EventHeaderLength*NumEvents+2] = eventdata;
+
+	      fread(&eventdata, 4, 1, ListModeFile);
+	      EventInformation[EventHeaderLength*NumEvents+3] = eventdata;
+	  
+	      EventInformation[EventHeaderLength*NumEvents+4] = TotalSkippedWords+headerlength;// Trace location
+
+	      switch(int(headerlength))
+		{
+		case 4:
+		  break;
+		case 6:
+		  fread(&eventdataexternaltimestamp, 4, 2, ListModeFile);
+		  if(headerexternaltimestamp->IsOn())
+		    {
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderexternaltimestamp] = eventdataexternaltimestamp[0];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderexternaltimestamp+1] = eventdataexternaltimestamp[1];
+		    }
+		  break;
+		case 8:
+		  fread(&eventdatarawenergysumsandbaseline, 4, 4, ListModeFile);
+		  if(headerrawenergysumsandbaseline->IsOn())
+		    { 
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderrawenergysumsandbaseline] = eventdatarawenergysumsandbaseline[0];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderrawenergysumsandbaseline+1] = eventdatarawenergysumsandbaseline[1];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderrawenergysumsandbaseline+2] = eventdatarawenergysumsandbaseline[2];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderrawenergysumsandbaseline+3] = eventdatarawenergysumsandbaseline[3];
+		    }
+		  break;
+		case 10:
+		  fread(&eventdatarawenergysumsandbaseline, 4, 4, ListModeFile);
+		  if(headerrawenergysumsandbaseline->IsOn())
+		    { 
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderrawenergysumsandbaseline] = eventdatarawenergysumsandbaseline[0];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderrawenergysumsandbaseline+1] = eventdatarawenergysumsandbaseline[1];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderrawenergysumsandbaseline+2] = eventdatarawenergysumsandbaseline[2];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderrawenergysumsandbaseline+3] = eventdatarawenergysumsandbaseline[3];
+		    }
+
+		  fread(&eventdataexternaltimestamp, 4, 2, ListModeFile);
+		  if(headerexternaltimestamp->IsOn())
+		    {
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderexternaltimestamp] = eventdataexternaltimestamp[0];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderexternaltimestamp+1] = eventdataexternaltimestamp[1];
+		    }		  
+		  break;
+		case 12:
+		  fread(&eventdataqdcsums, 4, 8, ListModeFile);
+		  if(headerqdcsums->IsOn())
+		    { 
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums] = eventdataqdcsums[0];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+1] = eventdataqdcsums[1];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+2] = eventdataqdcsums[2];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+3] = eventdataqdcsums[3];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+4] = eventdataqdcsums[4];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+5] = eventdataqdcsums[5];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+6] = eventdataqdcsums[6];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+7] = eventdataqdcsums[7];
+		    }
+		  break;
+		case 14:
+		  fread(&eventdataqdcsums, 4, 8, ListModeFile);
+		  if(headerqdcsums->IsOn())
+		    {
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums] = eventdataqdcsums[0];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+1] = eventdataqdcsums[1];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+2] = eventdataqdcsums[2];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+3] = eventdataqdcsums[3];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+4] = eventdataqdcsums[4];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+5] = eventdataqdcsums[5];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+6] = eventdataqdcsums[6];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+7] = eventdataqdcsums[7];
+		    }
+
+		  fread(&eventdataexternaltimestamp, 4, 2, ListModeFile);
+		  if(headerexternaltimestamp->IsOn())
+		    {
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderexternaltimestamp] = eventdataexternaltimestamp[0];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderexternaltimestamp+1] = eventdataexternaltimestamp[1];
+		    }
+		  break;
+		case 16:
+		  fread(&eventdatarawenergysumsandbaseline, 4, 4, ListModeFile);
+		  if(headerrawenergysumsandbaseline->IsOn())
+		    { 
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderrawenergysumsandbaseline] = eventdatarawenergysumsandbaseline[0];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderrawenergysumsandbaseline+1] = eventdatarawenergysumsandbaseline[1];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderrawenergysumsandbaseline+2] = eventdatarawenergysumsandbaseline[2];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderrawenergysumsandbaseline+3] = eventdatarawenergysumsandbaseline[3];
+		    }
+
+		  fread(&eventdataqdcsums, 4, 8, ListModeFile);
+		  if(headerqdcsums->IsOn())
+		    {
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums] = eventdataqdcsums[0];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+1] = eventdataqdcsums[1];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+2] = eventdataqdcsums[2];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+3] = eventdataqdcsums[3];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+4] = eventdataqdcsums[4];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+5] = eventdataqdcsums[5];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+6] = eventdataqdcsums[6];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+7] = eventdataqdcsums[7];
+		    }
+		  break;
+		case 18:
+		  fread(&eventdatarawenergysumsandbaseline, 4, 4, ListModeFile);
+		  if(headerrawenergysumsandbaseline->IsOn())
+		    { 
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderrawenergysumsandbaseline] = eventdatarawenergysumsandbaseline[0];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderrawenergysumsandbaseline+1] = eventdatarawenergysumsandbaseline[1];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderrawenergysumsandbaseline+2] = eventdatarawenergysumsandbaseline[2];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderrawenergysumsandbaseline+3] = eventdatarawenergysumsandbaseline[3];
+		    }
+
+		  fread(&eventdataqdcsums, 4, 8, ListModeFile);
+		  if(headerqdcsums->IsOn())
+		    {
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums] = eventdataqdcsums[0];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+1] = eventdataqdcsums[1];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+2] = eventdataqdcsums[2];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+3] = eventdataqdcsums[3];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+4] = eventdataqdcsums[4];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+5] = eventdataqdcsums[5];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+6] = eventdataqdcsums[6];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderqdcsums+7] = eventdataqdcsums[7];
+		    }
+		  
+		  fread(&eventdataexternaltimestamp, 4, 2, ListModeFile);
+		  if(headerexternaltimestamp->IsOn())
+		    {
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderexternaltimestamp] = eventdataexternaltimestamp[0];
+		      EventInformation[EventHeaderLength*NumEvents+offsetheaderexternaltimestamp+1] = eventdataexternaltimestamp[1];
+		    }
+		  break;
+		default:
+		  std::cout<<"Header Length Error!"<<std::endl;
+		  break;
+		}
+	      TotalSkippedWords += eventlength;
+	      NumEvents++;
+	      fseek(ListModeFile, (eventlength-headerlength)*4, SEEK_CUR);
+	    }while(TotalSkippedWords < TotalWords);
+	}
       fclose(ListModeFile);
     }
 }
@@ -2889,18 +3140,50 @@ void Offline::Panel8Draw()
 
   countenergyff8[0] = 0;
   countenergyff8[1] = 0;
-  if(energyfffirst8 != NULL)
+
+  if(choosedrawstyle8->GetSelected() == 0)
     {
-      delete energyfffirst8;
-      energyfffirst8 = NULL;
+      //Graph
+      if(energyfffirst8 != NULL)
+	{
+	  delete energyfffirst8;
+	  energyfffirst8 = NULL;
+	}
+      if(energyffsecond8 != NULL)
+	{
+	  delete energyffsecond8;
+	  energyffsecond8 = NULL;
+	}
+      energyfffirst8 = new TGraph();
+      energyffsecond8 = new TGraph();
     }
-  if(energyffsecond8 != NULL)
+  else
     {
-      delete energyffsecond8;
-      energyffsecond8 = NULL;
+      //Hist
+      if(histenergyfffirst8 != NULL)
+	{
+	  delete histenergyfffirst8;
+	  histenergyfffirst8 = NULL;
+	}
+      if(histenergyffsecond8 != NULL)
+	{
+	  delete histenergyffsecond8;
+	  histenergyffsecond8 = NULL;
+	}
+      if(histxyminmax8[0]->GetNumber() >= histxyminmax8[1]->GetNumber())
+	{
+	  histxyminmax8[0]->SetNumber(0);
+	  histxyminmax8[1]->SetNumber(1000);
+	}
+      if(histxyminmax8[2]->GetNumber() >= histxyminmax8[3]->GetNumber())
+	{
+	  histxyminmax8[2]->SetNumber(0);
+	  histxyminmax8[3]->SetNumber(65536);
+	}   
+      histenergyfffirst8 = new TH2D("histenergyfffirst8","",choosehistbinxy[0]->GetSelected(),histxyminmax8[0]->GetNumber(),histxyminmax8[1]->GetNumber(),choosehistbinxy[1]->GetSelected(),histxyminmax8[2]->GetNumber(),histxyminmax8[3]->GetNumber());
+      histenergyffsecond8 = new TH2D("histenergyffsecond8","",choosehistbinxy[0]->GetSelected(),histxyminmax8[0]->GetNumber(),histxyminmax8[1]->GetNumber(),choosehistbinxy[1]->GetSelected(),histxyminmax8[2]->GetNumber(),histxyminmax8[3]->GetNumber());
     }
-  energyfffirst8 = new TGraph();
-  energyffsecond8 = new TGraph();
+  
 
   if(RcdTrace8 != NULL)
     {
@@ -3048,15 +3331,29 @@ void Offline::Panel8Draw()
 			}
 		    }
 
-		  if(fffirst > 0)
+		  if(choosedrawstyle8->GetSelected() == 0)
 		    {
-		      energyfffirst8->SetPoint(countenergyff8[0],fffirst,(double(OfflineEventInformation[EventHeaderLength*i+3]&0xFFFF)));
-		      countenergyff8[0]++;
+		      if(fffirst > 0)
+			{
+			  energyfffirst8->SetPoint(countenergyff8[0],fffirst,(double(OfflineEventInformation[EventHeaderLength*i+3]&0xFFFF)));
+			  countenergyff8[0]++;
+			}
+		      if(ffsecond > 0)
+			{
+			  energyffsecond8->SetPoint(countenergyff8[1],ffsecond,(double(OfflineEventInformation[EventHeaderLength*i+3]&0xFFFF)));
+			  countenergyff8[1]++;
+			}
 		    }
-		  if(ffsecond > 0)
+		  else
 		    {
-		      energyffsecond8->SetPoint(countenergyff8[1],ffsecond,(double(OfflineEventInformation[EventHeaderLength*i+3]&0xFFFF)));
-		      countenergyff8[1]++;
+		      if(fffirst > 0)
+			{
+			  histenergyfffirst8->Fill(fffirst,(double(OfflineEventInformation[EventHeaderLength*i+3]&0xFFFF)));
+			}
+		      if(ffsecond > 0)
+			{
+			  histenergyffsecond8->Fill(ffsecond,(double(OfflineEventInformation[EventHeaderLength*i+3]&0xFFFF)));
+			}
 		    }
 		}//fast filter
 
@@ -3073,14 +3370,29 @@ void Offline::Panel8Draw()
 	}//for i
 
       // Draw
-      canvas8->cd(1);
-      energyfffirst8->Draw("AP*");
-      energyfffirst8->GetXaxis()->SetTitle("First Peak FF");
-      energyfffirst8->GetYaxis()->SetTitle("Orig E[ch]");
-      canvas8->cd(2);
-      energyffsecond8->Draw("AP*");
-      energyffsecond8->GetXaxis()->SetTitle("Second Peak FF");
-      energyffsecond8->GetYaxis()->SetTitle("Orig E[ch]");
+      if(choosedrawstyle8->GetSelected() == 0)
+	{
+	  canvas8->cd(1);
+	  energyfffirst8->Draw("AP*");
+	  energyfffirst8->GetXaxis()->SetTitle("First Peak FF");
+	  energyfffirst8->GetYaxis()->SetTitle("Orig E[ch]");
+	  canvas8->cd(2);
+	  energyffsecond8->Draw("AP*");
+	  energyffsecond8->GetXaxis()->SetTitle("Second Peak FF");
+	  energyffsecond8->GetYaxis()->SetTitle("Orig E[ch]");
+	}
+      else
+	{
+	  canvas8->cd(1);
+	  histenergyfffirst8->Draw("colz");
+	  histenergyfffirst8->GetXaxis()->SetTitle("First Peak FF");
+	  histenergyfffirst8->GetYaxis()->SetTitle("Orig E[ch]");
+	  canvas8->cd(2);
+	  histenergyffsecond8->Draw("colz");
+	  histenergyffsecond8->GetXaxis()->SetTitle("Second Peak FF");
+	  histenergyffsecond8->GetYaxis()->SetTitle("Orig E[ch]");
+	}
+
     }// inttracelength > -1
       
 
@@ -3109,6 +3421,21 @@ void Offline::Panel0ReadFile()
   OfflineFileStatus->SetText("Waitting...");
   gSystem->ProcessEvents();
 
+  //定义数据长度
+  EventHeaderLength = 5;
+  if(headerrawenergysumsandbaseline->IsOn())
+    {
+      EventHeaderLength += 4;
+    }
+  if(headerqdcsums->IsOn())
+    {
+      EventHeaderLength += 8;
+    }
+  if(headerexternaltimestamp->IsOn())
+    {
+      EventHeaderLength += 2;
+    }
+  
   sprintf(offlinefilename,"%s%s_R%04d_M%02d.bin",filepathtext->GetText(),filenametext->GetText(),int(offlinefilerunnum->GetIntNumber()),int(offlinemodnum->GetIntNumber()));
   // GOTO need check file 
   OfflineModuleEventsCount = GetModuleEvents(offlinefilename);
@@ -3120,7 +3447,8 @@ void Offline::Panel0ReadFile()
 	  OfflineEventInformation = NULL;
 	}
       OfflineEventInformation = new unsigned int[EventHeaderLength*OfflineModuleEventsCount];
-      memset(OfflineEventInformation, 0, sizeof(unsigned int)*OfflineModuleEventsCount*EventHeaderLength);
+      // std::cout<<"int length size: "<<EventHeaderLength*OfflineModuleEventsCount<<std::endl;
+      memset(OfflineEventInformation, 0, sizeof(unsigned int)*OfflineModuleEventsCount*EventHeaderLength);//置零
       GetEventsInfo(offlinefilename,OfflineEventInformation);
 	      
       //
@@ -3222,7 +3550,7 @@ void Offline::SelectRawEnergySumsBaseline(Bool_t on)
 
 void Offline::SelectQDCSums(Bool_t on)
 {
-  std::cout<<"GOTO  =  SelectRawEnergySumsBaseline: "<<headerqdcsums->IsOn()<<std::endl;
+  std::cout<<"GOTO  =  SelectQDCSums: "<<headerqdcsums->IsOn()<<std::endl;
   OfflineDrawButton->SetEnabled(0);
   OfflineDrawButton2->SetEnabled(0);
   OfflineDrawButton3->SetEnabled(0);
