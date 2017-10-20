@@ -4,11 +4,12 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 6月  3 09:24:39 2017 (+0800)
-// Last-Updated: 日 8月 13 18:08:53 2017 (+0800)
+// Last-Updated: 五 10月 20 16:26:27 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 9
+//     Update #: 10
 // URL: http://wuhongyi.cn 
 
+#include "UserDefine.hh"
 #include "sort.hh"
 
 #include "TString.h"
@@ -21,16 +22,9 @@
 
 int main(int argc, char *argv[])
 {
-  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-  // 以下部分用户需要修改
-  TString rawfilepath = "/home/wuhongyi/data/";
-  TString outfilepath = "/home/wuhongyi/data/";
-
-  TString filename = "data";
-  // 以上部分用户需要修改
-  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-
+  TString rawfilepath = RAWFILEPATH;
+  TString outfilepath = OUTFILEPATH;
+  TString filename = RAWFILENAME;
 
   
   if(argc != 3)

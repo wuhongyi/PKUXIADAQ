@@ -4,23 +4,13 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 6月  3 09:26:49 2017 (+0800)
-// Last-Updated: 一 8月 14 19:15:27 2017 (+0800)
+// Last-Updated: 五 10月 20 16:26:27 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 6
+//     Update #: 7
 // URL: http://wuhongyi.cn 
 
 #ifndef _SORT_H_
 #define _SORT_H_
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-// 以下部分用户需要修改
-
-// 设置插件个数
-#define BOARDNUMBER 5
-
-// 以上部分用户需要修改
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 
 #include "TFile.h"
 #include "TTree.h"

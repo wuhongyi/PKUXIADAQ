@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:18 2016 (+0800)
-// Last-Updated: 五 8月 25 13:29:18 2017 (+0800)
+// Last-Updated: 五 10月 20 17:16:11 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 24
+//     Update #: 26
 // URL: http://wuhongyi.cn 
 
 #include "decoder.hh"
@@ -132,6 +132,7 @@ bool decoder::decode()
     }
 
   evte = ( buff & kMaskevte ) >> kShiftevte;
+  // if(evte > 65000) printf("%x\n",buff);
   ltra = ( buff & kMaskltra ) >> kShiftltra;
   outofr = ( buff & kMaskoutofr ) >> kShiftoutofr;
 
