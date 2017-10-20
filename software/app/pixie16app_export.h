@@ -349,7 +349,8 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	double         *slowfilter,        // slow filter response
 	unsigned int   bl,
 	double         sl,
-	double         sg );
+	double         sg,
+	int            pointtobl );
   
 
 #ifdef __cplusplus

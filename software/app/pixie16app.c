@@ -6325,13 +6325,14 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	double         *slowfilter,        // slow filter response
 	unsigned int   bl,
 	double         sl,
-	double         sg )
+	double         sg,
+	int            pointtobl )
 {
 	char ErrMSG[MAX_ERRMSG_LENGTH];
 	FILE *ListModeFile = NULL;
 	unsigned int SlowLen, SlowGap, SlowFilterRange, PreampTau_IEEE;
 	unsigned int esum0[32768], esum1[32768], esum2[32768];
-	unsigned int offset, x, y;
+        unsigned int offset, x, y;
 	double preamptau, deltaT;
 	double b1, c0, c1, c2;
 	double baseline;
@@ -6371,6 +6372,14 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	OldSlowLen = ROUND(sl*Module_Information[ModuleNumber].Module_ADCMSPS/pow(2.0,(double)SlowFilterRange))*pow(2.0,(double)SlowFilterRange);
 	OldSlowGap = ROUND(sg*Module_Information[ModuleNumber].Module_ADCMSPS/pow(2.0,(double)SlowFilterRange))*pow(2.0,(double)SlowFilterRange);
 
+
+	int AverageRcdTrace = 0;
+	int i;
+	for (i = 0; i < pointtobl; ++i)//TODO wuhongyi
+	  {
+	    AverageRcdTrace += RcdTrace[i];
+	  }
+	AverageRcdTrace /= pointtobl;
 	
 	// Check if trace length is sufficiently long
 	if(RcdTraceLength < ((2*SlowLen + SlowGap)/**2*/))//TODO
@@ -6399,7 +6408,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 
 		// Compute baseline
 		baseline = IEEEFloating2Decimal(bl)*(SlowLen+SlowGap)/(OldSlowLen+OldSlowGap);
-
+		
 		// Compute slow filter response
 		offset = 2*SlowLen + SlowGap - 1;
 		for(x=offset; x<RcdTraceLength; x++)
@@ -6423,9 +6432,48 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 		}
 
 		// Extend the value of slowfilter[offset] to all non-computed ones from index 0 to offset-1
+		int yy;
 		for(x=0; x<offset; x++)
 		{
-			slowfilter[x] = slowfilter[offset];
+		  /* slowfilter[x] = slowfilter[offset]; */
+
+		  esum0[x] = 0;
+		  for(yy=((int)x-(int)offset); yy<((int)x-(int)offset+(int)SlowLen); yy++)
+		    {
+		      if(yy < 0)
+		  	{
+		  	  esum0[x] += AverageRcdTrace;
+		  	}
+		      else
+		  	{
+		  	  esum0[x] += RcdTrace[yy];
+		  	}
+		    }
+		  esum1[x] = 0;
+		  for(yy=((int)x-(int)offset+(int)SlowLen); yy<((int)x-(int)offset+(int)SlowLen+(int)SlowGap); yy++)
+		    {
+		      if(yy < 0)
+		  	{
+		  	  esum1[x] += AverageRcdTrace;
+		  	}
+		      else
+		  	{
+		  	  esum1[x] += RcdTrace[yy];
+		  	}
+		    }
+		  esum2[x] = 0;
+		  for(yy=((int)x-(int)offset+(int)SlowLen+(int)SlowGap); yy<((int)x-(int)offset+2*(int)SlowLen+(int)SlowGap); yy++)
+		    {
+		      if(yy < 0)
+		  	{
+		  	  esum2[x] += AverageRcdTrace;
+		  	}
+		      else
+		  	{
+		  	  esum2[x] += RcdTrace[yy];
+		  	}
+		    }
+		  slowfilter[x] = c0 * (double)esum0[x] + c1 * (double)esum1[x] + c2 * (double)esum2[x] - baseline;
 		}
 	}
 	else

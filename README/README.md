@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 日 9月 10 16:27:39 2017 (+0800)
+;; Last-Updated: 五 10月 20 14:56:42 2017 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 55
+;;     Update #: 56
 ;; URL: http://wuhongyi.cn -->
 
 **本说明书仅适用于 XIA LLC Pixie16 RevF**
@@ -16,6 +16,92 @@
 export PLX_SDK_DIR=$HOME/XIADAQ/PlxSdk
 ```
 
+
+
+Install the driver
+
+The PLX software should work on all Linux platform, primarily Fedora. Make sure your system is Little Endian.
+
+```
+[lijing@localhost Samples]$ lscpu 
+Architecture:          x86_64
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                8
+....
+```
+
+The environment variable PLX_SDK_DIR should be set to the root location of the PlxSdk folder.
+
+```bash
+ export PLX_SDK_DIR=$HOME/PlxSdk
+```
+
+Then compile the source code
+
+```bash
+cd PlxSdk/PlxApi
+make
+cd PlxSdk/Samples/ApiTest
+make // verify the API works
+```
+
+Our PCI card named Plx9054, so go to the folder Driver
+
+```bash
+cd PlxSdk/Driver 
+./builddriver 9054
+```
+
+Load the driver
+
+```
+cd PlxSdk/Bin
+sh Plx_load 9054 // need super user permission 
+sh Plx_load 9054 d // debug mode, show more information
+ls -l /dev/plx 
+total 0
+crwxrwxrwx. 1 root root 246, 255 Jan 12 12:02 Plx9054
+crwxrwxrwx. 1 root root 246,   0 Jan 12 12:02 Plx9054-0
+crwxrwxrwx. 1 root root 246,   1 Jan 12 12:02 Plx9054-1
+crwxrwxrwx. 1 root root 246,  10 Jan 12 12:02 Plx9054-10
+crwxrwxrwx. 1 root root 246,  11 Jan 12 12:02 Plx9054-11
+crwxrwxrwx. 1 root root 246,  12 Jan 12 12:02 Plx9054-12
+crwxrwxrwx. 1 root root 246,  13 Jan 12 12:02 Plx9054-13
+crwxrwxrwx. 1 root root 246,  14 Jan 12 12:02 Plx9054-14
+crwxrwxrwx. 1 root root 246,  15 Jan 12 12:02 Plx9054-15
+crwxrwxrwx. 1 root root 246,  16 Jan 12 12:02 Plx9054-16
+crwxrwxrwx. 1 root root 246,   2 Jan 12 12:02 Plx9054-2
+crwxrwxrwx. 1 root root 246,   3 Jan 12 12:02 Plx9054-3
+crwxrwxrwx. 1 root root 246,   4 Jan 12 12:02 Plx9054-4
+crwxrwxrwx. 1 root root 246,   5 Jan 12 12:02 Plx9054-5
+crwxrwxrwx. 1 root root 246,   6 Jan 12 12:02 Plx9054-6
+crwxrwxrwx. 1 root root 246,   7 Jan 12 12:02 Plx9054-7
+crwxrwxrwx. 1 root root 246,   8 Jan 12 12:02 Plx9054-8
+crwxrwxrwx. 1 root root 246,   9 Jan 12 12:02 Plx9054-9
+```
+
+monitor the Device traffic
+
+```bash
+cd PlxSdk/Samples/PlxCm
+make
+cd App
+./Plxcm
+
+    # Bs Sl Fn Pt Dev  Ven  Chip Rv I2C  Description
+   ---------------------------------------------------------------------------
+==> 0 06 0E 00 -- 9054 10B5 9054 AC  --  PLX PCI <==> Local Bus bridge
+    1 06 0F 00 -- 9054 10B5 9054 AC  --  PLX PCI <==> Local Bus bridge
+
+PLX Console Monitor, v2.60 [Jan 12 2016]
+Copyright (c) PLX Technology, Inc.
+```
+
+
+
+
+----
 
 说明书将包括这几部分：
 软件的安装，插件的跳线的设置，软件的使用，软件参数的意义。

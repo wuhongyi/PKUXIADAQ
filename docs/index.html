@@ -177,11 +177,77 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 日 11月  6 11:57:33 2016 (+0800)
+;; Last-Updated: 五 10月 20 14:56:42 2017 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 53
+;;     Update #: 56
 ;; URL: http://wuhongyi.cn -->
-<p><strong>&#x672C;&#x8BF4;&#x660E;&#x4E66;&#x4E0D;&#x9002;&#x7528;&#x4E8E; Rev-A modules</strong></p>
+<p><strong>&#x672C;&#x8BF4;&#x660E;&#x4E66;&#x4EC5;&#x9002;&#x7528;&#x4E8E; XIA LLC Pixie16 RevF</strong></p>
+<p>&#x73AF;&#x5883;&#x8BBE;&#x7F6E;</p>
+<pre><code class="lang-bash"><span class="hljs-built_in">export</span> PLX_SDK_DIR=<span class="hljs-variable">$HOME</span>/XIADAQ/PlxSdk
+</code></pre>
+<p>Install the driver</p>
+<p>The PLX software should work on all Linux platform, primarily Fedora. Make sure your system is Little Endian.</p>
+<pre><code>[lijing@localhost Samples]$ lscpu 
+Architecture:          x86_64
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                8
+....
+</code></pre><p>The environment variable PLX_SDK_DIR should be set to the root location of the PlxSdk folder.</p>
+<pre><code class="lang-bash"> <span class="hljs-built_in">export</span> PLX_SDK_DIR=<span class="hljs-variable">$HOME</span>/PlxSdk
+</code></pre>
+<p>Then compile the source code</p>
+<pre><code class="lang-bash"><span class="hljs-built_in">cd</span> PlxSdk/PlxApi
+make
+<span class="hljs-built_in">cd</span> PlxSdk/Samples/ApiTest
+make // verify the API works
+</code></pre>
+<p>Our PCI card named Plx9054, so go to the folder Driver</p>
+<pre><code class="lang-bash"><span class="hljs-built_in">cd</span> PlxSdk/Driver 
+./builddriver 9054
+</code></pre>
+<p>Load the driver</p>
+<pre><code>cd PlxSdk/Bin
+sh Plx_load 9054 // need super user permission 
+sh Plx_load 9054 d // debug mode, show more information
+ls -l /dev/plx 
+total 0
+crwxrwxrwx. 1 root root 246, 255 Jan 12 12:02 Plx9054
+crwxrwxrwx. 1 root root 246,   0 Jan 12 12:02 Plx9054-0
+crwxrwxrwx. 1 root root 246,   1 Jan 12 12:02 Plx9054-1
+crwxrwxrwx. 1 root root 246,  10 Jan 12 12:02 Plx9054-10
+crwxrwxrwx. 1 root root 246,  11 Jan 12 12:02 Plx9054-11
+crwxrwxrwx. 1 root root 246,  12 Jan 12 12:02 Plx9054-12
+crwxrwxrwx. 1 root root 246,  13 Jan 12 12:02 Plx9054-13
+crwxrwxrwx. 1 root root 246,  14 Jan 12 12:02 Plx9054-14
+crwxrwxrwx. 1 root root 246,  15 Jan 12 12:02 Plx9054-15
+crwxrwxrwx. 1 root root 246,  16 Jan 12 12:02 Plx9054-16
+crwxrwxrwx. 1 root root 246,   2 Jan 12 12:02 Plx9054-2
+crwxrwxrwx. 1 root root 246,   3 Jan 12 12:02 Plx9054-3
+crwxrwxrwx. 1 root root 246,   4 Jan 12 12:02 Plx9054-4
+crwxrwxrwx. 1 root root 246,   5 Jan 12 12:02 Plx9054-5
+crwxrwxrwx. 1 root root 246,   6 Jan 12 12:02 Plx9054-6
+crwxrwxrwx. 1 root root 246,   7 Jan 12 12:02 Plx9054-7
+crwxrwxrwx. 1 root root 246,   8 Jan 12 12:02 Plx9054-8
+crwxrwxrwx. 1 root root 246,   9 Jan 12 12:02 Plx9054-9
+</code></pre><p>monitor the Device traffic</p>
+<pre><code class="lang-bash"><span class="hljs-built_in">cd</span> PlxSdk/Samples/PlxCm
+make
+<span class="hljs-built_in">cd</span> App
+./Plxcm
+
+    <span class="hljs-comment"># Bs Sl Fn Pt Dev  Ven  Chip Rv I2C  Description</span>
+   ---------------------------------------------------------------------------
+==&gt; 0 06 0E 00 -- 9054 10B5 9054 AC  --  PLX PCI &lt;==&gt; Local Bus bridge
+    1 06 0F 00 -- 9054 10B5 9054 AC  --  PLX PCI &lt;==&gt; Local Bus bridge
+
+PLX Console Monitor, v2.60 [Jan 12 2016]
+Copyright (c) PLX Technology, Inc.
+</code></pre>
+<hr>
+<p>&#x8BF4;&#x660E;&#x4E66;&#x5C06;&#x5305;&#x62EC;&#x8FD9;&#x51E0;&#x90E8;&#x5206;&#xFF1A;
+&#x8F6F;&#x4EF6;&#x7684;&#x5B89;&#x88C5;&#xFF0C;&#x63D2;&#x4EF6;&#x7684;&#x8DF3;&#x7EBF;&#x7684;&#x8BBE;&#x7F6E;&#xFF0C;&#x8F6F;&#x4EF6;&#x7684;&#x4F7F;&#x7528;&#xFF0C;&#x8F6F;&#x4EF6;&#x53C2;&#x6570;&#x7684;&#x610F;&#x4E49;&#x3002;</p>
+<p>&#x4E00;&#x7EA7;trigger&#xFF0C;&#x4E8C;&#x7EA7;trigger</p>
 <hr>
 <p>&#x7B2C;&#x4E00;&#x6B65;&#xFF1A;&#x4E0B;&#x5B98;&#x7F51;&#x4E0B;&#x8F7D;PLX_SDK</p>
 <p>&#x7B2C;&#x4E8C;&#x6B65;&#xFF1A;&#x89E3;&#x538B;&#xFF0C;&#x6253;&#x5F00;Documentation\PLX_Linux_Release_Notes.htm&#xFF0C;&#x67E5;&#x770B;&#x5177;&#x4F53;&#x7684;&#x5B89;&#x88C5;&#x6B65;&#x9AA4;&#x548C;&#x8981;&#x6C42;&#x3002;</p>
@@ -742,7 +808,7 @@ CSRA bit18 =1 select external group trigger from system FPGA
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"说明书","level":"1.1","depth":1,"next":{"title":"前面版","level":"1.2","depth":1,"path":"FrontPanel.md","ref":"FrontPanel.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2016-11-06T03:57:33.219Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2016-11-19T11:57:54.955Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"说明书","level":"1.1","depth":1,"next":{"title":"前面版","level":"1.2","depth":1,"path":"FrontPanel.md","ref":"FrontPanel.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2017-10-20T06:56:42.852Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-10-20T06:57:01.823Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

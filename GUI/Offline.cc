@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 四 10月 19 23:07:08 2017 (+0800)
+// Last-Updated: 五 10月 20 13:13:59 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 578
+//     Update #: 580
 // URL: http://wuhongyi.cn 
 
 
@@ -2312,7 +2312,16 @@ void Offline::Panel1Draw()
       // OfflineDrawButton->SetEnabled(0);
       return;
     }
-	      
+
+  if(chooseslowfilterbaseline->GetSelected() == 1)//如果没有baseline数据，则采用计算基线的方法
+    {
+      int tempheaderlength = ((OfflineEventInformation[EventHeaderLength*OfflineCurrentCount] & 0x1F000) >> 12);
+      if(!(headerrawenergysumsandbaseline->IsOn() && (tempheaderlength == 8 || tempheaderlength == 10 || tempheaderlength == 16 || tempheaderlength == 18)))
+	{
+	  chooseslowfilterbaseline->Select(0);
+	}
+    }
+  
   fClient->GetColorByName("blue", color);
   OfflineCurrentCountText->SetTextColor(color, false);
   char stacurr[128];
@@ -2333,8 +2342,20 @@ void Offline::Panel1Draw()
   int retval;
   retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+4],tracelength, RcdTrace, doublefastfilter, doublecfd );//trace length/trace location
   if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "Pixie16ComputeFastFiltersOffline", retval);
-  retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+4], tracelength, RcdTrace,doubleslowfilter );//trace length/trace location
-  if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
+
+  if(chooseslowfilterbaseline->GetSelected() == 0)
+    {
+      retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+4], tracelength, RcdTrace,doubleslowfilter );//trace length/trace location
+      if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
+    }
+  else
+    {
+      retval = HongyiWuPixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+4], tracelength, RcdTrace,doubleslowfilter ,OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+8],oldslowfilterparameter[0]->GetNumber(),oldslowfilterparameter[1]->GetNumber(),200);//trace length/trace location
+      if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
+
+    }
+  
+
   
   double ChanParData;
   retval = Pixie16ReadSglChanPar((char*)"TRIGGER_THRESHOLD", &ChanParData, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber());
