@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 五 10月 20 13:13:59 2017 (+0800)
+// Last-Updated: 日 11月 12 20:39:22 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 580
+//     Update #: 583
 // URL: http://wuhongyi.cn 
 
 
@@ -845,7 +845,8 @@ void Offline::SelectDrawOptionPanel2(Bool_t on)
 	  if(offlinedrawoption2[2]->IsOn())
 	    offlinemultigraph2[i]->Add(ffilterdata2[i]);
 	  canvas2->cd(1+i);
-	  offlinemultigraph2[i]->SetTitle(TString::Format("Event: %d",OfflineCurrentCount2[i]).Data());
+	  // offlinemultigraph2[i]->SetTitle(TString::Format("Event: %d",OfflineCurrentCount2[i]).Data());
+	  offlinemultigraph2[i]->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount2[i],(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+3] & 0xFFFF),ULong64_t(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+2] & 0xFFFF)+OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+1]).Data());
 	  offlinemultigraph2[i]->Draw("AL");
 	} //!= NULL
     } //0-15
@@ -2571,7 +2572,7 @@ void Offline::Panel2Draw()
 	  if(offlinedrawoption2[2]->IsOn())
 	    offlinemultigraph2[i]->Add(ffilterdata2[i]);
 	  canvas2->cd(1+i);
-	  offlinemultigraph2[i]->SetTitle(TString::Format("Event: %d",OfflineCurrentCount2[i]).Data());
+	  offlinemultigraph2[i]->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount2[i],(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+3] & 0xFFFF),ULong64_t(OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+2] & 0xFFFF)+OfflineEventInformation[EventHeaderLength*OfflineCurrentCount2[i]+1]).Data());
 	  // std::cout<<TString::Format("%d",OfflineCurrentCount2[i]).Data()<<std::endl;
 	  offlinemultigraph2[i]->Draw("AL");
 	}
