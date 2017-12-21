@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 6月  3 09:27:02 2017 (+0800)
-// Last-Updated: 五 10月 20 16:26:27 2017 (+0800)
+// Last-Updated: 一 11月 13 21:28:27 2017 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 25
+//     Update #: 27
 // URL: http://wuhongyi.cn 
 
 #include "UserDefine.hh"
@@ -35,6 +35,10 @@ sort::sort(TString rawfilepath,TString outfilepath,TString filename,int runnumbe
       exit(1);
     }
   t_in = (TTree*)file_in->Get("tree");
+
+  t_in->SetBranchAddress("outofr",&outofr_,&b_outofr);
+  t_in->SetBranchAddress("qs",&qs,&b_qs);
+  
   t_in->SetBranchAddress("evte",&evte,&b_evte);
   t_in->SetBranchAddress("ts",&ts,&b_ts);
   t_in->SetBranchAddress("ch",&ch,&b_ch);
@@ -53,11 +57,15 @@ sort::sort(TString rawfilepath,TString outfilepath,TString filename,int runnumbe
 
 #if BOARDNUMBER > 1
   t_out->Branch("adc",&adc,TString::Format("adc[%d][16]/s",BOARDNUMBER).Data());
+  t_out->Branch("outofr",&outofr,TString::Format("outofr[%d][16]/O",BOARDNUMBER).Data());
+  t_out->Branch("qdc",&qdc,TString::Format("qdc[%d][16][8]/i",BOARDNUMBER).Data());
   t_out->Branch("tdc",&tdc,TString::Format("tdc[%d][16]/l",BOARDNUMBER).Data());
   t_out->Branch("cfd",&cfd,TString::Format("cfd[%d][16]/s",BOARDNUMBER).Data());
   t_out->Branch("cfdft",&cfdft,TString::Format("cfdft[%d][16]/O",BOARDNUMBER).Data());
 #else
   t_out->Branch("adc",&adc,"adc[16]/s");
+  t_out->Branch("outofr",&outofr,"outofr[16]/O");
+  t_out->Branch("qdc",&qdc,"qdc[16][8]/i");
   t_out->Branch("tdc",&tdc,"tdc[16]/l");
   t_out->Branch("cfd",&cfd,"cfd[16]/s");
   t_out->Branch("cfdft",&cfdft,"cfdft[16]/O");
@@ -77,6 +85,8 @@ sort::~sort()
 void sort::clearopt()
 {
   memset(adc,0,sizeof(adc));
+  memset(outofr,0,sizeof(outofr));
+  memset(qdc,0,sizeof(qdc));
   memset(tdc,0,sizeof(tdc));
   memset(cfd,0,sizeof(cfd));
   memset(cfdft,0,sizeof(cfdft));
@@ -134,20 +144,30 @@ void sort::InitEvent()
   inittime = ts*10;
 
 #if BOARDNUMBER > 1
-  if(evte >= adc[sid-2][ch])
+  if(evte < 65000 && evte >= adc[sid-2][ch])
     {
       adc[sid-2][ch] = evte;
+      outofr[sid-2][ch] = outofr_;
       tdc[sid-2][ch] = ts;
       cfd[sid-2][ch] = cfd_;
       cfdft[sid-2][ch] = cfdft_;
+      for (int i = 0; i < 8; ++i)
+	{
+	  qdc[sid-2][ch][i] = qs[i];
+	}
     }
 #else
-  if(evte >= adc[ch])
+  if(evte < 65000 && evte >= adc[ch])
     {
       adc[ch] = evte;
+      outofr[ch] = outofr_;
       tdc[ch] = ts;
       cfd[ch] = cfd_;
       cfdft[ch] = cfdft_;
+      for (int i = 0; i < 8; ++i)
+	{
+	  qdc[ch][i] = qs[i];
+	}
     }
 #endif
 
@@ -156,20 +176,30 @@ void sort::InitEvent()
 void sort::ProcessEntry()
 {
 #if BOARDNUMBER > 1
-  if(evte >= adc[sid-2][ch])
+  if(evte < 65000 && evte >= adc[sid-2][ch])
     {
       adc[sid-2][ch] = evte;
+      outofr[sid-2][ch] = outofr_;
       tdc[sid-2][ch] = ts;
       cfd[sid-2][ch] = cfd_;
       cfdft[sid-2][ch] = cfdft_;
+      for (int i = 0; i < 8; ++i)
+	{
+	  qdc[sid-2][ch][i] = qs[i];
+	}
     }
 #else
-  if(evte >= adc[ch])
+  if(evte < 65000 && evte >= adc[ch])
     {
       adc[ch] = evte;
+      outofr[ch] = outofr_;
       tdc[ch] = ts;
       cfd[ch] = cfd_;
       cfdft[ch] = cfdft_;
+      for (int i = 0; i < 8; ++i)
+	{
+	  qdc[ch][i] = qs[i];
+	}
     }
 #endif
 
