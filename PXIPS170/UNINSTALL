@@ -1,0 +1,2767 @@
+#!/bin/bash
+# UNINSTALL
+# This UNINSTALL script is meant to uninstall pxiPlatformDistributionLinuxRpm 17.0.0f0 from
+# a Linux system.
+#
+#  (c) Copyright 2004-2017,
+#  National Instruments Corporation.
+#  All Rights reserved.
+#
+
+kProductVersion="17.0.0f0"
+kProductName="pxiPlatformDistributionLinuxRpm"
+kProductStringSentence="PXI Platform Services for Linux"
+kProductStringBanner="PXI Platform Services for Linux"
+uninstallPackageList="libniapxipm215 libniapxipm215 libnicntdrv1 libnicntdrv1-errors libnicntdrv1-nikalmod libnimximgr1 libnimximgr1-data libnimximgr1-errors libnipcibrd1 libnipcibrd1-bin libnipcibrd1-errors libnipxiepmu15 libnipxiepmu15 libnipxisvc2 libnipxisvc2 libnipxisvc2-32bit libniqpxi1 libniqpxi1 libniqpxi1-32bit libniqpxi-resources libnismbus2 libnismbus2-errors libnismbus2-nikalmod ni-apal-errors niapxipm2i nicurli nidimi nidimi nidimi-32bit nidimki nidimki ni-kal ni-mdbg ni-mdbg ni-mdbg-32bit ni-mdbg-errors ni-mdbg-nikalmod ni-mdbg-nikalmod nimdnsresponder ni-mxdf ni-mxdf ni-mxdf-32bit ni-mxdf-errors ni-mxdf-nikalmod ni-mxdf-nikalmod ni-mximanager ni-mximanager-libs ni-orb ni-orb ni-orb-32bit ni-orb-errors ni-orb-nikalmod ni-orb-nikalmod ni-pal ni-pal ni-pal-32bit ni-pal-errors nipalki ni-pal-nikalmod ni-pal-nikalmod ni-pxipf-errors nipxipfi nipxipfki ni-pxiplatformhwsupport ni-pxiplatformhwsupport-bin ni-pxiplatformhwsupport-data ni-pxiplatformhwsupport-errors ni-pxiplatformhwsupport-libs ni-pxiplatformhwsupport-nikalmod ni-pxiplatformservices ni-pxiplatformservices-bin ni-pxiplatformservices-data ni-pxiplatformservices-libs ni-pxiplatformsoftware-errors ni-pxirm ni-pxirm ni-pxirm-nikalmod ni-pxirm-nikalmod ni-pxirm-resources nirocoerri nisslcerts nissli nisvcloc nisyscfgi nisyscfgi nisyscfgi-32bit nitargetcfgi"
+
+# Check if a value exists in a list
+# returns  statusSuccess if value exists, statusFailure otherwise
+in_array()
+{
+   value=$1
+   shift
+   for elem in $*
+   do
+      if [ $value = $elem ]; then
+         return 0
+      fi
+   done
+   return 1
+}
+
+# Set the path
+PATH=/bin:/usr/bin:/usr/X11R6/bin:/sbin:/usr/sbin:/usr/local/bin
+export PATH
+
+# General constants
+kNo=0
+kYes=1
+kFalse=0
+kTrue=1
+statusSuccess=0
+statusFail=1
+
+# Additional constants
+kTarPackageName="$kProductName-$kProductVersion.tar.gz"
+kTmpInstallSrcPath="/tmp/$kProductName-$kProductVersion.install"
+kInstallationLog="/etc/natinst/$kProductName-$kProductVersion.plist"
+kInstallerBinDir="$kTmpInstallSrcPath/bin"
+
+# Error messages
+eNotFound="Not found in current path"
+eInvalidSel="Invalid selection."
+eInstallAborted="Installer is aborted."
+eInstallComplete="Installer is finished."
+
+# findutil gets the path to a utility
+# Input: $1: name of utility to find
+# Output: $FINDUTIL: path of found utility or empty string
+# Returns: 0=success, nonzero=failure
+FINDUTIL=""
+findutil()
+{
+   # Validate inputs
+   if [ -z $1 ]; then
+      return $statusFail
+   fi
+   # Use which to locate the executable
+   FINDUTIL=`which $1 --skip-alias 2> /dev/null`
+   # If not found, display an error
+   if [ -z "$FINDUTIL" ]; then
+      STRING="$1"
+      # Pad spaces to account for aesthetics
+      while [ ${#STRING} -lt 10 ]; do
+         STRING="$STRING "
+      done
+      echo "$STRING $eNotFound"
+      return $statusFail
+   fi
+   return $statusSuccess
+}
+
+# inputynq get a yes / no / quit response from the user
+# Input: $1: Prompt string associated with input
+#        $2: Default selection
+# Output: $INPUT: character entered and accepted
+# Returns: Nothing
+INPUT=""
+inputynq()
+{
+   inputynqLOOP=$kYes
+   while [ "$inputynqLOOP" -eq "$kYes" ]; do
+      echo -n "$1"
+      read INPUT
+      test -z "$INPUT" && INPUT="$2"
+      case "$INPUT" in
+      [YyNn])
+         inputynqLOOP=$kNo
+         ;;
+      [Qq])
+         exit $statusFail
+         ;;
+      *)
+         echo -n "$eInvalidSel  "
+         ;;
+      esac
+   done
+}
+
+# initNIDrivers attempt to start or stop all NI Drivers on the system.
+#   This is done by searching for all init scripts for the current run
+#   level that are just links in /etc/init.d to a natinst location.
+# Input: $1: init action, start or stop are the only valid options
+# Output: Nothing
+# Returns: statusSuccess or statusFail
+initNIDrivers ()
+{
+   initAction=$1
+   if [ "$initAction" = "start" ]; then
+      sortCommand="$SORT"
+   elif [ "$initAction" = "stop" ]; then
+      sortCommand="$SORT -r"
+   else
+      echo "initNIDrivers unknown action: $initAction"
+      return $statusFail
+   fi
+
+   currentRunLevel="`$RUNLEVEL | $AWK '{ print $2}'`"
+   if [ -d /etc/rc${currentRunLevel}.d ]; then
+      currentRunLevelDir=/etc/rc${currentRunLevel}.d
+   elif [ -d /etc/init.d/rc${currentRunLevel}.d ]; then
+      currentRunLevelDir=/etc/init.d/rc${currentRunLevel}.d
+   else
+      return $statusFail
+   fi
+
+   for strInitModule in `ls ${currentRunLevelDir}/S* | $sortCommand`; do
+      strInitModule=${strInitModule##*\/}
+      strInitModule=${strInitModule#S[0-9][0-9]}
+      if [ `ls -al /etc/init.d/$strInitModule 2> /dev/null | $GREP -wc natinst` -ne 0 ]; then
+         /etc/init.d/$strInitModule $initAction >/dev/null 2>&1
+         nReturnValue=$?
+         if [ $nReturnValue -ne 0 ]; then
+            return $nReturnValue
+         fi
+      fi
+   done
+
+   return $statusSuccess
+}
+
+reloadNIDrivers ()
+{
+   initNIDrivers stop
+   nReturnValue=$?
+   if [ $nReturnValue -ne 0 ]; then
+      return $nReturnValue
+   fi
+   initNIDrivers start
+   return $?
+}
+
+# requirementsInList checks that the passed variables exist in
+#    uninstallPackageList
+# inputs: $*: list of packages to check for
+# outputs: none
+# returns: $statusSuccess if all packages passed are in the list
+#          $statusFail if any package passed is not in the list
+requirementsInList()
+{
+   dependencyList=$*
+
+   for dependantPackage in $dependencyList
+   do
+      packageBasename=${dependantPackage%-*-*}
+      if ! in_array $packageBasename $uninstallPackageList ; then
+         return $statusFail
+      fi
+   done
+
+   return $statusSuccess
+}
+
+# filterPackagesFromUninstallPackageList takes the position parameters and removes
+#    them from the uninstallPackageList
+# inputs: $*: list of packages to remove from the uninstallPackageList
+# outputs: none
+# returns: $statusSuccess
+filterPackagesFromUninstallPackageList()
+{
+   local filterPackages=$@
+   # strip out all packages in the filterPackages list from the uninstallPackageList
+   # also ensures that the list is nicely formatted with no extraneous whitespace
+   tmpUninstallPackageList="${uninstallPackageList}"
+   uninstallPackageList=""
+   for package in ${tmpUninstallPackageList}; do
+      if ! in_array ${package} ${filterPackages}; then
+         if [[ -n ${uninstallPackageList} ]]; then
+            uninstallPackageList="${uninstallPackageList} ${package}" 
+         else
+            uninstallPackageList="${package}"
+         fi
+      fi
+   done
+
+   return $statusSuccess
+}
+
+# willBeUninstalled checks if the passed package will be uninstalled during this
+#    uninstallation.
+# Input: $1: package name to query
+#        $uninstallPackageList: list of packages that will be uninstalled
+# Output: none
+# Returns: 0=success, nonzero=failure
+willBeUninstalled()
+{
+   queryPackage=$1
+
+   for uninstallingPackage in $uninstallPackageList
+   do
+      uninstallingPackage=${uninstallingPackage##*\/}
+      if [ "$uninstallingPackage" = "$queryPackage" ]; then
+         return $statusSuccess
+      fi
+   done
+   return $statusFail
+}
+
+# cleanexit performs script cleanup and quits
+#           can only be used after RM has been defined
+# Input: $1: exit code
+# Output: None
+# Returns: Nothing
+cleanexit ()
+{
+   if [ -z $RM ]; then
+      exit $statusFail
+   fi
+   # Clean up temporary directories
+   rm -rf "$kTmpInstallSrcPath"
+
+   # Display an exit message based on exit code
+   if [ $1 -ne 0 ]; then
+      echo ""
+      echo "$eInstallAborted"
+   else
+      echo ""
+      echo "$eInstallComplete"
+   fi
+
+   exit $1
+}
+
+# cleanwoexit performs script cleanup w/o exiting
+# Input: None
+# Output: None
+# Returns: Nothing
+cleanwoexit ()
+{
+   if [ ! -z "$RM" ]; then
+      # Clean up temporary directories
+      rm -rf "$kTmpInstallSrcPath"
+   fi
+}
+
+parseArguments()
+{
+   promptUser=$kTrue
+   noPromptRpmUninstall=$kFalse
+
+   while [ "$1" != "" ]; do
+      case $1 in
+         --no-prompt)
+            promptUser=$kFalse
+            ;;
+         --accept-license)
+            licenseAcceptedByUser=true
+            ;;
+         --no-prompt-rpm)
+            noPromptRpmUninstall=$kTrue
+            ;;
+         *)
+            echo "Unrecognized Option: $1" > /dev/stderr
+            echoUsage
+            exit $statusFail
+            ;;
+      esac
+      shift
+   done
+}
+
+# Perform cleanup if a Ctrl+C or kill signal is received
+trap "cleanexit 1" SIGINT SIGTERM
+
+#
+# Display software information
+#
+echo ""
+echo "*****************************************************************************"
+echo "  $kProductStringBanner"
+echo "     version $kProductVersion for Linux"
+echo "*****************************************************************************"
+echo ""
+
+currentdir="`pwd`"
+
+#
+# Verify root user
+#
+if [ $EUID -ne 0 ]; then
+   echo "This script must be run as root."
+   echo "$eInstallAborted"
+   # Not a cleanexit call because cleanexit uses $RM, which has
+   # not been set yet
+   exit $statusFail
+fi
+
+originalArguments=$*
+parseArguments $*
+
+findutil "rpm"
+let "RETURN+=$?"
+RPM=$FINDUTIL
+if [ $RETURN -eq 0 ]; then
+   echo "rpm found"
+   rpmFound=$kTrue
+else
+   echo "rpm not found.  RPM will not be used"
+   rpmFound=$kFalse
+fi
+
+findutil "awk"
+let "RETURN+=$?"
+AWK=$FINDUTIL
+
+findutil "grep"
+let "RETURN+=$?"
+GREP=$FINDUTIL
+
+findutil "rm"
+let "RETURN+=$?"
+RM=$FINDUTIL
+
+findutil "rmdir"
+let "RETURN+=$?"
+RMDIR=$FINDUTIL
+
+findutil "sed"
+let "RETURN+=$?"
+SED=$FINDUTIL
+
+findutil "tar"
+let "RETURN+=$?"
+TAR=$FINDUTIL
+
+findutil "runlevel"
+let "RETURN+=$?"
+RUNLEVEL=$FINDUTIL
+
+findutil "sort"
+let "RETURN+=$?"
+SORT=$FINDUTIL
+
+# Quit if there was an error
+if [ "$RETURN" -ne 0 ]; then
+   cleanexit $RETURN
+fi
+
+CDPATH="`dirname $0`"
+case "$CDPATH" in
+   /*) ;;
+   .) CDPATH="`pwd`" ;;
+   *) CDPATH="`pwd`/$CDPATH" ;;
+esac
+
+#
+# Verify installation tools
+#
+
+findutil "dpkg"
+RETURN=$?
+DPKG=$FINDUTIL
+if [ $RETURN -eq 0 ]; then
+   echo "dpkg found"
+   findutil "dpkg-query"
+   RETURN=$?
+   DPKG_QUERY=$FINDUTIL
+   if [ "$rpmFound" -eq "$kTrue" ]; then
+      if [ "$noPromptRpmUninstall" -eq "$kTrue" ]; then
+         echo "Dpkg is available but installing with rpm anyway."
+         bUseDpkg=$kFalse
+      else
+         if [ "$promptUser" -eq "$kTrue" ]; then
+            inputynq "Both rpm and dpkg are available on this system.  Continue using dpkg? [Yn] " 'Y'
+            case "$INPUT" in
+            [Yy])
+               bUseDpkg=$kTrue
+               ;;
+            [Nn])
+               echo "Will try using rpm as package manager for this uninstall..."
+               bUseDpkg=$kFalse
+               ;;
+            esac
+            echo ""
+         else
+            bUseDpkg=$kTrue
+         fi
+      fi
+   else
+      bUseDpkg=$kTrue
+   fi
+else
+   echo "dpkg not available, uninstall will not be using dpkg."
+   bUseDpkg=$kFalse
+fi
+
+echo "$kProductStringSentence version $kProductVersion"
+if [ "$bUseDpkg" -eq $kTrue ]; then
+   echo "is about to be uninstalled using dpkg at /usr/local/natinst"
+else
+   echo "is about to be uninstalled using rpm at /usr/local/natinst"
+fi
+
+echo ""
+if [ "$promptUser" -eq $kTrue ]; then
+   inputynq "Continue? [Yn] " 'Y'
+   case "$INPUT" in
+   [Yy])
+      ;;
+   [Nn])
+      exit $statusFail
+      ;;
+   esac
+   echo ""
+fi
+
+# Clean up any stale contents
+if [ -d "$kTmpInstallSrcPath" ] ; then
+  rm -rf "$kTmpInstallSrcPath"
+fi
+mkdir -p "$kTmpInstallSrcPath"
+
+bRebootRequired=$kFalse
+
+initNIDrivers stop
+if [ $? -ne 0 ] ; then
+   bRebootRequired=$kTrue
+fi
+
+uninstallStatus=$statusSuccess
+
+echo "Uninstalling $kProductStringSentence version $kProductVersion..."
+# Define component locations
+if [ -e /etc/natinst/share/share.dir ]; then
+   shareDir=`cat /etc/natinst/share/share.dir`
+fi
+if [ -e /etc/natinst/nicntdrk/nicntdrk.dir ]; then
+   nicntdrkDir=`cat /etc/natinst/nicntdrk/nicntdrk.dir`
+fi
+if [ -e /etc/natinst/share/share.dir ]; then
+   shareDir=`cat /etc/natinst/share/share.dir`
+fi
+if [ -e /etc/natinst/share/share.dir ]; then
+   shareDir=`cat /etc/natinst/share/share.dir`
+fi
+if [ -e /etc/natinst/share/share.dir ]; then
+   shareDir=`cat /etc/natinst/share/share.dir`
+fi
+if [ -e /etc/natinst/nismbus/nismbus.dir ]; then
+   nismbusDir=`cat /etc/natinst/nismbus/nismbus.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/nicurl/nicurl.dir ]; then
+   nicurlDir=`cat /etc/natinst/nicurl/nicurl.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/nimdnsresponder/nimdnsresponder.dir ]; then
+   nimdnsresponderDir=`cat /etc/natinst/nimdnsresponder/nimdnsresponder.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/share/share.dir ]; then
+   shareDir=`cat /etc/natinst/share/share.dir`
+fi
+if [ -e /etc/natinst/share/share.dir ]; then
+   shareDir=`cat /etc/natinst/share/share.dir`
+fi
+if [ -e /etc/natinst/nipxihw/nipxihw.dir ]; then
+   nipxihwDir=`cat /etc/natinst/nipxihw/nipxihw.dir`
+fi
+if [ -e /etc/natinst/share/share.dir ]; then
+   shareDir=`cat /etc/natinst/share/share.dir`
+fi
+if [ -e /etc/natinst/nipxirm/nipxirm.dir ]; then
+   nipxirmDir=`cat /etc/natinst/nipxirm/nipxirm.dir`
+fi
+if [ -e /etc/natinst/nipxirm/nipxirm.dir ]; then
+   nipxirmDir=`cat /etc/natinst/nipxirm/nipxirm.dir`
+fi
+if [ -e /etc/natinst/.nicore/nicore.dir ]; then
+   nicoreDir=`cat /etc/natinst/.nicore/nicore.dir`
+fi
+if [ -e /etc/natinst/nissl/nissl.dir ]; then
+   nisslDir=`cat /etc/natinst/nissl/nissl.dir`
+fi
+if [ -e /etc/natinst/nisvcloc/nisvcloc.dir ]; then
+   nisvclocDir=`cat /etc/natinst/nisvcloc/nisvcloc.dir`
+fi
+if [ -e /etc/natinst/nisyscfg/nisyscfg.dir ]; then
+   nisyscfgDir=`cat /etc/natinst/nisyscfg/nisyscfg.dir`
+fi
+if [ -e /etc/natinst/nisyscfg/nisyscfg.dir ]; then
+   nisyscfgDir=`cat /etc/natinst/nisyscfg/nisyscfg.dir`
+fi
+if [ -e /etc/natinst/nisyscfg/nisyscfg.dir ]; then
+   nisyscfgDir=`cat /etc/natinst/nisyscfg/nisyscfg.dir`
+fi
+if [ -e /etc/natinst/nitargetcfg/nitargetcfg.dir ]; then
+   nitargetcfgDir=`cat /etc/natinst/nitargetcfg/nitargetcfg.dir`
+fi
+if [ -e /etc/natinst/nipal/nipal.dir ]; then
+   nipalDir=`cat /etc/natinst/nipal/nipal.dir`
+fi
+if [ -e /etc/natinst/nipal/nipal.dir ]; then
+   nipalDir=`cat /etc/natinst/nipal/nipal.dir`
+fi
+if [ -e /etc/natinst/nipal/nipal.dir ]; then
+   nipalDir=`cat /etc/natinst/nipal/nipal.dir`
+fi
+if [ -e /etc/natinst/nipal/nipal.dir ]; then
+   nipalDir=`cat /etc/natinst/nipal/nipal.dir`
+fi
+if [ -e /etc/natinst/nipal/nipal.dir ]; then
+   nipalDir=`cat /etc/natinst/nipal/nipal.dir`
+fi
+if [ -e /etc/natinst/nipal/nipal.dir ]; then
+   nipalDir=`cat /etc/natinst/nipal/nipal.dir`
+fi
+if [ -e /etc/natinst/nikal/nikal.dir ]; then
+   nikalDir=`cat /etc/natinst/nikal/nikal.dir`
+fi
+
+# Pre-process driver
+
+# Source each of the installerUtility.sh scripts to get their functions and
+# defines
+for instutil in "$shareDir/bin/"libnicntdrv1_errorsInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+instutil="/usr/local/natinst/nicntdrk/bin/libnicntdrv1_nikalmodInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+for instutil in "$shareDir/bin/"libnimximgr1_errorsInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$shareDir/bin/"libnipcibrd1_errorsInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$shareDir/bin/"libnismbus2_errorsInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+instutil="/usr/local/natinst/nismbus/bin/libnismbus2_nikalmodInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+for instutil in "$nicoreDir/bin/"ni_apal_errorsInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$nicurlDir/bin/"nicurliInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+instutil="/usr/local/natinst/.nicore/bin/nidimiInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+instutil="/usr/local/natinst/.nicore/bin/nidimiInstallerUtility64.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+instutil="/usr/local/natinst/.nicore/bin/nidimiInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+instutil="/usr/local/natinst/.nicore/bin/nidimkiInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+instutil="/usr/local/natinst/.nicore/bin/nidimkiInstallerUtility64.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+for instutil in "$nicoreDir/bin/"ni_mdbgInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$nicoreDir/bin/"ni_mdbgInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$nicoreDir/bin/"ni_mdbgInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$nicoreDir/bin/"ni_mdbg_errorsInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+instutil="/usr/local/natinst/.nicore/bin/ni_mdbg_nikalmodInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+instutil="/usr/local/natinst/.nicore/bin/ni_mdbg_nikalmodInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+for instutil in "$nimdnsresponderDir/bin/"nimdnsresponderInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$nicoreDir/bin/"ni_mxdfInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$nicoreDir/bin/"ni_mxdfInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$nicoreDir/bin/"ni_mxdfInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$nicoreDir/bin/"ni_mxdf_errorsInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+instutil="/usr/local/natinst/.nicore/bin/ni_mxdf_nikalmodInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+instutil="/usr/local/natinst/.nicore/bin/ni_mxdf_nikalmodInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+for instutil in "$nicoreDir/bin/"ni_orbInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$nicoreDir/bin/"ni_orbInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$nicoreDir/bin/"ni_orbInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$nicoreDir/bin/"ni_orb_errorsInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+instutil="/usr/local/natinst/.nicore/bin/niorbkiInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+instutil="/usr/local/natinst/.nicore/bin/niorbkiInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+for instutil in "$shareDir/bin/"ni_pxipf_errorsInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$shareDir/bin/"ni_pxiplatformhwsupport_errorsInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+instutil="/usr/local/natinst/nipxihw/bin/ni_pxiplatformhwsupport_nikalmodInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+for instutil in "$shareDir/bin/"ni_pxiplatformsoftware_errorsInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+instutil="/usr/local/natinst/nipxirm/bin/ni_pxirm_nikalmodInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+instutil="/usr/local/natinst/nipxirm/bin/ni_pxirm_nikalmodInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+instutil="/usr/local/natinst/.nicore/bin/nirocoerriInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+for instutil in "$nisslDir/bin/"nissliInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$nisvclocDir/bin/"nisvclocInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+instutil="/usr/local/natinst/nisyscfg/bin/nisyscfgiInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+instutil="/usr/local/natinst/nisyscfg/bin/nisyscfgiInstallerUtility64.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+instutil="/usr/local/natinst/nisyscfg/bin/nisyscfgiInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+instutil="/usr/local/natinst/nitargetcfg/bin/nitargetcfgiInstallerUtility64.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+instutil="/usr/local/natinst/nipal/bin/nipalkiInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+instutil="/usr/local/natinst/nipal/bin/nipalkiInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+for instutil in "$nipalDir/bin/"ni_pal_errorsInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$nipalDir/bin/"ni_palInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$nipalDir/bin/"ni_palInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+for instutil in "$nipalDir/bin/"ni_palInstallerUtility{64,}.sh; do
+   if [ -r "${instutil}" ]; then
+      source "${instutil}"
+   fi
+done
+instutil="/usr/local/natinst/nikal/bin/ni-kalInstallerUtility.sh"
+if [ -r "${instutil}" ]; then
+   source "${instutil}"
+fi
+
+filterPackages=
+for package in ${uninstallPackageList}; do
+   if ! ${RPM} -q ${package} 2>&1 > /dev/null; then
+      filterPackages="${filterPackages} ${package}"
+   fi
+done
+
+filterPackagesFromUninstallPackageList "${filterPackages}"
+filterPackages=
+while : ; do
+   # simulate an uninstall request, and parse rpm's output
+   simulation=$(${RPM} -e --test --allmatches ${uninstallPackageList} 2>&1)
+   result=$?
+   inusePackages=$(grep 'is needed by (installed)' <<< "${simulation}" | awk '{print $1}' | sort -u)
+   if [[ ${result} -eq 0 ]] || [[ -z ${inusePackages} ]]; then
+      break
+   fi
+
+   # Now we need to look up other names this package may be known by,
+   # and add those names to the filterPackages list
+   for package in ${inusePackages}; do
+      packagecanonical=$(${RPM} -q ${package} --whatprovides)
+      for provides in $(${RPM} -q ${packagecanonical} --queryformat "[%{PROVIDENAME} ]"); do
+         filterPackages="${filterPackages} ${provides}"
+      done
+   done
+   filterPackagesFromUninstallPackageList "${filterPackages}"
+done
+
+if [[ -n ${filterPackages} ]]; then
+   echo "Some installed packages are in use and could not be removed."
+fi
+# Call each of the preUninstall functions
+if [ -n "$uninstallPackageList" ]; then
+   echo -n "Pre Uninstallation ."
+if willBeUninstalled libniapxipm215; then
+      if declare -f libniapxipm215PreUninstall > /dev/null; then
+         if ! libniapxipm215PreUninstall > /tmp/libniapxipm215PreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libniapxipm215 pre uninstallation failed! /tmp/libniapxipm215PreUninstall.log follows:"
+            cat libniapxipm215PreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libniapxipm215PreUninstall64 > /dev/null; then
+         if ! libniapxipm215PreUninstall64 > /tmp/libniapxipm215PreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libniapxipm215 pre uninstallation failed! /tmp/libniapxipm215PreUninstall64.log follows:"
+            cat libniapxipm215PreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libniapxipm215; then
+      if declare -f libniapxipm215PreUninstall > /dev/null; then
+         if ! libniapxipm215PreUninstall > /tmp/libniapxipm215PreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libniapxipm215 pre uninstallation failed! /tmp/libniapxipm215PreUninstall.log follows:"
+            cat libniapxipm215PreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libniapxipm215PreUninstall64 > /dev/null; then
+         if ! libniapxipm215PreUninstall64 > /tmp/libniapxipm215PreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libniapxipm215 pre uninstallation failed! /tmp/libniapxipm215PreUninstall64.log follows:"
+            cat libniapxipm215PreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libnicntdrv1; then
+      if declare -f libnicntdrv1PreUninstall > /dev/null; then
+         if ! libnicntdrv1PreUninstall > /tmp/libnicntdrv1PreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libnicntdrv1 pre uninstallation failed! /tmp/libnicntdrv1PreUninstall.log follows:"
+            cat libnicntdrv1PreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libnicntdrv1PreUninstall64 > /dev/null; then
+         if ! libnicntdrv1PreUninstall64 > /tmp/libnicntdrv1PreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libnicntdrv1 pre uninstallation failed! /tmp/libnicntdrv1PreUninstall64.log follows:"
+            cat libnicntdrv1PreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libnicntdrv1-errors; then
+      if declare -f libnicntdrv1_errorsPreUninstall > /dev/null; then
+         if ! libnicntdrv1_errorsPreUninstall > /tmp/libnicntdrv1_errorsPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libnicntdrv1-errors pre uninstallation failed! /tmp/libnicntdrv1_errorsPreUninstall.log follows:"
+            cat libnicntdrv1_errorsPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libnicntdrv1_errorsPreUninstall64 > /dev/null; then
+         if ! libnicntdrv1_errorsPreUninstall64 > /tmp/libnicntdrv1_errorsPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libnicntdrv1-errors pre uninstallation failed! /tmp/libnicntdrv1_errorsPreUninstall64.log follows:"
+            cat libnicntdrv1_errorsPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libnicntdrv1-nikalmod; then
+      if declare -f libnicntdrv1_nikalmodPreUninstall > /dev/null; then
+         if ! libnicntdrv1_nikalmodPreUninstall > /tmp/libnicntdrv1_nikalmodPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libnicntdrv1-nikalmod pre uninstallation failed! /tmp/libnicntdrv1_nikalmodPreUninstall.log follows:"
+            cat libnicntdrv1_nikalmodPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libnicntdrv1_nikalmodPreUninstall64 > /dev/null; then
+         if ! libnicntdrv1_nikalmodPreUninstall64 > /tmp/libnicntdrv1_nikalmodPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libnicntdrv1-nikalmod pre uninstallation failed! /tmp/libnicntdrv1_nikalmodPreUninstall64.log follows:"
+            cat libnicntdrv1_nikalmodPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libnimximgr1; then
+      if declare -f libnimximgr1PreUninstall > /dev/null; then
+         if ! libnimximgr1PreUninstall > /tmp/libnimximgr1PreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libnimximgr1 pre uninstallation failed! /tmp/libnimximgr1PreUninstall.log follows:"
+            cat libnimximgr1PreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libnimximgr1PreUninstall64 > /dev/null; then
+         if ! libnimximgr1PreUninstall64 > /tmp/libnimximgr1PreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libnimximgr1 pre uninstallation failed! /tmp/libnimximgr1PreUninstall64.log follows:"
+            cat libnimximgr1PreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libnimximgr1-data; then
+      if declare -f libnimximgr1_dataPreUninstall > /dev/null; then
+         if ! libnimximgr1_dataPreUninstall > /tmp/libnimximgr1_dataPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libnimximgr1-data pre uninstallation failed! /tmp/libnimximgr1_dataPreUninstall.log follows:"
+            cat libnimximgr1_dataPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libnimximgr1_dataPreUninstall64 > /dev/null; then
+         if ! libnimximgr1_dataPreUninstall64 > /tmp/libnimximgr1_dataPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libnimximgr1-data pre uninstallation failed! /tmp/libnimximgr1_dataPreUninstall64.log follows:"
+            cat libnimximgr1_dataPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libnimximgr1-errors; then
+      if declare -f libnimximgr1_errorsPreUninstall > /dev/null; then
+         if ! libnimximgr1_errorsPreUninstall > /tmp/libnimximgr1_errorsPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libnimximgr1-errors pre uninstallation failed! /tmp/libnimximgr1_errorsPreUninstall.log follows:"
+            cat libnimximgr1_errorsPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libnimximgr1_errorsPreUninstall64 > /dev/null; then
+         if ! libnimximgr1_errorsPreUninstall64 > /tmp/libnimximgr1_errorsPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libnimximgr1-errors pre uninstallation failed! /tmp/libnimximgr1_errorsPreUninstall64.log follows:"
+            cat libnimximgr1_errorsPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libnipcibrd1; then
+      if declare -f libnipcibrd1PreUninstall > /dev/null; then
+         if ! libnipcibrd1PreUninstall > /tmp/libnipcibrd1PreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libnipcibrd1 pre uninstallation failed! /tmp/libnipcibrd1PreUninstall.log follows:"
+            cat libnipcibrd1PreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libnipcibrd1PreUninstall64 > /dev/null; then
+         if ! libnipcibrd1PreUninstall64 > /tmp/libnipcibrd1PreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libnipcibrd1 pre uninstallation failed! /tmp/libnipcibrd1PreUninstall64.log follows:"
+            cat libnipcibrd1PreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libnipcibrd1-bin; then
+      if declare -f libnipcibrd1_binPreUninstall > /dev/null; then
+         if ! libnipcibrd1_binPreUninstall > /tmp/libnipcibrd1_binPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libnipcibrd1-bin pre uninstallation failed! /tmp/libnipcibrd1_binPreUninstall.log follows:"
+            cat libnipcibrd1_binPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libnipcibrd1_binPreUninstall64 > /dev/null; then
+         if ! libnipcibrd1_binPreUninstall64 > /tmp/libnipcibrd1_binPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libnipcibrd1-bin pre uninstallation failed! /tmp/libnipcibrd1_binPreUninstall64.log follows:"
+            cat libnipcibrd1_binPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libnipcibrd1-errors; then
+      if declare -f libnipcibrd1_errorsPreUninstall > /dev/null; then
+         if ! libnipcibrd1_errorsPreUninstall > /tmp/libnipcibrd1_errorsPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libnipcibrd1-errors pre uninstallation failed! /tmp/libnipcibrd1_errorsPreUninstall.log follows:"
+            cat libnipcibrd1_errorsPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libnipcibrd1_errorsPreUninstall64 > /dev/null; then
+         if ! libnipcibrd1_errorsPreUninstall64 > /tmp/libnipcibrd1_errorsPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libnipcibrd1-errors pre uninstallation failed! /tmp/libnipcibrd1_errorsPreUninstall64.log follows:"
+            cat libnipcibrd1_errorsPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libnipxiepmu15; then
+      if declare -f libnipxiepmu15PreUninstall > /dev/null; then
+         if ! libnipxiepmu15PreUninstall > /tmp/libnipxiepmu15PreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libnipxiepmu15 pre uninstallation failed! /tmp/libnipxiepmu15PreUninstall.log follows:"
+            cat libnipxiepmu15PreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libnipxiepmu15PreUninstall64 > /dev/null; then
+         if ! libnipxiepmu15PreUninstall64 > /tmp/libnipxiepmu15PreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libnipxiepmu15 pre uninstallation failed! /tmp/libnipxiepmu15PreUninstall64.log follows:"
+            cat libnipxiepmu15PreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libnipxiepmu15; then
+      if declare -f libnipxiepmu15PreUninstall > /dev/null; then
+         if ! libnipxiepmu15PreUninstall > /tmp/libnipxiepmu15PreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libnipxiepmu15 pre uninstallation failed! /tmp/libnipxiepmu15PreUninstall.log follows:"
+            cat libnipxiepmu15PreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libnipxiepmu15PreUninstall64 > /dev/null; then
+         if ! libnipxiepmu15PreUninstall64 > /tmp/libnipxiepmu15PreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libnipxiepmu15 pre uninstallation failed! /tmp/libnipxiepmu15PreUninstall64.log follows:"
+            cat libnipxiepmu15PreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libnipxisvc2; then
+      if declare -f libnipxisvc2PreUninstall > /dev/null; then
+         if ! libnipxisvc2PreUninstall > /tmp/libnipxisvc2PreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libnipxisvc2 pre uninstallation failed! /tmp/libnipxisvc2PreUninstall.log follows:"
+            cat libnipxisvc2PreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libnipxisvc2PreUninstall64 > /dev/null; then
+         if ! libnipxisvc2PreUninstall64 > /tmp/libnipxisvc2PreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libnipxisvc2 pre uninstallation failed! /tmp/libnipxisvc2PreUninstall64.log follows:"
+            cat libnipxisvc2PreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libnipxisvc2; then
+      if declare -f libnipxisvc2PreUninstall > /dev/null; then
+         if ! libnipxisvc2PreUninstall > /tmp/libnipxisvc2PreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libnipxisvc2 pre uninstallation failed! /tmp/libnipxisvc2PreUninstall.log follows:"
+            cat libnipxisvc2PreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libnipxisvc2PreUninstall64 > /dev/null; then
+         if ! libnipxisvc2PreUninstall64 > /tmp/libnipxisvc2PreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libnipxisvc2 pre uninstallation failed! /tmp/libnipxisvc2PreUninstall64.log follows:"
+            cat libnipxisvc2PreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libnipxisvc2; then
+      if declare -f libnipxisvc2PreUninstall > /dev/null; then
+         if ! libnipxisvc2PreUninstall > /tmp/libnipxisvc2PreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libnipxisvc2 pre uninstallation failed! /tmp/libnipxisvc2PreUninstall.log follows:"
+            cat libnipxisvc2PreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libnipxisvc2PreUninstall64 > /dev/null; then
+         if ! libnipxisvc2PreUninstall64 > /tmp/libnipxisvc2PreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libnipxisvc2 pre uninstallation failed! /tmp/libnipxisvc2PreUninstall64.log follows:"
+            cat libnipxisvc2PreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libniqpxi1; then
+      if declare -f libniqpxi1PreUninstall > /dev/null; then
+         if ! libniqpxi1PreUninstall > /tmp/libniqpxi1PreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libniqpxi1 pre uninstallation failed! /tmp/libniqpxi1PreUninstall.log follows:"
+            cat libniqpxi1PreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libniqpxi1PreUninstall64 > /dev/null; then
+         if ! libniqpxi1PreUninstall64 > /tmp/libniqpxi1PreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libniqpxi1 pre uninstallation failed! /tmp/libniqpxi1PreUninstall64.log follows:"
+            cat libniqpxi1PreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libniqpxi1; then
+      if declare -f libniqpxi1PreUninstall > /dev/null; then
+         if ! libniqpxi1PreUninstall > /tmp/libniqpxi1PreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libniqpxi1 pre uninstallation failed! /tmp/libniqpxi1PreUninstall.log follows:"
+            cat libniqpxi1PreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libniqpxi1PreUninstall64 > /dev/null; then
+         if ! libniqpxi1PreUninstall64 > /tmp/libniqpxi1PreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libniqpxi1 pre uninstallation failed! /tmp/libniqpxi1PreUninstall64.log follows:"
+            cat libniqpxi1PreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libniqpxi1; then
+      if declare -f libniqpxi1PreUninstall > /dev/null; then
+         if ! libniqpxi1PreUninstall > /tmp/libniqpxi1PreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libniqpxi1 pre uninstallation failed! /tmp/libniqpxi1PreUninstall.log follows:"
+            cat libniqpxi1PreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libniqpxi1PreUninstall64 > /dev/null; then
+         if ! libniqpxi1PreUninstall64 > /tmp/libniqpxi1PreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libniqpxi1 pre uninstallation failed! /tmp/libniqpxi1PreUninstall64.log follows:"
+            cat libniqpxi1PreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libniqpxi-resources; then
+      if declare -f libniqpxi_resourcesPreUninstall > /dev/null; then
+         if ! libniqpxi_resourcesPreUninstall > /tmp/libniqpxi_resourcesPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libniqpxi-resources pre uninstallation failed! /tmp/libniqpxi_resourcesPreUninstall.log follows:"
+            cat libniqpxi_resourcesPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libniqpxi_resourcesPreUninstall64 > /dev/null; then
+         if ! libniqpxi_resourcesPreUninstall64 > /tmp/libniqpxi_resourcesPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libniqpxi-resources pre uninstallation failed! /tmp/libniqpxi_resourcesPreUninstall64.log follows:"
+            cat libniqpxi_resourcesPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libnismbus2; then
+      if declare -f libnismbus2PreUninstall > /dev/null; then
+         if ! libnismbus2PreUninstall > /tmp/libnismbus2PreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libnismbus2 pre uninstallation failed! /tmp/libnismbus2PreUninstall.log follows:"
+            cat libnismbus2PreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libnismbus2PreUninstall64 > /dev/null; then
+         if ! libnismbus2PreUninstall64 > /tmp/libnismbus2PreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libnismbus2 pre uninstallation failed! /tmp/libnismbus2PreUninstall64.log follows:"
+            cat libnismbus2PreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libnismbus2-errors; then
+      if declare -f libnismbus2_errorsPreUninstall > /dev/null; then
+         if ! libnismbus2_errorsPreUninstall > /tmp/libnismbus2_errorsPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libnismbus2-errors pre uninstallation failed! /tmp/libnismbus2_errorsPreUninstall.log follows:"
+            cat libnismbus2_errorsPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libnismbus2_errorsPreUninstall64 > /dev/null; then
+         if ! libnismbus2_errorsPreUninstall64 > /tmp/libnismbus2_errorsPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libnismbus2-errors pre uninstallation failed! /tmp/libnismbus2_errorsPreUninstall64.log follows:"
+            cat libnismbus2_errorsPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled libnismbus2-nikalmod; then
+      if declare -f libnismbus2_nikalmodPreUninstall > /dev/null; then
+         if ! libnismbus2_nikalmodPreUninstall > /tmp/libnismbus2_nikalmodPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: libnismbus2-nikalmod pre uninstallation failed! /tmp/libnismbus2_nikalmodPreUninstall.log follows:"
+            cat libnismbus2_nikalmodPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f libnismbus2_nikalmodPreUninstall64 > /dev/null; then
+         if ! libnismbus2_nikalmodPreUninstall64 > /tmp/libnismbus2_nikalmodPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: libnismbus2-nikalmod pre uninstallation failed! /tmp/libnismbus2_nikalmodPreUninstall64.log follows:"
+            cat libnismbus2_nikalmodPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-apal-errors; then
+      if declare -f ni_apal_errorsPreUninstall > /dev/null; then
+         if ! ni_apal_errorsPreUninstall > /tmp/ni_apal_errorsPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-apal-errors pre uninstallation failed! /tmp/ni_apal_errorsPreUninstall.log follows:"
+            cat ni_apal_errorsPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_apal_errorsPreUninstall64 > /dev/null; then
+         if ! ni_apal_errorsPreUninstall64 > /tmp/ni_apal_errorsPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-apal-errors pre uninstallation failed! /tmp/ni_apal_errorsPreUninstall64.log follows:"
+            cat ni_apal_errorsPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled niapxipm2i; then
+      if declare -f niapxipm2iPreUninstall > /dev/null; then
+         if ! niapxipm2iPreUninstall > /tmp/niapxipm2iPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: niapxipm2i pre uninstallation failed! /tmp/niapxipm2iPreUninstall.log follows:"
+            cat niapxipm2iPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f niapxipm2iPreUninstall64 > /dev/null; then
+         if ! niapxipm2iPreUninstall64 > /tmp/niapxipm2iPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: niapxipm2i pre uninstallation failed! /tmp/niapxipm2iPreUninstall64.log follows:"
+            cat niapxipm2iPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nicurli; then
+      if declare -f nicurliPreUninstall > /dev/null; then
+         if ! nicurliPreUninstall > /tmp/nicurliPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nicurli pre uninstallation failed! /tmp/nicurliPreUninstall.log follows:"
+            cat nicurliPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nicurliPreUninstall64 > /dev/null; then
+         if ! nicurliPreUninstall64 > /tmp/nicurliPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nicurli pre uninstallation failed! /tmp/nicurliPreUninstall64.log follows:"
+            cat nicurliPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nidimi; then
+      if declare -f nidimiPreUninstall > /dev/null; then
+         if ! nidimiPreUninstall > /tmp/nidimiPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nidimi pre uninstallation failed! /tmp/nidimiPreUninstall.log follows:"
+            cat nidimiPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nidimiPreUninstall64 > /dev/null; then
+         if ! nidimiPreUninstall64 > /tmp/nidimiPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nidimi pre uninstallation failed! /tmp/nidimiPreUninstall64.log follows:"
+            cat nidimiPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nidimi; then
+      if declare -f nidimiPreUninstall > /dev/null; then
+         if ! nidimiPreUninstall > /tmp/nidimiPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nidimi pre uninstallation failed! /tmp/nidimiPreUninstall.log follows:"
+            cat nidimiPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nidimiPreUninstall64 > /dev/null; then
+         if ! nidimiPreUninstall64 > /tmp/nidimiPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nidimi pre uninstallation failed! /tmp/nidimiPreUninstall64.log follows:"
+            cat nidimiPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nidimi; then
+      if declare -f nidimiPreUninstall > /dev/null; then
+         if ! nidimiPreUninstall > /tmp/nidimiPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nidimi pre uninstallation failed! /tmp/nidimiPreUninstall.log follows:"
+            cat nidimiPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nidimiPreUninstall64 > /dev/null; then
+         if ! nidimiPreUninstall64 > /tmp/nidimiPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nidimi pre uninstallation failed! /tmp/nidimiPreUninstall64.log follows:"
+            cat nidimiPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nidimki; then
+      if declare -f nidimkiPreUninstall > /dev/null; then
+         if ! nidimkiPreUninstall > /tmp/nidimkiPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nidimki pre uninstallation failed! /tmp/nidimkiPreUninstall.log follows:"
+            cat nidimkiPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nidimkiPreUninstall64 > /dev/null; then
+         if ! nidimkiPreUninstall64 > /tmp/nidimkiPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nidimki pre uninstallation failed! /tmp/nidimkiPreUninstall64.log follows:"
+            cat nidimkiPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nidimki; then
+      if declare -f nidimkiPreUninstall > /dev/null; then
+         if ! nidimkiPreUninstall > /tmp/nidimkiPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nidimki pre uninstallation failed! /tmp/nidimkiPreUninstall.log follows:"
+            cat nidimkiPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nidimkiPreUninstall64 > /dev/null; then
+         if ! nidimkiPreUninstall64 > /tmp/nidimkiPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nidimki pre uninstallation failed! /tmp/nidimkiPreUninstall64.log follows:"
+            cat nidimkiPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-mdbg; then
+      if declare -f ni_mdbgPreUninstall > /dev/null; then
+         if ! ni_mdbgPreUninstall > /tmp/ni_mdbgPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mdbg pre uninstallation failed! /tmp/ni_mdbgPreUninstall.log follows:"
+            cat ni_mdbgPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_mdbgPreUninstall64 > /dev/null; then
+         if ! ni_mdbgPreUninstall64 > /tmp/ni_mdbgPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mdbg pre uninstallation failed! /tmp/ni_mdbgPreUninstall64.log follows:"
+            cat ni_mdbgPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-mdbg; then
+      if declare -f ni_mdbgPreUninstall > /dev/null; then
+         if ! ni_mdbgPreUninstall > /tmp/ni_mdbgPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mdbg pre uninstallation failed! /tmp/ni_mdbgPreUninstall.log follows:"
+            cat ni_mdbgPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_mdbgPreUninstall64 > /dev/null; then
+         if ! ni_mdbgPreUninstall64 > /tmp/ni_mdbgPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mdbg pre uninstallation failed! /tmp/ni_mdbgPreUninstall64.log follows:"
+            cat ni_mdbgPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-mdbg; then
+      if declare -f ni_mdbgPreUninstall > /dev/null; then
+         if ! ni_mdbgPreUninstall > /tmp/ni_mdbgPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mdbg pre uninstallation failed! /tmp/ni_mdbgPreUninstall.log follows:"
+            cat ni_mdbgPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_mdbgPreUninstall64 > /dev/null; then
+         if ! ni_mdbgPreUninstall64 > /tmp/ni_mdbgPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mdbg pre uninstallation failed! /tmp/ni_mdbgPreUninstall64.log follows:"
+            cat ni_mdbgPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-mdbg-errors; then
+      if declare -f ni_mdbg_errorsPreUninstall > /dev/null; then
+         if ! ni_mdbg_errorsPreUninstall > /tmp/ni_mdbg_errorsPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mdbg-errors pre uninstallation failed! /tmp/ni_mdbg_errorsPreUninstall.log follows:"
+            cat ni_mdbg_errorsPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_mdbg_errorsPreUninstall64 > /dev/null; then
+         if ! ni_mdbg_errorsPreUninstall64 > /tmp/ni_mdbg_errorsPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mdbg-errors pre uninstallation failed! /tmp/ni_mdbg_errorsPreUninstall64.log follows:"
+            cat ni_mdbg_errorsPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-mdbg-nikalmod; then
+      if declare -f ni_mdbg_nikalmodPreUninstall > /dev/null; then
+         if ! ni_mdbg_nikalmodPreUninstall > /tmp/ni_mdbg_nikalmodPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mdbg-nikalmod pre uninstallation failed! /tmp/ni_mdbg_nikalmodPreUninstall.log follows:"
+            cat ni_mdbg_nikalmodPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_mdbg_nikalmodPreUninstall64 > /dev/null; then
+         if ! ni_mdbg_nikalmodPreUninstall64 > /tmp/ni_mdbg_nikalmodPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mdbg-nikalmod pre uninstallation failed! /tmp/ni_mdbg_nikalmodPreUninstall64.log follows:"
+            cat ni_mdbg_nikalmodPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-mdbg-nikalmod; then
+      if declare -f ni_mdbg_nikalmodPreUninstall > /dev/null; then
+         if ! ni_mdbg_nikalmodPreUninstall > /tmp/ni_mdbg_nikalmodPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mdbg-nikalmod pre uninstallation failed! /tmp/ni_mdbg_nikalmodPreUninstall.log follows:"
+            cat ni_mdbg_nikalmodPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_mdbg_nikalmodPreUninstall64 > /dev/null; then
+         if ! ni_mdbg_nikalmodPreUninstall64 > /tmp/ni_mdbg_nikalmodPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mdbg-nikalmod pre uninstallation failed! /tmp/ni_mdbg_nikalmodPreUninstall64.log follows:"
+            cat ni_mdbg_nikalmodPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nimdnsresponder; then
+      if declare -f nimdnsresponderPreUninstall > /dev/null; then
+         if ! nimdnsresponderPreUninstall > /tmp/nimdnsresponderPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nimdnsresponder pre uninstallation failed! /tmp/nimdnsresponderPreUninstall.log follows:"
+            cat nimdnsresponderPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nimdnsresponderPreUninstall64 > /dev/null; then
+         if ! nimdnsresponderPreUninstall64 > /tmp/nimdnsresponderPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nimdnsresponder pre uninstallation failed! /tmp/nimdnsresponderPreUninstall64.log follows:"
+            cat nimdnsresponderPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-mxdf; then
+      if declare -f ni_mxdfPreUninstall > /dev/null; then
+         if ! ni_mxdfPreUninstall > /tmp/ni_mxdfPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mxdf pre uninstallation failed! /tmp/ni_mxdfPreUninstall.log follows:"
+            cat ni_mxdfPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_mxdfPreUninstall64 > /dev/null; then
+         if ! ni_mxdfPreUninstall64 > /tmp/ni_mxdfPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mxdf pre uninstallation failed! /tmp/ni_mxdfPreUninstall64.log follows:"
+            cat ni_mxdfPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-mxdf; then
+      if declare -f ni_mxdfPreUninstall > /dev/null; then
+         if ! ni_mxdfPreUninstall > /tmp/ni_mxdfPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mxdf pre uninstallation failed! /tmp/ni_mxdfPreUninstall.log follows:"
+            cat ni_mxdfPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_mxdfPreUninstall64 > /dev/null; then
+         if ! ni_mxdfPreUninstall64 > /tmp/ni_mxdfPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mxdf pre uninstallation failed! /tmp/ni_mxdfPreUninstall64.log follows:"
+            cat ni_mxdfPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-mxdf; then
+      if declare -f ni_mxdfPreUninstall > /dev/null; then
+         if ! ni_mxdfPreUninstall > /tmp/ni_mxdfPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mxdf pre uninstallation failed! /tmp/ni_mxdfPreUninstall.log follows:"
+            cat ni_mxdfPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_mxdfPreUninstall64 > /dev/null; then
+         if ! ni_mxdfPreUninstall64 > /tmp/ni_mxdfPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mxdf pre uninstallation failed! /tmp/ni_mxdfPreUninstall64.log follows:"
+            cat ni_mxdfPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-mxdf-errors; then
+      if declare -f ni_mxdf_errorsPreUninstall > /dev/null; then
+         if ! ni_mxdf_errorsPreUninstall > /tmp/ni_mxdf_errorsPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mxdf-errors pre uninstallation failed! /tmp/ni_mxdf_errorsPreUninstall.log follows:"
+            cat ni_mxdf_errorsPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_mxdf_errorsPreUninstall64 > /dev/null; then
+         if ! ni_mxdf_errorsPreUninstall64 > /tmp/ni_mxdf_errorsPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mxdf-errors pre uninstallation failed! /tmp/ni_mxdf_errorsPreUninstall64.log follows:"
+            cat ni_mxdf_errorsPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-mxdf-nikalmod; then
+      if declare -f ni_mxdf_nikalmodPreUninstall > /dev/null; then
+         if ! ni_mxdf_nikalmodPreUninstall > /tmp/ni_mxdf_nikalmodPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mxdf-nikalmod pre uninstallation failed! /tmp/ni_mxdf_nikalmodPreUninstall.log follows:"
+            cat ni_mxdf_nikalmodPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_mxdf_nikalmodPreUninstall64 > /dev/null; then
+         if ! ni_mxdf_nikalmodPreUninstall64 > /tmp/ni_mxdf_nikalmodPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mxdf-nikalmod pre uninstallation failed! /tmp/ni_mxdf_nikalmodPreUninstall64.log follows:"
+            cat ni_mxdf_nikalmodPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-mxdf-nikalmod; then
+      if declare -f ni_mxdf_nikalmodPreUninstall > /dev/null; then
+         if ! ni_mxdf_nikalmodPreUninstall > /tmp/ni_mxdf_nikalmodPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mxdf-nikalmod pre uninstallation failed! /tmp/ni_mxdf_nikalmodPreUninstall.log follows:"
+            cat ni_mxdf_nikalmodPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_mxdf_nikalmodPreUninstall64 > /dev/null; then
+         if ! ni_mxdf_nikalmodPreUninstall64 > /tmp/ni_mxdf_nikalmodPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mxdf-nikalmod pre uninstallation failed! /tmp/ni_mxdf_nikalmodPreUninstall64.log follows:"
+            cat ni_mxdf_nikalmodPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-mximanager; then
+      if declare -f ni_mximanagerPreUninstall > /dev/null; then
+         if ! ni_mximanagerPreUninstall > /tmp/ni_mximanagerPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mximanager pre uninstallation failed! /tmp/ni_mximanagerPreUninstall.log follows:"
+            cat ni_mximanagerPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_mximanagerPreUninstall64 > /dev/null; then
+         if ! ni_mximanagerPreUninstall64 > /tmp/ni_mximanagerPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mximanager pre uninstallation failed! /tmp/ni_mximanagerPreUninstall64.log follows:"
+            cat ni_mximanagerPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-mximanager-libs; then
+      if declare -f ni_mximanager_libsPreUninstall > /dev/null; then
+         if ! ni_mximanager_libsPreUninstall > /tmp/ni_mximanager_libsPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mximanager-libs pre uninstallation failed! /tmp/ni_mximanager_libsPreUninstall.log follows:"
+            cat ni_mximanager_libsPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_mximanager_libsPreUninstall64 > /dev/null; then
+         if ! ni_mximanager_libsPreUninstall64 > /tmp/ni_mximanager_libsPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-mximanager-libs pre uninstallation failed! /tmp/ni_mximanager_libsPreUninstall64.log follows:"
+            cat ni_mximanager_libsPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-orb; then
+      if declare -f ni_orbPreUninstall > /dev/null; then
+         if ! ni_orbPreUninstall > /tmp/ni_orbPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-orb pre uninstallation failed! /tmp/ni_orbPreUninstall.log follows:"
+            cat ni_orbPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_orbPreUninstall64 > /dev/null; then
+         if ! ni_orbPreUninstall64 > /tmp/ni_orbPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-orb pre uninstallation failed! /tmp/ni_orbPreUninstall64.log follows:"
+            cat ni_orbPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-orb; then
+      if declare -f ni_orbPreUninstall > /dev/null; then
+         if ! ni_orbPreUninstall > /tmp/ni_orbPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-orb pre uninstallation failed! /tmp/ni_orbPreUninstall.log follows:"
+            cat ni_orbPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_orbPreUninstall64 > /dev/null; then
+         if ! ni_orbPreUninstall64 > /tmp/ni_orbPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-orb pre uninstallation failed! /tmp/ni_orbPreUninstall64.log follows:"
+            cat ni_orbPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-orb; then
+      if declare -f ni_orbPreUninstall > /dev/null; then
+         if ! ni_orbPreUninstall > /tmp/ni_orbPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-orb pre uninstallation failed! /tmp/ni_orbPreUninstall.log follows:"
+            cat ni_orbPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_orbPreUninstall64 > /dev/null; then
+         if ! ni_orbPreUninstall64 > /tmp/ni_orbPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-orb pre uninstallation failed! /tmp/ni_orbPreUninstall64.log follows:"
+            cat ni_orbPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-orb-errors; then
+      if declare -f ni_orb_errorsPreUninstall > /dev/null; then
+         if ! ni_orb_errorsPreUninstall > /tmp/ni_orb_errorsPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-orb-errors pre uninstallation failed! /tmp/ni_orb_errorsPreUninstall.log follows:"
+            cat ni_orb_errorsPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_orb_errorsPreUninstall64 > /dev/null; then
+         if ! ni_orb_errorsPreUninstall64 > /tmp/ni_orb_errorsPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-orb-errors pre uninstallation failed! /tmp/ni_orb_errorsPreUninstall64.log follows:"
+            cat ni_orb_errorsPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-orb-nikalmod; then
+      if declare -f ni_orb_nikalmodPreUninstall > /dev/null; then
+         if ! ni_orb_nikalmodPreUninstall > /tmp/ni_orb_nikalmodPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-orb-nikalmod pre uninstallation failed! /tmp/ni_orb_nikalmodPreUninstall.log follows:"
+            cat ni_orb_nikalmodPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_orb_nikalmodPreUninstall64 > /dev/null; then
+         if ! ni_orb_nikalmodPreUninstall64 > /tmp/ni_orb_nikalmodPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-orb-nikalmod pre uninstallation failed! /tmp/ni_orb_nikalmodPreUninstall64.log follows:"
+            cat ni_orb_nikalmodPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-orb-nikalmod; then
+      if declare -f ni_orb_nikalmodPreUninstall > /dev/null; then
+         if ! ni_orb_nikalmodPreUninstall > /tmp/ni_orb_nikalmodPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-orb-nikalmod pre uninstallation failed! /tmp/ni_orb_nikalmodPreUninstall.log follows:"
+            cat ni_orb_nikalmodPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_orb_nikalmodPreUninstall64 > /dev/null; then
+         if ! ni_orb_nikalmodPreUninstall64 > /tmp/ni_orb_nikalmodPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-orb-nikalmod pre uninstallation failed! /tmp/ni_orb_nikalmodPreUninstall64.log follows:"
+            cat ni_orb_nikalmodPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pxipf-errors; then
+      if declare -f ni_pxipf_errorsPreUninstall > /dev/null; then
+         if ! ni_pxipf_errorsPreUninstall > /tmp/ni_pxipf_errorsPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxipf-errors pre uninstallation failed! /tmp/ni_pxipf_errorsPreUninstall.log follows:"
+            cat ni_pxipf_errorsPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pxipf_errorsPreUninstall64 > /dev/null; then
+         if ! ni_pxipf_errorsPreUninstall64 > /tmp/ni_pxipf_errorsPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxipf-errors pre uninstallation failed! /tmp/ni_pxipf_errorsPreUninstall64.log follows:"
+            cat ni_pxipf_errorsPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nipxipfi; then
+      if declare -f nipxipfiPreUninstall > /dev/null; then
+         if ! nipxipfiPreUninstall > /tmp/nipxipfiPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nipxipfi pre uninstallation failed! /tmp/nipxipfiPreUninstall.log follows:"
+            cat nipxipfiPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nipxipfiPreUninstall64 > /dev/null; then
+         if ! nipxipfiPreUninstall64 > /tmp/nipxipfiPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nipxipfi pre uninstallation failed! /tmp/nipxipfiPreUninstall64.log follows:"
+            cat nipxipfiPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nipxipfki; then
+      if declare -f nipxipfkiPreUninstall > /dev/null; then
+         if ! nipxipfkiPreUninstall > /tmp/nipxipfkiPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nipxipfki pre uninstallation failed! /tmp/nipxipfkiPreUninstall.log follows:"
+            cat nipxipfkiPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nipxipfkiPreUninstall64 > /dev/null; then
+         if ! nipxipfkiPreUninstall64 > /tmp/nipxipfkiPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nipxipfki pre uninstallation failed! /tmp/nipxipfkiPreUninstall64.log follows:"
+            cat nipxipfkiPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pxiplatformhwsupport; then
+      if declare -f ni_pxiplatformhwsupportPreUninstall > /dev/null; then
+         if ! ni_pxiplatformhwsupportPreUninstall > /tmp/ni_pxiplatformhwsupportPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformhwsupport pre uninstallation failed! /tmp/ni_pxiplatformhwsupportPreUninstall.log follows:"
+            cat ni_pxiplatformhwsupportPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pxiplatformhwsupportPreUninstall64 > /dev/null; then
+         if ! ni_pxiplatformhwsupportPreUninstall64 > /tmp/ni_pxiplatformhwsupportPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformhwsupport pre uninstallation failed! /tmp/ni_pxiplatformhwsupportPreUninstall64.log follows:"
+            cat ni_pxiplatformhwsupportPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pxiplatformhwsupport-bin; then
+      if declare -f ni_pxiplatformhwsupport_binPreUninstall > /dev/null; then
+         if ! ni_pxiplatformhwsupport_binPreUninstall > /tmp/ni_pxiplatformhwsupport_binPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformhwsupport-bin pre uninstallation failed! /tmp/ni_pxiplatformhwsupport_binPreUninstall.log follows:"
+            cat ni_pxiplatformhwsupport_binPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pxiplatformhwsupport_binPreUninstall64 > /dev/null; then
+         if ! ni_pxiplatformhwsupport_binPreUninstall64 > /tmp/ni_pxiplatformhwsupport_binPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformhwsupport-bin pre uninstallation failed! /tmp/ni_pxiplatformhwsupport_binPreUninstall64.log follows:"
+            cat ni_pxiplatformhwsupport_binPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pxiplatformhwsupport-data; then
+      if declare -f ni_pxiplatformhwsupport_dataPreUninstall > /dev/null; then
+         if ! ni_pxiplatformhwsupport_dataPreUninstall > /tmp/ni_pxiplatformhwsupport_dataPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformhwsupport-data pre uninstallation failed! /tmp/ni_pxiplatformhwsupport_dataPreUninstall.log follows:"
+            cat ni_pxiplatformhwsupport_dataPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pxiplatformhwsupport_dataPreUninstall64 > /dev/null; then
+         if ! ni_pxiplatformhwsupport_dataPreUninstall64 > /tmp/ni_pxiplatformhwsupport_dataPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformhwsupport-data pre uninstallation failed! /tmp/ni_pxiplatformhwsupport_dataPreUninstall64.log follows:"
+            cat ni_pxiplatformhwsupport_dataPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pxiplatformhwsupport-errors; then
+      if declare -f ni_pxiplatformhwsupport_errorsPreUninstall > /dev/null; then
+         if ! ni_pxiplatformhwsupport_errorsPreUninstall > /tmp/ni_pxiplatformhwsupport_errorsPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformhwsupport-errors pre uninstallation failed! /tmp/ni_pxiplatformhwsupport_errorsPreUninstall.log follows:"
+            cat ni_pxiplatformhwsupport_errorsPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pxiplatformhwsupport_errorsPreUninstall64 > /dev/null; then
+         if ! ni_pxiplatformhwsupport_errorsPreUninstall64 > /tmp/ni_pxiplatformhwsupport_errorsPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformhwsupport-errors pre uninstallation failed! /tmp/ni_pxiplatformhwsupport_errorsPreUninstall64.log follows:"
+            cat ni_pxiplatformhwsupport_errorsPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pxiplatformhwsupport-libs; then
+      if declare -f ni_pxiplatformhwsupport_libsPreUninstall > /dev/null; then
+         if ! ni_pxiplatformhwsupport_libsPreUninstall > /tmp/ni_pxiplatformhwsupport_libsPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformhwsupport-libs pre uninstallation failed! /tmp/ni_pxiplatformhwsupport_libsPreUninstall.log follows:"
+            cat ni_pxiplatformhwsupport_libsPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pxiplatformhwsupport_libsPreUninstall64 > /dev/null; then
+         if ! ni_pxiplatformhwsupport_libsPreUninstall64 > /tmp/ni_pxiplatformhwsupport_libsPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformhwsupport-libs pre uninstallation failed! /tmp/ni_pxiplatformhwsupport_libsPreUninstall64.log follows:"
+            cat ni_pxiplatformhwsupport_libsPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pxiplatformhwsupport-nikalmod; then
+      if declare -f ni_pxiplatformhwsupport_nikalmodPreUninstall > /dev/null; then
+         if ! ni_pxiplatformhwsupport_nikalmodPreUninstall > /tmp/ni_pxiplatformhwsupport_nikalmodPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformhwsupport-nikalmod pre uninstallation failed! /tmp/ni_pxiplatformhwsupport_nikalmodPreUninstall.log follows:"
+            cat ni_pxiplatformhwsupport_nikalmodPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pxiplatformhwsupport_nikalmodPreUninstall64 > /dev/null; then
+         if ! ni_pxiplatformhwsupport_nikalmodPreUninstall64 > /tmp/ni_pxiplatformhwsupport_nikalmodPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformhwsupport-nikalmod pre uninstallation failed! /tmp/ni_pxiplatformhwsupport_nikalmodPreUninstall64.log follows:"
+            cat ni_pxiplatformhwsupport_nikalmodPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pxiplatformservices; then
+      if declare -f ni_pxiplatformservicesPreUninstall > /dev/null; then
+         if ! ni_pxiplatformservicesPreUninstall > /tmp/ni_pxiplatformservicesPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformservices pre uninstallation failed! /tmp/ni_pxiplatformservicesPreUninstall.log follows:"
+            cat ni_pxiplatformservicesPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pxiplatformservicesPreUninstall64 > /dev/null; then
+         if ! ni_pxiplatformservicesPreUninstall64 > /tmp/ni_pxiplatformservicesPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformservices pre uninstallation failed! /tmp/ni_pxiplatformservicesPreUninstall64.log follows:"
+            cat ni_pxiplatformservicesPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pxiplatformservices-bin; then
+      if declare -f ni_pxiplatformservices_binPreUninstall > /dev/null; then
+         if ! ni_pxiplatformservices_binPreUninstall > /tmp/ni_pxiplatformservices_binPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformservices-bin pre uninstallation failed! /tmp/ni_pxiplatformservices_binPreUninstall.log follows:"
+            cat ni_pxiplatformservices_binPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pxiplatformservices_binPreUninstall64 > /dev/null; then
+         if ! ni_pxiplatformservices_binPreUninstall64 > /tmp/ni_pxiplatformservices_binPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformservices-bin pre uninstallation failed! /tmp/ni_pxiplatformservices_binPreUninstall64.log follows:"
+            cat ni_pxiplatformservices_binPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pxiplatformservices-data; then
+      if declare -f ni_pxiplatformservices_dataPreUninstall > /dev/null; then
+         if ! ni_pxiplatformservices_dataPreUninstall > /tmp/ni_pxiplatformservices_dataPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformservices-data pre uninstallation failed! /tmp/ni_pxiplatformservices_dataPreUninstall.log follows:"
+            cat ni_pxiplatformservices_dataPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pxiplatformservices_dataPreUninstall64 > /dev/null; then
+         if ! ni_pxiplatformservices_dataPreUninstall64 > /tmp/ni_pxiplatformservices_dataPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformservices-data pre uninstallation failed! /tmp/ni_pxiplatformservices_dataPreUninstall64.log follows:"
+            cat ni_pxiplatformservices_dataPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pxiplatformservices-libs; then
+      if declare -f ni_pxiplatformservices_libsPreUninstall > /dev/null; then
+         if ! ni_pxiplatformservices_libsPreUninstall > /tmp/ni_pxiplatformservices_libsPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformservices-libs pre uninstallation failed! /tmp/ni_pxiplatformservices_libsPreUninstall.log follows:"
+            cat ni_pxiplatformservices_libsPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pxiplatformservices_libsPreUninstall64 > /dev/null; then
+         if ! ni_pxiplatformservices_libsPreUninstall64 > /tmp/ni_pxiplatformservices_libsPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformservices-libs pre uninstallation failed! /tmp/ni_pxiplatformservices_libsPreUninstall64.log follows:"
+            cat ni_pxiplatformservices_libsPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pxiplatformsoftware-errors; then
+      if declare -f ni_pxiplatformsoftware_errorsPreUninstall > /dev/null; then
+         if ! ni_pxiplatformsoftware_errorsPreUninstall > /tmp/ni_pxiplatformsoftware_errorsPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformsoftware-errors pre uninstallation failed! /tmp/ni_pxiplatformsoftware_errorsPreUninstall.log follows:"
+            cat ni_pxiplatformsoftware_errorsPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pxiplatformsoftware_errorsPreUninstall64 > /dev/null; then
+         if ! ni_pxiplatformsoftware_errorsPreUninstall64 > /tmp/ni_pxiplatformsoftware_errorsPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxiplatformsoftware-errors pre uninstallation failed! /tmp/ni_pxiplatformsoftware_errorsPreUninstall64.log follows:"
+            cat ni_pxiplatformsoftware_errorsPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pxirm; then
+      if declare -f ni_pxirmPreUninstall > /dev/null; then
+         if ! ni_pxirmPreUninstall > /tmp/ni_pxirmPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxirm pre uninstallation failed! /tmp/ni_pxirmPreUninstall.log follows:"
+            cat ni_pxirmPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pxirmPreUninstall64 > /dev/null; then
+         if ! ni_pxirmPreUninstall64 > /tmp/ni_pxirmPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxirm pre uninstallation failed! /tmp/ni_pxirmPreUninstall64.log follows:"
+            cat ni_pxirmPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pxirm; then
+      if declare -f ni_pxirmPreUninstall > /dev/null; then
+         if ! ni_pxirmPreUninstall > /tmp/ni_pxirmPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxirm pre uninstallation failed! /tmp/ni_pxirmPreUninstall.log follows:"
+            cat ni_pxirmPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pxirmPreUninstall64 > /dev/null; then
+         if ! ni_pxirmPreUninstall64 > /tmp/ni_pxirmPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxirm pre uninstallation failed! /tmp/ni_pxirmPreUninstall64.log follows:"
+            cat ni_pxirmPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pxirm-nikalmod; then
+      if declare -f ni_pxirm_nikalmodPreUninstall > /dev/null; then
+         if ! ni_pxirm_nikalmodPreUninstall > /tmp/ni_pxirm_nikalmodPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxirm-nikalmod pre uninstallation failed! /tmp/ni_pxirm_nikalmodPreUninstall.log follows:"
+            cat ni_pxirm_nikalmodPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pxirm_nikalmodPreUninstall64 > /dev/null; then
+         if ! ni_pxirm_nikalmodPreUninstall64 > /tmp/ni_pxirm_nikalmodPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxirm-nikalmod pre uninstallation failed! /tmp/ni_pxirm_nikalmodPreUninstall64.log follows:"
+            cat ni_pxirm_nikalmodPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pxirm-nikalmod; then
+      if declare -f ni_pxirm_nikalmodPreUninstall > /dev/null; then
+         if ! ni_pxirm_nikalmodPreUninstall > /tmp/ni_pxirm_nikalmodPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxirm-nikalmod pre uninstallation failed! /tmp/ni_pxirm_nikalmodPreUninstall.log follows:"
+            cat ni_pxirm_nikalmodPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pxirm_nikalmodPreUninstall64 > /dev/null; then
+         if ! ni_pxirm_nikalmodPreUninstall64 > /tmp/ni_pxirm_nikalmodPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxirm-nikalmod pre uninstallation failed! /tmp/ni_pxirm_nikalmodPreUninstall64.log follows:"
+            cat ni_pxirm_nikalmodPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pxirm-resources; then
+      if declare -f ni_pxirm_resourcesPreUninstall > /dev/null; then
+         if ! ni_pxirm_resourcesPreUninstall > /tmp/ni_pxirm_resourcesPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxirm-resources pre uninstallation failed! /tmp/ni_pxirm_resourcesPreUninstall.log follows:"
+            cat ni_pxirm_resourcesPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pxirm_resourcesPreUninstall64 > /dev/null; then
+         if ! ni_pxirm_resourcesPreUninstall64 > /tmp/ni_pxirm_resourcesPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pxirm-resources pre uninstallation failed! /tmp/ni_pxirm_resourcesPreUninstall64.log follows:"
+            cat ni_pxirm_resourcesPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nirocoerri; then
+      if declare -f nirocoerriPreUninstall > /dev/null; then
+         if ! nirocoerriPreUninstall > /tmp/nirocoerriPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nirocoerri pre uninstallation failed! /tmp/nirocoerriPreUninstall.log follows:"
+            cat nirocoerriPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nirocoerriPreUninstall64 > /dev/null; then
+         if ! nirocoerriPreUninstall64 > /tmp/nirocoerriPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nirocoerri pre uninstallation failed! /tmp/nirocoerriPreUninstall64.log follows:"
+            cat nirocoerriPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nisslcerts; then
+      if declare -f nisslcertsPreUninstall > /dev/null; then
+         if ! nisslcertsPreUninstall > /tmp/nisslcertsPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nisslcerts pre uninstallation failed! /tmp/nisslcertsPreUninstall.log follows:"
+            cat nisslcertsPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nisslcertsPreUninstall64 > /dev/null; then
+         if ! nisslcertsPreUninstall64 > /tmp/nisslcertsPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nisslcerts pre uninstallation failed! /tmp/nisslcertsPreUninstall64.log follows:"
+            cat nisslcertsPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nissli; then
+      if declare -f nissliPreUninstall > /dev/null; then
+         if ! nissliPreUninstall > /tmp/nissliPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nissli pre uninstallation failed! /tmp/nissliPreUninstall.log follows:"
+            cat nissliPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nissliPreUninstall64 > /dev/null; then
+         if ! nissliPreUninstall64 > /tmp/nissliPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nissli pre uninstallation failed! /tmp/nissliPreUninstall64.log follows:"
+            cat nissliPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nisvcloc; then
+      if declare -f nisvclocPreUninstall > /dev/null; then
+         if ! nisvclocPreUninstall > /tmp/nisvclocPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nisvcloc pre uninstallation failed! /tmp/nisvclocPreUninstall.log follows:"
+            cat nisvclocPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nisvclocPreUninstall64 > /dev/null; then
+         if ! nisvclocPreUninstall64 > /tmp/nisvclocPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nisvcloc pre uninstallation failed! /tmp/nisvclocPreUninstall64.log follows:"
+            cat nisvclocPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nisyscfgi; then
+      if declare -f nisyscfgiPreUninstall > /dev/null; then
+         if ! nisyscfgiPreUninstall > /tmp/nisyscfgiPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nisyscfgi pre uninstallation failed! /tmp/nisyscfgiPreUninstall.log follows:"
+            cat nisyscfgiPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nisyscfgiPreUninstall64 > /dev/null; then
+         if ! nisyscfgiPreUninstall64 > /tmp/nisyscfgiPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nisyscfgi pre uninstallation failed! /tmp/nisyscfgiPreUninstall64.log follows:"
+            cat nisyscfgiPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nisyscfgi; then
+      if declare -f nisyscfgiPreUninstall > /dev/null; then
+         if ! nisyscfgiPreUninstall > /tmp/nisyscfgiPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nisyscfgi pre uninstallation failed! /tmp/nisyscfgiPreUninstall.log follows:"
+            cat nisyscfgiPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nisyscfgiPreUninstall64 > /dev/null; then
+         if ! nisyscfgiPreUninstall64 > /tmp/nisyscfgiPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nisyscfgi pre uninstallation failed! /tmp/nisyscfgiPreUninstall64.log follows:"
+            cat nisyscfgiPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nisyscfgi; then
+      if declare -f nisyscfgiPreUninstall > /dev/null; then
+         if ! nisyscfgiPreUninstall > /tmp/nisyscfgiPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nisyscfgi pre uninstallation failed! /tmp/nisyscfgiPreUninstall.log follows:"
+            cat nisyscfgiPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nisyscfgiPreUninstall64 > /dev/null; then
+         if ! nisyscfgiPreUninstall64 > /tmp/nisyscfgiPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nisyscfgi pre uninstallation failed! /tmp/nisyscfgiPreUninstall64.log follows:"
+            cat nisyscfgiPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nitargetcfgi; then
+      if declare -f nitargetcfgiPreUninstall > /dev/null; then
+         if ! nitargetcfgiPreUninstall > /tmp/nitargetcfgiPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nitargetcfgi pre uninstallation failed! /tmp/nitargetcfgiPreUninstall.log follows:"
+            cat nitargetcfgiPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nitargetcfgiPreUninstall64 > /dev/null; then
+         if ! nitargetcfgiPreUninstall64 > /tmp/nitargetcfgiPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nitargetcfgi pre uninstallation failed! /tmp/nitargetcfgiPreUninstall64.log follows:"
+            cat nitargetcfgiPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pal-nikalmod; then
+      if declare -f ni_pal_nikalmodPreUninstall > /dev/null; then
+         if ! ni_pal_nikalmodPreUninstall > /tmp/ni_pal_nikalmodPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pal-nikalmod pre uninstallation failed! /tmp/ni_pal_nikalmodPreUninstall.log follows:"
+            cat ni_pal_nikalmodPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pal_nikalmodPreUninstall64 > /dev/null; then
+         if ! ni_pal_nikalmodPreUninstall64 > /tmp/ni_pal_nikalmodPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pal-nikalmod pre uninstallation failed! /tmp/ni_pal_nikalmodPreUninstall64.log follows:"
+            cat ni_pal_nikalmodPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pal-nikalmod; then
+      if declare -f ni_pal_nikalmodPreUninstall > /dev/null; then
+         if ! ni_pal_nikalmodPreUninstall > /tmp/ni_pal_nikalmodPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pal-nikalmod pre uninstallation failed! /tmp/ni_pal_nikalmodPreUninstall.log follows:"
+            cat ni_pal_nikalmodPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pal_nikalmodPreUninstall64 > /dev/null; then
+         if ! ni_pal_nikalmodPreUninstall64 > /tmp/ni_pal_nikalmodPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pal-nikalmod pre uninstallation failed! /tmp/ni_pal_nikalmodPreUninstall64.log follows:"
+            cat ni_pal_nikalmodPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled nipalki; then
+      if declare -f nipalkiPreUninstall > /dev/null; then
+         if ! nipalkiPreUninstall > /tmp/nipalkiPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: nipalki pre uninstallation failed! /tmp/nipalkiPreUninstall.log follows:"
+            cat nipalkiPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f nipalkiPreUninstall64 > /dev/null; then
+         if ! nipalkiPreUninstall64 > /tmp/nipalkiPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: nipalki pre uninstallation failed! /tmp/nipalkiPreUninstall64.log follows:"
+            cat nipalkiPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pal-errors; then
+      if declare -f ni_pal_errorsPreUninstall > /dev/null; then
+         if ! ni_pal_errorsPreUninstall > /tmp/ni_pal_errorsPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pal-errors pre uninstallation failed! /tmp/ni_pal_errorsPreUninstall.log follows:"
+            cat ni_pal_errorsPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_pal_errorsPreUninstall64 > /dev/null; then
+         if ! ni_pal_errorsPreUninstall64 > /tmp/ni_pal_errorsPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pal-errors pre uninstallation failed! /tmp/ni_pal_errorsPreUninstall64.log follows:"
+            cat ni_pal_errorsPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pal; then
+      if declare -f ni_palPreUninstall > /dev/null; then
+         if ! ni_palPreUninstall > /tmp/ni_palPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pal pre uninstallation failed! /tmp/ni_palPreUninstall.log follows:"
+            cat ni_palPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_palPreUninstall64 > /dev/null; then
+         if ! ni_palPreUninstall64 > /tmp/ni_palPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pal pre uninstallation failed! /tmp/ni_palPreUninstall64.log follows:"
+            cat ni_palPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pal; then
+      if declare -f ni_palPreUninstall > /dev/null; then
+         if ! ni_palPreUninstall > /tmp/ni_palPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pal pre uninstallation failed! /tmp/ni_palPreUninstall.log follows:"
+            cat ni_palPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_palPreUninstall64 > /dev/null; then
+         if ! ni_palPreUninstall64 > /tmp/ni_palPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pal pre uninstallation failed! /tmp/ni_palPreUninstall64.log follows:"
+            cat ni_palPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-pal; then
+      if declare -f ni_palPreUninstall > /dev/null; then
+         if ! ni_palPreUninstall > /tmp/ni_palPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pal pre uninstallation failed! /tmp/ni_palPreUninstall.log follows:"
+            cat ni_palPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_palPreUninstall64 > /dev/null; then
+         if ! ni_palPreUninstall64 > /tmp/ni_palPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-pal pre uninstallation failed! /tmp/ni_palPreUninstall64.log follows:"
+            cat ni_palPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+if willBeUninstalled ni-kal; then
+      if declare -f ni_kalPreUninstall > /dev/null; then
+         if ! ni_kalPreUninstall > /tmp/ni_kalPreUninstall.log 2>&1; then
+            echo ""
+            echo "Warning: ni-kal pre uninstallation failed! /tmp/ni_kalPreUninstall.log follows:"
+            cat ni_kalPreUninstall.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+      if declare -f ni_kalPreUninstall64 > /dev/null; then
+         if ! ni_kalPreUninstall64 > /tmp/ni_kalPreUninstall64.log 2>&1; then
+            echo ""
+            echo "Warning: ni-kal pre uninstallation failed! /tmp/ni_kalPreUninstall64.log follows:"
+            cat ni_kalPreUninstall64.log
+            uninstallStatus=$statusFail
+         fi
+      fi
+   fi
+   echo -n "."
+
+
+   # Perform the uninstallation with the package list
+   $RPM -e --allmatches $uninstallPackageList
+   if [ $? -ne 0 ]; then
+      echo "Error uninstalling $kProductStringSentence $kProductVersion."
+      exit $statusFail
+   fi
+
+else
+   echo "All packages in the distribution are still in use or are already removed."
+   echo "Nothing to Uninstall."
+fi
+distStatus=$statusSuccess
+failedDists=
+
+if [ -f "$CDPATH/$kTarPackageName" ]; then
+   # Unpack the child distributions from the TZ package
+   $TAR -zxvf "$CDPATH/$kTarPackageName" -C $kTmpInstallSrcPath dists 1>/dev/null 2>/dev/null
+   if [ -d $kTmpInstallSrcPath/dists ]; then
+      for childDist in `ls $kTmpInstallSrcPath/dists`;
+      do
+         childDistVersion=`$GREP '^kProductVersion=' $kTmpInstallSrcPath/dists/$childDist/INSTALL | $SED 's/kProductVersion="\(.*\)"$/\1/'`
+         childDistString=`$GREP '^kProductStringSentence=' $kTmpInstallSrcPath/dists/$childDist/INSTALL | $SED 's/kProductStringSentence="\(.*\)"$/\1/'`
+
+         uninstallChild=$kTrue
+
+         if [ $promptUser -eq $kTrue ]; then
+            echo ""
+            echo -n "Would you like to uninstall $childDistString ($childDistVersion)? [Yn] "
+            read ans
+            test -z "$ans" && ans=y
+
+            case "$ans" in
+                 [nN]*) echo "$childDistString will be left installed."
+                        uninstallChild=$kFalse
+                        ;;
+                 [yY]*)
+                        uninstallChild=$kTrue
+                        ;;
+            esac
+         else
+            echo ""
+            echo "Uninstalling $childDistString ($childDistVersion)"
+         fi
+
+         if [ $uninstallChild -eq $kTrue ]; then
+
+            # Transfer arguments to child distribution
+            (
+               cd "$kTmpInstallSrcPath/dists/$childDist"
+               /bin/sh ./UNINSTALL $originalArguments
+               exit $?
+            )
+            if [ $? -ne $statusSuccess ]; then
+               distStatus=$statusFail
+               failedDists="$failedDists $childDistString"
+            fi
+
+            echo ""
+         fi
+
+      done
+   fi
+fi
+
+# remove the installation log from installation for this distribution
+rm -f $kInstallationLog
+
+if [ "$bRebootRequired" -ne $kTrue ]; then
+  reloadNIDrivers
+  if [ $? -ne 0 ] ; then
+    bRebootRequired=$kTrue
+  fi
+fi
+
+#
+# Finish uninstallation
+#
+if [ "$bRebootRequired" -eq $kTrue ]; then
+   echo ""
+   echo "******************************************************************************"
+   echo "* A reboot is required before attempting to finish uninstalling the"
+   echo "* $kProductStringSentence software from your system."
+   echo "******************************************************************************"
+   if [ "$promptUser" -eq $kTrue ]; then
+      while :
+      do
+         echo -n "Would you like to reboot now? [yes|no] "
+         read rebootConfirm 
+         if [ "$rebootConfirm" != "yes" ] && [ "$rebootConfirm" != "no" ]; then
+            echo "Please input yes or no."
+         else
+            break
+         fi
+      done
+      if [ "$rebootConfirm" = "yes" ]; then
+         cleanwoexit
+         echo ""
+         if [ "$uninstallStatus" -eq $statusSuccess ]; then
+            echo "$kProductStringSentence Uninstallation completed successfully."
+         else
+            echo "$kProductStringSentence Uninstallation completed with errors."
+         fi
+         if [ $distStatus -ne $statusSuccess ]; then
+            echo "WARNING: The following related products failed to uninstall: $failedDists"
+         fi
+         echo ""
+         echo "Rebooting...."
+         reboot
+         exit $uninstallStatus
+      fi
+   fi
+   echo ""
+   if [ "$uninstallStatus" -eq $statusSuccess ]; then
+      echo "$kProductStringSentence Uninstallation completed successfully."
+   else
+      echo "$kProductStringSentence Uninstallation completed with errors."
+   fi
+   if [ $distStatus -ne $statusSuccess ]; then
+      echo "WARNING: The following related products failed to uninstall: $failedDists"
+   fi
+   echo ""
+   cleanwoexit
+   echo "Please reboot manually in order to complete the removal of"
+   echo "$kProductStringSentence Instrument Driver software from your system."
+   echo ""
+else
+   echo ""
+   if [ "$uninstallStatus" -eq "$statusSuccess" ]; then
+      echo "$kProductStringSentence Uninstallation completed successfully."
+   else
+      echo "$kProductStringSentence Uninstallation completed with errors."
+   fi
+   if [ $distStatus -ne $statusSuccess ]; then
+      echo "WARNING: The following related products failed to uninstall: $failedDists"
+   fi
+   echo ""
+   cleanwoexit
+fi
+
+cleanexit "$uninstallStatus"
+
