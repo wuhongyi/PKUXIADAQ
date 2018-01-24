@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 二 1月 23 17:39:35 2018 (+0800)
+;; Last-Updated: 三 1月 24 20:06:40 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 59
+;;     Update #: 60
 ;; URL: http://wuhongyi.cn -->
 
 **本说明书仅适用于 XIA LLC Pixie16 RevF**
@@ -15,22 +15,6 @@
 ```bash
 export PLX_SDK_DIR=$HOME/XIADAQ/PlxSdk
 ```
-
-```
-Pre Installation ........................................................................................
-错误：依赖检测失败：
-	libstdc++.so.6 被 ni-pal-17.0.0.49152-0+f0.i386 需要
-	libstdc++.so.6 被 ni-orb-nikalmod-17.0.0.49152-0+f0.x86_64 需要
-Error installing PXI Platform Services for Linux 17.0.0f0.
-
-Installer is aborted.
-```
-
-```shell
-yum install libstdc++*
-yum install libstdc++.i686 libstdc++-devel.i686 libstdc++-static.i686
-```
-
 
 
 Install the driver
