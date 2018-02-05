@@ -6326,6 +6326,8 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	unsigned int   bl,
 	double         sl,
 	double         sg,
+	double         tau,
+	int            sfr,
 	int            pointtobl )
 {
 	char ErrMSG[MAX_ERRMSG_LENGTH];
@@ -6335,6 +6337,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
         unsigned int offset, x, y;
 	double preamptau, deltaT;
 	double b1, c0, c1, c2;
+	double b11;
 	double baseline;
 	unsigned int OldSlowLen, OldSlowGap;
 	// Check if RcdTrace is valid
@@ -6369,8 +6372,8 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	preamptau = IEEEFloating2Decimal(PreampTau_IEEE);
 
 
-	OldSlowLen = ROUND(sl*Module_Information[ModuleNumber].Module_ADCMSPS/pow(2.0,(double)SlowFilterRange))*pow(2.0,(double)SlowFilterRange);
-	OldSlowGap = ROUND(sg*Module_Information[ModuleNumber].Module_ADCMSPS/pow(2.0,(double)SlowFilterRange))*pow(2.0,(double)SlowFilterRange);
+	OldSlowLen = ROUND(sl*Module_Information[ModuleNumber].Module_ADCMSPS/pow(2.0,(double)sfr))*pow(2.0,(double)sfr);
+	OldSlowGap = ROUND(sg*Module_Information[ModuleNumber].Module_ADCMSPS/pow(2.0,(double)sfr))*pow(2.0,(double)sfr);
 
 
 	int AverageRcdTrace = 0;
@@ -6406,8 +6409,10 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 		c1 = (1.0 - b1) * 4.0;
 		c2 = (1.0 - b1) * 4.0 / (1.0 - pow(b1, (double)SlowLen));
 
+		b11 = exp(-1.0 * deltaT / tau);
+		
 		// Compute baseline
-		baseline = IEEEFloating2Decimal(bl)*(SlowLen+SlowGap)/(OldSlowLen+OldSlowGap);
+		baseline = IEEEFloating2Decimal(bl)*(1-b1)*(SlowLen+SlowGap)/((1-b11)*(OldSlowLen+OldSlowGap));
 		
 		// Compute slow filter response
 		offset = 2*SlowLen + SlowGap - 1;

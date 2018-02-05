@@ -4,5 +4,5 @@
 ../firmware/pixie16_revf_14b100m_firmware_release_11032016/fippixie16_revfgeneral_14b100m_r36263.bin
 FPGATrig
 ../firmware/Pixie16DSP_revfgeneral_14b100m_r38495/Pixie16DSP_revfgeneral_14b100m_r38495.ldr
-../parset/ribll2017_1122_wave.set
+../parset/tpc.set
 ../firmware/Pixie16DSP_revfgeneral_14b100m_r38495/Pixie16DSP_revfgeneral_14b100m_r38495.var

@@ -350,6 +350,8 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	unsigned int   bl,
 	double         sl,
 	double         sg,
+	double         tau,
+	int            sfr,
 	int            pointtobl );
   
 

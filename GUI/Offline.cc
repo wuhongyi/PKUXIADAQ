@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 日 11月 12 20:39:22 2017 (+0800)
+// Last-Updated: 一 2月  5 22:01:52 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 583
+//     Update #: 594
 // URL: http://wuhongyi.cn 
 
 
@@ -466,12 +466,12 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   filterFrame->AddFrame(offlinefilters[3], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
   // preamptau
-  TGLabel *preamptau = new TGLabel( filterFrame, "Tau:");
+  TGLabel *preamptau = new TGLabel(filterFrame, "Tau:");
   fClient->GetColorByName("green", color);
   preamptau->SetTextColor(color, false);
   filterFrame->AddFrame(preamptau, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
   offlinefilters[4] = new TGNumberEntryField(filterFrame, OFFLINEPREAMPTAU, 0, TGNumberFormat::kNESReal);
-  filterFrame->AddFrame(offlinefilters[4], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
+  filterFrame->AddFrame(offlinefilters[4], new TGLayoutHints(kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
 
   // slowfilterrange
@@ -480,7 +480,7 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   slowfilterrange->SetTextColor(color, false);
   filterFrame->AddFrame(slowfilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
   offlinefilterrange = new TGNumberEntry(filterFrame, 0, 2, OFFLINEFILTERRANGE, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 1, 6);
-  filterFrame->AddFrame(offlinefilterrange, new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
+  filterFrame->AddFrame(offlinefilterrange, new TGLayoutHints(kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
   offlinefilterrange->SetButtonToNum(0);
   offlinefilterrange->Associate(this);
 
@@ -562,9 +562,23 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   fClient->GetColorByName("green", color);
   LabelOldSlowFilterSG->SetTextColor(color, false);
   oldslowfilterparameter[1] = new TGNumberEntryField(parFrame, -1, 0.64, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.06,81.28);
-  parFrame->AddFrame(oldslowfilterparameter[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 20, 2, 0));
+  parFrame->AddFrame(oldslowfilterparameter[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   oldslowfilterparameter[1]->Resize(40, 20);
-
+  TGLabel *LabelOldSlowFilterTAU = new TGLabel(parFrame,"Tau:");
+  parFrame->AddFrame(LabelOldSlowFilterTAU, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelOldSlowFilterTAU->SetTextColor(color, false);
+  oldslowfilterparameter[2] = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESReal);
+  parFrame->AddFrame(oldslowfilterparameter[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  oldslowfilterparameter[2]->Resize(40, 20);
+  TGLabel *oldslowfilterrange = new TGLabel(parFrame, "FilRan:");
+  fClient->GetColorByName("purple", color);
+  oldslowfilterrange->SetTextColor(color, false);
+  parFrame->AddFrame(oldslowfilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  oldofflinefilterrange = new TGNumberEntry(parFrame, 0, 2, -1, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 1, 6);
+  parFrame->AddFrame(oldofflinefilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  oldofflinefilterrange->SetIntNumber(3);
+  
   
   // current count
   OfflineCurrentCountText = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
@@ -1145,14 +1159,55 @@ void Offline::MakeFold6Panel(TGCompositeFrame *TabPanel)
   parFrame->AddFrame(printtextinfor6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
 
 
-
   // Fit
-  GausFitButton6 = new TGTextButton( parFrame, "Open  Fit", OFFLINEGAUSFIT6);
+  GausFitButton6 = new TGTextButton(parFrame, "Open  Fit", OFFLINEGAUSFIT6);
   GausFitButton6->SetEnabled(0);
   GausFitButton6->Associate(this);
   parFrame->AddFrame(GausFitButton6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 30, 0, 0));
   
- 
+
+  //slow filter baseline
+  TGLabel *LabelChooseSlowFIlterBaseline = new TGLabel(parFrame, "SF BL:"); 
+  parFrame->AddFrame(LabelChooseSlowFIlterBaseline, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelChooseSlowFIlterBaseline->SetTextColor(color, false);
+  chooseslowfilterbaselinep6 = new TGComboBox(parFrame);
+  parFrame->AddFrame(chooseslowfilterbaselinep6, new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
+  chooseslowfilterbaselinep6->Resize(80, 20);
+  chooseslowfilterbaselinep6->AddEntry("Calculate", 0);
+  chooseslowfilterbaselinep6->AddEntry("Old Baseline", 1);
+  chooseslowfilterbaselinep6->Select(0);
+
+  TGLabel *LabelOldSlowFilterSL = new TGLabel(parFrame," 'Old BL' choose -> SL:");
+  parFrame->AddFrame(LabelOldSlowFilterSL, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelOldSlowFilterSL->SetTextColor(color, false);
+  oldslowfilterparameterp6[0] = new TGNumberEntryField(parFrame, -1, 3.04, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.04,81.28);
+  parFrame->AddFrame(oldslowfilterparameterp6[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  oldslowfilterparameterp6[0]->Resize(40, 20);
+  TGLabel *LabelOldSlowFilterSG = new TGLabel(parFrame,"SG:");
+  parFrame->AddFrame(LabelOldSlowFilterSG, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelOldSlowFilterSG->SetTextColor(color, false);
+  oldslowfilterparameterp6[1] = new TGNumberEntryField(parFrame, -1, 0.64, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.06,81.28);
+  parFrame->AddFrame(oldslowfilterparameterp6[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  oldslowfilterparameterp6[1]->Resize(40, 20);
+  TGLabel *LabelOldSlowFilterTAU = new TGLabel(parFrame,"Tau:");
+  parFrame->AddFrame(LabelOldSlowFilterTAU, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelOldSlowFilterTAU->SetTextColor(color, false);
+  oldslowfilterparameterp6[2] = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESReal);
+  parFrame->AddFrame(oldslowfilterparameterp6[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  oldslowfilterparameterp6[2]->Resize(40, 20);
+  TGLabel *oldslowfilterrange = new TGLabel(parFrame, "FilRan:");
+  fClient->GetColorByName("purple", color);
+  oldslowfilterrange->SetTextColor(color, false);
+  parFrame->AddFrame(oldslowfilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  oldofflinefilterrangep6 = new TGNumberEntry(parFrame, 0, 2, -1, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 1, 6);
+  parFrame->AddFrame(oldofflinefilterrangep6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  oldofflinefilterrangep6->SetIntNumber(3);
+
+  
   
   // draw
   OfflineDrawButton6 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW6);
@@ -2351,9 +2406,8 @@ void Offline::Panel1Draw()
     }
   else
     {
-      retval = HongyiWuPixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+4], tracelength, RcdTrace,doubleslowfilter ,OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+8],oldslowfilterparameter[0]->GetNumber(),oldslowfilterparameter[1]->GetNumber(),200);//trace length/trace location
-      if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
-
+      retval = HongyiWuPixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+4], tracelength, RcdTrace,doubleslowfilter ,OfflineEventInformation[EventHeaderLength*OfflineCurrentCount+8],oldslowfilterparameter[0]->GetNumber(),oldslowfilterparameter[1]->GetNumber(),oldslowfilterparameter[2]->GetNumber(),oldofflinefilterrange->GetIntNumber(),200);//trace length/trace location
+      if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "HongyiWuPixie16ComputeSlowFiltersOffline", retval);
     }
   
 
@@ -3089,16 +3143,37 @@ void Offline::Panel6Draw()
 	  intflagenergy = SlowLen+SlowGap-2;
 	  break;
 	}
-  
+
+
+
+      
       for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
 	{
 	  if(offlinechnum6->GetIntNumber() == (OfflineEventInformation[EventHeaderLength*i] & 0xF))//ch
 	    {
+	      if(chooseslowfilterbaselinep6->GetSelected() == 1)//如果没有baseline数据，则采用计算基线的方法
+		{
+		  int tempheaderlength = ((OfflineEventInformation[EventHeaderLength*i] & 0x1F000) >> 12);
+		  if(!(headerrawenergysumsandbaseline->IsOn() && (tempheaderlength == 8 || tempheaderlength == 10 || tempheaderlength == 16 || tempheaderlength == 18)))
+		    {
+		      chooseslowfilterbaselinep6->Select(0);
+		    }
+		}
+
+	      
 	      retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum6->GetIntNumber(), OfflineEventInformation[EventHeaderLength*i+4], ((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16), RcdTrace6, doublefastfilter6, doublecfd6);//trace location/trace length
 	      if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ComputeFastFiltersOffline", retval);
-	      retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum6->GetIntNumber(), OfflineEventInformation[EventHeaderLength*i+4], ((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16), RcdTrace6,doubleslowfilter6);//trace location/trace length
-	      if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
 
+	      if(chooseslowfilterbaselinep6->GetSelected() == 0)
+		{
+		  retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum6->GetIntNumber(), OfflineEventInformation[EventHeaderLength*i+4], ((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16), RcdTrace6,doubleslowfilter6);//trace location/trace length
+		  if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
+		}
+	      else
+		{
+		  retval = HongyiWuPixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum6->GetIntNumber(), OfflineEventInformation[EventHeaderLength*i+4], ((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16), RcdTrace6,doubleslowfilter6, OfflineEventInformation[EventHeaderLength*i+8],oldslowfilterparameterp6[0]->GetNumber(),oldslowfilterparameterp6[1]->GetNumber(),oldslowfilterparameterp6[2]->GetNumber(),oldofflinefilterrangep6->GetIntNumber(),200);//trace location/trace length
+		  if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "HongyiWuPixie16ComputeSlowFiltersOffline", retval);
+		}
 	      
 	      int intflagtrigger = -1;
 	      for (int j = 0; j < inttracelength; ++j)

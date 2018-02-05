@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 四 10月 19 22:48:10 2017 (+0800)
+// Last-Updated: 一 2月  5 21:37:11 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 126
+//     Update #: 128
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -156,7 +156,8 @@ private:
   TGDoubleHSlider *dslider;
 
   TGComboBox *chooseslowfilterbaseline;
-  TGNumberEntryField *oldslowfilterparameter[2];
+  TGNumberEntryField *oldslowfilterparameter[3];
+  TGNumberEntry* oldofflinefilterrange;
   
   int tracelength;
   TMultiGraph *offlinemultigraph;
@@ -256,7 +257,10 @@ private:
   double *doubleslowfilter6;//
   bool flagdrawstop6;
 
-
+  TGComboBox *chooseslowfilterbaselinep6;
+  TGNumberEntryField *oldslowfilterparameterp6[3];
+  TGNumberEntry* oldofflinefilterrangep6;
+  
   
   // Fold7
   TCanvas *canvas7;

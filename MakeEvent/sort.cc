@@ -4,15 +4,16 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 6月  3 09:27:02 2017 (+0800)
-// Last-Updated: 一 11月 13 21:28:27 2017 (+0800)
+// Last-Updated: 一 2月  5 20:12:22 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 27
+//     Update #: 29
 // URL: http://wuhongyi.cn 
 
 #include "UserDefine.hh"
 #include "sort.hh"
 
 #include "TBranch.h"
+#include "TMath.h"
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
@@ -104,7 +105,7 @@ void sort::Process()
   
       if(flag)
 	{
-	  if(ts*10-inittime <= ULong64_t(windows))
+	  if(TMath::Abs(Long64_t(ts)*10-Long64_t(inittime)) <= Long64_t(windows))
 	    {
 	      ProcessEntry();
 	    }
@@ -144,7 +145,7 @@ void sort::InitEvent()
   inittime = ts*10;
 
 #if BOARDNUMBER > 1
-  if(evte < 65000 && evte >= adc[sid-2][ch])
+  if(evte >= adc[sid-2][ch])
     {
       adc[sid-2][ch] = evte;
       outofr[sid-2][ch] = outofr_;
@@ -157,7 +158,7 @@ void sort::InitEvent()
 	}
     }
 #else
-  if(evte < 65000 && evte >= adc[ch])
+  if(evte >= adc[ch])
     {
       adc[ch] = evte;
       outofr[ch] = outofr_;
@@ -176,7 +177,7 @@ void sort::InitEvent()
 void sort::ProcessEntry()
 {
 #if BOARDNUMBER > 1
-  if(evte < 65000 && evte >= adc[sid-2][ch])
+  if(evte >= adc[sid-2][ch])
     {
       adc[sid-2][ch] = evte;
       outofr[sid-2][ch] = outofr_;
@@ -189,7 +190,7 @@ void sort::ProcessEntry()
 	}
     }
 #else
-  if(evte < 65000 && evte >= adc[ch])
+  if(evte >= adc[ch])
     {
       adc[ch] = evte;
       outofr[ch] = outofr_;
