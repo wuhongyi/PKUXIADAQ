@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:39 2016 (+0800)
-// Last-Updated: 五 8月 25 13:28:16 2017 (+0800)
+// Last-Updated: 三 2月 21 16:15:03 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 46
+//     Update #: 52
 // URL: http://wuhongyi.cn 
 
 #include "r2root.hh"
@@ -42,6 +42,8 @@ r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int run
   rawdec = new decoder[flagfile];
   for (int i = 0; i < flagfile; ++i)
     {
+      // TODO
+      rawdec[i].setsamplerate(100);
       sprintf(tempfilename,"%s%s_R%04d_M%02d.bin",rawfilepath.Data(),filename.Data(),runnumber,i);
       rawdec[i].openfile(tempfilename);
       havedata[i] = false;
@@ -51,6 +53,8 @@ r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int run
   file = new TFile(tempfilename,"RECREATE");
   t = new TTree("tree","PKU XIA Pixie-16 Data");
 
+  t->Branch("sr",&sr,"sr/S");
+  
   t->Branch("pileup",&pileup,"pileup/O");
   t->Branch("outofr",&outofr,"outofr/O");
 
@@ -58,11 +62,12 @@ r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int run
   t->Branch("sid",&sid,"sid/S");
   t->Branch("ch",&ch,"ch/S");
   t->Branch("evte",&evte,"evte/s");
-  t->Branch("ts",&ts,"ts/l");
-  t->Branch("ets",&ets,"ets/l");
+  t->Branch("ts",&ts,"ts/L");
+  t->Branch("ets",&ets,"ets/L");
   
   t->Branch("cfd",&cfd,"cfd/s");
   t->Branch("cfdft",&cfdft,"cfdft/O");
+  t->Branch("cfds",&cfds,"cfds/S");
   
   t->Branch("trae",&trae,"trae/i");
   t->Branch("leae",&leae,"leae/i");
@@ -87,7 +92,7 @@ void r2root::Process()
 {
   benchmark->Start("r2root");//计时开始
   
-  ULong64_t timestamp;
+  Long64_t timestamp;
   int mark = -1; 
   bool flagdata = false;
   nevt = 0;
@@ -97,9 +102,10 @@ void r2root::Process()
       havedata[i] = rawdec[i].getnextevt();
     }
 
+  
   while(true)
     {
-      timestamp = ULLONG_MAX;
+      timestamp = LLONG_MAX;
       for (int i = 0; i < flagfile; ++i)
 	{
 	  if(havedata[i])
@@ -113,6 +119,7 @@ void r2root::Process()
 	}
       
       clearopt();
+      sr = rawdec[mark].getsamplerate();
       ch = rawdec[mark].getch();
       sid = rawdec[mark].getsid();
       cid = rawdec[mark].getcid();
@@ -120,6 +127,7 @@ void r2root::Process()
       ts = rawdec[mark].getts();
       cfd = rawdec[mark].getcfd();
       cfdft = rawdec[mark].getcfdft();
+      cfds = rawdec[mark].getcfds();
       evte = rawdec[mark].getevte();
       ltra = rawdec[mark].getltra();
       outofr = rawdec[mark].getoutofr();
@@ -147,8 +155,11 @@ void r2root::Process()
       t->Fill();
 
       nevt++;
-      if(nevt%10000 == 0) std::cout<<"nevt: "<<nevt<<std::endl;
-      
+      if(nevt%10000 == 0)
+	{
+	  std::cout<<"\r"<<"nevt: "<<nevt;
+	  std::cout << std::flush;
+	}
       havedata[mark] = rawdec[mark].getnextevt(); 
       flagdata = false;
       for (int i = 0; i < flagfile; ++i)
@@ -157,7 +168,9 @@ void r2root::Process()
 	}
       if(!flagdata) break;
     }
-   
+
+  std::cout<<std::endl;
+  
   file->cd();
   t->Write();
   file->Close();
@@ -167,7 +180,7 @@ void r2root::Process()
 
 bool r2root::IsFileExists(const char *name)
 {
-  if((access(name,F_OK))!=-1)  
+  if((access(name,F_OK)) != -1)  
     {  
       return true;
     }  
@@ -179,6 +192,7 @@ bool r2root::IsFileExists(const char *name)
 
 void r2root::clearopt()
 {
+  sr = 0;
   ch = -1;
   sid = -1;
   cid = -1;
@@ -186,6 +200,7 @@ void r2root::clearopt()
   ts = 0;
   cfd = 0;
   cfdft = 0;
+  cfds = 0;
   evte = 0;
   ltra = 0;
   outofr = 0;

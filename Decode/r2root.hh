@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:31 2016 (+0800)
-// Last-Updated: 五 8月 25 13:28:16 2017 (+0800)
+// Last-Updated: 三 2月 21 16:15:04 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 22
+//     Update #: 25
 // URL: http://wuhongyi.cn 
 
 #ifndef _R2ROOT_H_
@@ -24,8 +24,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <unistd.h> 
-// #define MAXTRACEN 10000
-#define MAXBOARD  24  //预设最大24个
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class r2root
@@ -54,14 +53,17 @@ private:
   TBenchmark *benchmark;
   
 private:
-  Short_t ch;
-  Short_t sid;
-  Short_t cid;
+  Short_t sr;//sampling rate
+  
+  Short_t ch;//channel
+  Short_t sid;//slot id
+  Short_t cid;//crate id
   Bool_t pileup;
-  ULong64_t ts;
+  Long64_t ts;//timestamp
   UShort_t cfd;
   Bool_t cfdft;//CFD forced trigger bit
-  UShort_t evte;
+  Short_t cfds;//CFD trigger source bits
+  UShort_t evte;//energy
   UShort_t ltra;
   Bool_t outofr;//Trace Out-of-Range Flag
   UInt_t trae;  // trailing energy sum
@@ -70,7 +72,7 @@ private:
   double base;	// baseline value
 
   UInt_t qs[8];
-  ULong64_t ets;
+  Long64_t ets;
   UShort_t data[MAXTRACEN];
   UShort_t dt[MAXTRACEN];
 };

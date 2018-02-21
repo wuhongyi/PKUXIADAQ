@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:06 2016 (+0800)
-// Last-Updated: 五 8月 25 13:28:16 2017 (+0800)
+// Last-Updated: 三 2月 21 16:11:09 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 13
+//     Update #: 17
 // URL: http://wuhongyi.cn 
 
 // 20170825 add external clock timestamp 
@@ -23,7 +23,8 @@
 #include <string.h>
 #include <stdio.h>
 
-#define MAXTRACEN 10000 // maximum number of trace points
+#define MAXBOARD  24  //预设最大24个
+#define MAXTRACEN 100000 // maximum number of trace points
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class decoder
@@ -32,6 +33,9 @@ public:
   decoder();
   virtual ~decoder();
 
+  inline void setsamplerate(short sr) {samplerate = sr;}//MHz
+  inline short getsamplerate() {return samplerate;}
+  
   void clearall();
   bool openfile(const char*);
 
@@ -47,9 +51,10 @@ public:
   inline unsigned short getlevt() {return levt;}
   inline bool getpileup() {return pileup;}
 
-  inline unsigned long getts() {return ts;}
+  inline long getts() {return ts;}
   inline unsigned short getcfd() {return cfd;}
   inline bool getcfdft() {return cfdft;}
+  inline short getcfds() {return cfds;}
   inline unsigned short getevte() {return evte;}
   inline unsigned short getltra() {return ltra;}
   inline bool getoutofr() {return outofr;}
@@ -64,7 +69,7 @@ public:
   inline void getqs(unsigned int *qqs) {memcpy(qqs,qs,sizeof(unsigned int)*8);}
 
   inline bool getetsflag() {return etsf;}
-  inline unsigned long getets() {return ets;}
+  inline long getets() {return ets;}
   
   inline bool gettraceflag() {return tracef;}
   inline void gettrace(unsigned short *da) {memcpy(da,data,sizeof(unsigned short)*ltra);}
@@ -73,6 +78,8 @@ private:
   bool readword();
   bool decode();
 
+  short samplerate;
+  
   int fd; // File descripter
   unsigned int buff; // buffer to read 4 buytes from file(32bit)
 	
@@ -86,9 +93,10 @@ private:
   unsigned short levt;  // event length
   bool pileup; 		// 0-->good event 1-->pileup event
 
-  unsigned long ts; 	// timestamp of this event
+  long ts; 	        // timestamp of this event
   unsigned short cfd;   // CFD fractional time
-  bool cfdft;//CFD forced trigger bit
+  bool cfdft;           //CFD forced trigger bit
+  short cfds;           //CFD trigger source bits
   
   unsigned short evte;  // Event enrgy
   unsigned short ltra;  // Trace length
@@ -104,7 +112,7 @@ private:
   unsigned int qs[8];	// qdc sum #0-#7
 
   bool etsf;
-  unsigned long ets; 	// external clock timestamp
+  long ets; 	// external clock timestamp
   
   // pulse shape (trace enabled)
   bool tracef;
@@ -128,10 +136,21 @@ private:
   const static unsigned int kShifttslo =        0;
   const static unsigned int kMasktshi =         0x0000ffff;
   const static unsigned int kShifttshi =        0;
-  const static unsigned int kMaskcfd = 		0x7fff0000;
-  const static unsigned int kShiftcfd =		16;
-  const static unsigned int kMaskcfdft =        0x80000000;
-  const static unsigned int kShiftcfdft =       31;
+  const static unsigned int kMaskcfd100 =       0x7fff0000;
+  const static unsigned int kShiftcfd100 =      16;
+  const static unsigned int kMaskcfdft100 =     0x80000000;
+  const static unsigned int kShiftcfdft100 =    31;
+  const static unsigned int kMaskcfd250 =       0x3fff0000;
+  const static unsigned int kShiftcfd250 =      16;
+  const static unsigned int kMaskcfdft250 =     0x80000000;
+  const static unsigned int kShiftcfdft250 =    31;
+  const static unsigned int kMaskcfds250 =      0x40000000;
+  const static unsigned int kShiftcfds250 =     30;
+
+  const static unsigned int kMaskcfd500 =       0x1fff0000;
+  const static unsigned int kShiftcfd500 =      16;
+  const static unsigned int kMaskcfds500 =      0xE0000000;
+  const static unsigned int kShiftcfds500 =     29;
   
   const static unsigned int kMaskevte =         0x0000ffff;
   const static unsigned int kShiftevte =        0;

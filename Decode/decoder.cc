@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:18 2016 (+0800)
-// Last-Updated: 五 10月 20 17:16:11 2017 (+0800)
+// Last-Updated: 三 2月 21 15:54:02 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 26
+//     Update #: 29
 // URL: http://wuhongyi.cn 
 
 #include "decoder.hh"
@@ -16,6 +16,7 @@ decoder::decoder()
 {
   clearall();
   fd = -1;
+  samplerate = 0;
 }
 
 decoder::~decoder()
@@ -34,7 +35,8 @@ void decoder::clearall()
 
   ts = 0;
   cfd = 0;
-  cfdft = 0;
+  cfdft = false;
+  cfds = 0;
   evte = 0;
   ltra = 0;
   outofr = 0;
@@ -120,9 +122,28 @@ bool decoder::decode()
       printf("error! 3rd word in header is missing!");
       return false;
     }
-  ts = ts+(((unsigned long)( buff & kMasktshi ) >> kShifttshi)*0xffffffff);
-  cfd = ( buff & kMaskcfd ) >> kShiftcfd; 
-  cfdft = ( buff & kMaskcfdft ) >> kShiftcfdft; 
+  ts = ts+(((long)( buff & kMasktshi ) >> kShifttshi)*0xffffffff);
+  switch(int(samplerate))
+    {
+    case 100:
+      cfd = ( buff & kMaskcfd100 ) >> kShiftcfd100; 
+      cfdft = ( buff & kMaskcfdft100 ) >> kShiftcfdft100; 
+      break;
+    case 250:
+      cfd = ( buff & kMaskcfd250 ) >> kShiftcfd250; 
+      cfdft = ( buff & kMaskcfdft250 ) >> kShiftcfdft250;
+      cfds = ( buff & kMaskcfds250 ) >> kShiftcfds250; 
+      break;
+    case 500:
+      cfd = ( buff & kMaskcfd500 ) >> kShiftcfd500;
+      cfds = ( buff & kMaskcfds500 ) >> kShiftcfds500;
+      if(cfds == 5) cfdft = true;
+      break;
+    default:
+      printf("error! Set Sample Rate: %d\n",samplerate);
+      break;
+    }
+
   
   // decode 4th
   if(!getnextword())
@@ -247,7 +268,7 @@ bool decoder::decode()
 	  printf("error! 2nd word in ets is missing!\n");
 	  return false;
 	}
-      ets = ets+(((unsigned long)( buff & kMasketshi ) >> kShiftetshi)*0xffffffff);
+      ets = ets+(((long)( buff & kMasketshi ) >> kShiftetshi)*0xffffffff);
     }
   
   // decode trac.
