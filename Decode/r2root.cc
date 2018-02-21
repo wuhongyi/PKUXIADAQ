@@ -4,17 +4,17 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:39 2016 (+0800)
-// Last-Updated: 三 2月 21 16:15:03 2018 (+0800)
+// Last-Updated: 三 2月 21 20:34:17 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 52
+//     Update #: 56
 // URL: http://wuhongyi.cn 
 
 #include "r2root.hh"
+#include "UserDefine.hh"
 
 #include <iostream>
 #include <climits>
 #include <cmath>
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int runnumber)
@@ -25,27 +25,67 @@ r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int run
   
   char tempfilename[1024];
 
-  do
-    {
-      sprintf(tempfilename,"%s%s_R%04d_M%02d.bin",rawfilepath.Data(),filename.Data(),runnumber,flagfile);
-      // std::cout<<tempfilename<<std::endl;
-    } while (IsFileExists(tempfilename) && ++flagfile);
+  // OLD 20180221
+  // do
+  //   {
+  //     sprintf(tempfilename,"%s%s_R%04d_M%02d.bin",rawfilepath.Data(),filename.Data(),runnumber,flagfile);
+  //     // std::cout<<tempfilename<<std::endl;
+  //   } while (IsFileExists(tempfilename) && ++flagfile);
   
-  std::cout<<"Mod No. "<<flagfile<<std::endl;
-  
-  if(flagfile == 0)
+  // std::cout<<"Mod No. "<<flagfile<<std::endl;
+
+  // if(flagfile == 0)
+  //   {
+  //     std::cout<<"can't find raw data!"<<std::endl;
+  //     exit(1);
+  //   }
+
+#ifdef Crate0
+#if Crate0num > 0
+  flagfile = Crate0num;
+#else
+  std::cout<<"Crate 0 num < 1. Please check the file ==> UserDefine.hh"<<std::endl;
+  exit(1);
+#endif
+#else
+  std::cout<<"Not define Crate0. Please check the file ==> UserDefine.hh"<<std::endl;
+  exit(1);
+#endif
+
+  for (int i = 0; i < flagfile; ++i)
     {
-      std::cout<<"can't find raw data!"<<std::endl;
-      exit(1);
+      if(Crate0SamplingRate[i] == 100 || Crate0SamplingRate[i] == 250 || Crate0SamplingRate[i] == 500)
+	{
+	  sprintf(tempfilename,"%s%s_R%04d_M%02d.bin",rawfilepath.Data(),filename.Data(),runnumber,i);
+	  if(!IsFileExists(tempfilename))
+	    {
+	      std::cout<<"can't find raw data: "<<tempfilename<<std::endl;
+	      exit(1);
+	    }
+	}
     }
 
+  std::cout<<"Mod No. "<<flagfile<<std::endl;
+  
   rawdec = new decoder[flagfile];
   for (int i = 0; i < flagfile; ++i)
     {
-      // TODO
-      rawdec[i].setsamplerate(100);
-      sprintf(tempfilename,"%s%s_R%04d_M%02d.bin",rawfilepath.Data(),filename.Data(),runnumber,i);
-      rawdec[i].openfile(tempfilename);
+      // OLD 20180221
+      // rawdec[i].setsamplerate(100);
+      // sprintf(tempfilename,"%s%s_R%04d_M%02d.bin",rawfilepath.Data(),filename.Data(),runnumber,i);
+      // rawdec[i].openfile(tempfilename);
+      // havedata[i] = false;
+
+      if(Crate0SamplingRate[i] == 100 || Crate0SamplingRate[i] == 250 || Crate0SamplingRate[i] == 500)
+	{
+	  rawdec[i].setsamplerate(Crate0SamplingRate[i]);
+	  sprintf(tempfilename,"%s%s_R%04d_M%02d.bin",rawfilepath.Data(),filename.Data(),runnumber,i);
+	  rawdec[i].openfile(tempfilename);
+	}
+      else
+	{
+	  rawdec[i].setsamplerate(0);
+	}
       havedata[i] = false;
     }
 
@@ -99,7 +139,11 @@ void r2root::Process()
 
   for (int i = 0; i < flagfile; ++i)
     {
-      havedata[i] = rawdec[i].getnextevt();
+      // OLD 20180221
+      // havedata[i] = rawdec[i].getnextevt();
+      
+      if(rawdec[i].getsamplerate() != 0)
+	havedata[i] = rawdec[i].getnextevt();
     }
 
   
@@ -110,10 +154,38 @@ void r2root::Process()
 	{
 	  if(havedata[i])
 	    {
-	      if(rawdec[i].getts() < timestamp)
+	      // OLD 20180221
+	      // if(rawdec[i].getts() < timestamp)
+	      // 	{
+	      // 	  timestamp = rawdec[i].getts();
+	      // 	  mark = i;
+	      // 	}
+ 
+	      switch(int(rawdec[i].getsamplerate()))
 		{
-		  timestamp = rawdec[i].getts();
-		  mark = i;
+		case 100:
+		  if(10*rawdec[i].getts() < timestamp)
+		    {
+		      timestamp = 10*rawdec[i].getts();
+		      mark = i;
+		    }
+		  break;
+		case 250:
+		  if(8*rawdec[i].getts() < timestamp)
+		    {
+		      timestamp = 8*rawdec[i].getts();
+		      mark = i;
+		    }
+		  break;
+		case 500:
+		  if(10*rawdec[i].getts() < timestamp)
+		    {
+		      timestamp = 10*rawdec[i].getts();
+		      mark = i;
+		    }
+		  break;
+		default:
+		  break;
 		}
 	    }
 	}

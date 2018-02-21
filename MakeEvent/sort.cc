@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 6月  3 09:27:02 2017 (+0800)
-// Last-Updated: 三 2月 21 16:57:01 2018 (+0800)
+// Last-Updated: 三 2月 21 20:49:51 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 34
+//     Update #: 35
 // URL: http://wuhongyi.cn 
 
 #include "UserDefine.hh"
@@ -117,8 +117,22 @@ void sort::Process()
   
       if(flag)
 	{
-	  // TODO 100/250/500MHz  ???
-	  if(TMath::Abs(Long64_t(ts)*10-Long64_t(inittime)) <= Long64_t(windows))
+	  switch(int(sr_))
+	    {
+	    case 100:
+	      tsnow = ts*10;
+	      break;
+	    case 250:
+	      tsnow = ts*8;
+	      break;
+	    case 500:
+	      tsnow = ts*10;
+	      break;
+	    default:
+	      break;
+	    }
+	  
+	  if(TMath::Abs(tsnow-inittime) <= Long64_t(windows))
 	    {
 	      ProcessEntry();
 	    }
@@ -156,7 +170,22 @@ void sort::Process()
 void sort::InitEvent()
 {
   clearopt();
-  inittime = ts*10;//TODO  ???
+
+  switch(int(sr_))
+    {
+    case 100:
+      inittime = ts*10;
+      break;
+    case 250:
+      inittime = ts*8;
+      break;
+    case 500:
+      inittime = ts*10;
+      break;
+    default:
+      break;
+    }
+     
 
 #if BOARDNUMBER > 1
   if(evte >= adc[sid-2][ch])

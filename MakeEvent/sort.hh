@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 6月  3 09:26:49 2017 (+0800)
-// Last-Updated: 三 2月 21 16:55:29 2018 (+0800)
+// Last-Updated: 三 2月 21 20:49:52 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 10
+//     Update #: 11
 // URL: http://wuhongyi.cn 
 
 #ifndef _SORT_H_
@@ -86,6 +86,7 @@ private:
 
   bool flag;
   Long64_t inittime;
+  Long64_t tsnow;
   int windows;//组合事件门宽 ns
 
   TBenchmark *benchmark;
