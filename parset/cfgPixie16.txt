@@ -3,6 +3,6 @@
 ../firmware/syspixie16_revfpku_adc100mhz_r36481/syspixie16_revfpku_adc100mhz_r36481.bin
 ../firmware/pixie16_revf_14b100m_firmware_release_11032016/fippixie16_revfgeneral_14b100m_r36263.bin
 FPGATrig
-../firmware/Pixie16DSP_revfgeneral_14b100m_r38495/Pixie16DSP_revfgeneral_14b100m_r38896.ldr
+../firmware/Pixie16DSP_revfgeneral_14b100m_r38896/Pixie16DSP_revfgeneral_14b100m_r38896.ldr
 ../parset/tpc.set
-../firmware/Pixie16DSP_revfgeneral_14b100m_r38495/Pixie16DSP_revfgeneral_14b100m_r38896.var
+../firmware/Pixie16DSP_revfgeneral_14b100m_r38896/Pixie16DSP_revfgeneral_14b100m_r38896.var
