@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:06 2016 (+0800)
-// Last-Updated: 四 2月 22 12:48:26 2018 (+0800)
+// Last-Updated: 四 2月 22 16:28:02 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 18
+//     Update #: 19
 // URL: http://wuhongyi.cn 
 
 // 20170825 add external clock timestamp 
@@ -52,7 +52,7 @@ public:
   inline bool getpileup() {return pileup;}
 
   inline long getts() {return ts;}
-  inline unsigned short getcfd() {return cfd;}
+  inline short getcfd() {return cfd;}
   inline bool getcfdft() {return cfdft;}
   inline short getcfds() {return cfds;}
   inline unsigned short getevte() {return evte;}
@@ -94,7 +94,7 @@ private:
   bool pileup; 		// 0-->good event 1-->pileup event
 
   long ts; 	        // timestamp of this event
-  unsigned short cfd;   // CFD fractional time
+  short cfd;   // CFD fractional time
   bool cfdft;           //CFD forced trigger bit
   short cfds;           //CFD trigger source bits
   

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:31 2016 (+0800)
-// Last-Updated: 三 2月 21 16:15:04 2018 (+0800)
+// Last-Updated: 四 2月 22 17:05:54 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 25
+//     Update #: 28
 // URL: http://wuhongyi.cn 
 
 #ifndef _R2ROOT_H_
@@ -47,10 +47,17 @@ private:
   bool  havedata[MAXBOARD];//如果还有数据则为true
   int flagfile;
   Int_t nevt;
+
+  int StatisticsOutOfRange[MAXBOARD][16];//invalid count
+  int StatisticsPileup[MAXBOARD][16];
+  int StatisticsCfdForcedTrigger[MAXBOARD][16];
+  int StatisticsEventCount[MAXBOARD][16];
   
   TFile *file;
   TTree *t;
   TBenchmark *benchmark;
+  int Run;
+  TString FileName;
   
 private:
   Short_t sr;//sampling rate
@@ -60,7 +67,7 @@ private:
   Short_t cid;//crate id
   Bool_t pileup;
   Long64_t ts;//timestamp
-  UShort_t cfd;
+  Short_t cfd;
   Bool_t cfdft;//CFD forced trigger bit
   Short_t cfds;//CFD trigger source bits
   UShort_t evte;//energy

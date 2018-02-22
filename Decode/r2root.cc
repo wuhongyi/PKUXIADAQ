@@ -4,15 +4,16 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:39 2016 (+0800)
-// Last-Updated: 三 2月 21 20:34:17 2018 (+0800)
+// Last-Updated: 四 2月 22 17:05:54 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 56
+//     Update #: 62
 // URL: http://wuhongyi.cn 
 
 #include "r2root.hh"
 #include "UserDefine.hh"
 
 #include <iostream>
+#include <fstream>
 #include <climits>
 #include <cmath>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -20,7 +21,16 @@
 r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int runnumber)
 {
   flagfile = 0;
-
+  for (int i = 0; i < MAXBOARD; ++i)
+    for (int j = 0; j < 16; ++j)
+      {
+	StatisticsOutOfRange[i][j] = 0;
+	StatisticsPileup[i][j] = 0;
+	StatisticsCfdForcedTrigger[i][j] = 0;
+	StatisticsEventCount[i][j] = 0;
+      }
+  Run = runnumber;
+  FileName = filename;
   benchmark = new TBenchmark;
   
   char tempfilename[1024];
@@ -105,7 +115,7 @@ r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int run
   t->Branch("ts",&ts,"ts/L");
   t->Branch("ets",&ets,"ets/L");
   
-  t->Branch("cfd",&cfd,"cfd/s");
+  t->Branch("cfd",&cfd,"cfd/S");
   t->Branch("cfdft",&cfdft,"cfdft/O");
   t->Branch("cfds",&cfds,"cfds/S");
   
@@ -226,6 +236,11 @@ void r2root::Process()
 	}
       t->Fill();
 
+      StatisticsEventCount[mark][ch]++;
+      if(outofr) StatisticsOutOfRange[mark][ch]++;
+      if(pileup) StatisticsPileup[mark][ch]++;
+      if(cfdft) StatisticsCfdForcedTrigger[mark][ch]++;
+      
       nevt++;
       if(nevt%10000 == 0)
 	{
@@ -246,6 +261,27 @@ void r2root::Process()
   file->cd();
   t->Write();
   file->Close();
+
+  
+  std::ofstream writetxt;
+  writetxt.open(TString::Format("%s_R%04d.txt",FileName.Data(), Run).Data());
+  if(!writetxt.is_open())
+    {
+      std::cout<<"can't open text file."<<std::endl;
+    }
+  writetxt<<"Mod  Channel  OutOfRange  Pileup  CfdForcedTrigger  TotalEvent"<<std::endl;
+
+  for (int i = 0; i < flagfile; ++i)
+    {
+      writetxt<<std::endl;
+      for (int j = 0; j < 16; ++j)
+	{
+	  writetxt<<i<<"  "<<j<<"  "<<StatisticsOutOfRange[i][j]<<"  "<<StatisticsPileup[i][j]<<"  "<<StatisticsCfdForcedTrigger[i][j]<<"  "<<StatisticsEventCount[i][j]<<std::endl;
+	}
+    }
+ 
+  writetxt.close();
+
   
   benchmark->Show("r2root");//计时结束并输出时间
 }

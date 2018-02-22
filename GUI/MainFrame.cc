@@ -29,7 +29,7 @@ MainFrame::MainFrame(const TGWindow * p)
   ///////////////////////////////////////
   CreateMenuBar();
 
-  SetWindowName("PKU Pixie16-RevF DAQ");
+  SetWindowName("PKU XIA Pixie-16 DAQ");
   MapSubwindows();
   MapWindow();
   Resize(INITIAL_WIDTH, INITIAL_HIGHT);
@@ -169,7 +169,7 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 
 	    case ABOUT:
-	     about =  new TRootHelpDialog(this, "About PKU Pixie16-RevF DAQ", 550, 250);
+	     about =  new TRootHelpDialog(this, "About PKU XIA Pixie-16 DAQ", 550, 250);
 	     about->SetText(gAbout);
 	     about->Popup();
 	      break;

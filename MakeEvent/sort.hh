@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 6月  3 09:26:49 2017 (+0800)
-// Last-Updated: 三 2月 21 20:49:52 2018 (+0800)
+// Last-Updated: 四 2月 22 17:15:33 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 11
+//     Update #: 12
 // URL: http://wuhongyi.cn 
 
 #ifndef _SORT_H_
@@ -55,7 +55,7 @@ private:
   Long64_t ts;
   Short_t ch;
   Short_t sid;
-  UShort_t cfd_;   // CFD fractional time
+  Short_t cfd_;   // CFD fractional time
   bool cfdft_;//CFD forced trigger bit
   Short_t cfds_;
   Bool_t outofr_;//Trace Out-of-Range Flag
@@ -70,7 +70,7 @@ private:
   bool outofr[BOARDNUMBER][16];
   UInt_t qdc[BOARDNUMBER][16][8];
   Long64_t tdc[BOARDNUMBER][16];
-  UShort_t cfd[BOARDNUMBER][16]; 
+  Short_t cfd[BOARDNUMBER][16]; 
   bool cfdft[BOARDNUMBER][16];
   Short_t cfds[BOARDNUMBER][16]; 
 #else
@@ -79,7 +79,7 @@ private:
   bool outofr[16];
   UInt_t qdc[16][8];
   Long64_t tdc[16];
-  UShort_t cfd[16];
+  Short_t cfd[16];
   bool cfdft[16];
   Short_t cfds[16]; 
 #endif

@@ -2,19 +2,22 @@
 #define MAINFRAME_HH_
 
 const char gAbout[] = "\
-Version: 1.0 ---> 2016.11.06\n\
+Version: Beta ---> Developer version\n\
 \n\
 The program developed by Peking University.\n\
-The program applies to XIA Pixie16-RevF.\n\
+The program applies to XIA Pixie-16. \n\
+Support 100 MHz(RevD 12bit,RevF 14-bit), \n\
+        250 MHz(RevF 12/14/16-bit), \n\
+        500 MHz(RevF 12/14-bit)\n\
 \n\
 \n\
 Program Developer:\n\
-Hongyi Wu(wuhongyi@qq.com)\n\
-Jing Li (lijinger02@163.com)\n\
+  Hongyi Wu (wuhongyi@qq.com   Peking University)\n\
+  Jing Li (lijinger02@163.com   Peking University)\n\
 \n\
 Other Contributor:\n\
-Zhihuan Li\n\
-Hui Tan(XIA LLC)\n\
+  Zhihuan Li (Peking University)\n\
+  Hui Tan (XIA LLC)\n\
 \n\
 ";
 

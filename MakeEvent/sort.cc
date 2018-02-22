@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 6月  3 09:27:02 2017 (+0800)
-// Last-Updated: 三 2月 21 20:49:51 2018 (+0800)
+// Last-Updated: 四 2月 22 17:15:33 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 35
+//     Update #: 36
 // URL: http://wuhongyi.cn 
 
 #include "UserDefine.hh"
@@ -65,7 +65,7 @@ sort::sort(TString rawfilepath,TString outfilepath,TString filename,int runnumbe
   t_out->Branch("outofr",&outofr,TString::Format("outofr[%d][16]/O",BOARDNUMBER).Data());
   t_out->Branch("qdc",&qdc,TString::Format("qdc[%d][16][8]/i",BOARDNUMBER).Data());
   t_out->Branch("tdc",&tdc,TString::Format("tdc[%d][16]/L",BOARDNUMBER).Data());
-  t_out->Branch("cfd",&cfd,TString::Format("cfd[%d][16]/s",BOARDNUMBER).Data());
+  t_out->Branch("cfd",&cfd,TString::Format("cfd[%d][16]/S",BOARDNUMBER).Data());
   t_out->Branch("cfdft",&cfdft,TString::Format("cfdft[%d][16]/O",BOARDNUMBER).Data());
   t_out->Branch("cfds",&cfds,TString::Format("cfds[%d][16]/S",BOARDNUMBER).Data());
 #else
@@ -74,7 +74,7 @@ sort::sort(TString rawfilepath,TString outfilepath,TString filename,int runnumbe
   t_out->Branch("outofr",&outofr,"outofr[16]/O");
   t_out->Branch("qdc",&qdc,"qdc[16][8]/i");
   t_out->Branch("tdc",&tdc,"tdc[16]/L");
-  t_out->Branch("cfd",&cfd,"cfd[16]/s");
+  t_out->Branch("cfd",&cfd,"cfd[16]/S");
   t_out->Branch("cfdft",&cfdft,"cfdft[16]/O");
   t_out->Branch("cfds",&cfds,"cfds[16]/S");
 #endif
