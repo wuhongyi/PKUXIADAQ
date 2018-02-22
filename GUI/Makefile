@@ -9,11 +9,11 @@ LIBS:=../software/libPixie16App.a  ../software/libPixie16Sys.a  $(PLX_SDK_DIR)/P
 
 
 
-INCLUDES:=Global.hh Detector.hh ExpertMod.hh Table.hh Histogram.hh Csra.hh MainFrame.hh ScopedT.hh TriggerFilter.hh Cfd.hh Qdc.hh LogicTrigger.hh Offline.hh Base.hh Energy.hh Simulation.hh
+INCLUDES:=Global.hh Detector.hh ExpertMod.hh Table.hh Histogram.hh Csra.hh MainFrame.hh ScopedT.hh TriggerFilter.hh Cfd.hh Qdc.hh LogicTrigger.hh Offline.hh Base.hh Energy.hh Simulation.hh OfflineData.hh
 
-OBJECTS:=Global.o ExpertMod.o Histogram.o Csra.o Detector.o MainFrame.o main.o ScopedT.o Table.o TriggerFilter.o MainDict.o Cfd.o Qdc.o LogicTrigger.o Offline.o Base.o Energy.o Simulation.o
+OBJECTS:=Global.o ExpertMod.o Histogram.o Csra.o Detector.o MainFrame.o main.o ScopedT.o Table.o TriggerFilter.o MainDict.o Cfd.o Qdc.o LogicTrigger.o Offline.o Base.o Energy.o Simulation.o OfflineData.o
 
-SRCS:=Global.cc ExpertMod.cc Histogram.cc Csra.cc Detector.cc MainFrame.cc main.cc ScopedT.cc Table.cc TriggerFilter.cc  MainDict.cc Cfd.cc Qdc.cc LogicTrigger.cc Offline.cc Base.cc Energy.cc Simulation.cc
+SRCS:=Global.cc ExpertMod.cc Histogram.cc Csra.cc Detector.cc MainFrame.cc main.cc ScopedT.cc Table.cc TriggerFilter.cc  MainDict.cc Cfd.cc Qdc.cc LogicTrigger.cc Offline.cc Base.cc Energy.cc Simulation.cc OfflineData.cc
 
 all: $(OBJ)
 

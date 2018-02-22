@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 一 2月  5 22:01:52 2018 (+0800)
+// Last-Updated: 四 2月 22 11:28:10 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 594
+//     Update #: 607
 // URL: http://wuhongyi.cn 
 
 
@@ -47,6 +47,7 @@
 //exttime_lo
 //exttime_hi
 
+#include "OfflineData.hh"
 #include "Offline.hh"
 #include "Detector.hh"
 #include "Global.hh"
@@ -81,7 +82,8 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   chanNumber6 = 0;
   chanNumber8 = 0;
   fileRunNum = 0;
-  
+
+  offlinedata = NULL;
   OfflineEventInformation = NULL;
   OfflineCurrentCount = -1;
   rawdata = NULL;
@@ -250,6 +252,7 @@ Offline::~Offline()
       if(doubleslowfilter2[i] != NULL) delete []doubleslowfilter2[i];
     }
 
+  if(offlinedata != NULL) delete offlinedata;
   if(OfflineEventInformation != NULL) delete []OfflineEventInformation;
      
   if(offlinemultigraph != NULL) delete offlinemultigraph;
@@ -3512,6 +3515,30 @@ void Offline::Panel9Draw()
 
 void Offline::Panel0ReadFile()
 {
+  if(offlinedata != NULL)
+    {
+      delete offlinedata;
+      offlinedata = NULL;
+    }
+  offlinedata = new OfflineData;
+  switch(choosesamplemhz0->GetSelected())
+    {
+    case 1 ://100
+      offlinedata->SetSamplingRate(100);
+      break;
+    case 2 ://250
+      offlinedata->SetSamplingRate(250);
+      break;	  
+    case 3 ://500
+      offlinedata->SetSamplingRate(500);
+      break;
+    default:
+      std::cout<<"ERROR: Please call Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
+      break;
+    }
+
+
+  
   OfflineCurrentCount = -1;
   fClient->GetColorByName("green", color);
   OfflineFileStatus->SetTextColor(color, false);
@@ -3523,21 +3550,34 @@ void Offline::Panel0ReadFile()
   if(headerrawenergysumsandbaseline->IsOn())
     {
       EventHeaderLength += 4;
+
+      offlinedata->FlagRawEnergySumsAndBaseline(true);
     }
   if(headerqdcsums->IsOn())
     {
       EventHeaderLength += 8;
+
+      offlinedata->FlagQDCs(true);
     }
   if(headerexternaltimestamp->IsOn())
     {
       EventHeaderLength += 2;
+
+      offlinedata->FlagExternalTimestamp(true);
     }
   
   sprintf(offlinefilename,"%s%s_R%04d_M%02d.bin",filepathtext->GetText(),filenametext->GetText(),int(offlinefilerunnum->GetIntNumber()),int(offlinemodnum->GetIntNumber()));
+
+  offlinedata->SetFileName(offlinefilename);
+  offlinedata->ReadModuleEvents();
+  
   // GOTO need check file 
-  OfflineModuleEventsCount = GetModuleEvents(offlinefilename);
+  OfflineModuleEventsCount = GetModuleEvents(offlinefilename);//OLD
+  // OfflineModuleEventsCount = offlinedata->GetOfflineModuleEventsCount();//NN
+
   if(OfflineModuleEventsCount > 0)
     {
+      //OLD
       if(OfflineEventInformation != NULL)
 	{
 	  delete []OfflineEventInformation;
@@ -3547,8 +3587,18 @@ void Offline::Panel0ReadFile()
       // std::cout<<"int length size: "<<EventHeaderLength*OfflineModuleEventsCount<<std::endl;
       memset(OfflineEventInformation, 0, sizeof(unsigned int)*OfflineModuleEventsCount*EventHeaderLength);//置零
       GetEventsInfo(offlinefilename,OfflineEventInformation);
-	      
-      //
+
+
+      offlinedata->ReadEventsInfo();
+      // for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
+      // 	{
+      // 	  // std::cout<< OfflineEventInformation[EventHeaderLength*i+3] <<"   "<< offlinedata->GetEventHeader(i,3) <<std::endl;
+
+      // 	  std::cout<< OfflineEventInformation[EventHeaderLength*i+8] <<"   "<< offlinedata->GetEventSUMS4(i,3) <<std::endl;
+      // 	}
+
+      
+      
       fClient->GetColorByName("red", color);
       OfflineFileStatus->SetTextColor(color, false);
       char staok[20];

@@ -32,7 +32,7 @@ done
 
 $CXX $ROOTCFLAGS $CXXFLAGS -c MainDict.cc
 
-OBJECTS='Global.o ExpertMod.o Histogram.o Csra.o Detector.o MainFrame.o main.o ScopedT.o Table.o TriggerFilter.o MainDict.o Cfd.o Qdc.o LogicTrigger.o Offline.o Base.o Energy.o Simulation.o'
+OBJECTS='Global.o ExpertMod.o Histogram.o Csra.o Detector.o MainFrame.o main.o ScopedT.o Table.o TriggerFilter.o MainDict.o Cfd.o Qdc.o LogicTrigger.o Offline.o Base.o Energy.o Simulation.o OfflineData.o'
 
 $CXX $OBJECTS $CXXFLAGS $ROOTLIBS $ROOTCFLAGS $LIBS $PLX_SDK_DIR/PlxApi/Library/PlxApi.a -lGui  -o $OBJ
 

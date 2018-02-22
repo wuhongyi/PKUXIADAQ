@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 一 2月  5 21:37:11 2018 (+0800)
+// Last-Updated: 四 2月 22 10:51:31 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 128
+//     Update #: 130
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -36,7 +36,7 @@
 #include "TMultiGraph.h"
 #include "TRootEmbeddedCanvas.h"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
+class OfflineData;
 class Detector;
 class Offline : public TGTransientFrame
 {
@@ -67,7 +67,7 @@ public:
 private:
   Pixel_t color;
   Detector *detector;
-  int EventHeaderLength;
+  int EventHeaderLength;// RR
   TObject *selected;
   TGTextEntry *filepathtext;
   TGTextEntry *filenametext;
@@ -76,8 +76,8 @@ private:
 
   void OfflineChangeValues(int mod,int ch);
   void OfflineLoadValues(int mod,int ch);
-  unsigned int GetModuleEvents(char *FileName);//return events
-  void GetEventsInfo(char *FileName, unsigned int *EventInformation);
+  unsigned int GetModuleEvents(char *FileName);//return events    RR
+  void GetEventsInfo(char *FileName, unsigned int *EventInformation);// RR
 
   enum Commands
     {
@@ -129,8 +129,9 @@ private:
   TGNumberEntry	*offlinefilerunnum;//int
   TGNumberEntry	*offlinemodnum;//int
   
-  unsigned int *OfflineEventInformation;
+  unsigned int *OfflineEventInformation;// RR
   unsigned int OfflineModuleEventsCount;
+  OfflineData *offlinedata;
   unsigned int OfflineCurrentCount;
 
   TGComboBox *choosesamplemhz0;
