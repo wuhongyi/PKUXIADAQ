@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:31 2016 (+0800)
-// Last-Updated: 四 2月 22 17:05:54 2018 (+0800)
+// Last-Updated: 四 2月 22 17:19:51 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 28
+//     Update #: 29
 // URL: http://wuhongyi.cn 
 
 #ifndef _R2ROOT_H_
@@ -51,6 +51,7 @@ private:
   int StatisticsOutOfRange[MAXBOARD][16];//invalid count
   int StatisticsPileup[MAXBOARD][16];
   int StatisticsCfdForcedTrigger[MAXBOARD][16];
+  int StatisticsEnergy0[MAXBOARD][16];
   int StatisticsEventCount[MAXBOARD][16];
   
   TFile *file;
