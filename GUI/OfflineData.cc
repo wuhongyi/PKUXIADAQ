@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 2月 22 09:13:30 2018 (+0800)
-// Last-Updated: 四 2月 22 11:41:51 2018 (+0800)
+// Last-Updated: 四 2月 22 15:37:50 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 7
+//     Update #: 14
 // URL: http://wuhongyi.cn 
 
 #include "OfflineData.hh"
@@ -57,10 +57,10 @@ OfflineData::OfflineData()
 
 OfflineData::~OfflineData()
 {
-  if(OfflineEventInformation != NULL)
-    {
-      delete OfflineEventInformation;
-    }
+  // if(OfflineEventInformation != NULL)
+  //   {
+  //     delete []OfflineEventInformation;
+  //   }
 
 }
 
@@ -75,7 +75,7 @@ void OfflineData::ReadEventsInfo()
   if(OfflineModuleEventsCount > 0)
     {
       OfflineEventInformation = new EventData[OfflineModuleEventsCount];
-
+      memset(OfflineEventInformation, 0, sizeof(EventData)*OfflineModuleEventsCount);//置零
 
       unsigned int eventdata, headerlength, eventlength;
       // unsigned int tracelength;
@@ -353,72 +353,124 @@ unsigned int OfflineData::GetModuleEvents(const char *FileName)
 
 unsigned int OfflineData::GetEventChannel(unsigned int event)
 {
-
+  return (OfflineEventInformation[event].Header[0] & kMaskchannel) >> kShiftchannel;
 }
 
 unsigned int OfflineData::GetEventSlot(unsigned int event)
 {
-
+  return (OfflineEventInformation[event].Header[0] & kMasksid) >> kShiftsid;
 }
 
 unsigned int OfflineData::GetEventCrate(unsigned int event)
 {
-
+  return (OfflineEventInformation[event].Header[0] & kMaskcid) >> kShiftcid;
 }
 
 unsigned int OfflineData::GetEventHeaderLength(unsigned int event)
 {
-
+ return (OfflineEventInformation[event].Header[0] & kMasklhead) >> kShiftlhead;
 }
 
 unsigned int OfflineData::GetEventLength(unsigned int event)
 {
-
+  return (OfflineEventInformation[event].Header[0] & kMasklevt) >> kShiftlevt;
 }
 
 unsigned int OfflineData::GetEventFinishCode(unsigned int event)
 {
-
+  return (OfflineEventInformation[event].Header[0] & kMaskpileup) >> kShiftpileup;
 }
 
 unsigned int OfflineData::GetEventTime_Low(unsigned int event)
 {
-
+  return (OfflineEventInformation[event].Header[1] & kMasktslo) >> kShifttslo;
 }
 
 unsigned int OfflineData::GetEventTime_High(unsigned int event)
 {
-
+  return (OfflineEventInformation[event].Header[2] & kMasktshi) >> kShifttshi;
 }
 
 unsigned int OfflineData::GetEventCfd(unsigned int event)
 {
-
+  unsigned int temp;
+  switch(int(SamplingRate))
+    {
+    case 100:
+      temp = (OfflineEventInformation[event].Header[2] & kMaskcfd100) >> kShiftcfd100;
+      break;
+    case 250:
+      temp = (OfflineEventInformation[event].Header[2] & kMaskcfd250) >> kShiftcfd250;
+      break;
+    case 500:
+      temp = (OfflineEventInformation[event].Header[2] & kMaskcfd500) >> kShiftcfd500;
+      break;
+    default:
+      std::cout<<"ERROR Sample Rate."<<std::endl;
+      temp = 0;
+      break;
+    }
+  return temp;
 }
 
 unsigned int OfflineData::GetEventCfdForcedTriggerBit(unsigned int event)
 {
-
+  unsigned int temp;
+  switch(int(SamplingRate))
+    {
+    case 100:
+      temp = (OfflineEventInformation[event].Header[2] & kMaskcfdft100) >> kShiftcfdft100;
+      break;
+    case 250:
+      temp = (OfflineEventInformation[event].Header[2] & kMaskcfdft250) >> kShiftcfdft250;
+      break;
+    case 500:
+      temp = (OfflineEventInformation[event].Header[2] & kMaskcfds500) >> kShiftcfds500;
+      if(temp == 7) temp = 1;
+      break;
+    default:
+      std::cout<<"ERROR Sample Rate."<<std::endl;
+      temp = 0;
+      break;
+    }
+  return temp;
 }
 
 unsigned int OfflineData::GetEventCfdTriggerSourceBits(unsigned int event)
 {
-
+  unsigned int temp;
+  switch(int(SamplingRate))
+    {
+    case 100:
+      temp = 0;
+      break;
+    case 250:
+      temp = (OfflineEventInformation[event].Header[2] & kMaskcfds250) >> kShiftcfds250; 
+      break;
+    case 500:
+      temp = (OfflineEventInformation[event].Header[2] & kMaskcfds500) >> kShiftcfds500;
+      break;
+    default:
+      std::cout<<"ERROR Sample Rate."<<std::endl;
+      temp = 0;
+      break;
+    }
+  return temp;
 }
 
 unsigned int OfflineData::GetEventTraceLength(unsigned int event)
 {
-
+  return (OfflineEventInformation[event].Header[3] & kMaskltra) >> kShiftltra;
 }
 
 unsigned int OfflineData::GetEventEnergy(unsigned int event)
 {
-
+  return (OfflineEventInformation[event].Header[3] & kMaskevte) >> kShiftevte;
 }
 
 unsigned int OfflineData::GetEventTraceOutOfRangeFlag(unsigned int event)
 {
-
+  return (OfflineEventInformation[event].Header[3] & kMaskoutofr) >> kShiftoutofr;
 }
 
 

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:06 2016 (+0800)
-// Last-Updated: 三 2月 21 16:11:09 2018 (+0800)
+// Last-Updated: 四 2月 22 12:48:26 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 17
+//     Update #: 18
 // URL: http://wuhongyi.cn 
 
 // 20170825 add external clock timestamp 
@@ -146,7 +146,6 @@ private:
   const static unsigned int kShiftcfdft250 =    31;
   const static unsigned int kMaskcfds250 =      0x40000000;
   const static unsigned int kShiftcfds250 =     30;
-
   const static unsigned int kMaskcfd500 =       0x1fff0000;
   const static unsigned int kShiftcfd500 =      16;
   const static unsigned int kMaskcfds500 =      0xE0000000;

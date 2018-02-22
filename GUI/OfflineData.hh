@@ -4,48 +4,10 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 2月 22 09:08:20 2018 (+0800)
-// Last-Updated: 四 2月 22 11:41:51 2018 (+0800)
+// Last-Updated: 四 2月 22 15:13:10 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 7
+//     Update #: 10
 // URL: http://wuhongyi.cn 
-
-// 重新定义数据结构，4headr+1location
-// 扩展支持 2+4+8数据（在数据初始化位置可选）  TODO
-
-//ch (OfflineEventInformation[EventHeaderLength*i] & 0xF)
-//slot ((OfflineEventInformation[EventHeaderLength*i] & 0xF0) >> 4)
-//crate ((OfflineEventInformation[EventHeaderLength*i] & 0xF00) >> 8)
-// Header length ((OfflineEventInformation[EventHeaderLength*i] & 0x1F000) >> 12)
-// Event length((OfflineEventInformation[EventHeaderLength*i] & 0x7FFE0000) >> 17)
-// Finish code ((OfflineEventInformation[EventHeaderLength*i] & 0x80000000) >> 31)
-
-// EventTime_Low  OfflineEventInformation[EventHeaderLength*i+1]
-
-// EventTime_High  (OfflineEventInformation[EventHeaderLength*i+2] & 0xFFFF)
-//cfd ((OfflineEventInformation[EventHeaderLength*i+2] & 0x7FFF0000)>>16)
-//cfd forced trigger bit ((OfflineEventInformation[EventHeaderLength*i+2] & 0x80000000) >> 31)
-
-//trace length ((OfflineEventInformation[EventHeaderLength*i+3] & 0x7FFF0000)>>16)
-//event energy (OfflineEventInformation[EventHeaderLength*i+3] & 0xFFFF)
-//trace out-of-range flag ((OfflineEventInformation[EventHeaderLength*i+3] & 0x80000000) >> 31)
-
-//trailing energy sum
-//leading energy sum
-//gap energy sum
-//baseline value
-
-//qdc sum 0
-//qdc sum 1
-//qdc sum 2
-//qdc sum 3
-//qdc sum 4
-//qdc sum 5
-//qdc sum 6
-//qdc sum 7
-
-//exttime_lo
-//exttime_hi
-
 
 #ifndef _OFFLINEDATA_H_
 #define _OFFLINEDATA_H_
@@ -111,8 +73,6 @@ public:
   unsigned int GetEventTraceOutOfRangeFlag(unsigned int event);
 
   
-  
-  // Test
   inline unsigned int GetEventHeader(unsigned int event,int n) {return OfflineEventInformation[event].Header[n];}
   inline unsigned int GetEventSUMS4(unsigned int event,int n) {return OfflineEventInformation[event].SUMS4[n];}
   inline unsigned int GetEventQDC8(unsigned int event,int n) {return OfflineEventInformation[event].QDC8[n];}
@@ -137,6 +97,53 @@ private:
   short SamplingRate;
 
   TString fFileName;
+
+private:
+    // const parameters for decoder
+  const static unsigned int kMaskchannel =	0x0000000f;
+  const static unsigned int kShiftchannel =	0x0;
+  const static unsigned int kMasksid =		0x000000f0;
+  const static unsigned int kShiftsid =		4;
+  const static unsigned int kMaskcid =		0x00000f00;
+  const static unsigned int kShiftcid =		8;
+  const static unsigned int kMasklhead =        0x0001f000;
+  const static unsigned int kShiftlhead = 	12;
+  const static unsigned int kMasklevt =         0x7ffe0000;
+  const static unsigned int kShiftlevt =        17;
+  const static unsigned int kMaskpileup =       0x80000000;
+  const static unsigned int kShiftpileup = 	31;
+
+  const static unsigned int kMasktslo =         0xffffffff;
+  const static unsigned int kShifttslo =        0;
+  const static unsigned int kMasktshi =         0x0000ffff;
+  const static unsigned int kShifttshi =        0;
+  const static unsigned int kMaskcfd100 =       0x7fff0000;
+  const static unsigned int kShiftcfd100 =      16;
+  const static unsigned int kMaskcfdft100 =     0x80000000;
+  const static unsigned int kShiftcfdft100 =    31;
+  const static unsigned int kMaskcfd250 =       0x3fff0000;
+  const static unsigned int kShiftcfd250 =      16;
+  const static unsigned int kMaskcfdft250 =     0x80000000;
+  const static unsigned int kShiftcfdft250 =    31;
+  const static unsigned int kMaskcfds250 =      0x40000000;
+  const static unsigned int kShiftcfds250 =     30;
+  const static unsigned int kMaskcfd500 =       0x1fff0000;
+  const static unsigned int kShiftcfd500 =      16;
+  const static unsigned int kMaskcfds500 =      0xE0000000;
+  const static unsigned int kShiftcfds500 =     29;
+  
+  const static unsigned int kMaskevte =         0x0000ffff;
+  const static unsigned int kShiftevte =        0;
+  const static unsigned int kMaskltra =		0x7fff0000;
+  const static unsigned int kShiftltra =        16;
+  const static unsigned int kMaskoutofr =       0x80000000;
+  const static unsigned int kShiftoutofr =      31;
+
+  const static unsigned int kMasketslo =         0xffffffff;
+  const static unsigned int kShiftetslo =        0;
+  const static unsigned int kMasketshi =         0x0000ffff;
+  const static unsigned int kShiftetshi =        0;
+  
 };
 
 #endif /* _OFFLINEDATA_H_ */

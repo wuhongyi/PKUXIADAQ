@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 四 2月 22 10:51:31 2018 (+0800)
+// Last-Updated: 四 2月 22 15:03:28 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 130
+//     Update #: 132
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -67,7 +67,6 @@ public:
 private:
   Pixel_t color;
   Detector *detector;
-  int EventHeaderLength;// RR
   TObject *selected;
   TGTextEntry *filepathtext;
   TGTextEntry *filenametext;
@@ -76,8 +75,6 @@ private:
 
   void OfflineChangeValues(int mod,int ch);
   void OfflineLoadValues(int mod,int ch);
-  unsigned int GetModuleEvents(char *FileName);//return events    RR
-  void GetEventsInfo(char *FileName, unsigned int *EventInformation);// RR
 
   enum Commands
     {
@@ -129,7 +126,6 @@ private:
   TGNumberEntry	*offlinefilerunnum;//int
   TGNumberEntry	*offlinemodnum;//int
   
-  unsigned int *OfflineEventInformation;// RR
   unsigned int OfflineModuleEventsCount;
   OfflineData *offlinedata;
   unsigned int OfflineCurrentCount;
