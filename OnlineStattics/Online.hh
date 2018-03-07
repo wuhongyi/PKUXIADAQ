@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:41 2016 (+0800)
-// Last-Updated: 四 8月 24 10:16:57 2017 (+0800)
+// Last-Updated: 三 3月  7 23:20:44 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 41
+//     Update #: 42
 // URL: http://wuhongyi.cn 
 
 #ifndef _ONLINE_H_
@@ -43,6 +43,15 @@ using namespace std;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #define PRESET_MAX_MODULES 24
+
+#define SHAREDMEMORYDATAOFFSET 10 //BYTE
+// 1st 4 bytes IDcode for event shared memory
+// 2nd 2 bytes number of valid Num Modules in shared memory
+// 3rd 4 bytes Run Number
+#define SHAREDMEMORYDATASTATISTICS 448
+#define SHAREDMEMORYDATAENERGYLENGTH 32768
+#define SHAREDMEMORYDATAMAXCHANNEL 16
+
 
 #define INITIAL_HIGHT 1000
 #define INITIAL_WIDTH 1200

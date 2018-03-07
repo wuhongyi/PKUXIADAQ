@@ -15,6 +15,14 @@
 
 #define BLEN (500*2516) // size of 1 buffer
 #define BUFFLENGTH (500*2516) // 4.8MB Buffer *2 (DBUFF)
+
+#define SHAREDMEMORYDATAOFFSET 10 //BYTE
+// 1st 4 bytes IDcode for event shared memory
+// 2nd 2 bytes number of valid Num Modules in shared memory
+// 3rd 4 bytes Run Number
+#define SHAREDMEMORYDATASTATISTICS 448
+#define SHAREDMEMORYDATAENERGYLENGTH 32768
+#define SHAREDMEMORYDATAMAXCHANNEL 16
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class Detector
@@ -46,7 +54,19 @@ public:
   bool BootSystem();
 
   void StatisticsForModule();
+  void UpdateEnergySpectrumForModule();
 
+  struct Module_Info
+  {
+    // Module information
+    unsigned short Module_Rev;
+    unsigned int   Module_SerNum;
+    unsigned short Module_ADCBits;
+    unsigned short Module_ADCMSPS;
+    unsigned short Module_OfflineVariant;
+  };
+
+  
 public:
   unsigned short NumModules;
   
@@ -67,6 +87,10 @@ private:
   unsigned long FILESIZE[PRESET_MAX_MODULES];
   unsigned int  *evtlen;// GOTO  in dan't fixed length
 
+
+  struct Module_Info ModuleInformation[PRESET_MAX_MODULES];
+
+  
   // variables for shared memory
   sem_t *shmsem; // shared memory semaphore
   int    shmfd;  // shared memory id

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 四 8月 24 10:16:56 2017 (+0800)
+// Last-Updated: 三 3月  7 23:20:44 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 141
+//     Update #: 142
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -21,14 +21,14 @@ ClassImp(Online)
 
 Online::Online(const TGWindow * p)
 {
-  buf = new unsigned char[(PRESET_MAX_MODULES*448*4)+10];
-  buf_new = new unsigned char[(PRESET_MAX_MODULES*448*4)+10];
+  buf = new unsigned char[(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+SHAREDMEMORYDATAOFFSET];
+  buf_new = new unsigned char[(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+SHAREDMEMORYDATAOFFSET];
   number = UINT_MAX;
   flagrunnumber = false;
   
   CreateMenuBar();
   
-  SetWindowName("PKU Pixie16-RevF DAQ Online");
+  SetWindowName("PKU XIA Pixie16 DAQ Online");
   MapSubwindows();
   MapWindow();
   Resize(INITIAL_WIDTH, INITIAL_HIGHT);
@@ -58,7 +58,7 @@ void Online::Init()
       printf("The data file directory exist.\n");
     }
   
-  shm_id=shm_open("shmpixie16lee",O_RDWR,0);/*第一步：打开共享内存区*/
+  shm_id=shm_open("shmpixie16pkuxiadaq",O_RDWR,0);/*第一步：打开共享内存区*/
   if (shm_id == -1)
     {
       printf( "open shared memory error.errno=%d,desc=%s.\n", errno, strerror(errno));
@@ -69,7 +69,7 @@ void Online::Init()
       printf( "open shared memory ok.\n");
     }
 
-  sem=sem_open("sempixie16lee",1);/*打开信号量*/
+  sem=sem_open("sempixie16pkuxiadaq",1);/*打开信号量*/
   if (sem==SEM_FAILED)
     {
       printf( "open semaphore error.errno=%d,desc=%s.\n", errno, strerror(errno));
@@ -80,7 +80,7 @@ void Online::Init()
       printf( "open semaphore ok.\n");
     }
 
-  ptr=(unsigned char*)mmap(NULL,(PRESET_MAX_MODULES*448*4)+10,PROT_READ|PROT_WRITE,MAP_SHARED,shm_id,0);/*连接共享内存区*/
+  ptr=(unsigned char*)mmap(NULL,(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+SHAREDMEMORYDATAOFFSET,PROT_READ|PROT_WRITE,MAP_SHARED,shm_id,0);/*连接共享内存区*/
 
   if(flag)
     {
@@ -505,11 +505,11 @@ void Online::LoopRun()
 	      PrevProtectionTime = get_time();
 	      // std::cout<<"get time 1"<<std::endl;
 	      
-	      memcpy(buf_new,ptr,(PRESET_MAX_MODULES*448*4)+10);
+	      memcpy(buf_new,ptr,(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+SHAREDMEMORYDATAOFFSET);
 	      if(number == UINT_MAX) 
 		{
 		  number = tempN;
-		  memcpy(buf,buf_new,(PRESET_MAX_MODULES*448*4)+10);
+		  memcpy(buf,buf_new,(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+SHAREDMEMORYDATAOFFSET);
 		  continue;
 		}
 	      number = tempN;

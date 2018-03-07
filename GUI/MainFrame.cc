@@ -625,6 +625,15 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel){
 
   // start/stop LSM run button
   TGHorizontalFrame *cgrouphframe=new TGHorizontalFrame(controlgroup);
+  // send/not send online data stream box
+  onlinechk = new TGCheckButton(cgrouphframe,"&Online Statistics");
+  fClient->GetColorByName("red", color);
+  onlinechk->SetTextColor(color);
+  onlinechk->SetState(kButtonDown);
+  fonlinedata = 1;
+  onlinechk->Connect("Clicked()","MainFrame",this,"SetLSonlinedataf()");
+  cgrouphframe->AddFrame(onlinechk,new TGLayoutHints(kLHintsLeft|kLHintsTop,1,4,50,3));
+  
   startdaq = new TGTextButton(cgrouphframe,"LSRunStart");
   fClient->GetColorByName("red", color);
   startdaq->SetTextColor(color, false);
@@ -634,14 +643,14 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel){
   startdaq->Resize(110,110);
   startdaq->ChangeOptions(startdaq->GetOptions() | kFixedSize);
   cgrouphframe->AddFrame(startdaq,new TGLayoutHints(kLHintsCenterX|kLHintsTop));
-  // send/not send online data stream box
-  onlinechk = new TGCheckButton(cgrouphframe,"&Online data");
+
+  // update once time energy
+  updateenergyonline = new TGCheckButton(cgrouphframe,"&Update Energy Monitor");
   fClient->GetColorByName("red", color);
-  onlinechk->SetTextColor(color);
-  onlinechk->SetState(kButtonDown);
-  fonlinedata = 1;
-  onlinechk->Connect("Clicked()","MainFrame",this,"SetLSonlinedataf()");
-  cgrouphframe->AddFrame(onlinechk,new TGLayoutHints(kLHintsLeft|kLHintsTop,10,4,50,3));
+  updateenergyonline->SetTextColor(color);
+  updateenergyonline->SetOn(kFALSE);
+  cgrouphframe->AddFrame(updateenergyonline,new TGLayoutHints(kLHintsLeft|kLHintsTop,10,4,90,3));
+
 
   // save hitogram
 
@@ -833,20 +842,26 @@ void MainFrame::StartLSRun()
 void MainFrame::LSRunReadData()
 {
   cout<<"MainFrame:: read loop.."<<endl;
-  while(fstartdaq){
-    detector->ReadDataFromModules(0,0); // during the run
-    gSystem->ProcessEvents();
-  }
+  while(fstartdaq)
+    {
+      detector->ReadDataFromModules(0,0); // during the run
+      if(updateenergyonline->IsOn())
+	{
+	  detector->UpdateEnergySpectrumForModule();
+	  updateenergyonline->SetOn(kFALSE);
+	}
+      gSystem->ProcessEvents();
+    }
   cout<<"done!!!!!!"<<endl;
   int counter = 0;
   while(detector->StopLSMRun()){
     // failed to stop run 
     sleep(1); // wait 1s then try again
     counter++;
-    if(counter>10) break;
+    if(counter > 10) break;
   }
 
-  for(int i = 0;i < detector->NumModules;i++)
+  for(int i = 0;i < detector->NumModules; i++)
     {
       detector->SaveHistogram(Histogramname[i],i);
     }

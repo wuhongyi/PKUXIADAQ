@@ -197,6 +197,7 @@ private:
   // ******* ListMode Run Control **********
   TGTextButton	*startdaq;
   TGCheckButton   *onlinechk;
+  TGCheckButton   *updateenergyonline;
   bool            fonlinedata;
   bool            fstartdaq;
   bool            fstopdaq;

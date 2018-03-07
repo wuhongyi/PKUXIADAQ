@@ -92,16 +92,39 @@ bool Detector::BootSystem()
     {
       cout<<"---------- Init System Mode: Offline ----------"<<endl;
     }
+
+  for(unsigned short k = 0; k < NumModules; k++)
+    {
+      ModuleInformation[k].Module_OfflineVariant = OfflineMode;
+    }
+
   
   int retval = 0;
   retval = Pixie16InitSystem(NumModules, PXISlotMap, OfflineMode);
-
   if (retval != 0)
     {
       ErrorInfo("Detector.cc", "BootSystem()", "Pixie16InitSystem", retval);
       cout << "PCI Pixie init has failed: " << retval << endl;
       return false;
     }
+
+
+  // TODO
+  for(unsigned short k = 0; k < NumModules; k++)
+    {
+      retval = Pixie16ReadModuleInfo(k, &ModuleInformation[k].Module_Rev, &ModuleInformation[k].Module_SerNum, &ModuleInformation[k].Module_ADCBits, &ModuleInformation[k].Module_ADCMSPS);
+      if(retval != 0)
+	{
+	  ErrorInfo("Detector.cc", "BootSystem()", "Pixie16ReadModuleInfo", retval);
+	  printf("Pixie16ReadModuleInfo: failed to read module information in module %d, retval=%d", k, retval);
+	}
+      else
+	{
+	  cout<<ModuleInformation[k].Module_Rev<<"  "<<ModuleInformation[k].Module_SerNum<<"  "<<ModuleInformation[k].Module_ADCBits<<"  "<<ModuleInformation[k].Module_ADCMSPS<<endl;
+	}
+    }
+
+  // TODO
   retval = Pixie16BootModule(ComFPGAConfigFile,	// name of communications FPGA configuration file
 			     SPFPGAConfigFile,	// name of signal processing FPGA configuration file
 			     TrigFPGAConfigFile,	// name of trigger FPGA configuration file
@@ -163,16 +186,17 @@ int Detector::StartLSMRun(int continue_run)
       return retval;
     }
    
-  if (continue_run == 0){
-  // Reset clock counters to 0
-    retval = Pixie16WriteSglModPar((char*)"IN_SYNCH", 0, 0);
-    if (retval < 0)
-      {
-	ErrorInfo("Detector.cc", "StartLSMRun(...)", "Pixie16WriteSglModPar/IN_SYNCH", retval);
-        fprintf(stderr, "In Sync problem\n");
-        return retval;
-      }
-  }
+  if (continue_run == 0)
+    {
+      // Reset clock counters to 0
+      retval = Pixie16WriteSglModPar((char*)"IN_SYNCH", 0, 0);
+      if (retval < 0)
+	{
+	  ErrorInfo("Detector.cc", "StartLSMRun(...)", "Pixie16WriteSglModPar/IN_SYNCH", retval);
+	  fprintf(stderr, "In Sync problem\n");
+	  return retval;
+	}
+    }
 
   PrevRateTime = get_time();// used in statistics 
   StartTime = get_time();
@@ -194,14 +218,18 @@ int Detector::StartLSMRun(int continue_run)
   return 0;
 }
 
-int Detector::ReadDataFromModules(int thres,unsigned short  endofrun){ 
+int Detector::ReadDataFromModules(int thres,unsigned short  endofrun)
+{ 
   // when evnts' number exceeds thres, data will be read out from FIFO
-  if(endofrun == 0){
-    if(thres <= EXTFIFO_READ_THRESH) thres = EXTFIFO_READ_THRESH; // 1024 words
-    if(thres > 3*EXTFIFO_READ_THRESH) thres = 3*EXTFIFO_READ_THRESH;
-  } else {
-    thres = 2;
-  }
+  if(endofrun == 0)
+    {
+      if(thres <= EXTFIFO_READ_THRESH) thres = EXTFIFO_READ_THRESH; // 1024 words
+      if(thres > 3*EXTFIFO_READ_THRESH) thres = 3*EXTFIFO_READ_THRESH;
+    }
+  else
+    {
+      thres = 2;
+    }
   // if(fsave==NULL) {
   //   cout<<"No date file has been specified "<<endl;
   //   return 0;
@@ -261,7 +289,7 @@ void Detector::StatisticsForModule()
     }
 }
 
-int Detector::RunStatus ()
+int Detector::RunStatus()
 {
   int sum=0;
   
@@ -414,28 +442,30 @@ int Detector::StopLSMRun()
 
 int Detector::OpenSharedMemory(){
    int flag = 0;
-   if((shmsem=sem_open("sempixie16lee",O_CREAT,0666,1)) == SEM_FAILED){
-     cout<<"Cannot create seamphore!"<<endl;
-     flag++;
-   }
+   if((shmsem=sem_open("sempixie16pkuxiadaq",O_CREAT,0666,1)) == SEM_FAILED)
+     {
+       cout<<"Cannot create seamphore!"<<endl;
+       flag++;
+     }
 
-   if((shmfd=shm_open("shmpixie16lee",O_CREAT|O_RDWR,0666)) < 0){
-     cout<<"Cannot create shared memory"<<endl;
-     flag++;
-   }
+   if((shmfd=shm_open("shmpixie16pkuxiadaq",O_CREAT|O_RDWR,0666)) < 0)
+     {
+       cout<<"Cannot create shared memory"<<endl;
+       flag++;
+     }
 
-   if(ftruncate(shmfd,(off_t)(PRESET_MAX_MODULES*4*448+10)) < 0){
-     // 1st 4 bytes IDcode for event shared memory
-     // 2nd 2 bytes number of valid Num Modules in shared memory
-     // 3rd 4 bytes Run Number
-     cout<<"Cannot alloc memory for shared memory!"<<endl;
-     flag++;
-   }
+   if(ftruncate(shmfd,(off_t)(PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL)) < 0)
+     {
 
-   if((shmptr = (unsigned char*) mmap(NULL,(PRESET_MAX_MODULES*448*4)+10, PROT_READ|PROT_WRITE,MAP_SHARED,shmfd,0)) == MAP_FAILED){
-     cout<<"Cannot mmap the shared memroy to process space"<<endl;
-     flag++;
-   }
+       cout<<"Cannot alloc memory for shared memory!"<<endl;
+       flag++;
+     }
+
+   if((shmptr = (unsigned char*) mmap(NULL,(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL, PROT_READ|PROT_WRITE,MAP_SHARED,shmfd,0)) == MAP_FAILED)
+     {
+       cout<<"Cannot mmap the shared memroy to process space"<<endl;
+       flag++;
+     }
    if(flag > 0) return 0;
    cout<<"SHM Opend!"<<endl;
    return 1;
@@ -445,18 +475,21 @@ int Detector::UpdateSharedMemory()
 {
   int rc;
   rc = sem_trywait(shmsem);
-  if(rc == -1 && errno != EAGAIN){
-    cout<<"sem_wait error!"<<endl;
-    return 1;
-  }else if(rc == -1) return 1; // this indicates the shm is under use
+  if(rc == -1 && errno != EAGAIN)
+    {
+      cout<<"sem_wait error!"<<endl;
+      return 1;
+    }
+  else if(rc == -1) return 1; // this indicates the shm is under use
+  
   static unsigned int tmp = 0;
   tmp++;
   memcpy(shmptr,&tmp,sizeof(unsigned int));
   memcpy(shmptr+4,&NumModules,sizeof(unsigned short));
   memcpy(shmptr+6,&runnumber,sizeof(unsigned int));
   int retval = 0;
-  unsigned int Statistics[448];
-  for(unsigned short i = 0;i < NumModules;i++)
+  unsigned int Statistics[SHAREDMEMORYDATASTATISTICS];
+  for(unsigned short i = 0; i < NumModules; i++)
     {
       retval = Pixie16ReadStatisticsFromModule(Statistics, i);
       if(retval < 0)
@@ -464,7 +497,7 @@ int Detector::UpdateSharedMemory()
 	  ErrorInfo("Detector.cc", "UpdateSharedMemory()", "Pixie16ReadStatisticsFromModule", retval);
 	  cout<<"error in get statistics info"<<endl;
 	}
-      memcpy(shmptr+10+448*4*i,Statistics,sizeof(unsigned int)*448);
+      memcpy(shmptr+SHAREDMEMORYDATAOFFSET+SHAREDMEMORYDATASTATISTICS*4*i,Statistics,sizeof(unsigned int)*SHAREDMEMORYDATASTATISTICS);
     }
 
   if(sem_post(shmsem) == -1){
@@ -474,6 +507,28 @@ int Detector::UpdateSharedMemory()
   cout<<"SHM updated!"<<endl;
   return 0;
 }
+
+void Detector::UpdateEnergySpectrumForModule()
+{
+  int retval = 0;
+  unsigned int Statistics[SHAREDMEMORYDATAENERGYLENGTH];
+  
+  for(unsigned short i = 0; i < NumModules; i++)
+    for(unsigned short j = 0; i < SHAREDMEMORYDATAMAXCHANNEL; j++)
+      {
+	retval = Pixie16ReadHistogramFromModule(Statistics,SHAREDMEMORYDATAENERGYLENGTH,i,j);
+	if(retval < 0)
+	  {
+	    ErrorInfo("Detector.cc", "UpdateEnergySpectrumForModule()", "Pixie16ReadHistogramFromModule", retval);
+	    cout<<"Invalid Pixie module/channel number OR Failed to get the histogram data"<<endl;
+	  }
+	memcpy(shmptr+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+i*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL+j*4*SHAREDMEMORYDATAENERGYLENGTH,Statistics,sizeof(unsigned int)*SHAREDMEMORYDATAENERGYLENGTH);
+      }
+
+  cout<<"Updated Monitor Energy Spectrum. "<<endl;
+  cout<<"Please don't update it too often. Frequent updates will affect DAQ efficiency."<<endl;
+}
+
 
 int Detector::SetOnlineF(bool flag)
 {
@@ -492,17 +547,19 @@ bool Detector::SetEvtl()
       ErrorInfo("Detector.cc", "SetEvtl()", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);
       return 0;
     }
-    if(APP16_TstBit(12,mpar)) evtlen[i]+=4; // esum and baseline enabled
-    if(APP16_TstBit(9,mpar)) evtlen[i]+=8; // qsum enabled
-    if(APP16_TstBit(8,mpar)) {
-      double tracelen=-1;
-      retval=Pixie16ReadSglChanPar((char*)"TRACE_LENGTH",&tracelen,i,0);
-      if(retval<0){
-	ErrorInfo("Detector.cc", "SetEvtl()", "Pixie16ReadSglChanPar/TRACE_LENGTH", retval);
-        return 0;
+    if(APP16_TstBit(12,mpar)) evtlen[i] += 4; // esum and baseline enabled
+    if(APP16_TstBit(9,mpar)) evtlen[i] += 8; // qsum enabled
+    if(APP16_TstBit(8,mpar))
+      {
+	double tracelen = -1;
+	retval = Pixie16ReadSglChanPar((char*)"TRACE_LENGTH",&tracelen,i,0);
+	if(retval < 0)
+	  {
+	    ErrorInfo("Detector.cc", "SetEvtl()", "Pixie16ReadSglChanPar/TRACE_LENGTH", retval);
+	    return 0;
+	  }
+	evtlen[i] += tracelen*50;
       }
-      evtlen[i]+=tracelen*50;
-    }
     cout<<"evtlen ch: "<<i<<" len: "<<evtlen[i]<<endl; 
   }
   return 1;
