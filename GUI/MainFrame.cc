@@ -229,7 +229,7 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      bootB->SetEnabled(0);
 	      fClient->GetColorByName("red", color);
 	      StateMsgFold1->SetTextColor(color, false);
-	      StateMsgFold1->SetText("booting ...");
+	      StateMsgFold1->SetText("booting...wait a moment");
 	      gSystem->ProcessEvents();
 	      // gPad->SetCursor(kWatch);
 	      if(detector != 0) delete detector;
@@ -459,7 +459,7 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel)
   fClient->GetColorByName("blue", color);
   StateMsgFold1->SetTextColor(color, false);
   StateMsgFold1->SetText("System not booted");
-  StateMsgFold1->Resize(150, 12);
+  StateMsgFold1->Resize(200, 16);
   StateMsgFold1->SetEnabled(kFALSE);
   StateMsgFold1->SetFrameDrawn(kFALSE);
 

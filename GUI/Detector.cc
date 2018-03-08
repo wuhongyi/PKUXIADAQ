@@ -513,7 +513,7 @@ void Detector::UpdateEnergySpectrumForModule()
   unsigned int Statistics[SHAREDMEMORYDATAENERGYLENGTH];
   
   for(unsigned short i = 0; i < NumModules; i++)
-    for(unsigned short j = 0; i < SHAREDMEMORYDATAMAXCHANNEL; j++)
+    for(unsigned short j = 0; j < SHAREDMEMORYDATAMAXCHANNEL; j++)
       {
 	retval = Pixie16ReadHistogramFromModule(Statistics,SHAREDMEMORYDATAENERGYLENGTH,i,j);
 	if(retval < 0)
@@ -521,7 +521,7 @@ void Detector::UpdateEnergySpectrumForModule()
 	    ErrorInfo("Detector.cc", "UpdateEnergySpectrumForModule()", "Pixie16ReadHistogramFromModule", retval);
 	    cout<<"Invalid Pixie module/channel number OR Failed to get the histogram data"<<endl;
 	  }
-	memcpy(shmptr+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+i*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL+j*4*SHAREDMEMORYDATAENERGYLENGTH,Statistics,sizeof(unsigned int)*SHAREDMEMORYDATAENERGYLENGTH);//???
+	// memcpy(shmptr+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+i*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL+j*4*SHAREDMEMORYDATAENERGYLENGTH,Statistics,sizeof(unsigned int)*SHAREDMEMORYDATAENERGYLENGTH);//???
       }
 
   cout<<"Updated Monitor Energy Spectrum. "<<endl;
