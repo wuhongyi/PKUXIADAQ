@@ -80,10 +80,8 @@ MenuFile->AddEntry("&About", ABOUT,0,gClient->GetPicture("ed_help.png"));
   MenuSetup->AddEntry("&Energy", ENERGY);
   MenuSetup->AddEntry("&CFD", CFDP);
   MenuSetup->AddEntry("&QDC", QDCP);
-  MenuSetup->AddEntry("&Histogramming", HISTOGRAM);
-  MenuSetup->AddEntry("dT", SCOPEDT);
   MenuSetup->AddSeparator();
-MenuSetup->AddEntry("Save2File", FILE_SAVE,0,gClient->GetPicture("save.xpm"));
+  MenuSetup->AddEntry("Save2File", FILE_SAVE,0,gClient->GetPicture("save.xpm"));
   MenuSetup->Associate(this);
   MenuBar->AddPopup("&UV_Setup", MenuSetup, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   MenuSetup->DisableEntry(BASE);
@@ -91,8 +89,6 @@ MenuSetup->AddEntry("Save2File", FILE_SAVE,0,gClient->GetPicture("save.xpm"));
   MenuSetup->DisableEntry(TFILTER);
   MenuSetup->DisableEntry(CFDP);
   MenuSetup->DisableEntry(QDCP);
-  MenuSetup->DisableEntry(HISTOGRAM);
-  MenuSetup->DisableEntry(SCOPEDT);
   MenuSetup->DisableEntry(FILE_SAVE);
 
   MenuExpert = new TGPopupMenu(fClient->GetRoot());
@@ -104,6 +100,16 @@ MenuSetup->AddEntry("Save2File", FILE_SAVE,0,gClient->GetPicture("save.xpm"));
   MenuExpert->DisableEntry(MODVAR);
   MenuExpert->DisableEntry(CSRA);
   MenuExpert->DisableEntry(LOGIC);
+
+
+  MenuMonitor = new TGPopupMenu(fClient->GetRoot());
+  MenuMonitor->AddEntry("&Histogramming", HISTOGRAM);
+  MenuMonitor->AddEntry("dT", SCOPEDT);
+  MenuMonitor->Associate(this);
+  MenuBar->AddPopup("&Monitor", MenuMonitor, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  MenuMonitor->DisableEntry(HISTOGRAM);
+  MenuMonitor->DisableEntry(SCOPEDT);
+
 
   // TGPopupMenu *MenuScope = new TGPopupMenu(fClient->GetRoot());
   // // MenuScope->AddEntry("xy maxmin", MAXMIN);
@@ -265,12 +271,12 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		  MenuSetup->EnableEntry(TFILTER);
 		  MenuSetup->EnableEntry(CFDP);
 		  MenuSetup->EnableEntry(QDCP);
-		  MenuSetup->EnableEntry(HISTOGRAM);
-		  MenuSetup->EnableEntry(SCOPEDT);
 		  MenuSetup->EnableEntry(FILE_SAVE);
 		  MenuExpert->EnableEntry(MODVAR);
 		  MenuExpert->EnableEntry(CSRA);
 		  MenuExpert->EnableEntry(LOGIC);
+		  MenuMonitor->EnableEntry(HISTOGRAM);
+		  MenuMonitor->EnableEntry(SCOPEDT);
 		  MenuOffline->EnableEntry(OFFLINEADJUSTPAR);
 		  MenuOffline->EnableEntry(SIMULATION);
 		}
@@ -751,12 +757,12 @@ void MainFrame::StartLSRun()
       MenuSetup->DisableEntry(TFILTER);
       MenuSetup->DisableEntry(CFDP);
       MenuSetup->DisableEntry(QDCP);
-      MenuSetup->DisableEntry(HISTOGRAM);
-      MenuSetup->DisableEntry(SCOPEDT);
       MenuSetup->DisableEntry(FILE_SAVE);
       MenuExpert->DisableEntry(MODVAR);
       MenuExpert->DisableEntry(CSRA);
       MenuExpert->DisableEntry(LOGIC);
+      MenuMonitor->DisableEntry(HISTOGRAM);
+      MenuMonitor->DisableEntry(SCOPEDT);
       MenuOffline->DisableEntry(OFFLINEADJUSTPAR);
       MenuOffline->DisableEntry(SIMULATION);
       
@@ -781,12 +787,12 @@ void MainFrame::StartLSRun()
 	  MenuSetup->EnableEntry(TFILTER);
 	  MenuSetup->EnableEntry(CFDP);
 	  MenuSetup->EnableEntry(QDCP);
-	  MenuSetup->EnableEntry(HISTOGRAM);
-	  MenuSetup->EnableEntry(SCOPEDT);
 	  MenuSetup->EnableEntry(FILE_SAVE);
 	  MenuExpert->EnableEntry(MODVAR);
 	  MenuExpert->EnableEntry(CSRA);
 	  MenuExpert->EnableEntry(LOGIC);
+	  MenuMonitor->EnableEntry(HISTOGRAM);
+	  MenuMonitor->EnableEntry(SCOPEDT);
 	  MenuOffline->EnableEntry(OFFLINEADJUSTPAR);
 	  MenuOffline->EnableEntry(SIMULATION);
 	  acquireB->SetEnabled(1);
@@ -824,12 +830,12 @@ void MainFrame::StartLSRun()
       MenuSetup->EnableEntry(TFILTER);
       MenuSetup->EnableEntry(CFDP);
       MenuSetup->EnableEntry(QDCP);
-      MenuSetup->EnableEntry(HISTOGRAM);
-      MenuSetup->EnableEntry(SCOPEDT);
       MenuSetup->EnableEntry(FILE_SAVE);
       MenuExpert->EnableEntry(MODVAR);
       MenuExpert->EnableEntry(CSRA);
       MenuExpert->EnableEntry(LOGIC);
+      MenuMonitor->EnableEntry(HISTOGRAM);
+      MenuMonitor->EnableEntry(SCOPEDT);
       MenuOffline->EnableEntry(OFFLINEADJUSTPAR);
       MenuOffline->EnableEntry(SIMULATION);
       acquireB->SetEnabled(1);
@@ -885,12 +891,12 @@ void MainFrame::SetOnlineMode()
   MenuSetup->DisableEntry(TFILTER);
   MenuSetup->DisableEntry(CFDP);
   MenuSetup->DisableEntry(QDCP);
-  MenuSetup->DisableEntry(HISTOGRAM);
-  MenuSetup->DisableEntry(SCOPEDT);
   MenuSetup->DisableEntry(FILE_SAVE);
   MenuExpert->DisableEntry(MODVAR);
   MenuExpert->DisableEntry(CSRA);
   MenuExpert->DisableEntry(LOGIC);
+  MenuMonitor->DisableEntry(HISTOGRAM);
+  MenuMonitor->DisableEntry(SCOPEDT);
   MenuOffline->DisableEntry(OFFLINEADJUSTPAR);
   MenuOffline->DisableEntry(SIMULATION);
   bootB->SetEnabled(1);

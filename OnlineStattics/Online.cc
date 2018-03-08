@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 四 3月  8 10:56:32 2018 (+0800)
+// Last-Updated: 四 3月  8 11:44:34 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 160
+//     Update #: 161
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -38,6 +38,7 @@ Online::Online(const TGWindow * p)
   MapWindow();
   Resize(INITIAL_WIDTH, INITIAL_HIGHT);
 
+  gStyle->SetOptStat(0);//不显示统计框
 }
 
 Online::~Online()

@@ -174,6 +174,7 @@ private:
   TGPopupMenu *MenuFile;
   TGPopupMenu *MenuSetup;
   TGPopupMenu *MenuExpert;
+  TGPopupMenu *MenuMonitor;
   TGPopupMenu *MenuOffline;
   TGTextButton *bootB;
   TGTextButton *acquireB;

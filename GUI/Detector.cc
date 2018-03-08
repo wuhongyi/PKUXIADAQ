@@ -538,7 +538,7 @@ int Detector::SetOnlineF(bool flag)
 
 bool Detector::SetEvtl()
 {
-  evtlen = new unsigned int [NumModules];
+  evtlen = new unsigned int[NumModules];
   for(unsigned short i = 0;i < NumModules;i++){
     double mpar = -1;
     evtlen[i] = 4; // header
