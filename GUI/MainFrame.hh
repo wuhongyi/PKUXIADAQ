@@ -30,11 +30,11 @@ Other Contributor:\n\
 #include "Csra.hh"
 #include "Energy.hh"
 #include "ExpertMod.hh"
-#include "Histogram.hh"
+#include "HistXDT.hh"
 #include "LogicTrigger.hh"
 #include "Offline.hh"
 #include "Qdc.hh"
-#include "ScopedT.hh"
+
 #include "Simulation.hh"
 #include "TriggerFilter.hh"
 
@@ -97,10 +97,9 @@ enum Commands //commands for the menu bar popups
     STARTMCA,
     CONTINUEMCA,
     MCACHECKBUTTON,
-    HISTOGRAM,
+    HISTXDT,
     MAXMIN,
     FIND_WF,
-    SCOPEDT,
     OFFLINEADJUSTPAR,
     SIMULATION
   };
@@ -116,6 +115,7 @@ public:
   void StartLSRun();
   void SetLSonlinedataf();
   void SetOnlineMode();
+
   
 private:
   //variables
@@ -136,9 +136,8 @@ private:
   LogicTrigger *logictrigger;
   Offline *popupoffline;
   Simulation *simulation;
+  HistXDT *histxdt;
   Pixel_t color;
-  ScopedT *scopedt;
-  Histogram* histogram;
   int xmin, xmax, ymin, ymax;
   TGNumberEntry *numericMod, *numericCh;
   int moduleNr; //the module nr we are looking at 
@@ -169,7 +168,7 @@ private:
   int parts[4];
 
 
-
+  void SetMenuStatus(bool flag);
 
   TGPopupMenu *MenuFile;
   TGPopupMenu *MenuSetup;
@@ -207,7 +206,7 @@ private:
   TGTextEntry* lastruntextinfor;
 
   
-  void 	        LSRunReadData();
+  void LSRunReadData();
   bool IsDirectoryExists(const char *path);//判断文件夹是否存在
   
   ClassDef(MainFrame,1)
