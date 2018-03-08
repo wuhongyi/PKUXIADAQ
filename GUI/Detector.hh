@@ -48,8 +48,7 @@ public:
   unsigned int GetFileSize(int n); // in MB
   bool SetEvtl();
   //  	int Write2FileLSM(char *name);
-  int AcquireADCTrace(unsigned short *trace, unsigned long size,
-		       unsigned short module, unsigned short ChanNum);
+  int AcquireADCTrace(unsigned short *trace, unsigned long size, unsigned short module, unsigned short ChanNum);
 
   bool BootSystem();
 
@@ -87,9 +86,7 @@ private:
   unsigned long FILESIZE[PRESET_MAX_MODULES];
   unsigned int  *evtlen;// GOTO  in dan't fixed length
 
-
   struct Module_Info ModuleInformation[PRESET_MAX_MODULES];
-
   
   // variables for shared memory
   sem_t *shmsem; // shared memory semaphore

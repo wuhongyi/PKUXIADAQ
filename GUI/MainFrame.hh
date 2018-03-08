@@ -1,6 +1,8 @@
 #ifndef MAINFRAME_HH_
 #define MAINFRAME_HH_
 
+const char gVERSION[] = "Version: 2018.03.09";
+
 const char gAbout[] = "\
 Version: Beta ---> Developer version\n\
 \n\
@@ -21,9 +23,8 @@ Other Contributor:\n\
 \n\
 ";
 
-#define INITIAL_HIGHT 500
-#define INITIAL_WIDTH 700
-#define MCA_SIZE 32768
+#define INITIAL_HIGHT 1000
+#define INITIAL_WIDTH 300
 
 #include "Base.hh"
 #include "Cfd.hh"
@@ -34,13 +35,13 @@ Other Contributor:\n\
 #include "LogicTrigger.hh"
 #include "Offline.hh"
 #include "Qdc.hh"
-
+#include "CopyPars.hh"
 #include "Simulation.hh"
 #include "TriggerFilter.hh"
+#include "ReadChanStatus.hh"
 
 #include "../software/app/pixie16app_export.h"
 
-#include "TCanvas.h"
 #include "TGApplication.h"
 #include "TGButton.h"
 #include "TGDoubleSlider.h"
@@ -54,15 +55,14 @@ Other Contributor:\n\
 #include "TGStatusBar.h"
 #include "TGTab.h"
 #include "TGTextEntry.h"
-#include "TH1S.h"
+#include "TH1.h"
 #include "TMultiGraph.h"
 #include "TObject.h"
-#include "TRootEmbeddedCanvas.h"
 #include "TRootHelpDialog.h"
 #include "TString.h"
 #include "TStyle.h"
 #include "TSystem.h"
-#include "TVirtualPad.h"
+
 
 #include <fstream>
 #include <iostream>
@@ -74,32 +74,19 @@ enum Commands //commands for the menu bar popups
     FILE_EXIT,
     BOOT_BUTTON,
     ABOUT,
-    READ_WF,
-    SAVE_SEC,
-    MODULE_NUMBER,
-    MODULE_NUMBER_MCA,
-    CHANNEL_NUMBER,
-    CHANNEL_NUMBER_MCA,
     BASE,
     ENERGY,
     TFILTER,
     CSRA,
     CFDP,
     QDCP,
+    COPYPARS,
     FILE_SAVE,
     MODVAR,
     LOGIC,
     CHANVAR,
-    CLEARMCA,
-    SAVEMCA,
-    REFRESHMCA,
-    STOPMCA,
-    STARTMCA,
-    CONTINUEMCA,
-    MCACHECKBUTTON,
     HISTXDT,
-    MAXMIN,
-    FIND_WF,
+    READCHANSTATUS,
     OFFLINEADJUSTPAR,
     SIMULATION
   };
@@ -118,25 +105,28 @@ public:
 
   
 private:
-  //variables
   TGTextEntry *StateMsgFold1;
-  //, *StateMsgMCA;
-  TH1S  *fHpx_wave;
-  TCanvas *dCanvasF1;
-  //, *dCanvasMCA;
+
+  TRootHelpDialog *about;
+  
   Cfd *cfd;
   Qdc *qdc;
-	
-  TRootHelpDialog *about;
   Energy *energy;
   Base *base;
-  Csra *csra;
   TriggerFilter *triggerfilter;
+  CopyPars *copypars;
+  
+  Csra *csra;	
   ExpertMod *expertmod;
   LogicTrigger *logictrigger;
+
+  HistXDT *histxdt;
+  ReadChanStatus *readchanstatus;
+  
   Offline *popupoffline;
   Simulation *simulation;
-  HistXDT *histxdt;
+
+
   Pixel_t color;
   int xmin, xmax, ymin, ymax;
   TGNumberEntry *numericMod, *numericCh;
@@ -151,20 +141,14 @@ private:
   virtual Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t);//process message queue
   void CloseWindow(); //close main window
   void CreateMenuBar(void); //creates menu bar of the main window
-  void MakeFold1Panel(TGCompositeFrame *TabPanel);
+
   void MakeFold2Panel(TGCompositeFrame *TabPanel);
 
-  void NewTrace(unsigned long size, unsigned short module,
-		unsigned short ChanNum);
-  void writeSpe(const char *filename, float buf[], int dim);
-  TGStatusBar* test;
-  //, *testMCA;
   void save_setup(char *name);
   int range, separation;///filter parameters
   float fraction; ///filter parameters
-  unsigned long mca[MCA_SIZE];
   int NUMBERofTRACES;
-  TObject *selected;
+  // TObject *selected;
   int parts[4];
 
 
@@ -176,8 +160,6 @@ private:
   TGPopupMenu *MenuMonitor;
   TGPopupMenu *MenuOffline;
   TGTextButton *bootB;
-  TGTextButton *acquireB;
-  TGTextButton *saveB;
 
   
   // ******** File Setup Variables *********

@@ -16,7 +16,7 @@ Detector::Detector(int mode)
 {
   OfflineMode = (unsigned short)mode;
   
-  for(int i = 0; i < PRESET_MAX_MODULES;i++)
+  for(int i = 0; i < PRESET_MAX_MODULES; i++)
     {
       fsave[i] = NULL;
       buffid[i] = 0;
@@ -322,8 +322,7 @@ Detector::Write2FileLSM (char *name)
 }
 */
 
-int Detector::AcquireADCTrace(unsigned short *trace, unsigned long size,
-			      unsigned short module, unsigned short ChanNum)
+int Detector::AcquireADCTrace(unsigned short *trace, unsigned long size, unsigned short module, unsigned short ChanNum)
 { 
   int result;
   if(module < NumModules)
@@ -522,7 +521,7 @@ void Detector::UpdateEnergySpectrumForModule()
 	    ErrorInfo("Detector.cc", "UpdateEnergySpectrumForModule()", "Pixie16ReadHistogramFromModule", retval);
 	    cout<<"Invalid Pixie module/channel number OR Failed to get the histogram data"<<endl;
 	  }
-	memcpy(shmptr+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+i*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL+j*4*SHAREDMEMORYDATAENERGYLENGTH,Statistics,sizeof(unsigned int)*SHAREDMEMORYDATAENERGYLENGTH);
+	memcpy(shmptr+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+i*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL+j*4*SHAREDMEMORYDATAENERGYLENGTH,Statistics,sizeof(unsigned int)*SHAREDMEMORYDATAENERGYLENGTH);//???
       }
 
   cout<<"Updated Monitor Energy Spectrum. "<<endl;

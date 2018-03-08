@@ -12,8 +12,8 @@
 
 ClassImp(MainFrame)
 
-const char *spec_types[] =
-{ "Radware spectrum", "*.spe", "all files", "*.*", 0, 0 };
+// const char *spec_types[] =
+// { "Radware spectrum", "*.spe", "all files", "*.*", 0, 0 };
 
 const char *filetypes[] =
   { "Set Files", "*.set", "all files", "*.*", 0, 0 };
@@ -33,18 +33,15 @@ MainFrame::MainFrame(const TGWindow * p)
   MapSubwindows();
   MapWindow();
   Resize(INITIAL_WIDTH, INITIAL_HIGHT);
-  //hpx_once_wave=false;
-  fHpx_wave = NULL;
+
   trace = NULL;
   trace_float = NULL;
-  //mca_float = NULL;
-  //MCA_RUN = false;
 
   wave_once = false;
-  //MCAALL = true;
+
   
-  AppendPad(); //foarte important
-  //fMca = NULL;
+  // AppendPad(); //foarte important
+
   xmin = 0;
   xmax = 8192;
   ymin = 0;
@@ -81,6 +78,8 @@ MenuFile->AddEntry("&About", ABOUT,0,gClient->GetPicture("ed_help.png"));
   MenuSetup->AddEntry("&CFD", CFDP);
   MenuSetup->AddEntry("&QDC", QDCP);
   MenuSetup->AddSeparator();
+  MenuSetup->AddEntry("&Copy Pars", COPYPARS);
+  MenuSetup->AddSeparator();
   MenuSetup->AddEntry("Save2File", FILE_SAVE,0,gClient->GetPicture("save.xpm"));
   MenuSetup->Associate(this);
   MenuBar->AddPopup("&UV_Setup", MenuSetup, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
@@ -95,6 +94,7 @@ MenuFile->AddEntry("&About", ABOUT,0,gClient->GetPicture("ed_help.png"));
 
   MenuMonitor = new TGPopupMenu(fClient->GetRoot());
   MenuMonitor->AddEntry("&Hist & XDT", HISTXDT);
+  MenuMonitor->AddEntry("&Trace & Baseline", READCHANSTATUS);
   MenuMonitor->Associate(this);
   MenuBar->AddPopup("&Monitor", MenuMonitor, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
@@ -110,8 +110,6 @@ MenuFile->AddEntry("&About", ABOUT,0,gClient->GetPicture("ed_help.png"));
 
   TGTab *TabPanel = new TGTab(this);
   this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
-  TGCompositeFrame *Tab1 = TabPanel->AddTab("Oscilloscope");
-  MakeFold1Panel(Tab1);
 
   TGCompositeFrame *Tab2 = TabPanel->AddTab("List Mode Run");
   MakeFold2Panel(Tab2);
@@ -199,6 +197,12 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    case OFFLINEADJUSTPAR:
 	      popupoffline = new Offline(fClient->GetRoot(), this, detector,filepathtext,filenametext);
 	      break;
+	    case COPYPARS:
+	      copypars = new CopyPars(fClient->GetRoot(), this, detector);
+	      break;
+	    case READCHANSTATUS:
+	      readchanstatus = new ReadChanStatus(fClient->GetRoot(), this, detector);
+	      break;
 	    case SIMULATION:
 	      simulation = new Simulation(fClient->GetRoot(), this/*, detector,filepathtext,filenametext*/); //TODO
 	      break;
@@ -227,7 +231,7 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      StateMsgFold1->SetTextColor(color, false);
 	      StateMsgFold1->SetText("booting ...");
 	      gSystem->ProcessEvents();
-	      gPad->SetCursor(kWatch);
+	      // gPad->SetCursor(kWatch);
 	      if(detector != 0) delete detector;
 	      detector = new Detector(flagonlinemode);
 	      if(detector->BootSystem())
@@ -235,13 +239,7 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		  fClient->GetColorByName("green", color);
 		  StateMsgFold1->SetTextColor(color, false);
 		  StateMsgFold1->SetText("Booted system");
-		  gPad->SetCursor(kPointer);
-
-		  if(flagonlinemode == 0)
-		    {
-		      acquireB->SetEnabled(1);
-		      saveB->SetEnabled(1);
-		    }
+		  // gPad->SetCursor(kPointer);
 
 		  SetMenuStatus(true);
 		}
@@ -253,75 +251,7 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		  bootB->SetEnabled(1);
 		}
 	      break;
-	    case READ_WF:
-	      {
-		NewTrace(size, moduleNr, channelNr);
-	      }
-	      break;
-	    case SAVE_SEC:
-	      {
-		cout << "Saving to file\n" << flush;
-		static TString dir1(".");
-		TGFileInfo fInput1;
-		fInput1.fFilename = NULL;
-		fInput1.fFileTypes = spec_types;
-		fInput1.fIniDir = StrDup(dir1);
-		new
-		  TGFileDialog(fClient->GetRoot (), this, kFDSave, &fInput1);
-		if (fInput1.fFilename != NULL)
-		  {
-		    if (trace_float != NULL)
-		      delete trace_float;
-		    trace_float = new float[size];
-		    for (int i = 0; i < size; i++)
-		      trace_float[i] = (float) trace[i];
-		    writeSpe(fInput1.fFilename, trace_float, size);
-		  }
-		else
-		  {
-		    cout << "no file name entered !\n" << flush;
-		  }
-	      }
-	      break;
-	    case MODULE_NUMBER:
-	      if (parm2 == 0)
-		{
-		  if (moduleNr != detector->NumModules-1)
-		    {
-		      ++moduleNr;
-		      numericMod->SetIntNumber(moduleNr);
-		    }
-		}
-	      else
-		{
-		  if (moduleNr != 0)
-		    {
-		      if (--moduleNr == 0)
-			moduleNr = 0;
-		      numericMod->SetIntNumber(moduleNr);
-		    }
-		}
-	      break;
-	    case CHANNEL_NUMBER:
-	      if (parm2 == 0)
-		{
-		  if (channelNr != 15)
-		    {
-		      ++channelNr;
-		      numericCh->SetIntNumber(channelNr);
-		    }
-		}
-	      else
-		{
-		  if (channelNr != 0)
-		    {
-		      if (--channelNr == 0)
-			channelNr = 0;
-		      numericCh->SetIntNumber(channelNr);
-		    }
-		}
-	      break;
-	      
+
 	    default:
 	      break;
 	    }
@@ -329,42 +259,31 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
     case kC_TEXTENTRY:
       switch (parm1)
 	{
-	case MODULE_NUMBER:
-	  switch (GET_SUBMSG(msg))
-	    {
-	    case kTE_ENTER:
-	      moduleNr = numericMod->GetIntNumber();
-	      numericMod->SetIntNumber(moduleNr);
-	      break;
-	    default:
-	      break;
-	    }
-	case CHANNEL_NUMBER:
-	  switch (GET_SUBMSG(msg))
-	    {
-	    case kTE_ENTER:
-	      channelNr = numericCh->GetIntNumber();
-	      numericCh->SetIntNumber(channelNr);
-	      break;
-	    default:
-	      break;
-	    }
-	  break;
 
 	default:
 	  break;
 	}
-
-      /////////////////default for the most inclusive switch//////////          
+        
     default:
-      selected = gPad->GetSelected();
+      // selected = gPad->GetSelected();
       break;
     }
   return kTRUE;
 }
 
-void MainFrame::MakeFold1Panel(TGCompositeFrame * TabPanel)
+
+void MainFrame::save_setup(char *name)
 {
+  int retval;
+  retval = Pixie16SaveDSPParametersToFile(name);
+  if(retval < 0)
+    ErrorInfo("MainFrame.cc", "save_setup(...)", "Pixie16SaveDSPParametersToFile", retval);
+  cout << "saving setup to file: " << name << endl;
+}
+
+void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel)
+{
+
   TGCompositeFrame *LogoFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 
   TGImageMap* fImagePKU = new TGImageMap(LogoFrame, "pkulogo100.jpg");
@@ -401,211 +320,73 @@ void MainFrame::MakeFold1Panel(TGCompositeFrame * TabPanel)
   ButtonFrame->AddFrame(bootB, new TGLayoutHints(kLHintsTop | kLHintsLeft, 5, 10,10, 0));
 
   TabPanel->AddFrame(ButtonFrame, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  // status frame and status TGTextEntry holder//////////////////////////////////
-  TGGroupFrame *StateMsgFrame = new TGGroupFrame(ButtonFrame, "Status", kVerticalFrame);
-
-  StateMsgFold1 = new TGTextEntry(StateMsgFrame,
-				  new TGTextBuffer(30), 10000,
-				  StateMsgFold1->GetDefaultGC()(),
-				  StateMsgFold1->GetDefaultFontStruct(),
-				  kRaisedFrame | kDoubleBorder,
-				  GetWhitePixel());
-  StateMsgFold1->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
-
-  fClient->GetColorByName("blue", color);
-  StateMsgFold1->SetTextColor(color, false);
-  StateMsgFold1->SetText("System not booted");
-  StateMsgFold1->Resize(150, 12);
-  StateMsgFold1->SetEnabled(kFALSE);
-  StateMsgFold1->SetFrameDrawn(kFALSE);
-
-  /////////////
-  StateMsgFrame->AddFrame(StateMsgFold1, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  ButtonFrame->AddFrame(StateMsgFrame, new TGLayoutHints(kLHintsTop | kLHintsLeft, 2, 5, 1, 5));
-
-  //////////////////////////////////////////////////////////////////////////
-  acquireB = new TGTextButton(ButtonFrame, "Read WF", READ_WF);
-  acquireB->SetEnabled(0);
-  fClient->GetColorByName("purple", color);
-  acquireB->SetTextColor(color, false);
-  acquireB->Associate(this);
-  ButtonFrame->AddFrame(acquireB, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 10, 10, 0));
-  //////////////////////////////////////////////////////////////////////////////
-
-  saveB = new TGTextButton(ButtonFrame, "  Save  ", SAVE_SEC);
-  saveB->SetEnabled(0);
-  saveB->Associate(this);
-  fClient->GetColorByName("purple", color);
-  saveB->SetTextColor(color, false);
-  saveB->SetToolTipText("Save waveform to radware .sec file", 0);
-  ButtonFrame->AddFrame(saveB, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 10, 10, 0));
-  ///Labels///////////////////////////////////////////////////////////////////////////
-  TGVerticalFrame *fModChLabels = new TGVerticalFrame(ButtonFrame);
-
-  TGLabel *mod = new TGLabel(fModChLabels, "Module  nr:");
-  fModChLabels->AddFrame(mod, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 3, 4, 0));
-  TGLabel *ch = new TGLabel(fModChLabels, "Channel nr:");
-  fModChLabels->AddFrame(ch, new TGLayoutHints(kLHintsLeft, 10, 3, 4, 0));
-  ButtonFrame->AddFrame(fModChLabels, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  ///Number entries/////////////////////////////////////////////////////////////////////////
-  TGVerticalFrame *fModCh = new TGVerticalFrame(ButtonFrame);
-  numericMod = new TGNumberEntry(fModCh, 0, 4, MODULE_NUMBER, //module number entry
-				 (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3/*kNELLimitMinMax*/, 0, PRESET_MAX_MODULES-1);
-  numericMod->SetButtonToNum(0);
-  fModCh->AddFrame(numericMod, new TGLayoutHints(kLHintsTop | kLHintsLeft, 2, 3, 0, 0));
-  numericMod->Associate(this);
-
-  numericCh = new TGNumberEntry(fModCh, 0, 4, CHANNEL_NUMBER, //channel number entry
-				(TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3/*kNELLimitMinMax*/, 0, 15);
-  numericCh->SetButtonToNum(0);
-
-  fModCh->AddFrame(numericCh, new TGLayoutHints(kLHintsTop | kLHintsLeft, 2, 3, 0, 0));
-
-  numericCh->Associate(this);
-  ButtonFrame->AddFrame(fModCh, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-
   
-  ////////////////////Canvas///////////////////////////////////////////////////                                  
-  TGCompositeFrame *CanvasFrame = new TGCompositeFrame(TabPanel, 60, 60, kHorizontalFrame);
-  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
 
-  TRootEmbeddedCanvas *eCanvasF1 = new TRootEmbeddedCanvas("ec1", CanvasFrame, 100, 100);
-
-  dCanvasF1 = eCanvasF1->GetCanvas();
-
-  dCanvasF1->SetBorderMode(0); //no red frame
-  CanvasFrame->AddFrame(eCanvasF1, Hint);
-  TabPanel->AddFrame(CanvasFrame, Hint);
-
-  test = new TGStatusBar(TabPanel, 10, 10);
-
-  parts[0]=33;
-  parts[1]=10;
-  parts[2]=10;
-  parts[3]=47;
-
-  test->SetParts(parts, 4);
-
-  TabPanel->AddFrame(test, new TGLayoutHints(kLHintsBottom | kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
-
-}
-
-void MainFrame::NewTrace(unsigned long size, unsigned short module, unsigned short ChanNum)
-{
-  if (trace == NULL)
-    trace = new unsigned short[size];
-
-  memset(trace, 0, size * sizeof(unsigned short));
-
-  if (fHpx_wave == NULL)
-    fHpx_wave = new TH1S("hpx_wave", "Live trace", size, 0,size);
-  if(fHpx_wave == NULL) cout<<"Error!"<<endl;
-  detector->AcquireADCTrace(trace, size, module, ChanNum);
-
-  gStyle->SetOptStat(0);
-
-  fHpx_wave->Reset();
-  for (int i = 0; i < (int)size; i++){
-    fHpx_wave->Fill(i, trace[i]);
-  }
-
-  dCanvasF1->cd();
-  fHpx_wave->DrawCopy("hist");
-  dCanvasF1->Modified();
-  dCanvasF1->Update();
-
-  gSystem->ProcessEvents();
-
-}
-
-void MainFrame::writeSpe(const char *filename, float buf[], int dim)
-{
-  struct spePrefix
-  {
-    int reclA; /* 24 */
-    unsigned titleA;
-    unsigned titleB;
-    int dim;
-    int a1; /*  1 */
-    int a2; /*  1 */
-    int a3; /*  1 */
-    int reclB; /* 24 */
-  } x = { 24, 0, 0, 0, 1, 1, 1, 24 };
-  int recl;
-
-  //de revenit -> trebe puse sigurante !
-  // char buffer[100];
-  ofstream out(filename, ios::out | ios::binary);
-  x.dim = dim;
-  recl = sizeof(float) * dim;
-  out.write(reinterpret_cast < char *>(&x), sizeof(struct spePrefix));
-  out.write(reinterpret_cast < char *>(&recl), sizeof (recl));
-  out.write(reinterpret_cast < char *>(buf), sizeof(float) * dim);
-  out.write(reinterpret_cast < char *>(&recl), sizeof (recl));
-  out.close();
-}
-
-void MainFrame::save_setup(char *name)
-{
-  int retval;
-  retval = Pixie16SaveDSPParametersToFile(name);
-  if(retval < 0)
-    ErrorInfo("MainFrame.cc", "save_setup(...)", "Pixie16SaveDSPParametersToFile", retval);
-  cout << "saving setup to file: " << name << endl;
-}
-
-void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel){
- 
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
   // Set up for file store parametrs
   TGGroupFrame *filesetgroup = new TGGroupFrame(TabPanel,"Setup");
- 
-  // *** FILE path frame
+  TabPanel->AddFrame(filesetgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  
+  // FILE path frame
   TGHorizontalFrame *filepath = new TGHorizontalFrame(filesetgroup);
   TGLabel *filepathlabel = new TGLabel(filepath,"File Path: ");
   filepath->AddFrame(filepathlabel,new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 3, 4, 0));
-  filepathtext = new TGTextEntry(filepath,new TGTextBuffer(120));
+  filepathtext = new TGTextEntry(filepath,new TGTextBuffer(20));
   filepath->AddFrame(filepathtext,new TGLayoutHints(kLHintsExpandX|kLHintsTop, 10 ,3,4,0));
   
   filesetgroup->AddFrame(filepath,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
 
-  // *** File Name frame 
+  
+  // File Name frame 
   TGHorizontalFrame *filenamef = new TGHorizontalFrame(filesetgroup);
-
+  filesetgroup->AddFrame(filenamef,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  
   TGLabel *filenamelabel = new TGLabel(filenamef,"File Name: ");
   filenamef->AddFrame(filenamelabel,new TGLayoutHints(kLHintsLeft | kLHintsTop, 10 ,3,4,0));
   filenametext = new TGTextEntry(filenamef, new TGTextBuffer(20));
-  filenamef->AddFrame(filenametext,new TGLayoutHints(kLHintsLeft| kLHintsTop,10,3,4,0));
+  filenamef->AddFrame(filenametext,new TGLayoutHints(kLHintsExpandX| kLHintsTop,10,3,4,0));
 
-  TGLabel *filerunlabel = new TGLabel(filenamef,"Run Num: ");
-  filenamef->AddFrame(filerunlabel,new TGLayoutHints(kLHintsLeft| kLHintsTop,0,3,5,0));
+  // Run Num frame 
+  TGHorizontalFrame *runnumf = new TGHorizontalFrame(filesetgroup);
+  filesetgroup->AddFrame(runnumf,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  
+  TGLabel *filerunlabel = new TGLabel(runnumf,"Run Num: ");
+  runnumf->AddFrame(filerunlabel,new TGLayoutHints(kLHintsLeft| kLHintsTop,10,3,5,0));
 
-  filerunnum = new TGNumberEntry(filenamef,0,5,999,TGNumberFormat::kNESInteger,TGNumberFormat::kNEANonNegative);
+  filerunnum = new TGNumberEntry(runnumf,0,5,999,TGNumberFormat::kNESInteger,TGNumberFormat::kNEANonNegative);
   filerunnum->SetButtonToNum(1);
-  filenamef->AddFrame(filerunnum,new TGLayoutHints(kLHintsLeft|kLHintsTop,0,3,4,0));
+  runnumf->AddFrame(filerunnum,new TGLayoutHints(kLHintsLeft|kLHintsTop,20,3,4,0));
   filerunnum->Associate(this);
 
-  filesetdone = new TGTextButton(filenamef,"Complete");
+  filesetdone = new TGTextButton(runnumf,"Complete");
   filesetdone->Connect("Pressed()","MainFrame",this,"SetLSFileName()");
-  filenamef->AddFrame(filesetdone,new TGLayoutHints(kLHintsLeft|kLHintsTop,0,3,4,0));
-  filesetgroup->AddFrame(filenamef,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
-  
-  TabPanel->AddFrame(filesetgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  runnumf->AddFrame(filesetdone,new TGLayoutHints(kLHintsLeft|kLHintsTop,10,3,4,0));
 
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  
   // Control of list mode run
   TGGroupFrame *controlgroup = new TGGroupFrame(TabPanel,"Control");
+  TabPanel->AddFrame(controlgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  
 
-  // start/stop LSM run button
-  TGHorizontalFrame *cgrouphframe=new TGHorizontalFrame(controlgroup);
+  TGHorizontalFrame *cgrouphframe0 = new TGHorizontalFrame(controlgroup);
+  controlgroup->AddFrame(cgrouphframe0,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
   // send/not send online data stream box
-  onlinechk = new TGCheckButton(cgrouphframe,"&Online Statistics");
+  onlinechk = new TGCheckButton(cgrouphframe0,"&Online Statistics");
   fClient->GetColorByName("red", color);
   onlinechk->SetTextColor(color);
   onlinechk->SetState(kButtonDown);
   fonlinedata = 1;
   onlinechk->Connect("Clicked()","MainFrame",this,"SetLSonlinedataf()");
-  cgrouphframe->AddFrame(onlinechk,new TGLayoutHints(kLHintsLeft|kLHintsTop,1,4,50,3));
-  
-  startdaq = new TGTextButton(cgrouphframe,"LSRunStart");
+  cgrouphframe0->AddFrame(onlinechk,new TGLayoutHints(kLHintsExpandX|kLHintsTop,4,4,5,10));
+
+  TGHorizontalFrame *cgrouphframe1 = new TGHorizontalFrame(controlgroup);
+  controlgroup->AddFrame(cgrouphframe1,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  // start/stop LSM run button
+  startdaq = new TGTextButton(cgrouphframe1,"LSRunStart");
   fClient->GetColorByName("red", color);
   startdaq->SetTextColor(color, false);
   startdaq->SetFont("-adobe-helvetica-medium-r-*-*-20-*-*-*-*-*-iso8859-1", false);
@@ -613,22 +394,19 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel){
   startdaq->SetEnabled(0);
   startdaq->Resize(110,110);
   startdaq->ChangeOptions(startdaq->GetOptions() | kFixedSize);
-  cgrouphframe->AddFrame(startdaq,new TGLayoutHints(kLHintsCenterX|kLHintsTop));
+  cgrouphframe1->AddFrame(startdaq,new TGLayoutHints(kLHintsCenterX|kLHintsTop));
 
+  TGHorizontalFrame *cgrouphframe2 = new TGHorizontalFrame(controlgroup);
+  controlgroup->AddFrame(cgrouphframe2,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
   // update once time energy
-  updateenergyonline = new TGCheckButton(cgrouphframe,"&Update Energy Monitor");
+  updateenergyonline = new TGCheckButton(cgrouphframe2,"&Update Energy Monitor");
   fClient->GetColorByName("red", color);
   updateenergyonline->SetTextColor(color);
   updateenergyonline->SetOn(kFALSE);
-  cgrouphframe->AddFrame(updateenergyonline,new TGLayoutHints(kLHintsLeft|kLHintsTop,10,4,90,3));
+  cgrouphframe2->AddFrame(updateenergyonline,new TGLayoutHints(kLHintsRight|kLHintsTop,10,4,10,3));
 
 
-  // save hitogram
 
-
-  controlgroup->AddFrame(cgrouphframe,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
-
-  TabPanel->AddFrame(controlgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
 
 
   
@@ -651,26 +429,55 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel){
   
   // run information
   TGGroupFrame *informationgroup = new TGGroupFrame(TabPanel,"Information");
+  TabPanel->AddFrame(informationgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+
+
+  TGHorizontalFrame *versionstatusframe = new TGHorizontalFrame(informationgroup);
+  informationgroup->AddFrame(versionstatusframe,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  TGTextEntry *versiontextinfor = new TGTextEntry(versionstatusframe,new TGTextBuffer(30), 10000);
+  versionstatusframe->AddFrame(versiontextinfor, new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 6, 20));
+  versiontextinfor-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
+  fClient->GetColorByName("red", color);
+  versiontextinfor->SetTextColor(color, false);
+  versiontextinfor->SetText(gVERSION);
+  versiontextinfor->Resize(150, 16);
+  versiontextinfor->SetEnabled(kFALSE);
+  versiontextinfor->SetFrameDrawn(kFALSE);
+
+  
+  TGHorizontalFrame *StateMsgFrame = new TGHorizontalFrame(informationgroup);
+  informationgroup->AddFrame(StateMsgFrame,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  
+  StateMsgFold1 = new TGTextEntry(StateMsgFrame,
+				  new TGTextBuffer(30), 10000,
+				  StateMsgFold1->GetDefaultGC()(),
+				  StateMsgFold1->GetDefaultFontStruct(),
+				  kRaisedFrame | kDoubleBorder,
+				  GetWhitePixel());
+  StateMsgFrame->AddFrame(StateMsgFold1, new TGLayoutHints(kLHintsTop | kLHintsLeft, 10, 0, 5, 10));
+  StateMsgFold1->SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
+  fClient->GetColorByName("blue", color);
+  StateMsgFold1->SetTextColor(color, false);
+  StateMsgFold1->SetText("System not booted");
+  StateMsgFold1->Resize(150, 12);
+  StateMsgFold1->SetEnabled(kFALSE);
+  StateMsgFold1->SetFrameDrawn(kFALSE);
+
 
   
   TGHorizontalFrame *lastruninfor = new TGHorizontalFrame(informationgroup);
+  informationgroup->AddFrame(lastruninfor,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
   lastruntextinfor = new TGTextEntry(lastruninfor,new TGTextBuffer(30), 10000);
+  lastruninfor->AddFrame(lastruntextinfor, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
   lastruntextinfor-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
   fClient->GetColorByName("blue", color);
   lastruntextinfor->SetTextColor(color, false);
   lastruntextinfor->SetText(TString::Format("Last run number: %d",int(filerunnum->GetIntNumber())-1).Data());
-  lastruntextinfor->Resize(200, 12);
+  lastruntextinfor->Resize(150, 12);
   lastruntextinfor->SetEnabled(kFALSE);
   lastruntextinfor->SetFrameDrawn(kFALSE);
-  lastruninfor->AddFrame(lastruntextinfor, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
-  informationgroup->AddFrame(lastruninfor,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
-
-
 
   
-  TabPanel->AddFrame(informationgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
-
-
 
 }
 
@@ -714,8 +521,6 @@ void MainFrame::StartLSRun()
   if(fstartdaq == 0)
     {
       onlinemode->SetEnabled(0);
-      acquireB->SetEnabled(0);
-      saveB->SetEnabled(0);
       filesetdone->SetEnabled(0);
 
       SetMenuStatus(false);
@@ -738,8 +543,6 @@ void MainFrame::StartLSRun()
 
 	  SetMenuStatus(true);
 
-	  acquireB->SetEnabled(1);
-	  saveB->SetEnabled(1);
 	  onlinemode->SetEnabled(1);
 	  filesetdone->SetEnabled(1);
 	  
@@ -770,8 +573,6 @@ void MainFrame::StartLSRun()
 
       SetMenuStatus(true);
 
-      acquireB->SetEnabled(1);
-      saveB->SetEnabled(1);
       onlinemode->SetEnabled(1);
       filesetdone->SetEnabled(1);
     }
@@ -792,12 +593,13 @@ void MainFrame::LSRunReadData()
     }
   cout<<"done!!!!!!"<<endl;
   int counter = 0;
-  while(detector->StopLSMRun()){
-    // failed to stop run 
-    sleep(1); // wait 1s then try again
-    counter++;
-    if(counter > 10) break;
-  }
+  while(detector->StopLSMRun())
+    {
+      // failed to stop run 
+      sleep(1); // wait 1s then try again
+      counter++;
+      if(counter > 10) break;
+    }
 
   for(int i = 0;i < detector->NumModules; i++)
     {
@@ -826,22 +628,23 @@ void MainFrame::SetOnlineMode()
   StateMsgFold1->SetTextColor(color, false);
   StateMsgFold1->SetText("System not booted");
 
-  acquireB->SetEnabled(0);
-  saveB->SetEnabled(0);
   startdaq->SetEnabled(0);
 }
 
 void MainFrame::SetLSonlinedataf()
 {
-  if(onlinechk->IsOn()){
-    fonlinedata = 1;
-    detector->SetOnlineF(1);
-    cout<<"DAQ will send online data!"<<endl;
-  }else{
-    fonlinedata = 0;
-    detector->SetOnlineF(0);
-    cout<<"DAQ wont send online data!"<<endl;
-  }
+  if(onlinechk->IsOn())
+    {
+      fonlinedata = 1;
+      detector->SetOnlineF(1);
+      cout<<"DAQ will send online data!"<<endl;
+    }
+  else
+    {
+      fonlinedata = 0;
+      detector->SetOnlineF(0);
+      cout<<"DAQ wont send online data!"<<endl;
+    }
 }
 
 bool MainFrame::IsDirectoryExists(const char *path)
@@ -862,12 +665,13 @@ void MainFrame::SetMenuStatus(bool flag)
       MenuSetup->EnableEntry(TFILTER);
       MenuSetup->EnableEntry(CFDP);
       MenuSetup->EnableEntry(QDCP);
+      MenuSetup->EnableEntry(COPYPARS);
       MenuSetup->EnableEntry(FILE_SAVE);
       MenuExpert->EnableEntry(MODVAR);
       MenuExpert->EnableEntry(CSRA);
       MenuExpert->EnableEntry(LOGIC);
       MenuMonitor->EnableEntry(HISTXDT);
-
+      MenuMonitor->EnableEntry(READCHANSTATUS);
       MenuOffline->EnableEntry(OFFLINEADJUSTPAR);
       MenuOffline->EnableEntry(SIMULATION);
     }
@@ -878,12 +682,13 @@ void MainFrame::SetMenuStatus(bool flag)
       MenuSetup->DisableEntry(TFILTER);
       MenuSetup->DisableEntry(CFDP);
       MenuSetup->DisableEntry(QDCP);
+      MenuSetup->DisableEntry(COPYPARS);
       MenuSetup->DisableEntry(FILE_SAVE);
       MenuExpert->DisableEntry(MODVAR);
       MenuExpert->DisableEntry(CSRA);
       MenuExpert->DisableEntry(LOGIC);
       MenuMonitor->DisableEntry(HISTXDT);
-
+      MenuMonitor->DisableEntry(READCHANSTATUS);
       MenuOffline->DisableEntry(OFFLINEADJUSTPAR);
       MenuOffline->DisableEntry(SIMULATION);
     }
