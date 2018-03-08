@@ -4,14 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:41 2016 (+0800)
-// Last-Updated: 三 3月  7 23:20:44 2018 (+0800)
+// Last-Updated: 四 3月  8 10:50:20 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 42
+//     Update #: 47
 // URL: http://wuhongyi.cn 
 
 #ifndef _ONLINE_H_
 #define _ONLINE_H_
 
+#include "TGButton.h"
 #include "TGComboBox.h"
 #include "TGFrame.h"
 #include "TGMenu.h"
@@ -28,6 +29,7 @@
 #include "TStyle.h"
 // #include "TGFileDialog.h"
 #include "TCanvas.h"
+#include "TH1.h"
 #include <iostream>
 #include <fstream>
 #include <cstdio>
@@ -59,7 +61,10 @@ using namespace std;
 enum OnlineCommands
   {
     FILE_EXIT,
-    INIT_BUTTON
+      INIT_BUTTON,
+      ONLINEDRAW3,
+      ONLINECHNUM3,
+      ONLINEMODNUM3
   };
 
 class Online : public TGMainFrame
@@ -77,7 +82,12 @@ private:
   void CreateMenuBar(void); //creates menu bar of the main window
   void MakeFold1Panel(TGCompositeFrame *TabPanel);
   void MakeFold2Panel(TGCompositeFrame *TabPanel);
-  
+  void MakeFold3Panel(TGCompositeFrame *TabPanel);//energy
+
+
+  void Panel3Draw();
+
+
   void LoopRun();
   double GetFileSizeMB(const char *name);//返回MB
   bool IsFileExists(const char *name);//判断文件是否存在
@@ -116,7 +126,18 @@ private:
   Pixel_t color;
   bool flagrunnumber;
   char charrunstate[16];
-  
+
+  // energy
+  TCanvas *canvas3;
+  TGTextButton* OnlineDrawButton3;  
+  TH1I *onlineth1i3[16];
+  TGNumberEntry	*onlinechnum3;//int
+  TGNumberEntry	*onlinemodnum3;
+  int chanNumber3;
+  int modNumber3;
+  TGComboBox *chooseenergycanvasmode3;
+
+
 private:
   int shm_id;
   unsigned char *ptr;
@@ -128,8 +149,8 @@ private:
 
   int SYSTEM_CLOCK_MHZ;
   
-  unsigned int Statistics[448];
-  unsigned int Statistics_new[448];
+  unsigned int Statistics[SHAREDMEMORYDATASTATISTICS];
+  unsigned int Statistics_new[SHAREDMEMORYDATASTATISTICS];
 
   double RealTime_new;
   double LiveTime_new[16];
@@ -140,6 +161,9 @@ private:
   double FastPeaks[16];
   double ChanEvents[16];
 
+  unsigned int EnergySpec[SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL];
+
+  
   unsigned int number;
   unsigned short ModNum;
   int RunNumber;

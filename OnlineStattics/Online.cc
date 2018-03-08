@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 三 3月  7 23:20:44 2018 (+0800)
+// Last-Updated: 四 3月  8 10:56:32 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 142
+//     Update #: 160
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -25,6 +25,11 @@ Online::Online(const TGWindow * p)
   buf_new = new unsigned char[(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+SHAREDMEMORYDATAOFFSET];
   number = UINT_MAX;
   flagrunnumber = false;
+
+  for (int i = 0; i < 16; ++i)
+    {
+      onlineth1i3[i] = NULL;
+    }
   
   CreateMenuBar();
   
@@ -39,6 +44,12 @@ Online::~Online()
 {
   delete []buf;
   delete []buf_new;
+
+  for (int i = 0; i < 16; ++i)
+    {
+      if(onlineth1i3[i] != NULL) delete onlineth1i3[i];
+    }
+  
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -69,8 +80,8 @@ void Online::Init()
       printf( "open shared memory ok.\n");
     }
 
-  sem=sem_open("sempixie16pkuxiadaq",1);/*打开信号量*/
-  if (sem==SEM_FAILED)
+  sem = sem_open("sempixie16pkuxiadaq",1);/*打开信号量*/
+  if (sem == SEM_FAILED)
     {
       printf( "open semaphore error.errno=%d,desc=%s.\n", errno, strerror(errno));
       flag = false;
@@ -80,7 +91,7 @@ void Online::Init()
       printf( "open semaphore ok.\n");
     }
 
-  ptr=(unsigned char*)mmap(NULL,(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+SHAREDMEMORYDATAOFFSET,PROT_READ|PROT_WRITE,MAP_SHARED,shm_id,0);/*连接共享内存区*/
+  ptr = (unsigned char*)mmap(NULL,(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL,PROT_READ|PROT_WRITE,MAP_SHARED,shm_id,0);/*连接共享内存区*/
 
   if(flag)
     {
@@ -111,6 +122,9 @@ void Online::CreateMenuBar()
   MakeFold1Panel(Tab1);
   TGCompositeFrame *Tab2 = TabPanel->AddTab("Alert");
   MakeFold2Panel(Tab2);
+  TGCompositeFrame *Tab3 = TabPanel->AddTab("EnergyMonitor");
+  MakeFold3Panel(Tab3);
+  
 }
 
 void Online::CloseWindow()
@@ -152,6 +166,60 @@ Bool_t Online::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    default:
 	      break;
 	    }
+	  break;
+
+	case kCM_BUTTON:
+	  switch (parm1)
+	    {
+	    case ONLINEDRAW3:
+	      Panel3Draw();
+	      break;
+	    case ONLINEMODNUM3:
+	      if (parm2 == 0)
+		{
+		  if (modNumber3 != ModNum-1)
+		    {
+		      ++modNumber3;
+		      onlinemodnum3->SetIntNumber(modNumber3);
+		    }
+		}
+	      else
+		{
+		  if (modNumber3 != 0)
+		    {
+		      if (--modNumber3 == 0)
+			modNumber3 = 0;
+		      onlinemodnum3->SetIntNumber(modNumber3);
+		    }
+		}
+	      break;
+	    case ONLINECHNUM3:
+	      if (parm2 == 0)
+		{
+		  if (chanNumber3 != 15)
+		    {
+		      ++chanNumber3;
+		      onlinechnum3->SetIntNumber(chanNumber3);
+		    }
+		}
+	      else
+		{
+		  if (chanNumber3 != 0)
+		    {
+		      if (--chanNumber3 == 0)
+			chanNumber3 = 0;
+		      onlinechnum3->SetIntNumber(chanNumber3);
+		    }
+		}
+	      break;
+
+
+	    default:
+	      break;
+	    }
+	  break;
+
+	  
 	// case kCM_COMBOBOX:
 	//   switch (parm1)
 	//     {
@@ -164,7 +232,43 @@ Bool_t Online::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	//     }
 
 	}
-	           
+
+    case kC_TEXTENTRY:
+      switch (parm1)
+	{
+	case ONLINEMODNUM3:
+	  switch (GET_SUBMSG(msg))
+	    {
+	    case kTE_ENTER:
+	      modNumber3 = onlinemodnum3->GetIntNumber();
+	      if(modNumber3 > ModNum-1) modNumber3 = ModNum-1;
+	      if(modNumber3 < 0) modNumber3 = 0;
+	      onlinemodnum3->SetIntNumber(modNumber3);
+	      break;
+	      
+	    default:
+	      break;
+	    }
+	  break;
+	case ONLINECHNUM3:
+	  switch (GET_SUBMSG(msg))
+	    {
+	    case kTE_ENTER:
+	      chanNumber3 = onlinechnum3->GetIntNumber();
+	      if(chanNumber3 > 15) chanNumber3 = 15;
+	      if(chanNumber3 < 0) chanNumber3 = 0;
+	      onlinechnum3->SetIntNumber(chanNumber3);
+	      break;
+	      
+	    default:
+	      break;
+	    }
+	  break;
+
+	}
+      break;
+
+      
     default:
       break;
     }
@@ -429,6 +533,127 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
 void Online::MakeFold2Panel(TGCompositeFrame *TabPanel)
 {
 
+
+  
+}
+
+
+void Online::MakeFold3Panel(TGCompositeFrame *TabPanel)
+{
+  TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  
+  // draw
+  OnlineDrawButton3 = new TGTextButton(parFrame, "&Draw", ONLINEDRAW3);
+  // OnlineDrawButton3->SetEnabled(0);
+  OnlineDrawButton3->Associate(this);
+  parFrame->AddFrame(OnlineDrawButton3, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
+
+  // ch
+  onlinechnum3 = new TGNumberEntry (parFrame, 0, 2, ONLINECHNUM3, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  parFrame->AddFrame(onlinechnum3, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
+  onlinechnum3->SetButtonToNum(0);
+  onlinechnum3->Associate(this);
+  TGLabel *ch = new TGLabel(parFrame, "Ch:"); 
+  parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+
+
+  onlinemodnum3 = new TGNumberEntry (parFrame, 0, 2, ONLINEMODNUM3, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, PRESET_MAX_MODULES-1);
+  parFrame->AddFrame(onlinemodnum3, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
+  onlinemodnum3->SetButtonToNum(0);
+  onlinemodnum3->Associate(this);
+  TGLabel *mod = new TGLabel(parFrame, "Mod:"); 
+  parFrame->AddFrame(mod, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+
+
+
+  chooseenergycanvasmode3 = new TGComboBox(parFrame);
+  parFrame->AddFrame(chooseenergycanvasmode3, new TGLayoutHints(kLHintsRight, 0, 10, 0, 0));
+  chooseenergycanvasmode3->Resize(150, 20);
+  chooseenergycanvasmode3->AddEntry("Single Channel Mode", 0);
+  chooseenergycanvasmode3->AddEntry("Multi Channel Mode", 1);
+  chooseenergycanvasmode3->Select(0);
+  TGLabel *choosemode = new TGLabel(parFrame, "Mode:"); 
+  parFrame->AddFrame(choosemode, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+  fClient->GetColorByName("blue", color);
+  choosemode->SetTextColor(color, false);
+
+  
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
+  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
+
+  TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas3", adCanvasFrame, 100, 100);
+
+  canvas3 = adjCanvas->GetCanvas();
+  adCanvasFrame->AddFrame(adjCanvas, Hint);
+  TabPanel->AddFrame(adCanvasFrame, Hint);
+
+
+  
+}
+
+void Online::Panel3Draw()
+{
+  for (int i = 0; i < 16; ++i)
+    {
+      if(onlineth1i3[i] == NULL)
+	{
+	  char th1iname[16];
+	  sprintf(th1iname,"ch%02d",i);
+	  onlineth1i3[i] = new TH1I(th1iname,"",32768,0,32768);
+	  onlineth1i3[i]->SetTitle(TString::Format("Ch: %d",i).Data());
+	  onlineth1i3[i]->GetXaxis()->SetTitle("ch");
+	  onlineth1i3[i]->GetXaxis()->SetLabelSize(0.06);
+	  onlineth1i3[i]->GetYaxis()->SetLabelSize(0.06);
+	}
+      else
+	{
+	  onlineth1i3[i]->Reset("ICES");
+	}
+    }
+  
+  
+  canvas3->cd();
+  canvas3->Clear();
+
+  //TODO
+  memcpy(EnergySpec,ptr+SHAREDMEMORYDATAOFFSET+4*SHAREDMEMORYDATASTATISTICS*PRESET_MAX_MODULES+onlinemodnum3->GetIntNumber()*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL,4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL);
+  
+  switch(chooseenergycanvasmode3->GetSelected())
+    {
+    case 0://single
+      for (int j = 0; j < SHAREDMEMORYDATAENERGYLENGTH; ++j)
+	{
+	  onlineth1i3[onlinechnum3->GetIntNumber()]->SetBinContent(j+1, Double_t(EnergySpec[onlinechnum3->GetIntNumber()*SHAREDMEMORYDATAENERGYLENGTH+j]));
+	}
+      onlineth1i3[onlinechnum3->GetIntNumber()]->Draw();
+      break;
+
+    case 1://multi
+      canvas3->Divide(4,4);
+
+      for (int i = 0; i < 16; ++i)
+	{
+	  canvas3->cd(i+1);
+	  for (int j = 0; j < SHAREDMEMORYDATAENERGYLENGTH; ++j)
+	    {
+	      onlineth1i3[i]->SetBinContent(j+1, Double_t(EnergySpec[i*SHAREDMEMORYDATAENERGYLENGTH+j]));
+	    }
+	  onlineth1i3[i]->Draw();
+	}
+      break;
+
+
+    default:
+      break;
+    }
+
+  canvas3->Modified();
+  canvas3->Update();
+  gSystem->ProcessEvents();
 }
 
 
@@ -536,8 +761,8 @@ void Online::LoopRun()
 		  if(SampleRate[i]->GetSelected() == 3) SYSTEM_CLOCK_MHZ = 500;
 		  // std::cout<<"Mod: "<<i<<"  SYSTEM_CLOCK_MHZ: "<<SYSTEM_CLOCK_MHZ << "  " << SampleRate[i]->GetSelected() <<std::endl;
 		  
-		  memcpy(Statistics,buf+10+4*448*i,448*4);
-		  memcpy(Statistics_new,buf_new+10+4*448*i,448*4);
+		  memcpy(Statistics,buf+SHAREDMEMORYDATAOFFSET+4*SHAREDMEMORYDATASTATISTICS*i,SHAREDMEMORYDATASTATISTICS*4);
+		  memcpy(Statistics_new,buf_new+SHAREDMEMORYDATAOFFSET+4*SHAREDMEMORYDATASTATISTICS*i,SHAREDMEMORYDATASTATISTICS*4);
 
 		  RealTime = (double)Statistics[2] * pow(2.0, 32.0);
 		  RealTime += (double)Statistics[3];
@@ -584,7 +809,7 @@ void Online::LoopRun()
 		    }
 		}
 
-	      memcpy(buf,buf_new,(PRESET_MAX_MODULES*448*4)+10);
+	      memcpy(buf,buf_new,(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+SHAREDMEMORYDATAOFFSET);
 
 	      sprintf(charrunstate,"R%04d     M%02d",RunNumber,ModNum);
 	      StateMsg->SetText(charrunstate);
