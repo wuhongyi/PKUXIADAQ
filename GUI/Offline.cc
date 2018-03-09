@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 四 2月 22 15:35:43 2018 (+0800)
+// Last-Updated: 五 3月  9 22:45:04 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 630
+//     Update #: 644
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -59,10 +59,24 @@
 #include "TGTab.h"
 #include "TString.h"
 #include "TFitResultPtr.h"
+#include "TMath.h"
 
+#include <cmath>
 #include <cstring>
 #include <iostream>
 using namespace std;
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+#define FFT_BASELINE  0.0000001  // Baseline for low clipping (-140dB)
+#define NORM_FACTOR   4096       // Normalize the amplitide (12bit ADC)
+
+// Types of windowing
+#define HANNING_FFT_WINDOW    0
+#define HAMMING_FFT_WINDOW    1
+#define BLACKMAN_FFT_WINDOW   2
+#define RECT_FFT_WINDOW       3
+
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextEntry *filepath, TGTextEntry *filename)
@@ -78,6 +92,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   chanNumber5 = 0;
   chanNumber6 = 0;
   chanNumber8 = 0;
+  chanNumber9 = 0;
   fileRunNum = 0;
 
   offlinedata = NULL;
@@ -1320,7 +1335,7 @@ void Offline::MakeFold8Panel(TGCompositeFrame *TabPanel)
   LabelChooseDrawStyle->SetTextColor(color, false);
   choosedrawstyle8 = new TGComboBox(parFrame);
   parFrame->AddFrame(choosedrawstyle8, new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
-  choosedrawstyle8->Resize(50, 20);
+  choosedrawstyle8->Resize(55, 20);
   choosedrawstyle8->AddEntry("Graph", 0);
   choosedrawstyle8->AddEntry("Hist", 1);
   choosedrawstyle8->Select(0);
@@ -1419,24 +1434,39 @@ void Offline::MakeFold8Panel(TGCompositeFrame *TabPanel)
 void Offline::MakeFold9Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-
-  // // draw
-  // OfflineDrawButton6 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW6);
-  // OfflineDrawButton6->SetEnabled(0);
-  // OfflineDrawButton6->Associate(this);
-  // parFrame->AddFrame(OfflineDrawButton6, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
-
-  //   // ch
-  // offlinechnum6 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM6, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
-  // parFrame->AddFrame(offlinechnum6, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
-  // offlinechnum6->SetButtonToNum(0);
-  // offlinechnum6->Associate(this);
-  // TGLabel *ch = new TGLabel( parFrame, "Ch:"); 
-  // parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-  
-
   TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
 
+
+  // draw
+  OfflineDrawButton9 = new TGTextButton(parFrame, "&Draw", OFFLINEDRAW9);
+  OfflineDrawButton9->SetEnabled(0);
+  OfflineDrawButton9->Associate(this);
+  parFrame->AddFrame(OfflineDrawButton9, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
+
+  // ch
+  offlinechnum9 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM9, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  parFrame->AddFrame(offlinechnum9, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
+  offlinechnum9->SetButtonToNum(0);
+  offlinechnum9->Associate(this);
+  TGLabel *ch = new TGLabel( parFrame, "Ch:"); 
+  parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+  
+
+  // Draw Style
+  choosedrawstyle9 = new TGComboBox(parFrame);
+  parFrame->AddFrame(choosedrawstyle9, new TGLayoutHints(kLHintsRight, 0, 20, 2, 2));
+  choosedrawstyle9->Resize(60, 20);
+  choosedrawstyle9->AddEntry("XIA", 0);
+  choosedrawstyle9->AddEntry("CAEN", 1);
+  choosedrawstyle9->AddEntry("fftw3", 2);
+  choosedrawstyle9->Select(0);
+  TGLabel *LabelChooseDrawStyle = new TGLabel(parFrame, "Algorithm:"); 
+  parFrame->AddFrame(LabelChooseDrawStyle, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("red", color);
+  LabelChooseDrawStyle->SetTextColor(color, false);
+
+  
+  
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
@@ -1596,13 +1626,8 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;  
 	    case OFFLINERUNNUM:
 	      OfflineFileStatus->SetText("NOT READ");
-	      OfflineDrawButton->SetEnabled(0);
-	      OfflineDrawButton2->SetEnabled(0);
-	      OfflineDrawButton3->SetEnabled(0);
-	      OfflineDrawButton4->SetEnabled(0);
-	      OfflineDrawButton5->SetEnabled(0);
-	      OfflineDrawButton6->SetEnabled(0);
-	      OfflineDrawButton8->SetEnabled(0);
+	      DrawButtonStatus(false);
+	      
 	      if (parm2 == 0)
 		{
 		  ++fileRunNum;
@@ -1620,13 +1645,8 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 	    case OFFLINEMODNUM:
 	      OfflineFileStatus->SetText("NOT READ");
-	      OfflineDrawButton->SetEnabled(0);
-	      OfflineDrawButton2->SetEnabled(0);
-	      OfflineDrawButton3->SetEnabled(0);
-	      OfflineDrawButton4->SetEnabled(0);
-	      OfflineDrawButton5->SetEnabled(0);
-	      OfflineDrawButton6->SetEnabled(0);
-	      OfflineDrawButton8->SetEnabled(0);
+	      DrawButtonStatus(false);
+	      
 	      if (parm2 == 0)
 		{
 		  if (modNumber != detector->NumModules-1)
@@ -1749,7 +1769,25 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		    }
 		}
 	      break;
-
+	    case OFFLINECHNUM9:
+	      if (parm2 == 0)
+		{
+		  if (chanNumber9 != 15)
+		    {
+		      ++chanNumber9;
+		      offlinechnum9->SetIntNumber(chanNumber9);
+		    }
+		}
+	      else
+		{
+		  if (chanNumber9 != 0)
+		    {
+		      if (--chanNumber9 == 0)
+			chanNumber9 = 0;
+		      offlinechnum9->SetIntNumber(chanNumber9);
+		    }
+		}
+	      break;
 	      
 	      
 	      
@@ -1768,13 +1806,7 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    {
 	    case kTE_ENTER:
 	      OfflineFileStatus->SetText("NOT READ");
-	      OfflineDrawButton->SetEnabled(0);
-	      OfflineDrawButton2->SetEnabled(0);
-	      OfflineDrawButton3->SetEnabled(0);
-	      OfflineDrawButton4->SetEnabled(0);
-	      OfflineDrawButton5->SetEnabled(0);
-	      OfflineDrawButton6->SetEnabled(0);
-	      OfflineDrawButton8->SetEnabled(0);
+	      DrawButtonStatus(false);
 	      modNumber = offlinemodnum->GetIntNumber();
 	      if(modNumber > detector->NumModules-1) modNumber = detector->NumModules-1;
 	      if(modNumber < 0) modNumber = 0;
@@ -1861,13 +1893,7 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    {
 	    case kTE_ENTER:
 	      OfflineFileStatus->SetText("NOT READ");
-	      OfflineDrawButton->SetEnabled(0);
-	      OfflineDrawButton2->SetEnabled(0);
-	      OfflineDrawButton3->SetEnabled(0);
-	      OfflineDrawButton4->SetEnabled(0);
-	      OfflineDrawButton5->SetEnabled(0);
-	      OfflineDrawButton6->SetEnabled(0);
-	      OfflineDrawButton8->SetEnabled(0);
+	      DrawButtonStatus(false);
 	      fileRunNum = offlinefilerunnum->GetIntNumber();
 	      if(fileRunNum < 0) fileRunNum = 0;
 	      offlinefilerunnum->SetIntNumber(fileRunNum);
@@ -3248,8 +3274,31 @@ void Offline::Panel8Draw()
 void Offline::Panel9Draw()
 {
   OfflineReadFileButton->SetEnabled(0);
+  OfflineDrawButton9->SetEnabled(0);
+
+
+
+  switch(choosedrawstyle9->GetSelected())
+    {
+    case 0://XIA
+
+      break;
+
+    case 1://CAEN
+
+      break;
+
+    case 2://FFTW3
+
+      break;
+
+    default:
+      break;
+    }
 
   
+  
+  OfflineDrawButton9->SetEnabled(1);
   OfflineReadFileButton->SetEnabled(1);
 }
 
@@ -3316,13 +3365,7 @@ void Offline::Panel0ReadFile()
       sprintf(staok,"Total Events: %d",OfflineModuleEventsCount);
       OfflineFileStatus->SetText(staok);
 	      
-      OfflineDrawButton->SetEnabled(1);
-      OfflineDrawButton2->SetEnabled(1);
-      OfflineDrawButton3->SetEnabled(1);
-      OfflineDrawButton4->SetEnabled(1);
-      OfflineDrawButton5->SetEnabled(1);
-      OfflineDrawButton6->SetEnabled(1);
-      OfflineDrawButton8->SetEnabled(1);
+      DrawButtonStatus(true);
     }
   else
     {
@@ -3395,42 +3438,36 @@ void Offline::CalculateCFDShow5()
 void Offline::SelectRawEnergySumsBaseline(Bool_t on)
 {
   std::cout<<"GOTO  =  SelectRawEnergySumsBaseline: "<<headerrawenergysumsandbaseline->IsOn()<<std::endl;
-
-  OfflineDrawButton->SetEnabled(0);
-  OfflineDrawButton2->SetEnabled(0);
-  OfflineDrawButton3->SetEnabled(0);
-  OfflineDrawButton4->SetEnabled(0);
-  OfflineDrawButton5->SetEnabled(0);
-  OfflineDrawButton6->SetEnabled(0);
-  OfflineDrawButton8->SetEnabled(0);
+  DrawButtonStatus(false);
   // OfflineFileStatus->SetText("NOT READ");
 }
 
 void Offline::SelectQDCSums(Bool_t on)
 {
   std::cout<<"GOTO  =  SelectQDCSums: "<<headerqdcsums->IsOn()<<std::endl;
-  OfflineDrawButton->SetEnabled(0);
-  OfflineDrawButton2->SetEnabled(0);
-  OfflineDrawButton3->SetEnabled(0);
-  OfflineDrawButton4->SetEnabled(0);
-  OfflineDrawButton5->SetEnabled(0);
-  OfflineDrawButton6->SetEnabled(0);
-  OfflineDrawButton8->SetEnabled(0);
+  DrawButtonStatus(false);
   // OfflineFileStatus->SetText("NOT READ");
 }
 
 void Offline::SelectExternalTimestamp(Bool_t on)
 {
   std::cout<<"GOTO  =  SelectExternalTimestamp: "<<headerexternaltimestamp->IsOn()<<std::endl;
-  OfflineDrawButton->SetEnabled(0);
-  OfflineDrawButton2->SetEnabled(0);
-  OfflineDrawButton3->SetEnabled(0);
-  OfflineDrawButton4->SetEnabled(0);
-  OfflineDrawButton5->SetEnabled(0);
-  OfflineDrawButton6->SetEnabled(0);
-  OfflineDrawButton8->SetEnabled(0);
+  DrawButtonStatus(false);
   // OfflineFileStatus->SetText("NOT READ");
 }
+
+void Offline::DrawButtonStatus(bool flag)
+{
+  OfflineDrawButton->SetEnabled(flag);
+  OfflineDrawButton2->SetEnabled(flag);
+  OfflineDrawButton3->SetEnabled(flag);
+  OfflineDrawButton4->SetEnabled(flag);
+  OfflineDrawButton5->SetEnabled(flag);
+  OfflineDrawButton6->SetEnabled(flag);
+  OfflineDrawButton8->SetEnabled(flag);
+  OfflineDrawButton9->SetEnabled(flag);
+}
+
 
 
 
@@ -3537,6 +3574,133 @@ void DynamicCFDShowProjectY5()
   padsav->cd();
   delete ltx;
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+int Offline::CAEN_FFT(unsigned short *wave, double *fft, int ns, int WindowType)
+{
+  int m,n,ip,le,le1,nm1,k,l,j,i,nv2;
+  double u1,u2,u3,arg,c,s,t1,t2,t3,t4;
+  double *x, *y;
+
+  /* ns should be a power of 2. If it is not, find the maximum m
+     such that n = 2^m < ns and get n samples instead of ns.*/
+  i = 1;
+  while((int)std::pow(2,i) < ns)
+    i++;
+  if(ns == (int)(std::pow(2,i))) {
+    m = i;
+    n = ns;
+  }
+  else {
+    m = i - 1;
+    n = (int)std::pow(2,m);
+  }
+
+  /* allocate the memory buffers for the real and imaginary parts of the fft */
+  x = (double *)malloc(n * sizeof(double));
+  y = (double *)malloc(n * sizeof(double));
+
+  /* apply the windowing to the input vector */
+  for(i=0; i<n; i++) {
+    y[i] = 0.0; /* imaginary part of the input vector (always 0) */
+    switch (WindowType) {
+    case HANNING_FFT_WINDOW  :  
+      x[i] = wave[i] * (0.5 - 0.5 * std::cos(2*TMath::Pi() * i/n));
+      break;
+    case HAMMING_FFT_WINDOW  :  
+      x[i] = wave[i] * (0.54 - 0.46 * std::cos(2*TMath::Pi() * i/n)); 
+      break;
+    case BLACKMAN_FFT_WINDOW  :  
+      x[i] = wave[i] * (2.4 * (0.42323 - 0.49755*cos(2*TMath::Pi()*i/n) + 0.07922*std::cos(4*TMath::Pi()*i/n)));
+      break;
+    case RECT_FFT_WINDOW  :  
+      x[i] = wave[i];
+      break;
+    default :  
+      x[i] = wave[i] * (2.4*(0.42323-0.49755*std::cos(2*TMath::Pi()*(i)/n)+0.07922*std::cos(4*TMath::Pi()*(i)/n)));
+      break;
+    }
+  }
+
+  /* now the vectors x and y represents the input waveform expressed as imaginary numbers
+     after the appplication of the windowing. */
+
+  /* calculate the FFT */
+  for(l=0; l<m; l++) {
+    le=(int)std::pow(2,m-l);
+    le1=le/2;
+    u1=1.0;
+    u2=0.0;
+    arg=TMath::Pi()/le1;
+    c=std::cos(arg);
+    s=-std::sin(arg);
+
+    for (j=0; j<le1; j++) {
+      for (i=j; i<n; i=i+le) {
+	ip=i+le1;
+	t1=x[i]+x[ip];
+	t2=y[i]+y[ip];
+	t3=x[i]-x[ip];
+	t4=y[i]-y[ip];
+	x[ip]=t3*u1-t4*u2;
+	y[ip]=t4*u1+t3*u2;
+	x[i]=t1;
+	y[i]=t2;
+      }
+      u3=u1*c-u2*s;
+      u2=u2*c+u1*s;
+      u1=u3;
+    }
+  }
+
+  nv2=n/2;
+  nm1=n-1;
+  j=0;
+  i=0;
+  while (i<nm1) {
+    if(i>j)
+      goto rif;
+    t1=x[j];
+    t2=y[j];
+    x[j]=x[i];
+    y[j]=y[i];
+    x[i]=t1;
+    y[i]=t2;
+  rif:
+    k=nv2;
+  rife:
+    if (k>j)
+      goto rifer;
+    j=j-k;
+    k=k/2;
+    goto rife;
+  rifer:
+    j=j+k;
+    i++;
+  }
+
+  /* get the amplitude of the FFT (modulo) */
+  y[0]=y[0]/n;
+  x[0]=x[0]/n;
+  fft[0]=std::sqrt(x[0]*x[0] + y[0]*y[0]);
+  for(i=1;i<n/2;i++) {
+    y[i]=2*y[i]/n;
+    x[i]=2*x[i]/n;
+    fft[i]=std::sqrt(x[i]*x[i] + y[i]*y[i]);
+  }
+
+  /* Add the baseline, normalize and transform in dB */
+  for(i=0; i<n/2; i++) 
+    fft[i] = 20 * std::log10( fft[i]/NORM_FACTOR + FFT_BASELINE);
+
+  /* free the buffers and return the number of points (only half FFT) */
+  free(x);
+  free(y);
+  return (n/2);
+}
+
+
 
 // 
 // Offline.cc ends here

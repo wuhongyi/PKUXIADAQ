@@ -1,7 +1,7 @@
 OBJ = pku
 
 CXX=g++        
-CXXFLAGS:=-std=c++11 -g -Wall -lrt -I. -I../software/app -I../software/sys
+CXXFLAGS:=-std=c++11 -g -Wall -lrt -lfftw3 -I. -I../software/app -I../software/sys
 ROOTLIBS = $(shell root-config --libs) -lGui
 ROOTINC = -I$(shell root-config --incdir) 
 CXXFLAGS+=$(ROOTINC)
@@ -9,11 +9,11 @@ LIBS:=../software/libPixie16App.a  ../software/libPixie16Sys.a  $(PLX_SDK_DIR)/P
 
 
 
-INCLUDES:=Global.hh Detector.hh ExpertMod.hh Table.hh Csra.hh MainFrame.hh HistXDT.hh TriggerFilter.hh Cfd.hh Qdc.hh LogicTrigger.hh Offline.hh Base.hh Energy.hh Simulation.hh OfflineData.hh CopyPars.hh ReadChanStatus.hh
+INCLUDES:=Global.hh Detector.hh ExpertMod.hh Table.hh Csra.hh MainFrame.hh HistXDT.hh TriggerFilter.hh Cfd.hh Qdc.hh LogicTrigger.hh Offline.hh Base.hh Energy.hh Simulation.hh OfflineData.hh CopyPars.hh ReadChanStatus.hh pkuFFTW.hh
 
-OBJECTS:=Global.o ExpertMod.o Csra.o Detector.o MainFrame.o main.o Table.o HistXDT.o TriggerFilter.o MainDict.o Cfd.o Qdc.o LogicTrigger.o Offline.o Base.o Energy.o Simulation.o OfflineData.o CopyPars.o ReadChanStatus.o
+OBJECTS:=Global.o ExpertMod.o Csra.o Detector.o MainFrame.o main.o Table.o HistXDT.o TriggerFilter.o MainDict.o Cfd.o Qdc.o LogicTrigger.o Offline.o Base.o Energy.o Simulation.o OfflineData.o CopyPars.o ReadChanStatus.o pkuFFTW.o
 
-SRCS:=Global.cc ExpertMod.cc Csra.cc Detector.cc MainFrame.cc main.cc Table.cc HistXDT.cc TriggerFilter.cc  MainDict.cc Cfd.cc Qdc.cc LogicTrigger.cc Offline.cc Base.cc Energy.cc Simulation.cc OfflineData.cc CopyPars.cc ReadChanStatus.cc
+SRCS:=Global.cc ExpertMod.cc Csra.cc Detector.cc MainFrame.cc main.cc Table.cc HistXDT.cc TriggerFilter.cc  MainDict.cc Cfd.cc Qdc.cc LogicTrigger.cc Offline.cc Base.cc Energy.cc Simulation.cc OfflineData.cc CopyPars.cc ReadChanStatus.cc pkuFFTW.cc
 
 all: $(OBJ)
 

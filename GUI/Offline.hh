@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 四 2月 22 15:03:28 2018 (+0800)
+// Last-Updated: 五 3月  9 22:39:28 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 132
+//     Update #: 137
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -63,6 +63,33 @@ public:
   void SelectDrawOptionPanel1(Bool_t on);
   void SelectDrawOptionPanel2(Bool_t on);
   // void SelectSamplingFrequency(Int_t id);
+
+protected:
+  // Description:
+  // -----------------------------------------------------------------------------
+  // This is a function that calculates the FFT for a vector of 'ns' samples.
+  // The number ns must be a power of 2. In case it isn't, the closest power of 2
+  // smaller than ns will be considered and exceeding samples ignored.
+  // The calculation of the FFT is based on imaginary numbers (x = real part,
+  // y = imaginary part). However, the input vector is represented as real numbers
+  // (unsigned short) and the function returns a vector of real numbers (double)
+  // that are the amplitude (i.e. sqrt(x^2 + y^2) ) of the FFT points. 
+  // The amplitude is also normalized respect to the maximum amplitude (for 
+  // example 4096 for 12 bit samples) and expressed in dB. A contant baseline (for
+  // example 0.0000001 which is -140dB) is also added to the value in order to 
+  // low clip the FFT points. Since the FFT has two symmetrical lobes, only half
+  // points are returned.
+  // Input Parameters: 
+  // --------------------------------------------------------------------------
+  // wave: pointer to the input vector (waveform samples)
+  // fft: pointer to the output vector (fft amplitude in dB, half lobe)
+  // ns: number of samples of the input vector wave
+  // WindowType: Type of windowing for the FFT
+  // Return:
+  // --------------------------------------------------------------------------
+  // Number of pointf of the output vector fft
+  int CAEN_FFT(unsigned short *wave, double *fft, int ns, int WindowType);// source from www.caen.it  
+
   
 private:
   Pixel_t color;
@@ -86,6 +113,7 @@ private:
       OFFLINECHNUM5,
       OFFLINECHNUM6,
       OFFLINECHNUM8,
+      OFFLINECHNUM9,
       OFFLINEREAD,
       OFFLINELOAD,
       OFFLINEAPPLY,
@@ -283,8 +311,13 @@ private:
   
   // Fold9
   TCanvas *canvas9;  
+  TGTextButton* OfflineDrawButton9;
+  TGNumberEntry	*offlinechnum9;//int
+  int chanNumber9;//
+  TGComboBox *choosedrawstyle9;//0-XIA 1-CAEN 2-fftw3
+  
 
-
+  void DrawButtonStatus(bool flag);
   
   // function
   void Panel1Draw();
