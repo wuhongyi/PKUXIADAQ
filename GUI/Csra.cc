@@ -21,9 +21,11 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   numModules = NumModules;
 
   mn_vert = new TGVerticalFrame(this, 200, 300);
+  AddFrame(mn_vert, new TGLayoutHints(kLHintsTop | kLHintsLeft, 2, 2, 2, 2));
+  
   mn = new TGHorizontalFrame(mn_vert, 200, 300);
   mn_vert->AddFrame(mn, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  AddFrame(mn_vert, new TGLayoutHints(kLHintsTop | kLHintsLeft, 2, 2, 2, 2));
+  
   column1 = new TGVerticalFrame(mn, 200, 300);
   column2 = new TGVerticalFrame(mn, 200, 300);
   column3 = new TGVerticalFrame(mn, 200, 300);
@@ -151,13 +153,13 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   /////////////////////////////module entry///////////////////////////////
 
   TGHorizontal3DLine *ln1 = new TGHorizontal3DLine(column1, 50, 2);
+  column1->AddFrame(ln1, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
+  
   TGLabel *mod = new TGLabel(buttons, "Module #");
-
+  buttons->AddFrame(mod, new TGLayoutHints(kLHintsCenterX, 5, 10, 3, 0));
+  
   numericMod = new TGNumberEntry(buttons, 0, 4, 100, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3/*kNELLimitMinMax*/, 0, 3);
   numericMod->SetButtonToNum(0);
-
-  column1->AddFrame(ln1, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
-  buttons->AddFrame(mod, new TGLayoutHints(kLHintsCenterX, 5, 10, 3, 0));
   buttons->AddFrame(numericMod, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 0, 0));
 
   numericMod->Associate(this);
@@ -300,18 +302,23 @@ Bool_t Csra::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 	    }
 	  break;
+	  
 	case kCM_CHECKBUTTON :
 	  {
 	    checkbutton(parm1);
 	    break;
 	  }
-	default:
+	  
+	default://GET_SUBMSG(msg)
 	  break;
-	}
+	}//switch (GET_SUBMSG(msg))
+      break;//kC_COMMAND
+
+
+      
+    default://GET_MSG(msg)
       break;
-    default:
-      break;
-    }
+    }//switch (GET_MSG(msg))
 
   return kTRUE;
 }
@@ -364,11 +371,11 @@ int Csra::change_values(Long_t mod)
 void Csra::checkbutton(Long_t parm1)
 {
   // 添加功能类需要修改本函数
-  if(parm1 > 7016 || parm1 < 5000) return;
+  if(parm1 > 7116 || parm1 < 5000) return;
   if(parm1%100 == 16 ) // All
     {
       int k = parm1/100-50;//第几个功能类
-      if(k < 0 || k > 20) return;
+      if(k < 0 || k > 21) return;
       if(tmpckBtn[k][16]->IsDown()){
 	for(int i = 0;i < 16;i++)
 	  tmpckBtn[k][i]->SetState(kButtonDown);
@@ -380,7 +387,7 @@ void Csra::checkbutton(Long_t parm1)
   else //0-15
     {
       int k = parm1/100-50;
-      if(k < 0 || k > 20) return;
+      if(k < 0 || k > 21) return;
       int j = parm1%100;
       if(j < 0 || j > 15) return;
       if(!tmpckBtn[k][j]->IsDown()){

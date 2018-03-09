@@ -1,3 +1,14 @@
+// MainFrame.cc --- 
+// 
+// Description: 
+// Author: Hongyi Wu(吴鸿毅)
+// Email: wuhongyi@qq.com 
+// Created: 五 3月  9 13:01:33 2018 (+0800)
+// Last-Updated: 五 3月  9 17:47:49 2018 (+0800)
+//           By: Hongyi Wu(吴鸿毅)
+//     Update #: 5
+// URL: http://wuhongyi.cn 
+
 #include "MainFrame.hh"
 #include "Csra.hh"
 #include "Detector.hh"
@@ -12,21 +23,16 @@
 
 ClassImp(MainFrame)
 
-// const char *spec_types[] =
-// { "Radware spectrum", "*.spe", "all files", "*.*", 0, 0 };
-
 const char *filetypes[] =
   { "Set Files", "*.set", "all files", "*.*", 0, 0 };
 
 MainFrame::MainFrame(const TGWindow * p)
 {
   ///initialise variables///////////////
-  moduleNr = 0;
-  channelNr = 0;
-  size = 8192; //scope trace size
+
   detector = NULL; 
   runnum = 0;
-  ///////////////////////////////////////
+
   CreateMenuBar();
 
   SetWindowName("PKU XIA Pixie-16 DAQ");
@@ -34,22 +40,7 @@ MainFrame::MainFrame(const TGWindow * p)
   MapWindow();
   Resize(INITIAL_WIDTH, INITIAL_HIGHT);
 
-  trace = NULL;
-  trace_float = NULL;
-
-  wave_once = false;
-
-  
   // AppendPad(); //foarte important
-
-  xmin = 0;
-  xmax = 8192;
-  ymin = 0;
-  ymax = 4096;
-  NUMBERofTRACES = 500; //number of traces to search for waveforms
-  range = 480;
-  separation = 480;
-  fraction = 0.0002;
 
   flagonlinemode = 0;
 }
@@ -64,9 +55,9 @@ void MainFrame::CreateMenuBar()
   TGMenuBar *MenuBar = new TGMenuBar(this, 1, 1, kHorizontalFrame);
 
   MenuFile = new TGPopupMenu(fClient->GetRoot());
-MenuFile->AddEntry("E&xit", FILE_EXIT,0,gClient->GetPicture("bld_exit.png"));
+  MenuFile->AddEntry("E&xit", FILE_EXIT,0,gClient->GetPicture("bld_exit.png"));
   MenuFile->AddSeparator();
-MenuFile->AddEntry("&About", ABOUT,0,gClient->GetPicture("ed_help.png"));
+  MenuFile->AddEntry("&About", ABOUT,0,gClient->GetPicture("ed_help.png"));
   MenuFile->Associate(this);
   MenuBar->AddPopup("&File", MenuFile, new TGLayoutHints (kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   AddFrame(MenuBar, new TGLayoutHints (kLHintsTop | kLHintsLeft | kLHintsExpandX, 0, 0, 0, 0));
@@ -105,7 +96,7 @@ MenuFile->AddEntry("&About", ABOUT,0,gClient->GetPicture("ed_help.png"));
   MenuOffline->Associate(this);
   MenuBar->AddPopup("&Offline", MenuOffline, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
-  SetMenuStatus(false);
+  SetMenuStatus(false,flagonlinemode);
 
 
   TGTab *TabPanel = new TGTab(this);
@@ -241,7 +232,7 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		  StateMsgFold1->SetText("Booted system");
 		  // gPad->SetCursor(kPointer);
 
-		  SetMenuStatus(true);
+		  SetMenuStatus(true,flagonlinemode);
 		}
 	      else
 		{
@@ -406,9 +397,6 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel)
   cgrouphframe2->AddFrame(updateenergyonline,new TGLayoutHints(kLHintsRight|kLHintsTop,10,4,10,3));
 
 
-
-
-
   
   // restore last run's file information
   char tmp[200];
@@ -477,8 +465,6 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel)
   lastruntextinfor->SetEnabled(kFALSE);
   lastruntextinfor->SetFrameDrawn(kFALSE);
 
-  
-
 }
 
 
@@ -523,7 +509,7 @@ void MainFrame::StartLSRun()
       onlinemode->SetEnabled(0);
       filesetdone->SetEnabled(0);
 
-      SetMenuStatus(false);
+      SetMenuStatus(false,flagonlinemode);
       
       SetLSFileName();
       detector->SetOnlineF(fonlinedata);
@@ -541,7 +527,7 @@ void MainFrame::StartLSRun()
 	{
 	  cout<<"CANNOT start the LSM Run!"<<endl;
 
-	  SetMenuStatus(true);
+	  SetMenuStatus(true,flagonlinemode);
 
 	  onlinemode->SetEnabled(1);
 	  filesetdone->SetEnabled(1);
@@ -571,7 +557,7 @@ void MainFrame::StartLSRun()
 
       lastruntextinfor->SetText(TString::Format("Last run number: %d",int(filerunnum->GetIntNumber())-1).Data());
 
-      SetMenuStatus(true);
+      SetMenuStatus(true,flagonlinemode);
 
       onlinemode->SetEnabled(1);
       filesetdone->SetEnabled(1);
@@ -620,7 +606,7 @@ void MainFrame::SetOnlineMode()
       flagonlinemode = 1;
     }
 
-  SetMenuStatus(false);
+  SetMenuStatus(false,flagonlinemode);
 
   bootB->SetEnabled(1);
 
@@ -656,10 +642,11 @@ bool MainFrame::IsDirectoryExists(const char *path)
     return false;
 }
 
-void MainFrame::SetMenuStatus(bool flag)
+void MainFrame::SetMenuStatus(bool flag,int flagonline)
 {
   if(flag)
     {
+      MenuFile->EnableEntry(FILE_EXIT);
       MenuSetup->EnableEntry(BASE);
       MenuSetup->EnableEntry(ENERGY);
       MenuSetup->EnableEntry(TFILTER);
@@ -671,12 +658,19 @@ void MainFrame::SetMenuStatus(bool flag)
       MenuExpert->EnableEntry(CSRA);
       MenuExpert->EnableEntry(LOGIC);
       MenuMonitor->EnableEntry(HISTXDT);
-      MenuMonitor->EnableEntry(READCHANSTATUS);
+      if(flagonline == 1)
+	MenuMonitor->DisableEntry(READCHANSTATUS);
+	else
+	  MenuMonitor->EnableEntry(READCHANSTATUS);
       MenuOffline->EnableEntry(OFFLINEADJUSTPAR);
       MenuOffline->EnableEntry(SIMULATION);
     }
   else
     {
+      if(flagonline == 1)
+	MenuFile->EnableEntry(FILE_EXIT);
+      else
+	MenuFile->DisableEntry(FILE_EXIT);
       MenuSetup->DisableEntry(BASE);
       MenuSetup->DisableEntry(ENERGY);
       MenuSetup->DisableEntry(TFILTER);
@@ -694,3 +688,6 @@ void MainFrame::SetMenuStatus(bool flag)
     }
 
 }
+
+// 
+// MainFrame.cc ends here

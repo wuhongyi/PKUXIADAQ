@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 3月  8 14:57:31 2018 (+0800)
-// Last-Updated: 四 3月  8 22:59:23 2018 (+0800)
+// Last-Updated: 五 3月  9 13:31:46 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 22
+//     Update #: 23
 // URL: http://wuhongyi.cn 
 
 #include "ReadChanStatus.hh"
@@ -230,7 +230,7 @@ Bool_t ReadChanStatus::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	  switch (GET_SUBMSG(msg))
 	    {
 	    case kTE_ENTER:
-	      chanNumber1 = chnum0->GetIntNumber();
+	      chanNumber1 = chnum1->GetIntNumber();
 	      if(chanNumber1 > 15) chanNumber1 = 15;
 	      if(chanNumber1 < 0) chanNumber1 = 0;
 	      chnum1->SetIntNumber(chanNumber1);

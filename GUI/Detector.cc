@@ -124,6 +124,9 @@ bool Detector::BootSystem()
 	}
     }
 
+
+
+  
   // TODO
   retval = Pixie16BootModule(ComFPGAConfigFile,	// name of communications FPGA configuration file
 			     SPFPGAConfigFile,	// name of signal processing FPGA configuration file
@@ -151,6 +154,24 @@ bool Detector::BootSystem()
 	  ErrorInfo("Detector.cc", "BootSystem()", "Pixie16AdjustOffsets", retval);
 	  printf("Pixie16AdjustOffsets in module %d failed, retval = %d", k, retval);
 	  return false;
+	}
+    }
+
+  if(OfflineMode == 0)
+    {
+      for(unsigned short k = 0; k < NumModules; k++)
+	{
+	  unsigned int CSR;
+	  retval = Pixie16ReadCSR(k, &CSR);
+	  if(retval != 0)
+	    {
+	      ErrorInfo("Detector.cc", "BootSystem()", "Pixie16ReadCSR", retval);
+	      printf("Pixie16ReadCSR: Invalid Pixie module number in module %d, retval=%d", k, retval);
+	    }
+	  else
+	    {
+	      cout<<"host Control & Status Register =>  mod:"<<k<<"  value:0x"<<hex<<CSR<<dec<<endl;
+	    }
 	}
     }
   
@@ -510,20 +531,35 @@ int Detector::UpdateSharedMemory()
 void Detector::UpdateEnergySpectrumForModule()
 {
   int retval = 0;
-  unsigned int Statistics[SHAREDMEMORYDATAENERGYLENGTH];
   
+  // unsigned int Statistics[SHAREDMEMORYDATAENERGYLENGTH];
+  // for(unsigned short i = 0; i < NumModules; i++)
+  //   for(unsigned short j = 0; j < SHAREDMEMORYDATAMAXCHANNEL; j++)
+  //     {
+  // 	retval = Pixie16ReadHistogramFromModule(Statistics,SHAREDMEMORYDATAENERGYLENGTH,i,j);//channel by channel
+  // 	if(retval < 0)
+  // 	  {
+  // 	    ErrorInfo("Detector.cc", "UpdateEnergySpectrumForModule()", "Pixie16ReadHistogramFromModule", retval);
+  // 	    cout<<"Invalid Pixie module/channel number OR Failed to get the histogram data"<<endl;
+  // 	  }
+  // 	memcpy(shmptr+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+i*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL+j*4*SHAREDMEMORYDATAENERGYLENGTH,Statistics,sizeof(unsigned int)*SHAREDMEMORYDATAENERGYLENGTH);
+  //     }
+
+
+  unsigned int Statistics[SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL];
   for(unsigned short i = 0; i < NumModules; i++)
-    for(unsigned short j = 0; j < SHAREDMEMORYDATAMAXCHANNEL; j++)
       {
-	retval = Pixie16ReadHistogramFromModule(Statistics,SHAREDMEMORYDATAENERGYLENGTH,i,j);
+	retval = Pixie16EMbufferIO(Statistics,SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL,0x0,1,i);
 	if(retval < 0)
 	  {
-	    ErrorInfo("Detector.cc", "UpdateEnergySpectrumForModule()", "Pixie16ReadHistogramFromModule", retval);
-	    cout<<"Invalid Pixie module/channel number OR Failed to get the histogram data"<<endl;
+	    ErrorInfo("Detector.cc", "UpdateEnergySpectrumForModule()", "Pixie16EMbufferIO", retval);
+	    cout<<"null pointer for buffer data / number of buffer words exceeds the limit / invalid DSP external memory address / invalid I/O direction / invalid Pixie module number / I/O Failure"<<endl;
 	  }
-	// memcpy(shmptr+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+i*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL+j*4*SHAREDMEMORYDATAENERGYLENGTH,Statistics,sizeof(unsigned int)*SHAREDMEMORYDATAENERGYLENGTH);//???
+	memcpy(shmptr+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+i*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL,Statistics,sizeof(unsigned int)*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL);
       }
 
+
+  
   cout<<"Updated Monitor Energy Spectrum. "<<endl;
   cout<<"Please don't update it too often. Frequent updates will affect DAQ efficiency."<<endl;
 }

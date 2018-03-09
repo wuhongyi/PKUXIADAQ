@@ -1,3 +1,14 @@
+// MainFrame.hh --- 
+// 
+// Description: 
+// Author: Hongyi Wu(吴鸿毅)
+// Email: wuhongyi@qq.com 
+// Created: 五 3月  9 13:01:17 2018 (+0800)
+// Last-Updated: 五 3月  9 17:40:25 2018 (+0800)
+//           By: Hongyi Wu(吴鸿毅)
+//     Update #: 2
+// URL: http://wuhongyi.cn 
+
 #ifndef MAINFRAME_HH_
 #define MAINFRAME_HH_
 
@@ -126,18 +137,10 @@ private:
   Offline *popupoffline;
   Simulation *simulation;
 
-
   Pixel_t color;
-  int xmin, xmax, ymin, ymax;
-  TGNumberEntry *numericMod, *numericCh;
-  int moduleNr; //the module nr we are looking at 
-  int channelNr;//the channel nr we are looking at
-  unsigned short *trace, *filter_trace;
-  float *trace_float;
-  int size;//trace length in scope mode
+
   Detector *detector;
-  bool hpx_once_wave;
-  bool wave_once;
+
   virtual Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t);//process message queue
   void CloseWindow(); //close main window
   void CreateMenuBar(void); //creates menu bar of the main window
@@ -145,14 +148,11 @@ private:
   void MakeFold2Panel(TGCompositeFrame *TabPanel);
 
   void save_setup(char *name);
-  int range, separation;///filter parameters
-  float fraction; ///filter parameters
-  int NUMBERofTRACES;
+
   // TObject *selected;
   int parts[4];
 
-
-  void SetMenuStatus(bool flag);
+  void SetMenuStatus(bool flag,int flagonline);
 
   TGPopupMenu *MenuFile;
   TGPopupMenu *MenuSetup;
@@ -197,3 +197,6 @@ private:
 void DynamicExec();
 
 #endif /*MAINFRAME_HH_*/
+
+// 
+// MainFrame.hh ends here

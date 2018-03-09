@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 3月  8 14:18:45 2018 (+0800)
-// Last-Updated: 四 3月  8 14:30:26 2018 (+0800)
+// Last-Updated: 五 3月  9 16:44:09 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 2
+//     Update #: 12
 // URL: http://wuhongyi.cn 
 
 #ifndef _COPYPARS_H_
@@ -38,6 +38,12 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 class Detector;
 
+enum CopyParsCommands
+  {
+    COPYPARS_CHNUM0,
+    COPYPARS_MODNUM0
+  };
+
 class CopyPars : public TGTransientFrame
 {
 public:
@@ -45,14 +51,31 @@ public:
   virtual ~CopyPars();
 
 
+
 protected:
   virtual Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2);
 
-
+  void copy_values();
+  void  checkbutton(Long_t parm1);
+  
 private:
   Pixel_t color;
   Detector *detector;
 
+  TGVerticalFrame *columnlabel;
+  TGVerticalFrame *column[13];
+  TGCheckButton *ckBtn[17][13];//17=16ch+1all  13=mod
+
+  
+  TGTextButton *CopyButton, *CancelButton;
+  TGCheckButton *checkbitmask[13];
+  
+private:
+  TGNumberEntry	*chnum0;//int
+  TGNumberEntry	*modnum0;
+  int chanNumber0;
+  int modNumber0;
+  
 };
 
 #endif /* _COPYPARS_H_ */

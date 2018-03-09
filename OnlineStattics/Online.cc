@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 四 3月  8 11:44:34 2018 (+0800)
+// Last-Updated: 五 3月  9 09:17:50 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 161
+//     Update #: 163
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -607,8 +607,8 @@ void Online::Panel3Draw()
 	  onlineth1i3[i] = new TH1I(th1iname,"",32768,0,32768);
 	  onlineth1i3[i]->SetTitle(TString::Format("Ch: %d",i).Data());
 	  onlineth1i3[i]->GetXaxis()->SetTitle("ch");
-	  onlineth1i3[i]->GetXaxis()->SetLabelSize(0.06);
-	  onlineth1i3[i]->GetYaxis()->SetLabelSize(0.06);
+	  onlineth1i3[i]->GetXaxis()->SetLabelSize(0.04);
+	  onlineth1i3[i]->GetYaxis()->SetLabelSize(0.04);
 	}
       else
 	{
@@ -620,7 +620,6 @@ void Online::Panel3Draw()
   canvas3->cd();
   canvas3->Clear();
 
-  //TODO
   memcpy(EnergySpec,ptr+SHAREDMEMORYDATAOFFSET+4*SHAREDMEMORYDATASTATISTICS*PRESET_MAX_MODULES+onlinemodnum3->GetIntNumber()*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL,4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL);
   
   switch(chooseenergycanvasmode3->GetSelected())
