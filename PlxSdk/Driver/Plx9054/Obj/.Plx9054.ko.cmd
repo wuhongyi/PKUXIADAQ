@@ -1,1 +1,1 @@
-cmd_/home/wuhongyi/PlxSdk/Driver/Plx9054.ko := ld -r -m elf_x86_64 -T /usr/src/kernels/3.10.0-327.el7.x86_64/scripts/module-common.lds --build-id  -o /home/wuhongyi/PlxSdk/Driver/Plx9054.ko /home/wuhongyi/PlxSdk/Driver/Plx9054.o /home/wuhongyi/PlxSdk/Driver/Plx9054.mod.o
+cmd_/home/wuhongyi/XIADAQ/PlxSdk/Driver/Plx9054.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/wuhongyi/XIADAQ/PlxSdk/Driver/Plx9054.ko /home/wuhongyi/XIADAQ/PlxSdk/Driver/Plx9054.o /home/wuhongyi/XIADAQ/PlxSdk/Driver/Plx9054.mod.o

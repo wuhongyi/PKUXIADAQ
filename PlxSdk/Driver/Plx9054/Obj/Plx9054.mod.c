@@ -92,4 +92,4 @@ MODULE_ALIAS("pci:v000010B5d0000C860sv*sd*bc*sc*i*");
 MODULE_ALIAS("pci:v000010B5d00005406sv*sd*bc*sc*i*");
 
 MODULE_INFO(srcversion, "45930199213518F33D5B33B");
-MODULE_INFO(rhelversion, "7.2");
+MODULE_INFO(rhelversion, "7.3");
