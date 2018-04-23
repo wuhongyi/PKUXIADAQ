@@ -46,8 +46,8 @@
  *
  *		Declaration of global variables and data arrays.
  *
- * $Rev: 39391 $
- * $Id: pixie16app_globals.h 39391 2018-04-22 16:56:22Z htan $
+ * $Rev: 34816 $
+ * $Id: pixie16app_globals.h 34816 2016-03-31 00:56:02Z htan $
  ******************************************************************************/
 
 // If this is compiled by a C++ compiler, make it
@@ -172,8 +172,6 @@ unsigned int Integrator_Address[PRESET_MAX_MODULES];     // Integrator
 
 unsigned int BLcut_Address[PRESET_MAX_MODULES];          // BLcut
 unsigned int BaselinePercent_Address[PRESET_MAX_MODULES];// BaselinePercent
-
-unsigned int Integrator_Address[PRESET_MAX_MODULES];     // Integrator
 
 unsigned int FtrigoutDelay_Address[PRESET_MAX_MODULES];  // Fast trigger output delay for system synchronization
 

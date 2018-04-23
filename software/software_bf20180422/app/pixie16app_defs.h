@@ -64,7 +64,7 @@ extern "C" {
 #define PIXIE16_WINDOWS_APPAPI    0
 #define PIXIE16_LINUX_APPAPI      1
 // Changing PIXIE16_APPAPI_VER here affects the code globally
-#define PIXIE16_APPAPI_VER        PIXIE16_LINUX_APPAPI	
+#define PIXIE16_APPAPI_VER         PIXIE16_LINUX_APPAPI 	
 
 
 /*------------------------------------- 

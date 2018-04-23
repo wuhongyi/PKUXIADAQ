@@ -43,8 +43,8 @@
 *
 *		This file contains all the Pixie16 interface routines.
 *
-* $Rev: 39391 $
-* $Id: pixie16app.c 39391 2018-04-22 16:56:22Z htan $
+* $Rev: 34816 $
+* $Id: pixie16app.c 34816 2016-03-31 00:56:02Z htan $
 ******************************************************************************/
 
 #include "pixie16app_globals.h"
@@ -3153,7 +3153,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16WriteSglChanPar (
 	unsigned int baselinecut, fasttrigbacklen, baselineaverage;
 	int retval;
 	unsigned int cfddelay, cfdscale, qdclen, exttrigstretch, vetostretch, externdelaylen, multiplicitymaskl, multiplicitymaskh, ftrigoutdelay;
-	unsigned int chantrigstretch, cfdthresh, integrator;
+	unsigned int chantrigstretch, cfdthresh;
 
 	// Check if ModNum is valid
 	if( ModNum > Number_Modules )
@@ -3759,24 +3759,6 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16WriteSglChanPar (
 		Pixie_Devices[ModNum].DSP_Parameter_Values[BLcut_Address[ModNum] + ChanNum - DATA_MEMORY_ADDRESS] = baselinecut;
 		// Download to the selected Pixie module
 		Pixie16IMbufferIO(&baselinecut, 1, (unsigned int)(BLcut_Address[ModNum] + ChanNum), MOD_WRITE, ModNum);
-		
-	}
-	else if(strcmp(ChanParName,"INTEGRATOR") == 0)
-	{
-		
-		// Get the new INTEGRATOR 
-		integrator = (unsigned int)ChanParData;
-
-		// Check limit
-		if(integrator > 7)
-		{
-			integrator = 7;
-		}
-
-		// Update DSP parameter INTEGRATOR
-		Pixie_Devices[ModNum].DSP_Parameter_Values[Integrator_Address[ModNum] + ChanNum - DATA_MEMORY_ADDRESS] = integrator;
-		// Download to the selected Pixie module
-		Pixie16IMbufferIO(&integrator, 1, (unsigned int)(Integrator_Address[ModNum] + ChanNum), MOD_WRITE, ModNum);
 		
 	}
 	else if(strcmp(ChanParName,"FASTTRIGBACKLEN") == 0)
@@ -4438,7 +4420,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16ReadSglChanPar (
 	unsigned int baselinepercent, energylow, log2ebin, chancsra, chancsrb;
 	unsigned int baselinecut, fasttrigbacklen, baselineaverage;
 	unsigned int cfddelay, cfdscale, qdclen, exttrigstretch, vetostretch, externdelaylen, multiplicitymaskl, multiplicitymaskh, ftrigoutdelay;
-	unsigned int chantrigstretch, cfdthresh, integrator;
+	unsigned int chantrigstretch, cfdthresh;
 
 	// Check if ModNum is valid
 	if( ModNum >= Number_Modules )
@@ -4698,17 +4680,6 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16ReadSglChanPar (
 		
 		// Update channel parameter BaselineCut
 		*ChanParData = (double)baselinecut;
-		
-	}
-	else if(strcmp(ChanParName,"INTEGRATOR") == 0)
-	{
-		
-		// Read from the selected Pixie module
-		Pixie16IMbufferIO(&integrator, 1, (unsigned int)(Integrator_Address[ModNum] + ChanNum), MOD_READ, ModNum);
-		Pixie_Devices[ModNum].DSP_Parameter_Values[Integrator_Address[ModNum] + ChanNum - DATA_MEMORY_ADDRESS] = integrator;
-		
-		// Update channel parameter Integrator
-		*ChanParData = (double)integrator;
 		
 	}
 	else if(strcmp(ChanParName,"FASTTRIGBACKLEN") == 0)

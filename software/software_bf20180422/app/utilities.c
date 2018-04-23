@@ -44,8 +44,8 @@
 *		This file contains all the utility funtions used for memory I/O or
 *		data acquisition runs.
 *
-* $Rev: 39391 $
-* $Id: utilities.c 39391 2018-04-22 16:56:22Z htan $
+* $Rev: 29501 $
+* $Id: utilities.c 29501 2014-02-25 07:35:57Z htan $
 *****************************************************************************/
 
 #include "pixie16app_globals.h"
@@ -892,7 +892,6 @@ int Pixie_Init_DSPVarAddress(char *DSPVarFile, unsigned short ModNum)
 		PSAlength_Address[ModNum] = 0;
 		Integrator_Address[ModNum] = 0;
 		BLcut_Address[ModNum] = 0;
-		Integrator_Address[ModNum] = 0;
 		BaselinePercent_Address[ModNum] = 0;
 		FtrigoutDelay_Address[ModNum] = 0;
 		Log2Bweight_Address[ModNum] = 0;
@@ -1077,8 +1076,6 @@ int Pixie_Init_DSPVarAddress(char *DSPVarFile, unsigned short ModNum)
 				Integrator_Address[ModNum] = DSP_Parameter_Addr[k];
 			else if(strcmp(str, "BLcut") == 0)
 				BLcut_Address[ModNum] = DSP_Parameter_Addr[k];
-			else if(strcmp(str, "Integrator") == 0)
-				Integrator_Address[ModNum] = DSP_Parameter_Addr[k];
 			else if(strcmp(str, "BaselinePercent") == 0)
 				BaselinePercent_Address[ModNum] = DSP_Parameter_Addr[k];
 			else if(strcmp(str, "FtrigoutDelay") == 0)
@@ -1532,12 +1529,6 @@ int Pixie_Init_DSPVarAddress(char *DSPVarFile, unsigned short ModNum)
 		if(BLcut_Address[ModNum] == 0)
 		{
 			sprintf(ErrMSG, "*ERROR* (Pixie_Init_DSPVarAddress): BLcut was not found in the DSP .var file %s", DSPVarFile);
-			Pixie_Print_MSG(ErrMSG);
-			return(-2);
-		}
-		if(Integrator_Address[ModNum] == 0)
-		{
-			sprintf(ErrMSG, "*ERROR* (Pixie_Init_DSPVarAddress): Integrator was not found in the DSP .var file %s", DSPVarFile);
 			Pixie_Print_MSG(ErrMSG);
 			return(-2);
 		}
@@ -2033,7 +2024,6 @@ int Pixie_Copy_DSPVarAddress(unsigned short SourceModNum, unsigned short Destina
 
 	BLcut_Address[DestinationModNum] = BLcut_Address[SourceModNum];
 	BaselinePercent_Address[DestinationModNum] = BaselinePercent_Address[SourceModNum];
-	Integrator_Address[DestinationModNum] = Integrator_Address[SourceModNum];
 
 	FtrigoutDelay_Address[DestinationModNum] = FtrigoutDelay_Address[SourceModNum];
 

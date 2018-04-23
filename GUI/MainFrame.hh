@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:17 2018 (+0800)
-// Last-Updated: 五 3月  9 17:40:25 2018 (+0800)
+// Last-Updated: 一 4月 23 11:12:37 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 2
+//     Update #: 4
 // URL: http://wuhongyi.cn 
 
 #ifndef MAINFRAME_HH_
@@ -46,6 +46,7 @@ Other Contributor:\n\
 #include "LogicTrigger.hh"
 #include "Offline.hh"
 #include "Qdc.hh"
+#include "Decimation.hh"
 #include "CopyPars.hh"
 #include "Simulation.hh"
 #include "TriggerFilter.hh"
@@ -91,6 +92,7 @@ enum Commands //commands for the menu bar popups
     CSRA,
     CFDP,
     QDCP,
+    DECIMATIONP,
     COPYPARS,
     FILE_SAVE,
     MODVAR,
@@ -119,7 +121,8 @@ private:
   TGTextEntry *StateMsgFold1;
 
   TRootHelpDialog *about;
-  
+
+  Decimation *decimation;
   Cfd *cfd;
   Qdc *qdc;
   Energy *energy;

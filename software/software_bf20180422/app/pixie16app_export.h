@@ -354,6 +354,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	int            sfr,
 	int            pointtobl );
   
+
 #ifdef __cplusplus
 }
 #endif	// End of notice for C++ compilers
