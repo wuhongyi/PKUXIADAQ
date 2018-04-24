@@ -78,24 +78,26 @@ private:
 
   std::vector<unsigned short> *moduleslot;
   std::vector<unsigned short> *modulesamplingrate;
-
-  std::string File100M14bit_sys;
-  std::string File100M14bit_fip;
-  std::string File100M14bit_dspldr;
-  std::string File100M14bit_dsplst;
-  std::string File100M14bit_dspvar;
+  std::vector<unsigned short> *modulebits;
+  
+  std::string File100M14bit_sys;//ComFPGAConfigFile
+  std::string File100M14bit_fip;//SPFPGAConfigFile
+  std::string File100M14bit_dsplst;//TrigFPGAConfigFile
+  std::string File100M14bit_dspldr;//DSPCodeFile
+  std::string File100M14bit_dspvar;//DSPVarFile
   std::string File250M14bit_sys;
   std::string File250M14bit_fip;
   std::string File250M14bit_dspldr;
   std::string File250M14bit_dsplst;
   std::string File250M14bit_dspvar;
+  std::string FileSettingPars;//DSPParFile
   
-  char ComFPGAConfigFile[256];
-  char SPFPGAConfigFile[256];
-  char TrigFPGAConfigFile[256];
-  char DSPCodeFile[256];
-  char DSPParFile[256];
-  char DSPVarFile[256];
+  char ComFPGAConfigFile[1024];
+  char SPFPGAConfigFile[1024];
+  char TrigFPGAConfigFile[1024];
+  char DSPCodeFile[1024];
+  char DSPParFile[1024];
+  char DSPVarFile[1024];
   
   bool ReadConfigFile(char *config = (char*)"../parset/cfgPixie16.txt");
   

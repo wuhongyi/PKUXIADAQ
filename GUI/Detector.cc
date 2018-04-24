@@ -25,14 +25,17 @@ Detector::Detector(int mode)
       FILESIZE[i] = 0;
     }
 
+  PXISlotMap = new unsigned short[PRESET_MAX_MODULES];
   moduleslot = new std::vector<unsigned short>;
   modulesamplingrate = new std::vector<unsigned short>;
-  
+  modulebits = new std::vector<unsigned short>;
 }
 
 Detector::~Detector()
 {
   if(moduleslot) delete moduleslot;
+  if(modulesamplingrate) delete modulesamplingrate;
+  if(modulebits) delete modulebits;
   
   cout<<"detector is deleted!"<<endl;
   ExitSystem();
@@ -40,94 +43,42 @@ Detector::~Detector()
 
 bool Detector::ReadConfigFile(char *config)
 {
-  ifstream input;
-  char *temp = new char[256];
-  input.open(config, ios::in);
-
-  if (input.fail ())
-    {
-      cout << "can't open the config file ! " << config << endl << flush;
-      return false;
-    }
-
-  input >> NumModules;
-  cout << "\n\n" << NumModules << " modules, in slots:";
-  input.getline (temp, 256);
-  PXISlotMap = new unsigned short[NumModules+1];
-  for (int i = 0; i < NumModules; i++)
-  {
-    input >> PXISlotMap[i];
-    input.getline(temp, 256);
-    cout << PXISlotMap[i] << " ";
-  }
-
-  //==== This code is necessary if modules are installed in two crates ====//
-  //input >> PXISlotMap[NumModules];
-  //input.getline (temp, 80);
-  //cout << PXISlotMap[NumModules] << " ";
-
-  cout << endl << "Firmware files: \n";
-  input >> ComFPGAConfigFile;
-  input.getline (temp, 256);
-  cout << "ComFPGAConfigFile:  " << ComFPGAConfigFile << endl;
-  input >> SPFPGAConfigFile;
-  input.getline (temp, 256);
-  cout << "SPFPGAConfigFile:   " << SPFPGAConfigFile << endl;
-  input >> TrigFPGAConfigFile;
-  input.getline (temp, 256);
-  cout << "TrigFPGAConfigFile: " << TrigFPGAConfigFile << endl;
-  input >> DSPCodeFile;
-  input.getline (temp, 256);
-  cout << "DSPCodeFile:        " << DSPCodeFile << endl;
-  input >> DSPParFile;
-  input.getline (temp, 256);
-  cout << "DSPParFile:         " << DSPParFile << endl;
-  input >> DSPVarFile;
-  input.getline (temp, 256);
-  cout << "DSPVarFile:         " << DSPVarFile << endl;
-  cout << "--------------------------------------------------------\n\n";
-
-  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
   moduleslot->clear();
   modulesamplingrate->clear();
-  int tempcount1 = wuReadData::ReadVector("ModuleOnline", config, moduleslot);
-  int tempcount2 = wuReadData::ReadVector("ModuleOffline", config, modulesamplingrate);
-
-  std::cout<<tempcount1 <<"  "<<tempcount2<<std::endl;
-  std::cout<<moduleslot->size() <<"  "<<modulesamplingrate->size()<<std::endl;
+  modulebits->clear();
+  int tempcount1 = wuReadData::ReadVector("ModuleSlot", config, moduleslot);
+  int tempcount2 = wuReadData::ReadVector("ModuleSampingRate", config, modulesamplingrate);
+  int tempcount3 = wuReadData::ReadVector("ModuleBits", config, modulebits);
+  // std::cout<<tempcount1 <<"  "<<tempcount2<<std::endl;
+  // std::cout<<moduleslot->size() <<"  "<<modulesamplingrate->size()<<std::endl;
 								    
-  for (unsigned int i = 0; i < moduleslot->size(); ++i)
-  {
-    std::cout<<"module "<<i<<" in slot "<<moduleslot->at(i)<<std::endl;
-  }
-  for (unsigned int i = 0; i < modulesamplingrate->size(); ++i)
-  {
-    std::cout<<"module "<<i<<"  sampling rate "<<modulesamplingrate->at(i)<<std::endl;
-  }
-      
 
-      File100M14bit_sys = wuReadData::ReadValue<std::string>("100M14bit_sys", config);
-    File100M14bit_fip = wuReadData::ReadValue<std::string>("100M14bit_fip", config);
-    File100M14bit_dspldr = wuReadData::ReadValue<std::string>("100M14bit_dspldr", config);
-    File100M14bit_dsplst = wuReadData::ReadValue<std::string>("100M14bit_dsplst", config);
-    File100M14bit_dspvar = wuReadData::ReadValue<std::string>("100M14bit_dspvar", config);
-    File250M14bit_sys = wuReadData::ReadValue<std::string>("250M14bit_sys", config);
-    File250M14bit_fip = wuReadData::ReadValue<std::string>("250M14bit_fip", config);
-    File250M14bit_dspldr = wuReadData::ReadValue<std::string>("250M14bit_dspldr", config);
-    File250M14bit_dsplst = wuReadData::ReadValue<std::string>("250M14bit_dsplst", config);
-    File250M14bit_dspvar = wuReadData::ReadValue<std::string>("250M14bit_dspvar", config);
+  File100M14bit_sys = wuReadData::ReadValue<std::string>("100M14bit_sys", config);
+  File100M14bit_fip = wuReadData::ReadValue<std::string>("100M14bit_fip", config);
+  File100M14bit_dspldr = wuReadData::ReadValue<std::string>("100M14bit_dspldr", config);
+  File100M14bit_dsplst = wuReadData::ReadValue<std::string>("100M14bit_dsplst", config);
+  File100M14bit_dspvar = wuReadData::ReadValue<std::string>("100M14bit_dspvar", config);
+    
+  File250M14bit_sys = wuReadData::ReadValue<std::string>("250M14bit_sys", config);
+  File250M14bit_fip = wuReadData::ReadValue<std::string>("250M14bit_fip", config);
+  File250M14bit_dspldr = wuReadData::ReadValue<std::string>("250M14bit_dspldr", config);
+  File250M14bit_dsplst = wuReadData::ReadValue<std::string>("250M14bit_dsplst", config);
+  File250M14bit_dspvar = wuReadData::ReadValue<std::string>("250M14bit_dspvar", config);
+    
+  FileSettingPars = wuReadData::ReadValue<std::string>("SettingPars", config);
 
-    std::cout<<File100M14bit_sys<<std::endl;
-    std::cout<<File100M14bit_fip<<std::endl;
-    std::cout<<File100M14bit_dspldr<<std::endl;
-    std::cout<<File100M14bit_dsplst<<std::endl;
-    std::cout<<File100M14bit_dspvar<<std::endl;
-    std::cout<<File250M14bit_sys<<std::endl;
-    std::cout<<File250M14bit_fip<<std::endl;
-    std::cout<<File250M14bit_dspldr<<std::endl;
-    std::cout<<File250M14bit_dsplst<<std::endl;
-    std::cout<<File250M14bit_dspvar<<std::endl;
+    
+  std::cout<<File100M14bit_sys<<std::endl;
+  std::cout<<File100M14bit_fip<<std::endl;
+  std::cout<<File100M14bit_dspldr<<std::endl;
+  std::cout<<File100M14bit_dsplst<<std::endl;
+  std::cout<<File100M14bit_dspvar<<std::endl;
+  std::cout<<File250M14bit_sys<<std::endl;
+  std::cout<<File250M14bit_fip<<std::endl;
+  std::cout<<File250M14bit_dspldr<<std::endl;
+  std::cout<<File250M14bit_dsplst<<std::endl;
+  std::cout<<File250M14bit_dspvar<<std::endl;
+  std::cout<<FileSettingPars<<std::endl;
     
   return true;
 }
@@ -140,15 +91,26 @@ bool Detector::BootSystem()
     {
       NumModules = moduleslot->size();
       cout<<"---------- Init System Mode: Online ----------"<<endl;
+      std::cout<<"Module Number: "<< NumModules<<std::endl;
+      for (unsigned int i = 0; i < moduleslot->size(); ++i)
+	{
+	  std::cout<<"module "<<i<<" in slot "<<moduleslot->at(i)<<std::endl;
+	}
     }
   else
     {
       NumModules = modulesamplingrate->size();
       cout<<"---------- Init System Mode: Offline ----------"<<endl;
+      std::cout<<"Module Number: "<< NumModules <<std::endl;
+      for (unsigned int i = 0; i < modulesamplingrate->size(); ++i)
+	{
+	  std::cout<<"module "<<i<<"  sampling rate "<<modulesamplingrate->at(i)<<"  bits "<<modulebits->at(i)<<std::endl;
+	}
     }
 
   for(unsigned short k = 0; k < NumModules; k++)
     {
+      PXISlotMap[k] = moduleslot->at(k);
       ModuleInformation[k].Module_OfflineVariant = OfflineMode;
     }
 
@@ -163,7 +125,6 @@ bool Detector::BootSystem()
     }
 
 
-  // TODO
   for(unsigned short k = 0; k < NumModules; k++)
     {
       retval = Pixie16ReadModuleInfo(k, &ModuleInformation[k].Module_Rev, &ModuleInformation[k].Module_SerNum, &ModuleInformation[k].Module_ADCBits, &ModuleInformation[k].Module_ADCMSPS);
@@ -174,31 +135,68 @@ bool Detector::BootSystem()
 	}
       else
 	{
+	  if(OfflineMode != 0)
+	    {
+	      ModuleInformation[k].Module_ADCBits = modulebits->at(k);
+	      ModuleInformation[k].Module_ADCMSPS = modulesamplingrate->at(k);
+	    }
 	  cout<<ModuleInformation[k].Module_Rev<<"  "<<ModuleInformation[k].Module_SerNum<<"  "<<ModuleInformation[k].Module_ADCBits<<"  "<<ModuleInformation[k].Module_ADCMSPS<<endl;
 	}
     }
 
 
-
-  
-  // TODO
-  retval = Pixie16BootModule(ComFPGAConfigFile,	// name of communications FPGA configuration file
-			     SPFPGAConfigFile,	// name of signal processing FPGA configuration file
-			     TrigFPGAConfigFile,	// name of trigger FPGA configuration file
-			     DSPCodeFile,	// name of executable code file for digital signal processor (DSP)
-			     DSPParFile,	// name of DSP parameter file
-			     DSPVarFile,	// name of DSP variable names file
-			     NumModules,	// pixie module number
-			     0x7F);	// boot pattern bit mask
-  // 旧版固件0x7F 启动有问题，11032016新版没问题
-  
-  if (retval != 0)
+  for(unsigned short k = 0; k < NumModules; k++)
     {
-      ErrorInfo("Detector.cc", "BootSystem()", "Pixie16BootModule", retval);
-      cout << "cards booting has failed !\n";
-      return false;
+      // 旧版固件0x7F 启动有问题，11032016新版没问题
+      strcpy(DSPParFile, FileSettingPars.c_str());
+      if(ModuleInformation[k].Module_ADCMSPS == 100 && ModuleInformation[k].Module_ADCBits == 14)
+  	{
+  	  strcpy(ComFPGAConfigFile, File100M14bit_sys.c_str());
+  	  strcpy(SPFPGAConfigFile, File100M14bit_fip.c_str());
+  	  strcpy(TrigFPGAConfigFile, File100M14bit_dsplst.c_str());
+  	  strcpy(DSPCodeFile, File100M14bit_dspldr.c_str());
+  	  strcpy(DSPVarFile, File100M14bit_dspvar.c_str());
+  	}
+      else if(ModuleInformation[k].Module_ADCMSPS == 250 && ModuleInformation[k].Module_ADCBits == 14)
+  	{
+  	  strcpy(ComFPGAConfigFile, File250M14bit_sys.c_str());
+  	  strcpy(SPFPGAConfigFile, File250M14bit_fip.c_str());
+  	  strcpy(TrigFPGAConfigFile, File250M14bit_dsplst.c_str());
+  	  strcpy(DSPCodeFile, File250M14bit_dspldr.c_str());
+  	  strcpy(DSPVarFile, File250M14bit_dspvar.c_str());
+  	}
+      else
+  	{
+  	  std::cout<<"There is no Samping Rate =>"<<ModuleInformation[k].Module_ADCMSPS<<" and Bits =>"<<ModuleInformation[k].Module_ADCBits<<" firmware. "<<std::endl;
+  	  std::cout<<"Please contact Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
+  	  return false;
+  	}
+
+      cout<<"AA"<<ComFPGAConfigFile<<"AA"<<endl;
+      cout<<"AA"<<SPFPGAConfigFile<<"AA"<<endl;
+      cout<<"AA"<<TrigFPGAConfigFile<<"AA"<<endl;
+      cout<<"AA"<<DSPCodeFile<<"AA"<<endl;
+      cout<<"AA"<<DSPParFile<<"AA"<<endl;
+      cout<<"AA"<<DSPVarFile<<"AA"<<endl;
+      retval = Pixie16BootModule(ComFPGAConfigFile,	// name of communications FPGA configuration file
+  				 SPFPGAConfigFile,	// name of signal processing FPGA configuration file
+  				 TrigFPGAConfigFile,	// name of trigger FPGA configuration file
+  				 DSPCodeFile,	// name of executable code file for digital signal processor (DSP)
+  				 DSPParFile,	// name of DSP parameter file
+  				 DSPVarFile,	// name of DSP variable names file
+  				 k,	// pixie module number
+  				 0x7F);	// boot pattern bit mask
+      
+      if (retval != 0)
+  	{
+  	  ErrorInfo("Detector.cc", "BootSystem()", "Pixie16BootModule", retval);
+  	  cout << "cards booting has failed !  Module NUMBER "<< k <<endl;;
+  	  return false;
+  	}
+
     }
 
+  
   // Adjust DC-Offsets
   for(int k = 0; k < NumModules; k++)
     {		
