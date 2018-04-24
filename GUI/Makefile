@@ -9,7 +9,7 @@ LIBS:=../software/libPixie16App.a  ../software/libPixie16Sys.a  $(PLX_SDK_DIR)/P
 
 
 
-INCLUDES:=Global.hh Detector.hh ExpertMod.hh Table.hh Csra.hh MainFrame.hh HistXDT.hh TriggerFilter.hh Cfd.hh Qdc.hh Decimation.hh LogicTrigger.hh Offline.hh Base.hh Energy.hh Simulation.hh OfflineData.hh CopyPars.hh ReadChanStatus.hh pkuFFTW.hh
+INCLUDES:=Global.hh Detector.hh ExpertMod.hh Table.hh Csra.hh MainFrame.hh HistXDT.hh TriggerFilter.hh Cfd.hh Qdc.hh Decimation.hh LogicTrigger.hh Offline.hh Base.hh Energy.hh Simulation.hh OfflineData.hh CopyPars.hh ReadChanStatus.hh pkuFFTW.hh wuReadData.hh
 
 OBJECTS:=Global.o ExpertMod.o Csra.o Detector.o MainFrame.o main.o Table.o HistXDT.o TriggerFilter.o MainDict.o Cfd.o Qdc.o Decimation.o LogicTrigger.o Offline.o Base.o Energy.o Simulation.o OfflineData.o CopyPars.o ReadChanStatus.o pkuFFTW.o
 

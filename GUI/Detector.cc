@@ -1,5 +1,6 @@
 #include "Detector.hh"
 #include "Global.hh"
+#include "wuReadData.hh"
 
 #include "pixie16app_defs.h"
 #include "pixie16app_export.h"
@@ -8,6 +9,7 @@
 #include <string.h>
 #include <errno.h>
 #include <math.h>
+
 using namespace std;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -22,11 +24,16 @@ Detector::Detector(int mode)
       buffid[i] = 0;
       FILESIZE[i] = 0;
     }
-  ReadConfigFile();
+
+  moduleslot = new std::vector<unsigned short>;
+  modulesamplingrate = new std::vector<unsigned short>;
+  
 }
 
 Detector::~Detector()
 {
+  if(moduleslot) delete moduleslot;
+  
   cout<<"detector is deleted!"<<endl;
   ExitSystem();
 }
@@ -79,17 +86,64 @@ bool Detector::ReadConfigFile(char *config)
   input.getline (temp, 256);
   cout << "DSPVarFile:         " << DSPVarFile << endl;
   cout << "--------------------------------------------------------\n\n";
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+  moduleslot->clear();
+  modulesamplingrate->clear();
+  int tempcount1 = wuReadData::ReadVector("ModuleOnline", config, moduleslot);
+  int tempcount2 = wuReadData::ReadVector("ModuleOffline", config, modulesamplingrate);
+
+  std::cout<<tempcount1 <<"  "<<tempcount2<<std::endl;
+  std::cout<<moduleslot->size() <<"  "<<modulesamplingrate->size()<<std::endl;
+								    
+  for (unsigned int i = 0; i < moduleslot->size(); ++i)
+  {
+    std::cout<<"module "<<i<<" in slot "<<moduleslot->at(i)<<std::endl;
+  }
+  for (unsigned int i = 0; i < modulesamplingrate->size(); ++i)
+  {
+    std::cout<<"module "<<i<<"  sampling rate "<<modulesamplingrate->at(i)<<std::endl;
+  }
+      
+
+      File100M14bit_sys = wuReadData::ReadValue<std::string>("100M14bit_sys", config);
+    File100M14bit_fip = wuReadData::ReadValue<std::string>("100M14bit_fip", config);
+    File100M14bit_dspldr = wuReadData::ReadValue<std::string>("100M14bit_dspldr", config);
+    File100M14bit_dsplst = wuReadData::ReadValue<std::string>("100M14bit_dsplst", config);
+    File100M14bit_dspvar = wuReadData::ReadValue<std::string>("100M14bit_dspvar", config);
+    File250M14bit_sys = wuReadData::ReadValue<std::string>("250M14bit_sys", config);
+    File250M14bit_fip = wuReadData::ReadValue<std::string>("250M14bit_fip", config);
+    File250M14bit_dspldr = wuReadData::ReadValue<std::string>("250M14bit_dspldr", config);
+    File250M14bit_dsplst = wuReadData::ReadValue<std::string>("250M14bit_dsplst", config);
+    File250M14bit_dspvar = wuReadData::ReadValue<std::string>("250M14bit_dspvar", config);
+
+    std::cout<<File100M14bit_sys<<std::endl;
+    std::cout<<File100M14bit_fip<<std::endl;
+    std::cout<<File100M14bit_dspldr<<std::endl;
+    std::cout<<File100M14bit_dsplst<<std::endl;
+    std::cout<<File100M14bit_dspvar<<std::endl;
+    std::cout<<File250M14bit_sys<<std::endl;
+    std::cout<<File250M14bit_fip<<std::endl;
+    std::cout<<File250M14bit_dspldr<<std::endl;
+    std::cout<<File250M14bit_dsplst<<std::endl;
+    std::cout<<File250M14bit_dspvar<<std::endl;
+    
   return true;
 }
 
 bool Detector::BootSystem()
 {
+  ReadConfigFile();
+  
   if(OfflineMode == 0)
     {
+      NumModules = moduleslot->size();
       cout<<"---------- Init System Mode: Online ----------"<<endl;
     }
   else
     {
+      NumModules = modulesamplingrate->size();
       cout<<"---------- Init System Mode: Offline ----------"<<endl;
     }
 

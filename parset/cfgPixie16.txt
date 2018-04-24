@@ -8,3 +8,28 @@ FPGATrig
 ../firmware/pixie16_revfpku_14b100m_release_04222018/Pixie16DSP_revfpku_14b100m_r39393.ldr
 ../parset/test100m.set
 ../firmware/pixie16_revfpku_14b100m_release_04222018/Pixie16DSP_revfpku_14b100m_r39393.var
+
+# module number and slot number
+# The first number mean how many modules, other number means every module slot number
+ModuleOnline 3 2 3 4
+
+# module number and samping rate
+# The first number mean how many modules, other number means every module samping rate
+ModuleOffline 3 100 100 100
+
+SettingPars ../parset/test100m.set
+
+
+## The user does not modify the following parts
+
+100M14bit_sys ../firmware/pixie16_revfpku_14b100m_release_04222018/syspixie16_revfpku_adc100mhz_r36481.bin
+100M14bit_fip ../firmware/pixie16_revfpku_14b100m_release_04222018/fippixie16_revfpku_14b100m_r39395.bin
+100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_release_04222018/Pixie16DSP_revfpku_14b100m_r39393.ldr
+100M14bit_dsplst ../firmware/pixie16_revfpku_14b100m_release_04222018/Pixie16DSP_revfpku_14b100m_r39393.lst
+100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_release_04222018/Pixie16DSP_revfpku_14b100m_r39393.var
+
+250M14bit_sys ../firmware/pixie16_revf_14b250m_firmware_release_04222018/syspixie16_revfpku_adc250mhz_r39398.bin
+250M14bit_fip ../firmware/pixie16_revf_14b250m_firmware_release_04222018/fippixie16_revfgeneral_14b250m_r35425.bin
+250M14bit_dspldr ../firmware/pixie16_revf_14b250m_firmware_release_04222018/Pixie16DSP_revfgeneral_14b250m_r39397.ldr
+250M14bit_dsplst ../firmware/pixie16_revf_14b250m_firmware_release_04222018/Pixie16DSP_revfgeneral_14b250m_r39397.lst
+250M14bit_dspvar ../firmware/pixie16_revf_14b250m_firmware_release_04222018/Pixie16DSP_revfgeneral_14b250m_r39397.var

@@ -12,6 +12,9 @@
 #include <cstdio>
 #include <fstream>
 #include <iostream>
+#include <vector>
+#include <cstring>
+#include <string>
 
 #define BLEN (500*2516) // size of 1 buffer
 #define BUFFLENGTH (500*2516) // 4.8MB Buffer *2 (DBUFF)
@@ -72,14 +75,30 @@ public:
 private:
   unsigned short *PXISlotMap;
   unsigned short OfflineMode;
+
+  std::vector<unsigned short> *moduleslot;
+  std::vector<unsigned short> *modulesamplingrate;
+
+  std::string File100M14bit_sys;
+  std::string File100M14bit_fip;
+  std::string File100M14bit_dspldr;
+  std::string File100M14bit_dsplst;
+  std::string File100M14bit_dspvar;
+  std::string File250M14bit_sys;
+  std::string File250M14bit_fip;
+  std::string File250M14bit_dspldr;
+  std::string File250M14bit_dsplst;
+  std::string File250M14bit_dspvar;
+  
   char ComFPGAConfigFile[256];
   char SPFPGAConfigFile[256];
   char TrigFPGAConfigFile[256];
   char DSPCodeFile[256];
   char DSPParFile[256];
   char DSPVarFile[256];
+  
   bool ReadConfigFile(char *config = (char*)"../parset/cfgPixie16.txt");
-	
+  
   FILE *fsave[PRESET_MAX_MODULES];
   unsigned int buff[PRESET_MAX_MODULES][BUFFLENGTH];
   int buffid[PRESET_MAX_MODULES];
@@ -102,6 +121,7 @@ private:
   uint64_t StartTime;
   uint64_t StopTime;
   long get_time();
+  
 };
 
 #endif /*DETECTOR_HH_*/
