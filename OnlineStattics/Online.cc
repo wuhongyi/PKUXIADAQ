@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 五 3月  9 09:17:50 2018 (+0800)
+// Last-Updated: 三 4月 25 21:49:05 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 163
+//     Update #: 165
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -755,12 +755,6 @@ void Online::LoopRun()
 		
 	      for(int i = 0; i < ModNum;i++)
 		{
-		  // SYSTEM_CLOCK_MHZ = 100;
-		  if(SampleRate[i]->GetSelected() == 1) SYSTEM_CLOCK_MHZ = 100;
-		  if(SampleRate[i]->GetSelected() == 2) SYSTEM_CLOCK_MHZ = 250;
-		  if(SampleRate[i]->GetSelected() == 3) SYSTEM_CLOCK_MHZ = 500;
-		  // std::cout<<"Mod: "<<i<<"  SYSTEM_CLOCK_MHZ: "<<SYSTEM_CLOCK_MHZ << "  " << SampleRate[i]->GetSelected() <<std::endl;
-		  
 		  memcpy(Statistics,buf+SHAREDMEMORYDATAOFFSET+4*SHAREDMEMORYDATASTATISTICS*i,SHAREDMEMORYDATASTATISTICS*4);
 		  memcpy(Statistics_new,buf_new+SHAREDMEMORYDATAOFFSET+4*SHAREDMEMORYDATASTATISTICS*i,SHAREDMEMORYDATASTATISTICS*4);
 
@@ -772,15 +766,17 @@ void Online::LoopRun()
 		  RealTime_new += (double)Statistics_new[3];
 		  RealTime_new *= 1.0e-6 / (double)SYSTEM_CLOCK_MHZ;
 		  
-		  // std::cout<<"======================="<<std::endl;
-		  // std::cout<<"Mod: "<<i<<std::endl;
-		  // std::cout<<"Real Time: "<<RealTime_new<<std::endl;
-		  // std::cout<<"Cha:  LiveTime:   InputCountRate:  OutputCountRate:"<<std::endl;
 		  for(int j=0;j<16;j++)
 		    {
 		      LiveTime[j] = (double)Statistics[63+j] * pow(2.0, 32.0);
 		      LiveTime[j] += (double)Statistics[79+j];
-		      LiveTime[j] *= 1.0e-6 / (double)SYSTEM_CLOCK_MHZ;
+		      if(SampleRate[i]->GetSelected() == 1)
+			LiveTime[j] *= 1.0e-6 / (double)100;
+		      else if(SampleRate[i]->GetSelected() == 2)
+			LiveTime[j] *= 2.0 * 1.0e-6 / (double)250;
+		      else if(SampleRate[i]->GetSelected() == 3)
+			LiveTime[j] *= 5.0 * 1.0e-6 / (double)500;
+		      
 		      FastPeaks[j] = (double)Statistics[95+j] * pow(2.0, 32.0);
 		      FastPeaks[j] += (double)Statistics[111+j];
 		      ChanEvents[j] = (double)Statistics[223+j] * pow(2.0, 32.0);
@@ -788,7 +784,14 @@ void Online::LoopRun()
 
 		      LiveTime_new[j] = (double)Statistics_new[63+j] * pow(2.0, 32.0);
 		      LiveTime_new[j] += (double)Statistics_new[79+j];
-		      LiveTime_new[j] *= 1.0e-6 / (double)SYSTEM_CLOCK_MHZ;
+
+		      if(SampleRate[i]->GetSelected() == 1)
+			LiveTime_new[j] *= 1.0e-6 / (double)100;
+		      else if(SampleRate[i]->GetSelected() == 2)
+			LiveTime_new[j] *= 2.0 * 1.0e-6 / (double)250;
+		      else if(SampleRate[i]->GetSelected() == 3)
+			LiveTime_new[j] *= 5.0 * 1.0e-6 / (double)500;
+		      
 		      FastPeaks_new[j] = (double)Statistics_new[95+j] * pow(2.0, 32.0);
 		      FastPeaks_new[j] += (double)Statistics_new[111+j];
 		      ChanEvents_new[j] = (double)Statistics_new[223+j] * pow(2.0, 32.0);

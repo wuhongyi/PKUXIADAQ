@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:41 2016 (+0800)
-// Last-Updated: 四 3月  8 10:50:20 2018 (+0800)
+// Last-Updated: 三 4月 25 21:44:17 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 47
+//     Update #: 48
 // URL: http://wuhongyi.cn 
 
 #ifndef _ONLINE_H_
@@ -53,6 +53,9 @@ using namespace std;
 #define SHAREDMEMORYDATASTATISTICS 448
 #define SHAREDMEMORYDATAENERGYLENGTH 32768
 #define SHAREDMEMORYDATAMAXCHANNEL 16
+
+
+#define SYSTEM_CLOCK_MHZ 100// System FPGA clock frequency in MHz (used for real time counting)
 
 
 #define INITIAL_HIGHT 1000
@@ -146,8 +149,6 @@ private:
   unsigned char *buf;  
   unsigned char *buf_new;
   int val;
-
-  int SYSTEM_CLOCK_MHZ;
   
   unsigned int Statistics[SHAREDMEMORYDATASTATISTICS];
   unsigned int Statistics_new[SHAREDMEMORYDATASTATISTICS];

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 五 3月  9 22:45:04 2018 (+0800)
+// Last-Updated: 三 4月 25 20:47:32 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 644
+//     Update #: 681
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -551,48 +551,7 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   parFrame->AddFrame(offlinedrawoption1[5], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
 
 
-  //slow filter baseline
-  TGLabel *LabelChooseSlowFIlterBaseline = new TGLabel(parFrame, "SF BL:"); 
-  parFrame->AddFrame(LabelChooseSlowFIlterBaseline, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelChooseSlowFIlterBaseline->SetTextColor(color, false);
-  chooseslowfilterbaseline = new TGComboBox(parFrame);
-  parFrame->AddFrame(chooseslowfilterbaseline, new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
-  chooseslowfilterbaseline->Resize(80, 20);
-  chooseslowfilterbaseline->AddEntry("Calculate", 0);
-  chooseslowfilterbaseline->AddEntry("Old Baseline", 1);
-  chooseslowfilterbaseline->Select(0);
 
-  TGLabel *LabelOldSlowFilterSL = new TGLabel(parFrame," 'Old BL' choose -> SL:");
-  parFrame->AddFrame(LabelOldSlowFilterSL, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelOldSlowFilterSL->SetTextColor(color, false);
-  oldslowfilterparameter[0] = new TGNumberEntryField(parFrame, -1, 3.04, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.04,81.28);
-  parFrame->AddFrame(oldslowfilterparameter[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
-  oldslowfilterparameter[0]->Resize(40, 20);
-  TGLabel *LabelOldSlowFilterSG = new TGLabel(parFrame,"SG:");
-  parFrame->AddFrame(LabelOldSlowFilterSG, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelOldSlowFilterSG->SetTextColor(color, false);
-  oldslowfilterparameter[1] = new TGNumberEntryField(parFrame, -1, 0.64, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.06,81.28);
-  parFrame->AddFrame(oldslowfilterparameter[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
-  oldslowfilterparameter[1]->Resize(40, 20);
-  TGLabel *LabelOldSlowFilterTAU = new TGLabel(parFrame,"Tau:");
-  parFrame->AddFrame(LabelOldSlowFilterTAU, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelOldSlowFilterTAU->SetTextColor(color, false);
-  oldslowfilterparameter[2] = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESReal);
-  parFrame->AddFrame(oldslowfilterparameter[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
-  oldslowfilterparameter[2]->Resize(40, 20);
-  TGLabel *oldslowfilterrange = new TGLabel(parFrame, "FilRan:");
-  fClient->GetColorByName("purple", color);
-  oldslowfilterrange->SetTextColor(color, false);
-  parFrame->AddFrame(oldslowfilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
-  oldofflinefilterrange = new TGNumberEntry(parFrame, 0, 2, -1, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 1, 6);
-  parFrame->AddFrame(oldofflinefilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-  oldofflinefilterrange->SetIntNumber(3);
-  
-  
   // current count
   OfflineCurrentCountText = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
   OfflineCurrentCountText-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
@@ -609,14 +568,28 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   // CurrentCount
   offlinecurrentcountentry = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESInteger,TGNumberFormat::kNEANonNegative);
   parFrame->AddFrame(offlinecurrentcountentry, new TGLayoutHints(kLHintsRight | kLHintsTop, 20, 0, 0, 0));
-  
-  
+
   // draw
   OfflineDrawButton = new TGTextButton(parFrame, "&Draw", OFFLINEDRAW);
   OfflineDrawButton->SetEnabled(0);
   OfflineDrawButton->Associate(this);
   parFrame->AddFrame(OfflineDrawButton, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
 
+  // draw style
+  choosedrawmarkerstyle = new TGComboBox(parFrame);
+  parFrame->AddFrame(choosedrawmarkerstyle, new TGLayoutHints(kLHintsRight, 0, 5, 2, 2));
+  choosedrawmarkerstyle->Resize(80, 20);//注意编号与类型的对应关系
+  choosedrawmarkerstyle->AddEntry("Line1", 0);
+  choosedrawmarkerstyle->AddEntry("Line2", 1);
+  choosedrawmarkerstyle->AddEntry("Point", 2);
+  choosedrawmarkerstyle->AddEntry("Line1-Point", 3);
+  choosedrawmarkerstyle->AddEntry("Line2-Point", 4);
+  choosedrawmarkerstyle->Select(1);
+  TGLabel *LabelDrawStyle = new TGLabel(parFrame, "Draw style:"); 
+  parFrame->AddFrame(LabelDrawStyle, new TGLayoutHints(kLHintsRight | kLHintsTop, 5, 2, 5, 0));
+
+
+  
   // apply
   OfflineApplyButton = new TGTextButton( parFrame, "&Apply", OFFLINEAPPLY);
   OfflineApplyButton->Associate(this);
@@ -636,10 +609,59 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
 
 
+
   
   TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
 
 
+  // ===
+
+  TGCompositeFrame *oldparFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+  TabPanel->AddFrame(oldparFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  
+  //slow filter baseline
+  TGLabel *LabelChooseSlowFIlterBaseline = new TGLabel(oldparFrame, "Slow Filter Baseline:"); 
+  oldparFrame->AddFrame(LabelChooseSlowFIlterBaseline, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelChooseSlowFIlterBaseline->SetTextColor(color, false);
+  chooseslowfilterbaseline = new TGComboBox(oldparFrame);
+  oldparFrame->AddFrame(chooseslowfilterbaseline, new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
+  chooseslowfilterbaseline->Resize(100, 20);
+  chooseslowfilterbaseline->AddEntry("Calculate", 0);
+  chooseslowfilterbaseline->AddEntry("Old Baseline", 1);
+  chooseslowfilterbaseline->Select(0);
+
+  TGLabel *LabelOldSlowFilterSL = new TGLabel(oldparFrame," 'Old Baseline Pars' choose -> SLen:");
+  oldparFrame->AddFrame(LabelOldSlowFilterSL, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelOldSlowFilterSL->SetTextColor(color, false);
+  oldslowfilterparameter[0] = new TGNumberEntryField(oldparFrame, -1, 3.04, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.04,81.28);
+  oldparFrame->AddFrame(oldslowfilterparameter[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  oldslowfilterparameter[0]->Resize(40, 20);
+  TGLabel *LabelOldSlowFilterSG = new TGLabel(oldparFrame,"SGap:");
+  oldparFrame->AddFrame(LabelOldSlowFilterSG, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelOldSlowFilterSG->SetTextColor(color, false);
+  oldslowfilterparameter[1] = new TGNumberEntryField(oldparFrame, -1, 0.64, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.06,81.28);
+  oldparFrame->AddFrame(oldslowfilterparameter[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  oldslowfilterparameter[1]->Resize(40, 20);
+  TGLabel *LabelOldSlowFilterTAU = new TGLabel(oldparFrame,"Tau:");
+  oldparFrame->AddFrame(LabelOldSlowFilterTAU, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelOldSlowFilterTAU->SetTextColor(color, false);
+  oldslowfilterparameter[2] = new TGNumberEntryField(oldparFrame, -1, 0, TGNumberFormat::kNESReal);
+  oldparFrame->AddFrame(oldslowfilterparameter[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  oldslowfilterparameter[2]->Resize(40, 20);
+  TGLabel *oldslowfilterrange = new TGLabel(oldparFrame, "FilRan:");
+  fClient->GetColorByName("purple", color);
+  oldslowfilterrange->SetTextColor(color, false);
+  oldparFrame->AddFrame(oldslowfilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  oldofflinefilterrange = new TGNumberEntry(oldparFrame, 0, 2, -1, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 1, 6);
+  oldparFrame->AddFrame(oldofflinefilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  oldofflinefilterrange->SetIntNumber(3);
+
+
+  
   // ===
   dslider = new TGDoubleHSlider(TabPanel,4, kDoubleScaleBoth,ADJUSTPARSLIDER);
   dslider->Associate(this);
@@ -665,44 +687,57 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
 
 void Offline::SelectDrawOptionPanel1(Bool_t on)
 {
+  if(tracelength == 0) return;
+  
   if(rawdata != NULL || threshdata != NULL || cfddata != NULL || cfdthreshdata != NULL || sfilterdata != NULL || ffilterdata != NULL)
     {
       if(rawdata != NULL)
 	{
 	  delete rawdata;
 	  rawdata = new TGraph(tracelength,doublesample,doublercdtrace);
+	  rawdata->SetMarkerStyle(7);
 	}
       if(threshdata != NULL)
 	{
 	  delete threshdata;
 	  threshdata = new TGraph(tracelength,doublesample,doublethresh);
+	  threshdata->SetLineColor(4);
+	  threshdata->SetMarkerStyle(7);
+	  threshdata->SetMarkerColor(4);
 	}
       if(cfddata != NULL)
 	{
 	  delete cfddata;
 	  cfddata = new TGraph(tracelength,doublesample,doublecfd);
+	  cfddata->SetLineColor(2);
+	  cfddata->SetMarkerStyle(7);
+	  cfddata->SetMarkerColor(2);
 	}
       if(cfdthreshdata != NULL)
 	{
 	  delete cfdthreshdata;
 	  cfdthreshdata = new TGraph(tracelength,doublesample,doublecfdthresh);
+	  cfdthreshdata->SetLineColor(2);
+	  cfdthreshdata->SetMarkerStyle(7);
+	  cfdthreshdata->SetMarkerColor(2);
 	}
       if(sfilterdata != NULL)
 	{
 	  delete sfilterdata;
 	  sfilterdata = new TGraph(tracelength,doublesample,doubleslowfilter);
+	  sfilterdata->SetLineColor(3);
+	  sfilterdata->SetMarkerStyle(7);
+	  sfilterdata->SetMarkerColor(3);
 	}
       if(ffilterdata != NULL)
 	{
 	  delete ffilterdata;
 	  ffilterdata  = new TGraph(tracelength,doublesample,doublefastfilter);
+	  ffilterdata->SetLineColor(4);
+	  ffilterdata->SetMarkerStyle(7);
+	  ffilterdata->SetMarkerColor(4);
 	}
-      
-      cfddata->SetLineColor(2);
-      cfdthreshdata->SetLineColor(2);
-      sfilterdata->SetLineColor(3);
-      ffilterdata->SetLineColor(4);
-      threshdata->SetLineColor(4);
+
       if(offlinedrawoption1[0]->IsOn())
 	offlinemultigraph->Add(rawdata);
       if(offlinedrawoption1[3]->IsOn())
@@ -715,10 +750,34 @@ void Offline::SelectDrawOptionPanel1(Bool_t on)
 	offlinemultigraph->Add(sfilterdata);
       if(offlinedrawoption1[2]->IsOn())
 	offlinemultigraph->Add(ffilterdata);
+
+      if(choosedrawmarkerstyle->GetSelected() == 0 || choosedrawmarkerstyle->GetSelected() == 3)
+	{
+	  rawdata->SetLineWidth(1);
+	  threshdata->SetLineWidth(1);
+	  cfddata->SetLineWidth(1);
+	  cfdthreshdata->SetLineWidth(1);
+	  sfilterdata->SetLineWidth(1);
+	  ffilterdata->SetLineWidth(1);
+	}
+      if(choosedrawmarkerstyle->GetSelected() == 1 || choosedrawmarkerstyle->GetSelected() == 4)
+	{
+	  rawdata->SetLineWidth(2);
+	  threshdata->SetLineWidth(2);
+	  cfddata->SetLineWidth(2);
+	  cfdthreshdata->SetLineWidth(2);
+	  sfilterdata->SetLineWidth(2);
+	  ffilterdata->SetLineWidth(2);
+	}
       
       adjustCanvas->cd();
       adjustCanvas->Clear();
-      offlinemultigraph->Draw("AL");
+      
+      offlinemultigraph->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(ULong64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0xffffffff+offlinedata->GetEventTime_Low(OfflineCurrentCount)).Data());
+      if(choosedrawmarkerstyle->GetSelected() == 0 || choosedrawmarkerstyle->GetSelected() == 3) offlinemultigraph->Draw("AL");
+      if(choosedrawmarkerstyle->GetSelected() == 2) offlinemultigraph->Draw("AP");
+      if(choosedrawmarkerstyle->GetSelected() == 1 || choosedrawmarkerstyle->GetSelected() == 4) offlinemultigraph->Draw("ALP");
+      
       if(offlinedrawoption1[0]->IsOn() || offlinedrawoption1[1]->IsOn() || offlinedrawoption1[2]->IsOn() || offlinedrawoption1[3]->IsOn() || offlinedrawoption1[4]->IsOn() || offlinedrawoption1[5]->IsOn())
 	offlinemultigraph->GetXaxis()->SetRangeUser(double(dslider->GetMinPosition()),double(dslider->GetMaxPosition()));
       adjustCanvas->Modified();
@@ -843,8 +902,10 @@ void Offline::SelectDrawOptionPanel2(Bool_t on)
 	    }
 	}
     }
+  
   for (unsigned int i = 0; i < 16; ++i)
     {
+      if(tracelength2[i] == 0) continue;
       if(tempstatus[i])
 	{
 	  rawdata2[i] = new TGraph(tracelength2[i],doublesample2[i],doublercdtrace2[i]);
@@ -2134,10 +2195,11 @@ void Offline::Panel1Draw()
       char staok[20];
       sprintf(staok,"Ch%dNotData",(int)offlinechnum->GetIntNumber());
       OfflineCurrentCountText->SetText(staok);
-      // OfflineDrawButton->SetEnabled(0);
+      OfflineReadFileButton->SetEnabled(1);
       return;
     }
 
+  
   if(chooseslowfilterbaseline->GetSelected() == 1)//如果没有baseline数据，则采用计算基线的方法
     {
       int tempheaderlength = offlinedata->GetEventHeaderLength(OfflineCurrentCount);//header length
@@ -2153,8 +2215,26 @@ void Offline::Panel1Draw()
   sprintf(stacurr,"/ %d",OfflineModuleEventsCount);
   OfflineCurrentCountText->SetText(stacurr);
   offlinecurrentcountentry->SetIntNumber(Long_t(OfflineCurrentCount+1));
-  
+
+
   tracelength = offlinedata->GetEventTraceLength(OfflineCurrentCount);//trace length
+  
+  if(tracelength == 0)//没有波形事件
+    {
+      adjustCanvas->cd();
+      adjustCanvas->Clear();
+      TLatex l;
+      l.SetTextSize(0.1);
+      l.DrawLatex(0.1,0.5,TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(ULong64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0xffffffff+offlinedata->GetEventTime_Low(OfflineCurrentCount)).Data());
+      
+      adjustCanvas->Modified();
+      adjustCanvas->Update();
+      OfflineReadFileButton->SetEnabled(1);
+      gSystem->ProcessEvents();
+      return;
+    }
+
+
   RcdTrace = new unsigned short[tracelength];
   doublethresh = new double[tracelength];
   doublecfdthresh = new double[tracelength];
@@ -2210,11 +2290,38 @@ void Offline::Panel1Draw()
   sfilterdata->SetLineColor(3);
   ffilterdata->SetLineColor(4);
   threshdata->SetLineColor(4);
-  // rawdata->SetLineWidth(3);
-  // cfddata->SetLineWidth(3);
-  // sfilterdata->SetLineWidth(3);
-  // cfddata->SetLineWidth(3);
-  // offlinemultigraph->Clear();
+
+  rawdata->SetMarkerStyle(7);
+  threshdata->SetMarkerStyle(7);
+  threshdata->SetMarkerColor(4);
+  cfddata->SetMarkerStyle(7);
+  cfddata->SetMarkerColor(2);
+  cfdthreshdata->SetMarkerStyle(7);
+  cfdthreshdata->SetMarkerColor(2);
+  sfilterdata->SetMarkerStyle(7);
+  sfilterdata->SetMarkerColor(3);
+  ffilterdata->SetMarkerStyle(7);
+  ffilterdata->SetMarkerColor(4);
+
+  if(choosedrawmarkerstyle->GetSelected() == 0 || choosedrawmarkerstyle->GetSelected() == 3)
+    {
+      rawdata->SetLineWidth(1);
+      threshdata->SetLineWidth(1);
+      cfddata->SetLineWidth(1);
+      cfdthreshdata->SetLineWidth(1);
+      sfilterdata->SetLineWidth(1);
+      ffilterdata->SetLineWidth(1);
+    }
+  if(choosedrawmarkerstyle->GetSelected() == 1 || choosedrawmarkerstyle->GetSelected() == 4)
+    {
+      rawdata->SetLineWidth(2);
+      threshdata->SetLineWidth(2);
+      cfddata->SetLineWidth(2);
+      cfdthreshdata->SetLineWidth(2);
+      sfilterdata->SetLineWidth(2);
+      ffilterdata->SetLineWidth(2);
+    }
+  
   if(offlinedrawoption1[0]->IsOn())
     offlinemultigraph->Add(rawdata);
   if(offlinedrawoption1[3]->IsOn())
@@ -2227,10 +2334,16 @@ void Offline::Panel1Draw()
     offlinemultigraph->Add(sfilterdata);
   if(offlinedrawoption1[2]->IsOn())
     offlinemultigraph->Add(ffilterdata);
-  offlinemultigraph->Draw("AL");
+
+  offlinemultigraph->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(ULong64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0xffffffff+offlinedata->GetEventTime_Low(OfflineCurrentCount)).Data());
+
+  
+  if(choosedrawmarkerstyle->GetSelected() == 0 || choosedrawmarkerstyle->GetSelected() == 3) offlinemultigraph->Draw("AL");
+  if(choosedrawmarkerstyle->GetSelected() == 2) offlinemultigraph->Draw("AP");
+  if(choosedrawmarkerstyle->GetSelected() == 1 || choosedrawmarkerstyle->GetSelected() == 4) offlinemultigraph->Draw("ALP");
+
   if(offlinedrawoption1[0]->IsOn() || offlinedrawoption1[1]->IsOn() || offlinedrawoption1[2]->IsOn() || offlinedrawoption1[3]->IsOn() || offlinedrawoption1[4]->IsOn() || offlinedrawoption1[5]->IsOn())
     offlinemultigraph->GetXaxis()->SetRangeUser(double(dslider->GetMinPosition()),double(dslider->GetMaxPosition()));
-  // offlinemultigraph->Draw("AL");
   adjustCanvas->Modified();
   adjustCanvas->Update();
   OfflineReadFileButton->SetEnabled(1);
@@ -2334,10 +2447,22 @@ void Offline::Panel2Draw()
 	}
 
       // cout<<"Ch: "<<i<<"  N: "<<OfflineCurrentCount2[i]<<endl;
+      
       int retval;
       if(!offlinedatastatus2[i])
 	{
 	  tracelength2[i] = offlinedata->GetEventTraceLength(OfflineCurrentCount2[i]);//trace length
+
+	  if(tracelength2[i] == 0)//没有波形事件
+	    {
+	      offlinemultigraph2[i]->Clear();
+	      canvas2->cd(1+i);
+	      TLatex l;
+	      l.SetTextSize(0.04);
+	      l.DrawLatex(0.1,0.5,TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount2[i],offlinedata->GetEventEnergy(OfflineCurrentCount2[i]),(ULong64_t(offlinedata->GetEventTime_High(OfflineCurrentCount2[i])))*0xffffffff+offlinedata->GetEventTime_Low(OfflineCurrentCount2[i])).Data());
+	      continue;
+	    }
+	  
 	  RcdTrace2[i] = new unsigned short[tracelength2[i]];
 	  doublethresh2[i] = new double[tracelength2[i]];
 	  doublecfdthresh2[i] = new double[tracelength2[i]];
@@ -3437,21 +3562,20 @@ void Offline::CalculateCFDShow5()
 
 void Offline::SelectRawEnergySumsBaseline(Bool_t on)
 {
-  std::cout<<"GOTO  =  SelectRawEnergySumsBaseline: "<<headerrawenergysumsandbaseline->IsOn()<<std::endl;
   DrawButtonStatus(false);
   // OfflineFileStatus->SetText("NOT READ");
 }
 
 void Offline::SelectQDCSums(Bool_t on)
 {
-  std::cout<<"GOTO  =  SelectQDCSums: "<<headerqdcsums->IsOn()<<std::endl;
+  std::cout<<"TODO  =  SelectQDCSums: "<<headerqdcsums->IsOn()<<std::endl;
   DrawButtonStatus(false);
   // OfflineFileStatus->SetText("NOT READ");
 }
 
 void Offline::SelectExternalTimestamp(Bool_t on)
 {
-  std::cout<<"GOTO  =  SelectExternalTimestamp: "<<headerexternaltimestamp->IsOn()<<std::endl;
+  std::cout<<"TODO  =  SelectExternalTimestamp: "<<headerexternaltimestamp->IsOn()<<std::endl;
   DrawButtonStatus(false);
   // OfflineFileStatus->SetText("NOT READ");
 }

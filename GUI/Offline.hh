@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 五 3月  9 22:39:28 2018 (+0800)
+// Last-Updated: 三 4月 25 16:30:14 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 137
+//     Update #: 138
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -181,6 +181,7 @@ private:
   TGDoubleHSlider *dslider;
 
   TGComboBox *chooseslowfilterbaseline;
+  TGComboBox *choosedrawmarkerstyle;
   TGNumberEntryField *oldslowfilterparameter[3];
   TGNumberEntry* oldofflinefilterrange;
   
