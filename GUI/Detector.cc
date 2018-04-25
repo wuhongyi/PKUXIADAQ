@@ -46,13 +46,10 @@ bool Detector::ReadConfigFile(char *config)
   moduleslot->clear();
   modulesamplingrate->clear();
   modulebits->clear();
-  int tempcount1 = wuReadData::ReadVector("ModuleSlot", config, moduleslot);
-  int tempcount2 = wuReadData::ReadVector("ModuleSampingRate", config, modulesamplingrate);
-  int tempcount3 = wuReadData::ReadVector("ModuleBits", config, modulebits);
-  // std::cout<<tempcount1 <<"  "<<tempcount2<<std::endl;
-  // std::cout<<moduleslot->size() <<"  "<<modulesamplingrate->size()<<std::endl;
-								    
-
+  wuReadData::ReadVector("ModuleSlot", config, moduleslot);
+  wuReadData::ReadVector("ModuleSampingRate", config, modulesamplingrate);
+  wuReadData::ReadVector("ModuleBits", config, modulebits);
+  
   File100M14bit_sys = wuReadData::ReadValue<std::string>("100M14bit_sys", config);
   File100M14bit_fip = wuReadData::ReadValue<std::string>("100M14bit_fip", config);
   File100M14bit_dspldr = wuReadData::ReadValue<std::string>("100M14bit_dspldr", config);
@@ -66,19 +63,18 @@ bool Detector::ReadConfigFile(char *config)
   File250M14bit_dspvar = wuReadData::ReadValue<std::string>("250M14bit_dspvar", config);
     
   FileSettingPars = wuReadData::ReadValue<std::string>("SettingPars", config);
-
-    
-  std::cout<<File100M14bit_sys<<std::endl;
-  std::cout<<File100M14bit_fip<<std::endl;
-  std::cout<<File100M14bit_dspldr<<std::endl;
-  std::cout<<File100M14bit_dsplst<<std::endl;
-  std::cout<<File100M14bit_dspvar<<std::endl;
-  std::cout<<File250M14bit_sys<<std::endl;
-  std::cout<<File250M14bit_fip<<std::endl;
-  std::cout<<File250M14bit_dspldr<<std::endl;
-  std::cout<<File250M14bit_dsplst<<std::endl;
-  std::cout<<File250M14bit_dspvar<<std::endl;
-  std::cout<<FileSettingPars<<std::endl;
+  
+  // std::cout<<File100M14bit_sys<<std::endl;
+  // std::cout<<File100M14bit_fip<<std::endl;
+  // std::cout<<File100M14bit_dspldr<<std::endl;
+  // std::cout<<File100M14bit_dsplst<<std::endl;
+  // std::cout<<File100M14bit_dspvar<<std::endl;
+  // std::cout<<File250M14bit_sys<<std::endl;
+  // std::cout<<File250M14bit_fip<<std::endl;
+  // std::cout<<File250M14bit_dspldr<<std::endl;
+  // std::cout<<File250M14bit_dsplst<<std::endl;
+  // std::cout<<File250M14bit_dspvar<<std::endl;
+  // std::cout<<FileSettingPars<<std::endl;
     
   return true;
 }
@@ -94,13 +90,18 @@ bool Detector::BootSystem()
       std::cout<<"Module Number: "<< NumModules<<std::endl;
       for (unsigned int i = 0; i < moduleslot->size(); ++i)
 	{
-	  std::cout<<"module "<<i<<" in slot "<<moduleslot->at(i)<<std::endl;
+	  std::cout<<"Module "<<i<<" in slot "<<moduleslot->at(i)<<std::endl;
 	}
     }
   else
     {
-      NumModules = modulesamplingrate->size();
       cout<<"---------- Init System Mode: Offline ----------"<<endl;
+      if(modulesamplingrate->size() != modulebits->size())
+	{
+	  std::cout<<"The number of ModuleSampingRate is not equal to ModuleBits"<<std::endl;
+	  return false;
+	}
+      NumModules = modulesamplingrate->size();
       std::cout<<"Module Number: "<< NumModules <<std::endl;
       for (unsigned int i = 0; i < modulesamplingrate->size(); ++i)
 	{
@@ -140,7 +141,7 @@ bool Detector::BootSystem()
 	      ModuleInformation[k].Module_ADCBits = modulebits->at(k);
 	      ModuleInformation[k].Module_ADCMSPS = modulesamplingrate->at(k);
 	    }
-	  cout<<ModuleInformation[k].Module_Rev<<"  "<<ModuleInformation[k].Module_SerNum<<"  "<<ModuleInformation[k].Module_ADCBits<<"  "<<ModuleInformation[k].Module_ADCMSPS<<endl;
+	  cout<<"Rev:"<<ModuleInformation[k].Module_Rev<<"  SerNum:"<<ModuleInformation[k].Module_SerNum<<"  ADCBits:"<<ModuleInformation[k].Module_ADCBits<<"  ADCMSPS:"<<ModuleInformation[k].Module_ADCMSPS<<endl;
 	}
     }
 
@@ -171,13 +172,13 @@ bool Detector::BootSystem()
   	  std::cout<<"Please contact Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
   	  return false;
   	}
-
-      cout<<"AA"<<ComFPGAConfigFile<<"AA"<<endl;
-      cout<<"AA"<<SPFPGAConfigFile<<"AA"<<endl;
-      cout<<"AA"<<TrigFPGAConfigFile<<"AA"<<endl;
-      cout<<"AA"<<DSPCodeFile<<"AA"<<endl;
-      cout<<"AA"<<DSPParFile<<"AA"<<endl;
-      cout<<"AA"<<DSPVarFile<<"AA"<<endl;
+      cout<<"----------------------------------------"<<endl;
+      cout<<ComFPGAConfigFile<<endl;
+      cout<<SPFPGAConfigFile<<endl;
+      cout<<TrigFPGAConfigFile<<endl;
+      cout<<DSPCodeFile<<endl;
+      cout<<DSPParFile<<endl;
+      cout<<DSPVarFile<<endl;
       retval = Pixie16BootModule(ComFPGAConfigFile,	// name of communications FPGA configuration file
   				 SPFPGAConfigFile,	// name of signal processing FPGA configuration file
   				 TrigFPGAConfigFile,	// name of trigger FPGA configuration file
@@ -209,6 +210,7 @@ bool Detector::BootSystem()
 	}
     }
 
+  cout<<"----------------------------------------"<<endl;
   if(OfflineMode == 0)
     {
       for(unsigned short k = 0; k < NumModules; k++)
@@ -247,7 +249,7 @@ int Detector::StartLSMRun(int continue_run)
 {
   cout<<"RUN START"<<endl;
   // if(fonline&&shmfd<0) OpenSharedMemory();
-  if(shmfd<0) OpenSharedMemory();//避免启动获取时候没开启，中途开启造成的bug问题。
+  if(shmfd < 0) OpenSharedMemory();//避免启动获取时候没开启，中途开启造成的bug问题。
   if(!SetEvtl()) return 1;
   int retval = 0;
   // All modules start acuqire and Stop acquire simultaneously

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:39 2016 (+0800)
-// Last-Updated: 四 2月 22 17:19:51 2018 (+0800)
+// Last-Updated: 三 4月 25 10:31:41 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 63
+//     Update #: 64
 // URL: http://wuhongyi.cn 
 
 #include "r2root.hh"
@@ -28,6 +28,7 @@ r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int run
 	StatisticsPileup[i][j] = 0;
 	StatisticsCfdForcedTrigger[i][j] = 0;
 	StatisticsEnergy0[i][j] = 0;
+	StatisticsWaveformCount[i][j] = 0;
 	StatisticsEventCount[i][j] = 0;
       }
   Run = runnumber;
@@ -241,6 +242,7 @@ void r2root::Process()
       if(outofr) StatisticsOutOfRange[mark][ch]++;
       if(pileup) StatisticsPileup[mark][ch]++;
       if(cfdft) StatisticsCfdForcedTrigger[mark][ch]++;
+      if(ltra > 0) StatisticsWaveformCount[mark][ch]++;
       if(evte == 0) StatisticsEnergy0[mark][ch]++;
       
       nevt++;
@@ -271,14 +273,14 @@ void r2root::Process()
     {
       std::cout<<"can't open text file."<<std::endl;
     }
-  writetxt<<"Mod  Channel  OutOfRange  Pileup  CfdForcedTrigger  Energy->0  TotalEvent"<<std::endl;
+  writetxt<<"Mod  Channel  OutOfRange  Pileup  CfdForcedTrigger  Energy->0  WaveformCount  TotalEvent"<<std::endl;
 
   for (int i = 0; i < flagfile; ++i)
     {
       writetxt<<std::endl;
       for (int j = 0; j < 16; ++j)
 	{
-	  writetxt<<i<<"  "<<j<<"  "<<StatisticsOutOfRange[i][j]<<"  "<<StatisticsPileup[i][j]<<"  "<<StatisticsCfdForcedTrigger[i][j]<<"  "<<StatisticsEnergy0[i][j]<<"  "<<StatisticsEventCount[i][j]<<std::endl;
+	  writetxt<<i<<"  "<<j<<"  "<<StatisticsOutOfRange[i][j]<<"  "<<StatisticsPileup[i][j]<<"  "<<StatisticsCfdForcedTrigger[i][j]<<"  "<<StatisticsEnergy0[i][j]<<"  "<<StatisticsWaveformCount[i][j]<<"  "<<StatisticsEventCount[i][j]<<std::endl;
 	}
     }
  
