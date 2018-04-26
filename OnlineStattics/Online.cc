@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 三 4月 25 21:49:05 2018 (+0800)
+// Last-Updated: 四 4月 26 22:48:43 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 165
+//     Update #: 180
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -21,8 +21,8 @@ ClassImp(Online)
 
 Online::Online(const TGWindow * p)
 {
-  buf = new unsigned char[(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+SHAREDMEMORYDATAOFFSET];
-  buf_new = new unsigned char[(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+SHAREDMEMORYDATAOFFSET];
+  buf = new unsigned char[(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*2+SHAREDMEMORYDATAOFFSET];
+  buf_new = new unsigned char[(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*2+SHAREDMEMORYDATAOFFSET];
   number = UINT_MAX;
   flagrunnumber = false;
 
@@ -63,7 +63,7 @@ void Online::Init()
   if(!IsDirectoryExists(filepathtext->GetText()))
     {
       printf("The data file directory does not exist.\n");
-      flag =false;
+      flag = false;
     }
   else
     {
@@ -92,7 +92,7 @@ void Online::Init()
       printf( "open semaphore ok.\n");
     }
 
-  ptr = (unsigned char*)mmap(NULL,(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL,PROT_READ|PROT_WRITE,MAP_SHARED,shm_id,0);/*连接共享内存区*/
+  ptr = (unsigned char*)mmap(NULL,SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL,PROT_READ|PROT_WRITE,MAP_SHARED,shm_id,0);/*连接共享内存区*/
 
   if(flag)
     {
@@ -322,7 +322,8 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
   ICR = new TGTextEntry *[224];
   OCR = new TGTextEntry *[224];
   Labels = new TGTextEntry *[224];
-  SampleRate = new TGComboBox *[13];
+
+
   
   char nnn[10];
 
@@ -334,12 +335,12 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
   monitorgroup->AddFrame(horizontal2,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
   
   Column1 = new TGVerticalFrame *[42];
-  for (int i = 0; i < 13; i++)
+  for (int i = 0; i < 14; i++)
     {
       if(i < 7)
 	{
 	  Column1[3*i] = new TGVerticalFrame(horizontal1, 200, 300);
-	  horizontal1->AddFrame(Column1[3*i], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 10, 0, 0, 0));
+	  horizontal1->AddFrame(Column1[3*i], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
 	  Column1[3*i+1] = new TGVerticalFrame(horizontal1, 200, 300);
 	  horizontal1->AddFrame(Column1[3*i+1], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
 	  Column1[3*i+2] = new TGVerticalFrame(horizontal1, 200, 300);
@@ -348,7 +349,7 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
       else
 	{
 	  Column1[3*i] = new TGVerticalFrame(horizontal2, 200, 300);
-	  horizontal2->AddFrame(Column1[3*i], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 10, 0, 0, 0));
+	  horizontal2->AddFrame(Column1[3*i], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
 	  Column1[3*i+1] = new TGVerticalFrame(horizontal2, 200, 300);
 	  horizontal2->AddFrame(Column1[3*i+1], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
 	  Column1[3*i+2] = new TGVerticalFrame(horizontal2, 200, 300);
@@ -360,7 +361,10 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
 			       cl0[i]->GetDefaultFontStruct(),
 			       kRaisedFrame | kDoubleBorder, GetWhitePixel());
       cl0[i]->SetFont("-adobe-helvetica-bold-r-*-*-11-*-*-*-*-*-iso8859-1", false);
-      cl0[i]->SetText ("ch #");
+      if(i == 13)
+	cl0[i]->SetText("File");
+      else
+	cl0[i]->SetText("ch #");
       cl0[i]->Resize(35, 20);
       cl0[i]->SetEnabled(kFALSE);
       cl0[i]->SetFrameDrawn(kTRUE);
@@ -371,8 +375,11 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
 				   LabelsI[i]->GetDefaultFontStruct(),
 				   kRaisedFrame | kDoubleBorder, GetWhitePixel());
       LabelsI[i]->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
-      LabelsI[i]->SetText("InputRate/s");
-      LabelsI[i]->SetAlignment(kTextCenterX);
+      if(i == 13)
+        LabelsI[i]->SetText("Size/MB");
+      else
+	LabelsI[i]->SetText("InRate/s");
+      // LabelsI[i]->SetAlignment(kTextCenterX);
       LabelsI[i]->Resize(90, 20);
       LabelsI[i]->SetEnabled(kFALSE);
       LabelsI[i]->SetFrameDrawn(kTRUE);
@@ -384,8 +391,11 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
 				   LabelsO[i]->GetDefaultFontStruct(),
 				   kRaisedFrame | kDoubleBorder, GetWhitePixel());
       LabelsO[i]->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
-      LabelsO[i]->SetText("OutputRate/s");
-      LabelsO[i]->SetAlignment(kTextCenterX);
+      if(i == 13)
+        LabelsO[i]->SetText("ADC/MHz");
+      else
+	LabelsO[i]->SetText("OutRate/s");
+      // LabelsO[i]->SetAlignment(kTextCenterX);
       LabelsO[i]->Resize(90, 20);
       LabelsO[i]->SetEnabled(kFALSE);
       LabelsO[i]->SetFrameDrawn(kTRUE);
@@ -398,12 +408,23 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
 				      Labels[16*i+j]->GetDefaultFontStruct(),
 				      kRaisedFrame | kDoubleBorder,
 				      GetWhitePixel());
-	  sprintf(nnn, "%02d", j);
+	  if(i == 13)
+	    {
+	      if(j < 13)
+		sprintf(nnn, "M%02d", j);
+	      else
+		strcpy(nnn, "");
+		// sprintf(nnn, "");
+	    }
+	  else
+	    {
+	      sprintf(nnn, "%02d", j);
+	    }
 	  Labels[16*i+j]->SetText(nnn);
 	  Labels[16*i+j]->Resize(35, 20);
 	  Labels[16*i+j]->SetEnabled(kFALSE);
 	  Labels[16*i+j]->SetFrameDrawn(kTRUE);
-	  Column1[3*i]->AddFrame(Labels[16*i+j], new TGLayoutHints (kLHintsCenterX, 0, 3, 0, 0));
+	  Column1[3*i]->AddFrame(Labels[16*i+j], new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
 
 	  
 	  ICR[16*i+j] = new TGTextEntry(Column1[3*i+1], new TGTextBuffer(100), 10000,
@@ -415,7 +436,7 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
 	  ICR[16*i+j]->Resize(35, 20);
 	  ICR[16*i+j]->SetEnabled(kFALSE);
 	  // ICR[16*i+j]->SetFrameDrawn(kFALSE);
-	  Column1[3*i+1]->AddFrame(ICR[16*i+j], new TGLayoutHints (kLHintsExpandX, 0, 0, 0, 0));//kLHintsCenterX
+	  Column1[3*i+1]->AddFrame(ICR[16*i+j], new TGLayoutHints(kLHintsExpandX, 0, 0, 0, 0));//kLHintsCenterX
 
 
 	  OCR[16*i+j] = new TGTextEntry(Column1[3*i+2], new TGTextBuffer(100), 10000,
@@ -427,94 +448,17 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
 	  OCR[16*i+j]->Resize(35, 20);
 	  OCR[16*i+j]->SetEnabled(kFALSE);
 	  // OCR[16*i+j]->SetFrameDrawn(kFALSE);
-	  Column1[3*i+2]->AddFrame(OCR[16*i+j], new TGLayoutHints (kLHintsExpandX, 0, 0, 0, 0));
+	  Column1[3*i+2]->AddFrame(OCR[16*i+j], new TGLayoutHints(kLHintsExpandX, 0, 0, 0, 0));
 	}
       
     }
 
-  // ========
-  
-  Column1[39] = new TGVerticalFrame(horizontal2, 200, 300);
-  horizontal2->AddFrame(Column1[39], new TGLayoutHints(kLHintsTop | kLHintsLeft, 10, 0, 0, 0));
-  Column1[40] = new TGVerticalFrame(horizontal2, 200, 300);
-  horizontal2->AddFrame(Column1[40], new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  Column1[41] = new TGVerticalFrame(horizontal2, 200, 300);
-  horizontal2->AddFrame(Column1[41], new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-
-  cl0[13] = new TGTextEntry(Column1[39], new TGTextBuffer(100), 10000,
-			   cl0[13]->GetDefaultGC()(),
-			   cl0[13]->GetDefaultFontStruct(),
-			   kRaisedFrame | kDoubleBorder, GetWhitePixel());
-  cl0[13]->SetFont("-adobe-helvetica-bold-r-*-*-11-*-*-*-*-*-iso8859-1", false);
-  cl0[13]->SetText ("File");
-  cl0[13]->Resize(35, 20);
-  cl0[13]->SetEnabled(kFALSE);
-  cl0[13]->SetFrameDrawn(kTRUE);
-  Column1[39]->AddFrame(cl0[13], new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
-
-  LabelsI[13] = new TGTextEntry(Column1[40], new TGTextBuffer(100), 10000,
-			       LabelsI[13]->GetDefaultGC()(),
-			       LabelsI[13]->GetDefaultFontStruct(),
-			       kRaisedFrame | kDoubleBorder, GetWhitePixel());
-  LabelsI[13]->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
-  LabelsI[13]->SetText("Size/MB");
-  LabelsI[13]->SetAlignment(kTextCenterX);
-  LabelsI[13]->Resize(90, 20);
-  LabelsI[13]->SetEnabled(kFALSE);
-  LabelsI[13]->SetFrameDrawn(kTRUE);
-  Column1[40]->AddFrame(LabelsI[13], new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
-
-  for (int j = 0; j < 13; j++)
-    {
-      Labels[208+j] = new TGTextEntry(Column1[39], new TGTextBuffer(100), 10000,
-				       Labels[208+j]->GetDefaultGC()(),
-				       Labels[208+j]->GetDefaultFontStruct(),
-				       kRaisedFrame | kDoubleBorder,
-				       GetWhitePixel());
-      sprintf(nnn, "M%02d", j);
-      Labels[208+j]->SetText(nnn);
-      Labels[208+j]->Resize(35, 20);
-      Labels[208+j]->SetEnabled(kFALSE);
-      Labels[208+j]->SetFrameDrawn(kTRUE);
-      Column1[39]->AddFrame(Labels[208+j], new TGLayoutHints(kLHintsCenterX, 0, 3, 0, 0));
-      
-      ICR[208+j] = new TGTextEntry(Column1[40], new TGTextBuffer(100), 10000,
-				   ICR[208+j]->GetDefaultGC()(),
-				   ICR[208+j]->GetDefaultFontStruct(),
-				   kRaisedFrame | kDoubleBorder, GetWhitePixel());
-      ICR[208+j]->SetAlignment(kTextCenterX);
-      ICR[208+j]->SetText("");
-      ICR[208+j]->Resize(35, 20);
-      ICR[208+j]->SetEnabled(kFALSE);
-      // ICR[208+j]->SetFrameDrawn(kFALSE);
-      Column1[40]->AddFrame(ICR[208+j], new TGLayoutHints(kLHintsExpandX, 0, 0, 0, 0));
-    }
-
-
-
-  LabelsO[13] = new TGTextEntry(Column1[41], new TGTextBuffer(100), 10000,
-			       LabelsO[13]->GetDefaultGC()(),
-			       LabelsO[13]->GetDefaultFontStruct(),
-			       kRaisedFrame | kDoubleBorder, GetWhitePixel());
-  LabelsO[13]->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
-  LabelsO[13]->SetText("Sample/MHz");
-  LabelsO[13]->SetAlignment(kTextCenterX);
-  LabelsO[13]->Resize(90, 20);
-  LabelsO[13]->SetEnabled(kFALSE);
-  LabelsO[13]->SetFrameDrawn(kTRUE);
-  Column1[41]->AddFrame(LabelsO[13], new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
-
-  for (int j = 0; j < 13; j++)
-    {
-      SampleRate[j] = new TGComboBox(Column1[41]);
-      Column1[41]->AddFrame(SampleRate[j], new TGLayoutHints(kLHintsExpandX, 0, 0, 0, 0));
-      SampleRate[j]->Associate(this);
-      SampleRate[j]->AddEntry("100", 1);
-      SampleRate[j]->AddEntry("250", 2);
-      SampleRate[j]->AddEntry("500", 3);
-      SampleRate[j]->Select(1);
-      SampleRate[j]->Resize(35, 20);
-    }
+  ICR[221]->SetFont("-adobe-helvetica-bold-r-*-*-11-*-*-*-*-*-iso8859-1", false);
+  ICR[222]->SetFont("-adobe-helvetica-bold-r-*-*-11-*-*-*-*-*-iso8859-1", false);
+  ICR[223]->SetFont("-adobe-helvetica-bold-r-*-*-11-*-*-*-*-*-iso8859-1", false);
+  ICR[221]->SetText("Used");
+  ICR[222]->SetText("Available");
+  ICR[223]->SetText("Use%");
   
   TabPanel->AddFrame(monitorgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
   
@@ -620,7 +564,7 @@ void Online::Panel3Draw()
   canvas3->cd();
   canvas3->Clear();
 
-  memcpy(EnergySpec,ptr+SHAREDMEMORYDATAOFFSET+4*SHAREDMEMORYDATASTATISTICS*PRESET_MAX_MODULES+onlinemodnum3->GetIntNumber()*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL,4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL);
+  memcpy(EnergySpec,ptr+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+4*SHAREDMEMORYDATASTATISTICS*PRESET_MAX_MODULES+onlinemodnum3->GetIntNumber()*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL,4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL);
   
   switch(chooseenergycanvasmode3->GetSelected())
     {
@@ -714,6 +658,9 @@ void Online::LoopRun()
 		      ICR[208+i]->SetText(tempstring.c_str());
 		    }
 		}
+	      OCR[221]->SetText(gSystem->GetFromPipe(TString::Format("df -hl %s | awk 'NR>1{print $3}'",filepathtext->GetText()).Data()).Data());
+	      OCR[222]->SetText(gSystem->GetFromPipe(TString::Format("df -hl %s | awk 'NR>1{print $4}'",filepathtext->GetText()).Data()).Data());
+	      OCR[223]->SetText(gSystem->GetFromPipe(TString::Format("df -hl %s | awk 'NR>1{print $5}'",filepathtext->GetText()).Data()).Data());
 	    }
 	  PrevTime = CurrentTime;
 	}
@@ -730,11 +677,11 @@ void Online::LoopRun()
 	      PrevProtectionTime = get_time();
 	      // std::cout<<"get time 1"<<std::endl;
 	      
-	      memcpy(buf_new,ptr,(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+SHAREDMEMORYDATAOFFSET);
+	      memcpy(buf_new,ptr,(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*2+SHAREDMEMORYDATAOFFSET);
 	      if(number == UINT_MAX) 
 		{
 		  number = tempN;
-		  memcpy(buf,buf_new,(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+SHAREDMEMORYDATAOFFSET);
+		  memcpy(buf,buf_new,(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*2+SHAREDMEMORYDATAOFFSET);
 		  continue;
 		}
 	      number = tempN;
@@ -755,8 +702,14 @@ void Online::LoopRun()
 		
 	      for(int i = 0; i < ModNum;i++)
 		{
-		  memcpy(Statistics,buf+SHAREDMEMORYDATAOFFSET+4*SHAREDMEMORYDATASTATISTICS*i,SHAREDMEMORYDATASTATISTICS*4);
-		  memcpy(Statistics_new,buf_new+SHAREDMEMORYDATAOFFSET+4*SHAREDMEMORYDATASTATISTICS*i,SHAREDMEMORYDATASTATISTICS*4);
+		  memcpy(&tempsampingrate,buf_new+SHAREDMEMORYDATAOFFSET+2*i,2);
+		  ss.clear();//重复使用前一定要清空
+		  ss<<tempsampingrate;
+		  ss>>tempstring;
+		  OCR[208+i]->SetText(tempstring.c_str());
+		  
+		  memcpy(Statistics,buf+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+4*SHAREDMEMORYDATASTATISTICS*i,SHAREDMEMORYDATASTATISTICS*4);
+		  memcpy(Statistics_new,buf_new+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+4*SHAREDMEMORYDATASTATISTICS*i,SHAREDMEMORYDATASTATISTICS*4);
 
 		  RealTime = (double)Statistics[2] * pow(2.0, 32.0);
 		  RealTime += (double)Statistics[3];
@@ -770,12 +723,6 @@ void Online::LoopRun()
 		    {
 		      LiveTime[j] = (double)Statistics[63+j] * pow(2.0, 32.0);
 		      LiveTime[j] += (double)Statistics[79+j];
-		      if(SampleRate[i]->GetSelected() == 1)
-			LiveTime[j] *= 1.0e-6 / (double)100;
-		      else if(SampleRate[i]->GetSelected() == 2)
-			LiveTime[j] *= 2.0 * 1.0e-6 / (double)250;
-		      else if(SampleRate[i]->GetSelected() == 3)
-			LiveTime[j] *= 5.0 * 1.0e-6 / (double)500;
 		      
 		      FastPeaks[j] = (double)Statistics[95+j] * pow(2.0, 32.0);
 		      FastPeaks[j] += (double)Statistics[111+j];
@@ -785,12 +732,21 @@ void Online::LoopRun()
 		      LiveTime_new[j] = (double)Statistics_new[63+j] * pow(2.0, 32.0);
 		      LiveTime_new[j] += (double)Statistics_new[79+j];
 
-		      if(SampleRate[i]->GetSelected() == 1)
-			LiveTime_new[j] *= 1.0e-6 / (double)100;
-		      else if(SampleRate[i]->GetSelected() == 2)
-			LiveTime_new[j] *= 2.0 * 1.0e-6 / (double)250;
-		      else if(SampleRate[i]->GetSelected() == 3)
-			LiveTime_new[j] *= 5.0 * 1.0e-6 / (double)500;
+		      if(tempsampingrate == 100)
+			{
+			  LiveTime[j] *= 1.0e-6 / (double)tempsampingrate;
+			  LiveTime_new[j] *= 1.0e-6 / (double)tempsampingrate;
+			}
+		      else if(tempsampingrate == 250)
+			{
+			  LiveTime[j] *= 2.0 * 1.0e-6 / (double)tempsampingrate;
+			  LiveTime_new[j] *= 2.0 * 1.0e-6 / (double)tempsampingrate;
+			}
+		      else if(tempsampingrate == 500)
+			{
+			  LiveTime[j] *= 5.0 * 1.0e-6 / (double)tempsampingrate;
+			  LiveTime_new[j] *= 5.0 * 1.0e-6 / (double)tempsampingrate;
+			}
 		      
 		      FastPeaks_new[j] = (double)Statistics_new[95+j] * pow(2.0, 32.0);
 		      FastPeaks_new[j] += (double)Statistics_new[111+j];
@@ -812,7 +768,7 @@ void Online::LoopRun()
 		    }
 		}
 
-	      memcpy(buf,buf_new,(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+SHAREDMEMORYDATAOFFSET);
+	      memcpy(buf,buf_new,(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*2+SHAREDMEMORYDATAOFFSET);
 
 	      sprintf(charrunstate,"R%04d     M%02d",RunNumber,ModNum);
 	      StateMsg->SetText(charrunstate);

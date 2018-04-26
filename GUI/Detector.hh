@@ -26,6 +26,8 @@
 #define SHAREDMEMORYDATASTATISTICS 448
 #define SHAREDMEMORYDATAENERGYLENGTH 32768
 #define SHAREDMEMORYDATAMAXCHANNEL 16
+
+// 共享内存数据定义 10bytes header + 插件采样率 + 数据统计 + 能谱
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class Detector

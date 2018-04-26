@@ -528,14 +528,14 @@ int Detector::OpenSharedMemory(){
        flag++;
      }
 
-   if(ftruncate(shmfd,(off_t)(PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL)) < 0)
+   if(ftruncate(shmfd,(off_t)(SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+PRESET_MAX_MODULES*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL)) < 0)
      {
 
        cout<<"Cannot alloc memory for shared memory!"<<endl;
        flag++;
      }
 
-   if((shmptr = (unsigned char*) mmap(NULL,(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL, PROT_READ|PROT_WRITE,MAP_SHARED,shmfd,0)) == MAP_FAILED)
+   if((shmptr = (unsigned char*) mmap(NULL,SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL, PROT_READ|PROT_WRITE,MAP_SHARED,shmfd,0)) == MAP_FAILED)
      {
        cout<<"Cannot mmap the shared memroy to process space"<<endl;
        flag++;
@@ -561,17 +561,20 @@ int Detector::UpdateSharedMemory()
   memcpy(shmptr,&tmp,sizeof(unsigned int));
   memcpy(shmptr+4,&NumModules,sizeof(unsigned short));
   memcpy(shmptr+6,&runnumber,sizeof(unsigned int));
+  
   int retval = 0;
   unsigned int Statistics[SHAREDMEMORYDATASTATISTICS];
   for(unsigned short i = 0; i < NumModules; i++)
     {
+      memcpy(shmptr+SHAREDMEMORYDATAOFFSET+2*i,&ModuleInformation[i].Module_ADCMSPS,sizeof(unsigned short));
+	
       retval = Pixie16ReadStatisticsFromModule(Statistics, i);
       if(retval < 0)
 	{
 	  ErrorInfo("Detector.cc", "UpdateSharedMemory()", "Pixie16ReadStatisticsFromModule", retval);
 	  cout<<"error in get statistics info"<<endl;
 	}
-      memcpy(shmptr+SHAREDMEMORYDATAOFFSET+SHAREDMEMORYDATASTATISTICS*4*i,Statistics,sizeof(unsigned int)*SHAREDMEMORYDATASTATISTICS);
+      memcpy(shmptr+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+SHAREDMEMORYDATASTATISTICS*4*i,Statistics,sizeof(unsigned int)*SHAREDMEMORYDATASTATISTICS);
     }
 
   if(sem_post(shmsem) == -1){
@@ -609,7 +612,7 @@ void Detector::UpdateEnergySpectrumForModule()
 	    ErrorInfo("Detector.cc", "UpdateEnergySpectrumForModule()", "Pixie16EMbufferIO", retval);
 	    cout<<"null pointer for buffer data / number of buffer words exceeds the limit / invalid DSP external memory address / invalid I/O direction / invalid Pixie module number / I/O Failure"<<endl;
 	  }
-	memcpy(shmptr+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+i*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL,Statistics,sizeof(unsigned int)*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL);
+	memcpy(shmptr+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+i*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL,Statistics,sizeof(unsigned int)*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL);
       }
 
 

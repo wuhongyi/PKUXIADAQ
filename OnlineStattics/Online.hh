@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:41 2016 (+0800)
-// Last-Updated: 三 4月 25 21:44:17 2018 (+0800)
+// Last-Updated: 四 4月 26 21:47:52 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 48
+//     Update #: 50
 // URL: http://wuhongyi.cn 
 
 #ifndef _ONLINE_H_
@@ -108,7 +108,7 @@ private:
   TGTextEntry **ICR;//[0-207] Input rate   >=208 File size
   TGTextEntry **OCR;//[0-207] Output rate  >=208 not used
   TGTextEntry **Labels;
-  TGComboBox **SampleRate;
+  TGTextEntry **SampleRate;
   
   uint64_t CurrentTime;
   uint64_t PrevTime;
@@ -169,7 +169,8 @@ private:
   unsigned short ModNum;
   int RunNumber;
   unsigned int tempN;
-
+  unsigned short tempsampingrate;
+  
   ClassDef(Online,1)
 };
 

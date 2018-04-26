@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 三 4月 25 20:47:32 2018 (+0800)
+// Last-Updated: 四 4月 26 19:48:28 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 681
+//     Update #: 686
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -584,8 +584,8 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   choosedrawmarkerstyle->AddEntry("Point", 2);
   choosedrawmarkerstyle->AddEntry("Line1-Point", 3);
   choosedrawmarkerstyle->AddEntry("Line2-Point", 4);
-  choosedrawmarkerstyle->Select(1);
-  TGLabel *LabelDrawStyle = new TGLabel(parFrame, "Draw style:"); 
+  choosedrawmarkerstyle->Select(0);
+  TGLabel *LabelDrawStyle = new TGLabel(parFrame, "Style:"); 
   parFrame->AddFrame(LabelDrawStyle, new TGLayoutHints(kLHintsRight | kLHintsTop, 5, 2, 5, 0));
 
 
@@ -2756,7 +2756,7 @@ void Offline::Panel5Draw()
   int inttracelength = -1;
   for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
     {
-      if(offlinechnum5->GetIntNumber() == offlinedata->GetEventChannel(i))//ch
+      if(offlinechnum5->GetIntNumber() == offlinedata->GetEventChannel(i) && offlinedata->GetEventTraceLength(i) > 0)//ch / trcae length>0
 	{
 	  inttracelength = offlinedata->GetEventTraceLength(i);//trace length
 	  break;
@@ -2799,7 +2799,7 @@ void Offline::Panel5Draw()
   
       for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
 	{
-	  if(offlinechnum5->GetIntNumber() == offlinedata->GetEventChannel(i))//ch
+	  if(offlinechnum5->GetIntNumber() == offlinedata->GetEventChannel(i) && offlinedata->GetEventTraceLength(i) > 0)//ch / trace length>0
 	    {
 	      cfdevenycount5++;
 	      if(offlinedata->GetEventCfdForcedTriggerBit(i) == 0) originalcfdvalidcount5++;////cfd forced trigger bit
@@ -2952,7 +2952,7 @@ void Offline::Panel6Draw()
   int inttracelength = -1;
   for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
     {
-      if(offlinechnum6->GetIntNumber() == offlinedata->GetEventChannel(i))//ch
+      if(offlinechnum6->GetIntNumber() == offlinedata->GetEventChannel(i) && offlinedata->GetEventTraceLength(i) > 0)//ch
 	{
 	  inttracelength = offlinedata->GetEventTraceLength(i);//trace length
 	  break;
@@ -3043,7 +3043,7 @@ void Offline::Panel6Draw()
       
       for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
 	{
-	  if(offlinechnum6->GetIntNumber() == offlinedata->GetEventChannel(i))//ch
+	  if(offlinechnum6->GetIntNumber() == offlinedata->GetEventChannel(i) && offlinedata->GetEventTraceLength(i) > 0)//ch / trace length>0
 	    {
 	      if(chooseslowfilterbaselinep6->GetSelected() == 1)//如果没有baseline数据，则采用计算基线的方法
 		{
@@ -3197,7 +3197,7 @@ void Offline::Panel8Draw()
   int inttracelength = -1;
   for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
     {
-      if(offlinechnum8->GetIntNumber() == offlinedata->GetEventChannel(i))//ch
+      if(offlinechnum8->GetIntNumber() == offlinedata->GetEventChannel(i) && offlinedata->GetEventTraceLength(i))//ch / trace length>0
 	{
 	  inttracelength = offlinedata->GetEventTraceLength(i);//trace length
 	  break;
@@ -3257,7 +3257,7 @@ void Offline::Panel8Draw()
       unsigned int offset, x, y;
       for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
 	{
-	  if(offlinechnum6->GetIntNumber() == offlinedata->GetEventChannel(i))//ch
+	  if(offlinechnum6->GetIntNumber() == offlinedata->GetEventChannel(i) && offlinedata->GetEventTraceLength(i))//ch / trace length>0
 	    {
 	      ListModeFile = fopen(offlinefilename, "rb");
 	      if(ListModeFile != NULL)
