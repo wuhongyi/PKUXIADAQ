@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 11月 18 19:24:01 2016 (+0800)
-// Last-Updated: 六 8月 26 19:31:25 2017 (+0800)
+// Last-Updated: 六 4月 28 22:13:31 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 26
+//     Update #: 31
 // URL: http://wuhongyi.cn 
 
 #include "Base.hh"
@@ -244,8 +244,15 @@ Base::Base(const TGWindow * p, const TGWindow * main, char *name, int columns, i
 
   TGTextButton *adjustB = new TGTextButton(CopyButton, "&AdjustOffset",COPYBUTTON+2000);
   adjustB->Associate(this);
-  adjustB->SetToolTipText(" Adjust the DC offset of this module automatically by module!");
+  adjustB->SetToolTipText("Adjust the DC offset of this module automatically by module!");
   CopyButton->AddFrame(adjustB,new TGLayoutHints(kLHintsTop|kLHintsLeft,0,20,0,0));
+
+
+  TGTextButton *blcutfinder = new TGTextButton(CopyButton, "&BLcutFinder",COPYBUTTON+3000);
+  blcutfinder->Associate(this);
+  blcutfinder->SetToolTipText("Update BLcut values.");
+  CopyButton->AddFrame(blcutfinder,new TGLayoutHints(kLHintsTop|kLHintsLeft,0,20,0,0));
+    
   ///////////////////////////////////////////////////////////////////////
   MapSubwindows();
   Resize();			// resize to default size
@@ -376,14 +383,31 @@ Bool_t Base::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		}  
 		    
 	      break;
-	    case (COPYBUTTON+2000) :
+	    case (COPYBUTTON+2000):
 	      {
 		int retval = Pixie16AdjustOffsets(modNumber);
-		if(retval < 0){
-		  ErrorInfo("Base.cc", "ProcessMessage(...)", "Pixie16AdjustOffsets", retval);
-		  break;
-		}
+		if(retval < 0)
+		  {
+		    ErrorInfo("Base.cc", "ProcessMessage(...)", "Pixie16AdjustOffsets", retval);
+		    break;
+		  }
 		load_info(modNumber);
+	      }
+	      break;
+	    case (COPYBUTTON+3000):
+	      {
+		int retval;
+		unsigned int blcut;
+		for (unsigned short i = 0; i < 16; ++i)
+		  {
+		    retval = Pixie16BLcutFinder(modNumber,i,&blcut);
+		    if(retval < 0)
+		      {
+			ErrorInfo("Base.cc", "ProcessMessage(...)", "Pixie16BLcutFinder", retval);
+		      }
+		    NumEntry[2][i]->SetText(TString::Format("%d",blcut).Data());
+		  }
+		
 	      }
 	      break;
 	    default:
@@ -490,12 +514,12 @@ int Base::load_info(Long_t mod)
 
       retval = Pixie16ReadSglChanPar((char*)"TRACE_DELAY", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRACE_DELAY", retval);
-      sprintf(text, "%1.2f", ChanParData);
+      sprintf(text, "%1.3f", ChanParData);
       NumEntry[4][i]->SetText(text);
 
       retval = Pixie16ReadSglChanPar((char*)"TRACE_LENGTH", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRACE_LENGTH", retval);
-      sprintf (text, "%1.2f", ChanParData);
+      sprintf (text, "%1.3f", ChanParData);
       NumEntry[5][i]->SetText(text);      
     }
   return 1;

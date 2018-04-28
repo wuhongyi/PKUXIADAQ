@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 四 4月 26 19:48:28 2018 (+0800)
+// Last-Updated: 六 4月 28 21:56:42 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 686
+//     Update #: 687
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -3009,6 +3009,7 @@ void Offline::Panel6Draw()
 	  SlowGap = ROUND(ChanParData*100/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
 	  break;
 	default:
+	  std::cout<<"ERROR: Please call Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
 	  break;
 	}
 
