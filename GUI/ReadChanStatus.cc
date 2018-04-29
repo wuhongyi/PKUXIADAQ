@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 3月  8 14:57:31 2018 (+0800)
-// Last-Updated: 五 3月  9 13:31:46 2018 (+0800)
+// Last-Updated: 日 4月 29 11:34:31 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 23
+//     Update #: 31
 // URL: http://wuhongyi.cn 
 
 #include "ReadChanStatus.hh"
@@ -41,6 +41,7 @@ ReadChanStatus::ReadChanStatus(const TGWindow *p, const TGWindow *main,Detector 
     {
       traceth1s0[i] = NULL;
       baselineth1i1[i] = NULL;
+      baselinetgraph1[i] = NULL;
     }
 
   
@@ -67,6 +68,7 @@ ReadChanStatus::~ReadChanStatus()
     {
       if(traceth1s0[i] != NULL) delete traceth1s0[i];
       if(baselineth1i1[i] != NULL) delete baselineth1i1[i];
+      if(baselinetgraph1[i] != NULL) delete baselinetgraph1[i];
     }
 }
 
@@ -335,7 +337,7 @@ void ReadChanStatus::MakeFold1Panel(TGCompositeFrame *TabPanel)
 
   choosecanvasmode1 = new TGComboBox(parFrame);
   parFrame->AddFrame(choosecanvasmode1, new TGLayoutHints(kLHintsRight, 0, 10, 0, 0));
-  choosecanvasmode1->Resize(150, 20);
+  choosecanvasmode1->Resize(140, 20);
   choosecanvasmode1->AddEntry("Single Channel Mode", 0);
   choosecanvasmode1->AddEntry("Multi Channel Mode", 1);
   choosecanvasmode1->Select(0);
@@ -343,6 +345,18 @@ void ReadChanStatus::MakeFold1Panel(TGCompositeFrame *TabPanel)
   parFrame->AddFrame(choosemode, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
   fClient->GetColorByName("blue", color);
   choosemode->SetTextColor(color, false);
+
+  choosebaselinedrawmode1 = new TGComboBox(parFrame);
+  parFrame->AddFrame(choosebaselinedrawmode1, new TGLayoutHints(kLHintsRight, 0, 15, 0, 0));
+  choosebaselinedrawmode1->Resize(140, 20);
+  choosebaselinedrawmode1->AddEntry("baseline(hist)", 0);
+  choosebaselinedrawmode1->AddEntry("baseline-timestamp", 1);
+  choosebaselinedrawmode1->Select(0);
+
+  TGLabel *choosetype = new TGLabel(parFrame, "Type:"); 
+  parFrame->AddFrame(choosetype, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+  fClient->GetColorByName("red", color);
+  choosetype->SetTextColor(color, false);
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
@@ -439,19 +453,32 @@ void ReadChanStatus::Panel1Draw()
 {
   for (int i = 0; i < 16; ++i)
     {
-      if(baselineth1i1[i] == NULL)
+      if(choosebaselinedrawmode1->GetSelected() == 0)
 	{
-	  char th1iname[16];
-	  sprintf(th1iname,"baseline_ch%02d",i);
-	  baselineth1i1[i] = new TH1I(th1iname,"",65536,0,65536);
-	  baselineth1i1[i]->SetTitle(TString::Format("Ch: %d",i).Data());
-	  baselineth1i1[i]->GetXaxis()->SetTitle("bl");
-	  baselineth1i1[i]->GetXaxis()->SetLabelSize(0.06);
-	  baselineth1i1[i]->GetYaxis()->SetLabelSize(0.06);
+	  if(baselineth1i1[i] == NULL)
+	    {
+	      baselineth1i1[i] = new TH1I(TString::Format("baseline_ch%02d",i).Data(),"",65536,0,65536);
+	      baselineth1i1[i]->SetTitle(TString::Format("Ch: %d",i).Data());
+	      baselineth1i1[i]->GetXaxis()->SetTitle("bl");
+	      baselineth1i1[i]->GetXaxis()->SetLabelSize(0.06);
+	      baselineth1i1[i]->GetYaxis()->SetLabelSize(0.06);
+	    }
+	  else
+	    {
+	      baselineth1i1[i]->Reset("ICES");
+	    }
 	}
       else
 	{
-	  baselineth1i1[i]->Reset("ICES");
+	  if(baselinetgraph1[i] == NULL)
+	    {
+	      baselinetgraph1[i] = new TGraph(READBASELINELEENGTH);
+	      baselinetgraph1[i]->SetTitle(TString::Format("Ch: %d",i).Data());
+	      baselinetgraph1[i]->GetXaxis()->SetTitle("ts");
+	      baselinetgraph1[i]->GetYaxis()->SetTitle("bl");
+	      // baselinetgraph1[i]->GetXaxis()->SetLabelSize(0.06);
+	      // baselinetgraph1[i]->GetYaxis()->SetLabelSize(0.06);
+	    }
 	}
     }
   
@@ -479,9 +506,15 @@ void ReadChanStatus::Panel1Draw()
       
       for (int j = 0; j < READBASELINELEENGTH; ++j)
   	{
-  	  baselineth1i1[chnum1->GetIntNumber()]->Fill(baselines[chnum1->GetIntNumber()][j]);
+	  if(choosebaselinedrawmode1->GetSelected() == 0)
+	    baselineth1i1[chnum1->GetIntNumber()]->Fill(baselines[chnum1->GetIntNumber()][j]);
+	  else
+	    baselinetgraph1[chnum1->GetIntNumber()]->SetPoint(j,timestamps[chnum1->GetIntNumber()][j],baselines[chnum1->GetIntNumber()][j]);
   	}
-      baselineth1i1[chnum1->GetIntNumber()]->Draw();
+      if(choosebaselinedrawmode1->GetSelected() == 0)
+	baselineth1i1[chnum1->GetIntNumber()]->Draw();
+      else
+	baselinetgraph1[chnum1->GetIntNumber()]->Draw("AP*");
       break;
 
     case 1://multi
@@ -499,9 +532,15 @@ void ReadChanStatus::Panel1Draw()
 	  
   	  for (int j = 0; j < READBASELINELEENGTH; ++j)
   	    {
-  	      baselineth1i1[i]->Fill(baselines[i][j]);
+	      if(choosebaselinedrawmode1->GetSelected() == 0)
+		baselineth1i1[i]->Fill(baselines[i][j]);
+	      else
+		baselinetgraph1[i]->SetPoint(j,timestamps[i][j],baselines[i][j]);
   	    }
-  	  baselineth1i1[i]->Draw();
+	  if(choosebaselinedrawmode1->GetSelected() == 0)
+	    baselineth1i1[i]->Draw();
+	  else
+	    baselinetgraph1[i]->Draw("AP*");
   	}
       break;
 

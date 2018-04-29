@@ -14,7 +14,7 @@ using namespace std;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 Detector::Detector(int mode)
-  :evtlen(0),shmfd(-1),fonline(0)
+  :shmfd(-1),fonline(0)
 {
   OfflineMode = (unsigned short)mode;
   
@@ -37,7 +37,7 @@ Detector::~Detector()
   if(modulesamplingrate) delete modulesamplingrate;
   if(modulebits) delete modulebits;
   
-  cout<<"detector is deleted!"<<endl;
+  std::cout<<"detector is deleted!"<<std::endl;
   ExitSystem();
 }
 
@@ -86,7 +86,7 @@ bool Detector::BootSystem()
   if(OfflineMode == 0)
     {
       NumModules = moduleslot->size();
-      cout<<"---------- Init System Mode: Online ----------"<<endl;
+      std::cout<<"---------- Init System Mode: Online ----------"<<std::endl;
       std::cout<<"Module Number: "<< NumModules<<std::endl;
       for (unsigned int i = 0; i < moduleslot->size(); ++i)
 	{
@@ -121,7 +121,7 @@ bool Detector::BootSystem()
   if (retval != 0)
     {
       ErrorInfo("Detector.cc", "BootSystem()", "Pixie16InitSystem", retval);
-      cout << "PCI Pixie init has failed: " << retval << endl;
+      std::cout << "PCI Pixie init has failed: " << retval << std::endl;
       return false;
     }
 
@@ -132,7 +132,7 @@ bool Detector::BootSystem()
       if(retval != 0)
 	{
 	  ErrorInfo("Detector.cc", "BootSystem()", "Pixie16ReadModuleInfo", retval);
-	  printf("Pixie16ReadModuleInfo: failed to read module information in module %d, retval=%d", k, retval);
+	  std::cout<<"Pixie16ReadModuleInfo: failed to read module information in module " <<k<<", retval="<<retval<<std::endl;
 	}
       else
 	{
@@ -141,7 +141,7 @@ bool Detector::BootSystem()
 	      ModuleInformation[k].Module_ADCBits = modulebits->at(k);
 	      ModuleInformation[k].Module_ADCMSPS = modulesamplingrate->at(k);
 	    }
-	  cout<<"Rev:"<<ModuleInformation[k].Module_Rev<<"  SerNum:"<<ModuleInformation[k].Module_SerNum<<"  ADCBits:"<<ModuleInformation[k].Module_ADCBits<<"  ADCMSPS:"<<ModuleInformation[k].Module_ADCMSPS<<endl;
+	  std::cout<<"Rev:"<<ModuleInformation[k].Module_Rev<<"  SerNum:"<<ModuleInformation[k].Module_SerNum<<"  ADCBits:"<<ModuleInformation[k].Module_ADCBits<<"  ADCMSPS:"<<ModuleInformation[k].Module_ADCMSPS<<std::endl;
 	}
     }
 
@@ -172,13 +172,13 @@ bool Detector::BootSystem()
   	  std::cout<<"Please contact Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
   	  return false;
   	}
-      cout<<"----------------------------------------"<<endl;
-      cout<<ComFPGAConfigFile<<endl;
-      cout<<SPFPGAConfigFile<<endl;
-      cout<<TrigFPGAConfigFile<<endl;
-      cout<<DSPCodeFile<<endl;
-      cout<<DSPParFile<<endl;
-      cout<<DSPVarFile<<endl;
+      std::cout<<"----------------------------------------"<<std::endl;
+      std::cout<<ComFPGAConfigFile<<std::endl;
+      std::cout<<SPFPGAConfigFile<<std::endl;
+      std::cout<<TrigFPGAConfigFile<<std::endl;
+      std::cout<<DSPCodeFile<<std::endl;
+      std::cout<<DSPParFile<<std::endl;
+      std::cout<<DSPVarFile<<std::endl;
       retval = Pixie16BootModule(ComFPGAConfigFile,	// name of communications FPGA configuration file
   				 SPFPGAConfigFile,	// name of signal processing FPGA configuration file
   				 TrigFPGAConfigFile,	// name of trigger FPGA configuration file
@@ -191,7 +191,7 @@ bool Detector::BootSystem()
       if (retval != 0)
   	{
   	  ErrorInfo("Detector.cc", "BootSystem()", "Pixie16BootModule", retval);
-  	  cout << "cards booting has failed !  Module NUMBER "<< k <<endl;;
+  	  std::cout << "cards booting has failed !  Module NUMBER "<< k <<std::endl;;
   	  return false;
   	}
 
@@ -205,12 +205,12 @@ bool Detector::BootSystem()
       if (retval < 0)
 	{
 	  ErrorInfo("Detector.cc", "BootSystem()", "Pixie16AdjustOffsets", retval);
-	  printf("Pixie16AdjustOffsets in module %d failed, retval = %d", k, retval);
+	  std::cout<<"Pixie16AdjustOffsets in module "<<k<<" failed, retval = "<<retval<<std::endl;
 	  return false;
 	}
     }
 
-  cout<<"----------------------------------------"<<endl;
+  std::cout<<"----------------------------------------"<<std::endl;
   if(OfflineMode == 0)
     {
       for(unsigned short k = 0; k < NumModules; k++)
@@ -220,11 +220,11 @@ bool Detector::BootSystem()
 	  if(retval != 0)
 	    {
 	      ErrorInfo("Detector.cc", "BootSystem()", "Pixie16ReadCSR", retval);
-	      printf("Pixie16ReadCSR: Invalid Pixie module number in module %d, retval=%d", k, retval);
+	      std::cout<<"Pixie16ReadCSR: Invalid Pixie module number in module "<<k<<", retval="<<retval<<std::endl;
 	    }
 	  else
 	    {
-	      cout<<"host Control & Status Register =>  mod:"<<k<<"  value:0x"<<hex<<CSR<<dec<<endl;
+	      std::cout<<"host Control & Status Register =>  mod:"<<k<<"  value:0x"<<hex<<CSR<<dec<<std::endl;
 	    }
 	}
     }
@@ -240,17 +240,17 @@ int Detector::Syncronise()
   if (retval < 0)
     {
       ErrorInfo("Detector.cc", "Syncronise()", "Pixie16WriteSglModPar/IN_SYNCH", retval);
-      fprintf (stderr, "Failed to write IN_SYNCH");
+      fprintf(stderr, "Failed to write IN_SYNCH");
     }
   return retval;
 }
 
 int Detector::StartLSMRun(int continue_run)
 {
-  cout<<"RUN START"<<endl;
+  std::cout<<"RUN START"<<std::endl;
   // if(fonline&&shmfd<0) OpenSharedMemory();
   if(shmfd < 0) OpenSharedMemory();//避免启动获取时候没开启，中途开启造成的bug问题。
-  if(!SetEvtl()) return 1;
+  // if(!SetEvtl()) return 1;
   int retval = 0;
   // All modules start acuqire and Stop acquire simultaneously
   retval = Pixie16WriteSglModPar((char*)"SYNCH_WAIT", 1, 0);
@@ -287,8 +287,8 @@ int Detector::StartLSMRun(int continue_run)
       return retval;
     }
 
-  for(int i = 0;i < NumModules;i++)
-    if(evtlen[i] <= 0) return 1; // confirm the evtlengt
+  // for(int i = 0; i < NumModules; i++)
+  //   if(evtlen[i] <= 0) return 1; // confirm the evtlengt
 
   return 0;
 }
@@ -320,7 +320,7 @@ int Detector::ReadDataFromModules(int thres,unsigned short  endofrun)
       if(retval<0) 
 	{
 	  ErrorInfo("Detector.cc", "ReadDataFromModules(...)", "Pixie16CheckExternalFIFOStatus", retval);
-	  cout<<"Invalid modnum!"<<endl;
+	  std::cout<<"Invalid modnum!"<<std::endl;
 	  return 0;
 	}
 
@@ -331,10 +331,10 @@ int Detector::ReadDataFromModules(int thres,unsigned short  endofrun)
 	  SavetoFile(i);
 	}
 
-      retval = Pixie16ReadDataFromExternalFIFO( (unsigned int *) (&buff[i][buffid[i]]),nwords,i);
+      retval = Pixie16ReadDataFromExternalFIFO((unsigned int *)(&buff[i][buffid[i]]),nwords,i);
       if(retval < 0){
 	ErrorInfo("Detector.cc", "ReadDataFromModules(...)", "Pixie16ReadDataFromExternalFIFO", retval);
-	cout<<"CheckExternalFIFOWords: "<<nwords<<endl;
+	std::cout<<"CheckExternalFIFOWords: "<<nwords<<std::endl;
       }
       buffid[i]=buffid[i]+nwords;
       //    cout<<"nwords: "<<nwords<<endl;
@@ -372,7 +372,7 @@ int Detector::RunStatus()
     {
       int ret = 0;
       ret = Pixie16CheckRunStatus(i);
-      cout<<"Run status: "<<i <<" sta:"<<ret<<endl;
+      std::cout<<"Run status: "<<i <<" sta:"<<ret<<std::endl;
       sum = sum + ret;
     }
   return sum;
@@ -437,7 +437,7 @@ int Detector::OpenSaveFile(int n,const char *FileN)
 {
   fsave[n]=fopen(FileN,"wb");
   if(fsave[n] == NULL){
-    cout<<"Cannot open store file!"<<endl;
+    std::cout<<"Cannot open store file!"<<std::endl;
     return 0;
   }
   return 1;
@@ -445,22 +445,23 @@ int Detector::OpenSaveFile(int n,const char *FileN)
 
 int Detector::SavetoFile(int nFile)
 {
-  cout<<"saving file ..."<<endl;
-  if(fsave[nFile] == NULL) {
-    cout<<"ERROR! No opened file found for store!"<<endl;
-    cout<<"CAUTION! No data will be saved!"<<endl;
-    buffid[nFile] = 0;
-    return 1;
-  }
+  std::cout<<"saving file ..."<<std::endl;
+  if(fsave[nFile] == NULL)
+    {
+      std::cout<<"ERROR! No opened file found for store!"<<std::endl;
+      std::cout<<"CAUTION! No data will be saved!"<<std::endl;
+      buffid[nFile] = 0;
+      return 1;
+    }
   
   size_t n = fwrite(buff[nFile],4,buffid[nFile],fsave[nFile]);
 
   if(n != (size_t)buffid[nFile]){
-    cout<<"Not All Data has been stored!"<<endl;
+    std::cout<<"Not All Data has been stored!"<<std::endl;
   }
   FILESIZE[nFile] += buffid[nFile];
   buffid[nFile] = 0;
-  cout<<"FILE: "<<nFile<<" SIZE: "<<FILESIZE[nFile]<<endl;
+  std::cout<<"FILE: "<<nFile<<" SIZE: "<<FILESIZE[nFile]<<std::endl;
   return 0;
 }
 
@@ -482,25 +483,27 @@ unsigned int  Detector::GetFileSize(int n)
 
 int Detector::StopLSMRun()
 {
-  cout<<"STOP RUN!"<<endl;
+  std::cout<<"STOP RUN!"<<std::endl;
   unsigned short ModNum = 0;
   StopTime = get_time();
   int retval = Pixie16EndRun(ModNum);
   if(retval < 0) {
     ErrorInfo("Detector.cc", "StopLSMRun(...)", "Pixie16EndRun", retval);
-    cout<<"FAILED TO END THE RUN!!!"<<endl;
+    std::cout<<"FAILED TO END THE RUN!!!"<<std::endl;
     return 1;
   }
   
   int counter = 0;
-  while(RunStatus()){
-    ReadDataFromModules(0);
-    counter++;
-    if(counter > 10*NumModules) break;
-  }
-  if(counter == 10*NumModules) {
-    cout<<" ERROR! Some modules may not End Run correctly!"<<endl;
-  }
+  while(RunStatus())
+    {
+      ReadDataFromModules(0);
+      counter++;
+      if(counter > 10*NumModules) break;
+    }
+  if(counter == 10*NumModules)
+    {
+      std::cout<<" ERROR! Some modules may not End Run correctly!"<<std::endl;
+    }
   
   // Make sure all data has been read out
   ReadDataFromModules(0,1); // end of run
@@ -510,38 +513,39 @@ int Detector::StopLSMRun()
     }
   CloseFile();
 
-  cout<<"Real Run Time:"<<StopTime-StartTime<<endl;
+  std::cout<<"Real Run Time:"<<StopTime-StartTime<<std::endl;
   return 0;
 }
 
-int Detector::OpenSharedMemory(){
+int Detector::OpenSharedMemory()
+{
    int flag = 0;
    if((shmsem=sem_open("sempixie16pkuxiadaq",O_CREAT,0666,1)) == SEM_FAILED)
      {
-       cout<<"Cannot create seamphore!"<<endl;
+       std::cout<<"Cannot create seamphore!"<<std::endl;
        flag++;
      }
 
    if((shmfd=shm_open("shmpixie16pkuxiadaq",O_CREAT|O_RDWR,0666)) < 0)
      {
-       cout<<"Cannot create shared memory"<<endl;
+       std::cout<<"Cannot create shared memory"<<std::endl;
        flag++;
      }
 
    if(ftruncate(shmfd,(off_t)(SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+PRESET_MAX_MODULES*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL)) < 0)
      {
 
-       cout<<"Cannot alloc memory for shared memory!"<<endl;
+       std::cout<<"Cannot alloc memory for shared memory!"<<std::endl;
        flag++;
      }
 
    if((shmptr = (unsigned char*) mmap(NULL,SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL, PROT_READ|PROT_WRITE,MAP_SHARED,shmfd,0)) == MAP_FAILED)
      {
-       cout<<"Cannot mmap the shared memroy to process space"<<endl;
+       std::cout<<"Cannot mmap the shared memroy to process space"<<std::endl;
        flag++;
      }
    if(flag > 0) return 0;
-   cout<<"SHM Opend!"<<endl;
+   std::cout<<"SHM Opend!"<<std::endl;
    return 1;
 }
 
@@ -551,7 +555,7 @@ int Detector::UpdateSharedMemory()
   rc = sem_trywait(shmsem);
   if(rc == -1 && errno != EAGAIN)
     {
-      cout<<"sem_wait error!"<<endl;
+      std::cout<<"sem_wait error!"<<std::endl;
       return 1;
     }
   else if(rc == -1) return 1; // this indicates the shm is under use
@@ -572,16 +576,16 @@ int Detector::UpdateSharedMemory()
       if(retval < 0)
 	{
 	  ErrorInfo("Detector.cc", "UpdateSharedMemory()", "Pixie16ReadStatisticsFromModule", retval);
-	  cout<<"error in get statistics info"<<endl;
+	  std::cout<<"error in get statistics info"<<std::endl;
 	}
       memcpy(shmptr+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+SHAREDMEMORYDATASTATISTICS*4*i,Statistics,sizeof(unsigned int)*SHAREDMEMORYDATASTATISTICS);
     }
 
   if(sem_post(shmsem) == -1){
-    cout<<"sem_post error!"<<endl;
+    std::cout<<"sem_post error!"<<std::endl;
     return 1;
   }
-  cout<<"SHM updated!"<<endl;
+  std::cout<<"SHM updated!"<<std::endl;
   return 0;
 }
 
@@ -610,15 +614,13 @@ void Detector::UpdateEnergySpectrumForModule()
 	if(retval < 0)
 	  {
 	    ErrorInfo("Detector.cc", "UpdateEnergySpectrumForModule()", "Pixie16EMbufferIO", retval);
-	    cout<<"null pointer for buffer data / number of buffer words exceeds the limit / invalid DSP external memory address / invalid I/O direction / invalid Pixie module number / I/O Failure"<<endl;
+	    std::cout<<"null pointer for buffer data / number of buffer words exceeds the limit / invalid DSP external memory address / invalid I/O direction / invalid Pixie module number / I/O Failure"<<std::endl;
 	  }
 	memcpy(shmptr+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+i*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL,Statistics,sizeof(unsigned int)*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL);
       }
-
-
   
-  cout<<"Updated Monitor Energy Spectrum. "<<endl;
-  cout<<"Please don't update it too often. Frequent updates will affect DAQ efficiency."<<endl;
+  std::cout<<"Updated Monitor Energy Spectrum. "<<std::endl;
+  std::cout<<"Please don't update it too often. Frequent updates will affect DAQ efficiency."<<std::endl;
 }
 
 
@@ -628,55 +630,55 @@ int Detector::SetOnlineF(bool flag)
   return 1;
 }
 
-bool Detector::SetEvtl()
-{
-  evtlen = new unsigned int[NumModules];
-  for(unsigned short i = 0;i < NumModules;i++){
-    double mpar = -1;
-    evtlen[i] = 4; // header
-    int retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA",&mpar,i,0);
-    if(retval<0){
-      ErrorInfo("Detector.cc", "SetEvtl()", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);
-      return 0;
-    }
-    if(APP16_TstBit(12,mpar)) evtlen[i] += 4; // esum and baseline enabled
-    if(APP16_TstBit(9,mpar)) evtlen[i] += 8; // qsum enabled
-    if(APP16_TstBit(8,mpar))
-      {
-	double tracelen = -1;
-	retval = Pixie16ReadSglChanPar((char*)"TRACE_LENGTH",&tracelen,i,0);
-	if(retval < 0)
-	  {
-	    ErrorInfo("Detector.cc", "SetEvtl()", "Pixie16ReadSglChanPar/TRACE_LENGTH", retval);
-	    return 0;
-	  }
-	evtlen[i] += tracelen*50;
-      }
-    cout<<"evtlen ch: "<<i<<" len: "<<evtlen[i]<<endl; 
-  }
-  return 1;
-}
+// bool Detector::SetEvtl()
+// {
+//   evtlen = new unsigned int[NumModules];
+//   for(unsigned short i = 0;i < NumModules;i++)
+//     {
+//       double mpar = -1;
+//       evtlen[i] = 4; // header
+//       int retval = Pixie16ReadSglChanPar((char*)"CHANNEL_CSRA",&mpar,i,0);
+//       if(retval<0){
+// 	ErrorInfo("Detector.cc", "SetEvtl()", "Pixie16ReadSglChanPar/CHANNEL_CSRA", retval);
+// 	return 0;
+//       }
+//       if(APP16_TstBit(12,mpar)) evtlen[i] += 4; // esum and baseline enabled
+//       if(APP16_TstBit(9,mpar)) evtlen[i] += 8; // qsum enabled
+//       if(APP16_TstBit(8,mpar))
+// 	{
+// 	  double tracelen = -1;
+// 	  retval = Pixie16ReadSglChanPar((char*)"TRACE_LENGTH",&tracelen,i,0);
+// 	  if(retval < 0)
+// 	    {
+// 	      ErrorInfo("Detector.cc", "SetEvtl()", "Pixie16ReadSglChanPar/TRACE_LENGTH", retval);
+// 	      return 0;
+// 	    }
+// 	  evtlen[i] += tracelen*50;
+// 	}
+//       std::cout<<"evtlen ch: "<<i<<" len: "<<evtlen[i]<<std::endl; 
+//     }
+//   return 1;
+// }
 
 int Detector::ExitSystem()
 {
   int retval = Pixie16ExitSystem(NumModules);
-  if(retval<0){
-    ErrorInfo("Detector.cc", "ExitSystem()", "Pixie16ExitSystem", retval);
-    return 1;
-  }
+  if(retval<0)
+    {
+      ErrorInfo("Detector.cc", "ExitSystem()", "Pixie16ExitSystem", retval);
+      return 1;
+    }
   return 0;
 }
 
 int Detector::SaveHistogram(char *fileN , int mod)
 {
-  
   int retval ;
-
   retval = Pixie16SaveHistogramToFile(fileN,mod);
-  if(retval <0 ) {
+  if(retval <0 )
+    {
     ErrorInfo("Detector.cc", "SaveHistogram(...)", "Pixie16SaveHistogramToFile", retval);
   }
-
   return 0;
 }
 

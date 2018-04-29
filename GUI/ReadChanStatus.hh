@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 3月  8 14:57:16 2018 (+0800)
-// Last-Updated: 四 3月  8 22:24:14 2018 (+0800)
+// Last-Updated: 日 4月 29 10:50:55 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 5
+//     Update #: 6
 // URL: http://wuhongyi.cn 
 
 #ifndef _READCHANSTATUS_H_
@@ -88,12 +88,14 @@ private:
   TCanvas *canvas1;
   TGTextButton* DrawButton1;  
   TH1I *baselineth1i1[16];
+  TGraph *baselinetgraph1[16];
   TGNumberEntry	*chnum1;//int
   TGNumberEntry	*modnum1;
   int chanNumber1;
   int modNumber1;
   TGComboBox *choosecanvasmode1;
-
+  TGComboBox *choosebaselinedrawmode1;
+  
   double baselines[16][READBASELINELEENGTH];
   double timestamps[16][READBASELINELEENGTH];
 

@@ -51,7 +51,7 @@ public:
   int UpdateSharedMemory();
   void SetRunNumber(int r);
   unsigned int GetFileSize(int n); // in MB
-  bool SetEvtl();
+  // bool SetEvtl();
   //  	int Write2FileLSM(char *name);
   int AcquireADCTrace(unsigned short *trace, unsigned long size, unsigned short module, unsigned short ChanNum);
 
@@ -107,7 +107,7 @@ private:
   unsigned int buff[PRESET_MAX_MODULES][BUFFLENGTH];
   int buffid[PRESET_MAX_MODULES];
   unsigned long FILESIZE[PRESET_MAX_MODULES];
-  unsigned int  *evtlen;// GOTO  in dan't fixed length
+  // unsigned int  *evtlen;// TODO  in dan't fixed length
 
   struct Module_Info ModuleInformation[PRESET_MAX_MODULES];
   
