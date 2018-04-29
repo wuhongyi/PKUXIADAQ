@@ -19,7 +19,7 @@ protected:
   bool Load_Once;
   short int modNumber;
   short int chanNumber;
-  char tmp[10];
+
   TGNumberEntry* chanCopy;
 
   double qlen[8];

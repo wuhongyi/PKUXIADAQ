@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 六 4月 28 21:56:42 2018 (+0800)
+// Last-Updated: 日 4月 29 15:22:07 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 687
+//     Update #: 688
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -972,14 +972,14 @@ void Offline::MakeFold4Panel(TGCompositeFrame *TabPanel)
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 
   // Fit
-  GausFitButton4 = new TGTextButton( parFrame, "Open  Fit", OFFLINEGAUSFIT4);
+  GausFitButton4 = new TGTextButton(parFrame, "Open  Fit", OFFLINEGAUSFIT4);
   GausFitButton4->SetEnabled(0);
   GausFitButton4->Associate(this);
   parFrame->AddFrame(GausFitButton4, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 0, 0));
   
   
   // draw
-  OfflineDrawButton4 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW4);
+  OfflineDrawButton4 = new TGTextButton(parFrame, "&Draw", OFFLINEDRAW4);
   OfflineDrawButton4->SetEnabled(0);
   OfflineDrawButton4->Associate(this);
   parFrame->AddFrame(OfflineDrawButton4, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
@@ -989,7 +989,7 @@ void Offline::MakeFold4Panel(TGCompositeFrame *TabPanel)
   parFrame->AddFrame(offlinechnum4, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
   offlinechnum4->SetButtonToNum(0);
   offlinechnum4->Associate(this);
-  TGLabel *ch = new TGLabel( parFrame, "Ch:"); 
+  TGLabel *ch = new TGLabel(parFrame, "Ch:"); 
   parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
    
   // bin
@@ -1026,8 +1026,6 @@ void Offline::MakeFold4Panel(TGCompositeFrame *TabPanel)
   canvas4 = adjCanvas->GetCanvas();
   adCanvasFrame->AddFrame(adjCanvas, Hint);
   TabPanel->AddFrame(adCanvasFrame, Hint);
-
-  
 }
 
 void Offline::GausFit4()
@@ -2026,52 +2024,42 @@ void Offline::OfflineLoadValues(int mod,int ch)
 {
   double ChanParData = -1;
   int retval; 
-  char text[20];
   
   retval = Pixie16ReadSglChanPar((char*)"TRIGGER_RISETIME", &ChanParData, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/TRIGGER_RISETIME", retval);
-  sprintf(text, "%1.2f", ChanParData);
-  offlinefilters[0]->SetText(text);
+  offlinefilters[0]->SetText(TString::Format("%1.2f", ChanParData).Data());
 
   retval = Pixie16ReadSglChanPar((char*)"TRIGGER_FLATTOP", &ChanParData, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/TRIGGER_FLATTOP", retval);  
-  sprintf(text, "%1.2f", ChanParData);
-  offlinefilters[1]->SetText(text);
+  offlinefilters[1]->SetText(TString::Format("%1.2f", ChanParData).Data());
 
   retval = Pixie16ReadSglChanPar((char*)"ENERGY_RISETIME", &ChanParData, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/ENERGY_RISETIME", retval);
-  sprintf(text, "%1.2f", ChanParData);
-  offlinefilters[2]->SetText(text);
+  offlinefilters[2]->SetText(TString::Format("%1.2f", ChanParData).Data());
 
   retval = Pixie16ReadSglChanPar((char*)"ENERGY_FLATTOP", &ChanParData, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/ENERGY_FLATTOP", retval);  
-  sprintf(text, "%1.2f", ChanParData);
-  offlinefilters[3]->SetText(text);
+  offlinefilters[3]->SetText(TString::Format("%1.2f", ChanParData).Data());
 
   retval = Pixie16ReadSglChanPar((char*)"TAU", &ChanParData, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/TAU", retval);
-  sprintf(text, "%1.2f", ChanParData);
-  offlinefilters[4]->SetText(text);
+  offlinefilters[4]->SetText(TString::Format("%1.2f", ChanParData).Data());
 
   retval = Pixie16ReadSglChanPar((char*)"CFDDelay", &ChanParData, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/CFDDelay", retval);
-  sprintf(text, "%1.2f", ChanParData);
-  offlinefilters[5]->SetText(text);
+  offlinefilters[5]->SetText(TString::Format("%1.2f", ChanParData).Data());
 
   retval = Pixie16ReadSglChanPar((char*)"CFDScale", &ChanParData, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/CFDScale", retval); 
-  sprintf(text, "%1.2f", ChanParData);
-  offlinefilters[6]->SetText(text);
+  offlinefilters[6]->SetText(TString::Format("%1.2f", ChanParData).Data());
 
   retval = Pixie16ReadSglChanPar((char*)"TRIGGER_THRESHOLD", &ChanParData, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/TRIGGER_THRESHOLD", retval);
-  sprintf (text, "%d", (int)ChanParData);
-  offlinefilters[7]->SetText(text);
+  offlinefilters[7]->SetText(TString::Format("%d", (int)ChanParData).Data());
 
   retval = Pixie16ReadSglChanPar((char*)"CFDThresh", &ChanParData, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/CFDThresh", retval);     
-  sprintf(text, "%d", (int)ChanParData);
-  offlinefilters[8]->SetText(text);
+  offlinefilters[8]->SetText(TString::Format("%d", (int)ChanParData).Data());
 
 
   

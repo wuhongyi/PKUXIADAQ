@@ -9,13 +9,12 @@ using namespace std;
 Cfd::Cfd(const TGWindow *p, const TGWindow * main, char *name, int columns, int rows, int NumModules)
   :Table(p,main,columns,rows,name, NumModules)
 {
-  modNumber=0;
-  char n[10];
+  modNumber = 0;
   cl0->SetText("ch #");
-  for(int i = 0;i < rows;i++){
-    sprintf(n,"%2d",i);
-    Labels[i]->SetText(n);
-  }
+  for(int i = 0; i < rows; i++)
+    {
+      Labels[i]->SetText(TString::Format("%2d",i).Data());
+    }
   CLabel[0]->SetText("CFD Delay[us]");
   CLabel[0]->SetAlignment(kTextCenterX);
   CLabel[1]->SetText("CFD Frac[0-7]");
@@ -55,11 +54,13 @@ Cfd::Cfd(const TGWindow *p, const TGWindow * main, char *name, int columns, int 
   Load_Once = true;
 }
 
-Cfd::~Cfd(){
-  cout<<"Cfd is deleted!"<<endl;
+Cfd::~Cfd()
+{
+  std::cout<<"Cfd is deleted!"<<std::endl;
 }
 
-Bool_t Cfd::ProcessMessage(Long_t msg,Long_t parm1, Long_t parm2){
+Bool_t Cfd::ProcessMessage(Long_t msg,Long_t parm1, Long_t parm2)
+{
 
   switch (GET_MSG(msg))
     {
@@ -122,7 +123,7 @@ Bool_t Cfd::ProcessMessage(Long_t msg,Long_t parm1, Long_t parm2){
 	      if (Load_Once)
 		change_values(modNumber);
 	      else
-		std::cout << "please load once first !\n";
+		std::cout << "please load once first !"<<std::endl;
 	      break;
 	    case CANCEL:		/// Cancel Button
 	      DeleteWindow();
@@ -136,12 +137,9 @@ Bool_t Cfd::ProcessMessage(Long_t msg,Long_t parm1, Long_t parm2){
 		{
 		  if(i != (chanNumber))
 		    {
-		      sprintf(tmp,"%1.3f",tdelay);
-		      NumEntry[1][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",cfrac);
-		      NumEntry[2][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",thresh);
-		      NumEntry[3][i]->SetText(tmp);
+		      NumEntry[1][i]->SetText(TString::Format("%1.3f",tdelay).Data());
+		      NumEntry[2][i]->SetText(TString::Format("%1.3f",cfrac).Data());
+		      NumEntry[3][i]->SetText(TString::Format("%1.3f",thresh).Data());
 		    }
 		}      
 	      break;
@@ -166,25 +164,20 @@ int Cfd::load_info(Long_t mod)
 {
   double ChanParData = -1;
   int retval;
-  char text[20];
 
   for (int i = 0; i < 16; i++)
     {
       retval = Pixie16ReadSglChanPar((char*)"CFDDelay", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Cfd.cc", "load_info(...)", "Pixie16ReadSglChanPar/CFDDelay", retval);
-      sprintf(text, "%1.2f", ChanParData);
-      NumEntry[1][i]->SetText(text);
+      NumEntry[1][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"CFDScale", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Cfd.cc", "load_info(...)", "Pixie16ReadSglChanPar/CFDScale", retval);  
-      sprintf(text, "%1.2f", ChanParData);
-      NumEntry[2][i]->SetText(text);
+      NumEntry[2][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"CFDThresh", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Cfd.cc", "load_info(...)", "Pixie16ReadSglChanPar/CFDThresh", retval);     
-      sprintf(text, "%1.2f", ChanParData);
-      NumEntry[3][i]->SetText(text);
-     
+      NumEntry[3][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
     }
   //  std::cout << "loading info\n";
   return 1;

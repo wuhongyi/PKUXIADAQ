@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 4月 23 10:49:38 2018 (+0800)
-// Last-Updated: 一 4月 23 11:22:30 2018 (+0800)
+// Last-Updated: 日 4月 29 13:08:48 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 2
+//     Update #: 3
 // URL: http://wuhongyi.cn 
 
 #include "Decimation.hh"
@@ -18,12 +18,10 @@
 Decimation::Decimation(const TGWindow * p, const TGWindow * main,  char *name, int columns, int rows, int NumModules)
   :Table(p,main,columns,rows,name, NumModules)
 {
-  char n[10];
   cl0->SetText("ch #");
   for(int i  =0;i < rows;i++)
     {
-      sprintf(n,"%2d",i);
-      Labels[i]->SetText(n);
+      Labels[i]->SetText(TString::Format("%2d",i).Data());
     }
   CLabel[0]->SetText("N [0-7]");
   CLabel[0]->SetAlignment(kTextCenterX);
@@ -60,7 +58,6 @@ Decimation::Decimation(const TGWindow * p, const TGWindow * main,  char *name, i
   modNumber = 0;
   chanNumber = 0;
   Load_Once = true;
-
 
   decimation = 0;
 }
@@ -136,7 +133,7 @@ Bool_t Decimation::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		  change_values(modNumber);
 		}
 	      else
-		std::cout << "please load once first !\n";
+		std::cout << "please load once first !"<<std::endl;
 	      break;
 	    case CANCEL:		/// Cancel Button
 	      DeleteWindow();
@@ -148,9 +145,7 @@ Bool_t Decimation::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		{
 		  if(i != (chanNumber))
 		    {
-		      char tmp[10];
-		      sprintf(tmp,"%1.3f",decimation);
-		      NumEntry[1][i]->SetText(tmp);
+		      NumEntry[1][i]->SetText(TString::Format("%1.3f",decimation).Data());
 		    }
 		}   
 	      break;
@@ -190,14 +185,12 @@ int Decimation::load_info(Long_t mod)
 {
   double ChanParData = -1;
   int retval;
-  char text[20];
 
   for (int i = 0; i < 16; i++)
     {
       retval = Pixie16ReadSglChanPar((char*)"INTEGRATOR", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Decimation.cc", "load_info(...)", "Pixie16ReadSglChanPar/INTEGRATOR", retval);
-      sprintf(text, "%d", (int)ChanParData);
-      NumEntry[1][i]->SetText(text);
+      NumEntry[1][i]->SetText(TString::Format("%d", (int)ChanParData).Data());
     }
 
   return 1;
@@ -216,8 +209,6 @@ int Decimation::change_values(Long_t mod)
 
   return 1;
 }
-
-
 
 // 
 // Decimation.cc ends here

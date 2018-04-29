@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 11月 18 19:23:48 2016 (+0800)
-// Last-Updated: 六 11月 19 12:24:20 2016 (+0800)
+// Last-Updated: 日 4月 29 12:51:51 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 7
+//     Update #: 8
 // URL: http://wuhongyi.cn 
 
 #ifndef _BASE_H_
@@ -38,7 +38,6 @@ protected:
   TGComboBox *lstBox[16], *lstBoxGain[16];
   TGCheckButton *ckGC[16],*ckTC[16],*ckEQS[16],*ckECT[16],*ckERB[16];
 
-  char tmp[10];
 };
 
 #endif /* _BASE_H_ */

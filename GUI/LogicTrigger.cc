@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 一 8月 28 10:59:39 2017 (+0800)
+// Last-Updated: 日 4月 29 13:40:55 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 146
+//     Update #: 148
 // URL: http://wuhongyi.cn 
 
 #include "LogicTrigger.hh"
@@ -21,13 +21,10 @@
 LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, int columns, int rows,int NumModules)
   : Table(p,main,columns,rows,name, NumModules)
 {
-  char tempname[16];
-  char n[10];
   cl0->SetText("ch #");
-  for(int i=0;i<rows;i++)
+  for(int i = 0; i < rows; i++)
     {
-      sprintf(n,"%2d",i);
-      Labels[i]->SetText(n);
+      Labels[i]->SetText(TString::Format("%2d",i).Data());
     }
   CLabel[0]->SetText("ExtTrigStr[us]");
   CLabel[0]->SetAlignment(kTextCenterX);
@@ -208,8 +205,7 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   ChannelOfTestSignals->Resize(100, 20);
   for (int i = 0; i < 16; ++i)
     {
-      sprintf(tempname,"Ch %02d",i);
-      ChannelOfTestSignals->AddEntry(tempname, i+1);
+      ChannelOfTestSignals->AddEntry(TString::Format("Ch %02d",i).Data(), i+1);
     }
   ChannelOfTestSignals->Select(1);
 
@@ -218,8 +214,7 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   TestSignals->Resize(100, 20);
   for (int i = 0; i < 16; ++i)
     {
-      sprintf(tempname,"TestSig %02d",i);
-      TestSignals->AddEntry(tempname, i+1);
+      TestSignals->AddEntry(TString::Format("TestSig %02d",i).Data(), i+1);
     }
   TestSignals->Select(1);
   
@@ -301,10 +296,9 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   GroupTri0_2->Resize(100, 20);
   for (int i = 0; i < 16; ++i)
     {
-      sprintf(tempname,"Ch %02d",i);
-      GroupTri0_0->AddEntry(tempname, i+1);
-      GroupTri0_1->AddEntry(tempname, i+1);
-      GroupTri0_2->AddEntry(tempname, i+1);
+      GroupTri0_0->AddEntry(TString::Format("Ch %02d",i).Data(), i+1);
+      GroupTri0_1->AddEntry(TString::Format("Ch %02d",i).Data(), i+1);
+      GroupTri0_2->AddEntry(TString::Format("Ch %02d",i).Data(), i+1);
     }
   GroupTri0_0->Select(1);
   GroupTri0_1->Select(1);
@@ -350,10 +344,9 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   GroupTri1_2->Resize(100, 20);
   for (int i = 0; i < 16; ++i)
     {
-      sprintf(tempname,"Ch %02d",i);
-      GroupTri1_0->AddEntry(tempname, i+1);
-      GroupTri1_1->AddEntry(tempname, i+1);
-      GroupTri1_2->AddEntry(tempname, i+1);
+      GroupTri1_0->AddEntry(TString::Format("Ch %02d",i).Data(), i+1);
+      GroupTri1_1->AddEntry(TString::Format("Ch %02d",i).Data(), i+1);
+      GroupTri1_2->AddEntry(TString::Format("Ch %02d",i).Data(), i+1);
     }
   GroupTri1_0->Select(1);
   GroupTri1_1->Select(1);
@@ -400,10 +393,9 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   GroupTri2_2->Resize(100, 20);
   for (int i = 0; i < 16; ++i)
     {
-      sprintf(tempname,"Ch %02d",i);
-      GroupTri2_0->AddEntry(tempname, i+1);
-      GroupTri2_1->AddEntry(tempname, i+1);
-      GroupTri2_2->AddEntry(tempname, i+1);
+      GroupTri2_0->AddEntry(TString::Format("Ch %02d",i).Data(), i+1);
+      GroupTri2_1->AddEntry(TString::Format("Ch %02d",i).Data(), i+1);
+      GroupTri2_2->AddEntry(TString::Format("Ch %02d",i).Data(), i+1);
     }
   GroupTri2_0->Select(1);
   GroupTri2_1->Select(1);
@@ -450,10 +442,9 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   GroupTri3_2->Resize(100, 20);
   for (int i = 0; i < 16; ++i)
     {
-      sprintf(tempname,"Ch %02d",i);
-      GroupTri3_0->AddEntry(tempname, i+1);
-      GroupTri3_1->AddEntry(tempname, i+1);
-      GroupTri3_2->AddEntry(tempname, i+1);
+      GroupTri3_0->AddEntry(TString::Format("Ch %02d",i).Data(), i+1);
+      GroupTri3_1->AddEntry(TString::Format("Ch %02d",i).Data(), i+1);
+      GroupTri3_2->AddEntry(TString::Format("Ch %02d",i).Data(), i+1);
     }
   GroupTri3_0->Select(1);
   GroupTri3_1->Select(1);
@@ -530,8 +521,7 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   InternalFastTrigger->Resize(100, 20);
   for (int i = 0; i < 16; ++i)
     {
-      sprintf(tempname,"Ch %02d",i);
-      InternalFastTrigger->AddEntry(tempname, i+1);
+      InternalFastTrigger->AddEntry(TString::Format("Ch %02d",i).Data(), i+1);
     }
   InternalFastTrigger->Select(1);
 
@@ -605,8 +595,7 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   InternalValidationTrigger->Resize(100, 20);
   for (int i = 0; i < 16; ++i)
     {
-      sprintf(tempname,"Ch %02d",i);
-      InternalValidationTrigger->AddEntry(tempname, i+1);
+      InternalValidationTrigger->AddEntry(TString::Format("Ch %02d",i).Data(), i+1);
     }
   InternalValidationTrigger->Select(1);
   
@@ -640,8 +629,7 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   ChannelTrigger->Resize(100, 20);
   for (int i = 0; i < 16; ++i)
     {
-      sprintf(tempname,"Ch %02d",i);
-      ChannelTrigger->AddEntry(tempname, i+1);
+      ChannelTrigger->AddEntry(TString::Format("Ch %02d",i).Data(), i+1);
     }
   ChannelTrigger->Select(1);
 
@@ -669,11 +657,10 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
     
-  chanNumber = 0;
-
   MapSubwindows();
   Resize();			// resize to default size
-	
+
+  chanNumber = 0;
   modNumber = 0;
   Load_Once = true;
 
@@ -682,7 +669,6 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   ftrigoutdelay = 0;
   vetostretch = 0;
   chantrigstretch = 0;
-
 }
 
 LogicTrigger::~LogicTrigger()
@@ -756,7 +742,7 @@ Bool_t LogicTrigger::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		  change_values(modNumber);
 		}
 	      else
-		std::cout << "please load once first !\n";
+		std::cout << "please load once first !"<<std::endl;
 	      break;
 	    case CANCEL:		/// Cancel Button
 	      DeleteWindow();
@@ -780,42 +766,26 @@ Bool_t LogicTrigger::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      SelCoinMulti = NumEntry[MULTIPLICITYOFFSET+8][chanNumber]->GetNumber();
 	      SelChValidTrig = NumEntry[MULTIPLICITYOFFSET+9][chanNumber]->GetNumber();
 	      
-	      for(int i=0;i<16;i++)
+	      for(int i = 0; i < 16; i++)
 		{
-		  if(i != (chanNumber))
+		  if(i != chanNumber)
 		    {
-		      char tmp[10];
-		      sprintf(tmp,"%1.3f",exttrigstretch);
-		      NumEntry[1][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",externdelaylen);
-		      NumEntry[2][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",ftrigoutdelay);
-		      NumEntry[3][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",vetostretch);
-		      NumEntry[4][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",chantrigstretch);
-		      NumEntry[5][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",fasttrigbacklen);
-		      NumEntry[6][i]->SetText(tmp);
+		      NumEntry[1][i]->SetText(TString::Format("%1.3f",exttrigstretch).Data());
+		      NumEntry[2][i]->SetText(TString::Format("%1.3f",externdelaylen).Data());
+		      NumEntry[3][i]->SetText(TString::Format("%1.3f",ftrigoutdelay).Data());
+		      NumEntry[4][i]->SetText(TString::Format("%1.3f",vetostretch).Data());
+		      NumEntry[5][i]->SetText(TString::Format("%1.3f",chantrigstretch).Data());
+		      NumEntry[6][i]->SetText(TString::Format("%1.3f",fasttrigbacklen).Data());
 		      
-	      	      sprintf(tmp,"%04X",MultiLeft);
-	      	      NumEntry[MULTIPLICITYOFFSET+1][i]->SetText(tmp);
-	      	      sprintf(tmp,"%04X",MultiItself);
-	      	      NumEntry[MULTIPLICITYOFFSET+2][i]->SetText(tmp);
-		      sprintf(tmp,"%04X",MultiRight);
-	      	      NumEntry[MULTIPLICITYOFFSET+3][i]->SetText(tmp);
-		      sprintf(tmp,"%d",Multi1st);
-	      	      NumEntry[MULTIPLICITYOFFSET+4][i]->SetText(tmp);
-		      sprintf(tmp,"%d",Multi2nd);
-	      	      NumEntry[MULTIPLICITYOFFSET+5][i]->SetText(tmp);
-		      sprintf(tmp,"%d",Multi3rd);
-	      	      NumEntry[MULTIPLICITYOFFSET+6][i]->SetText(tmp);
-		      sprintf(tmp,"%d",MultiThreshold);
-	      	      NumEntry[MULTIPLICITYOFFSET+7][i]->SetText(tmp);
-		      sprintf(tmp,"%d",SelCoinMulti);
-	      	      NumEntry[MULTIPLICITYOFFSET+8][i]->SetText(tmp);
-		      sprintf(tmp,"%d",SelChValidTrig);
-	      	      NumEntry[MULTIPLICITYOFFSET+9][i]->SetText(tmp);
+	      	      NumEntry[MULTIPLICITYOFFSET+1][i]->SetText(TString::Format("%04X",MultiLeft).Data());
+	      	      NumEntry[MULTIPLICITYOFFSET+2][i]->SetText(TString::Format("%04X",MultiItself).Data());
+	      	      NumEntry[MULTIPLICITYOFFSET+3][i]->SetText(TString::Format("%04X",MultiRight).Data());
+	      	      NumEntry[MULTIPLICITYOFFSET+4][i]->SetText(TString::Format("%d",Multi1st).Data());
+	      	      NumEntry[MULTIPLICITYOFFSET+5][i]->SetText(TString::Format("%d",Multi2nd).Data());
+	      	      NumEntry[MULTIPLICITYOFFSET+6][i]->SetText(TString::Format("%d",Multi3rd).Data());
+	      	      NumEntry[MULTIPLICITYOFFSET+7][i]->SetText(TString::Format("%d",MultiThreshold).Data());
+	      	      NumEntry[MULTIPLICITYOFFSET+8][i]->SetText(TString::Format("%d",SelCoinMulti).Data());
+	      	      NumEntry[MULTIPLICITYOFFSET+9][i]->SetText(TString::Format("%d",SelChValidTrig).Data());
 		    }
 		}  
 	      break;
@@ -854,40 +824,33 @@ int LogicTrigger::load_info(Long_t mod)
   unsigned int ModParData;
   unsigned int b;
   int retval;
-  char text[20];
   unsigned short gt;
   
   for (int i = 0; i < 16; i++)
     {
       retval = Pixie16ReadSglChanPar((char*)"ExtTrigStretch", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/ExtTrigStretch", retval);
-      sprintf(text, "%1.2f", ChanParData);
-      NumEntry[1][i]->SetText(text);
+      NumEntry[1][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"ExternDelayLen", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/ExternDelayLen", retval);
-      sprintf(text, "%1.2f", ChanParData);
-      NumEntry[2][i]->SetText(text);
+      NumEntry[2][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"FtrigoutDelay", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/FtrigoutDelay", retval);    
-      sprintf(text, "%1.2f", ChanParData);
-      NumEntry[3][i]->SetText(text);
+      NumEntry[3][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"VetoStretch", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/VetoStretch", retval);
-      sprintf(text, "%1.2f", ChanParData);
-      NumEntry[4][i]->SetText(text);
+      NumEntry[4][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"ChanTrigStretch", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/ChanTrigStretch", retval);
-      sprintf(text, "%1.2f", ChanParData);
-      NumEntry[5][i]->SetText(text);
+      NumEntry[5][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"FASTTRIGBACKLEN", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/FASTTRIGBACKLEN", retval);     
-      sprintf(text, "%1.2f", ChanParData);
-      NumEntry[6][i]->SetText(text);
+      NumEntry[6][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
     }
 
   //=============================
@@ -913,15 +876,13 @@ int LogicTrigger::load_info(Long_t mod)
     {
       b += (APP32_TstBit(j, BackplaneEna)<<j);
     }
-  sprintf(text, "%04X", b);
-  fasttriggerbackplaneena[0]->SetText(text);
+  fasttriggerbackplaneena[0]->SetText(TString::Format("%04X", b).Data());
   b = 0;
   for (int j = 0; j < 16; j++)
     {
       b += (APP32_TstBit(j+16, BackplaneEna)<<j);
     }
-  sprintf(text, "%04X", b);
-  fasttriggerbackplaneena[1]->SetText(text);
+  fasttriggerbackplaneena[1]->SetText(TString::Format("%04X", b).Data());
   
   
   for (int i = 0; i < 16; i++)
@@ -934,16 +895,14 @@ int LogicTrigger::load_info(Long_t mod)
 	{
 	  b += (APP32_TstBit(j, ChanParData)<<j);
 	}
-      sprintf(text, "%04X", b);
-      NumEntry[MULTIPLICITYOFFSET+2][i]->SetText(text);
+      NumEntry[MULTIPLICITYOFFSET+2][i]->SetText(TString::Format("%04X", b).Data());
 
       b = 0;
       for (int j = 0; j < 16; j++)
 	{
 	  b += (APP32_TstBit(j+16, ChanParData)<<j);
 	}
-      sprintf(text, "%04X", b);
-      NumEntry[MULTIPLICITYOFFSET+3][i]->SetText(text);
+      NumEntry[MULTIPLICITYOFFSET+3][i]->SetText(TString::Format("%04X", b).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"MultiplicityMaskH", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/MultiplicityMaskH", retval);
@@ -953,32 +912,25 @@ int LogicTrigger::load_info(Long_t mod)
 	{
 	  b += (APP32_TstBit(j, ChanParData)<<j);
 	}
-      sprintf(text, "%04X", b);
-      NumEntry[MULTIPLICITYOFFSET+1][i]->SetText(text);
+      NumEntry[MULTIPLICITYOFFSET+1][i]->SetText(TString::Format("%04X", b).Data());
 
       b = (APP32_TstBit(24, ChanParData)<<2)+(APP32_TstBit(23, ChanParData)<<1)+APP32_TstBit(22, ChanParData);
-      sprintf(text, "%d", b);
-      NumEntry[MULTIPLICITYOFFSET+4][i]->SetText(text);
+      NumEntry[MULTIPLICITYOFFSET+4][i]->SetText(TString::Format("%d", b).Data());
       
       b = (APP32_TstBit(27, ChanParData)<<2)+(APP32_TstBit(26, ChanParData)<<1)+APP32_TstBit(25, ChanParData);
-      sprintf(text, "%d", b);
-      NumEntry[MULTIPLICITYOFFSET+5][i]->SetText(text);
+      NumEntry[MULTIPLICITYOFFSET+5][i]->SetText(TString::Format("%d", b).Data());
 
       b = (APP32_TstBit(30, ChanParData)<<2)+(APP32_TstBit(29, ChanParData)<<1)+APP32_TstBit(28, ChanParData);
-      sprintf(text, "%d", b);
-      NumEntry[MULTIPLICITYOFFSET+6][i]->SetText(text);      
+      NumEntry[MULTIPLICITYOFFSET+6][i]->SetText(TString::Format("%d", b).Data());      
 
       b = (APP32_TstBit(21, ChanParData)<<4)+(APP32_TstBit(20, ChanParData)<<3)+(APP32_TstBit(19, ChanParData)<<2)+(APP32_TstBit(18, ChanParData)<<1)+APP32_TstBit(17, ChanParData);
-      sprintf(text, "%d", b);
-      NumEntry[MULTIPLICITYOFFSET+7][i]->SetText(text);  
+      NumEntry[MULTIPLICITYOFFSET+7][i]->SetText(TString::Format("%d", b).Data());  
 
       b = APP32_TstBit(16, ChanParData);
-      sprintf(text, "%d", b);
-      NumEntry[MULTIPLICITYOFFSET+8][i]->SetText(text);
+      NumEntry[MULTIPLICITYOFFSET+8][i]->SetText(TString::Format("%d", b).Data());
       
       b = APP32_TstBit(31, ChanParData);
-      sprintf(text, "%d", b);
-      NumEntry[MULTIPLICITYOFFSET+9][i]->SetText(text);      
+      NumEntry[MULTIPLICITYOFFSET+9][i]->SetText(TString::Format("%d", b).Data());      
     }
 
   //=============================

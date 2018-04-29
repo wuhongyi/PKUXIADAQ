@@ -16,7 +16,6 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
 {
   SetCleanup(kDeepCleanup);
   module_number1 = 0;
-  char name[20];
 
   numModules = NumModules;
 
@@ -93,19 +92,17 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
 
   for (int i = 0; i < 16; i++)
     {
-      sprintf(name, "%d", i);
       Labels[i] = new TGTextEntry(column1, new TGTextBuffer(100), 10000,
 				  Labels[i]->GetDefaultGC()(),
 				  Labels[i]->GetDefaultFontStruct(),
 				  kRaisedFrame | kDoubleBorder,
 				  GetWhitePixel());
-      Labels[i]->SetText(name);
+      Labels[i]->SetText(TString::Format("%d", i).Data());
       Labels[i]->Resize(35, 20);
       Labels[i]->SetEnabled(kFALSE);
       Labels[i]->SetFrameDrawn(kTRUE);
 
-      column1->AddFrame (Labels[i],
-			 new TGLayoutHints(kLHintsCenterX, 0, 3, 0, 0));
+      column1->AddFrame(Labels[i], new TGLayoutHints(kLHintsCenterX, 0, 3, 0, 0));
     }
   
   // enable all channel
@@ -187,9 +184,9 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
   getckbuttonaddress();
 }
 
-Csra::~Csra ()
+Csra::~Csra()
 {
-  cout<<"Csra is deleted!"<<endl;
+  std::cout<<"Csra is deleted!"<<std::endl;
 }
 
 int Csra::make_columns(TGVerticalFrame * column, TGCheckButton * ckBtn_g[17],
@@ -293,7 +290,7 @@ Bool_t Csra::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      if (Load_Once)
 		change_values(module_number1);
 	      else
-		std::cout << "please load once first !\n";
+		std::cout << "please load once first !"<<std::endl;
 	      break;
 	    case 4002:		/// Cancel Button
 	      DeleteWindow();

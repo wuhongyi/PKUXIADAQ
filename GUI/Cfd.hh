@@ -20,7 +20,6 @@ protected:
 
   short int modNumber;
   short int chanNumber;
-  char tmp[10];
   TGNumberEntry* chanCopy;
 };
 

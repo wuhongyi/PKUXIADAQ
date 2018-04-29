@@ -7,12 +7,10 @@
 TriggerFilter::TriggerFilter(const TGWindow * p, const TGWindow * main, char *name,int columns,int rows, int NumModules)
   :Table(p,main,columns,rows,name, NumModules)
 {
-  char n[10];
   cl0->SetText("ch #");
-  for(int i=0;i<rows;i++)
+  for(int i = 0; i < rows; i++)
     {
-      sprintf(n,"%2d",i);
-      Labels[i]->SetText(n);
+      Labels[i]->SetText(TString::Format("%2d",i).Data());
     }
   CLabel[0]->SetText("TPeaking[us]");
   CLabel[0]->SetAlignment(kTextCenterX);
@@ -20,11 +18,7 @@ TriggerFilter::TriggerFilter(const TGWindow * p, const TGWindow * main, char *na
   CLabel[1]->SetAlignment(kTextCenterX);
   CLabel[2]->SetText("Thresh. [ADC u]");
   CLabel[2]->SetAlignment(kTextCenterX);
-  // for(int i=0;i<16;i++)
-  //   {
-  //     NumEntry[1][i]->SetEnabled(0);
-  //     NumEntry[2][i]->SetEnabled(0);
-  //   }
+
   
   modNumber = 0;
   Load_Once = false;
@@ -131,7 +125,7 @@ Bool_t TriggerFilter::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      if (Load_Once)
 		change_values(modNumber);
 	      else
-		std::cout << "please load once first !\n";
+		std::cout << "please load once first !"<<std::endl;
 	      break;
 	    case CANCEL:	/// Cancel Button
 	      DeleteWindow();
@@ -140,16 +134,13 @@ Bool_t TriggerFilter::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      tpeak = NumEntry[1][chanNumber]->GetNumber();
 	      tgap = NumEntry[2][chanNumber]->GetNumber();
 	      thre = NumEntry[3][chanNumber]->GetNumber();
-	      for(int i = 0;i < 16;i++)
+	      for(int i = 0; i < 16; i++)
 		{
 		  if(i != (chanNumber))
 		    {
-		      sprintf(tmp,"%1.3f",tpeak);
-		      NumEntry[1][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",tgap);
-		      NumEntry[2][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",thre);
-		      NumEntry[3][i]->SetText(tmp);
+		      NumEntry[1][i]->SetText(TString::Format("%1.3f",tpeak).Data());
+		      NumEntry[2][i]->SetText(TString::Format("%1.3f",tgap).Data());
+		      NumEntry[3][i]->SetText(TString::Format("%1.3f",thre).Data());
 		    }
 		}  
 	      //		    
@@ -173,24 +164,20 @@ int TriggerFilter::load_info(Long_t mod)
 {
   double ChanParData = -1;
   int retval;
-  char text[20];
 
   for (int i = 0; i < 16; i++)
     {
       retval = Pixie16ReadSglChanPar((char*)"TRIGGER_RISETIME", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("TriggerFilter.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRIGGER_RISETIME", retval);
-      sprintf(text, "%1.2f", ChanParData);
-      NumEntry[1][i]->SetText(text);
+      NumEntry[1][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"TRIGGER_FLATTOP", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("TriggerFilter.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRIGGER_FLATTOP", retval);
-      sprintf(text, "%1.2f", ChanParData);
-      NumEntry[2][i]->SetText(text);
+      NumEntry[2][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"TRIGGER_THRESHOLD", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("TriggerFilter.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRIGGER_THRESHOLD", retval);
-      sprintf(text, "%d", (int)ChanParData);
-      NumEntry[3][i]->SetText(text);
+      NumEntry[3][i]->SetText(TString::Format("%d", (int)ChanParData).Data());
     }
 
   return 1;

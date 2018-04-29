@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 11月 18 20:32:50 2016 (+0800)
-// Last-Updated: 五 11月 18 21:18:01 2016 (+0800)
+// Last-Updated: 日 4月 29 13:15:17 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 7
+//     Update #: 8
 // URL: http://wuhongyi.cn 
 
 #include "Energy.hh"
@@ -18,7 +18,6 @@
 Energy::Energy(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, int NumModules)
   : Table(p, main, columns, rows, name, NumModules)
 {
-
   modNumber = 0;
   chanNumber = 0;
   decay = 0;
@@ -27,12 +26,10 @@ Energy::Energy(const TGWindow * p, const TGWindow * main, char *name, int column
   flattop = 0;
   fRange = 0;
   
-  char n[10];
   cl0->SetText("ch #");
   for (int i = 0; i < rows; i++)
     {
-      sprintf (n, "%2d", i);
-      Labels[i]->SetText(n);
+      Labels[i]->SetText(TString::Format("%2d", i).Data());
     }
   CLabel[0]->SetText("TPeaking[us]");
   CLabel[0]->SetAlignment(kTextCenterX);
@@ -96,12 +93,12 @@ Energy::Energy(const TGWindow * p, const TGWindow * main, char *name, int column
   CopyButton->AddFrame(copyB, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
   
-  TGTextButton *findTau = new TGTextButton( CopyButton, "&FindTau",COPYBUTTON + 2000);
+  TGTextButton *findTau = new TGTextButton(CopyButton, "&FindTau",COPYBUTTON + 2000);
   findTau->Associate(this);
   findTau->SetToolTipText("Find the selected module's decay time Tau automatically by module\n You should set an initial value at first");
   CopyButton->AddFrame(findTau,new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
-  TGTextButton *acceptTau = new TGTextButton( CopyButton, "&Accept",COPYBUTTON + 3000);
+  TGTextButton *acceptTau = new TGTextButton(CopyButton, "&Accept",COPYBUTTON + 3000);
   acceptTau->Associate(this);
   acceptTau->SetToolTipText("Accept the decay time find by module");
   CopyButton->AddFrame(acceptTau,new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
@@ -110,7 +107,6 @@ Energy::Energy(const TGWindow * p, const TGWindow * main, char *name, int column
 
   MapSubwindows();
   Resize();// resize to default size
-
 }
 
 
@@ -183,7 +179,7 @@ Bool_t Energy::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		    {
 		      ++fRange;
 		      filterRange->SetIntNumber(fRange);
-		      cout << fRange << " " << modNumber << "\n" << flush;
+		      std::cout << fRange << " " << modNumber << "\n" << flush;
 		      retval = Pixie16WriteSglModPar((char*)"SLOW_FILTER_RANGE",fRange, modNumber);
 		      if(retval < 0) ErrorInfo("Energy.cc", "ProcessMessage(...)", "Pixie16WriteSglModPar/SLOW_FILTER_RANGE", retval);
 		      load_info(modNumber);
@@ -214,7 +210,7 @@ Bool_t Energy::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      if (Load_Once)
 		change_values(modNumber);
 	      else
-		std::cout << "please load once first !\n";
+		std::cout << "please load once first !"<<std::endl;
 	      break;
 	    case CANCEL:	/// Cancel Button
 	      DeleteWindow();
@@ -228,12 +224,9 @@ Bool_t Energy::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		{
 		  if (i != (chanNumber))
 		    {
-		      sprintf (tmp, "%1.3f", risetime);
-		      NumEntry[1][i]->SetText (tmp);
-		      sprintf (tmp, "%1.3f", flattop);
-		      NumEntry[2][i]->SetText (tmp);
-		      sprintf(tmp, "%1.3f", decay);
-		      NumEntry[3][i]->SetText(tmp);
+		      NumEntry[1][i]->SetText(TString::Format("%1.3f", risetime).Data());
+		      NumEntry[2][i]->SetText(TString::Format("%1.3f", flattop).Data());
+		      NumEntry[3][i]->SetText(TString::Format("%1.3f", decay).Data());
 		    }
 		}
 
@@ -244,12 +237,11 @@ Bool_t Energy::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		break;
 	      }
 	    case (COPYBUTTON + 3000):
-	      cout<<"Accept!\n";
+	      std::cout<<"Accept!"<<std::endl;
 	      for (int i = 0; i < 16; i++)
 		{
 		  decay = NumEntry[4][i]->GetNumber();
-		  sprintf(tmp, "%1.3f", decay);
-		  NumEntry[3][i]->SetText(tmp);
+		  NumEntry[3][i]->SetText(TString::Format("%1.3f", decay).Data());
 		}
 	      break;
 	      /////////////////////////////
@@ -272,24 +264,20 @@ int Energy::load_info(Long_t mod)
 {
   double ChanParData = -1;
   int retval;
-  char text[20];
   
   for (int i = 0; i < 16; i++)
     {
       retval = Pixie16ReadSglChanPar((char*)"ENERGY_RISETIME", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Energy.cc", "load_info(...)", "Pixie16ReadSglChanPar/ENERGY_RISETIME", retval);
-      sprintf(text, "%1.2f", ChanParData);
-      NumEntry[1][i]->SetText(text);
+      NumEntry[1][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"ENERGY_FLATTOP", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Energy.cc", "load_info(...)", "Pixie16ReadSglChanPar/ENERGY_FLATTOP", retval);
-      sprintf(text, "%1.2f", ChanParData);
-      NumEntry[2][i]->SetText (text);
+      NumEntry[2][i]->SetText (TString::Format("%1.2f", ChanParData).Data());
       
       retval = Pixie16ReadSglChanPar((char*)"TAU", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Energy.cc", "load_info(...)", "Pixie16ReadSglChanPar/TAU", retval);
-      sprintf(text, "%1.2f", ChanParData);
-      NumEntry[3][i]->SetText(text);
+      NumEntry[3][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
     }
 
   unsigned int Range = 0; 
@@ -329,39 +317,41 @@ void Energy::findtau(short int mod)
 {
   double TauByFPGA[16];
   int retval = Pixie16TauFinder(mod,TauByFPGA);
-  if(retval<0){
-    if(retval < 0) ErrorInfo("Energy.cc", "findtau(...)", "Pixie16TauFinder", retval);
-    switch (retval) {
-    case -1:
-      cout<<"Error ModNum!"<<endl;
-      break;
-    case -2:
-      cout<<"Error ChannleNum!"<<endl;
-      break;
-    case -3:
-      cout<<"Tau Finder TIMED OUT"<<endl;
-      break;
-    case -4:
-      cout<<"Failed to find sufficient number of pulses!"<<endl;
-      cout<<"Pls reboot the module!"<<endl;
-      break;
-    case -5:
-      cout<<"Low input count rate, increase the input count rate pls!"<<endl;
-      break;
-    default:
-      cout<<"ERROR!"<<endl;
-      break;
+  if(retval < 0)
+    {
+      if(retval < 0) ErrorInfo("Energy.cc", "findtau(...)", "Pixie16TauFinder", retval);
+      switch (retval)
+	{
+	case -1:
+	  std::cout<<"Error ModNum!"<<std::endl;
+	  break;
+	case -2:
+	  std::cout<<"Error ChannleNum!"<<std::endl;
+	  break;
+	case -3:
+	  std::cout<<"Tau Finder TIMED OUT"<<std::endl;
+	  break;
+	case -4:
+	  std::cout<<"Failed to find sufficient number of pulses!"<<std::endl;
+	  std::cout<<"Pls reboot the module!"<<std::endl;
+	  break;
+	case -5:
+	  std::cout<<"Low input count rate, increase the input count rate pls!"<<std::endl;
+	  break;
+	default:
+	  std::cout<<"ERROR!"<<std::endl;
+	  break;
+	}
     }
-  }else {
-    for(int i = 0;i < 16;i++){
-      sprintf (tmp, "%1.3f", TauByFPGA[i]);
-      NumEntry[4][i]->SetText(tmp);
+  else
+    {
+      for(int i = 0; i < 16; i++)
+	{
+	  NumEntry[4][i]->SetText(TString::Format("%1.3f", TauByFPGA[i]).Data());
+	}
     }
-  }
 
 }
-
-
 
 
 // 

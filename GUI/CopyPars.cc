@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 3月  8 14:19:00 2018 (+0800)
-// Last-Updated: 五 3月  9 17:32:30 2018 (+0800)
+// Last-Updated: 日 4月 29 13:01:32 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 54
+//     Update #: 55
 // URL: http://wuhongyi.cn 
 
 #include "CopyPars.hh"
@@ -127,7 +127,7 @@ CopyPars::CopyPars(const TGWindow *p, const TGWindow *main,Detector *det)
       copysetgroup->AddFrame(checkbitmask[i],new TGLayoutHints(kLHintsExpandX|kLHintsTop,4,4,3,3));
       fClient->GetColorByName("blue", color);
       checkbitmask[i]->SetTextColor(color);
-      checkbitmask[i]->SetState(kButtonDown);      
+      checkbitmask[i]->SetState(kButtonUp);      
     }
 
 

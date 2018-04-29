@@ -163,7 +163,6 @@ ExpertMod::ExpertMod(const TGWindow * p, const TGWindow * main, char *name,int N
   CenterOnParent();
 
   SetWindowName(name);
-
   MapWindow();
 }
 
@@ -213,7 +212,7 @@ Bool_t ExpertMod::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      if (Load_Once)
 		change_values(modNumber);
 	      else
-		std::cout << "please load once first !\n";
+		std::cout << "please load once first !"<<std::endl;
 	      break;
 	    case CANCEL:	/// Cancel Button
 	      DeleteWindow();
@@ -319,5 +318,4 @@ int ExpertMod::change_values(Long_t mod)
   if(retval < 0) ErrorInfo("ExpertMod.cc", "change_values(...)", "Pixie16ReadSglModPar/MODULE_CSRB", retval);
   
   return retval;
-  
 }

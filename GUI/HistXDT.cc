@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 3月  8 13:33:01 2018 (+0800)
-// Last-Updated: 一 4月 23 11:08:33 2018 (+0800)
+// Last-Updated: 日 4月 29 13:25:45 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 7
+//     Update #: 8
 // URL: http://wuhongyi.cn 
 
 #include "HistXDT.hh"
@@ -18,12 +18,10 @@
 HistXDT::HistXDT(const TGWindow * p, const TGWindow * main,  char *name, int columns, int rows, int NumModules)
   :Table(p,main,columns,rows,name, NumModules)
 {
-  char n[10];
   cl0->SetText("ch #");
-  for(int i  =0;i < rows;i++)
+  for(int i = 0; i < rows; i++)
     {
-      sprintf(n,"%2d",i);
-      Labels[i]->SetText(n);
+      Labels[i]->SetText(TString::Format("%2d",i).Data());
     }
   CLabel[0]->SetText("EMin [ADC u]");
   CLabel[0]->SetAlignment(kTextCenterX);
@@ -145,7 +143,7 @@ Bool_t HistXDT::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		  change_values(modNumber);
 		}
 	      else
-		std::cout << "please load once first !\n";
+		std::cout << "please load once first !"<<std::endl;
 	      break;
 	    case CANCEL:		/// Cancel Button
 	      DeleteWindow();
@@ -155,19 +153,13 @@ Bool_t HistXDT::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      emin = NumEntry[1][chanNumber]->GetNumber();
 	      bin = NumEntry[2][chanNumber]->GetNumber();
 	      decay = NumEntry[3][chanNumber]->GetNumber();
-	      for(int i = 0;i < 16;i++)
+	      for(int i = 0; i < 16; i++)
 		{
-		  if(i != (chanNumber))
+		  if(i != chanNumber)
 		    {
-		      char tmp[10];
-		      sprintf(tmp,"%1.3f",emin);
-		      NumEntry[1][i]->SetText(tmp);
-		  				
-		      sprintf(tmp,"%1.3f",bin);
-		      NumEntry[2][i]->SetText(tmp);
-
-		      sprintf (tmp, "%1.3f",decay);
-		      NumEntry[3][i]->SetText(tmp);
+		      NumEntry[1][i]->SetText(TString::Format("%1.3f",emin).Data());
+		      NumEntry[2][i]->SetText(TString::Format("%1.3f",bin).Data());
+		      NumEntry[3][i]->SetText(TString::Format("%1.3f",decay).Data());
 		    }
 		}   
 	      break;
@@ -207,24 +199,20 @@ int HistXDT::load_info(Long_t mod)
 {
   double ChanParData = -1;
   int retval;
-  char text[20];
 
   for (int i = 0; i < 16; i++)
     {
       retval = Pixie16ReadSglChanPar((char*)"EMIN", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("HistXDT.cc", "load_info(...)", "Pixie16ReadSglChanPar/EMIN", retval);
-      sprintf(text, "%d", (int)ChanParData);
-      NumEntry[1][i]->SetText(text);
+      NumEntry[1][i]->SetText(TString::Format("%d", (int)ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"BINFACTOR", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("HistXDT.cc", "load_info(...)", "Pixie16ReadSglChanPar/BINFACTOR", retval);
-      sprintf(text, "%d", (int)ChanParData);
-      NumEntry[2][i]->SetText(text);
+      NumEntry[2][i]->SetText(TString::Format("%d", (int)ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"XDT", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("HistXDT.cc", "load_info(...)", "Pixie16ReadSglChanPar/XDT", retval);
-      sprintf(text, "%1.2f", ChanParData);
-      NumEntry[3][i]->SetText(text);
+      NumEntry[3][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
     }
   //  std::cout << "loading info for module " << module << std::endl;
 

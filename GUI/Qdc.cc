@@ -10,13 +10,12 @@ using namespace std;
 Qdc::Qdc(const TGWindow *p, const TGWindow *main, char *name, int columns, int rows,int NumModules)
   : Table(p,main,columns,rows,name, NumModules)
 {
-  modNumber=0;
-  char n[10];
+  modNumber = 0;
   cl0->SetText("ch #");
-  for(int i=0;i<rows;i++){
-    sprintf(n,"%2d",i);
-    Labels[i]->SetText(n);
-  }
+  for(int i = 0; i < rows; i++)
+    {
+      Labels[i]->SetText(TString::Format("%2d",i).Data());
+    }
   CLabel[0]->SetText("QDC len0[us]");
   CLabel[0]->SetAlignment(kTextCenterX);
   CLabel[1]->SetText("QDC len1[us]");
@@ -59,7 +58,7 @@ Qdc::Qdc(const TGWindow *p, const TGWindow *main, char *name, int columns, int r
 
   chanNumber = 0;
   MapSubwindows();
-  Resize();			// resize to default size
+  Resize();// resize to default size
 
   Load_Once = true;
 }
@@ -133,7 +132,7 @@ Bool_t Qdc::ProcessMessage(Long_t msg, Long_t parm1,Long_t parm2)
 	      if (Load_Once)
 		change_values(modNumber);
 	      else
-		std::cout << "please load once first !\n";
+		std::cout << "please load once first !"<<std::endl;
 	      break;
 	    case CANCEL:		/// Cancel Button
 	      DeleteWindow();
@@ -141,16 +140,16 @@ Bool_t Qdc::ProcessMessage(Long_t msg, Long_t parm1,Long_t parm2)
 	      //////////////////////////////
 	    case (COPYBUTTON+1000):
 	      memset(qlen,0,sizeof(double)*8);
-	      for(int i = 0;i < 8;i++)
+	      for(int i = 0; i < 8; i++)
 		qlen[i]=NumEntry[i+1][chanNumber]->GetNumber();
-	      for(int i = 0;i  < 16;i++)
+	      for(int i = 0; i  < 16; i++)
 		{
-		  if(i != (chanNumber))
+		  if(i != chanNumber)
 		    {
-		      for(int j = 0;j < 8;j++){
-			sprintf(tmp,"%1.3f",qlen[j]);
-			NumEntry[j+1][i]->SetText(tmp);
-		      }
+		      for(int j = 0; j < 8; j++)
+			{
+			  NumEntry[j+1][i]->SetText(TString::Format("%1.3f",qlen[j]).Data());
+			}
 		    }
 		}  
 		    
@@ -176,19 +175,19 @@ Bool_t Qdc::ProcessMessage(Long_t msg, Long_t parm1,Long_t parm2)
 int Qdc::change_values(Long_t mod)
 {
   int retval;
-  char varN[32];
-  for(int i = 0;i < 16;i++){
-    for(int j = 0;j < 8;j++){
-      qlen[j] = NumEntry[j+1][i]->GetNumber();
-      sprintf(varN,"QDCLen%d",j);
-      retval = Pixie16WriteSglChanPar(varN,qlen[j],mod,i);
-      if(retval<0) {
-	ErrorInfo("Qdc.cc", "change_values(...)", "Pixie16WriteSglChanPar/QDCLen0-7", retval);
-	return retval;
-      }
+  for(int i = 0; i < 16; i++)
+    {
+      for(int j = 0; j < 8; j++)
+	{
+	  qlen[j] = NumEntry[j+1][i]->GetNumber();
+	  retval = Pixie16WriteSglChanPar((char*)TString::Format("QDCLen%d",j).Data(),qlen[j],mod,i);
+	  if(retval<0)
+	    {
+	      ErrorInfo("Qdc.cc", "change_values(...)", "Pixie16WriteSglChanPar/QDCLen0-7", retval);
+	      return retval;
+	    }
+	}
     }
-
-  }
   return 0;
 }
 
@@ -196,17 +195,17 @@ int Qdc::load_info(Long_t mod)
 {
   int retval;
   double ChanParData = -1;
-  char text[20];
-
   char varN[8][10] = {"QDCLen0","QDCLen1","QDCLen2","QDCLen3","QDCLen4","QDCLen5","QDCLen6","QDCLen7"};
-  for(int i = 0;i < 16;i++){
-    for(int j = 0;j < 8;j++){
-      retval = Pixie16ReadSglChanPar(varN[j],&ChanParData,mod,i);
-      if(retval < 0) ErrorInfo("Qdc.cc", "load_info(...)", "Pixie16ReadSglChanPar/QDCLen0-7", retval);
-      sprintf(text,"%1.2f",ChanParData);
-      NumEntry[j+1][i]->SetText(text);
+  
+  for(int i = 0; i < 16; i++)
+    {
+      for(int j = 0; j < 8; j++)
+	{
+	  retval = Pixie16ReadSglChanPar(varN[j],&ChanParData,mod,i);
+	  if(retval < 0) ErrorInfo("Qdc.cc", "load_info(...)", "Pixie16ReadSglChanPar/QDCLen0-7", retval);
+	  NumEntry[j+1][i]->SetText(TString::Format("%1.2f",ChanParData).Data());
+	}
     }
-  }
 
   return 0;
 }

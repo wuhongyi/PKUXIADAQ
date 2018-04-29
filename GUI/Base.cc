@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 11月 18 19:24:01 2016 (+0800)
-// Last-Updated: 六 4月 28 22:13:31 2018 (+0800)
+// Last-Updated: 日 4月 29 12:51:50 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 31
+//     Update #: 32
 // URL: http://wuhongyi.cn 
 
 #include "Base.hh"
@@ -18,12 +18,10 @@
 Base::Base(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, int NumModules)
   : Table(p, main, columns, rows, name,NumModules)
 {
-  char n[10];
   cl0->SetText("ch #");
   for (int i = 0; i < rows; i++)
     {
-      sprintf (n, "%2d", i);
-      Labels[i]->SetText(n);
+      Labels[i]->SetText(TString::Format("%2d", i).Data());
     }
   CLabel[0]->SetText("DCOffset");
   CLabel[0]->SetAlignment(kTextCenterX);
@@ -332,7 +330,7 @@ Bool_t Base::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      if (Load_Once)
 		change_values(modNumber);
 	      else
-		std::cout << "please load once first !\n";
+		std::cout << "please load once first !"<<std::endl;
 	      break;
 	    case CANCEL:	/// Cancel Button
 	      DeleteWindow();
@@ -369,16 +367,11 @@ Bool_t Base::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		      else 
 			ckERB[i]->SetState(kButtonUp);
 		      
-		      sprintf(tmp,"%1.3f",NumEntry[1][chanNumber]->GetNumber());
-		      NumEntry[1][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",NumEntry[2][chanNumber]->GetNumber());
-		      NumEntry[2][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",NumEntry[3][chanNumber]->GetNumber());
-		      NumEntry[3][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",NumEntry[4][chanNumber]->GetNumber());
-		      NumEntry[4][i]->SetText(tmp);
-		      sprintf(tmp,"%1.3f",NumEntry[5][chanNumber]->GetNumber());
-		      NumEntry[5][i]->SetText(tmp);
+		      NumEntry[1][i]->SetText(TString::Format("%1.3f",NumEntry[1][chanNumber]->GetNumber()).Data());
+		      NumEntry[2][i]->SetText(TString::Format("%1.3f",NumEntry[2][chanNumber]->GetNumber()).Data());
+		      NumEntry[3][i]->SetText(TString::Format("%1.3f",NumEntry[3][chanNumber]->GetNumber()).Data());
+		      NumEntry[4][i]->SetText(TString::Format("%1.3f",NumEntry[4][chanNumber]->GetNumber()).Data());
+		      NumEntry[5][i]->SetText(TString::Format("%1.3f",NumEntry[5][chanNumber]->GetNumber()).Data());
 		    }
 		}  
 		    
@@ -442,9 +435,7 @@ Bool_t Base::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 int Base::load_info(Long_t mod)
 {
   double ChanParData = -1;
-
   int retval;
-  char text[20];
   unsigned short gain;
   unsigned short pol;
   unsigned short gt;
@@ -499,28 +490,23 @@ int Base::load_info(Long_t mod)
       retval = Pixie16ReadSglChanPar((char*)"VOFFSET", &ChanParData, mod, i);
       if(retval < 0)
 	ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/VOFFSET", retval);
-      sprintf(text, "%1.3f", ChanParData);
-      NumEntry[1][i]->SetText(text);
+      NumEntry[1][i]->SetText(TString::Format("%1.3f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"BLCUT", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/BLCUT", retval);  
-      sprintf(text, "%d", (int)ChanParData);
-      NumEntry[2][i]->SetText(text);
+      NumEntry[2][i]->SetText(TString::Format("%d", (int)ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"BASELINE_PERCENT", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/BASELINE_PERCENT", retval);  
-      sprintf(text, "%d", (int)ChanParData);
-      NumEntry[3][i]->SetText(text);
+      NumEntry[3][i]->SetText(TString::Format("%d", (int)ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"TRACE_DELAY", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRACE_DELAY", retval);
-      sprintf(text, "%1.3f", ChanParData);
-      NumEntry[4][i]->SetText(text);
+      NumEntry[4][i]->SetText(TString::Format("%1.3f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"TRACE_LENGTH", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Base.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRACE_LENGTH", retval);
-      sprintf (text, "%1.3f", ChanParData);
-      NumEntry[5][i]->SetText(text);      
+      NumEntry[5][i]->SetText(TString::Format("%1.3f", ChanParData).Data());      
     }
   return 1;
 }

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 一 4月 23 12:11:27 2018 (+0800)
+// Last-Updated: 日 4月 29 13:46:04 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 7
+//     Update #: 8
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -47,7 +47,7 @@ MainFrame::MainFrame(const TGWindow * p)
 
 MainFrame::~MainFrame()
 {
-  cout<<"destructor of MainFrame is called!"<<endl;
+  std::cout<<"destructor of MainFrame is called!"<<std::endl;
 }
 
 void MainFrame::CreateMenuBar()
@@ -105,7 +105,6 @@ void MainFrame::CreateMenuBar()
 
   TGCompositeFrame *Tab2 = TabPanel->AddTab("List Mode Run");
   MakeFold2Panel(Tab2);
-
 }
 
 void MainFrame::CloseWindow()
@@ -155,7 +154,7 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      base->load_info(0);
 	      break;
 	    case CFDP:
-	      cfd=new Cfd(fClient->GetRoot(),this,(char*)"Cfd Par.", 4, 16, detector->NumModules);
+	      cfd = new Cfd(fClient->GetRoot(),this,(char*)"Cfd Par.", 4, 16, detector->NumModules);
 	      cfd->load_info(0);
 	      break;
 	    case QDCP:
@@ -274,7 +273,7 @@ void MainFrame::save_setup(char *name)
   retval = Pixie16SaveDSPParametersToFile(name);
   if(retval < 0)
     ErrorInfo("MainFrame.cc", "save_setup(...)", "Pixie16SaveDSPParametersToFile", retval);
-  cout << "saving setup to file: " << name << endl;
+  std::cout << "saving setup to file: " << name << std::endl;
 }
 
 void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel)
@@ -475,16 +474,17 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel)
 
 void MainFrame::SetLSFileName()
 {
-  if(detector == NULL){
-    cout<<"Modules not booted!"<<endl;
-    return ;
-  }
-  const char *path=filepathtext->GetText();
-  const char *filen=filenametext->GetText();
-  runnum=(int)filerunnum->GetIntNumber();
+  if(detector == NULL)
+    {
+      std::cout<<"Modules not booted!"<<std::endl;
+      return ;
+    }
+  const char *path = filepathtext->GetText();
+  const char *filen = filenametext->GetText();
+  runnum = (int)filerunnum->GetIntNumber();
 
   detector->SetRunNumber(runnum);
-  for(int i = 0;i < detector->NumModules;i++)
+  for(int i = 0; i < detector->NumModules; i++)
     {
       sprintf(Filename[i],"%s%s_R%04d_M%02d.bin",path,filen,runnum,i);
       sprintf(Histogramname[i],"%s%s_histogram_R%04d_M%02d.bin",path,filen,runnum,i);
@@ -503,7 +503,7 @@ void MainFrame::SetLSFileName()
     }
   else
     {
-      cout<<"The output file directory does not exist"<<endl;
+      std::cout<<"The output file directory does not exist"<<std::endl;
     }
 }
 
@@ -521,7 +521,7 @@ void MainFrame::StartLSRun()
 
       for(int i = 0;i < detector->NumModules;i++)
 	{
-	  cout<<"open: "<<Filename[i]<<endl;
+	  std::cout<<"open: "<<Filename[i]<<std::endl;
 	  if(!detector->OpenSaveFile(i,Filename[i]))
 	    {
 	      cout<<Filename[i]<<endl;
@@ -530,7 +530,7 @@ void MainFrame::StartLSRun()
 	}
       if(detector->StartLSMRun(0))
 	{
-	  cout<<"CANNOT start the LSM Run!"<<endl;
+	  std::cout<<"CANNOT start the LSM Run!"<<std::endl;
 
 	  SetMenuStatus(true,flagonlinemode);
 
@@ -571,7 +571,7 @@ void MainFrame::StartLSRun()
 
 void MainFrame::LSRunReadData()
 {
-  cout<<"MainFrame:: read loop.."<<endl;
+  std::cout<<"MainFrame:: read loop.."<<std::endl;
   while(fstartdaq)
     {
       detector->ReadDataFromModules(0,0); // during the run
@@ -582,7 +582,7 @@ void MainFrame::LSRunReadData()
 	}
       gSystem->ProcessEvents();
     }
-  cout<<"done!!!!!!"<<endl;
+  std::cout<<"done!!!!!!"<<std::endl;
   int counter = 0;
   while(detector->StopLSMRun())
     {
@@ -597,7 +597,7 @@ void MainFrame::LSRunReadData()
       detector->SaveHistogram(Histogramname[i],i);
     }
   
-  cout<<"finish!"<<endl;
+  std::cout<<"finish!"<<std::endl;
 }
 
 void MainFrame::SetOnlineMode()
@@ -628,13 +628,13 @@ void MainFrame::SetLSonlinedataf()
     {
       fonlinedata = 1;
       detector->SetOnlineF(1);
-      cout<<"DAQ will send online data!"<<endl;
+      std::cout<<"DAQ will send online data!"<<std::endl;
     }
   else
     {
       fonlinedata = 0;
       detector->SetOnlineF(0);
-      cout<<"DAQ wont send online data!"<<endl;
+      std::cout<<"DAQ wont send online data!"<<std::endl;
     }
 }
 

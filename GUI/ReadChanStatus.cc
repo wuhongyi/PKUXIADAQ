@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 3月  8 14:57:31 2018 (+0800)
-// Last-Updated: 日 4月 29 11:34:31 2018 (+0800)
+// Last-Updated: 日 4月 29 15:30:47 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 31
+//     Update #: 32
 // URL: http://wuhongyi.cn 
 
 #include "ReadChanStatus.hh"
@@ -376,9 +376,7 @@ void ReadChanStatus::Panel0Draw()
     {
       if(traceth1s0[i] == NULL)
 	{
-	  char th1iname[16];
-	  sprintf(th1iname,"trace_ch%02d",i);
-	  traceth1s0[i] = new TH1S(th1iname,"",8192,0,8192);
+	  traceth1s0[i] = new TH1S(TString::Format("trace_ch%02d",i).Data(),"",8192,0,8192);
 	  traceth1s0[i]->SetTitle(TString::Format("Ch: %d",i).Data());
 	  traceth1s0[i]->GetXaxis()->SetTitle("sample");
 	  traceth1s0[i]->GetXaxis()->SetLabelSize(0.06);
