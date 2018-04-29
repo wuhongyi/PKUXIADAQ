@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 三 4月 25 16:30:14 2018 (+0800)
+// Last-Updated: 日 4月 29 21:34:17 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 138
+//     Update #: 139
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -170,7 +170,7 @@ private:
   TGTextEntry* OfflineCurrentCountText;
   TGNumberEntry	*offlinechnum;//int
   TGCheckButton *offlinedrawoption1[6];//0-wave 1-slow filter 2-fast filter 3-thres 4-cfd 5-cfd thres
-
+  TGCheckButton *offlineonlywaveformevent;
   
   // 0-fastlength 1-fastgap  2-slowlength  3-slowgap  4-preamptau  5-cfddelay  6-cfdscale 7-fast filterthreshold 8-cfd threshold
   TGNumberEntryField *offlinefilters[9];

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 日 4月 29 15:22:07 2018 (+0800)
+// Last-Updated: 日 4月 29 21:42:01 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 688
+//     Update #: 691
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -661,6 +661,11 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   oldofflinefilterrange->SetIntNumber(3);
 
 
+  offlineonlywaveformevent = new TGCheckButton(oldparFrame, "Only Waveform Event");
+  offlineonlywaveformevent->SetOn(kTRUE);
+  oldparFrame->AddFrame(offlineonlywaveformevent, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 0, 3, 0));
+
+  
   
   // ===
   dslider = new TGDoubleHSlider(TabPanel,4, kDoubleScaleBoth,ADJUSTPARSLIDER);
@@ -2166,7 +2171,14 @@ void Offline::Panel1Draw()
 	}
       if(OfflineCurrentCount == OfflineModuleEventsCount) OfflineCurrentCount = 0;
 
-      if(offlinechnum->GetIntNumber() == offlinedata->GetEventChannel(OfflineCurrentCount)) break;//ch
+      if(offlineonlywaveformevent->IsOn())
+	{
+	  if(offlinechnum->GetIntNumber() == offlinedata->GetEventChannel(OfflineCurrentCount) && offlinedata->GetEventTraceLength(OfflineCurrentCount) > 0) break;//ch / trace length > 0
+	}
+      else
+	{
+	  if(offlinechnum->GetIntNumber() == offlinedata->GetEventChannel(OfflineCurrentCount)) break;//ch
+	}
     }
 
   // cout<<"N: "<<OfflineCurrentCount<<endl;
@@ -2180,9 +2192,10 @@ void Offline::Panel1Draw()
       gSystem->ProcessEvents();
       fClient->GetColorByName("red", color);
       OfflineCurrentCountText->SetTextColor(color, false);
-      char staok[20];
-      sprintf(staok,"Ch%dNotData",(int)offlinechnum->GetIntNumber());
-      OfflineCurrentCountText->SetText(staok);
+      if(offlineonlywaveformevent->IsOn())
+	OfflineCurrentCountText->SetText(TString::Format("Ch%dNotWaveformData",(int)offlinechnum->GetIntNumber()).Data());
+      else
+	OfflineCurrentCountText->SetText(TString::Format("Ch%dNotData",(int)offlinechnum->GetIntNumber()).Data());
       OfflineReadFileButton->SetEnabled(1);
       return;
     }
