@@ -42,7 +42,7 @@ public:
   int OpenSaveFile(int n,const char *FileN);
   int SavetoFile(int nFile);
   int RunStatus();
-  int ReadDataFromModules(int thres=0,unsigned short endofrun=0);
+  int ReadDataFromModules(int thres = 0,unsigned short endofrun = 0);
   int StopLSMRun();
   int CloseFile();
   int SetOnlineF(bool flag);
@@ -78,6 +78,7 @@ private:
   unsigned short *PXISlotMap;
   unsigned short OfflineMode;
 
+  unsigned int crateid;
   std::vector<unsigned short> *moduleslot;
   std::vector<unsigned short> *modulesamplingrate;
   std::vector<unsigned short> *modulebits;

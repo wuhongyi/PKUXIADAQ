@@ -43,6 +43,8 @@ Detector::~Detector()
 
 bool Detector::ReadConfigFile(char *config)
 {
+  crateid = wuReadData::ReadValue<unsigned int>("CrateID", config);
+  
   moduleslot->clear();
   modulesamplingrate->clear();
   modulebits->clear();
@@ -197,9 +199,20 @@ bool Detector::BootSystem()
 
     }
 
+  for(unsigned short k = 0; k < NumModules; k++)
+    {
+      retval = Pixie16WriteSglModPar((char*)"CrateID", crateid, k);
+      if (retval < 0)
+	{
+	  ErrorInfo("Detector.cc", "BootSystem()", "Pixie16WriteSglModPar/CrateID", retval);
+	  std::cout<<"Pixie16WriteSglModPar/CrateID in module "<<k<<" failed, retval = "<<retval<<std::endl;
+	  return false;
+	}
+    }
+  
   
   // Adjust DC-Offsets
-  for(int k = 0; k < NumModules; k++)
+  for(unsigned short k = 0; k < NumModules; k++)
     {		
       retval = Pixie16AdjustOffsets(k);
       if (retval < 0)
@@ -207,6 +220,17 @@ bool Detector::BootSystem()
 	  ErrorInfo("Detector.cc", "BootSystem()", "Pixie16AdjustOffsets", retval);
 	  std::cout<<"Pixie16AdjustOffsets in module "<<k<<" failed, retval = "<<retval<<std::endl;
 	  return false;
+	}
+
+      unsigned int blcut;
+      for (unsigned short kk = 0; kk < 16; ++kk)
+	{
+	  retval = Pixie16BLcutFinder(k,kk,&blcut);
+	  if(retval < 0)
+	    {
+	      ErrorInfo("Detector.cc", "BootSystem()", "Pixie16BLcutFinder", retval);
+	      return false;
+	    }
 	}
     }
 

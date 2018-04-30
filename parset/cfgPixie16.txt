@@ -1,4 +1,8 @@
 ## -----------------------------------------------------------------------------
+##Designation of the chassis number,choose in 0-15
+
+CrateID 0
+
 ## Register parameters
 
 SettingPars ../parset/test100m250m.set
