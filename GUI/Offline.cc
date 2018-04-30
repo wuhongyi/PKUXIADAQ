@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 日 4月 29 21:42:01 2018 (+0800)
+// Last-Updated: 一 4月 30 22:15:39 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 691
+//     Update #: 738
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -170,39 +170,69 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   energyffsecond8 = NULL;
   histenergyfffirst8 = NULL;
   histenergyffsecond8 = NULL;
+
+  RcdTrace9 = NULL;
+  BufferFFT9 = NULL;
+  graphfft9 = NULL;
+  in9 = NULL;
+  fft1d9 = NULL;
+  OfflineCurrentCount9 = -1;
   
   TGTab *TabPanel = new TGTab(this);
   this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
   TGCompositeFrame *Tab0 = TabPanel->AddTab("InitData");
+  fClient->GetColorByName("red", color);
+  TabPanel->GetTabTab("InitData")->ChangeBackground(color);
   MakeFold0Panel(Tab0);
   
   TGCompositeFrame *Tab1 = TabPanel->AddTab("Adjust Par");
+  fClient->GetColorByName("orange", color);
+  TabPanel->GetTabTab("Adjust Par")->ChangeBackground(color);
   MakeFold1Panel(Tab1);
 
   TGCompositeFrame *Tab2 = TabPanel->AddTab("Wave-16");
+  fClient->GetColorByName("yellow", color);
+  TabPanel->GetTabTab("Wave-16")->ChangeBackground(color);
   MakeFold2Panel(Tab2);
 
   TGCompositeFrame *Tab3 = TabPanel->AddTab("Energy-16");
+  fClient->GetColorByName("green", color);
+  TabPanel->GetTabTab("Energy-16")->ChangeBackground(color);
   MakeFold3Panel(Tab3);
 
   TGCompositeFrame *Tab4 = TabPanel->AddTab("Orig Energy");
+  fClient->GetColorByName("blue", color);
+  TabPanel->GetTabTab("Orig Energy")->ChangeBackground(color);
   MakeFold4Panel(Tab4);
 
   TGCompositeFrame *Tab6 = TabPanel->AddTab("Calc Energy");
+  fClient->GetColorByName("pink", color);
+  TabPanel->GetTabTab("Calc Energy")->ChangeBackground(color);
   MakeFold6Panel(Tab6);
   
   TGCompositeFrame *Tab5 = TabPanel->AddTab("FF/CFD Thre");
+  fClient->GetColorByName("purple", color);
+  TabPanel->GetTabTab("FF/CFD Thre")->ChangeBackground(color);
   MakeFold5Panel(Tab5);
 
   TGCompositeFrame *Tab8 = TabPanel->AddTab("Energy-FF");
+  fClient->GetColorByName("orange", color);
+  TabPanel->GetTabTab("Energy-FF")->ChangeBackground(color);
   MakeFold8Panel(Tab8);
   
   TGCompositeFrame *Tab7 = TabPanel->AddTab("QCD");
+  fClient->GetColorByName("yellow", color);
+  TabPanel->GetTabTab("QCD")->ChangeBackground(color);
   MakeFold7Panel(Tab7);
 
   TGCompositeFrame *Tab9 = TabPanel->AddTab("FFT");
+  fClient->GetColorByName("green", color);
+  TabPanel->GetTabTab("FFT")->ChangeBackground(color);
   MakeFold9Panel(Tab9);
   
+
+
+
   
   SetWindowName("Review & Adjust Par");
   MapSubwindows();
@@ -245,6 +275,11 @@ Offline::~Offline()
   if(histenergyfffirst8 != NULL) delete histenergyfffirst8;
   if(histenergyffsecond8 != NULL) delete histenergyffsecond8;
 
+  if(RcdTrace9 != NULL) delete []RcdTrace9;
+  if(BufferFFT9 != NULL) delete []BufferFFT9;
+  if(graphfft9 != NULL) delete graphfft9;
+  if(fft1d9 != NULL) delete fft1d9;
+  if(in9 != NULL) Free_fftw_complex(in9);
   
   for (int i = 0; i < 16; ++i)
     {
@@ -1501,6 +1536,19 @@ void Offline::MakeFold9Panel(TGCompositeFrame *TabPanel)
   TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
 
 
+  // current count
+  OfflineCurrentCountText9 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  OfflineCurrentCountText9-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
+  fClient->GetColorByName("blue", color);
+  OfflineCurrentCountText9->SetTextColor(color, false);
+  OfflineCurrentCountText9->SetText("");
+  OfflineCurrentCountText9->Resize(200, 12);
+  OfflineCurrentCountText9->SetEnabled(kFALSE);
+  OfflineCurrentCountText9->SetFrameDrawn(kFALSE);
+  parFrame->AddFrame(OfflineCurrentCountText9, new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 6, 0));
+  
+
+  
   // draw
   OfflineDrawButton9 = new TGTextButton(parFrame, "&Draw", OFFLINEDRAW9);
   OfflineDrawButton9->SetEnabled(0);
@@ -1519,10 +1567,13 @@ void Offline::MakeFold9Panel(TGCompositeFrame *TabPanel)
   // Draw Style
   choosedrawstyle9 = new TGComboBox(parFrame);
   parFrame->AddFrame(choosedrawstyle9, new TGLayoutHints(kLHintsRight, 0, 20, 2, 2));
-  choosedrawstyle9->Resize(60, 20);
+  choosedrawstyle9->Resize(100, 20);
   choosedrawstyle9->AddEntry("XIA", 0);
-  choosedrawstyle9->AddEntry("CAEN", 1);
-  choosedrawstyle9->AddEntry("fftw3", 2);
+  choosedrawstyle9->AddEntry("fftw3", 1);
+  choosedrawstyle9->AddEntry("CAEN(HANNING)", 10);
+  choosedrawstyle9->AddEntry("CAEN(HAMMING)", 11);
+  choosedrawstyle9->AddEntry("CAEN(BLACKMAN)", 12);
+  choosedrawstyle9->AddEntry("CAEN(RECT)", 13);
   choosedrawstyle9->Select(0);
   TGLabel *LabelChooseDrawStyle = new TGLabel(parFrame, "Algorithm:"); 
   parFrame->AddFrame(LabelChooseDrawStyle, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 5, 0));
@@ -2162,13 +2213,14 @@ void Offline::Panel1Draw()
   
   for(;;)
     {
-      OfflineCurrentCount++;
       tempN1++;
-      if(tempN1 > OfflineModuleEventsCount)
+      if(tempN1 >= OfflineModuleEventsCount)
 	{
 	  offlinedatastatus = true;
 	  break;
 	}
+
+      OfflineCurrentCount++;
       if(OfflineCurrentCount == OfflineModuleEventsCount) OfflineCurrentCount = 0;
 
       if(offlineonlywaveformevent->IsOn())
@@ -2212,10 +2264,8 @@ void Offline::Panel1Draw()
   
   fClient->GetColorByName("blue", color);
   OfflineCurrentCountText->SetTextColor(color, false);
-  char stacurr[128];
-  sprintf(stacurr,"/ %d",OfflineModuleEventsCount);
-  OfflineCurrentCountText->SetText(stacurr);
-  offlinecurrentcountentry->SetIntNumber(Long_t(OfflineCurrentCount+1));
+  OfflineCurrentCountText->SetText(TString::Format("/ %d",OfflineModuleEventsCount).Data());
+  offlinecurrentcountentry->SetIntNumber(Long_t(OfflineCurrentCount));
 
 
   tracelength = offlinedata->GetEventTraceLength(OfflineCurrentCount);//trace length
@@ -2435,13 +2485,14 @@ void Offline::Panel2Draw()
 
       for(;;)
 	{
-	  OfflineCurrentCount2[i]++;
 	  tempN12[i]++;
-	  if(tempN12[i] > OfflineModuleEventsCount-1)
+	  if(tempN12[i] >= OfflineModuleEventsCount-1)
 	    {
 	      offlinedatastatus2[i] = true;
 	      break;
 	    }
+
+	  OfflineCurrentCount2[i]++;
 	  if(OfflineCurrentCount2[i] >= OfflineModuleEventsCount) OfflineCurrentCount2[i] = 0;
 
 	  if(i == offlinedata->GetEventChannel(OfflineCurrentCount2[i])) break;//ch
@@ -3040,8 +3091,6 @@ void Offline::Panel6Draw()
 	  break;
 	}
 
-
-
       
       for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
 	{
@@ -3403,30 +3452,164 @@ void Offline::Panel9Draw()
   OfflineReadFileButton->SetEnabled(0);
   OfflineDrawButton9->SetEnabled(0);
 
+  if(fft1d9 != NULL)
+    {
+      delete fft1d9;
+      fft1d9 = NULL;
+    }
 
+  if(in9 != NULL)
+    {
+      Free_fftw_complex(in9);
+      in9 = NULL;
+    }
+  
+  if(graphfft9 != NULL)
+    {
+      delete graphfft9;
+      graphfft9 = NULL;
+    }
+  
+  if(RcdTrace9 != NULL)
+    {
+      delete []RcdTrace9;
+      RcdTrace9 = NULL;
+    }
 
+  if(BufferFFT9 != NULL)
+    {
+      delete []BufferFFT9;
+      BufferFFT9 = NULL;
+    }
+
+  bool offlinedatastatus;
+  unsigned int tempN1;
+  tempN1 = -1;
+  offlinedatastatus = false;  
+  for(;;)
+    {
+      tempN1++;
+      if(tempN1 >= OfflineModuleEventsCount)
+	{
+	  offlinedatastatus = true;
+	  break;
+	}
+      
+      OfflineCurrentCount9++;
+      if(OfflineCurrentCount9 >= OfflineModuleEventsCount) OfflineCurrentCount9 = 0;
+
+      if(offlinechnum9->GetIntNumber() == offlinedata->GetEventChannel(OfflineCurrentCount9) && offlinedata->GetEventTraceLength(OfflineCurrentCount9) > 0) break;//ch / trace length > 0
+    }
+
+  if(offlinedatastatus)
+    {
+      canvas9->cd();
+      canvas9->Clear();
+      canvas9->Modified();
+      canvas9->Update();
+      fClient->GetColorByName("red", color);
+      OfflineCurrentCountText9->SetTextColor(color, false);
+      OfflineCurrentCountText9->SetText(TString::Format("Ch%dNotWaveformData",(int)offlinechnum9->GetIntNumber()).Data());
+      OfflineReadFileButton->SetEnabled(1);
+      OfflineDrawButton9->SetEnabled(1);
+      gSystem->ProcessEvents();
+      return;
+    }
+
+  fClient->GetColorByName("blue", color);
+  OfflineCurrentCountText9->SetTextColor(color, false);
+  OfflineCurrentCountText9->SetText(TString::Format("Event: %d / %d",OfflineCurrentCount9,OfflineModuleEventsCount).Data());
+  
+  tracelength9 = offlinedata->GetEventTraceLength(OfflineCurrentCount9);//trace length
+
+  RcdTrace9 = new unsigned short[tracelength9];
+  BufferFFT9 = new double[2*tracelength9];
+  in9 = Malloc_fftw_complex(tracelength9);
+  graphfft9 = new TGraph;
+  fft1d9 = new fftw1d(tracelength9,-1);
+  
+  FILE *ListModeFile = NULL;
+  ListModeFile = fopen(offlinefilename, "rb");
+  if(ListModeFile != NULL)
+    {
+      fseek(ListModeFile, offlinedata->GetEventWaveLocation(OfflineCurrentCount9)*4, SEEK_SET);// Position ListModeFile to the requested trace location
+      fread(RcdTrace9, 2, offlinedata->GetEventTraceLength(OfflineCurrentCount9), ListModeFile);// Read trace
+      fclose(ListModeFile);// Close file
+      ListModeFile = NULL;
+    }
+
+  int power2;
+  unsigned int sizecomplexfft;
+  int SizeFFT;
   switch(choosedrawstyle9->GetSelected())
     {
     case 0://XIA
+      for (int point = 0; point < tracelength9; ++point)
+	{
+	  BufferFFT9[2*point+1] = 0;
+	  BufferFFT9[2*point] = double(RcdTrace9[point]);
+	}
 
+      power2 = 1;
+      while((1<<power2) < tracelength9) power2++;
+      if((1<<power2) == tracelength9) sizecomplexfft = (unsigned int)(1<<power2);
+      else sizecomplexfft = (unsigned int)(1<<(power2-1));
+
+      Pixie16complexFFT(BufferFFT9, sizecomplexfft);
+      
+      for (int point = 0; point < (int)(sizecomplexfft)/2; ++point)
+	{
+	  graphfft9->SetPoint(point,double(point),std::sqrt(BufferFFT9[2*point]*BufferFFT9[2*point]+BufferFFT9[2*point+1]*BufferFFT9[2*point+1]));
+	}
       break;
 
-    case 1://CAEN
-
+    case 1://FFTW3
+      for (int point = 0; point < tracelength9; ++point)
+	{
+	  in9[point][0] = double(RcdTrace9[point]);
+	  in9[point][1] = 0;
+	}
+      
+      fft1d9->ForwardGetAmplitude(in9,BufferFFT9);
+      
+      for (int point = 0; point < tracelength9/2; ++point)
+	{
+	  graphfft9->SetPoint(point,double(point),BufferFFT9[point]);
+	}
       break;
 
-    case 2://FFTW3
 
-      break;
-
-    default:
+    default://CAEN
+      SizeFFT = CAEN_FFT(RcdTrace9,BufferFFT9,tracelength9,choosedrawstyle9->GetSelected()%10);
+      for (int point = 0; point < SizeFFT; ++point)
+	{
+	  graphfft9->SetPoint(point,point,BufferFFT9[point]);
+	}
       break;
     }
 
+  canvas9->cd();
+  canvas9->Clear();
+  canvas9->SetLogy(0);
+
+  graphfft9->SetLineColor(kRed);
+  graphfft9->Draw("AL");
+
+  if(choosedrawstyle9->GetSelected() >= 10)
+    {
+      graphfft9->GetYaxis()->SetTitle("dB");
+    }
+  else
+    {
+      canvas9->SetLogy(1);
+    }
   
-  
+
+  canvas9->Modified();
+  canvas9->Update();
   OfflineDrawButton9->SetEnabled(1);
   OfflineReadFileButton->SetEnabled(1);
+  gSystem->ProcessEvents();
 }
 
 void Offline::Panel0ReadFile()

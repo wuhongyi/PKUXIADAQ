@@ -4,13 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 日 4月 29 21:34:17 2018 (+0800)
+// Last-Updated: 一 4月 30 20:27:20 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 139
+//     Update #: 145
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
 #define _OFFLINE_HH_
+
+#include "pkuFFTW.hh"
 
 #include "TCanvas.h"
 #include "TGApplication.h"
@@ -316,8 +318,15 @@ private:
   TGNumberEntry	*offlinechnum9;//int
   int chanNumber9;//
   TGComboBox *choosedrawstyle9;//0-XIA 1-CAEN 2-fftw3
+  TGTextEntry* OfflineCurrentCountText9;
+  TGraph *graphfft9;
+  unsigned short *RcdTrace9;
+  double *BufferFFT9;
+  unsigned int OfflineCurrentCount9;
+  int tracelength9;
+  fftw_complex *in9;
+  fftw1d *fft1d9;
   
-
   void DrawButtonStatus(bool flag);
   
   // function

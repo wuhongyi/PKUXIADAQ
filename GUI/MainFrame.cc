@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 日 4月 29 13:46:04 2018 (+0800)
+// Last-Updated: 一 4月 30 22:38:42 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 8
+//     Update #: 13
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -53,16 +53,18 @@ MainFrame::~MainFrame()
 void MainFrame::CreateMenuBar()
 {
   TGMenuBar *MenuBar = new TGMenuBar(this, 1, 1, kHorizontalFrame);
-
+  fClient->GetColorByName("pink", color);
+  MenuBar->ChangeBackground(color);
+  
   MenuFile = new TGPopupMenu(fClient->GetRoot());
   MenuFile->AddEntry("E&xit", FILE_EXIT,0,gClient->GetPicture("bld_exit.png"));
   MenuFile->AddSeparator();
   MenuFile->AddEntry("&About", ABOUT,0,gClient->GetPicture("ed_help.png"));
   MenuFile->Associate(this);
   MenuBar->AddPopup("&File", MenuFile, new TGLayoutHints (kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  AddFrame(MenuBar, new TGLayoutHints (kLHintsTop | kLHintsLeft | kLHintsExpandX, 0, 0, 0, 0));
+  AddFrame(MenuBar, new TGLayoutHints(kLHintsTop | kLHintsLeft | kLHintsExpandX, 0, 0, 0, 0));
 
-  MenuSetup = new TGPopupMenu(fClient->GetRoot ());
+  MenuSetup = new TGPopupMenu(fClient->GetRoot());
   MenuSetup->AddEntry("&Base Setup", BASE);
   MenuSetup->AddEntry("&Trigger Filter", TFILTER);
   MenuSetup->AddEntry("&Energy", ENERGY);
