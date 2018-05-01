@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 一 4月 30 22:15:39 2018 (+0800)
+// Last-Updated: 二 5月  1 20:32:28 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 738
+//     Update #: 760
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -95,6 +95,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   chanNumber9 = 0;
   fileRunNum = 0;
 
+  adjustdslider = false;
   offlinedata = NULL;
   OfflineCurrentCount = -1;
   rawdata = NULL;
@@ -177,56 +178,68 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   in9 = NULL;
   fft1d9 = NULL;
   OfflineCurrentCount9 = -1;
+
+  fClient->GetColorByName("pink", color);
   
   TGTab *TabPanel = new TGTab(this);
   this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
   TGCompositeFrame *Tab0 = TabPanel->AddTab("InitData");
-  fClient->GetColorByName("red", color);
+  // fClient->GetColorByName("red", color);
+  fClient->GetColorByName("pink", color);
   TabPanel->GetTabTab("InitData")->ChangeBackground(color);
   MakeFold0Panel(Tab0);
   
   TGCompositeFrame *Tab1 = TabPanel->AddTab("Adjust Par");
-  fClient->GetColorByName("orange", color);
+  // fClient->GetColorByName("orange", color);
+  fClient->GetColorByName("pink", color);
   TabPanel->GetTabTab("Adjust Par")->ChangeBackground(color);
   MakeFold1Panel(Tab1);
 
   TGCompositeFrame *Tab2 = TabPanel->AddTab("Wave-16");
-  fClient->GetColorByName("yellow", color);
+  // fClient->GetColorByName("yellow", color);
+  fClient->GetColorByName("pink", color);
   TabPanel->GetTabTab("Wave-16")->ChangeBackground(color);
   MakeFold2Panel(Tab2);
 
   TGCompositeFrame *Tab3 = TabPanel->AddTab("Energy-16");
-  fClient->GetColorByName("green", color);
+  // fClient->GetColorByName("green", color);
+  fClient->GetColorByName("pink", color);
   TabPanel->GetTabTab("Energy-16")->ChangeBackground(color);
   MakeFold3Panel(Tab3);
 
   TGCompositeFrame *Tab4 = TabPanel->AddTab("Orig Energy");
-  fClient->GetColorByName("blue", color);
+  // fClient->GetColorByName("blue", color);
+  fClient->GetColorByName("pink", color);
   TabPanel->GetTabTab("Orig Energy")->ChangeBackground(color);
   MakeFold4Panel(Tab4);
 
   TGCompositeFrame *Tab6 = TabPanel->AddTab("Calc Energy");
+  // fClient->GetColorByName("pink", color);
   fClient->GetColorByName("pink", color);
   TabPanel->GetTabTab("Calc Energy")->ChangeBackground(color);
   MakeFold6Panel(Tab6);
   
   TGCompositeFrame *Tab5 = TabPanel->AddTab("FF/CFD Thre");
-  fClient->GetColorByName("purple", color);
+  // fClient->GetColorByName("purple", color);
+  fClient->GetColorByName("pink", color);
   TabPanel->GetTabTab("FF/CFD Thre")->ChangeBackground(color);
   MakeFold5Panel(Tab5);
 
   TGCompositeFrame *Tab8 = TabPanel->AddTab("Energy-FF");
-  fClient->GetColorByName("orange", color);
+  // fClient->GetColorByName("violet", color);
+  fClient->GetColorByName("pink", color);
   TabPanel->GetTabTab("Energy-FF")->ChangeBackground(color);
   MakeFold8Panel(Tab8);
   
   TGCompositeFrame *Tab7 = TabPanel->AddTab("QCD");
-  fClient->GetColorByName("yellow", color);
+  // fClient->GetColorByName("teal", color);
+  fClient->GetColorByName("pink", color);
   TabPanel->GetTabTab("QCD")->ChangeBackground(color);
   MakeFold7Panel(Tab7);
 
   TGCompositeFrame *Tab9 = TabPanel->AddTab("FFT");
-  fClient->GetColorByName("green", color);
+  // fClient->GetColorByName("azure", color);
+  fClient->GetColorByName("pink", color);
   TabPanel->GetTabTab("FFT")->ChangeBackground(color);
   MakeFold9Panel(Tab9);
   
@@ -342,24 +355,6 @@ void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
 
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 
-  // MHz
-  choosesamplemhz0 = new TGComboBox(parFrame);
-  parFrame->AddFrame(choosesamplemhz0, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-  choosesamplemhz0->Resize(50, 20);
-  choosesamplemhz0->AddEntry("100", 1);
-  choosesamplemhz0->AddEntry("250", 2);
-  choosesamplemhz0->AddEntry("500", 3);
-  choosesamplemhz0->Select(1);
-  // choosesamplemhz0->Connect("Selected(Int_t id)", "Offline", this, "SelectSamplingFrequency(Int_t id)");
-
-  
-  TGTextEntry *LabelMHz = new TGTextEntry(parFrame,new TGTextBuffer(30));
-  LabelMHz->SetText("MHz");
-  LabelMHz->Resize(30,20);
-  LabelMHz->SetEnabled(kFALSE);
-  // LabelMHz->SetToolTipText("Choose module ");
-  parFrame->AddFrame(LabelMHz, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 20, 0, 0));
-  
 
   // choose header length
   TGLabel *additionalanalysis = new TGLabel(parFrame, "Additional analysis:");
@@ -414,7 +409,7 @@ void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
 
   // read
   OfflineReadFileButton = new TGTextButton( parFrame, "&Read", OFFLINEREAD);
-  OfflineReadFileButton->Associate (this);
+  OfflineReadFileButton->Associate(this);
   parFrame->AddFrame(OfflineReadFileButton, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
 
   // status
@@ -1613,8 +1608,11 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	  switch(parm1)
 	    {
 	    case ADJUSTPARSLIDER:
-	      offlinemultigraph->GetXaxis()->SetRangeUser(dslider->GetMinPosition(),dslider->GetMaxPosition());
-	      // std::cout<<"Slider Pos -  min:"<<dslider->GetMinPosition()<<" max:"<<dslider->GetMaxPosition()<<std::endl;
+	      if(adjustdslider)
+		{
+		  offlinemultigraph->GetXaxis()->SetRangeUser(dslider->GetMinPosition(),dslider->GetMaxPosition());
+		  // std::cout<<"Slider Pos -  min:"<<dslider->GetMinPosition()<<" max:"<<dslider->GetMaxPosition()<<std::endl;
+		}
 	      adjustCanvas->Modified();
 	      adjustCanvas->Update();
 	      break;
@@ -1637,7 +1635,7 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      Panel0ReadFile();
 	      for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)//将默认的ch横坐标范围与sample对应
 		{
-		  if(offlinechnum->GetIntNumber() == offlinedata->GetEventChannel(i))//ch
+		  if(offlinechnum->GetIntNumber() == offlinedata->GetEventChannel(i) && offlinedata->GetEventTraceLength(i) > 0)//ch / trace length > 0
 		    {
 		      dslider->SetRange(0,offlinedata->GetEventTraceLength(i));//trace length
 		      dslider->SetPosition(0,offlinedata->GetEventTraceLength(i));//trace length
@@ -1800,7 +1798,7 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		}
 	      for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)//每次改变channel，横坐标范围都回到全部sample
 		{
-		  if(offlinechnum->GetIntNumber() == offlinedata->GetEventChannel(i))//ch
+		  if(offlinechnum->GetIntNumber() == offlinedata->GetEventChannel(i) && offlinedata->GetEventTraceLength(i) > 0)//ch / trace length > 0
 		    {
 		      dslider->SetRange(0,offlinedata->GetEventTraceLength(i));//trace length
 		      dslider->SetPosition(0,offlinedata->GetEventTraceLength(i));//trace length
@@ -2126,6 +2124,7 @@ void Offline::OfflineLoadValues(int mod,int ch)
 
 void Offline::Panel1Draw()
 {
+  adjustdslider = false;
   OfflineReadFileButton->SetEnabled(0);
   if(rawdata != NULL)
     {
@@ -2208,7 +2207,7 @@ void Offline::Panel1Draw()
     }
   else
     {
-      OfflineCurrentCount = offlinecurrentcountentry->GetIntNumber()-1;
+      OfflineCurrentCount = offlinecurrentcountentry->GetIntNumber();
     }
   
   for(;;)
@@ -2220,12 +2219,16 @@ void Offline::Panel1Draw()
 	  break;
 	}
 
-      OfflineCurrentCount++;
+      // OfflineCurrentCount++;
       if(OfflineCurrentCount == OfflineModuleEventsCount) OfflineCurrentCount = 0;
 
       if(offlineonlywaveformevent->IsOn())
 	{
-	  if(offlinechnum->GetIntNumber() == offlinedata->GetEventChannel(OfflineCurrentCount) && offlinedata->GetEventTraceLength(OfflineCurrentCount) > 0) break;//ch / trace length > 0
+	  if(offlinechnum->GetIntNumber() == offlinedata->GetEventChannel(OfflineCurrentCount) && offlinedata->GetEventTraceLength(OfflineCurrentCount) > 0)//ch / trace length > 0
+	    {
+	      adjustdslider = true;
+	      break;
+	    }
 	}
       else
 	{
@@ -2265,7 +2268,7 @@ void Offline::Panel1Draw()
   fClient->GetColorByName("blue", color);
   OfflineCurrentCountText->SetTextColor(color, false);
   OfflineCurrentCountText->SetText(TString::Format("/ %d",OfflineModuleEventsCount).Data());
-  offlinecurrentcountentry->SetIntNumber(Long_t(OfflineCurrentCount));
+  offlinecurrentcountentry->SetIntNumber(Long_t(OfflineCurrentCount)+1);
 
 
   tracelength = offlinedata->GetEventTraceLength(OfflineCurrentCount);//trace length
@@ -2398,6 +2401,7 @@ void Offline::Panel1Draw()
   adjustCanvas->Modified();
   adjustCanvas->Update();
   OfflineReadFileButton->SetEnabled(1);
+  // OfflineCurrentCount++;
   gSystem->ProcessEvents();
 }
 
@@ -3031,15 +3035,15 @@ void Offline::Panel6Draw()
       
       retval = Pixie16ReadSglChanPar((char*)"ENERGY_RISETIME", &ChanParData, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)offlinechnum6->GetIntNumber());
       if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ReadSglChanPar/ENERGY_RISETIME", retval);
-      switch(choosesamplemhz0->GetSelected())
+      switch(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()))
 	{
-	case 1 ://100
+	case 100 ://100
 	  SlowLen = ROUND(ChanParData*100/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
 	  break;
-	case 2 ://250
+	case 250 ://250
 	  SlowLen = ROUND(ChanParData*125/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
 	  break;	  
-	case 3 ://500
+	case 500 ://500
 	  SlowLen = ROUND(ChanParData*100/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
 	  break;
 	default:
@@ -3049,15 +3053,15 @@ void Offline::Panel6Draw()
       
       retval = Pixie16ReadSglChanPar((char*)"ENERGY_FLATTOP", &ChanParData, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)offlinechnum6->GetIntNumber());
       if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ReadSglChanPar/ENERGY_FLATTOP", retval);
-      switch(choosesamplemhz0->GetSelected())
+      switch(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()))
 	{
-	case 1 ://100
+	case 100 ://100
 	  SlowGap = ROUND(ChanParData*100/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
 	  break;
-	case 2 ://250
+	case 250 ://250
 	  SlowGap = ROUND(ChanParData*125/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
 	  break;	  
-	case 3 ://500
+	case 500 ://500
 	  SlowGap = ROUND(ChanParData*100/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
 	  break;
 	default:
@@ -3269,15 +3273,15 @@ void Offline::Panel8Draw()
 
       retval = Pixie16ReadSglChanPar((char*)"TRIGGER_RISETIME", &ChanParData, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)offlinechnum8->GetIntNumber());
       if(retval < 0) ErrorInfo("Offline.cc", "Panel8Draw()", "Pixie16ReadSglChanPar/TRIGGER_RISETIME", retval);
-      switch(choosesamplemhz0->GetSelected())
+      switch(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()))
 	{
-	case 1 ://100
+	case 100 ://100
 	  FastLen = ROUND(ChanParData*100/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
 	  break;
-	case 2 ://250
+	case 250 ://250
 	  FastLen = ROUND(ChanParData*125/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
 	  break;	  
-	case 3 ://500
+	case 500 ://500
 	  FastLen = ROUND(ChanParData*100/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
 	  break;
 	default:
@@ -3287,15 +3291,15 @@ void Offline::Panel8Draw()
 
       retval = Pixie16ReadSglChanPar((char*)"TRIGGER_FLATTOP", &ChanParData, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)offlinechnum8->GetIntNumber());
       if(retval < 0) ErrorInfo("Offline.cc", "Panel8Draw()", "Pixie16ReadSglChanPar/TRIGGER_FLATTOP", retval);
-      switch(choosesamplemhz0->GetSelected())
+      switch(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()))
 	{
-	case 1 ://100
+	case 100 ://100
 	  FastGap = ROUND(ChanParData*100/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
 	  break;
-	case 2 ://250
+	case 250 ://250
 	  FastGap = ROUND(ChanParData*125/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
 	  break;	  
-	case 3 ://500
+	case 500 ://500
 	  FastGap = ROUND(ChanParData*100/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
 	  break;
 	default:
@@ -3614,21 +3618,26 @@ void Offline::Panel9Draw()
 
 void Offline::Panel0ReadFile()
 {
+  modNumber = offlinemodnum->GetIntNumber();
+  if(modNumber > detector->NumModules-1) modNumber = detector->NumModules-1;
+  if(modNumber < 0) modNumber = 0;
+  offlinemodnum->SetIntNumber(modNumber);
+  
   if(offlinedata != NULL)
     {
       delete offlinedata;
       offlinedata = NULL;
     }
   offlinedata = new OfflineData;
-  switch(choosesamplemhz0->GetSelected())
+  switch(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()))
     {
-    case 1 ://100
+    case 100 ://100
       offlinedata->SetSamplingRate(100);
       break;
-    case 2 ://250
+    case 250 ://250
       offlinedata->SetSamplingRate(250);
       break;	  
-    case 3 ://500
+    case 500 ://500
       offlinedata->SetSamplingRate(500);
       break;
     default:
@@ -3749,6 +3758,34 @@ void Offline::SelectRawEnergySumsBaseline(Bool_t on)
 {
   DrawButtonStatus(false);
   // OfflineFileStatus->SetText("NOT READ");
+  // if(headerrawenergysumsandbaseline->IsOn())
+  //   {
+  //     chooseslowfilterbaseline->SetEnabled(1);
+  //     oldslowfilterparameter[0]->SetEnabled(1);
+  //     oldslowfilterparameter[1]->SetEnabled(1);
+  //     oldslowfilterparameter[2]->SetEnabled(1);
+  //     oldofflinefilterrange->SetEditDisabled(0);
+      
+  //     chooseslowfilterbaselinep6->SetEnabled(1);
+  //     oldslowfilterparameterp6[0]->SetEnabled(1);
+  //     oldslowfilterparameterp6[1]->SetEnabled(1);
+  //     oldslowfilterparameterp6[2]->SetEnabled(1);
+  //     oldofflinefilterrangep6->SetEditDisabled(0);
+  //   }
+  // else
+  //   {
+  //     chooseslowfilterbaseline->SetEnabled(0);
+  //     oldslowfilterparameter[0]->SetEnabled(0);
+  //     oldslowfilterparameter[1]->SetEnabled(0);
+  //     oldslowfilterparameter[2]->SetEnabled(0);
+  //     oldofflinefilterrange->SetEditDisabled(1);
+	
+  //     chooseslowfilterbaselinep6->SetEnabled(0);
+  //     oldslowfilterparameterp6[0]->SetEnabled(0);
+  //     oldslowfilterparameterp6[1]->SetEnabled(0);
+  //     oldslowfilterparameterp6[2]->SetEnabled(0);
+  //     oldofflinefilterrangep6->SetEditDisabled(1);
+  //   }
 }
 
 void Offline::SelectQDCSums(Bool_t on)

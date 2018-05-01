@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 一 4月 30 20:27:20 2018 (+0800)
+// Last-Updated: 二 5月  1 19:17:41 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 145
+//     Update #: 147
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -160,7 +160,6 @@ private:
   OfflineData *offlinedata;
   unsigned int OfflineCurrentCount;
 
-  TGComboBox *choosesamplemhz0;
   TGCheckButton *headerrawenergysumsandbaseline;
   TGCheckButton *headerqdcsums;
   TGCheckButton *headerexternaltimestamp;
@@ -199,6 +198,7 @@ private:
   double *doublecfd;//
   double *doubleslowfilter;//
   unsigned int OfflinefRange;
+  bool adjustdslider;
   
   // Fold2
   TCanvas *canvas2;

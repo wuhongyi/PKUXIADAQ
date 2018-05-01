@@ -60,6 +60,8 @@ public:
   void StatisticsForModule();
   void UpdateEnergySpectrumForModule();
 
+  unsigned short GetModuleADCMSPS(int mod) {return ModuleInformation[mod].Module_ADCMSPS;}
+  
   struct Module_Info
   {
     // Module information
