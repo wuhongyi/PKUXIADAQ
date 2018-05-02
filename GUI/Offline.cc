@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 二 5月  1 20:32:28 2018 (+0800)
+// Last-Updated: 三 5月  2 23:03:23 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 760
+//     Update #: 775
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -2209,31 +2209,80 @@ void Offline::Panel1Draw()
     {
       OfflineCurrentCount = offlinecurrentcountentry->GetIntNumber();
     }
+
+  // ===
+
+  // if(offlineonlywaveformevent->IsOn())
+  //   {
+  //     for(;;)
+  // 	{
+  // 	  tempN1++;
+  // 	  if(tempN1 >= OfflineModuleEventsCount)
+  // 	    {
+  // 	      offlinedatastatus = true;
+  // 	      break;
+  // 	    }
+
+  // 	  // OfflineCurrentCount++;
+  // 	  if(OfflineCurrentCount == OfflineModuleEventsCount) OfflineCurrentCount = 0;
+
+  // 	  if(offlinechnum->GetIntNumber() == offlinedata->GetEventChannel(OfflineCurrentCount) && offlinedata->GetEventTraceLength(OfflineCurrentCount) > 0)//ch / trace length > 0
+  // 	    {
+  // 	      adjustdslider = true;
+  // 	      break;
+  // 	    }
+  // 	}
+  //   }
+  // else
+  //   {
+  //     for(;;)
+  // 	{
+  // 	  tempN1++;
+  // 	  if(tempN1 >= OfflineModuleEventsCount)
+  // 	    {
+  // 	      offlinedatastatus = true;
+  // 	      break;
+  // 	    }
+
+  // 	  // OfflineCurrentCount++;
+  // 	  if(OfflineCurrentCount == OfflineModuleEventsCount) OfflineCurrentCount = 0;
+
+  // 	  if(offlinechnum->GetIntNumber() == offlinedata->GetEventChannel(OfflineCurrentCount)) break;//ch
+
+  // 	}
+
+  //   }
+  
+  // ===
   
   for(;;)
     {
       tempN1++;
       if(tempN1 >= OfflineModuleEventsCount)
-	{
-	  offlinedatastatus = true;
-	  break;
-	}
+  	{
+  	  offlinedatastatus = true;
+  	  break;
+  	}
 
       // OfflineCurrentCount++;
       if(OfflineCurrentCount == OfflineModuleEventsCount) OfflineCurrentCount = 0;
 
       if(offlineonlywaveformevent->IsOn())
-	{
-	  if(offlinechnum->GetIntNumber() == offlinedata->GetEventChannel(OfflineCurrentCount) && offlinedata->GetEventTraceLength(OfflineCurrentCount) > 0)//ch / trace length > 0
+  	{
+  	  if(offlinechnum->GetIntNumber() == offlinedata->GetEventChannel(OfflineCurrentCount) && offlinedata->GetEventTraceLength(OfflineCurrentCount) > 0)//ch / trace length > 0
+  	    {
+  	      adjustdslider = true;
+  	      break;
+  	    }
+	  else
 	    {
-	      adjustdslider = true;
-	      break;
+	      OfflineCurrentCount++;
 	    }
-	}
+  	}
       else
-	{
-	  if(offlinechnum->GetIntNumber() == offlinedata->GetEventChannel(OfflineCurrentCount)) break;//ch
-	}
+  	{
+  	  if(offlinechnum->GetIntNumber() == offlinedata->GetEventChannel(OfflineCurrentCount)) break;//ch
+  	}
     }
 
   // cout<<"N: "<<OfflineCurrentCount<<endl;
@@ -2248,10 +2297,15 @@ void Offline::Panel1Draw()
       fClient->GetColorByName("red", color);
       OfflineCurrentCountText->SetTextColor(color, false);
       if(offlineonlywaveformevent->IsOn())
-	OfflineCurrentCountText->SetText(TString::Format("Ch%dNotWaveformData",(int)offlinechnum->GetIntNumber()).Data());
+	{
+	  OfflineCurrentCountText->SetText(TString::Format("Ch%dNotWaveformData",(int)offlinechnum->GetIntNumber()).Data());
+	}
       else
-	OfflineCurrentCountText->SetText(TString::Format("Ch%dNotData",(int)offlinechnum->GetIntNumber()).Data());
+	{
+	  OfflineCurrentCountText->SetText(TString::Format("Ch%dNotData",(int)offlinechnum->GetIntNumber()).Data());
+	}
       OfflineReadFileButton->SetEnabled(1);
+      // offlinecurrentcountentry->SetIntNumber(Long_t(OfflineCurrentCount)+1);
       return;
     }
 
@@ -3252,7 +3306,7 @@ void Offline::Panel8Draw()
   int inttracelength = -1;
   for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
     {
-      if(offlinechnum8->GetIntNumber() == offlinedata->GetEventChannel(i) && offlinedata->GetEventTraceLength(i))//ch / trace length>0
+      if(offlinechnum8->GetIntNumber() == offlinedata->GetEventChannel(i) && offlinedata->GetEventTraceLength(i) > 0)//ch / trace length>0
 	{
 	  inttracelength = offlinedata->GetEventTraceLength(i);//trace length
 	  break;
@@ -3312,8 +3366,8 @@ void Offline::Panel8Draw()
       unsigned int offset, x, y;
       for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
 	{
-	  if(offlinechnum6->GetIntNumber() == offlinedata->GetEventChannel(i) && offlinedata->GetEventTraceLength(i))//ch / trace length>0
-	    {
+	  if(offlinechnum8->GetIntNumber() == offlinedata->GetEventChannel(i) && offlinedata->GetEventTraceLength(i) > 0)//ch / trace length>0
+	    {	      
 	      ListModeFile = fopen(offlinefilename, "rb");
 	      if(ListModeFile != NULL)
 		{
@@ -3376,7 +3430,7 @@ void Offline::Panel8Draw()
 			    }
 			}
 		    }
-
+		  
 		  if(choosedrawstyle8->GetSelected() == 0)
 		    {
 		      if(fffirst > 0)
