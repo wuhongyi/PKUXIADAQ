@@ -523,6 +523,7 @@ int Detector::StopLSMRun()
       ReadDataFromModules(0);
       counter++;
       if(counter > 10*NumModules) break;
+      sleep(1); // wait 1s then try again  // add 20180504
     }
   if(counter == 10*NumModules)
     {

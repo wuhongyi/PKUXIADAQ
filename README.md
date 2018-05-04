@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 3月 25 20:23:51 2018 (+0800)
-;; Last-Updated: 日 3月 25 22:10:04 2018 (+0800)
+;; Last-Updated: 五 5月  4 16:49:02 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 1
+;;     Update #: 2
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -200,6 +200,16 @@ cd XIADAQ/Decode/
 ./decode xxx
 #xxx 表示 Run Number
 ```
+
+
+----
+
+## 建议操作流程
+
+- 先用放射源
+- 初步调节参数
+- 采集波形
+- 离线调节参数
 
 
 

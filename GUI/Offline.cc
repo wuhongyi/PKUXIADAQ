@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 三 5月  2 23:03:23 2018 (+0800)
+// Last-Updated: 五 5月  4 15:10:36 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 775
+//     Update #: 777
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -2882,8 +2882,25 @@ void Offline::Panel5Draw()
       offlineth2d5_0 = new TH2D("offlineth2d5_0","",inttracelength,0,inttracelength,1000,-100,900);
       offlineth2d5_1 = new TH2D("offlineth2d5_1","",inttracelength,0,inttracelength,1000,-100,900);
 
-      originalcfdth1d5 = new TH1D("originalcfdth1d5","",330,0,33000);//32768
-      calculatecfdth1d5 = new TH1D("calculatecfdth1d5","",330,0,33000);//32768
+      switch(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()))
+	{
+	case 100 ://100
+	  originalcfdth1d5 = new TH1D("originalcfdth1d5","",512,0,32768);//32768
+	  calculatecfdth1d5 = new TH1D("calculatecfdth1d5","",512,0,32768);//32768
+	  break;
+	case 250 ://250
+	  originalcfdth1d5 = new TH1D("originalcfdth1d5","",512,0,16384);//16384
+	  calculatecfdth1d5 = new TH1D("calculatecfdth1d5","",512,0,16384);//16384
+	  break;	  
+	case 500 ://500
+	  originalcfdth1d5 = new TH1D("originalcfdth1d5","",512,0,8192);//8192
+	  calculatecfdth1d5 = new TH1D("calculatecfdth1d5","",512,0,8192);//8192
+	  break;
+	default:
+	  std::cout<<"ERROR: Please call Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
+	  break;
+	}
+
 
       fitoriginalcfdth1d5 = new TF1("fitoriginalcfdth1d5","pol1");
       fitcalculatecfdth1d5 = new TF1("fitcalculatecfdth1d5","pol1");
@@ -2936,7 +2953,22 @@ void Offline::Panel5Draw()
 		    {
 		      if(doublecfd5[j]>= 0 && doublecfd5[j+1] < 0)
 			{
-			  calculatecfdth1d5->Fill(doublecfd5[j]/(doublecfd5[j]-doublecfd5[j+1])*32768);
+			  switch(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()))
+			    {
+			    case 100 ://100
+			      calculatecfdth1d5->Fill(doublecfd5[j]/(doublecfd5[j]-doublecfd5[j+1])*32768);//
+			      break;
+			    case 250 ://250
+			      calculatecfdth1d5->Fill(doublecfd5[j]/(doublecfd5[j]-doublecfd5[j+1])*16384);//
+			      break;	  
+			    case 500 ://500
+			      calculatecfdth1d5->Fill(doublecfd5[j]/(doublecfd5[j]-doublecfd5[j+1])*8192);//
+			      break;
+			    default:
+			      std::cout<<"ERROR: Please call Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
+			      break;
+			    }
+
 			  break;
 			}
 		    }
