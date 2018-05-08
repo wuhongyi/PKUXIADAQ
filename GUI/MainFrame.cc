@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 一 4月 30 22:38:42 2018 (+0800)
+// Last-Updated: 二 5月  8 18:31:34 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 13
+//     Update #: 14
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -467,7 +467,7 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel)
   fClient->GetColorByName("blue", color);
   lastruntextinfor->SetTextColor(color, false);
   lastruntextinfor->SetText(TString::Format("Last run number: %d",int(filerunnum->GetIntNumber())-1).Data());
-  lastruntextinfor->Resize(150, 12);
+  lastruntextinfor->Resize(200, 16);
   lastruntextinfor->SetEnabled(kFALSE);
   lastruntextinfor->SetFrameDrawn(kFALSE);
 

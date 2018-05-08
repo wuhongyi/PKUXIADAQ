@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 五 5月  4 15:10:36 2018 (+0800)
+// Last-Updated: 二 5月  8 19:06:00 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 777
+//     Update #: 778
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -2282,6 +2282,7 @@ void Offline::Panel1Draw()
       else
   	{
   	  if(offlinechnum->GetIntNumber() == offlinedata->GetEventChannel(OfflineCurrentCount)) break;//ch
+	  OfflineCurrentCount++;
   	}
     }
 

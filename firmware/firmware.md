@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 12月 13 09:41:49 2016 (+0800)
-;; Last-Updated: 一 4月 23 09:55:36 2018 (+0800)
+;; Last-Updated: 二 5月  8 18:24:26 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 6
+;;     Update #: 7
 ;; URL: http://wuhongyi.cn -->
 
 # 固件说明
@@ -19,7 +19,7 @@
 
 ----
 
-- pixie16_revfpku_14b100m_release_04222018
+- pixie16_revfpku_14b100m_release_04222018(降频存在bug)
 	- MultiplicityMaskHigh[31]=0和1时候均能输出multiplicity结果
 	- 当计算的能量为负数时，该值设置为0。pileup事件能量保留，不设置为0。
 	- 在记录波形模式下，waveform 的buffer满了的时候，插件不busy，header继续记录，该情况下，输出的数据没有波形。
@@ -28,8 +28,11 @@
 	- 前面板多重性MultiplicityMaskHigh[31]=0和1时候均能输出multiplicity结果。
 	- 当计算的能量为负数时，该值设置为0。pileup事件能量保留，不设置为0。
 
-
-
+- pixie16_revfpku_14b100m_firmware_update_05032018
+	- MultiplicityMaskHigh[31]=0和1时候均能输出multiplicity结果
+	- 当计算的能量为负数时，该值设置为0。pileup事件能量保留，不设置为0。
+	- 在记录波形模式下，waveform 的buffer满了的时候，插件不busy，header继续记录，该情况下，输出的数据没有波形。
+	- 在采集波形时候，增加了降频输出的功能，采取的策略为可选择1，1/2，1/4，1/8，1/16，1/32，1/64，1/128频率的输出，即多少个点保留一个点。保留的点是平均后的值。
 
 
 <!-- firmware.md ends here -->
