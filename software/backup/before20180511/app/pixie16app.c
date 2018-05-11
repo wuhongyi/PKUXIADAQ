@@ -43,8 +43,8 @@
 *
 *		This file contains all the Pixie16 interface routines.
 *
-* $Rev: 39573 $
-* $Id: pixie16app.c 39573 2018-05-11 00:08:48Z htan $
+* $Rev: 39391 $
+* $Id: pixie16app.c 39391 2018-04-22 16:56:22Z htan $
 ******************************************************************************/
 
 #include "pixie16app_globals.h"
@@ -1932,7 +1932,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16AdjustOffsets (
 		Pixie_Print_MSG(ErrMSG);
 		return(-3); // Time Out
 	}
-
+	
 	return(0); // Normal finish
 	
 }
@@ -3777,15 +3777,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16WriteSglChanPar (
 		Pixie_Devices[ModNum].DSP_Parameter_Values[Integrator_Address[ModNum] + ChanNum - DATA_MEMORY_ADDRESS] = integrator;
 		// Download to the selected Pixie module
 		Pixie16IMbufferIO(&integrator, 1, (unsigned int)(Integrator_Address[ModNum] + ChanNum), MOD_WRITE, ModNum);
-
-		// Program FiPPI to apply FastTrigBackLen settings to the FPGA
-		retval = Pixie16ProgramFippi(ModNum);
-		if(retval < 0)
-		{
-			sprintf(ErrMSG, "*ERROR* (Pixie16WriteSglChanPar): ProgramFippi failed in module %d channel %d after downloading Integrator, retval=%d", ModNum, ChanNum, retval);
-			Pixie_Print_MSG(ErrMSG);
-			return(-4);
-		}
+		
 	}
 	else if(strcmp(ChanParName,"FASTTRIGBACKLEN") == 0)
 	{
