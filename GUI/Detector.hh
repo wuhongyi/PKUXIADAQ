@@ -16,6 +16,16 @@
 #include <cstring>
 #include <string>
 
+// #define FIRMWARE100M12BIT
+#define FIRMWARE100M14BIT
+// #define FIRMWARE250M12BIT
+#define FIRMWARE250M14BIT
+// #define FIRMWARE250M16BIT
+// #define FIRMWARE500M12BIT
+// #define FIRMWARE500M14BIT
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 #define BLEN (500*2516) // size of 1 buffer
 #define BUFFLENGTH (500*2516) // 4.8MB Buffer *2 (DBUFF)
 
@@ -84,17 +94,49 @@ private:
   std::vector<unsigned short> *moduleslot;
   std::vector<unsigned short> *modulesamplingrate;
   std::vector<unsigned short> *modulebits;
+
+  std::string File100M12bit_sys;
+  std::string File100M12bit_fip;
+  std::string File100M12bit_dspldr;
+  std::string File100M12bit_dsplst;
+  std::string File100M12bit_dspvar;
   
   std::string File100M14bit_sys;//ComFPGAConfigFile
   std::string File100M14bit_fip;//SPFPGAConfigFile
   std::string File100M14bit_dsplst;//TrigFPGAConfigFile
   std::string File100M14bit_dspldr;//DSPCodeFile
   std::string File100M14bit_dspvar;//DSPVarFile
+
+  std::string File250M12bit_sys;
+  std::string File250M12bit_fip;
+  std::string File250M12bit_dspldr;
+  std::string File250M12bit_dsplst;
+  std::string File250M12bit_dspvar;
+  
   std::string File250M14bit_sys;
   std::string File250M14bit_fip;
   std::string File250M14bit_dspldr;
   std::string File250M14bit_dsplst;
   std::string File250M14bit_dspvar;
+
+  std::string File250M16bit_sys;
+  std::string File250M16bit_fip;
+  std::string File250M16bit_dspldr;
+  std::string File250M16bit_dsplst;
+  std::string File250M16bit_dspvar;
+
+  std::string File500M12bit_sys;
+  std::string File500M12bit_fip;
+  std::string File500M12bit_dspldr;
+  std::string File500M12bit_dsplst;
+  std::string File500M12bit_dspvar;
+  
+  std::string File500M14bit_sys;
+  std::string File500M14bit_fip;
+  std::string File500M14bit_dspldr;
+  std::string File500M14bit_dsplst;
+  std::string File500M14bit_dspvar;
+  
   std::string FileSettingPars;//DSPParFile
   
   char ComFPGAConfigFile[1024];

@@ -51,19 +51,65 @@ bool Detector::ReadConfigFile(char *config)
   wuReadData::ReadVector("ModuleSlot", config, moduleslot);
   wuReadData::ReadVector("ModuleSampingRate", config, modulesamplingrate);
   wuReadData::ReadVector("ModuleBits", config, modulebits);
+
+#ifdef FIRMWARE100M12BIT
+  File100M12bit_sys = wuReadData::ReadValue<std::string>("100M12bit_sys", config);
+  File100M12bit_fip = wuReadData::ReadValue<std::string>("100M12bit_fip", config);
+  File100M12bit_dspldr = wuReadData::ReadValue<std::string>("100M12bit_dspldr", config);
+  File100M12bit_dsplst = wuReadData::ReadValue<std::string>("100M12bit_dsplst", config);
+  File100M12bit_dspvar = wuReadData::ReadValue<std::string>("100M12bit_dspvar", config);   
+#endif
   
+#ifdef FIRMWARE100M14BIT
   File100M14bit_sys = wuReadData::ReadValue<std::string>("100M14bit_sys", config);
   File100M14bit_fip = wuReadData::ReadValue<std::string>("100M14bit_fip", config);
   File100M14bit_dspldr = wuReadData::ReadValue<std::string>("100M14bit_dspldr", config);
   File100M14bit_dsplst = wuReadData::ReadValue<std::string>("100M14bit_dsplst", config);
-  File100M14bit_dspvar = wuReadData::ReadValue<std::string>("100M14bit_dspvar", config);
-    
+  File100M14bit_dspvar = wuReadData::ReadValue<std::string>("100M14bit_dspvar", config);  
+#endif
+  
+
+#ifdef FIRMWARE250M12BIT
+  File250M12bit_sys = wuReadData::ReadValue<std::string>("250M12bit_sys", config);
+  File250M12bit_fip = wuReadData::ReadValue<std::string>("250M12bit_fip", config);
+  File250M12bit_dspldr = wuReadData::ReadValue<std::string>("250M12bit_dspldr", config);
+  File250M12bit_dsplst = wuReadData::ReadValue<std::string>("250M12bit_dsplst", config);
+  File250M12bit_dspvar = wuReadData::ReadValue<std::string>("250M12bit_dspvar", config);   
+#endif
+  
+#ifdef FIRMWARE250M14BIT
   File250M14bit_sys = wuReadData::ReadValue<std::string>("250M14bit_sys", config);
   File250M14bit_fip = wuReadData::ReadValue<std::string>("250M14bit_fip", config);
   File250M14bit_dspldr = wuReadData::ReadValue<std::string>("250M14bit_dspldr", config);
   File250M14bit_dsplst = wuReadData::ReadValue<std::string>("250M14bit_dsplst", config);
-  File250M14bit_dspvar = wuReadData::ReadValue<std::string>("250M14bit_dspvar", config);
-    
+  File250M14bit_dspvar = wuReadData::ReadValue<std::string>("250M14bit_dspvar", config);  
+#endif
+
+#ifdef FIRMWARE250M16BIT
+  File250M16bit_sys = wuReadData::ReadValue<std::string>("250M16bit_sys", config);
+  File250M16bit_fip = wuReadData::ReadValue<std::string>("250M16bit_fip", config);
+  File250M16bit_dspldr = wuReadData::ReadValue<std::string>("250M16bit_dspldr", config);
+  File250M16bit_dsplst = wuReadData::ReadValue<std::string>("250M16bit_dsplst", config);
+  File250M16bit_dspvar = wuReadData::ReadValue<std::string>("250M16bit_dspvar", config);  
+#endif
+  
+#ifdef FIRMWARE500M12BIT
+  File500M12bit_sys = wuReadData::ReadValue<std::string>("500M12bit_sys", config);
+  File500M12bit_fip = wuReadData::ReadValue<std::string>("500M12bit_fip", config);
+  File500M12bit_dspldr = wuReadData::ReadValue<std::string>("500M12bit_dspldr", config);
+  File500M12bit_dsplst = wuReadData::ReadValue<std::string>("500M12bit_dsplst", config);
+  File500M12bit_dspvar = wuReadData::ReadValue<std::string>("500M12bit_dspvar", config);   
+#endif
+  
+#ifdef FIRMWARE500M14BIT
+  File500M14bit_sys = wuReadData::ReadValue<std::string>("500M14bit_sys", config);
+  File500M14bit_fip = wuReadData::ReadValue<std::string>("500M14bit_fip", config);
+  File500M14bit_dspldr = wuReadData::ReadValue<std::string>("500M14bit_dspldr", config);
+  File500M14bit_dsplst = wuReadData::ReadValue<std::string>("500M14bit_dsplst", config);
+  File500M14bit_dspvar = wuReadData::ReadValue<std::string>("500M14bit_dspvar", config);  
+#endif
+
+  
   FileSettingPars = wuReadData::ReadValue<std::string>("SettingPars", config);
   
   // std::cout<<File100M14bit_sys<<std::endl;
@@ -152,21 +198,97 @@ bool Detector::BootSystem()
     {
       // 旧版固件0x7F 启动有问题，11032016新版没问题
       strcpy(DSPParFile, FileSettingPars.c_str());
-      if(ModuleInformation[k].Module_ADCMSPS == 100 && ModuleInformation[k].Module_ADCBits == 14)
+
+      if(ModuleInformation[k].Module_ADCMSPS == 100 && ModuleInformation[k].Module_ADCBits == 12)
+	{
+#ifdef FIRMWARE100M12BIT
+  	  strcpy(ComFPGAConfigFile, File100M12bit_sys.c_str());
+  	  strcpy(SPFPGAConfigFile, File100M12bit_fip.c_str());
+  	  strcpy(TrigFPGAConfigFile, File100M12bit_dsplst.c_str());
+  	  strcpy(DSPCodeFile, File100M12bit_dspldr.c_str());
+  	  strcpy(DSPVarFile, File100M12bit_dspvar.c_str());
+#else
+	  std::cout<<"No 100M-12bit firmware was found!!!"<<std::endl;
+	  return false;
+#endif	  
+	}
+      else if(ModuleInformation[k].Module_ADCMSPS == 100 && ModuleInformation[k].Module_ADCBits == 14)
   	{
+#ifdef FIRMWARE100M14BIT
   	  strcpy(ComFPGAConfigFile, File100M14bit_sys.c_str());
   	  strcpy(SPFPGAConfigFile, File100M14bit_fip.c_str());
   	  strcpy(TrigFPGAConfigFile, File100M14bit_dsplst.c_str());
   	  strcpy(DSPCodeFile, File100M14bit_dspldr.c_str());
   	  strcpy(DSPVarFile, File100M14bit_dspvar.c_str());
+#else
+	  std::cout<<"No 100M-14bit firmware was found!!!"<<std::endl;
+	  return false;
+#endif	  
   	}
+      else if(ModuleInformation[k].Module_ADCMSPS == 250 && ModuleInformation[k].Module_ADCBits == 12)
+	{
+#ifdef FIRMWARE250M12BIT
+  	  strcpy(ComFPGAConfigFile, File250M12bit_sys.c_str());
+  	  strcpy(SPFPGAConfigFile, File250M12bit_fip.c_str());
+  	  strcpy(TrigFPGAConfigFile, File250M12bit_dsplst.c_str());
+  	  strcpy(DSPCodeFile, File250M12bit_dspldr.c_str());
+  	  strcpy(DSPVarFile, File250M12bit_dspvar.c_str());
+#else
+	  std::cout<<"No 250M-14bit firmware was found!!!"<<std::endl;
+	  return false;
+#endif	
+	}
       else if(ModuleInformation[k].Module_ADCMSPS == 250 && ModuleInformation[k].Module_ADCBits == 14)
   	{
+#ifdef FIRMWARE250M14BIT
   	  strcpy(ComFPGAConfigFile, File250M14bit_sys.c_str());
   	  strcpy(SPFPGAConfigFile, File250M14bit_fip.c_str());
   	  strcpy(TrigFPGAConfigFile, File250M14bit_dsplst.c_str());
   	  strcpy(DSPCodeFile, File250M14bit_dspldr.c_str());
   	  strcpy(DSPVarFile, File250M14bit_dspvar.c_str());
+#else
+	  std::cout<<"No 250M-14bit firmware was found!!!"<<std::endl;
+	  return false;
+#endif	
+  	}
+      else if(ModuleInformation[k].Module_ADCMSPS == 250 && ModuleInformation[k].Module_ADCBits == 16)
+  	{
+#ifdef FIRMWARE250M16BIT
+  	  strcpy(ComFPGAConfigFile, File250M16bit_sys.c_str());
+  	  strcpy(SPFPGAConfigFile, File250M16bit_fip.c_str());
+  	  strcpy(TrigFPGAConfigFile, File250M16bit_dsplst.c_str());
+  	  strcpy(DSPCodeFile, File250M16bit_dspldr.c_str());
+  	  strcpy(DSPVarFile, File250M16bit_dspvar.c_str());
+#else
+	  std::cout<<"No 250M-16bit firmware was found!!!"<<std::endl;
+	  return false;
+#endif	
+  	}
+      else if(ModuleInformation[k].Module_ADCMSPS == 500 && ModuleInformation[k].Module_ADCBits == 12)
+	{
+#ifdef FIRMWARE500M12BIT
+  	  strcpy(ComFPGAConfigFile, File500M12bit_sys.c_str());
+  	  strcpy(SPFPGAConfigFile, File500M12bit_fip.c_str());
+  	  strcpy(TrigFPGAConfigFile, File500M12bit_dsplst.c_str());
+  	  strcpy(DSPCodeFile, File500M12bit_dspldr.c_str());
+  	  strcpy(DSPVarFile, File500M12bit_dspvar.c_str());
+#else
+	  std::cout<<"No 500M-12bit firmware was found!!!"<<std::endl;
+	  return false;
+#endif	  
+	}
+      else if(ModuleInformation[k].Module_ADCMSPS == 500 && ModuleInformation[k].Module_ADCBits == 14)
+  	{
+#ifdef FIRMWARE500M14BIT
+  	  strcpy(ComFPGAConfigFile, File500M14bit_sys.c_str());
+  	  strcpy(SPFPGAConfigFile, File500M14bit_fip.c_str());
+  	  strcpy(TrigFPGAConfigFile, File500M14bit_dsplst.c_str());
+  	  strcpy(DSPCodeFile, File500M14bit_dspldr.c_str());
+  	  strcpy(DSPVarFile, File500M14bit_dspvar.c_str());
+#else
+	  std::cout<<"No 500M-14bit firmware was found!!!"<<std::endl;
+	  return false;
+#endif	  
   	}
       else
   	{

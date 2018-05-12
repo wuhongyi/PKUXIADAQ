@@ -4,13 +4,27 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 二 5月  1 19:17:41 2018 (+0800)
+// Last-Updated: 六 5月 12 23:25:48 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 147
+//     Update #: 156
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
 #define _OFFLINE_HH_
+
+const char gOfflineGuides[10][128] =
+  {
+    "InitData: This page. Read the binary file.",
+    "Adjust Par:  Waveform/fast filter/energy filter/cfd/threshould of the select channel.",
+    "Wave-16:  Waveform/fast filter/energy filter/cfd filter/threshould of the 16 channels.",
+    "Energy-16:  The original energy spectrum of the 16 channel..",
+    "Orig Energy:  The original energy spectrum of the select channel.",
+    "Calc Energy:  Recalculation of energy spectrum by waveforms.",
+    "FF/CFD Thre:   Accumulation of a large number of fast filter/cfd filter waveforms to determine the threshold.",
+    "Energy-FF:  The two dimensional relationship between energy and fast filter first/second peak height.",
+    "QDC:  It will be finished soon.",
+    "FFT:  Fourier transformation of a single waveform. User can choose XIA/CAEN/FFTW3 functions."
+  };
 
 #include "pkuFFTW.hh"
 

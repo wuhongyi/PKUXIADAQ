@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 二 5月  8 19:06:00 2018 (+0800)
+// Last-Updated: 六 5月 12 23:18:05 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 778
+//     Update #: 794
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -231,10 +231,10 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   TabPanel->GetTabTab("Energy-FF")->ChangeBackground(color);
   MakeFold8Panel(Tab8);
   
-  TGCompositeFrame *Tab7 = TabPanel->AddTab("QCD");
+  TGCompositeFrame *Tab7 = TabPanel->AddTab("QDC");
   // fClient->GetColorByName("teal", color);
   fClient->GetColorByName("pink", color);
-  TabPanel->GetTabTab("QCD")->ChangeBackground(color);
+  TabPanel->GetTabTab("QDC")->ChangeBackground(color);
   MakeFold7Panel(Tab7);
 
   TGCompositeFrame *Tab9 = TabPanel->AddTab("FFT");
@@ -250,7 +250,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   SetWindowName("Review & Adjust Par");
   MapSubwindows();
   MapWindow();
-  Resize();
+  Resize(1200,1000);
 
   gStyle->SetOptStat(0);//不显示统计框
 }
@@ -354,7 +354,7 @@ void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 20, 1));
 
   // choose header length
   TGLabel *additionalanalysis = new TGLabel(parFrame, "Additional analysis:");
@@ -423,9 +423,32 @@ void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
   OfflineFileStatus->SetFrameDrawn(kFALSE);
   parFrame->AddFrame(OfflineFileStatus, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 6, 0));// 
 
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  TGGroupFrame *informationgroup = new TGGroupFrame(TabPanel,"Information");
+  TabPanel->AddFrame(informationgroup,new TGLayoutHints(kLHintsExpandX | kLHintsTop,0,0,100,0));
+
+  TGHorizontalFrame *guideframe[10];
+  TGTextEntry *guidetextinfor[10];
+
+
 
   
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 20, 1));
+  for (int i = 0; i < 10; ++i)
+    {
+      guideframe[i] = new TGHorizontalFrame(informationgroup);
+      informationgroup->AddFrame(guideframe[i],new TGLayoutHints(kLHintsExpandX | kLHintsTop,0,0,5,0));
+      guidetextinfor[i] = new TGTextEntry(guideframe[i],new TGTextBuffer(30), 10000);
+      guideframe[i]->AddFrame(guidetextinfor[i], new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 0, 0));
+      guidetextinfor[i]-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
+
+      guidetextinfor[i]->SetText(gOfflineGuides[i]);
+      guidetextinfor[i]->Resize(1000, 16);
+      guidetextinfor[i]->SetEnabled(kFALSE);
+      guidetextinfor[i]->SetFrameDrawn(kFALSE);
+    }
+  
+
 }
 
 
