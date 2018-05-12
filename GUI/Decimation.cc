@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 4月 23 10:49:38 2018 (+0800)
-// Last-Updated: 日 4月 29 13:08:48 2018 (+0800)
+// Last-Updated: 六 5月 12 15:22:00 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 3
+//     Update #: 4
 // URL: http://wuhongyi.cn 
 
 #include "Decimation.hh"
@@ -69,6 +69,8 @@ Decimation::~Decimation()
 
 Bool_t Decimation::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 {
+  PreFunction();
+  
   switch (GET_MSG(msg))
     {
     case kC_COMMAND:
@@ -177,6 +179,8 @@ Bool_t Decimation::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
     default:
       break;
     }
+
+  PostFunction();
   return kTRUE;
 }
 

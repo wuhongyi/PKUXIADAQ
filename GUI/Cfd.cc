@@ -61,7 +61,8 @@ Cfd::~Cfd()
 
 Bool_t Cfd::ProcessMessage(Long_t msg,Long_t parm1, Long_t parm2)
 {
-
+  PreFunction();
+  
   switch (GET_MSG(msg))
     {
     case kC_COMMAND:
@@ -157,6 +158,8 @@ Bool_t Cfd::ProcessMessage(Long_t msg,Long_t parm1, Long_t parm2)
     default:
       break;
     }
+
+  PostFunction();
   return kTRUE;
 }
 

@@ -1,4 +1,5 @@
 #include "Table.hh"
+#include "TSystem.h"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 Table::Table(const TGWindow * p, const TGWindow * main, int columns,
@@ -14,7 +15,7 @@ Table::Table(const TGWindow * p, const TGWindow * main, int columns,
   AddFrame(mn_vert, new TGLayoutHints(kLHintsTop | kLHintsLeft, 2, 2, 2, 2));
 	    
   Buttons = new TGHorizontalFrame(mn_vert, 400, 300);
-  	
+  StatusFrame = new TGHorizontalFrame(mn_vert, 400, 300);
   	    
   Column = new TGVerticalFrame *[columns];
   for (int i = 0; i < columns; i++)
@@ -49,7 +50,7 @@ Table::Table(const TGWindow * p, const TGWindow * main, int columns,
       Labels[i]->SetEnabled(kFALSE);
       Labels[i]->SetFrameDrawn(kTRUE);
 
-      Column[0]->AddFrame(Labels[i], new TGLayoutHints (kLHintsCenterX, 0, 3, 0, 0));
+      Column[0]->AddFrame(Labels[i], new TGLayoutHints(kLHintsCenterX, 0, 3, 0, 0));
     }
 
 
@@ -65,7 +66,6 @@ Table::Table(const TGWindow * p, const TGWindow * main, int columns,
 			kRaisedFrame | kDoubleBorder, GetWhitePixel());
 
       CLabel[i]->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
-      //->SetText ("Trace Length[us]");
       CLabel[i]->Resize(90, 20);
       CLabel[i]->SetEnabled(kFALSE);
       CLabel[i]->SetFrameDrawn(kTRUE);
@@ -95,6 +95,21 @@ Table::Table(const TGWindow * p, const TGWindow * main, int columns,
   /////////////////////////////module entry///////////////////////////////
 
   TGHorizontal3DLine *ln1 = new TGHorizontal3DLine(Column[0], 30, 2);
+
+  mn_vert->AddFrame(StatusFrame, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+
+  TGLabel *labelstatus = new TGLabel(StatusFrame, "Status:");
+  StatusFrame->AddFrame(labelstatus, new TGLayoutHints(kLHintsLeft, 5, 10, 3, 0));
+  userstatus = new TGTextEntry(StatusFrame,new TGTextBuffer(30), 10000);
+  StatusFrame->AddFrame(userstatus, new TGLayoutHints(kLHintsLeft, 5, 0, 0, 0));
+  userstatus->SetEnabled(kFALSE);
+  userstatus->SetFrameDrawn(kFALSE);
+  fClient->GetColorByName("green", color);
+  userstatus->SetTextColor(color, false);
+  userstatus->SetText("Ready");
+  userstatus->Resize(100, 16);
+  
+  
   TGLabel *mod = new TGLabel(Buttons, "Module #");
 
   numericMod = new TGNumberEntry(Buttons, 0, 4, MODNUMBER, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) NumModules/*kNELLimitMinMax*/, 0, NumModules);
@@ -118,6 +133,7 @@ Table::Table(const TGWindow * p, const TGWindow * main, int columns,
   Buttons->AddFrame(ApplyButton, new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
   Buttons->AddFrame(CancelButton, new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
 
+  
   ///////////////////////////////////////////////////////////////////
 
   MapSubwindows();
@@ -135,4 +151,19 @@ int Table::LoadInfo(Long_t mod, TGNumberEntryField *** NumEntry, int column, cha
 {
 
   return 1;
+}
+
+void Table::PreFunction()
+{
+  fClient->GetColorByName("red", color);
+  userstatus->SetTextColor(color, false);
+  userstatus->SetText("Waitting...");
+  gSystem->ProcessEvents();
+}
+
+void Table::PostFunction()
+{
+  fClient->GetColorByName("green", color);
+  userstatus->SetTextColor(color, false);
+  userstatus->SetText("Ready");
 }

@@ -4,15 +4,16 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 11月 18 20:32:50 2016 (+0800)
-// Last-Updated: 日 4月 29 13:15:17 2018 (+0800)
+// Last-Updated: 六 5月 12 15:16:42 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 8
+//     Update #: 18
 // URL: http://wuhongyi.cn 
 
 #include "Energy.hh"
 #include "Global.hh"
 
 #include "pixie16app_export.h"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 Energy::Energy(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, int NumModules)
@@ -103,6 +104,7 @@ Energy::Energy(const TGWindow * p, const TGWindow * main, char *name, int column
   acceptTau->SetToolTipText("Accept the decay time find by module");
   CopyButton->AddFrame(acceptTau,new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
+  
   ///////////////////////////////////////////////////////////////////////
 
   MapSubwindows();
@@ -119,6 +121,7 @@ Energy::~Energy()
 
 Bool_t Energy::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 {
+  PreFunction();
   int retval;
   
   switch (GET_MSG(msg))
@@ -201,10 +204,8 @@ Bool_t Energy::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      
 	      ////////////////////////////////////////
 	    case LOAD:
-	      {
-		Load_Once = true;
-		load_info(modNumber);
-	      }
+	      Load_Once = true;
+	      load_info(modNumber);
 	      break;
 	    case APPLY:
 	      if (Load_Once)
@@ -229,13 +230,11 @@ Bool_t Energy::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		      NumEntry[3][i]->SetText(TString::Format("%1.3f", decay).Data());
 		    }
 		}
-
 	      break;
 	    case (COPYBUTTON + 2000):
-	      {
-		findtau(modNumber);
-		break;
-	      }
+	      findtau(modNumber);
+	      break;
+
 	    case (COPYBUTTON + 3000):
 	      std::cout<<"Accept!"<<std::endl;
 	      for (int i = 0; i < 16; i++)
@@ -257,6 +256,7 @@ Bool_t Energy::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
       break;
     }
 
+  PostFunction();
   return kTRUE;
 }
 
@@ -284,7 +284,7 @@ int Energy::load_info(Long_t mod)
   retval = Pixie16ReadSglModPar((char*)"SLOW_FILTER_RANGE", &Range, mod);
   if(retval < 0) ErrorInfo("EnergyFilter.cc", "load_info(...)", "Pixie16ReadSglModPar/SLOW_FILTER_RANGE", retval);
   filterRange->SetIntNumber(Range);
-  
+
   return 1;
 }
 
@@ -350,7 +350,6 @@ void Energy::findtau(short int mod)
 	  NumEntry[4][i]->SetText(TString::Format("%1.3f", TauByFPGA[i]).Data());
 	}
     }
-
 }
 
 

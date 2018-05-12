@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 日 4月 29 13:40:55 2018 (+0800)
+// Last-Updated: 六 5月 12 15:25:17 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 148
+//     Update #: 149
 // URL: http://wuhongyi.cn 
 
 #include "LogicTrigger.hh"
@@ -678,6 +678,8 @@ LogicTrigger::~LogicTrigger()
 
 Bool_t LogicTrigger::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 {
+  PreFunction();
+  
   switch (GET_MSG(msg))
     {
     case kC_COMMAND:
@@ -815,6 +817,8 @@ Bool_t LogicTrigger::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
     default:
       break;
     }
+
+  PostFunction();
   return kTRUE;
 }
 

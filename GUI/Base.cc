@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 11月 18 19:24:01 2016 (+0800)
-// Last-Updated: 一 4月 30 10:04:17 2018 (+0800)
+// Last-Updated: 六 5月 12 15:19:29 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 33
+//     Update #: 34
 // URL: http://wuhongyi.cn 
 
 #include "Base.hh"
@@ -269,6 +269,8 @@ Base::~Base()
 
 Bool_t Base::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 {
+  PreFunction();
+  
   switch (GET_MSG(msg))
     {
     case kC_COMMAND:
@@ -428,6 +430,7 @@ Bool_t Base::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
       break;
     }
 
+  PostFunction();
   return kTRUE;
 }
 

@@ -71,6 +71,8 @@ Qdc::~Qdc()
 
 Bool_t Qdc::ProcessMessage(Long_t msg, Long_t parm1,Long_t parm2)
 {
+  PreFunction();
+  
   switch (GET_MSG(msg))
     {
     case kC_COMMAND:
@@ -169,6 +171,7 @@ Bool_t Qdc::ProcessMessage(Long_t msg, Long_t parm1,Long_t parm2)
       break;
     }
 
+  PostFunction();
   return kTRUE;
 }
 

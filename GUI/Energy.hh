@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 11月 18 20:32:43 2016 (+0800)
-// Last-Updated: 日 4月 29 13:15:18 2018 (+0800)
+// Last-Updated: 六 5月 12 14:35:32 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 6
+//     Update #: 7
 // URL: http://wuhongyi.cn 
 
 #ifndef _ENERGY_H_
@@ -33,7 +33,7 @@ protected:
   TGNumberEntry* filterRange;
   short int chanNumber;
   short int modNumber;
-
+ 
   unsigned int fRange;
   bool Load_Once;
   float decay;

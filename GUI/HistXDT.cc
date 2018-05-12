@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 3月  8 13:33:01 2018 (+0800)
-// Last-Updated: 日 4月 29 13:25:45 2018 (+0800)
+// Last-Updated: 六 5月 12 15:24:06 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 8
+//     Update #: 9
 // URL: http://wuhongyi.cn 
 
 #include "HistXDT.hh"
@@ -79,6 +79,8 @@ HistXDT::~HistXDT()
 
 Bool_t HistXDT::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 {
+  PreFunction();
+  
   switch (GET_MSG(msg))
     {
     case kC_COMMAND:
@@ -191,6 +193,8 @@ Bool_t HistXDT::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
     default:
       break;
     }
+
+  PostFunction();
   return kTRUE;
 }
 

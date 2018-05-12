@@ -4,15 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:17 2018 (+0800)
-// Last-Updated: 三 5月  2 23:05:13 2018 (+0800)
+// Last-Updated: 六 5月 12 15:26:36 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 8
+//     Update #: 9
 // URL: http://wuhongyi.cn 
 
 #ifndef MAINFRAME_HH_
 #define MAINFRAME_HH_
 
-const char gVERSION[] = "Version: 2018.05.02";
+const char gVERSION[] = "Version: 2018.05.12";
 
 const char gAbout[] = "\
 Version: Beta ---> Developer version\n\

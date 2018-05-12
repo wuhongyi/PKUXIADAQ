@@ -21,6 +21,9 @@ public:
 
   virtual int LoadInfo(Long_t mod, TGNumberEntryField *** NumEntry, int column, char *parameter);
 
+  void PreFunction();//waittung status info
+  void PostFunction();
+  
 protected:  
   TGVerticalFrame* mn_vert;
   TGHorizontalFrame* mn;
@@ -32,9 +35,13 @@ protected:
   //column[0] has the labels
   TGTextEntry **Labels; //labels in the left most column
 
+  TGHorizontalFrame *StatusFrame;
+  TGTextEntry *userstatus;
+  Pixel_t color;
+  
   int numModules;
   TGNumberEntry *numericMod;
-  TGHorizontalFrame* Buttons;
+  TGHorizontalFrame *Buttons;
 
   enum Commands
     {
