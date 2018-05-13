@@ -20,11 +20,11 @@ ModuleSlot 5 2 3 4 5 6
 ## Offline Mode
 
 # module number and samping rate
-# The first number mean how many modules, other number means every module samping rate
+# The first number mean how many modules, other number means every module samping rate(100/250/500)
 ModuleSampingRate 5 100 100 100 250 250
 
 # module number and bits
-# The first number mean how many modules, other number means every module bits
+# The first number mean how many modules, other number means every module bits(12/14/16)
 ModuleBits 5 14 14 14 14 14
 
 
@@ -33,18 +33,17 @@ ModuleBits 5 14 14 14 14 14
 
 ## The user does not modify the following parts
 
-# 100M14bit_sys ../firmware/pixie16_revfpku_14b100m_firmware_update_05032018/syspixie16_revfpku_adc100mhz_r36481.bin
-# 100M14bit_fip ../firmware/pixie16_revfpku_14b100m_firmware_update_05032018/fippixie16_revfpku_14b100m_r39511.bin
-# 100M14bit_dsplst ../firmware/pixie16_revfpku_14b100m_dsp_update_05082018/Pixie16DSP_revfpku_14b100m_r39555.lst
-# 100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_dsp_update_05082018/Pixie16DSP_revfpku_14b100m_r39555.ldr
-# 100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_dsp_update_05082018/Pixie16DSP_revfpku_14b100m_r39555.var
-
 100M14bit_sys ../firmware/pixie16_revfpku_14b100m_release_05102018/syspixie16_revfpku_adc100mhz_r36481.bin
 100M14bit_fip ../firmware/pixie16_revfpku_14b100m_release_05102018/fippixie16_revfpku_14b100m_r39574.bin
 100M14bit_dsplst ../firmware/pixie16_revfpku_14b100m_release_05102018/Pixie16DSP_revfpku_14b100m_r39572.lst
 100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_release_05102018/Pixie16DSP_revfpku_14b100m_r39572.ldr
 100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_release_05102018/Pixie16DSP_revfpku_14b100m_r39572.var
 
+# 100M14bit_sys ../firmware/pixie16_revfpku_14b100m_firmware_update_05032018/syspixie16_revfpku_adc100mhz_r36481.bin
+# 100M14bit_fip ../firmware/pixie16_revfpku_14b100m_firmware_update_05032018/fippixie16_revfpku_14b100m_r39511.bin
+# 100M14bit_dsplst ../firmware/pixie16_revfpku_14b100m_dsp_update_05082018/Pixie16DSP_revfpku_14b100m_r39555.lst
+# 100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_dsp_update_05082018/Pixie16DSP_revfpku_14b100m_r39555.ldr
+# 100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_dsp_update_05082018/Pixie16DSP_revfpku_14b100m_r39555.var
 
 250M14bit_sys ../firmware/pixie16_revf_14b250m_firmware_release_04222018/syspixie16_revfpku_adc250mhz_r39398.bin
 250M14bit_fip ../firmware/pixie16_revf_14b250m_firmware_release_04222018/fippixie16_revfgeneral_14b250m_r35425.bin
@@ -54,6 +53,7 @@ ModuleBits 5 14 14 14 14 14
 
 
 ## TODO
+#After adding the following firmware, you need to modify the definition in the file Detector.hh.
 100M12bit_sys ../firmware/
 100M12bit_fip ../firmware/
 100M12bit_dsplst ../firmware/
