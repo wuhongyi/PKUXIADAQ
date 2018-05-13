@@ -4,12 +4,18 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 日 5月 13 16:10:48 2018 (+0800)
+;; Last-Updated: 日 5月 13 16:17:00 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 64
+;;     Update #: 65
 ;; URL: http://wuhongyi.cn -->
 
 # README
+
+程序下载请访问
+https://github.com/wuhongyi/PKUXIADAQ
+
+网页版说明书请访问
+http://wuhongyi.cn/PKUXIADAQ/
 
 **本说明书仅适用于 XIA LLC Pixie16**
 
