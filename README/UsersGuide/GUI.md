@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:55 2018 (+0800)
-;; Last-Updated: 日 5月 13 20:48:42 2018 (+0800)
+;; Last-Updated: 日 5月 13 21:16:05 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 2
+;;     Update #: 4
 ;; URL: http://wuhongyi.cn -->
 
 # GUI
@@ -49,7 +49,9 @@
 
 ----
 
-## File
+## File 下拉栏
+
+本下拉栏内容没有实际用途。
 
 ### About
 
@@ -59,54 +61,84 @@
 
 ----
 
-## UV_Setup
+## UV_Setup 下拉栏
+
+本下拉栏中调节内容为基础内容，任何使用Pixie16获取系统的人员都应该熟悉并掌握其调节技巧。
 
 ### Base Setup
 
+![Base Setup](/img/BaseSetup.png)
+
 ### Trigger Filter
+
+![Trigger Filter](/img/TriggerFilter.png)
 
 ### Energy
 
+![Energy](/img/Energy.png)
+
 ### CFD
+
+![CFD](/img/CFDPars.png)
 
 ### QDC
 
+![QDC](/img/QDCPars.png)
+
 ### Decimation
+
+![Decimation](/img/Decimation.png)
 
 ### Copy Pars
 
+![Copy Pars](/img/CopyPars.png)
+
 ### Save2File
 
+![Save2File](/img/Save2File.png)
 
 ----
 
-## Expert
+## Expert 下拉栏
+
+本下拉栏中调节内容为高阶内容，需要对获取逻辑有一定基础的人学习掌握。
 
 ### Module Variables
 
+![Module Variables](/img/ModuleVariables.png)
 
 ### CSRA
 
+![CSRA](/img/CSRA.png)
 
 ### Logic Set
 
+![Logic Set](/img/LogicTrigger.png)
 
 ----
 
-## Monitor
+## Monitor 下拉栏
+
+本下拉栏中调节内容为监视波形噪声水平、基线分布等。
 
 ### Hist & XDT
 
+![Hist & XDT](/img/HistXDT.png)
 
 ### Trace & Baseline
 
+待补充
+<!-- ![Trace & Baseline](/img/) -->
 
 ----
 
-## Offiline
+## Offiline 下拉栏
+
+本下拉栏中为离线参数优化调节。
 
 ### Adjust Par
 
+![Adjust Par](/img/AdjustPar.png)
 
 ### Simulation
 

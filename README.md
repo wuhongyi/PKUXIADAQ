@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 日 5月 13 20:03:24 2018 (+0800)
+;; Last-Updated: 日 5月 13 20:56:11 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 72
+;;     Update #: 73
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -47,9 +47,10 @@ README.pdf
 - 李晶(lijinger02@126.com)
 
 说明书主要撰写者:
+- 吴鸿毅
 - 王翔
 - 罗迪雯
-- 吴鸿毅
+
 
 
 
