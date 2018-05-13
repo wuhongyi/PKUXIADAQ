@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 3月 25 20:23:51 2018 (+0800)
-;; Last-Updated: 日 5月 13 19:52:11 2018 (+0800)
+;; Last-Updated: 日 5月 13 21:47:07 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 10
+;;     Update #: 11
 ;; URL: http://wuhongyi.cn -->
 
 # 程序安装
@@ -32,7 +32,7 @@
 - 编译事件重构程序(可选)
 
 
-```shell
+```bash
 ##设置环境变量
 
 #在 .bashrc 文件中添加
@@ -47,7 +47,7 @@ mv PKUXIADAQ-master  PKUXIADAQ
 #得到 PKUXIADAQ 目录
 ```
 
-```shell
+```bash
 ##编译Plx9054驱动
 
 #打开新终端
@@ -72,7 +72,7 @@ cd ../../Driver/
 ```
 
 
-```shell
+```bash
 ##编译pixie16
 
 cd ~
@@ -83,7 +83,7 @@ make
 ```
 
 
-```shell
+```bash
 ##编译图形化获取软件
 
 #修改设置参数
@@ -105,7 +105,7 @@ make
 ```
 
 
-```shell
+```bash
 ##编译在线监视程序
 
 cd ~
@@ -119,7 +119,7 @@ make clean
 make 
 ```
 
-```shell
+```bash
 ## 编译数据转换程序
 
 cd ~
@@ -131,7 +131,7 @@ make
 ```
 
 
-```shell
+```bash
 ## 编译事件重构程序
 
 cd ~
@@ -150,7 +150,7 @@ make
 - 正常获取
 
 
-```shell
+```bash
 ## ROOT权限下加载Plx9054驱动
 cd ~
 cd PKUXIADAQ/PlxSdk/Bin/
@@ -162,7 +162,7 @@ exit  #退出ROOT权限
 
 ----
 
-```shell
+```bash
 ##启动图形界面程序
 
 cd ~
@@ -177,7 +177,7 @@ cd ~/PKUXIADAQ/GUI
 ```
 
 
-```shell
+```bash
 ##启动在线监视程序
 
 cd ~
@@ -192,7 +192,7 @@ cd PKUXIADAQ/OnlineStattics/
 ```
 
 
-```shell
+```bash
 ##执行数据转换程序
 
 cd ~
