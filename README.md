@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 日 5月 13 19:32:34 2018 (+0800)
+;; Last-Updated: 日 5月 13 20:03:24 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 71
+;;     Update #: 72
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -32,6 +32,7 @@ README.pdf
 - 对本获取程序有任何的意见及建议(功能添加及改进)，欢迎给吴鸿毅(wuhongyi@qq.com)发邮件。
 - 我们将会尽快完善软件的中英文使用说明书，当前基本都是以通过操作演示讲解软件的使用为主。
 
+----
 
 **本说明书仅适用于 XIA LLC Pixie-16**
 
@@ -68,23 +69,25 @@ README.pdf
 本程序的设计兼容 100/250/500 MHz 采集卡的混合使用，只需在 cfgPixie16.txt 添加各类采样率采集卡的固件位置即可，程序在线能够自动识别采集卡类型并加载相应的固件。当前我们只有100/250MHz 14bit的采集卡，因此默认可运行该类型的采集卡，如要支持其它类型，请联系 XIA LLC 获取对应固件或者联系吴鸿毅(wuhongyi@qq.com)。
 
 
+----
 
-
-用户使用程序包中包含以下文件夹:
+用户使用程序包中包含以下文件/文件夹:
 
 - Decode(将原始二进制数据转为ROOT)
-- docs(使用说明书，网页版，pdf版。暂未完成)
+- docs(使用说明书，网页版)
 - firmware(固件)
+	- firmware/firmware.md(历史各版本固件说明)
 - GUI(图形软件)
 - MakeEvent(事件重构程序，可选)
-- NOGUI(非图形软件。升级中，暂时不可用)
+- NOGUI(非图形软件。新版本升级中，暂时不可用)
 - OnlineStattics(在线监视程序)
 - parset(参数设置文件)
+- PlxSdk.tar.gz(Plx9054驱动)
 - README(说明书md版)
-- PlxSdk(Plx9054驱动，由PlxSdk.tar.gz得到)
-- software(pixie16驱动API)
-- firmware/firmware.md(历史各版本固件说明)
-- TestTool(开发者测试工具，用户不需要)
+- README.md(github首页介绍)
+- README.pdf(pdf版本说明书)
+- software(pixie16驱动API，非官方标准，已经被吴鸿毅修改)
+- TestTool(开发者测试工具，用户不需要！！！)
 
 
 
