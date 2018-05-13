@@ -7,5 +7,6 @@
 	* [GUI](UsersGuide/GUI.md)
 	* [OnlineStattics](UsersGuide/OnlineStattics.md)
 	* [MakeEvent](UsersGuide/MakeEvent.md)
+	* [FrontPanel](UsersGuide/FrontPanel.md)
 * [Programmers Guide](ProgrammersGuide/README.md)
 	* [XIA API](ProgrammersGuide/XIAAPI.md)

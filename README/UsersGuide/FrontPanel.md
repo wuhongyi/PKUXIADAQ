@@ -4,12 +4,15 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 五 7月 29 15:38:49 2016 (+0800)
-;; Last-Updated: 日 10月 30 16:21:33 2016 (+0800)
+;; Last-Updated: 日 5月 13 20:26:32 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 16
+;;     Update #: 17
 ;; URL: http://wuhongyi.cn -->
 
 # Front Panel
+
+本页内容待更新。。。
+
 
 ## LVDS I/O port(J101) 
 
