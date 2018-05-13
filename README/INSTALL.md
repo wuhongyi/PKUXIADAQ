@@ -4,13 +4,20 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 3月 25 20:23:51 2018 (+0800)
-;; Last-Updated: 日 5月 13 15:27:13 2018 (+0800)
+;; Last-Updated: 日 5月 13 19:52:11 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 8
+;;     Update #: 10
 ;; URL: http://wuhongyi.cn -->
 
 # 程序安装
 
+本程序安装要求
+
+- CERN ROOT 6
+	- GCC >= 4.8
+- FFTW3
+
+本程序测试过的系统包括Scientific Linux 7.2/7.3/7.4
 
 ## 软件安装步骤
 

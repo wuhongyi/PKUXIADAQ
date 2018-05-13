@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 4月 28 18:50:41 2018 (+0800)
-;; Last-Updated: 日 5月 13 15:53:52 2018 (+0800)
+;; Last-Updated: 日 5月 13 16:39:17 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 2
+;;     Update #: 4
 ;; URL: http://wuhongyi.cn -->
 
 # XIA API
@@ -40,6 +40,9 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16BootModule (
 	unsigned short ModNum,        // pixie module number
 	unsigned short BootPattern ); // boot pattern bit mask
 
+// Acquire ADC traces in single or multiple modules
+// Use this function to acquire ADC traces from Pixie-16 modules. Specify the module using ModNum. If ModNum is set to be less than the total number of modules in the system, only the module specified by ModNum will have its ADC traces acquired. But if ModNum is equal to the total number of modules in the system, then all modules in the system will have their ADC traces acquired.
+// After the successful return of this function, the DSP's internal memory will be filled with ADC trace data. A user's application software should then call another function Pixie16ReadSglChanADCTrace to read the ADC trace data out to the host computer, channel by channel.
 PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16AcquireADCTrace (
 	unsigned short ModNum );      // module number
 
@@ -138,6 +141,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16ProgramFippi (
 PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16AdjustOffsets (
 	unsigned short ModNum );
 
+// Acquire baselines from a module
 PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16AcquireBaselines (
 	unsigned short ModNum );      // module number
 
@@ -292,7 +296,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16ComputeSlowFiltersOffline (
 	unsigned short *RcdTrace,          // recorded trace
 	double         *slowfilter );      // slow filter response
 
-
+// Add by Hongyi Wu
 PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	char           *FileName,          // the list mode data file name (with complete path)
 	unsigned short ModuleNumber,       // the module whose events are to be analyzed

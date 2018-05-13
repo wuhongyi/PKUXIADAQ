@@ -4,12 +4,14 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 日 5月 13 16:17:00 2018 (+0800)
+;; Last-Updated: 日 5月 13 19:32:34 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 65
+;;     Update #: 71
 ;; URL: http://wuhongyi.cn -->
 
 # README
+
+**最新版本号 Version:2018.05.12**  
 
 程序下载请访问
 https://github.com/wuhongyi/PKUXIADAQ
@@ -17,7 +19,21 @@ https://github.com/wuhongyi/PKUXIADAQ
 网页版说明书请访问
 http://wuhongyi.cn/PKUXIADAQ/
 
-**本说明书仅适用于 XIA LLC Pixie16**
+markdown版本说明书请访问  
+README/
+
+本地网页版说明书请访问  
+docs/
+
+pdf版本说明书请访问  
+README.pdf
+
+
+- 对本获取程序有任何的意见及建议(功能添加及改进)，欢迎给吴鸿毅(wuhongyi@qq.com)发邮件。
+- 我们将会尽快完善软件的中英文使用说明书，当前基本都是以通过操作演示讲解软件的使用为主。
+
+
+**本说明书仅适用于 XIA LLC Pixie-16**
 
 本程序由北京大学实验核物理组开发。
 
@@ -52,8 +68,6 @@ http://wuhongyi.cn/PKUXIADAQ/
 本程序的设计兼容 100/250/500 MHz 采集卡的混合使用，只需在 cfgPixie16.txt 添加各类采样率采集卡的固件位置即可，程序在线能够自动识别采集卡类型并加载相应的固件。当前我们只有100/250MHz 14bit的采集卡，因此默认可运行该类型的采集卡，如要支持其它类型，请联系 XIA LLC 获取对应固件或者联系吴鸿毅(wuhongyi@qq.com)。
 
 
-- 对本获取程序有任何的意见及建议(功能添加及改进)，欢迎给吴鸿毅(wuhongyi@qq.com)发邮件。
-- 我们将会尽快完善软件的中英文使用说明书，当前基本都是通过操作演示来讲解软件的使用为主。
 
 
 用户使用程序包中包含以下文件夹:
