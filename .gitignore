@@ -1,5 +1,7 @@
 *.o
 *~
+~.set
+!DSPpar.set
 *Dict*
 PlxSdk/
 _book/

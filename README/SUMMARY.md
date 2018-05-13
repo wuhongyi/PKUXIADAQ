@@ -1,5 +1,7 @@
 # Summary
 
-* [说明书](README.md)
-* [前面版](FrontPanel.md)
-* [版本一](Version1.md)
+* [README](README.md)
+* [INSTALL](INSTALL.md)
+* [Users Guide](UsersGuide/README.md)
+* [Programmers Guide](ProgrammersGuide/README.md)
+	* [XIA API](ProgrammersGuide/XIAAPI.md)

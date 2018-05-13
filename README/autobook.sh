@@ -1,9 +1,9 @@
 #!/bin/bash
 
-rm -r ../docs/*
+rm -rf ../docs/*
 
 gitbook build
 
-cp -r   _book/*  ../docs/
+cp -r _book/*  ../docs/
 
 rm -r _book
