@@ -1,6 +1,7 @@
 *.o
 *~
 *Dict*
+PlxSdk/
 _book/
 Pixie16msg.txt
 trace.dat

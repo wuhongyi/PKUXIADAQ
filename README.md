@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 3月 25 20:23:51 2018 (+0800)
-;; Last-Updated: 五 5月  4 16:49:02 2018 (+0800)
+;; Last-Updated: 日 5月 13 13:34:08 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 2
+;;     Update #: 3
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -52,6 +52,11 @@
 
 #在 .bashrc 文件中添加
 export PLX_SDK_DIR=$HOME/XIADAQ/PlxSdk
+
+# 将 XIADAQ.tar.gz 放置到 /home 下的个人目录下，即 ~/ 位置
+tar -zxvf XIADAQ.tar.gz  #解压缩
+
+#得到 XIADAQ 目录
 ```
 
 ```shell
@@ -59,8 +64,10 @@ export PLX_SDK_DIR=$HOME/XIADAQ/PlxSdk
 
 #打开新终端
 cd ~
-cd XIADAQ/PlxSdk/
-cd PlxApi/
+cd XIADAQ/
+rm -rf PlxSdk #删除可能存在的未删除驱动，如果没有该目录则不用执行该行命令
+tar -zxvf PlxSdk.tar.gz
+cd PlxSdk/PlxApi/
 make clean
 make 
 #成功后你将会看到 Library "Library/PlxApi.a" built successfully
