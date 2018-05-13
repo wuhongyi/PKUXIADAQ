@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:55 2018 (+0800)
-;; Last-Updated: 日 5月 13 21:16:05 2018 (+0800)
+;; Last-Updated: 日 5月 13 21:18:45 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 4
+;;     Update #: 5
 ;; URL: http://wuhongyi.cn -->
 
 # GUI
@@ -140,7 +140,7 @@
 
 ![Adjust Par](/img/AdjustPar.png)
 
-### Simulation
+### Simulation(暂未实现)
 
 通过模型产生不同类型探测器的波形，辅助使用者学习参数优化调节的。
 
