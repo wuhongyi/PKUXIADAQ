@@ -1,0 +1,87 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>未知 </title></head><body>
+<!-- README.md --- 
+;; 
+;; Description: 
+;; Author: Hongyi Wu(吴鸿毅)
+;; Email: wuhongyi@qq.com 
+;; Created: 六 6月 18 13:37:42 2016 (+0800)
+;; Last-Updated: 三 5月 16 18:58:51 2018 (+0800)
+;;           By: Hongyi Wu(吴鸿毅)
+;;     Update #: 79
+;; URL: http://wuhongyi.cn -->
+
+<h1 id="readme">README</h1>
+<p><strong>最新版本号 Version:2018.05.12</strong>  </p>
+<p>程序下载请访问(<em>私有仓库，暂未开放下载</em>)
+https://github.com/wuhongyi/PKUXIADAQ</p>
+<p>网页版说明书请访问
+http://wuhongyi.cn/PKUXIADAQ/</p>
+<p>markdown版本说明书请访问  README/  </p>
+<p>离线网页版说明书请访问  docs/  </p>
+<p>pdf版本说明书请访问  README.pdf  </p>
+<ul>
+<li>对本获取程序有任何的意见及建议(功能添加及改进)，欢迎给吴鸿毅(wuhongyi@qq.com)发邮件。</li>
+<li>我们将会尽快完善软件的中英文使用说明书，当前基本以操作演示讲解软件的使用为主。</li>
+</ul>
+<hr />
+<p><strong>本说明书仅适用于 XIA LLC Pixie-16</strong></p>
+<ul>
+<li>本程序由<strong>北京大学实验核物理组</strong>开发。</li>
+<li>本程序的开发参考借鉴了<strong>DOTO</strong>程序。</li>
+<li>特别感谢 <em>谭辉(XIA LLC)</em> 对我们开发的支持。</li>
+</ul>
+<p>技术指导:
+- 李智焕
+- 谭辉(XIA LLC)</p>
+<p>软件主要开发者:
+- 吴鸿毅(wuhongyi@qq.com)
+- 李晶(lijinger02@126.com)</p>
+<p>说明书主要撰写者:
+- 吴鸿毅
+- 王翔
+- 罗迪雯</p>
+<p>本程序的开发得到以下单位的支持：
+- XIA LLC
+- 中国科学院近代物理研究所(IMP)
+- 中国原子能科学研究院(CIAE)
+- 香港大学(HKU)
+- 山东大学(威海)(SDU)
+- ...</p>
+<hr />
+<p>本程序适用于 XIA Pixie16 系列采集卡，支持 100/250/500 MHz 采集卡(具体支持型号可查看图形软件中的File-&gt;About)，最大支持 8 个机箱同步运行，即 1600+ 路信号同时采集。<strong>本程序包要求使用 CERN ROOT6 版本。要求采用 1920x1080 及以上分辨率显示屏</strong>。</p>
+<p>本程序的设计兼容 100/250/500 MHz 采集卡的混合使用，只需在 cfgPixie16.txt 添加各类采样率采集卡的固件位置即可，程序在线能够自动识别采集卡类型并加载相应的固件。当前我们只有100/250 MHz 14 bit 的采集卡，因此默认可运行该类型的采集卡，如要支持其它类型，请联系 XIA LLC 获取对应固件或者联系吴鸿毅(wuhongyi@qq.com)。</p>
+<hr />
+<p>用户使用程序包中包含以下文件/文件夹:</p>
+<ul>
+<li>Decode(将原始二进制数据转为 ROOT)</li>
+<li>docs(使用说明书，网页版)</li>
+<li>firmware(固件)<ul>
+<li>firmware/firmware.md(历史各版本固件说明)</li>
+</ul>
+</li>
+<li>GUI(图形软件)</li>
+<li>MakeEvent(事件重构程序，可选)</li>
+<li>NOGUI(非图形软件。新版本升级中，暂时不可用)</li>
+<li>OnlineStattics(在线监视程序)</li>
+<li>parset(参数设置文件)</li>
+<li>PlxSdk.tar.gz(Plx9054 驱动)</li>
+<li>README(说明书 m d版)</li>
+<li>README.md(github首页介绍)</li>
+<li>README.pdf(pdf版本说明书)</li>
+<li>software(pixie16驱动API，非官方标准，已经被吴鸿毅修改)</li>
+<li>TestTool(开发者测试工具，用户不需要！！！)</li>
+</ul>
+<hr />
+<h2 id="_1">升级计划：</h2>
+<ul>
+<li>当前基于 ROOT GUI 开发的主控制界面复杂度高，用户修改难度大。其它用户不容易基于其发展适合自己的版本。</li>
+<li>我们也在开发基于网页控制的获取在线/离线分析程序:<ul>
+<li>FastCGI</li>
+<li>JSROOT</li>
+<li>网页前端</li>
+<li>...</li>
+</ul>
+</li>
+</ul>
+<!-- README.md ends here -->
+</body></html>

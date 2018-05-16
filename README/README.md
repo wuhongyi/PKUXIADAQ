@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 三 5月 16 18:58:51 2018 (+0800)
+;; Last-Updated: 四 5月 17 00:33:20 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 79
+;;     Update #: 80
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -34,7 +34,7 @@ pdf版本说明书请访问  README.pdf
 **本说明书仅适用于 XIA LLC Pixie-16**
 
 - 本程序由**北京大学实验核物理组**开发。
-- 本程序的开发参考借鉴了**DOTO**程序。
+- 本程序的开发参考借鉴了**TODO**程序。
 - 特别感谢 *谭辉(XIA LLC)* 对我们开发的支持。
 
 
