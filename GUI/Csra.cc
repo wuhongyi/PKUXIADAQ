@@ -288,7 +288,10 @@ Bool_t Csra::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 	    case 4001:
 	      if (Load_Once)
-		change_values(module_number1);
+		{
+		  change_values(module_number1);
+		  load_info(module_number1);
+		}
 	      else
 		std::cout << "please load once first !"<<std::endl;
 	      break;

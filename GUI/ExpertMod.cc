@@ -211,7 +211,10 @@ Bool_t ExpertMod::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 	    case APPLY:
 	      if (Load_Once)
-		change_values(modNumber);
+		{
+		  change_values(modNumber);
+		  load_info(modNumber);
+		}		  
 	      else
 		std::cout << "please load once first !"<<std::endl;
 	      break;

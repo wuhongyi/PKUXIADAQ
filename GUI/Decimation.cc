@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 4月 23 10:49:38 2018 (+0800)
-// Last-Updated: 六 5月 12 15:22:00 2018 (+0800)
+// Last-Updated: 三 5月 16 17:24:53 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 4
+//     Update #: 5
 // URL: http://wuhongyi.cn 
 
 #include "Decimation.hh"
@@ -133,6 +133,7 @@ Bool_t Decimation::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      if (Load_Once)
 		{
 		  change_values(modNumber);
+		  load_info(modNumber);
 		}
 	      else
 		std::cout << "please load once first !"<<std::endl;

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 11月 18 20:32:50 2016 (+0800)
-// Last-Updated: 六 5月 12 15:16:42 2018 (+0800)
+// Last-Updated: 三 5月 16 17:25:32 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 18
+//     Update #: 19
 // URL: http://wuhongyi.cn 
 
 #include "Energy.hh"
@@ -209,7 +209,10 @@ Bool_t Energy::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 	    case APPLY:
 	      if (Load_Once)
-		change_values(modNumber);
+		{
+		  change_values(modNumber);
+		  load_info(modNumber);
+		}
 	      else
 		std::cout << "please load once first !"<<std::endl;
 	      break;
