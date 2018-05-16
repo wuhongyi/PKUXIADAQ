@@ -60,7 +60,7 @@
     <link rel="next" href="GUI.html" />
     
     
-    <link rel="prev" href="./" />
+    <link rel="prev" href="FIRMWARE.html" />
     
 
     </head>
@@ -129,7 +129,20 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="1.3.1" data-path="Decode.html">
+        <li class="chapter " data-level="1.3.1" data-path="FIRMWARE.html">
+            
+                <a href="FIRMWARE.html">
+            
+                    
+                    firmware
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.2" data-path="Decode.html">
             
                 <a href="Decode.html">
             
@@ -142,7 +155,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="GUI.html">
+        <li class="chapter " data-level="1.3.3" data-path="GUI.html">
             
                 <a href="GUI.html">
             
@@ -155,7 +168,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3" data-path="OnlineStattics.html">
+        <li class="chapter " data-level="1.3.4" data-path="OnlineStattics.html">
             
                 <a href="OnlineStattics.html">
             
@@ -168,7 +181,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.4" data-path="MakeEvent.html">
+        <li class="chapter " data-level="1.3.5" data-path="MakeEvent.html">
             
                 <a href="MakeEvent.html">
             
@@ -181,7 +194,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.5" data-path="FrontPanel.html">
+        <li class="chapter " data-level="1.3.6" data-path="FrontPanel.html">
             
                 <a href="FrontPanel.html">
             
@@ -282,13 +295,92 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:14 2018 (+0800)
-;; Last-Updated: 日 5月 13 20:23:43 2018 (+0800)
+;; Last-Updated: 三 5月 16 18:30:38 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 1
+;;     Update #: 6
 ;; URL: http://wuhongyi.cn -->
 
 
-<h1 id="decode">Decode</h1><!-- Decode.md ends here -->
+<h1 id="decode">Decode</h1><p><strong>Decode &#x7A0B;&#x5E8F;&#x7528;&#x6765;&#x5C06;&#x540C;&#x4E00;&#x8F6E;&#x6570;&#x636E;&#x4E0D;&#x540C;&#x91C7;&#x96C6;&#x5361;&#x91C7;&#x96C6;&#x7684;&#x6570;&#x636E;&#x8F6C;&#x4E3A;&#x4E00;&#x4E2A; ROOT &#x6587;&#x4EF6;&#x3002;&#x7528;&#x6237;&#x7684;&#x7269;&#x7406;&#x5206;&#x6790;&#x4EE5;&#x672C;&#x7A0B;&#x5E8F;&#x4EA7;&#x751F;&#x7684; ROOT &#x6587;&#x4EF6;&#x4E3A;&#x57FA;&#x51C6;&#x3002;</strong></p><p>&#x7528;&#x6237;&#x9996;&#x5148;&#x9700;&#x8981;&#x4FEE;&#x6539; <strong>UesrDefine.hh</strong> &#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x5B9A;&#x4E49;</p><pre><code class="lang-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ROOTFILEPATH <span class="hljs-string">&quot;/home/wuhongyi/data/&quot;</span>  <span class="hljs-comment">//&#x8981;&#x751F;&#x6210;ROOT&#x6587;&#x4EF6;&#x7684;&#x8DEF;&#x5F84;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> RAWFILEPATH <span class="hljs-string">&quot;/home/wuhongyi/data/&quot;</span>   <span class="hljs-comment">//&#x539F;&#x59CB;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x7684;&#x8DEF;&#x5F84;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> RAWFILENAME <span class="hljs-string">&quot;data&quot;</span>                   <span class="hljs-comment">// &#x539F;&#x59CB;&#x6587;&#x4EF6;&#x7684;&#x6587;&#x4EF6;&#x540D;</span></span>
+
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> Crate0</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> Crate0num 5   <span class="hljs-comment">//&#x8BE5;&#x673A;&#x7BB1;&#x4E2D;&#x4F7F;&#x7528;&#x63D2;&#x4EF6;&#x6570;</span></span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> Crate0SamplingRate[Crate0num] = {<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">250</span>,<span class="hljs-number">250</span>};<span class="hljs-comment">//&#x5206;&#x522B;&#x6307;&#x5B9A;&#x6BCF;&#x4E2A;&#x63D2;&#x4EF6;&#x7684;&#x91C7;&#x6837;&#x7387;  100/250/500&#x4E09;&#x79CD;&#x91C7;&#x6837;&#x7387;  0&#x4E3A;&#x8DF3;&#x8FC7;&#x8BE5;&#x63D2;&#x4EF6;</span></code></pre>
+<p>&#x7528;&#x6237;&#x9700;&#x8981;&#x4FEE;&#x6539;&#xFF1A;</p><ul><li>&#x539F;&#x59CB;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x5B58;&#x653E;&#x76EE;&#x5F55;
+</li>
+<li>&#x751F;&#x6210; ROOT &#x6587;&#x4EF6;&#x5B58;&#x653E;&#x76EE;&#x5F55;
+</li>
+<li>&#x6587;&#x4EF6;&#x540D;
+</li>
+<li>&#x673A;&#x7BB1;&#x4E2D;&#x4F7F;&#x7528;&#x91C7;&#x96C6;&#x5361;&#x4E2A;&#x6570;
+</li>
+<li>&#x6BCF;&#x4E2A;&#x91C7;&#x96C6;&#x5361;&#x5BF9;&#x5E94;&#x7684;&#x91C7;&#x6837;&#x9891;&#x7387;&#xFF0C;&#x5982;&#x679C;&#x91C7;&#x6837;&#x9891;&#x7387;&#x8BBE;&#x7F6E;&#x4E3A;0&#xFF0C;&#x5219;&#x5FFD;&#x7565;&#x8BE5;&#x91C7;&#x96C6;&#x5361;&#x7684;&#x6570;&#x636E;
+</li></ul>
+<p>&#x4FEE;&#x6539;&#x4E4B;&#x540E;&#x6267;&#x884C;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x7F16;&#x8BD1;&#x7A0B;&#x5E8F;&#xFF1A;</p><pre><code class="lang-bash">make clean
+make</code></pre>
+<p>&#x7F16;&#x8BD1;&#x6210;&#x529F;&#x4E4B;&#x540E;&#x5C06;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x53EF;&#x6267;&#x884C;&#x6587;&#x4EF6; <strong>decode</strong>&#xFF0C;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x65B9;&#x5F0F;&#xFF1A;</p><pre><code class="lang-bash">./decode [RuNnumber]</code></pre>
+<p>&#x5176;&#x4E2D; <em>[RuNnumber]</em> &#x4E3A;&#x60F3;&#x8981;&#x8F6C;&#x6362;&#x7684;&#x6587;&#x4EF6;&#x8FD0;&#x884C;&#x7F16;&#x53F7;&#x3002;</p><hr><p>ROOT File Branch&#xFF1A;</p><ul><li>sr(short):sample rate&#xFF0C;100/250/500&#xFF0C;&#x8BE5;&#x6570;&#x503C;&#x7531; UesrDefine.hh &#x4E2D;&#x6307;&#x5B9A;
+</li>
+<li>pileup(bool):&#x5806;&#x79EF;&#x6807;&#x8BB0;&#x3002;
+</li>
+<li>outofr(bool):&#x662F;&#x5426;&#x8D85;&#x91CF;&#x7A0B;&#x6807;&#x8BB0;&#x3002;
+</li>
+<li>cid(short):&#x673A;&#x7BB1;&#x7F16;&#x53F7;
+</li>
+<li>sid(short):&#x91C7;&#x96C6;&#x5361;&#x6240;&#x5728;&#x63D2;&#x69FD;&#x7F16;&#x53F7;
+</li>
+<li>ch(short):&#x91C7;&#x96C6;&#x5361;&#x901A;&#x9053;
+</li>
+<li>evte(unsigned short):&#x68AF;&#x5F62;&#x7B97;&#x6CD5;&#x7684;&#x80FD;&#x91CF;
+</li>
+<li>ts(long int 64 bit):timestamps
+</li>
+<li>ets(long int 64 bit):&#x5916;&#x90E8;&#x65F6;&#x6807;
+</li>
+<li>cfd(short):cfd&#x6570;&#x503C;
+</li>
+<li>cfdft(bool):cfd&#x6570;&#x503C;&#x662F;&#x5426;&#x6709;&#x6548;
+</li>
+<li>cfds(short):cfd source&#xFF0C;&#x4EC5;&#x9002;&#x7528;&#x4E8E; 250/500 MHz &#x91C7;&#x96C6;&#x5361;
+</li>
+<li>trae(unsigned int):&#x80FD;&#x91CF;&#x68AF;&#x5F62;&#x4E0A;&#x5347;&#x6BB5;&#x79EF;&#x5206;
+</li>
+<li>leae(unsigned int):&#x80FD;&#x91CF;&#x68AF;&#x5F62;&#x4E0B;&#x964D;&#x6BB5;&#x79EF;&#x5206;
+</li>
+<li>gape(unsigned int):&#x80FD;&#x91CF;&#x68AF;&#x5F62;&#x5E73;&#x53F0;&#x6BB5;&#x79EF;&#x5206;
+</li>
+<li>base(double):&#x80FD;&#x91CF;&#x68AF;&#x5F62;&#x7B97;&#x6CD5;&#x7684;&#x57FA;&#x7EBF;
+</li>
+<li>qs(unsigned int):&#x516B;&#x4E2A;QDC&#x9762;&#x79EF;&#x7684;&#x79EF;&#x5206;
+</li>
+<li>ltra(unsigned short):&#x6CE2;&#x5F62;&#x91C7;&#x96C6;&#x70B9;&#x6570;
+</li>
+<li>data(unsigned short):&#x6CE2;&#x5F62;&#x6570;&#x636E;
+</li>
+<li>dt(unsigned short):&#x4E3A;&#x4E86;&#x65B9;&#x4FBF;&#x76F4;&#x63A5;&#x67E5;&#x770B;&#x6BCF;&#x4E2A;&#x6CE2;&#x5F62;&#xFF0C;&#x6DFB;&#x52A0;&#x4E86;&#x4E00;&#x4E2A;&#x6570;&#x503C;&#x4ECE;0 - N-1 &#x7684;&#x6570;&#x7EC4;
+</li>
+<li>nevt(unsigned int):&#x8BE5;&#x4E8B;&#x4EF6;&#x5728;&#x672C;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x7F16;&#x53F7;
+</li></ul>
+<p><strong>TODO &#x8FD9;&#x91CC;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;Branch&#x622A;&#x56FE;&#x3002;&#x3002;&#x3002;</strong></p><hr><p>&#x6BCF;&#x8F6E;&#x6570;&#x636E;&#x8F6C;&#x6362;&#x7ED3;&#x675F;&#xFF0C;&#x672C;&#x6587;&#x4EF6;&#x5939;&#x5185;&#x5747;&#x4F1A;&#x751F;&#x6210;&#x4E00;&#x4E2A; <strong>txt</strong> &#x6587;&#x4EF6;&#xFF0C;&#x8BE5;&#x6587;&#x4EF6;&#x7EDF;&#x8BA1;&#x4E86;&#x91C7;&#x96C6;&#x5361;&#x6BCF;&#x4E2A;&#x901A;&#x9053;&#x7684;&#x4EE5;&#x4E0B;&#x4FE1;&#x606F;&#xFF1A;</p><ul><li>Mod: &#x91C7;&#x96C6;&#x5361;&#x6807;&#x8BB0;&#xFF0C;&#x4ECE;0&#x5F00;&#x59CB;
+</li>
+<li>Channel: &#x91C7;&#x96C6;&#x5361;&#x901A;&#x9053;&#x6807;&#x8BB0;&#xFF0C;0 - 15
+</li>
+<li>OutOfRange: &#x4FE1;&#x53F7;&#x5E45;&#x5EA6;&#x8D85;&#x51FA;&#x6A21;&#x6570;&#x8F6C;&#x6362;&#x6A21;&#x5757;&#x8303;&#x56F4;&#x7684;&#x4E8B;&#x4EF6;&#x6570;
+</li>
+<li>Pileup: &#x6807;&#x8BB0;&#x4E3A;&#x5806;&#x79EF;&#x7684;&#x4E8B;&#x4EF6;&#x6570;
+</li>
+<li>CfdForcedTrigger: cfd&#x5F3A;&#x5236;&#x89E6;&#x53D1;&#x4E8B;&#x4EF6;&#x6570;&#xFF08;cfd&#x672A;&#x8FC7;&#x9608;&#x503C;&#xFF09;
+</li>
+<li>Energy-&gt;0: &#x8BA1;&#x7B97;&#x68AF;&#x5F62;&#x80FD;&#x91CF;&#x5C0F;&#x4E8E; 0 &#x7684;&#x4E8B;&#x4EF6;&#x6570;&#xFF08;&#x8BA1;&#x7B97;&#x7ED3;&#x679C;&#x5C0F;&#x4E8E; 0 &#x7684;&#x76F4;&#x63A5;&#x88AB;&#x6807;&#x8BB0;&#x4E3A;0&#x4E86;&#xFF09;
+</li>
+<li>WaveformCount: &#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#x7684;&#x4E8B;&#x4EF6;&#x6570;
+</li>
+<li>TotalEvent: &#x603B;&#x7684;&#x8F93;&#x51FA;&#x4E8B;&#x4EF6;&#x6570;
+</li></ul>
+<!-- Decode.md ends here -->
 
 
 
@@ -318,7 +410,7 @@
 
             
                 
-                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Users Guide">
+                <a href="FIRMWARE.html" class="navigation navigation-prev " aria-label="Previous page: firmware">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
@@ -334,7 +426,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Decode","level":"1.3.1","depth":2,"next":{"title":"GUI","level":"1.3.2","depth":2,"path":"UsersGuide/GUI.md","ref":"UsersGuide/GUI.md","articles":[]},"previous":{"title":"Users Guide","level":"1.3","depth":1,"path":"UsersGuide/README.md","ref":"UsersGuide/README.md","articles":[{"title":"Decode","level":"1.3.1","depth":2,"path":"UsersGuide/Decode.md","ref":"UsersGuide/Decode.md","articles":[]},{"title":"GUI","level":"1.3.2","depth":2,"path":"UsersGuide/GUI.md","ref":"UsersGuide/GUI.md","articles":[]},{"title":"OnlineStattics","level":"1.3.3","depth":2,"path":"UsersGuide/OnlineStattics.md","ref":"UsersGuide/OnlineStattics.md","articles":[]},{"title":"MakeEvent","level":"1.3.4","depth":2,"path":"UsersGuide/MakeEvent.md","ref":"UsersGuide/MakeEvent.md","articles":[]},{"title":"FrontPanel","level":"1.3.5","depth":2,"path":"UsersGuide/FrontPanel.md","ref":"UsersGuide/FrontPanel.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"UsersGuide/Decode.md","mtime":"2018-05-14T09:28:04.849Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-16T08:36:51.621Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Decode","level":"1.3.2","depth":2,"next":{"title":"GUI","level":"1.3.3","depth":2,"path":"UsersGuide/GUI.md","ref":"UsersGuide/GUI.md","articles":[]},"previous":{"title":"firmware","level":"1.3.1","depth":2,"path":"UsersGuide/FIRMWARE.md","ref":"UsersGuide/FIRMWARE.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"UsersGuide/Decode.md","mtime":"2018-05-16T10:30:39.023Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-16T11:08:18.839Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

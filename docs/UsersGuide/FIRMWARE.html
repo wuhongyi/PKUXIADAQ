@@ -2,7 +2,7 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>MakeEvent · GitBook</title>
+        <title>firmware · GitBook</title>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="FrontPanel.html" />
+    <link rel="next" href="Decode.html" />
     
     
-    <link rel="prev" href="OnlineStattics.html" />
+    <link rel="prev" href="./" />
     
 
     </head>
@@ -129,7 +129,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="FIRMWARE.html">
+        <li class="chapter active" data-level="1.3.1" data-path="FIRMWARE.html">
             
                 <a href="FIRMWARE.html">
             
@@ -181,7 +181,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3.5" data-path="MakeEvent.html">
+        <li class="chapter " data-level="1.3.5" data-path="MakeEvent.html">
             
                 <a href="MakeEvent.html">
             
@@ -274,7 +274,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >MakeEvent</a>
+        <a href=".." >firmware</a>
     </h1>
 </div>
 
@@ -289,53 +289,37 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <!-- MakeEvent.md --- 
+                                <!-- FIRMWARE.md --- 
 ;; 
 ;; Description: 
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
-;; Created: 日 5月 13 20:24:12 2018 (+0800)
-;; Last-Updated: 三 5月 16 18:30:44 2018 (+0800)
+;; Created: 三 5月 16 19:00:58 2018 (+0800)
+;; Last-Updated: 三 5月 16 19:06:53 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
 ;;     Update #: 2
 ;; URL: http://wuhongyi.cn -->
 
 
-<h1 id="makeevent">MakeEvent</h1><p><strong>&#x672C;&#x8F6C;&#x6362;&#x7A0B;&#x5E8F;&#x7684;&#x4F7F;&#x7528;&#x524D;&#x63D0;&#xFF0C;&#x63D2;&#x4EF6;&#x5FC5;&#x987B;&#x4ECE;&#x7B2C;&#x4E00;&#x4E2A;&#x63D2;&#x69FD;&#x5F00;&#x59CB;&#xFF0C;&#x4E2D;&#x95F4;&#x4E0D;&#x7559;&#x7A7A;&#x63D2;&#x69FD;&#x3002;</strong></p><p><strong>MakeEvent &#x7A0B;&#x5E8F;&#x7528;&#x6765;&#x5FEB;&#x901F;&#x5C06;&#x6570;&#x636E;&#x7EC4;&#x88C5;&#x6210;&#x4E0E;&#x4F20;&#x7EDF; VME &#x83B7;&#x53D6;&#x6570;&#x636E;&#x7C7B;&#x4F3C;&#x7684;&#x7ED3;&#x6784;&#xFF0C;&#x65B9;&#x4FBF;&#x5B9E;&#x9A8C;&#x65F6;&#x7684;&#x521D;&#x6B65;&#x7269;&#x7406;&#x5206;&#x6790;&#xFF0C;&#x6700;&#x7EC8;&#x7684;&#x7269;&#x7406;&#x5206;&#x6790;&#x4E0D;&#x80FD;&#x4EE5;&#x672C;&#x7A0B;&#x5E8F;&#x4EA7;&#x751F;&#x7684;&#x6570;&#x636E;&#x4E3A;&#x57FA;&#x51C6;&#x3002;</strong></p><p>&#x7528;&#x6237;&#x9996;&#x5148;&#x9700;&#x8981;&#x4FEE;&#x6539; <strong>UesrDefine.hh</strong> &#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x5B9A;&#x4E49;</p><pre><code class="lang-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> OUTFILEPATH <span class="hljs-string">&quot;/home/wuhongyi/data/&quot;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> RAWFILEPATH <span class="hljs-string">&quot;/home/wuhongyi/data/&quot;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> RAWFILENAME <span class="hljs-string">&quot;data&quot;</span></span>
-
-
-<span class="hljs-comment">// &#x8BBE;&#x7F6E;&#x63D2;&#x4EF6;&#x4E2A;&#x6570;</span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> BOARDNUMBER 5</span></code></pre>
-<p>&#x7528;&#x6237;&#x9700;&#x8981;&#x4FEE;&#x6539;&#xFF1A;</p><ul><li>&#x539F;&#x59CB; ROOT &#x6587;&#x4EF6;&#x7684;&#x8DEF;&#x5F84;
+<h1 id="firmware">FIRMWARE</h1><p><strong>&#x5317;&#x4EAC;&#x5927;&#x5B66;&#x5B9A;&#x5236;&#x56FA;&#x4EF6;</strong></p><p>&#x5728;&#x6807;&#x51C6;&#x56FA;&#x4EF6;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x6DFB;&#x52A0;&#x4E86;&#x4EE5;&#x4E0B;&#x529F;&#x80FD;&#xFF1A;</p><ul><li><p>100MHz 14 bit(pixie16_revfpku_14b100m_dsp_update_05082018)</p><ul><li>MultiplicityMaskHigh[31]=0&#x548C;1 &#x65F6;&#x5019;&#x524D;&#x9762;&#x7248;&#x5747;&#x80FD;&#x8F93;&#x51FA; multiplicity &#x7ED3;&#x679C;&#x3002;
 </li>
-<li>&#x751F;&#x6210;&#x7684;&#x4E8B;&#x4EF6;&#x7ED3;&#x6784; ROOT &#x6587;&#x4EF6;&#x7684;&#x5B58;&#x653E;&#x8DEF;&#x5F84;
+<li>&#x5F53;&#x8BA1;&#x7B97;&#x7684;&#x80FD;&#x91CF;&#x4E3A;&#x8D1F;&#x6570;&#x65F6;&#xFF0C;&#x8BE5;&#x503C;&#x8BBE;&#x7F6E;&#x4E3A; 0&#x3002;
 </li>
-<li>&#x6587;&#x4EF6;&#x540D;
+<li>pileup &#x4E8B;&#x4EF6;&#x80FD;&#x91CF;&#x4FDD;&#x7559;&#xFF0C;&#x4E0D;&#x8BBE;&#x7F6E;&#x4E3A; 0&#x3002;
 </li>
-<li>&#x4F7F;&#x7528;&#x91C7;&#x96C6;&#x5361;&#x4E2A;&#x6570;
+<li>&#x5728;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;waveform &#x7684;buffer&#x6EE1;&#x4E86;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x63D2;&#x4EF6;&#x4E0D;busy&#xFF0C;header&#x7EE7;&#x7EED;&#x8BB0;&#x5F55;&#xFF0C;&#x8BE5;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x8F93;&#x51FA;&#x7684;&#x6570;&#x636E;&#x6CA1;&#x6709;&#x6CE2;&#x5F62;&#x3002;
+</li>
+<li>&#x5728;&#x91C7;&#x96C6;&#x6CE2;&#x5F62;&#x65F6;&#x5019;&#xFF0C;&#x589E;&#x52A0;&#x4E86;&#x964D;&#x9891;&#x8F93;&#x51FA;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x91C7;&#x53D6;&#x7684;&#x7B56;&#x7565;&#x4E3A;&#x53EF;&#x9009;&#x62E9;1&#xFF0C;1/2&#xFF0C;1/4&#xFF0C;1/8&#xFF0C;1/16&#xFF0C;1/32&#xFF0C;1/64&#xFF0C;1/128&#x9891;&#x7387;&#x7684;&#x8F93;&#x51FA;&#xFF0C;&#x5373;&#x591A;&#x5C11;&#x4E2A;&#x70B9;&#x4FDD;&#x7559;&#x4E00;&#x4E2A;&#x70B9;&#x3002;&#x4FDD;&#x7559;&#x7684;&#x70B9;&#x662F;&#x5E73;&#x5747;&#x540E;&#x7684;&#x503C;&#x3002;
 </li></ul>
-<p>&#x4FEE;&#x6539;&#x4E4B;&#x540E;&#x6267;&#x884C;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x7F16;&#x8BD1;&#x7A0B;&#x5E8F;&#xFF1A;</p><pre><code class="lang-bash">make clean
-make</code></pre>
-<p>&#x7F16;&#x8BD1;&#x6210;&#x529F;&#x4E4B;&#x540E;&#x5C06;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x53EF;&#x6267;&#x884C;&#x6587;&#x4EF6; <strong>event</strong>&#xFF0C;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x65B9;&#x5F0F;&#xFF1A;</p><pre><code class="lang-bash">./event  [RunNnumber]  [windows]</code></pre>
-<p>&#x5176;&#x4E2D; <em>[RuNnumber]</em> &#x4E3A;&#x60F3;&#x8981;&#x8F6C;&#x6362;&#x7684;&#x6587;&#x4EF6;&#x8FD0;&#x884C;&#x7F16;&#x53F7;&#xFF0C;<em>[windows]</em> &#x4E3A;&#x4E8B;&#x4EF6;&#x7684;&#x65F6;&#x95F4;&#x7A97;&#xFF0C;&#x5355;&#x4F4D;&#x4E3A; ns&#x3002;</p><hr><p>ROOT File Branch&#xFF1A;</p><ul><li>sr: &#x91C7;&#x6837;&#x7387;&#xFF0C;&#x8BE5;&#x4E8B;&#x4EF6;&#x4E2D;&#x8BE5;&#x901A;&#x9053;&#x6570;&#x503C;&#x4E0D;&#x4E3A;0&#x8868;&#x793A;&#x63A2;&#x6D4B;&#x5230;&#x4FE1;&#x53F7;&#x3002;
 </li>
-<li>adc: &#x80FD;&#x91CF;
+<li><p>250MHz 14bit(pixie16_revf_14b250m_firmware_release_04222018)</p><ul><li>&#x524D;&#x9762;&#x677F;&#x591A;&#x91CD;&#x6027;MultiplicityMaskHigh[31]=0&#x548C;1 &#x65F6;&#x5019;&#x524D;&#x9762;&#x7248;&#x5747;&#x80FD;&#x8F93;&#x51FA; multiplicity &#x7ED3;&#x679C;&#x3002;
 </li>
-<li>outofr: &#x6807;&#x8BB0;&#x662F;&#x5426;&#x8D85;&#x6A21;&#x6570;&#x8F6C;&#x6362;&#x7684;&#x91CF;&#x7A0B;
+<li>&#x5F53;&#x8BA1;&#x7B97;&#x7684;&#x80FD;&#x91CF;&#x4E3A;&#x8D1F;&#x6570;&#x65F6;&#xFF0C;&#x8BE5;&#x503C;&#x8BBE;&#x7F6E;&#x4E3A; 0&#x3002;
 </li>
-<li>qdc: QDC&#x7684;&#x516B;&#x6BB5;&#x79EF;&#x5206;
-</li>
-<li>tdc: &#x65F6;&#x95F4;
-</li>
-<li>cfd: cfd&#x6570;&#x503C;
-</li>
-<li>cfdft: &#x6807;&#x8BB0;CFD&#x6570;&#x503C;&#x662F;&#x5426;&#x6709;&#x6548;
-</li>
-<li>cfds: &#x4EC5;&#x9002;&#x7528;&#x4E8E; 250/500 MHz &#x91C7;&#x96C6;&#x5361;&#xFF0C;cfd source
+<li>pileup &#x4E8B;&#x4EF6;&#x80FD;&#x91CF;&#x4FDD;&#x7559;&#xFF0C;&#x4E0D;&#x8BBE;&#x7F6E;&#x4E3A; 0&#x3002;
 </li></ul>
-<p><strong>TODO &#x8FD9;&#x91CC;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;Branch&#x622A;&#x56FE;&#x3002;&#x3002;&#x3002;</strong></p><!-- MakeEvent.md ends here -->
+</li></ul>
+<!-- FIRMWARE.md ends here -->
 
 
 
@@ -365,12 +349,12 @@ make</code></pre>
 
             
                 
-                <a href="OnlineStattics.html" class="navigation navigation-prev " aria-label="Previous page: OnlineStattics">
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Users Guide">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="FrontPanel.html" class="navigation navigation-next " aria-label="Next page: FrontPanel">
+                <a href="Decode.html" class="navigation navigation-next " aria-label="Next page: Decode">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -381,7 +365,7 @@ make</code></pre>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"MakeEvent","level":"1.3.5","depth":2,"next":{"title":"FrontPanel","level":"1.3.6","depth":2,"path":"UsersGuide/FrontPanel.md","ref":"UsersGuide/FrontPanel.md","articles":[]},"previous":{"title":"OnlineStattics","level":"1.3.4","depth":2,"path":"UsersGuide/OnlineStattics.md","ref":"UsersGuide/OnlineStattics.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"UsersGuide/MakeEvent.md","mtime":"2018-05-16T10:30:44.542Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-16T11:08:18.839Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"firmware","level":"1.3.1","depth":2,"next":{"title":"Decode","level":"1.3.2","depth":2,"path":"UsersGuide/Decode.md","ref":"UsersGuide/Decode.md","articles":[]},"previous":{"title":"Users Guide","level":"1.3","depth":1,"path":"UsersGuide/README.md","ref":"UsersGuide/README.md","articles":[{"title":"firmware","level":"1.3.1","depth":2,"path":"UsersGuide/FIRMWARE.md","ref":"UsersGuide/FIRMWARE.md","articles":[]},{"title":"Decode","level":"1.3.2","depth":2,"path":"UsersGuide/Decode.md","ref":"UsersGuide/Decode.md","articles":[]},{"title":"GUI","level":"1.3.3","depth":2,"path":"UsersGuide/GUI.md","ref":"UsersGuide/GUI.md","articles":[]},{"title":"OnlineStattics","level":"1.3.4","depth":2,"path":"UsersGuide/OnlineStattics.md","ref":"UsersGuide/OnlineStattics.md","articles":[]},{"title":"MakeEvent","level":"1.3.5","depth":2,"path":"UsersGuide/MakeEvent.md","ref":"UsersGuide/MakeEvent.md","articles":[]},{"title":"FrontPanel","level":"1.3.6","depth":2,"path":"UsersGuide/FrontPanel.md","ref":"UsersGuide/FrontPanel.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"UsersGuide/FIRMWARE.md","mtime":"2018-05-16T11:06:53.616Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-16T11:08:18.839Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

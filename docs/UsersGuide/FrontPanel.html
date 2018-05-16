@@ -129,7 +129,20 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="Decode.html">
+        <li class="chapter " data-level="1.3.1" data-path="FIRMWARE.html">
+            
+                <a href="FIRMWARE.html">
+            
+                    
+                    firmware
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="Decode.html">
             
                 <a href="Decode.html">
             
@@ -142,7 +155,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="GUI.html">
+        <li class="chapter " data-level="1.3.3" data-path="GUI.html">
             
                 <a href="GUI.html">
             
@@ -155,7 +168,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3" data-path="OnlineStattics.html">
+        <li class="chapter " data-level="1.3.4" data-path="OnlineStattics.html">
             
                 <a href="OnlineStattics.html">
             
@@ -168,7 +181,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.4" data-path="MakeEvent.html">
+        <li class="chapter " data-level="1.3.5" data-path="MakeEvent.html">
             
                 <a href="MakeEvent.html">
             
@@ -181,7 +194,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3.5" data-path="FrontPanel.html">
+        <li class="chapter active" data-level="1.3.6" data-path="FrontPanel.html">
             
                 <a href="FrontPanel.html">
             
@@ -282,9 +295,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 五 7月 29 15:38:49 2016 (+0800)
-;; Last-Updated: 日 5月 13 20:26:32 2018 (+0800)
+;; Last-Updated: 三 5月 16 16:40:27 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 17
+;;     Update #: 18
 ;; URL: http://wuhongyi.cn -->
 
 
@@ -295,11 +308,10 @@ A1&#x3001;B1&#x3001;B2&#x3001;C1&#x3001;C2&#x3001;D2 &#x8F93;&#x51FA;&#x4FE1;&#x
 </li>
 <li>1 not use current
 </li></ul>
-<hr><h2 id="j151-j155">J151-J155</h2><p><strong>&#x8F93;&#x5165;&#x4FE1;&#x53F7;</strong></p><p>single-ended TTL external input signals</p><p>FI0&#x3001;FI2&#x3001;FI3&#x3001;FI4&#x3001;FI6&#x3001;FI7</p><p>&#x8FD9;&#x662F;&#x4EC0;&#x4E48;&#x8F93;&#x5165;&#x4FE1;&#x53F7;&#xFF1F;external trigger&#xFF1F;clock signals&#xFF1F;</p><hr><p>&#x4ECE;&#x524D;&#x9762;&#x677F;&#x8F93;&#x51FA;&#x76D1;&#x89C6;&#x6765;&#x770B;&#xFF0C;fast trigger stretch length(FastTrigBackLen) &#x5B9E;&#x9645;&#x503C;&#x4E3A;16&#x8DEF;&#x4E2D;&#x6700;&#x5927;&#x7684;&#x503C;&#x3002;</p><p>&#x524D;&#x9762;&#x677F;&#x76D1;&#x89C6;&#x4FE1;&#x53F7;&#x4E2D;&#xFF0C;&#x5DE6;&#x8FB9;&#x7684;&#x77E9;&#x5F62;&#x6CE2;&#x662F;fast trigger&#xFF0C;&#x5176;&#x5BBD;&#x5EA6;&#x8868;&#x793A;&#x65F6;&#x95F4;&#x3002;
-&#x53F3;&#x8FB9;&#x7684;&#x4FE1;&#x53F7;&#x8868;&#x793A;Extern delay(ExternDelayLen) &#x8868;&#x793A;&#x4E3A;&#x4E86;&#x7B49;&#x5F85;trigger&#x800C;&#x5EF6;&#x8FDF;&#x91C7;&#x96C6;&#x7684;&#x65F6;&#x95F4;</p><h2 id="group-000">group 000</h2><p>FTRIG_DELAY  &#x91C7;&#x96C6;&#x5EF6;&#x8FDF;&#x65F6;&#x95F4;  &#x53EA;&#x8981;fast filter &#x8FC7;&#x9608;&#x503C;&#x5C31;&#x4F1A;&#x4EA7;&#x751F;
+<hr><h2 id="j151-j155">J151-J155</h2><p><strong>&#x8F93;&#x5165;&#x4FE1;&#x53F7;</strong></p><p>single-ended TTL external input signals</p><p>FI0&#x3001;FI2&#x3001;FI3&#x3001;FI4&#x3001;FI6&#x3001;FI7</p><h2 id="group-000">group 000</h2><p>FTRIG_DELAY  &#x91C7;&#x96C6;&#x5EF6;&#x8FDF;&#x65F6;&#x95F4;  &#x53EA;&#x8981;fast filter &#x8FC7;&#x9608;&#x503C;&#x5C31;&#x4F1A;&#x4EA7;&#x751F;
 FTRIG_VAL    &#x57FA;&#x672C;&#x540C;&#x4E0A;&#xFF0C;&#x6709;&#x6548;&#x91C7;&#x96C6;&#x65F6;&#x5019;&#x624D;&#x6709;&#x4FE1;&#x53F7;
 GLBETRIG_CE  stretched external global validation trigger 
-CHANETRIG_CE stretched channel validation trigger &#xFF0C;&#x5F00;&#x542F;CSRA bit13 &#x3002;&#x91C7;&#x96C6;&#x5EF6;&#x8FDF;&#x5FC5;&#x987B;&#x5728;&#x8FD9;&#x4E2A;&#x65F6;&#x95F4;&#x7A97;&#x5185;&#x624D;&#x80FD;&#x91C7;&#x96C6;&#x5230;    &#x770B;&#x5230;&#x7684;&#x4FE1;&#x53F7;&#x5B9E;&#x9645;&#x8D77;&#x59CB;&#x4F4D;&#x7F6E;&#x5728; 100 ns&#xFF0C;&#x610F;&#x5473;&#x7740;System FPGA &#x5904;&#x7406;&#x65F6;&#x95F4;&#x9700;&#x8981; 100 ns &#xFF1F; &#x4FE1;&#x53F7;&#x5BBD;&#x5EA6;&#x7531; ChanTrigStretch &#x63A7;&#x5236;&#x3002;</p><p>&#x9009;&#x62E9; CSRA bit0 bit18 FTRIG_DELAY &#x603B;&#x4F1A;&#x591A; 100 ns</p><!-- FrontPanel.md ends here -->
+CHANETRIG_CE stretched channel validation trigger &#xFF0C;&#x5F00;&#x542F;CSRA bit13 &#x3002;&#x91C7;&#x96C6;&#x5EF6;&#x8FDF;&#x5FC5;&#x987B;&#x5728;&#x8FD9;&#x4E2A;&#x65F6;&#x95F4;&#x7A97;&#x5185;&#x624D;&#x80FD;&#x91C7;&#x96C6;&#x5230;    &#x770B;&#x5230;&#x7684;&#x4FE1;&#x53F7;&#x5B9E;&#x9645;&#x8D77;&#x59CB;&#x4F4D;&#x7F6E;&#x5728; 100 ns&#xFF0C;&#x610F;&#x5473;&#x7740;System FPGA &#x5904;&#x7406;&#x65F6;&#x95F4;&#x9700;&#x8981; 100 ns &#xFF1F; &#x4FE1;&#x53F7;&#x5BBD;&#x5EA6;&#x7531; ChanTrigStretch &#x63A7;&#x5236;&#x3002;</p><!-- FrontPanel.md ends here -->
 
 
 
@@ -345,7 +357,7 @@ CHANETRIG_CE stretched channel validation trigger &#xFF0C;&#x5F00;&#x542F;CSRA b
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"FrontPanel","level":"1.3.5","depth":2,"next":{"title":"Programmers Guide","level":"1.4","depth":1,"path":"ProgrammersGuide/README.md","ref":"ProgrammersGuide/README.md","articles":[{"title":"XIA API","level":"1.4.1","depth":2,"path":"ProgrammersGuide/XIAAPI.md","ref":"ProgrammersGuide/XIAAPI.md","articles":[]}]},"previous":{"title":"MakeEvent","level":"1.3.4","depth":2,"path":"UsersGuide/MakeEvent.md","ref":"UsersGuide/MakeEvent.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"UsersGuide/FrontPanel.md","mtime":"2018-05-14T09:28:04.918Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-16T08:36:51.621Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"FrontPanel","level":"1.3.6","depth":2,"next":{"title":"Programmers Guide","level":"1.4","depth":1,"path":"ProgrammersGuide/README.md","ref":"ProgrammersGuide/README.md","articles":[{"title":"XIA API","level":"1.4.1","depth":2,"path":"ProgrammersGuide/XIAAPI.md","ref":"ProgrammersGuide/XIAAPI.md","articles":[]}]},"previous":{"title":"MakeEvent","level":"1.3.5","depth":2,"path":"UsersGuide/MakeEvent.md","ref":"UsersGuide/MakeEvent.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"UsersGuide/FrontPanel.md","mtime":"2018-05-16T08:40:27.444Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-16T11:08:18.839Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
