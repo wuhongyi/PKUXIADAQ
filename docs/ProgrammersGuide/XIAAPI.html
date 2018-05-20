@@ -293,17 +293,19 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 4月 28 18:50:41 2018 (+0800)
-;; Last-Updated: 日 5月 13 16:39:17 2018 (+0800)
+;; Last-Updated: 六 5月 19 02:23:21 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 4
+;;     Update #: 7
 ;; URL: http://wuhongyi.cn -->
 
 
-<h1 id="xia-api">XIA API</h1><pre><code class="lang-cpp"><span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16InitSystem</span> <span class="hljs-params">(
+<h1 id="xia-api">XIA API</h1><pre><code class="lang-cpp"><span class="hljs-comment">// Configure modules for communication in PXI chassis</span>
+<span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16InitSystem</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> NumModules,    <span class="hljs-comment">// total number of Pixie16 modules in the system</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> *PXISlotMap,   <span class="hljs-comment">// an array containing the PXI slot number for each pixie16 module</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> OfflineMode )</span></span>; <span class="hljs-comment">// specify if the system is in offline mode</span>
 
+<span class="hljs-comment">// Release user virtual addressees assigned to modules</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16ExitSystem</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum )</span></span>;      <span class="hljs-comment">// module number</span>
 
@@ -314,6 +316,7 @@
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> *ModADCBits,   <span class="hljs-comment">// returned module ADC bits</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> *ModADCMSPS )</span></span>; <span class="hljs-comment">// returned module ADC sampling rate</span>
 
+<span class="hljs-comment">// Boot modules so that they can be set up for data taking</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16BootModule</span> <span class="hljs-params">(
     <span class="hljs-keyword">char</span> *ComFPGAConfigFile,      <span class="hljs-comment">// name of communications FPGA configuration file</span>
     <span class="hljs-keyword">char</span> *SPFPGAConfigFile,       <span class="hljs-comment">// name of signal processing FPGA configuration file</span>
@@ -330,12 +333,14 @@
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16AcquireADCTrace</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum )</span></span>;      <span class="hljs-comment">// module number</span>
 
+<span class="hljs-comment">// Read ADC trace data from a channel in a module</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16ReadSglChanADCTrace</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> *Trace_Buffer, <span class="hljs-comment">// trace data</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> Trace_Length,    <span class="hljs-comment">// trace length</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,        <span class="hljs-comment">// module number</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ChanNum )</span></span>;     <span class="hljs-comment">// channel number</span>
 
+<span class="hljs-comment">// Transfer data between host and DSP internal memory</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16IMbufferIO</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> *Buffer,         <span class="hljs-comment">// buffer data</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> NumWords,        <span class="hljs-comment">// number of buffer words to read or write</span>
@@ -343,6 +348,7 @@
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> Direction,     <span class="hljs-comment">// I/O direction</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum )</span></span>;      <span class="hljs-comment">// module number</span>
 
+<span class="hljs-comment">// Transfer data between host and DSP external memory</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16EMbufferIO</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> *Buffer,         <span class="hljs-comment">// buffer data</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> NumWords,        <span class="hljs-comment">// number of buffer words to read or write</span>
@@ -350,40 +356,49 @@
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> Direction,     <span class="hljs-comment">// I/O direction</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum )</span></span>;      <span class="hljs-comment">// module number</span>
 
+<span class="hljs-comment">// Start a list mode data acquisition run</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16StartListModeRun</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,        <span class="hljs-comment">// module number</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> RunType,       <span class="hljs-comment">// run type</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> mode )</span></span>;        <span class="hljs-comment">// run mode</span>
 
+<span class="hljs-comment">// Start a MCA histogram mode data acquisition run</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16StartHistogramRun</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,        <span class="hljs-comment">// module number</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> mode )</span></span>;        <span class="hljs-comment">// run mode</span>
 
+<span class="hljs-comment">// Check status of a data acquisition run</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16CheckRunStatus</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum )</span></span>;      <span class="hljs-comment">// Pixie module number  </span>
 
+<span class="hljs-comment">// Stop a data acquisition run</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16EndRun</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum )</span></span>;      <span class="hljs-comment">// Pixie module number  </span>
 
+<span class="hljs-comment">// Compute input count rate</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">double</span> PIXIE16APP_API <span class="hljs-title">Pixie16ComputeInputCountRate</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   *Statistics,
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ChanNum )</span></span>;
 
+<span class="hljs-comment">// Compute output count rate of a channel</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">double</span> PIXIE16APP_API <span class="hljs-title">Pixie16ComputeOutputCountRate</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   *Statistics,
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ChanNum )</span></span>;
 
+<span class="hljs-comment">// Compute live time that a channel accumulated in a run</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">double</span> PIXIE16APP_API <span class="hljs-title">Pixie16ComputeLiveTime</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   *Statistics,
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ChanNum )</span></span>;
 
+<span class="hljs-comment">// Compute number of events processed by a channel</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">double</span> PIXIE16APP_API <span class="hljs-title">Pixie16ComputeProcessedEvents</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   *Statistics,
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum )</span></span>;
 
+<span class="hljs-comment">// Compute real time that a channel accumulated in a run</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">double</span> PIXIE16APP_API <span class="hljs-title">Pixie16ComputeRealTime</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   *Statistics,
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum )</span></span>;
@@ -416,12 +431,16 @@
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> bit,
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   value )</span></span>;
 
+<span class="hljs-comment">// Program on-board DACs</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16SetDACs</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum )</span></span>;
 
+<span class="hljs-comment">// Program on-board signal processing FPGAs</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16ProgramFippi</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum )</span></span>;
 
+
+<span class="hljs-comment">// Adjust DC-offsets in single or multiple modules</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16AdjustOffsets</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum )</span></span>;
 
@@ -429,6 +448,7 @@
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16AcquireBaselines</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum )</span></span>;      <span class="hljs-comment">// module number</span>
 
+<span class="hljs-comment">// Read baselines from a channel in a module</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16ReadSglChanBaselines</span> <span class="hljs-params">(
     <span class="hljs-keyword">double</span> *Baselines,            <span class="hljs-comment">// returned baselines values</span>
     <span class="hljs-keyword">double</span> *TimeStamps,           <span class="hljs-comment">// time stamp for each baseline value</span>
@@ -436,76 +456,91 @@
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,        <span class="hljs-comment">// module number</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ChanNum )</span></span>;     <span class="hljs-comment">// channel number</span>
 
+<span class="hljs-comment">// Ramp Offset DACs of a module and record the baselines</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16RampOffsetDACs</span> <span class="hljs-params">(
     <span class="hljs-keyword">double</span> *DCValues,             <span class="hljs-comment">// returned DC offset values</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> NumDCVals,     <span class="hljs-comment">// number of DC values to read</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum )</span></span>;
 
+<span class="hljs-comment">// Execute special control tasks</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16ControlTaskRun</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,        <span class="hljs-comment">// Pixie module number</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ControlTask,   <span class="hljs-comment">// Control task number</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   Max_Poll )</span></span>;    <span class="hljs-comment">// Timeout control in unit of ms for control task run</span>
 
+<span class="hljs-comment">// Find the Baseline Cut values of a module</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16BLcutFinder</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,        <span class="hljs-comment">// Pixie module number</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ChanNum,       <span class="hljs-comment">// Pixie channel number</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   *BLcut )</span></span>;      <span class="hljs-comment">// BLcut return value</span>
 
+<span class="hljs-comment">// Find the exponential decay time of a channel    </span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16TauFinder</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,        <span class="hljs-comment">// Pixie module number</span>
     <span class="hljs-keyword">double</span>         *Tau )</span></span>;        <span class="hljs-comment">// 16 returned Tau values, in &#x794D;</span>
 
+<span class="hljs-comment">// Write a MODULE level parameter to a module</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16WriteSglModPar</span> <span class="hljs-params">(
     <span class="hljs-keyword">char</span> *ModParName,             <span class="hljs-comment">// the name of the module parameter</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   ModParData,    <span class="hljs-comment">// the module parameter value to be written to the module</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum )</span></span>;      <span class="hljs-comment">// module number</span>
 
+<span class="hljs-comment">// Read a MODULE level parameter from a module</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16ReadSglModPar</span> <span class="hljs-params">(
     <span class="hljs-keyword">char</span> *ModParName,             <span class="hljs-comment">// the name of the module parameter</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   *ModParData,   <span class="hljs-comment">// the module parameter value to be read from the module</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum )</span></span>;      <span class="hljs-comment">// module number</span>
 
+<span class="hljs-comment">// Write a CHANNEL level parameter to a module</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16WriteSglChanPar</span> <span class="hljs-params">(
     <span class="hljs-keyword">char</span> *ChanParName,            <span class="hljs-comment">// the name of the channel parameter</span>
     <span class="hljs-keyword">double</span> ChanParData,           <span class="hljs-comment">// the channel parameter value to be written to the module</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,        <span class="hljs-comment">// module number</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ChanNum )</span></span>;     <span class="hljs-comment">// channel number</span>
 
+<span class="hljs-comment">// Read a CHANNEL level parameter from a module</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16ReadSglChanPar</span> <span class="hljs-params">(
     <span class="hljs-keyword">char</span> *ChanParName,            <span class="hljs-comment">// the name of the channel parameter</span>
     <span class="hljs-keyword">double</span> *ChanParData,          <span class="hljs-comment">// the channel parameter value to be read from the module</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,        <span class="hljs-comment">// module number</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ChanNum )</span></span>;     <span class="hljs-comment">// channel number</span>
 
+<span class="hljs-comment">// Read histogram data from a module</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16ReadHistogramFromModule</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   *Histogram,    <span class="hljs-comment">// histogram data</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   NumWords,      <span class="hljs-comment">// number of words to be read out</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,        <span class="hljs-comment">// module number</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ChanNum)</span></span>;      <span class="hljs-comment">// channel number</span>
 
+<span class="hljs-comment">// Read run statistics data from a module</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16ReadStatisticsFromModule</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   *Statistics,   <span class="hljs-comment">// run statistics data</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum )</span></span>;      <span class="hljs-comment">// module number</span>
 
+<span class="hljs-comment">// Read histogram data from a module and save to a file</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16SaveHistogramToFile</span> <span class="hljs-params">(
     <span class="hljs-keyword">char</span> *FileName,               <span class="hljs-comment">// histogram data file name</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum)</span></span>;       <span class="hljs-comment">// module number</span>
 
+<span class="hljs-comment">// Parse a list mode data file to get events information</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16GetModuleEvents</span> <span class="hljs-params">(
     <span class="hljs-keyword">char</span> *FileName,               <span class="hljs-comment">// the list mode data file name (with complete path)</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> *ModuleEvents )</span></span>; <span class="hljs-comment">// receives number of events for each module</span>
 
+<span class="hljs-comment">// Get detailed events information from a data file</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16GetEventsInfo</span> <span class="hljs-params">(
     <span class="hljs-keyword">char</span> *FileName,                   <span class="hljs-comment">// the list mode data file name (with complete path)</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   *EventInformation, <span class="hljs-comment">// to hold event information</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModuleNumber)</span></span>;     <span class="hljs-comment">// the module whose events are to be retrieved</span>
 
+<span class="hljs-comment">// Read trace data from a list mode data file</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16ReadListModeTrace</span> <span class="hljs-params">(
     <span class="hljs-keyword">char</span> *FileName,               <span class="hljs-comment">// list mode data file name</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> *Trace_Data,   <span class="hljs-comment">// list mode trace data (16-bit words)</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> NumWords,      <span class="hljs-comment">// number of 16-bit words to be read out</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   FileLocation)</span></span>; <span class="hljs-comment">// the location of the trace in the file</span>
 
+<span class="hljs-comment">// Read histogram data from a histogram data file</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16ReadHistogramFromFile</span> <span class="hljs-params">(
     <span class="hljs-keyword">char</span>  *FileName,              <span class="hljs-comment">// the histogram data file name (with complete path)</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> *Histogram,      <span class="hljs-comment">// histogram data</span>
@@ -513,12 +548,15 @@
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,        <span class="hljs-comment">// module number</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ChanNum)</span></span>;      <span class="hljs-comment">// channel number</span>
 
+<span class="hljs-comment">// Read DSP parameters from modules and save to a file</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16SaveDSPParametersToFile</span> <span class="hljs-params">(
     <span class="hljs-keyword">char</span>  *FileName )</span></span>;            <span class="hljs-comment">// the DSP parameters file name (with complete path)</span>
 
+<span class="hljs-comment">// Load DSP parameters to modules from a file</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16LoadDSPParametersFromFile</span> <span class="hljs-params">(
     <span class="hljs-keyword">char</span>  *FileName )</span></span>;            <span class="hljs-comment">// the DSP parameters file name (with complete path)</span>
 
+<span class="hljs-comment">// Copy DSP parameters from a module to others</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16CopyDSPParameters</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> BitMask,             <span class="hljs-comment">// copy items bit mask</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> SourceModule,        <span class="hljs-comment">// source module</span>
@@ -532,30 +570,37 @@
 
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">double</span> PIXIE16APP_API <span class="hljs-title">IEEEFloating2Decimal</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> IEEEFloatingNumber)</span></span>;
 
+
+<span class="hljs-comment">// Read data from external FIFO and save to a file</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16SaveExternalFIFODataToFile</span> <span class="hljs-params">(
     <span class="hljs-keyword">char</span> *FileName,               <span class="hljs-comment">// list mode data file name</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   *nFIFOWords,   <span class="hljs-comment">// number of words read from external FIFO</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,        <span class="hljs-comment">// module number</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> EndOfRunRead)</span></span>; <span class="hljs-comment">// indicator whether this is the end of run read</span>
 
+<span class="hljs-comment">// Read from or write to registers on a module</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16RegisterIO</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,        <span class="hljs-comment">// the Pixie module to communicate to</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   address,       <span class="hljs-comment">// register address</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> direction,     <span class="hljs-comment">// either MOD_READ or MOD_WRITE</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   *value )</span></span>;      <span class="hljs-comment">// holds or receives the data</span>
 
+<span class="hljs-comment">// Read Control &amp; Status Register value from a module</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16ReadCSR</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   *CSR )</span></span>;
 
+<span class="hljs-comment">// Write to Control &amp; Status Register in a module</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16WriteCSR</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum,
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   CSR )</span></span>;
 
+<span class="hljs-comment">// Check status of external FIFO of a module</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16CheckExternalFIFOStatus</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   *nFIFOWords,
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> ModNum )</span></span>;
 
+<span class="hljs-comment">// Read data from external FIFO of a module</span>
 <span class="hljs-function">PIXIE16APP_EXPORT <span class="hljs-keyword">int</span> PIXIE16APP_API <span class="hljs-title">Pixie16ReadDataFromExternalFIFO</span> <span class="hljs-params">(
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   *ExtFIFO_Data, <span class="hljs-comment">// To receive the external FIFO data</span>
     <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>   nFIFOWords,    <span class="hljs-comment">// number of words to read from external FIFO</span>
@@ -637,7 +682,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"XIA API","level":"1.4.1","depth":2,"previous":{"title":"Programmers Guide","level":"1.4","depth":1,"path":"ProgrammersGuide/README.md","ref":"ProgrammersGuide/README.md","articles":[{"title":"XIA API","level":"1.4.1","depth":2,"path":"ProgrammersGuide/XIAAPI.md","ref":"ProgrammersGuide/XIAAPI.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ProgrammersGuide/XIAAPI.md","mtime":"2018-05-14T09:28:04.983Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-16T16:33:32.177Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"XIA API","level":"1.4.1","depth":2,"previous":{"title":"Programmers Guide","level":"1.4","depth":1,"path":"ProgrammersGuide/README.md","ref":"ProgrammersGuide/README.md","articles":[{"title":"XIA API","level":"1.4.1","depth":2,"path":"ProgrammersGuide/XIAAPI.md","ref":"ProgrammersGuide/XIAAPI.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ProgrammersGuide/XIAAPI.md","mtime":"2018-05-18T18:23:21.447Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-20T01:09:41.995Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
