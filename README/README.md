@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 四 5月 17 00:33:20 2018 (+0800)
+;; Last-Updated: 三 5月 23 09:57:32 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 80
+;;     Update #: 83
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -19,7 +19,7 @@ https://github.com/wuhongyi/PKUXIADAQ
 网页版说明书请访问
 http://wuhongyi.cn/PKUXIADAQ/
 
-markdown版本说明书请访问  README/  
+markdown 版本说明书请访问  README/  
 
 离线网页版说明书请访问  docs/  
 
@@ -31,34 +31,34 @@ pdf版本说明书请访问  README.pdf
 
 ----
 
-**本说明书仅适用于 XIA LLC Pixie-16**
+**This manual applies only to XIA LLC Pixie-16**
 
-- 本程序由**北京大学实验核物理组**开发。
-- 本程序的开发参考借鉴了**TODO**程序。
-- 特别感谢 *谭辉(XIA LLC)* 对我们开发的支持。
-
-
-技术指导:
-- 李智焕
-- 谭辉(XIA LLC)
-
-软件主要开发者:
-- 吴鸿毅(wuhongyi@qq.com)
-- 李晶(lijinger02@126.com)
-
-说明书主要撰写者:
-- 吴鸿毅
-- 王翔
-- 罗迪雯
+- This program is developed by the **experimental nuclear physics group of Peking University**.  本程序由**北京大学实验核物理组**开发。
+- The earliest graphical interface development of this program is based on NSCL DDAS Nscope(http://docs.nscl.msu.edu/daq/newsite/ddas-1.1/nscope.html).  最早的图形界面程序是基于 NSCL DDAS Nscope 开发。
+- Thanks to Hui Tan's(XIA LLC) support for our development.  特别感谢 *谭辉(XIA LLC)* 对我们开发的支持。
 
 
+Technical adviser 技术指导:
+- Zhihuan Li  李智焕
+- Hui Tan  谭辉(XIA LLC)
 
-本程序的开发得到以下单位的支持：
+Software Developer 软件主要开发者:
+- Hongyi Wu 吴鸿毅(wuhongyi@qq.com)
+- Jing Li 李晶(lijinger02@126.com)
+
+Principal author of the instruction 说明书主要撰写者:
+- Hongyi Wu 吴鸿毅
+- Xiang Wang 王翔
+- Diwen Luo 罗迪雯
+
+
+
+The development of this program is supported by the following 本程序的开发得到以下单位的支持：
 - XIA LLC
-- 中国科学院近代物理研究所(IMP)
-- 中国原子能科学研究院(CIAE)
-- 香港大学(HKU)
-- 山东大学(威海)(SDU)
+- Institute of Modern Physics, Chinese Academy of Sciences 中国科学院近代物理研究所(IMP)
+- China Institute of Atomic Energy 中国原子能科学研究院(CIAE)
+- The University of Hong Kong  香港大学(HKU)
+- Shandong University, Weihai 山东大学(威海)(SDU)
 - ...
 
 ----
@@ -83,7 +83,7 @@ pdf版本说明书请访问  README.pdf
 - OnlineStattics(在线监视程序)
 - parset(参数设置文件)
 - PlxSdk.tar.gz(Plx9054 驱动)
-- README(说明书 m d版)
+- README(说明书 markdown 版)
 - README.md(github首页介绍)
 - README.pdf(pdf版本说明书)
 - software(pixie16驱动API，非官方标准，已经被吴鸿毅修改)
@@ -97,7 +97,7 @@ pdf版本说明书请访问  README.pdf
 - 我们也在开发基于网页控制的获取在线/离线分析程序:
 	- FastCGI
 	- JSROOT
-	- 网页前端
+	- web
 	- ...
 
 

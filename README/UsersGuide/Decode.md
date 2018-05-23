@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:14 2018 (+0800)
-;; Last-Updated: 三 5月 16 18:30:38 2018 (+0800)
+;; Last-Updated: 三 5月 23 07:05:08 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 6
+;;     Update #: 9
 ;; URL: http://wuhongyi.cn -->
 
 # Decode
@@ -53,9 +53,14 @@ make
 其中 *[RuNnumber]* 为想要转换的文件运行编号。
 
 
+例如：
+```bash
+./decade  3
+```
+
 ----
 
-ROOT File Branch：
+**ROOT File Branch：**
 
 - sr(short):sample rate，100/250/500，该数值由 UesrDefine.hh 中指定
 - pileup(bool):堆积标记。
@@ -79,8 +84,10 @@ ROOT File Branch：
 - dt(unsigned short):为了方便直接查看每个波形，添加了一个数值从0 - N-1 的数组
 - nevt(unsigned int):该事件在本文件中的编号
 
+下图展示一个文件中的 Branch 定义：   
+![File Branch 1](/img/ROOTFILEBRANCH_1.png)
+![File Branch 2](/img/ROOTFILEBRANCH_2.png)
 
-**TODO 这里添加一个Branch截图。。。**
 
 
 ----

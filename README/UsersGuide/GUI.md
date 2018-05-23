@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:55 2018 (+0800)
-;; Last-Updated: 三 5月 16 16:29:12 2018 (+0800)
+;; Last-Updated: 三 5月 23 09:08:22 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 10
+;;     Update #: 14
 ;; URL: http://wuhongyi.cn -->
 
 # GUI
@@ -52,9 +52,9 @@
 
 选择、或者不选择 **Online Mode** 选项之后，按 **Boot** 按钮开启初始化过程，可看到最下方 *Information* 栏目中的状态变化。
 
-系统初始化成功后，再次确认 *Setup* 栏中从的获取文件存放路径、文件名、文件编号是否有问题，如果有问题则直接修改，确认之后按 **Complete**。
+系统初始化成功后，再次确认 *Setup* 栏中的获取文件存放路径、文件名、文件编号是否有问题，如果有问题则直接修改，确认之后按 **Complete**。
 
-之后 *Control* 栏中的主按钮 **LSRunStart** 则开启，此时点击该按钮，获取则开启，按钮状态更改为 **LSRunStop**，再次点击该按钮，获取结束，运行的 *Run Num* 号码自动加一。再次点击 **LSRunStart** 开启下轮获取。
+确认 *Setup* 栏中的信息之后， *Control* 栏中的主按钮 **LSRunStart** 则开启，此时点击该按钮，获取则开启，按钮状态更改为 **LSRunStop**，再次点击该按钮，获取结束，运行的 *Run Num* 号码自动加一。再次点击 **LSRunStart** 开启下轮获取。
 
 当前，获取之前可通过最上方的下拉栏里面的子菜单来调节、修改参数。获取数据时请勿操作 *Control*栏之外的所有选项。
 
@@ -93,7 +93,7 @@
 
 
 - 选项 *Gain* 为增益调节，用户可选择 Larger 或者 Small 档，具体每个采集卡这两档所对应的增益参数用户可自行测试或者咨询厂家。
-- 选项 *Sign* 选择输入信号的极性，输入正信号选择 +，输入负信号则选择 -。
+- 选项 *Sign* 选择输入信号的极性，输入正信号选择 "+"，输入负信号则选择 "-"。
 - 选项 *GC* 表示是否开启该通道，选择表示开启该通道，不选择表示不开启。
 - 选项 *ECT* 选择表示开启CFD功能。
 
@@ -135,28 +135,38 @@
 
 界面下方的 Status 显示为**绿色的 Ready** 时表示可操作该界面，否则需要等待。底下按钮的操作同上。
 
-。。。。
+。。TODO。。
 
 
 ### CFD
 
 ![CFD](/img/CFDPars.png)
 
+。。TODO。。
+
 ### QDC
 
 ![QDC](/img/QDCPars.png)
+
+。。TODO。。
 
 ### Decimation
 
 ![Decimation](/img/Decimation.png)
 
+。。TODO。。
+
 ### Copy Pars
 
 ![Copy Pars](/img/CopyPars.png)
 
+。。TODO。。
+
 ### Save2File
 
 ![Save2File](/img/Save2File.png)
+
+。。TODO。。
 
 ----
 
@@ -164,17 +174,25 @@
 
 本下拉栏中调节内容为高阶内容，需要对获取逻辑有一定基础的人学习掌握。
 
+。。TODO。。
+
 ### Module Variables
 
 ![Module Variables](/img/ModuleVariables.png)
+
+。。TODO。。
 
 ### CSRA
 
 ![CSRA](/img/CSRA.png)
 
+。。TODO。。
+
 ### Logic Set
 
 ![Logic Set](/img/LogicTrigger.png)
+
+。。TODO。。
 
 ----
 
@@ -185,6 +203,8 @@
 ### Hist & XDT
 
 ![Hist & XDT](/img/HistXDT.png)
+
+。。TODO。。
 
 ### Trace & Baseline
 
@@ -197,6 +217,9 @@
 
 ![Trace & Baseline](/img/BaselineTimestamps.png)
 
+
+。。TODO。。
+
 ----
 
 ## Offiline 下拉栏
@@ -207,9 +230,26 @@
 
 ![Adjust Par](/img/AdjustPar.png)
 
+- InitData: This page. Read the binary file.
+	- Run 选择要读取的文件运行编号，Mod 选择要读取第几个采集卡，按钮 Read 将文件主要信息(道址、能量、波形位置等)载入内存。
+	- Additional analysis: 三个选项中，选择表示读取该文件数据到内存中时包括该信息。只有读取了该数据，才能启用一些分析方法。但是前提是数据采集时候需要记录该信息。
+- Adjust Par:  Waveform/fast filter/energy filter/cfd/threshould of the select channel.
+- Wave-16:  Waveform/fast filter/energy filter/cfd filter/threshould of the 16 channels.
+- Energy-16:  The original energy spectrum of the 16 channel..
+- Orig Energy:  The original energy spectrum of the select channel.
+- Calc Energy:  Recalculation of energy spectrum by waveforms.
+- FF/CFD Thre:   Accumulation of a large number of fast filter/cfd filter waveforms to determine the threshold.
+- Energy-FF:  The two dimensional relationship between energy and fast filter first/second peak height.
+- QDC:  It will be finished soon.
+- FFT:  Fourier transformation of a single waveform. User can choose XIA/CAEN/FFTW3 functions.
+
+**需要添加一个页面功能，选择两路快速看时间分辨。类似于TechnoAP界面中的功能。**
+
+。。TODO。。这里需要较大篇幅来介绍。每个子页面的用法需要详细介绍。
+
 ### Simulation(暂未实现)
 
-通过模型产生不同类型探测器的波形，辅助使用者学习参数优化调节的。
+通过模型产生不同类型探测、不同信噪比的波形，辅助使用者学习参数优化调节的。
 
 
 

@@ -11,3 +11,4 @@
 	* [FrontPanel](UsersGuide/FrontPanel.md)
 * [Programmers Guide](ProgrammersGuide/README.md)
 	* [XIA API](ProgrammersGuide/XIAAPI.md)
+	* [PKU code](ProgrammersGuide/PKUCode.md)
