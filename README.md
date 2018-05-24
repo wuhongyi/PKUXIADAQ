@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 三 5月 23 09:56:16 2018 (+0800)
+;; Last-Updated: 三 5月 23 09:57:32 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 82
+;;     Update #: 83
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -35,7 +35,7 @@ pdf版本说明书请访问  README.pdf
 
 - This program is developed by the **experimental nuclear physics group of Peking University**.  本程序由**北京大学实验核物理组**开发。
 - The earliest graphical interface development of this program is based on NSCL DDAS Nscope(http://docs.nscl.msu.edu/daq/newsite/ddas-1.1/nscope.html).  最早的图形界面程序是基于 NSCL DDAS Nscope 开发。
-- Thanks to Hui Tan's support for our development.  特别感谢 *谭辉(XIA LLC)* 对我们开发的支持。
+- Thanks to Hui Tan's(XIA LLC) support for our development.  特别感谢 *谭辉(XIA LLC)* 对我们开发的支持。
 
 
 Technical adviser 技术指导:

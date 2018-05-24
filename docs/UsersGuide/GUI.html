@@ -308,9 +308,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:55 2018 (+0800)
-;; Last-Updated: 三 5月 23 09:08:22 2018 (+0800)
+;; Last-Updated: 四 5月 24 11:58:04 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 14
+;;     Update #: 19
 ;; URL: http://wuhongyi.cn -->
 
 
@@ -376,13 +376,119 @@
 </li></ul>
 <p>&#x84DD;&#x8272;&#x7684; <em>Baseline</em> &#x7528;&#x6765;&#x8C03;&#x8282;&#x57FA;&#x7EBF;&#x4F4D;&#x7F6E;&#xFF0C;&#x901A;&#x8FC7;&#x7535;&#x538B;&#x7684;&#x8865;&#x507F;&#x5C06;&#x57FA;&#x7EBF;&#x8C03;&#x8282;&#x5230;&#x7528;&#x6237;&#x9884;&#x671F;&#x7684;&#x4F4D;&#x7F6E;&#xFF1A;</p><ul><li><em>Baseline</em> &#x53EF;&#x8C03;&#x8282;&#x8303;&#x56F4;&#x4E3A; 0 - 100&#xFF0C;&#x8868;&#x793A;&#x6CE2;&#x5F62;&#x57FA;&#x7EBF;&#x843D;&#x5728;&#x6EE1;&#x91CF;&#x7A0B;&#x7684;&#x4F4D;&#x7F6E;&#x767E;&#x5206;&#x6BD4;&#x3002;&#x4F8B;&#x5982;&#x5782;&#x76F4;&#x7CBE;&#x5EA6; 14 bit&#x91C7;&#x96C6;&#x5361;&#xFF0C;&#x8BE5;&#x53C2;&#x6570;&#x8BBE;&#x7F6E;&#x4E3A;10&#x610F;&#x5473;&#x7740;&#x964D;&#x57FA;&#x7EBF;&#x8865;&#x507F;&#x8C03;&#x8282;&#x5230;&#x6EE1;&#x91CF;&#x7A0B; 16384 &#x9053;&#x7684; 10% &#x5DE6;&#x53F3;&#x5373; 1638 &#x9644;&#x8FD1;&#x3002;
 </li></ul>
-<p>&#x7D2B;&#x8272;&#x7684; <em>DCOffset</em>&#x3001;<em>BLcut</em> &#x7528;&#x6237;&#x4E0D;&#x9700;&#x8981;&#x4FEE;&#x6539;&#xFF0C;&#x91C7;&#x7528;&#x81EA;&#x52A8;&#x8C03;&#x8282;&#x53C2;&#x6570;&#x5373;&#x53EF;&#x3002;&#x672C;&#x5B50;&#x83DC;&#x5355;&#x4E2D;&#x4FEE;&#x6539;&#x4E86; <em>Baseline</em>&#x3001;<em>Gain</em>&#x3001;<em>Sign</em> &#x4E4B;&#x540E;&#xFF0C;&#x9700;&#x8981;&#x6309;&#x6700;&#x4E0B;&#x65B9;&#x7684; <strong>AdjustOffset</strong>&#xFF0C;&#x4E4B;&#x540E;&#x518D;&#x6309;<strong>BLcutFinder</strong> &#x6765;&#x81EA;&#x52A8;&#x8C03;&#x8282;&#x8FD9;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#x3002;</p><h3 id="trigger-filter">Trigger Filter</h3><p><img alt="Trigger Filter" src="../img/TriggerFilter.png"></p><p>&#x754C;&#x9762;&#x4E0B;&#x65B9;&#x7684; Status &#x663E;&#x793A;&#x4E3A;<strong>&#x7EFF;&#x8272;&#x7684; Ready</strong> &#x65F6;&#x8868;&#x793A;&#x53EF;&#x64CD;&#x4F5C;&#x8BE5;&#x754C;&#x9762;&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x3002;&#x5E95;&#x4E0B;&#x6309;&#x94AE;&#x7684;&#x64CD;&#x4F5C;&#x540C;&#x4E0A;&#x3002;</p><ul><li>&#x53C2;&#x6570; <em>TPeaking</em> &#x3002;&#x3002;&#x3002;
+<p>&#x7D2B;&#x8272;&#x7684; <em>DCOffset</em>&#x3001;<em>BLcut</em> &#x7528;&#x6237;&#x4E0D;&#x9700;&#x8981;&#x4FEE;&#x6539;&#xFF0C;&#x91C7;&#x7528;&#x81EA;&#x52A8;&#x8C03;&#x8282;&#x53C2;&#x6570;&#x5373;&#x53EF;&#x3002;&#x672C;&#x5B50;&#x83DC;&#x5355;&#x4E2D;&#x4FEE;&#x6539;&#x4E86; <em>Baseline</em>&#x3001;<em>Gain</em>&#x3001;<em>Sign</em> &#x4E4B;&#x540E;&#xFF0C;&#x9700;&#x8981;&#x6309;&#x6700;&#x4E0B;&#x65B9;&#x7684; <strong>AdjustOffset</strong>&#xFF0C;&#x4E4B;&#x540E;&#x518D;&#x6309;<strong>BLcutFinder</strong> &#x6765;&#x81EA;&#x52A8;&#x8C03;&#x8282;&#x8FD9;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#x3002;</p><ul><li>Good channel. Only channels marked as good will have their events recorded.
+This setting has no bearing on the channel&apos;s capability to issue a trigger. There
+can be a triggering channel whose data are discarded. Channels not marked as
+good will be excluded from the automatic offset adjustment.
+</li>
+<li>Capture trace. When this box is checked, trace will be captured and recorded
+for each event, along with other list mode information, e.g. timestamp, energy,
+etc.
+</li>
+<li>Capture QDC sums. When this box is checked, eight QDC sums will be
+recorded for each event. QDC sums are consecutive sums of the list mode
+trace.
+</li>
+<li>Enable CFD trigger. Check this box to enable this channel&#x2019;s CFD trigger.
+Otherwise, regular trapezoidal fast trigger will be used.
+</li>
+<li>Capture raw energy sums and baseline. Check this box to record raw energy
+sums and baseline value for each event.
+</li></ul>
+<p>The <strong>Base Setup</strong> page controls the analog gain, offset and polarity for each channel. It is useful to click on <strong>Trace &amp; Baseline</strong> in the top control <strong>Monitor</strong> bar to view the signal read from the ADCs while adjusting these parameters. The display shows one or all 16 channels of a module; you can set the sampling interval for each block to capture a longer time frame in <strong>Hist &amp; XDT</strong> page. Click <strong>Draw</strong> to update the graph.</p><p>Pulses from the detector should fall in the range from 0 to 12/14/16-bit -1, with the baseline at ~400 to allow for drifts and/or undershoots and no clipping at the upper limit. If there is clipping, adjust the Gain and Offset or click on the Adjust Offsets button to let the software set the DC offsets to proper levels.<strong>TODO &#x8FD9;&#x6BB5;&#x8FD8;&#x9700;&#x8981;&#x8FDB;&#x4E00;&#x6B65;&#x4FEE;&#x6539;</strong></p><p>Since the trigger/filter circuits in the FPGA only act on rising pulses, negative pulses are inverted at the input of the FPGA, and the waveforms shown in the ADC trace display include this optional inversion. Thus set the channel&#x2019;s Polarity such that pulses from the detector appear with positive amplitude (rising edge).</p><p>In the <strong>Base Setup</strong>  tab, you can set the total trace length and the pre-trigger trace delay for the waveforms to be acquired in list mode runs.</p><p>The Pixie-16 constantly takes baseline measurements when no pulse is detected and keeps a
+baseline average to be subtracted from the energy filter output during pulse height
+reconstruction. Baseline measurements that differ from the average by more than Baseline Cut
+will be rejected as they are likely contaminated with small pulses below the trigger threshold.
+You can click on the Acquire Baseline button to view a series of baseline measurements for each
+channel, and in the single channel view you can build a histogram of baselines to verify that the
+Baseline Cut does not reject measurements falling into the main (ideally Gaussian) peak in the
+baseline distribution. Usually, it is sufficient to keep Baseline Cut at its default value.</p><p>Note: Since the baseline computation takes into account the exponential decay, no pulses
+should be noticeable in the baseline display if a) the decay time is set correctly and b) the
+detector pulses are truly exponential.</p><p>Baseline Percent is a parameter used for automatic offset adjustment; by clicking on the
+Adjust Offsets button, offsets will be set such that the baseline seen in the ADC trace display falls
+at the Baseline Percent fraction of the full ADC range (e.g. for Baseline Percent = 10% the
+baseline falls at ADC step 1638 out of 16384 total).</p><h3 id="trigger-filter">Trigger Filter</h3><p><img alt="Trigger Filter" src="../img/TriggerFilter.png"></p><p>&#x754C;&#x9762;&#x4E0B;&#x65B9;&#x7684; Status &#x663E;&#x793A;&#x4E3A;<strong>&#x7EFF;&#x8272;&#x7684; Ready</strong> &#x65F6;&#x8868;&#x793A;&#x53EF;&#x64CD;&#x4F5C;&#x8BE5;&#x754C;&#x9762;&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x3002;&#x5E95;&#x4E0B;&#x6309;&#x94AE;&#x7684;&#x64CD;&#x4F5C;&#x540C;&#x4E0A;&#x3002;</p><ul><li>&#x53C2;&#x6570; <em>TPeaking</em> &#x3002;&#x3002;&#x3002;
 </li>
 <li>&#x53C2;&#x6570; <em>TGap</em> &#x3002;&#x3002;&#x3002;
 </li>
 <li>&#x53C2;&#x6570; <em>Thresh.</em> &#x8868;&#x793A;&#x9608;&#x503C;&#xFF0C;&#x8BE5;&#x6570;&#x503C;&#x7684;&#x8BBE;&#x7F6E;&#x662F;&#x76F8;&#x5BF9; fast filter &#x6CE2;&#x5F62;&#x3002;
 </li></ul>
-<p><strong>TODO   &#x8FD9;&#x91CC;&#x9700;&#x8981;&#x8865;&#x5145;&#x4E00;&#x4E2A;&#x793A;&#x610F;&#x56FE;&#xFF0C;&#x8FD8;&#x6709;&#x8BA1;&#x7B97;&#x516C;&#x5F0F;&#x3002;</strong></p><h3 id="energy">Energy</h3><p><img alt="Energy" src="../img/Energy.png"></p><p>&#x754C;&#x9762;&#x4E0B;&#x65B9;&#x7684; Status &#x663E;&#x793A;&#x4E3A;<strong>&#x7EFF;&#x8272;&#x7684; Ready</strong> &#x65F6;&#x8868;&#x793A;&#x53EF;&#x64CD;&#x4F5C;&#x8BE5;&#x754C;&#x9762;&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x3002;&#x5E95;&#x4E0B;&#x6309;&#x94AE;&#x7684;&#x64CD;&#x4F5C;&#x540C;&#x4E0A;&#x3002;</p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><h3 id="cfd">CFD</h3><p><img alt="CFD" src="../img/CFDPars.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><h3 id="qdc">QDC</h3><p><img alt="QDC" src="../img/QDCPars.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><h3 id="decimation">Decimation</h3><p><img alt="Decimation" src="../img/Decimation.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><h3 id="copy-pars">Copy Pars</h3><p><img alt="Copy Pars" src="../img/CopyPars.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><h3 id="save2file">Save2File</h3><p><img alt="Save2File" src="../img/Save2File.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><hr><h2 id="expert-&#x4E0B;&#x62C9;&#x680F;">Expert &#x4E0B;&#x62C9;&#x680F;</h2><p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x8C03;&#x8282;&#x5185;&#x5BB9;&#x4E3A;&#x9AD8;&#x9636;&#x5185;&#x5BB9;&#xFF0C;&#x9700;&#x8981;&#x5BF9;&#x83B7;&#x53D6;&#x903B;&#x8F91;&#x6709;&#x4E00;&#x5B9A;&#x57FA;&#x7840;&#x7684;&#x4EBA;&#x5B66;&#x4E60;&#x638C;&#x63E1;&#x3002;</p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><h3 id="module-variables">Module Variables</h3><p><img alt="Module Variables" src="../img/ModuleVariables.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><h3 id="csra">CSRA</h3><p><img alt="CSRA" src="../img/CSRA.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><h3 id="logic-set">Logic Set</h3><p><img alt="Logic Set" src="../img/LogicTrigger.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><hr><h2 id="monitor-&#x4E0B;&#x62C9;&#x680F;">Monitor &#x4E0B;&#x62C9;&#x680F;</h2><p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x8C03;&#x8282;&#x5185;&#x5BB9;&#x4E3A;&#x76D1;&#x89C6;&#x6CE2;&#x5F62;&#x566A;&#x58F0;&#x6C34;&#x5E73;&#x3001;&#x57FA;&#x7EBF;&#x5206;&#x5E03;&#x7B49;&#x3002;</p><h3 id="hist--xdt">Hist &amp; XDT</h3><p><img alt="Hist &amp; XDT" src="../img/HistXDT.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><h3 id="trace--baseline">Trace &amp; Baseline</h3><p><img alt="Trace &amp; Baseline" src="../img/Trace.png"></p><p><img alt="Trace &amp; Baseline" src="../img/BaselineHist.png"></p><p><img alt="Trace &amp; Baseline" src="../img/BaselineTimestamps.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><hr><h2 id="offiline-&#x4E0B;&#x62C9;&#x680F;">Offiline &#x4E0B;&#x62C9;&#x680F;</h2><p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x4E3A;&#x79BB;&#x7EBF;&#x53C2;&#x6570;&#x4F18;&#x5316;&#x8C03;&#x8282;&#x3002;</p><h3 id="adjust-par">Adjust Par</h3><p><img alt="Adjust Par" src="../img/AdjustPar.png"></p><ul><li><p>InitData: This page. Read the binary file.</p><ul><li>Run &#x9009;&#x62E9;&#x8981;&#x8BFB;&#x53D6;&#x7684;&#x6587;&#x4EF6;&#x8FD0;&#x884C;&#x7F16;&#x53F7;&#xFF0C;Mod &#x9009;&#x62E9;&#x8981;&#x8BFB;&#x53D6;&#x7B2C;&#x51E0;&#x4E2A;&#x91C7;&#x96C6;&#x5361;&#xFF0C;&#x6309;&#x94AE; Read &#x5C06;&#x6587;&#x4EF6;&#x4E3B;&#x8981;&#x4FE1;&#x606F;(&#x9053;&#x5740;&#x3001;&#x80FD;&#x91CF;&#x3001;&#x6CE2;&#x5F62;&#x4F4D;&#x7F6E;&#x7B49;)&#x8F7D;&#x5165;&#x5185;&#x5B58;&#x3002;
+<p><strong>TODO   &#x8FD9;&#x91CC;&#x9700;&#x8981;&#x8865;&#x5145;&#x4E00;&#x4E2A;&#x793A;&#x610F;&#x56FE;&#xFF0C;&#x8FD8;&#x6709;&#x8BA1;&#x7B97;&#x516C;&#x5F0F;&#x3002;</strong></p><p>Assume the digitized waveform stream can be represented by data series Trace[i], i=0,1,2,... First the fast filter response of the digitized waveform is computed as follows:</p><p><strong>TODO&#x516C;&#x5F0F;</strong></p><p>Where FL is called the fast length and FG is called the fast gap of the digital trapezoidal filter.</p><ul><li>A longer trigger filter rise time averages more samples and thus allows setting lower thresholds without triggering on noise.
+</li>
+<li>Typically the threshold should be set as low as possible, just above the noise level.
+</li>
+<li>A longer trigger filter flat top time makes it easier to detect slow rising pulses.
+</li></ul>
+<h3 id="energy">Energy</h3><p><img alt="Energy" src="../img/Energy.png"></p><p>&#x754C;&#x9762;&#x4E0B;&#x65B9;&#x7684; Status &#x663E;&#x793A;&#x4E3A;<strong>&#x7EFF;&#x8272;&#x7684; Ready</strong> &#x65F6;&#x8868;&#x793A;&#x53EF;&#x64CD;&#x4F5C;&#x8BE5;&#x754C;&#x9762;&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x3002;&#x5E95;&#x4E0B;&#x6309;&#x94AE;&#x7684;&#x64CD;&#x4F5C;&#x540C;&#x4E0A;&#x3002;</p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><p>The most critical parameter for the energy computation is the signal decay time Tau. It is used
+to compensate for the falling edge of a previous pulse in the computation of the energy. You can
+either enter Tau directly for each channel, or enter an approximate value in the right control,
+select a channel, and click Find it to let the software determine the decay time automatically.
+Click Accept it to apply the found value to the channel. (If the approximate value is unchanged,
+the software could not find a better value.)  <strong>TODO &#x8FD9;&#x6BB5;&#x8FD8;&#x9700;&#x8981;&#x8FDB;&#x4E00;&#x6B65;&#x4FEE;&#x6539;</strong></p><ul><li>The energy filter flat top time should be about the same as the pulse rise time.
+</li>
+<li>The energy filter rise time can be varied to balance resolution and throughput. Typically, energy resolution increases with the length of the filter rise time, up to an optimum when longer filters only add more noise into the measurement. The filter dead time is about TD = 2 &#xD7; (T rise + T flat ), and the maximum throughput for Poisson statistics is 1/(TD*e). For HPGe detectors, a rise time of 4-6&#x3BC;s is usually appropriate.
+</li>
+<li>Choose the smallest energy filter range that allows setting the optimum energy filter rise time. Larger filter ranges allow longer filter sums, but increase the granularity of possible values for the energy filter rise time and flat top time and increase the jitter of latching the energy filter output relative to the rising edge of the pulse. This is usually only important for very fast pulses.
+</li></ul>
+<h3 id="cfd">CFD</h3><p><img alt="CFD" src="../img/CFDPars.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><p>Then the CFD is computed as follows:</p><p><strong>TODO&#x516C;&#x5F0F;</strong></p><p>Where D is called the CFD delay length and W is called the CFD scaling factor.</p><p>The CFD zero crossing point (ZCP) is then determined when CFD[i] &gt; 0 and CFD[i+1] &lt; 0.
+The timestamp is latched at Trace point i, and the fraction time f is given by the ratio of the two
+CFD response amplitudes right before and after the ZCP.</p><p><strong>TODO&#x516C;&#x5F0F;</strong></p><p>Where CFDout1 is the CFD response amplitude right before the ZCP and CFDout2 is the CFD
+response amplitude (absolute value since CFDout2 is negative) right after the ZCP. The Pixie-16
+DSP computes the CFD final value as shown below and stored it in the output data stream for
+online or offline analysis.</p><p>Valid CFD Scale values and corresponding CFD scaling factors are
+<strong>TODO  CFD&#x53C2;&#x6570;&#x5BF9;&#x5E94;&#x8868;&#x683C;</strong></p><h3 id="qdc">QDC</h3><p><img alt="QDC" src="../img/QDCPars.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><p>Eight QDC sums, each of which can have different length varying from 10 ns to 327.68 &#x3BC;s,
+are computed in the signal processing FPGA of a Pixie-16 module for each channel and the sums
+are written to the output data stream if the user requests so. The recording of QDC sums starts at
+the waveform point which is Pre-trigger Trace Length earlier than the trigger point, which is
+either the CFD trigger or local fast trigger depending on whether or not CFD trigger mode is
+enabled. The eight QDC sums are computed one by one continuously, but they are not
+overlapping. Both the QDC sum length and the Pre-trigger trace length are set by the user. The
+recording of QDC sums ends when the eight intervals have passed.</p><h3 id="decimation">Decimation</h3><p><img alt="Decimation" src="../img/Decimation.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><h3 id="copy-pars">Copy Pars</h3><p><img alt="Copy Pars" src="../img/CopyPars.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><h3 id="save2file">Save2File</h3><p><img alt="Save2File" src="../img/Save2File.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><hr><h2 id="expert-&#x4E0B;&#x62C9;&#x680F;">Expert &#x4E0B;&#x62C9;&#x680F;</h2><p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x8C03;&#x8282;&#x5185;&#x5BB9;&#x4E3A;&#x9AD8;&#x9636;&#x5185;&#x5BB9;&#xFF0C;&#x9700;&#x8981;&#x5BF9;&#x83B7;&#x53D6;&#x903B;&#x8F91;&#x6709;&#x4E00;&#x5B9A;&#x57FA;&#x7840;&#x7684;&#x4EBA;&#x5B66;&#x4E60;&#x638C;&#x63E1;&#x3002;</p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><h3 id="module-variables">Module Variables</h3><p><img alt="Module Variables" src="../img/ModuleVariables.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><p>Module Control Register B affecting the module as a whole.</p><ul><li>a) Enable pullups for backplane bus lines. This should be enabled for only one module in the crate.
+</li>
+<li>b) Connect trigger signals to backplane. You can set the module to share triggers over the backplane with other modules, unless you run each module (or channel) independently.
+</li>
+<li>c) Accept external trigger and run inhibit signals. Enable this option to let this module accept external trigger and run inhibit signals and then put the signals on the backplane so that all modules can see the same signals. This should be enabled for only one module in the crate.
+</li>
+<li>d) Crate master module (multiple crates only). This option is only used when multiple Pixie-16 crates communicate with each other. By enabling this option,the mater module in each crate is responsible for sending synchronization or trigger signals to certain backplane lines. This should be enabled for only one module in the crate.
+</li>
+<li>e) Enable run inhibit signal input. This option is only applicable to the module which has the &#x201C;Accept external trigger and run inhibit signals&#x201D; option enabled. This should be enabled for only one module in the crate.
+</li>
+<li>f) Multiple crates. This option is only used when multiple Pixie-16 crates communicate with each other.
+</li></ul>
+<h3 id="csra">CSRA</h3><p><img alt="CSRA" src="../img/CSRA.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><p>Channel Control Register A affecting each channel individually</p><ul><li>Good channel. Only channels marked as good will have their events recorded.
+This setting has no bearing on the channel&apos;s capability to issue a trigger. There
+can be a triggering channel whose data are discarded. Channels not marked as
+good will be excluded from the automatic offset adjustment.
+</li>
+<li>Histogram energies. When this box is checked, pulse height (energy) computed
+for each event will be incremented to an energy histogram in the MCA
+memory.
+</li>
+<li>Capture trace. When this box is checked, trace will be captured and recorded
+for each event, along with other list mode information, e.g. timestamp, energy,
+etc.
+</li>
+<li>Capture QDC sums. When this box is checked, eight QDC sums will be
+recorded for each event. QDC sums are consecutive sums of the list mode
+trace.
+</li>
+<li>Enable CFD trigger. Check this box to enable this channel&#x2019;s CFD trigger.
+Otherwise, regular trapezoidal fast trigger will be used.
+</li>
+<li>Require global external trigger for validation. Check this box to require global
+external trigger to validate events for this channel.
+</li>
+<li>Capture raw energy sums and baseline. Check this box to record raw energy
+sums and baseline value for each event.
+</li>
+<li>Require channel external trigger for validation. Check this box to require
+channel external trigger to validate events for this channel.
+</li>
+<li>Enable pileup rejection. Check this box to enable pileup rejection for this
+channel. Otherwise, pulses will still be recorded even if they are piled up.
+<strong>TODO &#x8FD9;&#x6BB5;&#x8FD8;&#x9700;&#x8981;&#x8FDB;&#x4E00;&#x6B65;&#x4FEE;&#x6539;</strong>
+</li></ul>
+<h3 id="logic-set">Logic Set</h3><p><img alt="Logic Set" src="../img/LogicTrigger.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><hr><h2 id="monitor-&#x4E0B;&#x62C9;&#x680F;">Monitor &#x4E0B;&#x62C9;&#x680F;</h2><p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x8C03;&#x8282;&#x5185;&#x5BB9;&#x4E3A;&#x76D1;&#x89C6;&#x6CE2;&#x5F62;&#x566A;&#x58F0;&#x6C34;&#x5E73;&#x3001;&#x57FA;&#x7EBF;&#x5206;&#x5E03;&#x7B49;&#x3002;</p><h3 id="hist--xdt">Hist &amp; XDT</h3><p><img alt="Hist &amp; XDT" src="../img/HistXDT.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><p>The binning factor controls the number of MCA bins in the spectrum. Energies are computed as 16 bit numbers, allowing in principle 64K MCA bins.</p><p>However, spectrum memory for each channel is limited to 32K bins, so computed energy values are divided by 2 binning factor before building the histogram. Binning Factor is usually set to 1, but for low count rates and wide peaks, it might be useful to set it to a larger value to obtain a spectrum with fewer bins, but more counts per bin.</p><p>Emin is reserved for a future function to subtract a constant &#x201C;minimum energy&#x201D; from the computed energy value before binning to essentially cut off the lower end of the spectrum.</p><h3 id="trace--baseline">Trace &amp; Baseline</h3><p><img alt="Trace &amp; Baseline" src="../img/Trace.png"></p><p><img alt="Trace &amp; Baseline" src="../img/BaselineHist.png"></p><p><img alt="Trace &amp; Baseline" src="../img/BaselineTimestamps.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><hr><h2 id="offiline-&#x4E0B;&#x62C9;&#x680F;">Offiline &#x4E0B;&#x62C9;&#x680F;</h2><p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x4E3A;&#x79BB;&#x7EBF;&#x53C2;&#x6570;&#x4F18;&#x5316;&#x8C03;&#x8282;&#x3002;</p><h3 id="adjust-par">Adjust Par</h3><p><img alt="Adjust Par" src="../img/AdjustPar.png"></p><ul><li><p>InitData: This page. Read the binary file.</p><ul><li>Run &#x9009;&#x62E9;&#x8981;&#x8BFB;&#x53D6;&#x7684;&#x6587;&#x4EF6;&#x8FD0;&#x884C;&#x7F16;&#x53F7;&#xFF0C;Mod &#x9009;&#x62E9;&#x8981;&#x8BFB;&#x53D6;&#x7B2C;&#x51E0;&#x4E2A;&#x91C7;&#x96C6;&#x5361;&#xFF0C;&#x6309;&#x94AE; Read &#x5C06;&#x6587;&#x4EF6;&#x4E3B;&#x8981;&#x4FE1;&#x606F;(&#x9053;&#x5740;&#x3001;&#x80FD;&#x91CF;&#x3001;&#x6CE2;&#x5F62;&#x4F4D;&#x7F6E;&#x7B49;)&#x8F7D;&#x5165;&#x5185;&#x5B58;&#x3002;
 </li>
 <li>Additional analysis: &#x4E09;&#x4E2A;&#x9009;&#x9879;&#x4E2D;&#xFF0C;&#x9009;&#x62E9;&#x8868;&#x793A;&#x8BFB;&#x53D6;&#x8BE5;&#x6587;&#x4EF6;&#x6570;&#x636E;&#x5230;&#x5185;&#x5B58;&#x4E2D;&#x65F6;&#x5305;&#x62EC;&#x8BE5;&#x4FE1;&#x606F;&#x3002;&#x53EA;&#x6709;&#x8BFB;&#x53D6;&#x4E86;&#x8BE5;&#x6570;&#x636E;&#xFF0C;&#x624D;&#x80FD;&#x542F;&#x7528;&#x4E00;&#x4E9B;&#x5206;&#x6790;&#x65B9;&#x6CD5;&#x3002;&#x4F46;&#x662F;&#x524D;&#x63D0;&#x662F;&#x6570;&#x636E;&#x91C7;&#x96C6;&#x65F6;&#x5019;&#x9700;&#x8981;&#x8BB0;&#x5F55;&#x8BE5;&#x4FE1;&#x606F;&#x3002;
 </li></ul>
@@ -404,7 +510,7 @@
 </li>
 <li>FFT:  Fourier transformation of a single waveform. User can choose XIA/CAEN/FFTW3 functions.
 </li></ul>
-<p><strong>&#x9700;&#x8981;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x9875;&#x9762;&#x529F;&#x80FD;&#xFF0C;&#x9009;&#x62E9;&#x4E24;&#x8DEF;&#x5FEB;&#x901F;&#x770B;&#x65F6;&#x95F4;&#x5206;&#x8FA8;&#x3002;&#x7C7B;&#x4F3C;&#x4E8E;TechnoAP&#x754C;&#x9762;&#x4E2D;&#x7684;&#x529F;&#x80FD;&#x3002;</strong></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x8F83;&#x5927;&#x7BC7;&#x5E45;&#x6765;&#x4ECB;&#x7ECD;&#x3002;&#x6BCF;&#x4E2A;&#x5B50;&#x9875;&#x9762;&#x7684;&#x7528;&#x6CD5;&#x9700;&#x8981;&#x8BE6;&#x7EC6;&#x4ECB;&#x7ECD;&#x3002;</p><h3 id="simulation&#x6682;&#x672A;&#x5B9E;&#x73B0;">Simulation(&#x6682;&#x672A;&#x5B9E;&#x73B0;)</h3><p>&#x901A;&#x8FC7;&#x6A21;&#x578B;&#x4EA7;&#x751F;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#x63A2;&#x6D4B;&#x3001;&#x4E0D;&#x540C;&#x4FE1;&#x566A;&#x6BD4;&#x7684;&#x6CE2;&#x5F62;&#xFF0C;&#x8F85;&#x52A9;&#x4F7F;&#x7528;&#x8005;&#x5B66;&#x4E60;&#x53C2;&#x6570;&#x4F18;&#x5316;&#x8C03;&#x8282;&#x7684;&#x3002;</p><!-- GUI.md ends here -->
+<p><strong>&#x9700;&#x8981;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x9875;&#x9762;&#x529F;&#x80FD;&#xFF0C;&#x9009;&#x62E9;&#x4E24;&#x8DEF;&#x5FEB;&#x901F;&#x770B;&#x65F6;&#x95F4;&#x5206;&#x8FA8;&#x3002;&#x7C7B;&#x4F3C;&#x4E8E;TechnoAP&#x754C;&#x9762;&#x4E2D;&#x7684;&#x529F;&#x80FD;&#x3002;</strong></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x8F83;&#x5927;&#x7BC7;&#x5E45;&#x6765;&#x4ECB;&#x7ECD;&#x3002;&#x6BCF;&#x4E2A;&#x5B50;&#x9875;&#x9762;&#x7684;&#x7528;&#x6CD5;&#x9700;&#x8981;&#x8BE6;&#x7EC6;&#x4ECB;&#x7ECD;&#x3002;</p><p>the ADC trace display also includes the option to view a FFT of the acquired trace. This is useful to diagnose noise contributions.</p><h3 id="simulation&#x6682;&#x672A;&#x5B9E;&#x73B0;">Simulation(&#x6682;&#x672A;&#x5B9E;&#x73B0;)</h3><p>&#x901A;&#x8FC7;&#x6A21;&#x578B;&#x4EA7;&#x751F;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#x63A2;&#x6D4B;&#x3001;&#x4E0D;&#x540C;&#x4FE1;&#x566A;&#x6BD4;&#x7684;&#x6CE2;&#x5F62;&#xFF0C;&#x8F85;&#x52A9;&#x4F7F;&#x7528;&#x8005;&#x5B66;&#x4E60;&#x53C2;&#x6570;&#x4F18;&#x5316;&#x8C03;&#x8282;&#x7684;&#x3002;</p><!-- GUI.md ends here -->
 
 
 
@@ -450,7 +556,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"GUI","level":"1.3.3","depth":2,"next":{"title":"OnlineStattics","level":"1.3.4","depth":2,"path":"UsersGuide/OnlineStattics.md","ref":"UsersGuide/OnlineStattics.md","articles":[]},"previous":{"title":"Decode","level":"1.3.2","depth":2,"path":"UsersGuide/Decode.md","ref":"UsersGuide/Decode.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"UsersGuide/GUI.md","mtime":"2018-05-23T01:08:22.820Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-23T01:56:23.225Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"GUI","level":"1.3.3","depth":2,"next":{"title":"OnlineStattics","level":"1.3.4","depth":2,"path":"UsersGuide/OnlineStattics.md","ref":"UsersGuide/OnlineStattics.md","articles":[]},"previous":{"title":"Decode","level":"1.3.2","depth":2,"path":"UsersGuide/Decode.md","ref":"UsersGuide/Decode.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"UsersGuide/GUI.md","mtime":"2018-05-24T03:58:04.164Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-24T03:59:54.368Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
