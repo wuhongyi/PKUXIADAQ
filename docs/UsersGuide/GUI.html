@@ -207,6 +207,19 @@
             
         </li>
     
+        <li class="chapter " data-level="1.3.7" data-path="Logic.html">
+            
+                <a href="Logic.html">
+            
+                    
+                    Logic
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -308,9 +321,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:55 2018 (+0800)
-;; Last-Updated: 四 5月 24 11:58:04 2018 (+0800)
+;; Last-Updated: 六 5月 26 09:43:55 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 19
+;;     Update #: 23
 ;; URL: http://wuhongyi.cn -->
 
 
@@ -407,9 +420,9 @@ should be noticeable in the baseline display if a) the decay time is set correct
 detector pulses are truly exponential.</p><p>Baseline Percent is a parameter used for automatic offset adjustment; by clicking on the
 Adjust Offsets button, offsets will be set such that the baseline seen in the ADC trace display falls
 at the Baseline Percent fraction of the full ADC range (e.g. for Baseline Percent = 10% the
-baseline falls at ADC step 1638 out of 16384 total).</p><h3 id="trigger-filter">Trigger Filter</h3><p><img alt="Trigger Filter" src="../img/TriggerFilter.png"></p><p>&#x754C;&#x9762;&#x4E0B;&#x65B9;&#x7684; Status &#x663E;&#x793A;&#x4E3A;<strong>&#x7EFF;&#x8272;&#x7684; Ready</strong> &#x65F6;&#x8868;&#x793A;&#x53EF;&#x64CD;&#x4F5C;&#x8BE5;&#x754C;&#x9762;&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x3002;&#x5E95;&#x4E0B;&#x6309;&#x94AE;&#x7684;&#x64CD;&#x4F5C;&#x540C;&#x4E0A;&#x3002;</p><ul><li>&#x53C2;&#x6570; <em>TPeaking</em> &#x3002;&#x3002;&#x3002;
+baseline falls at ADC step 1638 out of 16384 total).</p><h3 id="trigger-filter">Trigger Filter</h3><p><img alt="Trigger Filter" src="../img/TriggerFilter.png"></p><p>&#x754C;&#x9762;&#x4E0B;&#x65B9;&#x7684; Status &#x663E;&#x793A;&#x4E3A;<strong>&#x7EFF;&#x8272;&#x7684; Ready</strong> &#x65F6;&#x8868;&#x793A;&#x53EF;&#x64CD;&#x4F5C;&#x8BE5;&#x754C;&#x9762;&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x3002;&#x5E95;&#x4E0B;&#x6309;&#x94AE;&#x7684;&#x64CD;&#x4F5C;&#x540C;&#x4E0A;&#x3002;</p><ul><li>&#x53C2;&#x6570; <em>Rise Time</em> &#x3002;&#x3002;&#x3002;
 </li>
-<li>&#x53C2;&#x6570; <em>TGap</em> &#x3002;&#x3002;&#x3002;
+<li>&#x53C2;&#x6570; <em>Flat Top</em> &#x3002;&#x3002;&#x3002;
 </li>
 <li>&#x53C2;&#x6570; <em>Thresh.</em> &#x8868;&#x793A;&#x9608;&#x503C;&#xFF0C;&#x8BE5;&#x6570;&#x503C;&#x7684;&#x8BBE;&#x7F6E;&#x662F;&#x76F8;&#x5BF9; fast filter &#x6CE2;&#x5F62;&#x3002;
 </li></ul>
@@ -419,7 +432,13 @@ baseline falls at ADC step 1638 out of 16384 total).</p><h3 id="trigger-filter">
 </li>
 <li>A longer trigger filter flat top time makes it easier to detect slow rising pulses.
 </li></ul>
-<h3 id="energy">Energy</h3><p><img alt="Energy" src="../img/Energy.png"></p><p>&#x754C;&#x9762;&#x4E0B;&#x65B9;&#x7684; Status &#x663E;&#x793A;&#x4E3A;<strong>&#x7EFF;&#x8272;&#x7684; Ready</strong> &#x65F6;&#x8868;&#x793A;&#x53EF;&#x64CD;&#x4F5C;&#x8BE5;&#x754C;&#x9762;&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x3002;&#x5E95;&#x4E0B;&#x6309;&#x94AE;&#x7684;&#x64CD;&#x4F5C;&#x540C;&#x4E0A;&#x3002;</p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><p>The most critical parameter for the energy computation is the signal decay time Tau. It is used
+<h3 id="energy">Energy</h3><p><img alt="Energy" src="../img/Energy.png"></p><p>&#x754C;&#x9762;&#x4E0B;&#x65B9;&#x7684; Status &#x663E;&#x793A;&#x4E3A;<strong>&#x7EFF;&#x8272;&#x7684; Ready</strong> &#x65F6;&#x8868;&#x793A;&#x53EF;&#x64CD;&#x4F5C;&#x8BE5;&#x754C;&#x9762;&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x3002;&#x5E95;&#x4E0B;&#x6309;&#x94AE;&#x7684;&#x64CD;&#x4F5C;&#x540C;&#x4E0A;&#x3002;</p><ul><li>&#x53C2;&#x6570; <em>Rise Time</em> &#x3002;&#x3002;&#x3002;
+</li>
+<li>&#x53C2;&#x6570; <em>Flat Top</em> &#x3002;&#x3002;&#x3002;
+</li>
+<li>&#x53C2;&#x6570; <em>Tau</em> &#x3002;&#x3002;&#x3002;
+</li></ul>
+<p><strong>TODO</strong></p><p>The most critical parameter for the energy computation is the signal decay time Tau. It is used
 to compensate for the falling edge of a previous pulse in the computation of the energy. You can
 either enter Tau directly for each channel, or enter an approximate value in the right control,
 select a channel, and click Find it to let the software determine the decay time automatically.
@@ -430,13 +449,13 @@ the software could not find a better value.)  <strong>TODO &#x8FD9;&#x6BB5;&#x8F
 </li>
 <li>Choose the smallest energy filter range that allows setting the optimum energy filter rise time. Larger filter ranges allow longer filter sums, but increase the granularity of possible values for the energy filter rise time and flat top time and increase the jitter of latching the energy filter output relative to the rising edge of the pulse. This is usually only important for very fast pulses.
 </li></ul>
-<h3 id="cfd">CFD</h3><p><img alt="CFD" src="../img/CFDPars.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><p>Then the CFD is computed as follows:</p><p><strong>TODO&#x516C;&#x5F0F;</strong></p><p>Where D is called the CFD delay length and W is called the CFD scaling factor.</p><p>The CFD zero crossing point (ZCP) is then determined when CFD[i] &gt; 0 and CFD[i+1] &lt; 0.
+<p><img alt="filter range" src="../img/filterrange_format.PNG"></p><h3 id="cfd">CFD</h3><p><img alt="CFD" src="../img/CFDPars.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><p>Then the CFD is computed as follows:</p><p><strong>TODO&#x516C;&#x5F0F;</strong></p><p>Where D is called the CFD delay length and W is called the CFD scaling factor.</p><p>The CFD zero crossing point (ZCP) is then determined when CFD[i] &gt; 0 and CFD[i+1] &lt; 0.
 The timestamp is latched at Trace point i, and the fraction time f is given by the ratio of the two
 CFD response amplitudes right before and after the ZCP.</p><p><strong>TODO&#x516C;&#x5F0F;</strong></p><p>Where CFDout1 is the CFD response amplitude right before the ZCP and CFDout2 is the CFD
 response amplitude (absolute value since CFDout2 is negative) right after the ZCP. The Pixie-16
 DSP computes the CFD final value as shown below and stored it in the output data stream for
 online or offline analysis.</p><p>Valid CFD Scale values and corresponding CFD scaling factors are
-<strong>TODO  CFD&#x53C2;&#x6570;&#x5BF9;&#x5E94;&#x8868;&#x683C;</strong></p><h3 id="qdc">QDC</h3><p><img alt="QDC" src="../img/QDCPars.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><p>Eight QDC sums, each of which can have different length varying from 10 ns to 327.68 &#x3BC;s,
+<img alt="cfd scale" src="../img/cfdscale_format.PNG"></p><h3 id="qdc">QDC</h3><p><img alt="QDC" src="../img/QDCPars.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><p>Eight QDC sums, each of which can have different length varying from 10 ns to 327.68 &#x3BC;s,
 are computed in the signal processing FPGA of a Pixie-16 module for each channel and the sums
 are written to the output data stream if the user requests so. The recording of QDC sums starts at
 the waveform point which is Pre-trigger Trace Length earlier than the trigger point, which is
@@ -455,7 +474,45 @@ recording of QDC sums ends when the eight intervals have passed.</p><h3 id="deci
 </li>
 <li>f) Multiple crates. This option is only used when multiple Pixie-16 crates communicate with each other.
 </li></ul>
-<h3 id="csra">CSRA</h3><p><img alt="CSRA" src="../img/CSRA.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><p>Channel Control Register A affecting each channel individually</p><ul><li>Good channel. Only channels marked as good will have their events recorded.
+<h3 id="csra">CSRA</h3><p><img alt="CSRA" src="../img/CSRA.png"></p><ul><li><p>&#x9EC4;&#x8272; FTS&#x3001;GTS &#x7EC4;&#x5408;&#x6765;&#x9009;&#x62E9; channel fast trigger&#xFF1A;</p><ul><li>&#x4E24;&#x4E2A;&#x5747;&#x4E0D;&#x9009;&#x65F6;&#x4E3A; local fast trigger
+</li>
+<li>&#x9009;&#x62E9; FTS &#x65F6;&#x4E3A; latched module fast trigger
+</li>
+<li>FTS &#x4E0D;&#x9009;&#x3001;GTS &#x9009;&#x4E0A;&#x65F6;&#x4E3A; latched channel validation trigger
+</li></ul>
+</li>
+<li><p>&#x84DD;&#x8272; MSE&#x3001;CSE&#x3001;MVT&#x3001;CVT &#x7528;&#x6765;&#x9009;&#x62E9; module/channel validation trigger&#xFF1A;</p><ul><li>MVT &#x4E3A;&#x662F;&#x5426;&#x5F00;&#x542F; module validation trigger
+</li>
+<li>CVT &#x4E3A;&#x662F;&#x5426;&#x5F00;&#x542F; channel validation trigger
+</li>
+<li>MSE&#x9009;&#x62E9; module validation trigger &#x6765;&#x6E90;&#x4E8E; System FPGA &#x8FD8;&#x662F;&#x524D;&#x9762;&#x677F; module GATE
+</li>
+<li>CSE&#x9009;&#x62E9; channel validation trigger &#x6765;&#x6E90;&#x4E8E; System FPGA &#x8FD8;&#x662F;&#x524D;&#x9762;&#x677F; channel GATE
+</li></ul>
+</li>
+<li><p>&#x7C89;&#x7EA2;&#x8272; NPR&#x3001;IPR &#x7EC4;&#x5408;&#x9009;&#x62E9; pileup &#x4E8B;&#x4EF6;&#x7684;&#x5904;&#x7406;&#xFF1A;</p><ul><li>&#x4E24;&#x4E2A;&#x5747;&#x4E0D;&#x9009;&#x65F6;&#x5219;&#x8BB0;&#x5F55;&#x6240;&#x6709;&#x4E8B;&#x4EF6;&#xFF0C;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;&#x80FD;&#x91CF;&#x503C;&#x4E3A;&#x65E0;&#x6548;
+</li>
+<li>NPR &#x9009;&#x62E9; IPR &#x4E0D;&#x9009;&#x65F6;&#x4E0D;&#x8BB0;&#x5F55;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;
+</li>
+<li>NPR &#x4E0D;&#x9009; IPR &#x9009;&#x62E9;&#x65F6;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#x3001;&#x4E0D;&#x5806;&#x79EF;&#x65F6;&#x5019;&#x4E0D;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;
+</li>
+<li>&#x4E24;&#x4E2A;&#x5747;&#x9009;&#x62E9;&#x65F6;&#x53EA;&#x8BB0;&#x5F55;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;
+</li></ul>
+</li>
+<li><p>&#x7EFF;&#x8272;CTV&#x3001;CVS&#x3001;MVS&#x7528;&#x6765;&#x9009;&#x62E9;module/channel veto&#xFF1A;</p><ul><li>MVS &#x9009;&#x62E9; module veto &#x6765;&#x6E90;&#x4E8E;&#x524D;&#x9762;&#x677F; module GATE &#x8FD8;&#x662F; module validation trigger
+</li>
+<li>CVS &#x9009;&#x62E9; channel veto &#x6765;&#x6E90;&#x4E8E;&#x524D;&#x9762;&#x677F; channel GATE &#x8FD8;&#x662F; channel validation trigger
+</li>
+<li>CTV &#x4E3A;&#x662F;&#x5426;&#x5F00;&#x542F; channel trigger veto
+</li></ul>
+</li>
+<li><p>&#x7EA2;&#x8272;&#x4E3A;&#x57FA;&#x7840;&#x8BBE;&#x7F6E;</p><ul><li>&#x9ED1;&#x8272; NTL &#x662F;&#x5426;&#x4FDD;&#x7559;&#x8D85;&#x51FA;&#x91CF;&#x7A0B;&#x7684;&#x6CE2;&#x5F62;
+</li>
+<li>&#x9ED1;&#x8272; ETS &#x662F;&#x5426;&#x8BB0;&#x5F55;&#x5916;&#x90E8;&#x65F6;&#x949F;&#x7684;&#x6570;&#x636E;
+</li></ul>
+</li>
+<li><p>&#x5269;&#x4F59;&#x7684;BDA&#x4E0D;&#x9009;&#xFF0C;HE&#x4E0D;&#x7BA1;</p></li></ul>
+<p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><p>Channel Control Register A affecting each channel individually</p><ul><li>Good channel. Only channels marked as good will have their events recorded.
 This setting has no bearing on the channel&apos;s capability to issue a trigger. There
 can be a triggering channel whose data are discarded. Channels not marked as
 good will be excluded from the automatic offset adjustment.
@@ -488,7 +545,7 @@ channel external trigger to validate events for this channel.
 channel. Otherwise, pulses will still be recorded even if they are piled up.
 <strong>TODO &#x8FD9;&#x6BB5;&#x8FD8;&#x9700;&#x8981;&#x8FDB;&#x4E00;&#x6B65;&#x4FEE;&#x6539;</strong>
 </li></ul>
-<h3 id="logic-set">Logic Set</h3><p><img alt="Logic Set" src="../img/LogicTrigger.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><hr><h2 id="monitor-&#x4E0B;&#x62C9;&#x680F;">Monitor &#x4E0B;&#x62C9;&#x680F;</h2><p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x8C03;&#x8282;&#x5185;&#x5BB9;&#x4E3A;&#x76D1;&#x89C6;&#x6CE2;&#x5F62;&#x566A;&#x58F0;&#x6C34;&#x5E73;&#x3001;&#x57FA;&#x7EBF;&#x5206;&#x5E03;&#x7B49;&#x3002;</p><h3 id="hist--xdt">Hist &amp; XDT</h3><p><img alt="Hist &amp; XDT" src="../img/HistXDT.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><p>The binning factor controls the number of MCA bins in the spectrum. Energies are computed as 16 bit numbers, allowing in principle 64K MCA bins.</p><p>However, spectrum memory for each channel is limited to 32K bins, so computed energy values are divided by 2 binning factor before building the histogram. Binning Factor is usually set to 1, but for low count rates and wide peaks, it might be useful to set it to a larger value to obtain a spectrum with fewer bins, but more counts per bin.</p><p>Emin is reserved for a future function to subtract a constant &#x201C;minimum energy&#x201D; from the computed energy value before binning to essentially cut off the lower end of the spectrum.</p><h3 id="trace--baseline">Trace &amp; Baseline</h3><p><img alt="Trace &amp; Baseline" src="../img/Trace.png"></p><p><img alt="Trace &amp; Baseline" src="../img/BaselineHist.png"></p><p><img alt="Trace &amp; Baseline" src="../img/BaselineTimestamps.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><hr><h2 id="offiline-&#x4E0B;&#x62C9;&#x680F;">Offiline &#x4E0B;&#x62C9;&#x680F;</h2><p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x4E3A;&#x79BB;&#x7EBF;&#x53C2;&#x6570;&#x4F18;&#x5316;&#x8C03;&#x8282;&#x3002;</p><h3 id="adjust-par">Adjust Par</h3><p><img alt="Adjust Par" src="../img/AdjustPar.png"></p><ul><li><p>InitData: This page. Read the binary file.</p><ul><li>Run &#x9009;&#x62E9;&#x8981;&#x8BFB;&#x53D6;&#x7684;&#x6587;&#x4EF6;&#x8FD0;&#x884C;&#x7F16;&#x53F7;&#xFF0C;Mod &#x9009;&#x62E9;&#x8981;&#x8BFB;&#x53D6;&#x7B2C;&#x51E0;&#x4E2A;&#x91C7;&#x96C6;&#x5361;&#xFF0C;&#x6309;&#x94AE; Read &#x5C06;&#x6587;&#x4EF6;&#x4E3B;&#x8981;&#x4FE1;&#x606F;(&#x9053;&#x5740;&#x3001;&#x80FD;&#x91CF;&#x3001;&#x6CE2;&#x5F62;&#x4F4D;&#x7F6E;&#x7B49;)&#x8F7D;&#x5165;&#x5185;&#x5B58;&#x3002;
+<h3 id="logic-set">Logic Set</h3><p><img alt="Logic Set" src="../img/LogicTrigger.png"></p><p><strong>TODO</strong></p><p><img alt="stretch length" src="../img/stretchlength.PNG"></p><hr><h2 id="monitor-&#x4E0B;&#x62C9;&#x680F;">Monitor &#x4E0B;&#x62C9;&#x680F;</h2><p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x8C03;&#x8282;&#x5185;&#x5BB9;&#x4E3A;&#x76D1;&#x89C6;&#x6CE2;&#x5F62;&#x566A;&#x58F0;&#x6C34;&#x5E73;&#x3001;&#x57FA;&#x7EBF;&#x5206;&#x5E03;&#x7B49;&#x3002;</p><h3 id="hist--xdt">Hist &amp; XDT</h3><p><img alt="Hist &amp; XDT" src="../img/HistXDT.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><p>The binning factor controls the number of MCA bins in the spectrum. Energies are computed as 16 bit numbers, allowing in principle 64K MCA bins.</p><p>However, spectrum memory for each channel is limited to 32K bins, so computed energy values are divided by 2 binning factor before building the histogram. Binning Factor is usually set to 1, but for low count rates and wide peaks, it might be useful to set it to a larger value to obtain a spectrum with fewer bins, but more counts per bin.</p><p>Emin is reserved for a future function to subtract a constant &#x201C;minimum energy&#x201D; from the computed energy value before binning to essentially cut off the lower end of the spectrum.</p><h3 id="trace--baseline">Trace &amp; Baseline</h3><p><img alt="Trace &amp; Baseline" src="../img/Trace.png"></p><p><img alt="Trace &amp; Baseline" src="../img/BaselineHist.png"></p><p><img alt="Trace &amp; Baseline" src="../img/BaselineTimestamps.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><hr><h2 id="offiline-&#x4E0B;&#x62C9;&#x680F;">Offiline &#x4E0B;&#x62C9;&#x680F;</h2><p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x4E3A;&#x79BB;&#x7EBF;&#x53C2;&#x6570;&#x4F18;&#x5316;&#x8C03;&#x8282;&#x3002;</p><h3 id="adjust-par">Adjust Par</h3><p><img alt="Adjust Par" src="../img/AdjustPar.png"></p><ul><li><p>InitData: This page. Read the binary file.</p><ul><li>Run &#x9009;&#x62E9;&#x8981;&#x8BFB;&#x53D6;&#x7684;&#x6587;&#x4EF6;&#x8FD0;&#x884C;&#x7F16;&#x53F7;&#xFF0C;Mod &#x9009;&#x62E9;&#x8981;&#x8BFB;&#x53D6;&#x7B2C;&#x51E0;&#x4E2A;&#x91C7;&#x96C6;&#x5361;&#xFF0C;&#x6309;&#x94AE; Read &#x5C06;&#x6587;&#x4EF6;&#x4E3B;&#x8981;&#x4FE1;&#x606F;(&#x9053;&#x5740;&#x3001;&#x80FD;&#x91CF;&#x3001;&#x6CE2;&#x5F62;&#x4F4D;&#x7F6E;&#x7B49;)&#x8F7D;&#x5165;&#x5185;&#x5B58;&#x3002;
 </li>
 <li>Additional analysis: &#x4E09;&#x4E2A;&#x9009;&#x9879;&#x4E2D;&#xFF0C;&#x9009;&#x62E9;&#x8868;&#x793A;&#x8BFB;&#x53D6;&#x8BE5;&#x6587;&#x4EF6;&#x6570;&#x636E;&#x5230;&#x5185;&#x5B58;&#x4E2D;&#x65F6;&#x5305;&#x62EC;&#x8BE5;&#x4FE1;&#x606F;&#x3002;&#x53EA;&#x6709;&#x8BFB;&#x53D6;&#x4E86;&#x8BE5;&#x6570;&#x636E;&#xFF0C;&#x624D;&#x80FD;&#x542F;&#x7528;&#x4E00;&#x4E9B;&#x5206;&#x6790;&#x65B9;&#x6CD5;&#x3002;&#x4F46;&#x662F;&#x524D;&#x63D0;&#x662F;&#x6570;&#x636E;&#x91C7;&#x96C6;&#x65F6;&#x5019;&#x9700;&#x8981;&#x8BB0;&#x5F55;&#x8BE5;&#x4FE1;&#x606F;&#x3002;
 </li></ul>
@@ -556,7 +613,7 @@ channel. Otherwise, pulses will still be recorded even if they are piled up.
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"GUI","level":"1.3.3","depth":2,"next":{"title":"OnlineStattics","level":"1.3.4","depth":2,"path":"UsersGuide/OnlineStattics.md","ref":"UsersGuide/OnlineStattics.md","articles":[]},"previous":{"title":"Decode","level":"1.3.2","depth":2,"path":"UsersGuide/Decode.md","ref":"UsersGuide/Decode.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"UsersGuide/GUI.md","mtime":"2018-05-24T03:58:04.164Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-24T03:59:54.368Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"GUI","level":"1.3.3","depth":2,"next":{"title":"OnlineStattics","level":"1.3.4","depth":2,"path":"UsersGuide/OnlineStattics.md","ref":"UsersGuide/OnlineStattics.md","articles":[]},"previous":{"title":"Decode","level":"1.3.2","depth":2,"path":"UsersGuide/Decode.md","ref":"UsersGuide/Decode.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"UsersGuide/GUI.md","mtime":"2018-05-26T01:43:55.639Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-26T01:57:58.447Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -4,14 +4,21 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 五 7月 29 15:38:49 2016 (+0800)
-;; Last-Updated: 三 5月 16 16:40:27 2018 (+0800)
+;; Last-Updated: 六 5月 26 09:57:01 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 18
+;;     Update #: 20
 ;; URL: http://wuhongyi.cn -->
 
 # Front Panel
 
 本页内容待更新。。。
+
+
+![frontpanel](/img/frontpanel_pku.png)
+
+用于逻辑转换的可编程逻辑插件
+
+![Lupo x495](/img/lupox495.png)
 
 
 ## LVDS I/O port(J101) 

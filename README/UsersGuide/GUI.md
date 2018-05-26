@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:55 2018 (+0800)
-;; Last-Updated: 四 5月 24 11:58:04 2018 (+0800)
+;; Last-Updated: 六 5月 26 09:43:55 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 19
+;;     Update #: 23
 ;; URL: http://wuhongyi.cn -->
 
 # GUI
@@ -175,8 +175,8 @@ baseline falls at ADC step 1638 out of 16384 total).
 
 界面下方的 Status 显示为**绿色的 Ready** 时表示可操作该界面，否则需要等待。底下按钮的操作同上。
 
-- 参数 *TPeaking* 。。。
-- 参数 *TGap* 。。。
+- 参数 *Rise Time* 。。。
+- 参数 *Flat Top* 。。。
 - 参数 *Thresh.* 表示阈值，该数值的设置是相对 fast filter 波形。
 
 
@@ -200,7 +200,12 @@ Where FL is called the fast length and FG is called the fast gap of the digital 
 
 界面下方的 Status 显示为**绿色的 Ready** 时表示可操作该界面，否则需要等待。底下按钮的操作同上。
 
-。。TODO。。
+- 参数 *Rise Time* 。。。
+- 参数 *Flat Top* 。。。
+- 参数 *Tau* 。。。
+
+
+**TODO**
 
 
 The most critical parameter for the energy computation is the signal decay time Tau. It is used
@@ -216,6 +221,7 @@ the software could not find a better value.)  **TODO 这段还需要进一步修
 - Choose the smallest energy filter range that allows setting the optimum energy filter rise time. Larger filter ranges allow longer filter sums, but increase the granularity of possible values for the energy filter rise time and flat top time and increase the jitter of latching the energy filter output relative to the rising edge of the pulse. This is usually only important for very fast pulses.
 
 
+![filter range](/img/filterrange_format.PNG)
 
 
 ### CFD
@@ -239,7 +245,7 @@ DSP computes the CFD final value as shown below and stored it in the output data
 online or offline analysis.
 
 Valid CFD Scale values and corresponding CFD scaling factors are
-**TODO  CFD参数对应表格**  
+![cfd scale](/img/cfdscale_format.PNG)
 
 
 ### QDC
@@ -306,6 +312,29 @@ Module Control Register B affecting the module as a whole.
 
 ![CSRA](/img/CSRA.png)
 
+- 黄色 FTS、GTS 组合来选择 channel fast trigger：
+	- 两个均不选时为 local fast trigger
+	- 选择 FTS 时为 latched module fast trigger
+	- FTS 不选、GTS 选上时为 latched channel validation trigger
+- 蓝色 MSE、CSE、MVT、CVT 用来选择 module/channel validation trigger：
+	- MVT 为是否开启 module validation trigger
+	- CVT 为是否开启 channel validation trigger
+	- MSE选择 module validation trigger 来源于 System FPGA 还是前面板 module GATE
+	- CSE选择 channel validation trigger 来源于 System FPGA 还是前面板 channel GATE
+- 粉红色 NPR、IPR 组合选择 pileup 事件的处理：
+	- 两个均不选时则记录所有事件，堆积事件能量值为无效
+	- NPR 选择 IPR 不选时不记录堆积事件
+	- NPR 不选 IPR 选择时堆积事件记录波形、不堆积时候不记录波形
+	- 两个均选择时只记录堆积事件
+- 绿色CTV、CVS、MVS用来选择module/channel veto：
+	- MVS 选择 module veto 来源于前面板 module GATE 还是 module validation trigger
+	- CVS 选择 channel veto 来源于前面板 channel GATE 还是 channel validation trigger
+	- CTV 为是否开启 channel trigger veto
+- 红色为基础设置
+	- 黑色 NTL 是否保留超出量程的波形
+	- 黑色 ETS 是否记录外部时钟的数据
+- 剩余的BDA不选，HE不管
+
 。。TODO。。
 
 Channel Control Register A affecting each channel individually 
@@ -340,7 +369,11 @@ channel. Otherwise, pulses will still be recorded even if they are piled up.
 
 ![Logic Set](/img/LogicTrigger.png)
 
-。。TODO。。
+**TODO**
+
+
+![stretch length](/img/stretchlength.PNG)
+
 
 ----
 

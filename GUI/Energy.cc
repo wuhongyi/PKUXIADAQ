@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 11月 18 20:32:50 2016 (+0800)
-// Last-Updated: 三 5月 16 17:25:32 2018 (+0800)
+// Last-Updated: 六 5月 26 08:32:35 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 19
+//     Update #: 21
 // URL: http://wuhongyi.cn 
 
 #include "Energy.hh"
@@ -32,9 +32,9 @@ Energy::Energy(const TGWindow * p, const TGWindow * main, char *name, int column
     {
       Labels[i]->SetText(TString::Format("%2d", i).Data());
     }
-  CLabel[0]->SetText("TPeaking[us]");
+  CLabel[0]->SetText("Rise Time[us]");
   CLabel[0]->SetAlignment(kTextCenterX);
-  CLabel[1]->SetText("TGap[us]");
+  CLabel[1]->SetText("Flat Top[us]");
   CLabel[1]->SetAlignment(kTextCenterX);
   CLabel[2]->SetText("Tau [us]");
   CLabel[2]->SetAlignment(kTextCenterX);

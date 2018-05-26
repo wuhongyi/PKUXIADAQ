@@ -12,9 +12,9 @@ TriggerFilter::TriggerFilter(const TGWindow * p, const TGWindow * main, char *na
     {
       Labels[i]->SetText(TString::Format("%2d",i).Data());
     }
-  CLabel[0]->SetText("TPeaking[us]");
+  CLabel[0]->SetText("Rise Time[us]");
   CLabel[0]->SetAlignment(kTextCenterX);
-  CLabel[1]->SetText("TGap[us]");
+  CLabel[1]->SetText("Flat Top[us]");
   CLabel[1]->SetAlignment(kTextCenterX);
   CLabel[2]->SetText("Thresh. [ADC u]");
   CLabel[2]->SetAlignment(kTextCenterX);
