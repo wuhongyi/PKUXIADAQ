@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 10月 20 16:16:28 2017 (+0800)
-// Last-Updated: 日 5月 13 14:16:13 2018 (+0800)
+// Last-Updated: 日 5月 27 05:42:44 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 12
+//     Update #: 14
 // URL: http://wuhongyi.cn 
 
 // 用户需要修改本文件中的参数
@@ -22,8 +22,8 @@
 
 
 #define Crate0
-#define Crate0num 5   //该机箱中使用插件数
-const int Crate0SamplingRate[Crate0num] = {100,100,100,250,250};//分别指定每个插件的采样率  100/250/500三种采样率  0为跳过该插件
+#define Crate0num 1   //该机箱中使用插件数
+const int Crate0SamplingRate[Crate0num] = {100};//分别指定每个插件的采样率  100/250/500三种采样率  0为跳过该插件
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:18 2016 (+0800)
-// Last-Updated: 三 2月 21 19:27:27 2018 (+0800)
+// Last-Updated: 日 5月 27 03:59:07 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 30
+//     Update #: 33
 // URL: http://wuhongyi.cn 
 
 #include "decoder.hh"
@@ -122,7 +122,7 @@ bool decoder::decode()
       printf("error! 3rd word in header is missing!");
       return false;
     }
-  ts = ts+(((long)( buff & kMasktshi ) >> kShifttshi)*0xffffffff);
+  ts = ts+(((long)( buff & kMasktshi ) >> kShifttshi)*0x100000000);// fix bug 20180526
   switch(int(samplerate))
     {
     case 100:
@@ -268,7 +268,7 @@ bool decoder::decode()
 	  printf("error! 2nd word in ets is missing!\n");
 	  return false;
 	}
-      ets = ets+(((long)( buff & kMasketshi ) >> kShiftetshi)*0xffffffff);
+      ets = ets+(((long)( buff & kMasketshi ) >> kShiftetshi)*0x100000000);// fix bug 20180526
     }
   
   // decode trac.

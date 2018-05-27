@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:55 2018 (+0800)
-;; Last-Updated: 六 5月 26 09:43:55 2018 (+0800)
+;; Last-Updated: 日 5月 27 07:58:55 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 23
+;;     Update #: 25
 ;; URL: http://wuhongyi.cn -->
 
 # GUI
@@ -432,10 +432,80 @@ Emin is reserved for a future function to subtract a constant “minimum energy�
 - Energy-FF:  The two dimensional relationship between energy and fast filter first/second peak height.
 - QDC:  It will be finished soon.
 - FFT:  Fourier transformation of a single waveform. User can choose XIA/CAEN/FFTW3 functions.
+- Time Diff:  Time difference of two signal.
 
-**需要添加一个页面功能，选择两路快速看时间分辨。类似于TechnoAP界面中的功能。**
+----
 
-。。TODO。。这里需要较大篇幅来介绍。每个子页面的用法需要详细介绍。
+**TODO 这个不好描述，之后补充 Adjust Par**
+
+**TODO 这个不好描述，之后补充 Wave-16**
+
+
+
+
+![Energy16](/img/Energy16.png)
+
+该界面用于同时查看 16 通道的一维能谱。点击右上角的按钮 Draw 即可。
+
+
+![OrigEnergy](/img/OrigEnergy.png)
+
+该页面用来快速查看某通道的能谱。用户选择能谱的分 Bin 数，该数值表示将 0 - 65536 道分成多少分。选择查看通道。然后按 Draw 按钮即可。
+
+![OrigEnergyFit](/img/OrigEnergyFit.png)
+
+左上角的 Open Fit 按钮用来快速高斯拟合看能量分辨。点击按钮，开启拟合模式，再次点击按钮则关闭该功能。将鼠标移动到直方图的蓝线上，鼠标十字将会变成三角箭头。三角箭头的鼠标点击直方图中的两个位置，两点所在区间即为拟合区间，则可查看能量分辨。
+
+
+
+**TODO 这个不好描述，需要一个额外的辅助图  Calc Energy**
+
+
+![FFCFDThre](/img/FFCFDThre.png)
+
+该界面用于 fast filter波形、cfd filter波形的累加。用户选择查看通道，然后按 Draw 按钮则开始进入计算，左上角可时时监视进度，也可按 Stop 按钮提前终止计算。计算结束得到如上图所示。
+
+上方按钮 FFProjectY、CFDProjectY、OriginalCFD、CalculateCFD 分别可弹出子画板。
+
+![FFCFDThreFFProjectY](/img/FFCFDThreFFProjectY.png)
+
+点击按钮 FFProjectY，则开启查看fast filter投影图，再次点击则关闭该功能。开启功能时，将鼠标放在二维图上，左右移动鼠标， Fast Filter ShowProjectY 子画板则显示鼠标指向的该位置的投影分布。触发前的该分布，也表征噪声的水平。
+
+![FFCFDThreCFDProjectY](/img/FFCFDThreCFDProjectY.png)
+
+同理，按钮 CFDProjectY 功能如上图所示。
+
+![FFCFDThreCFD](/img/FFCFDThreCFD.png)
+
+点击按钮 OriginalCFD，则展示左图中原始数据中 CFD 数值的分布。点击按钮 CalculateCFD，则展示右图中通过离线波形计算的结果，计算所用参数为当前的参数。对于一个合适的 CFD 参数设置，该CFD分布该是平均分布的。 
+
+
+![EnergyFFGraph](/img/EnergyFFGraph.png)
+
+该界面是能量与 fast filter 峰高的二维关联图。用于确定合适的阈值。左图是能量与 fast filter的二维关联，它们应该有个较好的线性关系，右图为能量与 fast filer 中抛除梯形部分剩余中最大值的二维关联，抛除梯形部分剩余分布的最大值表征噪声水平，能量跟该值应该是没有关联的。
+
+首先 Draw Style 选择 Graph，即二维散点图模式。选择查看通道，然后按 Draw 按钮则开始进入计算，左上角可时时监视进度，也可按 Stop 按钮提前终止计算。计算结束得到如上图所示。
+
+![EnergyFFHist](/img/EnergyFFHist.png)
+
+二维散点图并不能很直观显示展示数据点的密度分布，因此 Draw Style 选择 Hist 模式，选择 X、Y轴的分 bin 数即范围，然后同样按 Draw 按钮开始计算。结果如上图所示，右图反映了噪声的水平。
+
+
+
+**QDC  TODO   功能未完成**
+
+
+
+![FFT](/img/FFT.png)
+
+该界面用于快速查看波形的傅立叶变换。用户可以选择不同的算法，例如 XIA、fftw3、CAEN(HANNING)、CAEN(HAMMING)、CAEN(BLACKMAN)、CAEN(RECT)。选择查看通道。然后按 Draw 按钮即可，每点击一次该按钮，则显示下一个结果。
+
+
+![Time Diff](/img/TimeDiff.png)
+
+该界面用于快速查看两路信号的时间分辨。用户可以选择查看 CFD 算法过零点的时间差或者 fast filter 过阈值的时间差。Xbin 表示横坐标分 bin 数，Xmin 表示横坐标的最小值，Xmax 表示横坐标的最大值。通过 Ch A、Ch B 来选择想要查看的两个通道。然后按 Draw 按钮即可。
+
+
 
 the ADC trace display also includes the option to view a FFT of the acquired trace. This is useful to diagnose noise contributions.
 

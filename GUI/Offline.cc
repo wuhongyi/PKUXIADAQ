@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 六 5月 12 23:18:05 2018 (+0800)
+// Last-Updated: 日 5月 27 05:58:49 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 794
+//     Update #: 827
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -20,7 +20,7 @@
 
 // EventTime_Low  offlinedata->GetEventTime_Low()
 // EventTime_High  offlinedata->GetEventTime_High()
-//(ULong64_t(offlinedata->GetEventTime_High()))*0xffffffff+offlinedata->GetEventTime_Low()
+//(Long64_t(offlinedata->GetEventTime_High()))*0x100000000+offlinedata->GetEventTime_Low()
 
 //cfd offlinedata->GetEventCfd()
 //cfd forced trigger bit  offlinedata->GetEventCfdForcedTriggerBit()
@@ -93,6 +93,8 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   chanNumber6 = 0;
   chanNumber8 = 0;
   chanNumber9 = 0;
+  chanNumberA10 = 0;
+  chanNumberB10 = 0;
   fileRunNum = 0;
 
   adjustdslider = false;
@@ -179,6 +181,10 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   fft1d9 = NULL;
   OfflineCurrentCount9 = -1;
 
+  offlineth1i10 = NULL;
+  
+
+  
   fClient->GetColorByName("pink", color);
   
   TGTab *TabPanel = new TGTab(this);
@@ -243,6 +249,12 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   TabPanel->GetTabTab("FFT")->ChangeBackground(color);
   MakeFold9Panel(Tab9);
   
+  TGCompositeFrame *Tab10 = TabPanel->AddTab("Time Diff");
+  // fClient->GetColorByName("azure", color);
+  fClient->GetColorByName("pink", color);
+  TabPanel->GetTabTab("Time Diff")->ChangeBackground(color);
+  MakeFold10Panel(Tab10);
+
 
 
 
@@ -293,6 +305,9 @@ Offline::~Offline()
   if(graphfft9 != NULL) delete graphfft9;
   if(fft1d9 != NULL) delete fft1d9;
   if(in9 != NULL) Free_fftw_complex(in9);
+
+  if(offlineth1i10 != NULL) delete offlineth1i10;
+
   
   for (int i = 0; i < 16; ++i)
     {
@@ -434,7 +449,7 @@ void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
 
 
   
-  for (int i = 0; i < 10; ++i)
+  for (int i = 0; i < 11; ++i)
     {
       guideframe[i] = new TGHorizontalFrame(informationgroup);
       informationgroup->AddFrame(guideframe[i],new TGLayoutHints(kLHintsExpandX | kLHintsTop,0,0,5,0));
@@ -831,7 +846,7 @@ void Offline::SelectDrawOptionPanel1(Bool_t on)
       adjustCanvas->cd();
       adjustCanvas->Clear();
       
-      offlinemultigraph->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(ULong64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0xffffffff+offlinedata->GetEventTime_Low(OfflineCurrentCount)).Data());
+      offlinemultigraph->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount)).Data());
       if(choosedrawmarkerstyle->GetSelected() == 0 || choosedrawmarkerstyle->GetSelected() == 3) offlinemultigraph->Draw("AL");
       if(choosedrawmarkerstyle->GetSelected() == 2) offlinemultigraph->Draw("AP");
       if(choosedrawmarkerstyle->GetSelected() == 1 || choosedrawmarkerstyle->GetSelected() == 4) offlinemultigraph->Draw("ALP");
@@ -992,7 +1007,7 @@ void Offline::SelectDrawOptionPanel2(Bool_t on)
 	    offlinemultigraph2[i]->Add(ffilterdata2[i]);
 	  canvas2->cd(1+i);
 	  // offlinemultigraph2[i]->SetTitle(TString::Format("Event: %d",OfflineCurrentCount2[i]).Data());
-	  offlinemultigraph2[i]->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount2[i],offlinedata->GetEventEnergy(OfflineCurrentCount2[i]),(ULong64_t(offlinedata->GetEventTime_High(OfflineCurrentCount2[i])))*0xffffffff+offlinedata->GetEventTime_Low(OfflineCurrentCount2[i])).Data());//energy timestamp
+	  offlinemultigraph2[i]->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount2[i],offlinedata->GetEventEnergy(OfflineCurrentCount2[i]),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount2[i])))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount2[i])).Data());//energy timestamp
 	  offlinemultigraph2[i]->Draw("AL");
 	} //!= NULL
     } //0-15
@@ -1614,6 +1629,99 @@ void Offline::MakeFold9Panel(TGCompositeFrame *TabPanel)
 
 
 
+void Offline::MakeFold10Panel(TGCompositeFrame *TabPanel)
+{
+  TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+
+  // draw
+  OfflineDrawButton10 = new TGTextButton(parFrame, "&Draw", OFFLINEDRAW10);
+  OfflineDrawButton10->SetEnabled(0);
+  OfflineDrawButton10->Associate(this);
+  parFrame->AddFrame(OfflineDrawButton10, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
+
+
+  // ch
+  offlinechnumB10 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUMB10, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  parFrame->AddFrame(offlinechnumB10, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
+  offlinechnumB10->SetButtonToNum(0);
+  offlinechnumB10->Associate(this);
+  TGLabel *chB = new TGLabel( parFrame, "Ch B:"); 
+  parFrame->AddFrame(chB, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0)); 
+  
+  offlinechnumA10 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUMA10, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  parFrame->AddFrame(offlinechnumA10, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
+  offlinechnumA10->SetButtonToNum(0);
+  offlinechnumA10->Associate(this);
+  TGLabel *chA = new TGLabel( parFrame, "Ch A:"); 
+  parFrame->AddFrame(chA, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+
+ 
+  // text
+  printtextinfor10 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  printtextinfor10->SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
+  fClient->GetColorByName("blue", color);
+  printtextinfor10->SetTextColor(color, false);
+  printtextinfor10->SetText("Choose 'Ch A' and 'Ch B' then enter button 'Draw'.");
+  printtextinfor10->Resize(450, 12);
+  printtextinfor10->SetEnabled(kFALSE);
+  printtextinfor10->SetFrameDrawn(kFALSE);
+  parFrame->AddFrame(printtextinfor10, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+
+  // Draw Style
+  TGLabel *LabelChooseDrawStyle = new TGLabel(parFrame, "Draw Style:"); 
+  parFrame->AddFrame(LabelChooseDrawStyle, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("red", color);
+  LabelChooseDrawStyle->SetTextColor(color, false);
+  choosedrawstyle10 = new TGComboBox(parFrame);
+  parFrame->AddFrame(choosedrawstyle10, new TGLayoutHints(kLHintsLeft, 0, 10, 2, 2));
+  choosedrawstyle10->Resize(55, 20);
+  choosedrawstyle10->AddEntry("CFD", 0);
+  choosedrawstyle10->AddEntry("FF", 1);
+  choosedrawstyle10->Select(0);
+
+  
+  TGLabel *LabelChooseHistXbin = new TGLabel(parFrame,"Xbin:");
+  parFrame->AddFrame(LabelChooseHistXbin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  // fClient->GetColorByName("green", color);
+  // LabelChooseHistXbin->SetTextColor(color, false);
+  histxminmax10[0] = new TGNumberEntryField(parFrame, -1, 10000, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,1,100000);
+  parFrame->AddFrame(histxminmax10[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  histxminmax10[0]->Resize(50, 20);
+  
+  TGLabel *LabelChooseHistXmin = new TGLabel(parFrame,"Xmin(ns):");
+  parFrame->AddFrame(LabelChooseHistXmin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  // fClient->GetColorByName("green", color);
+  // LabelChooseHistXmin->SetTextColor(color, false);
+  histxminmax10[1] = new TGNumberEntryField(parFrame, -1, -100, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,-500,500);
+  parFrame->AddFrame(histxminmax10[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  histxminmax10[1]->Resize(40, 20);
+  
+  TGLabel *LabelChooseHistXmax = new TGLabel(parFrame,"Xmax(ns):");
+  parFrame->AddFrame(LabelChooseHistXmax, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  // fClient->GetColorByName("green", color);
+  // LabelChooseHistXmax->SetTextColor(color, false);
+  histxminmax10[2] = new TGNumberEntryField(parFrame, -1, 100, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,-500,500);
+  parFrame->AddFrame(histxminmax10[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  histxminmax10[2]->Resize(40, 20);  
+
+  
+  
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
+  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
+
+  TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas10", adCanvasFrame, 100, 100);
+
+  canvas10 = adjCanvas->GetCanvas();
+  adCanvasFrame->AddFrame(adjCanvas, Hint);
+  TabPanel->AddFrame(adCanvasFrame, Hint);
+}
+
+
+
 
 
 
@@ -1699,7 +1807,11 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    case OFFLINEDRAW9:
 	      Panel9Draw();
 	      break;
+	    case OFFLINEDRAW10:
+	      Panel10Draw();
+	      break;
 
+	      
 	    case OFFLINEGAUSFIT4:
 	      GausFit4();
 	      break;
@@ -1924,6 +2036,44 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		    }
 		}
 	      break;
+	    case OFFLINECHNUMA10:
+	      if (parm2 == 0)
+		{
+		  if (chanNumberA10 != 15)
+		    {
+		      ++chanNumberA10;
+		      offlinechnumA10->SetIntNumber(chanNumberA10);
+		    }
+		}
+	      else
+		{
+		  if (chanNumberA10 != 0)
+		    {
+		      if (--chanNumberA10 == 0)
+			chanNumberA10 = 0;
+		      offlinechnumA10->SetIntNumber(chanNumberA10);
+		    }
+		}
+	      break;
+	    case OFFLINECHNUMB10:
+	      if (parm2 == 0)
+		{
+		  if (chanNumberB10 != 15)
+		    {
+		      ++chanNumberB10;
+		      offlinechnumB10->SetIntNumber(chanNumberB10);
+		    }
+		}
+	      else
+		{
+		  if (chanNumberB10 != 0)
+		    {
+		      if (--chanNumberB10 == 0)
+			chanNumberB10 = 0;
+		      offlinechnumB10->SetIntNumber(chanNumberB10);
+		    }
+		}
+	      break;
 	      
 	      
 	      
@@ -1995,7 +2145,7 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	  switch (GET_SUBMSG(msg))
 	    {
 	    case kTE_ENTER:
-	      chanNumber6 = offlinechnum4->GetIntNumber();
+	      chanNumber6 = offlinechnum6->GetIntNumber();
 	      if(chanNumber6 > 15) chanNumber6 = 15;
 	      if(chanNumber6 < 0) chanNumber6 = 0;
 	      offlinechnum6->SetIntNumber(chanNumber6);
@@ -2004,7 +2154,60 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 	    }
 	  break;
-
+	case OFFLINECHNUM8:
+	  switch (GET_SUBMSG(msg))
+	    {
+	    case kTE_ENTER:
+	      chanNumber8 = offlinechnum8->GetIntNumber();
+	      if(chanNumber8 > 15) chanNumber8 = 15;
+	      if(chanNumber8 < 0) chanNumber8 = 0;
+	      offlinechnum8->SetIntNumber(chanNumber8);
+	      break;
+	    default:
+	      break;
+	    }
+	  break;
+	case OFFLINECHNUM9:
+	  switch (GET_SUBMSG(msg))
+	    {
+	    case kTE_ENTER:
+	      chanNumber9 = offlinechnum9->GetIntNumber();
+	      if(chanNumber9 > 15) chanNumber9 = 15;
+	      if(chanNumber9 < 0) chanNumber9 = 0;
+	      offlinechnum9->SetIntNumber(chanNumber9);
+	      break;
+	    default:
+	      break;
+	    }
+	  break;
+	case OFFLINECHNUMA10:
+	  switch (GET_SUBMSG(msg))
+	    {
+	    case kTE_ENTER:
+	      chanNumberA10 = offlinechnumA10->GetIntNumber();
+	      if(chanNumberA10 > 15) chanNumberA10 = 15;
+	      if(chanNumberA10 < 0) chanNumberA10 = 0;
+	      offlinechnumA10->SetIntNumber(chanNumberA10);
+	      break;
+	    default:
+	      break;
+	    }
+	  break;
+	case OFFLINECHNUMB10:
+	  switch (GET_SUBMSG(msg))
+	    {
+	    case kTE_ENTER:
+	      chanNumberB10 = offlinechnumB10->GetIntNumber();
+	      if(chanNumberB10 > 15) chanNumberB10 = 15;
+	      if(chanNumberB10 < 0) chanNumberB10 = 0;
+	      offlinechnumB10->SetIntNumber(chanNumberB10);
+	      break;
+	    default:
+	      break;
+	    }
+	  break;
+	  
+	  
 	  
 	case OFFLINEFILTERRANGE:
 	  switch (GET_SUBMSG(msg))
@@ -2357,7 +2560,7 @@ void Offline::Panel1Draw()
       adjustCanvas->Clear();
       TLatex l;
       l.SetTextSize(0.1);
-      l.DrawLatex(0.1,0.5,TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(ULong64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0xffffffff+offlinedata->GetEventTime_Low(OfflineCurrentCount)).Data());
+      l.DrawLatex(0.1,0.5,TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount)).Data());
       
       adjustCanvas->Modified();
       adjustCanvas->Update();
@@ -2467,7 +2670,7 @@ void Offline::Panel1Draw()
   if(offlinedrawoption1[2]->IsOn())
     offlinemultigraph->Add(ffilterdata);
 
-  offlinemultigraph->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(ULong64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0xffffffff+offlinedata->GetEventTime_Low(OfflineCurrentCount)).Data());
+  offlinemultigraph->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount)).Data());
 
   
   if(choosedrawmarkerstyle->GetSelected() == 0 || choosedrawmarkerstyle->GetSelected() == 3) offlinemultigraph->Draw("AL");
@@ -2593,7 +2796,7 @@ void Offline::Panel2Draw()
 	      canvas2->cd(1+i);
 	      TLatex l;
 	      l.SetTextSize(0.04);
-	      l.DrawLatex(0.1,0.5,TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount2[i],offlinedata->GetEventEnergy(OfflineCurrentCount2[i]),(ULong64_t(offlinedata->GetEventTime_High(OfflineCurrentCount2[i])))*0xffffffff+offlinedata->GetEventTime_Low(OfflineCurrentCount2[i])).Data());
+	      l.DrawLatex(0.1,0.5,TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount2[i],offlinedata->GetEventEnergy(OfflineCurrentCount2[i]),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount2[i])))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount2[i])).Data());
 	      continue;
 	    }
 	  
@@ -2644,7 +2847,7 @@ void Offline::Panel2Draw()
 	  if(offlinedrawoption2[0]->IsOn())
 	    offlinemultigraph2[i]->Add(rawdata2[i]);
 	  if(offlinedrawoption2[3]->IsOn())
-	  offlinemultigraph2[i]->Add(threshdata2[i]);
+	    offlinemultigraph2[i]->Add(threshdata2[i]);
 	  if(offlinedrawoption2[5]->IsOn())
 	    offlinemultigraph2[i]->Add(cfdthreshdata2[i]);
 	  if(offlinedrawoption2[4]->IsOn())
@@ -2654,7 +2857,7 @@ void Offline::Panel2Draw()
 	  if(offlinedrawoption2[2]->IsOn())
 	    offlinemultigraph2[i]->Add(ffilterdata2[i]);
 	  canvas2->cd(1+i);
-	  offlinemultigraph2[i]->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount2[i],offlinedata->GetEventEnergy(OfflineCurrentCount2[i]),(ULong64_t(offlinedata->GetEventTime_High(OfflineCurrentCount2[i])))*0xffffffff+offlinedata->GetEventTime_Low(OfflineCurrentCount2[i])).Data());//energy timestamp
+	  offlinemultigraph2[i]->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount2[i],offlinedata->GetEventEnergy(OfflineCurrentCount2[i]),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount2[i])))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount2[i])).Data());//energy timestamp
 	  // std::cout<<TString::Format("%d",OfflineCurrentCount2[i]).Data()<<std::endl;
 	  offlinemultigraph2[i]->Draw("AL");
 	}
@@ -3726,6 +3929,197 @@ void Offline::Panel9Draw()
   gSystem->ProcessEvents();
 }
 
+
+void Offline::Panel10Draw()
+{
+  OfflineReadFileButton->SetEnabled(0);
+  OfflineDrawButton10->SetEnabled(0);
+  
+  fClient->GetColorByName("red", color);
+  printtextinfor10->SetTextColor(color, false);
+  printtextinfor10->SetText("Waitting ...");
+  gSystem->ProcessEvents();
+  
+  if(offlineth1i10 != NULL)
+    {
+      delete offlineth1i10;
+      offlineth1i10 = NULL;
+    }
+
+  if(offlinechnumA10->GetIntNumber() == offlinechnumB10->GetIntNumber())
+    {
+      fClient->GetColorByName("red", color);
+      printtextinfor10->SetTextColor(color, false);
+      printtextinfor10->SetText("Ch A == Ch B. Pelse re-select it.");
+      
+      canvas10->cd();
+      canvas10->Clear();
+      canvas10->Modified();
+      canvas10->Update();
+      OfflineDrawButton10->SetEnabled(1);
+      OfflineReadFileButton->SetEnabled(1);
+      gSystem->ProcessEvents();
+
+      return;
+    }
+  
+  if(histxminmax10[1]->GetNumber() >= histxminmax10[2]->GetNumber())
+    {
+      std::cout<<"The range of the histogram is not suitable (xmin >= xmax). The recommended value will be used."<<std::endl;
+      histxminmax10[1]->SetNumber(-500);
+      histxminmax10[2]->SetNumber(500);
+    }
+
+  offlineth1i10 = new TH1I("offlineth1i10","",histxminmax10[0]->GetNumber(),histxminmax10[1]->GetNumber(),histxminmax10[2]->GetNumber());
+  offlineth1i10->GetXaxis()->SetTitle("#DeltaT / ns");
+  offlineth1i10->SetTitle("T_{A}-T_{B}");
+
+
+  double deltat;
+  Long64_t deltaft;
+  for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
+    {
+      if(offlinechnumA10->GetIntNumber() == offlinedata->GetEventChannel(i))//ch
+	{
+
+	  for (unsigned int j = i; j < OfflineModuleEventsCount; ++j)
+	    {
+	      deltaft = ((Long64_t(offlinedata->GetEventTime_High(i)))*0x100000000+offlinedata->GetEventTime_Low(i))-((Long64_t(offlinedata->GetEventTime_High(j)))*0x100000000+offlinedata->GetEventTime_Low(j));
+	      // std::cout<<i<<"  "<<j<<"  Post:"<<deltaft<<std::endl;
+	      if(TMath::Abs(deltaft) < 100000)
+	  	{
+	  	  if(offlinechnumB10->GetIntNumber() == offlinedata->GetEventChannel(j))//ch
+	  	    {
+	  	      switch(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()))
+	  		{
+	  		case 100 ://100
+	  		  if(choosedrawstyle10->GetSelected() == 0)
+	  		    deltat = deltaft*10.0 + (int(offlinedata->GetEventCfd(i))-int(offlinedata->GetEventCfd(j)))*10.0/32768;
+	  		  else
+	  		    deltat = deltaft*10.0;
+	  		  break;
+	  		case 250 ://250
+	  		  if(choosedrawstyle10->GetSelected() == 0)
+	  		    deltat = deltaft*8.0 - (int(offlinedata->GetEventCfdTriggerSourceBits(i))-int(offlinedata->GetEventCfdTriggerSourceBits(j)))*4.0 + (int(offlinedata->GetEventCfd(i))-int(offlinedata->GetEventCfd(j)))*4.0/16384;
+	  		  else
+	  		    deltat = deltaft*8.0;
+	  		  break;	  
+	  		case 500 ://500
+	  		  if(choosedrawstyle10->GetSelected() == 0)
+	  		    deltat = deltaft*10.0 + (int(offlinedata->GetEventCfdTriggerSourceBits(i))-int(offlinedata->GetEventCfdTriggerSourceBits(j)))*2.0 + (int(offlinedata->GetEventCfd(i))-int(offlinedata->GetEventCfd(j)))*2.0/8192;
+	  		  else
+	  		    deltat = deltaft*10.0;
+	  		  break;
+	  		default:
+	  		  std::cout<<"ERROR: Please call Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
+	  		  break;
+	  		}
+		      
+	  	      if(deltat >= histxminmax10[1]->GetNumber() && deltat <= histxminmax10[2]->GetNumber())
+	  	      	{
+	  	      	  if(choosedrawstyle10->GetSelected() == 0)
+	  	      	    {
+	  	      	      if(offlinedata->GetEventCfdForcedTriggerBit(i) == 0 && offlinedata->GetEventCfdForcedTriggerBit(j) == 0) offlineth1i10->Fill(deltat);
+	  	      	    }
+	  	      	  else
+	  	      	    offlineth1i10->Fill(deltat);
+
+	  	      	}
+	  	    }
+
+	  	}
+	      else
+	  	{
+	  	  break;
+	  	}
+	    }
+
+	  
+	  // =====
+	  
+	  for (unsigned int j = i; j > 0; --j)
+	    {
+	      deltaft = ((Long64_t(offlinedata->GetEventTime_High(i)))*0x100000000+offlinedata->GetEventTime_Low(i))-((Long64_t(offlinedata->GetEventTime_High(j)))*0x100000000+offlinedata->GetEventTime_Low(j));
+	      // std::cout<<i<<"  "<<j<<"  Pre:"<<deltaft<<std::endl;
+	      if(TMath::Abs(deltaft) < 100000)
+		{
+		  if(offlinechnumB10->GetIntNumber() == offlinedata->GetEventChannel(j))//ch
+		    {
+		      switch(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()))
+			{
+			case 100 ://100
+			  if(choosedrawstyle10->GetSelected() == 0)
+			    deltat = deltaft*10.0 + (int(offlinedata->GetEventCfd(i))-int(offlinedata->GetEventCfd(j)))*10.0/32768;
+			  else
+			    deltat = deltaft*10.0;
+			  break;
+			case 250 ://250
+			  if(choosedrawstyle10->GetSelected() == 0)
+			    deltat = deltaft*8.0 - (int(offlinedata->GetEventCfdTriggerSourceBits(i))-int(offlinedata->GetEventCfdTriggerSourceBits(j)))*4.0 + (int(offlinedata->GetEventCfd(i))-int(offlinedata->GetEventCfd(j)))*4.0/16384;
+			  else
+			    deltat = deltaft*8.0;
+			  break;	  
+			case 500 ://500
+			  if(choosedrawstyle10->GetSelected() == 0)
+			    deltat = deltaft*10.0 + (int(offlinedata->GetEventCfdTriggerSourceBits(i))-int(offlinedata->GetEventCfdTriggerSourceBits(j)))*2.0 + (int(offlinedata->GetEventCfd(i))-int(offlinedata->GetEventCfd(j)))*2.0/8192;
+			  else
+			    deltat = deltaft*10.0;
+			  break;
+			default:
+			  std::cout<<"ERROR: Please call Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
+			  break;
+			}
+		      
+		      if(deltat >= histxminmax10[1]->GetNumber() && deltat <= histxminmax10[2]->GetNumber())
+		      	{
+		      	  if(choosedrawstyle10->GetSelected() == 0)
+		      	    {
+		      	      if(offlinedata->GetEventCfdForcedTriggerBit(i) == 0 && offlinedata->GetEventCfdForcedTriggerBit(j) == 0) offlineth1i10->Fill(deltat);
+		      	    }
+		      	  else
+		      	    offlineth1i10->Fill(deltat);
+
+		      	}
+		    }
+
+		}
+	      else
+		{
+		  break;
+		}
+	    }
+
+	  // ==========
+
+
+
+	 
+
+	}// ch
+    }// for OfflineModuleEventsCount
+
+
+
+  fClient->GetColorByName("blue", color);
+  printtextinfor10->SetTextColor(color, false);
+  printtextinfor10->SetText("Done!");
+
+  canvas10->cd();
+  canvas10->Clear();
+
+  offlineth1i10->Draw();
+  
+  canvas10->Modified();
+  canvas10->Update();
+  OfflineDrawButton10->SetEnabled(1);
+  OfflineReadFileButton->SetEnabled(1);
+  gSystem->ProcessEvents();
+}
+
+
+
+
+
 void Offline::Panel0ReadFile()
 {
   modNumber = offlinemodnum->GetIntNumber();
@@ -3922,6 +4316,7 @@ void Offline::DrawButtonStatus(bool flag)
   OfflineDrawButton6->SetEnabled(flag);
   OfflineDrawButton8->SetEnabled(flag);
   OfflineDrawButton9->SetEnabled(flag);
+  OfflineDrawButton10->SetEnabled(flag);
 }
 
 
@@ -4155,6 +4550,9 @@ int Offline::CAEN_FFT(unsigned short *wave, double *fft, int ns, int WindowType)
   free(y);
   return (n/2);
 }
+
+
+
 
 
 

@@ -4,15 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 六 5月 12 23:25:48 2018 (+0800)
+// Last-Updated: 日 5月 27 05:57:35 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 156
+//     Update #: 159
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
 #define _OFFLINE_HH_
 
-const char gOfflineGuides[10][128] =
+const char gOfflineGuides[11][128] =
   {
     "InitData: This page. Read the binary file.",
     "Adjust Par:  Waveform/fast filter/energy filter/cfd/threshould of the select channel.",
@@ -23,7 +23,8 @@ const char gOfflineGuides[10][128] =
     "FF/CFD Thre:   Accumulation of a large number of fast filter/cfd filter waveforms to determine the threshold.",
     "Energy-FF:  The two dimensional relationship between energy and fast filter first/second peak height.",
     "QDC:  It will be finished soon.",
-    "FFT:  Fourier transformation of a single waveform. User can choose XIA/CAEN/FFTW3 functions."
+    "FFT:  Fourier transformation of a single waveform. User can choose XIA/CAEN/FFTW3 functions.",
+    "Time Diff:  Time difference of two signal."
   };
 
 #include "pkuFFTW.hh"
@@ -72,7 +73,8 @@ public:
   void MakeFold7Panel(TGCompositeFrame *TabPanel);//QCD
   void MakeFold8Panel(TGCompositeFrame *TabPanel);//Energy-FF
   void MakeFold9Panel(TGCompositeFrame *TabPanel);//FFT
-
+  void MakeFold10Panel(TGCompositeFrame *TabPanel);//Time Diff
+  
   void SelectRawEnergySumsBaseline(Bool_t on);
   void SelectQDCSums(Bool_t on);
   void SelectExternalTimestamp(Bool_t on);
@@ -130,6 +132,8 @@ private:
       OFFLINECHNUM6,
       OFFLINECHNUM8,
       OFFLINECHNUM9,
+      OFFLINECHNUMA10,
+      OFFLINECHNUMB10,
       OFFLINEREAD,
       OFFLINELOAD,
       OFFLINEAPPLY,
@@ -142,6 +146,7 @@ private:
       OFFLINEDRAW7,
       OFFLINEDRAW8,
       OFFLINEDRAW9,
+      OFFLINEDRAW10,
       OFFLINEFASTLENGTH,
       OFFLINEFASTGAP,
       OFFLINESLOWLENGTH,
@@ -340,6 +345,24 @@ private:
   int tracelength9;
   fftw_complex *in9;
   fftw1d *fft1d9;
+
+
+  // Fold10
+  TCanvas *canvas10;
+  TGTextButton* OfflineDrawButton10;
+  TGNumberEntry	*offlinechnumA10;//int
+  TGNumberEntry	*offlinechnumB10;//int
+  int chanNumberA10;//
+  int chanNumberB10;//
+  TGNumberEntryField *histxminmax10[3];//0-bin 1-xmin 2-xmax
+  TH1I *offlineth1i10;
+  TGComboBox *choosedrawstyle10;//0-cfd 1-fast filter
+  TGTextEntry* printtextinfor10;
+
+
+
+
+
   
   void DrawButtonStatus(bool flag);
   
@@ -353,6 +376,7 @@ private:
   void Panel7Draw();
   void Panel8Draw();
   void Panel9Draw();
+  void Panel10Draw();
 
   
   void Panel0ReadFile();
