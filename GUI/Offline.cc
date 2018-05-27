@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 日 5月 27 05:58:49 2018 (+0800)
+// Last-Updated: 日 5月 27 09:32:52 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 827
+//     Update #: 836
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -1662,8 +1662,8 @@ void Offline::MakeFold10Panel(TGCompositeFrame *TabPanel)
   printtextinfor10->SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
   fClient->GetColorByName("blue", color);
   printtextinfor10->SetTextColor(color, false);
-  printtextinfor10->SetText("Choose 'Ch A' and 'Ch B' then enter button 'Draw'.");
-  printtextinfor10->Resize(450, 12);
+  printtextinfor10->SetText("Choose 'Ch A' and 'Ch B', enter button 'Draw'.");
+  printtextinfor10->Resize(350, 12);
   printtextinfor10->SetEnabled(kFALSE);
   printtextinfor10->SetFrameDrawn(kFALSE);
   parFrame->AddFrame(printtextinfor10, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
@@ -1705,7 +1705,46 @@ void Offline::MakeFold10Panel(TGCompositeFrame *TabPanel)
   parFrame->AddFrame(histxminmax10[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
   histxminmax10[2]->Resize(40, 20);  
 
+
   
+  offlineenergylimit10 = new TGCheckButton(parFrame, "Limits");
+  offlineenergylimit10->SetOn(kFALSE);
+  fClient->GetColorByName("green", color);
+  offlineenergylimit10->SetTextColor(color, false);
+  parFrame->AddFrame(offlineenergylimit10, new TGLayoutHints(kLHintsLeft | kLHintsTop, 35, 5, 4, 0));
+
+
+  TGLabel *LabelELimits0 = new TGLabel(parFrame,"AL:");
+  parFrame->AddFrame(LabelELimits0, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelELimits0->SetTextColor(color, false);
+  energylimitsab10[0] = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  parFrame->AddFrame(energylimitsab10[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  energylimitsab10[0]->Resize(40, 20);
+
+  TGLabel *LabelELimits1 = new TGLabel(parFrame,"AR:");
+  parFrame->AddFrame(LabelELimits1, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelELimits1->SetTextColor(color, false);
+  energylimitsab10[1] = new TGNumberEntryField(parFrame, -1, 65536, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  parFrame->AddFrame(energylimitsab10[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  energylimitsab10[1]->Resize(40, 20);
+
+  TGLabel *LabelELimits2 = new TGLabel(parFrame,"BL:");
+  parFrame->AddFrame(LabelELimits2, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelELimits2->SetTextColor(color, false);
+  energylimitsab10[2] = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  parFrame->AddFrame(energylimitsab10[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  energylimitsab10[2]->Resize(40, 20);
+  
+  TGLabel *LabelELimits3 = new TGLabel(parFrame,"BR:");
+  parFrame->AddFrame(LabelELimits3, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelELimits3->SetTextColor(color, false);
+  energylimitsab10[3] = new TGNumberEntryField(parFrame, -1, 65536, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  parFrame->AddFrame(energylimitsab10[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  energylimitsab10[3]->Resize(40, 20);
   
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -3970,6 +4009,24 @@ void Offline::Panel10Draw()
       histxminmax10[2]->SetNumber(500);
     }
 
+  if(offlineenergylimit10->IsOn())
+    {
+      if(energylimitsab10[0] >= energylimitsab10[1])
+	{
+	  std::cout<<"The range of limits od energy is not suitable (A Left >= A Right). The recommended value will be used."<<std::endl;
+	  energylimitsab10[0]->SetNumber(0);
+	  energylimitsab10[1]->SetNumber(65536);
+	}
+
+      if(energylimitsab10[2] >= energylimitsab10[3])
+	{
+	  std::cout<<"The range of limits od energy is not suitable (B Left >= B Right). The recommended value will be used."<<std::endl;
+	  energylimitsab10[2]->SetNumber(0);
+	  energylimitsab10[3]->SetNumber(65536);
+	}
+    }
+
+  
   offlineth1i10 = new TH1I("offlineth1i10","",histxminmax10[0]->GetNumber(),histxminmax10[1]->GetNumber(),histxminmax10[2]->GetNumber());
   offlineth1i10->GetXaxis()->SetTitle("#DeltaT / ns");
   offlineth1i10->SetTitle("T_{A}-T_{B}");
@@ -3977,6 +4034,7 @@ void Offline::Panel10Draw()
 
   double deltat;
   Long64_t deltaft;
+  bool flagenergylimits;
   for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
     {
       if(offlinechnumA10->GetIntNumber() == offlinedata->GetEventChannel(i))//ch
@@ -4015,16 +4073,28 @@ void Offline::Panel10Draw()
 	  		  break;
 	  		}
 		      
-	  	      if(deltat >= histxminmax10[1]->GetNumber() && deltat <= histxminmax10[2]->GetNumber())
-	  	      	{
-	  	      	  if(choosedrawstyle10->GetSelected() == 0)
-	  	      	    {
-	  	      	      if(offlinedata->GetEventCfdForcedTriggerBit(i) == 0 && offlinedata->GetEventCfdForcedTriggerBit(j) == 0) offlineth1i10->Fill(deltat);
-	  	      	    }
-	  	      	  else
-	  	      	    offlineth1i10->Fill(deltat);
+		      if(deltat >= histxminmax10[1]->GetNumber() && deltat <= histxminmax10[2]->GetNumber())
+		      	{
 
-	  	      	}
+			  flagenergylimits = true;
+			  if(offlineenergylimit10->IsOn())
+			    {
+			      if((int(offlinedata->GetEventEnergy(i)) > energylimitsab10[0]->GetNumber()) && (int(offlinedata->GetEventEnergy(i)) < energylimitsab10[1]->GetNumber()) && (int(offlinedata->GetEventEnergy(j)) > energylimitsab10[2]->GetNumber()) && (int(offlinedata->GetEventEnergy(j)) < energylimitsab10[3]->GetNumber()))
+				flagenergylimits = true;
+			      else
+				flagenergylimits = false;
+			    }
+			  
+			  if(flagenergylimits)
+			    {
+			      if(choosedrawstyle10->GetSelected() == 0)
+				{
+				  if(offlinedata->GetEventCfdForcedTriggerBit(i) == 0 && offlinedata->GetEventCfdForcedTriggerBit(j) == 0) offlineth1i10->Fill(deltat);
+				}
+			      else
+				offlineth1i10->Fill(deltat);
+			    }
+		      	}
 	  	    }
 
 	  	}
@@ -4072,13 +4142,24 @@ void Offline::Panel10Draw()
 		      
 		      if(deltat >= histxminmax10[1]->GetNumber() && deltat <= histxminmax10[2]->GetNumber())
 		      	{
-		      	  if(choosedrawstyle10->GetSelected() == 0)
-		      	    {
-		      	      if(offlinedata->GetEventCfdForcedTriggerBit(i) == 0 && offlinedata->GetEventCfdForcedTriggerBit(j) == 0) offlineth1i10->Fill(deltat);
-		      	    }
-		      	  else
-		      	    offlineth1i10->Fill(deltat);
-
+			  flagenergylimits = true;
+			  if(offlineenergylimit10->IsOn())
+			    {
+			      if((int(offlinedata->GetEventEnergy(i)) > energylimitsab10[0]->GetNumber()) && (int(offlinedata->GetEventEnergy(i)) < energylimitsab10[1]->GetNumber()) && (int(offlinedata->GetEventEnergy(j)) > energylimitsab10[2]->GetNumber()) && (int(offlinedata->GetEventEnergy(j)) < energylimitsab10[3]->GetNumber()))
+				flagenergylimits = true;
+			      else
+				flagenergylimits = false;
+			    }
+			  
+			  if(flagenergylimits)
+			    {
+			      if(choosedrawstyle10->GetSelected() == 0)
+				{
+				  if(offlinedata->GetEventCfdForcedTriggerBit(i) == 0 && offlinedata->GetEventCfdForcedTriggerBit(j) == 0) offlineth1i10->Fill(deltat);
+				}
+			      else
+				offlineth1i10->Fill(deltat);
+			    }
 		      	}
 		    }
 
@@ -4087,13 +4168,7 @@ void Offline::Panel10Draw()
 		{
 		  break;
 		}
-	    }
-
-	  // ==========
-
-
-
-	 
+	    }	 
 
 	}// ch
     }// for OfflineModuleEventsCount

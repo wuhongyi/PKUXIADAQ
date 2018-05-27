@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 15:47:48 2018 (+0800)
-;; Last-Updated: 六 5月 26 08:26:38 2018 (+0800)
+;; Last-Updated: 日 5月 27 08:40:44 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 7
+;;     Update #: 8
 ;; URL: http://wuhongyi.cn -->
 
 # Guide
@@ -56,7 +56,35 @@ The Pixie-16 is an instrument for waveform acquisition and MCA histogramming for
 
 The Pixie-16 modules must be operated in a custom 6U CompactPCI/PXI chassis providing high currents at specific voltages not included in the CompactPCI/PXI standard 1 . Currently XIA provides a 14-slot chassis. Put the host computer(or remote PXI controller) in the system slot (slot 1) of your chassis. Put the Pixie-16 modules into any free peripheral slot (slot 2-14) with the chassis still powered down. After modules are installed, power up the chassis (Pixie-16 modules are not hot swappable). If using a remote controller, be sure to boot the host computer after powering up the chassis.
 
+----
 
+## Clock distribution
+
+In a multi-module system there will be one clock master and a number of clock slaves or repeaters. The clock function of a module can be selected by setting shunts on Jumper JP101 at the rear of the board.
+
+![ClockDistribution](/img/ClockDistribution.png)
+
+Jumper Settings for different clock distribution modes. An individual module uses its own local clock (a). In a group of modules, there will be one daisy-chained clock master in the leftmost position and several repeaters (b). Alternatively, the PXI clock distribution path can be used, with the module in slot 2 the PXI clock master and the other modules as PXI clock recipients (c). In multi-chassis systems, the module in slot 2 in the clock master chassis should be configured shown in the top picture of (d), the modules in slot 2 in all other chassis as shown in the bottom picture of (d), and modules in any other slot as in the bottom picture of (c). The local clock can be substituted by an LVDS clock input on the front panel by using the “Loc” pin instead of the “FP” pin and setting jumper JP5 to “Clk”.
+
+### Individual Clock mode
+
+If only one Pixie-16 module is used in the system, or if clocks between modules do not have to be synchronized, the module should be set into individual clock mode, as shown in Figure a.
+
+Connect pin 7 of JP101 (the clock input) with a shunt to pin 8 (LOC – IN). This will use the local clock crystal as the clock source.
+
+### Daisy-chained Clock Mode
+
+The preferred way to distribute clocks between modules is to daisy-chain the clocks from module to module, where each module repeats and amplifies the signal. This requires one master module, located in the leftmost slot of the group of Pixie-16 modules. The master module has the same jumper settings shown in Figure b (top), using its local crystal as the input and sending its output to the right (LOC – IN, OUT – Right). Configure the other modules in the chassis as clock repeaters by setting the jumpers as shown in Figure b (bottom), using the signal from the left neighbor as the input and sending its output to the right (Left – IN, OUT – Right). There must be no gaps between modules.
+
+### PXI Clock Mode
+
+A further option for clock distribution is to use the PXI clock distributed on the backplane. This clock is by default generated on the backplane (10MHz), repeated by a fan out buffer and connected to each slot by a dedicated line with minimum skew. Though the 10MHz is too slow to be a useful clock for the Pixie-16, it can be overridden by a signal from a module in slot 2.
+
+The Pixie-16 can be configured to be the PXI clock master in slot 2, by connecting pins 6 and 8 (Loc – BP). All modules, including the clock master, should be set to receive the PXI clock by connecting pin 1 and 3 on JP101 (PXI – IN), see Figure c.
+
+### Multi-Chassis Clock Mode
+
+In multi-chassis systems (Figure d), the “left” and “right” connections are taken over by a P16Trigger board on the rear backplane. The module in slot 2 in the clock master chassis should be configured to send its local clock to the P16Trigger board (Loc - Right), receive it back from the P16trigger board and send it to the PXI clock input (Left - BP), and receive the PXI clock as the input for on-board distribution (PXI – IN), see Figure d (top). The modules in slot 2 in all other chassis receive the clock from the P16trigger board and send it to the PXI clock input (Left – BP), and also receive the PXI clock as the input for on-board distribution (PXI – IN), see Figure d (bottom). The modules in any other slot should be set to use the PXI clock as the input (PXI-IN) as in Figure c (bottom).
 
 ----
 

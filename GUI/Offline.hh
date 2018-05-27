@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 日 5月 27 05:57:35 2018 (+0800)
+// Last-Updated: 日 5月 27 09:10:43 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 159
+//     Update #: 160
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -358,8 +358,8 @@ private:
   TH1I *offlineth1i10;
   TGComboBox *choosedrawstyle10;//0-cfd 1-fast filter
   TGTextEntry* printtextinfor10;
-
-
+  TGCheckButton *offlineenergylimit10;
+  TGNumberEntryField *energylimitsab10[4];//0-AL  1-AR  2-BL  3-BR 
 
 
 
