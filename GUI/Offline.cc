@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 日 5月 27 09:32:52 2018 (+0800)
+// Last-Updated: 一 5月 28 05:48:48 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 836
+//     Update #: 840
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -661,12 +661,12 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   // apply
   OfflineApplyButton = new TGTextButton( parFrame, "&Apply", OFFLINEAPPLY);
   OfflineApplyButton->Associate(this);
-  parFrame->AddFrame( OfflineApplyButton , new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 5, 0, 0));
+  parFrame->AddFrame(OfflineApplyButton , new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 5, 0, 0));
 
   // load
   OfflineLoadButton = new TGTextButton( parFrame, "&Load", OFFLINELOAD);
   OfflineLoadButton->Associate(this);
-  parFrame->AddFrame( OfflineLoadButton, new TGLayoutHints(kLHintsRight | kLHintsTop, 20, 5, 0, 0));
+  parFrame->AddFrame(OfflineLoadButton, new TGLayoutHints(kLHintsRight | kLHintsTop, 20, 5, 0, 0));
 
   // ch
   offlinechnum = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
@@ -1818,6 +1818,7 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 	    case OFFLINEAPPLY:
 	      OfflineChangeValues(offlinemodnum->GetIntNumber(),offlinechnum->GetIntNumber());
+	      OfflineLoadValues(offlinemodnum->GetIntNumber(),offlinechnum->GetIntNumber());
 	      break;
 	    case OFFLINEDRAW:
 	      Panel1Draw();
@@ -3239,8 +3240,9 @@ void Offline::Panel5Draw()
 			}
 		    }
 		}
-	      
-	      originalcfdth1d5->Fill(offlinedata->GetEventCfd(i));//cfd
+
+	      if(offlinedata->GetEventCfdForcedTriggerBit(i) == 0)
+		originalcfdth1d5->Fill(offlinedata->GetEventCfd(i));//cfd
 	    }
 
 	  if(i%500 == 0)
@@ -4011,16 +4013,17 @@ void Offline::Panel10Draw()
 
   if(offlineenergylimit10->IsOn())
     {
-      if(energylimitsab10[0] >= energylimitsab10[1])
+      
+      if(energylimitsab10[0]->GetNumber() >= energylimitsab10[1]->GetNumber())
 	{
-	  std::cout<<"The range of limits od energy is not suitable (A Left >= A Right). The recommended value will be used."<<std::endl;
+	  std::cout<<"The range of limits of energy is not suitable (A Left >= A Right). The recommended value will be used."<<std::endl;
 	  energylimitsab10[0]->SetNumber(0);
 	  energylimitsab10[1]->SetNumber(65536);
 	}
 
-      if(energylimitsab10[2] >= energylimitsab10[3])
+      if(energylimitsab10[2]->GetNumber() >= energylimitsab10[3]->GetNumber())
 	{
-	  std::cout<<"The range of limits od energy is not suitable (B Left >= B Right). The recommended value will be used."<<std::endl;
+	  std::cout<<"The range of limits of energy is not suitable (B Left >= B Right). The recommended value will be used."<<std::endl;
 	  energylimitsab10[2]->SetNumber(0);
 	  energylimitsab10[3]->SetNumber(65536);
 	}

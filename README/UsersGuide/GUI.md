@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:55 2018 (+0800)
-;; Last-Updated: 日 5月 27 09:41:22 2018 (+0800)
+;; Last-Updated: 一 5月 28 05:40:57 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 26
+;;     Update #: 30
 ;; URL: http://wuhongyi.cn -->
 
 # GUI
@@ -252,7 +252,7 @@ Valid CFD Scale values and corresponding CFD scaling factors are
 
 ![QDC](/img/QDCPars.png)
 
-。。TODO。。
+**。。TODO。。**
 
 Eight QDC sums, each of which can have different length varying from 10 ns to 327.68 μs,
 are computed in the signal processing FPGA of a Pixie-16 module for each channel and the sums
@@ -268,19 +268,19 @@ recording of QDC sums ends when the eight intervals have passed.
 
 ![Decimation](/img/Decimation.png)
 
-。。TODO。。
+**。。TODO。。**
 
 ### Copy Pars
 
 ![Copy Pars](/img/CopyPars.png)
 
-。。TODO。。
+**。。TODO。。**
 
 ### Save2File
 
 ![Save2File](/img/Save2File.png)
 
-。。TODO。。
+**。。TODO。。**
 
 ----
 
@@ -288,13 +288,13 @@ recording of QDC sums ends when the eight intervals have passed.
 
 本下拉栏中调节内容为高阶内容，需要对获取逻辑有一定基础的人学习掌握。
 
-。。TODO。。
+**。。TODO。。**
 
 ### Module Variables
 
 ![Module Variables](/img/ModuleVariables.png)
 
-。。TODO。。
+**。。TODO。。**
 
 Module Control Register B affecting the module as a whole.
 
@@ -335,7 +335,7 @@ Module Control Register B affecting the module as a whole.
 	- 黑色 ETS 是否记录外部时钟的数据
 - 剩余的BDA不选，HE不管
 
-。。TODO。。
+**。。TODO。。**
 
 Channel Control Register A affecting each channel individually 
 
@@ -418,11 +418,15 @@ Emin is reserved for a future function to subtract a constant “minimum energy�
 
 ### Adjust Par
 
+#### InitData
+
 ![Adjust Par](/img/AdjustPar.png)
 
+- Run 选择要读取的文件运行编号，Mod 选择要读取第几个采集卡，按钮 Read 将文件主要信息(道址、能量、波形位置等)载入内存。
+- Additional analysis: 三个选项中，选择表示读取该文件数据到内存中时包括该信息。只有读取了该数据，才能启用一些分析方法。但是前提是数据采集时候需要记录该信息。
+
+
 - InitData: This page. Read the binary file.
-	- Run 选择要读取的文件运行编号，Mod 选择要读取第几个采集卡，按钮 Read 将文件主要信息(道址、能量、波形位置等)载入内存。
-	- Additional analysis: 三个选项中，选择表示读取该文件数据到内存中时包括该信息。只有读取了该数据，才能启用一些分析方法。但是前提是数据采集时候需要记录该信息。
 - Adjust Par:  Waveform/fast filter/energy filter/cfd/threshould of the select channel.
 - Wave-16:  Waveform/fast filter/energy filter/cfd filter/threshould of the 16 channels.
 - Energy-16:  The original energy spectrum of the 16 channel..
@@ -434,19 +438,64 @@ Emin is reserved for a future function to subtract a constant “minimum energy�
 - FFT:  Fourier transformation of a single waveform. User can choose XIA/CAEN/FFTW3 functions.
 - Time Diff:  Time difference of two signal.
 
-----
+-----
 
-**TODO 这个不好描述，之后补充 Adjust Par**
+#### Adjust Par
 
-**TODO 这个不好描述，之后补充 Wave-16**
+![offlineapi](/img/OfflineAPI.png)
+
+要通过采集的波形离线计算fast filter、slow filter cfd 曲线，对采集的波形有以下要求。如上图中，计算的能量是算法的能量与算法的基线的差，要得到正确的梯形，那么前提是前面有足够长的点来计算基线。
+
+图中 EFRT 表示 *Energy Filter Rise Time*，EFFT 表示 *Energy Filter Flat Top*。
+
+To compute energy filter response offline, the ideal settings are:
+- Total trance length > 2 * ( 2 * EFRT + EFFT)
+- Pre-trigger trace (Trace-delay) length > ( 3 * EFRT + EFFT )
+
+当然，这只是计算梯形的一个方法，如果我们记录了每个事件的能量梯形的基线，并且采用pre-trigger部分点的平均值作为波形左侧的无限延伸，那么就不受 Pre-trigger trace length > ( 3 x EFRT + EFFT ) 条件的限制了。下面的页面中，当采用 Old Baseline 方法来计算能量梯形时，有个前提是 pre-trigger trace length 至少需要有 200 个点，因为波形左侧延伸采用前 200 个点来平均。
+
+![Adjustpars3](/img/Adjustpars3.png)
+
+当采集的波形 pre-trigger trace length > 3 x EFRT + EFFT 时，pre-trigger trace 提供足够多的点来计算基线，SF BL 算法可选择 Calculate，否则需要选择 Old Baseline 算法。选择Old Baseline 算法的前提时记录数据的时候， 选择开启记录 梯形的baseline，并且 InitData 页面的 raw E sums/baseline 选项开启。当选择 Old Baseline 算法时，之后的四个选项参数生效，该四个参数为该数据采集时候所用的能量梯形的参数。
+
+上图中绿色曲线为典型的不满足 pre-trigger trace length > 3 x EFRT + EFFT 时，采用的 Calculate 算法造成的结果。图中显示 pre-trigger trace length 为 10 us，EFRT 为 5.04 us，EFFT 为 1.60 us。
+
+此时，应该采用下图所示的  Old Baseline 算法。
+
+![Adjustpars1](/img/Adjustpars1.png)
+
+用户可选择查看波形的通道，按钮 Load 可读取并显示当前的参数设置情况，当修改以上的参数时候，需要按 Apply 按钮使之生效。按钮 Draw 用来显示下一个该通道的事件波形。
+
+用户可选择同时显示 Wave / Slow Filter/ Fast filter / Thres / CFD / CFD Thres 中的多个波形。或者选择曲线的绘画样式。
 
 
+![Adjustpars2](/img/Adjustpars2.png)
 
+上图展示了显示 fast filter、Thres、CFD、CFD Thres 四个波形，图样采用点显示方式。最低端的水平条两端可以拖动，用户可拉动来控制波形横坐标的显示范围，如图中显示800 - 1300 的点。该情况下，点击 Draw 按钮，将会保持该指定的坐标范围。
+
+-----
+
+#### Wave-16
+
+![Waveform16](/img/Waveform16.png)
+
+该页面用于同时查看16通道的原始波形、filter 波形，阈值等。用户可选择同时显示 Wave / Slow Filter/ Fast filter / Thres / CFD / CFD Thres 中的多个波形。
+
+用户可通过该页面，快速查看该采集卡所有通道的波形是否正常，参数设置是否合理。点击按钮 Draw 一次，则显示所有通道下一个波形。
+
+*需要注意的一点，本页面的 Slow Filter 波形需要在采集的波形 pre-trigger trace 长度大于 3 x EFRT + EFFT 时才是正确的。*
+
+-----
+
+#### Energy-16
 
 ![Energy16](/img/Energy16.png)
 
 该界面用于同时查看 16 通道的一维能谱。点击右上角的按钮 Draw 即可。
 
+-----
+
+#### Orig Energy
 
 ![OrigEnergy](/img/OrigEnergy.png)
 
@@ -456,10 +505,19 @@ Emin is reserved for a future function to subtract a constant “minimum energy�
 
 左上角的 Open Fit 按钮用来快速高斯拟合看能量分辨。点击按钮，开启拟合模式，再次点击按钮则关闭该功能。将鼠标移动到直方图的蓝线上，鼠标十字将会变成三角箭头。三角箭头的鼠标点击直方图中的两个位置，两点所在区间即为拟合区间，则可查看能量分辨。
 
+-----
 
+#### Calc Energy
 
-**TODO 这个不好描述，需要一个额外的辅助图  Calc Energy**
+![CalcEnergy](/img/CalcEnergy.png)
 
+该页面利用采集的波形重新计算能量。同 Adjust Par 页面一样，SF BL 算法可选择Calculate算法或者 Old Baseline 算法。
+
+计算能量采用的fast filter、energy filter参数采用采集卡的设置参数，用户需要选择能量 0-65536 分成多少个 bin，可选择 1024/2048/4096/8192/16384/32768/65536，选择计算的通道，然后按按钮 Draw即开始计算，左上角将会显示计算的进度，也可以按按钮 Stop 提前终止计算。当计算终止时，画板上将显示能谱。
+
+-----
+
+#### FF/CFD Thre
 
 ![FFCFDThre](/img/FFCFDThre.png)
 
@@ -479,6 +537,9 @@ Emin is reserved for a future function to subtract a constant “minimum energy�
 
 点击按钮 OriginalCFD，则展示左图中原始数据中 CFD 数值的分布。点击按钮 CalculateCFD，则展示右图中通过离线波形计算的结果，计算所用参数为当前的参数。对于一个合适的 CFD 参数设置，该CFD分布该是平均分布的。 
 
+-----
+
+#### Energy-FF
 
 ![EnergyFFGraph](/img/EnergyFFGraph.png)
 
@@ -490,11 +551,15 @@ Emin is reserved for a future function to subtract a constant “minimum energy�
 
 二维散点图并不能很直观显示展示数据点的密度分布，因此 Draw Style 选择 Hist 模式，选择 X、Y轴的分 bin 数即范围，然后同样按 Draw 按钮开始计算。结果如上图所示，右图反映了噪声的水平。
 
+-----
 
+#### QDC
 
 **QDC  TODO   功能未完成**
 
+-----
 
+#### FFT
 
 ![FFT](/img/FFT.png)
 
@@ -502,6 +567,9 @@ Emin is reserved for a future function to subtract a constant “minimum energy�
 
 the ADC trace display also includes the option to view a FFT of the acquired trace. This is useful to diagnose noise contributions.
 
+-----
+
+#### Time Diff
 
 ![Time Diff](/img/TimeDiff.png)
 
@@ -510,7 +578,7 @@ the ADC trace display also includes the option to view a FFT of the acquired tra
 选项 Limits 选择则开启能量范围约束。选择该选项后，之后的四个参数 AL、AR、BL、BR才生效，其分别表示 Ch A/B 能量道址的左右范围，只有能量落在这个区间的事件才填充到直方图中。用户可通过 Orig Energy 页面来选择合适的能量道址区间。
 
 
-
+----
 
 ### Simulation(暂未实现)
 

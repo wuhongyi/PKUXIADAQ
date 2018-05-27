@@ -5,7 +5,7 @@ CrateID 0
 
 ## Register parameters
 
-SettingPars ../parset/ribll2017_1122_wave.set
+SettingPars ../parset/ciae2018527.set
 
 
 ## -----------------------------------------------------------------------------
@@ -13,7 +13,7 @@ SettingPars ../parset/ribll2017_1122_wave.set
 
 # module number and slot number
 # The first number mean how many modules, other number means every module slot number
-ModuleSlot 9 2 3 4 5 6 7 8 9 10
+ModuleSlot 4 2 3 4 5
 
 
 ## -----------------------------------------------------------------------------
@@ -21,11 +21,11 @@ ModuleSlot 9 2 3 4 5 6 7 8 9 10
 
 # module number and samping rate
 # The first number mean how many modules, other number means every module samping rate(100/250/500)
-ModuleSampingRate 9 100 100 100 100 100 100 100 100 100
+ModuleSampingRate 4 100 100 250 250
 
 # module number and bits
 # The first number mean how many modules, other number means every module bits(12/14/16)
-ModuleBits 9 14 14 14 14 14 14 14 14 14
+ModuleBits 4 14 14 14 14
 
 
 ## -----------------------------------------------------------------------------
