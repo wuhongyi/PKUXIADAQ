@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:39 2016 (+0800)
-// Last-Updated: 三 4月 25 10:31:41 2018 (+0800)
+// Last-Updated: 日 6月 10 04:16:57 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 64
+//     Update #: 72
 // URL: http://wuhongyi.cn 
 
 #include "r2root.hh"
@@ -104,7 +104,7 @@ r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int run
   sprintf(tempfilename,"%s%s_R%04d.root",rootfilepath.Data(),filename.Data(),runnumber);
   file = new TFile(tempfilename,"RECREATE");
   t = new TTree("tree","PKU XIA Pixie-16 Data");
-
+  
   t->Branch("sr",&sr,"sr/S");
   
   t->Branch("pileup",&pileup,"pileup/O");
@@ -172,33 +172,33 @@ void r2root::Process()
 	      // 	  timestamp = rawdec[i].getts();
 	      // 	  mark = i;
 	      // 	}
- 
+
 	      switch(int(rawdec[i].getsamplerate()))
-		{
-		case 100:
-		  if(10*rawdec[i].getts() < timestamp)
-		    {
-		      timestamp = 10*rawdec[i].getts();
-		      mark = i;
-		    }
-		  break;
-		case 250:
-		  if(8*rawdec[i].getts() < timestamp)
-		    {
-		      timestamp = 8*rawdec[i].getts();
-		      mark = i;
-		    }
-		  break;
-		case 500:
-		  if(10*rawdec[i].getts() < timestamp)
-		    {
-		      timestamp = 10*rawdec[i].getts();
-		      mark = i;
-		    }
-		  break;
-		default:
-		  break;
-		}
+	      	{
+	      	case 100:
+	      	  if(10*rawdec[i].getts() < timestamp)
+	      	    {
+	      	      timestamp = 10*rawdec[i].getts();
+	      	      mark = i;
+	      	    }
+	      	  break;
+	      	case 250:
+	      	  if(8*rawdec[i].getts() < timestamp)
+	      	    {
+	      	      timestamp = 8*rawdec[i].getts();
+	      	      mark = i;
+	      	    }
+	      	  break;
+	      	case 500:
+	      	  if(10*rawdec[i].getts() < timestamp)
+	      	    {
+	      	      timestamp = 10*rawdec[i].getts();
+	      	      mark = i;
+	      	    }
+	      	  break;
+	      	default:
+	      	  break;
+	      	}
 	    }
 	}
       
