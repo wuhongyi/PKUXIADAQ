@@ -1,0 +1,64 @@
+{
+    "title": "",
+    "description": "吴鸿毅笔记",
+    "author": "Hongyi Wu(吴鸿毅)",
+    "plugins": [
+	"search",
+	"sharing",
+	"fontsettings",
+	"livereload",
+	"highlight",
+	"github",
+	"-prism",	
+	"ad",
+	"alerts",
+	"atoc",
+	"splitter",
+	"sitemap",
+	"image-captions",
+	"anchors",
+	"latex-codecogs",
+	"-katex",
+	"mermaid",
+	"ace",
+	"page-footer-ex",
+	"sectionx",
+	"mcqx",
+	"fbqx",
+	"spoiler",
+	"anchor-navigation",
+	"youtubex",
+	"redirect",
+	"expandable-chapters"
+    ],
+    "pluginsConfig": {
+	"fontsettings": {
+            "theme": "sepia",
+            "family": "serif", 
+            "size": 2 
+	},
+	"ad": {
+	    "contentTop": "",
+	    "contentBottom": ""
+	},
+	"github": {
+	    "url": "https://github.com/wuhongyi"
+	},
+	"sitemap": {
+            "hostname": "http://wuhongyi.cn/"
+	},
+	"page-footer-ex": {
+            "copyright": "[© Hongyi Wu](http://wuhongyi.cn/)",
+            "markdown": true,
+            "update_label": "<i>updated:</i>",
+            "update_format": "YYYY-MM-DD HH:mm:ss"
+	},
+	"expandable-chapters":{
+
+	},
+	"atoc": {
+            "addClass": true,
+            "className": "atoc"
+	}
+    }
+}

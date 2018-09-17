@@ -4,12 +4,14 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 5月 26 09:17:06 2018 (+0800)
-;; Last-Updated: 六 5月 26 09:40:34 2018 (+0800)
+;; Last-Updated: 一 9月 17 13:32:55 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 4
+;;     Update #: 5
 ;; URL: http://wuhongyi.cn -->
 
 # Logic
+
+<!-- toc -->
 
 对于某路信号的每个事件是否有效被记录取决于：
 - Fast trigger select  (一级trigger)

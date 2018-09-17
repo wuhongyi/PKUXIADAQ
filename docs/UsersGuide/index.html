@@ -2,13 +2,13 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>Users Guide · GitBook</title>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Users Guide · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.0">
-        
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Hongyi Wu(吴鸿毅)">
         
         
     
@@ -17,15 +17,91 @@
     
             
                 
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
                 
             
                 
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-ad/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-atoc/atoc.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-image-captions/image-captions.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-latex-codecogs/latex-codecogs.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-ace/ace.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-sectionx/sectionx.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-mcqx/mcqx.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fbqx/fbqx.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-spoiler/spoiler.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-youtubex/player.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
                 
             
         
@@ -66,6 +142,13 @@
     </head>
     <body>
         
+  <script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  </script>
+  
 <div class="book">
     <div class="book-summary">
         
@@ -321,74 +404,109 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 15:47:48 2018 (+0800)
-;; Last-Updated: 日 5月 27 08:40:44 2018 (+0800)
+;; Last-Updated: 一 9月 17 13:33:16 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 8
+;;     Update #: 9
 ;; URL: http://wuhongyi.cn -->
-
-
-<h1 id="guide">Guide</h1><p><strong>User&apos;s Manual</strong> <em>Digital Gamma Finder (DGF) PIXIE-16</em>  <strong>Version 1.40, October 2009</strong></p><ul><li>&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x4ECB;&#x7ECD;&#x8DF3;&#x7EBF;&#x63A5;&#x6CD5;
+<h1 id="guide"><a name="guide" class="plugin-anchor" href="#guide"><i class="fa fa-link" aria-hidden="true"></i></a>Guide</h1>
+<!-- toc -->
+<ul>
+<li><a href="#clock-distribution">Clock distribution</a><ul>
+<li><a href="#individual-clock-mode">Individual Clock mode</a></li>
+<li><a href="#daisy-chained-clock-mode">Daisy-chained Clock Mode</a></li>
+<li><a href="#pxi-clock-mode">PXI Clock Mode</a></li>
+<li><a href="#multi-chassis-clock-mode">Multi-Chassis Clock Mode</a></li>
+</ul>
 </li>
-<li>&#x539F;&#x59CB;&#x6570;&#x636E;&#x5B9A;&#x4E49;
+<li><a href="#&#x6570;&#x636E;&#x7ED3;&#x6784;">&#x6570;&#x636E;&#x7ED3;&#x6784;</a></li>
+</ul>
+<!-- tocstop -->
+<p><strong>User&apos;s Manual</strong> <em>Digital Gamma Finder (DGF) PIXIE-16</em>  <strong>Version 1.40, October 2009</strong></p>
+<ul>
+<li>&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x4ECB;&#x7ECD;&#x8DF3;&#x7EBF;&#x63A5;&#x6CD5;</li>
+<li>&#x539F;&#x59CB;&#x6570;&#x636E;&#x5B9A;&#x4E49;</li>
+<li>&#x7B97;&#x6CD5;&#x539F;&#x7406;</li>
+<li>&#x3002;&#x3002;&#x3002;</li>
+</ul>
+<hr>
+<p><strong>Do Not Hot-Swap!</strong></p>
+<p><strong>To avoid personal injury, and/or damage to the DGF-Pixie-16, always turn off crate power before removing the DGF-Pixie-16 from the crate!</strong></p>
+<figure id="fig1.3.1"><img src="../img/pixie16.jpg" alt="pixie16"><figcaption>Figure: pixie16</figcaption></figure>
+<p>The DGF Pixie-16 is a 16-channel all-digital waveform acquisition and spectrometer card based on the CompactPCI/PXI standard for fast data readout to the host. It combines spectroscopy with waveform digitizing and the option of on-line pulse shape analysis. The Pixie-16 accepts signals from virtually any radiation detector. Incoming signals are digitized by 12/14/16-bit 100/250/500 MSPS ADCs. Waveforms of up to 163.8 &#x3BC;s in length for each channel can be stored in a FIFO.</p>
+<p>The waveforms are available for onboard pulse shape analysis, which can be customized by adding user functions to the core processing software. Waveforms, timestamps, and the results of the pulse shape analysis can be read out by the host system for further off-line processing. Pulse heights are calculated to 16-bit precision and can be binned into spectra with up to 32K channels. The Pixie-16 supports coincidence spectroscopy and can recognize complex hit patterns.</p>
+<p>Data readout rates through the CompactPCI/PXI backplane to the host computer can be up to 109 Mbyte/s. The standard PXI backplane, as well as additional custom backplane connections are used to distribute clocks and trigger signals between several Pixie-16 modules for group operation. A complete data acquisition and processing systems can be built by combining Pixie-16 modules with commercially available CompactPCI/PXI processor, controller or I/O modules in the same chassis.</p>
+<p>The Pixie-16 is an instrument for waveform acquisition and MCA histogramming for arrays of gamma ray or other radiation detectors such as</p>
+<ul>
+<li>100 MSPS<ul>
+<li>Segmented HPGe detectors.</li>
+<li>Scintillator/PMT combinations: NaI, CsI, BGO and many others.</li>
+<li>Gas detector.</li>
+<li>Silicon strip detectors.</li>
+</ul>
 </li>
-<li>&#x7B97;&#x6CD5;&#x539F;&#x7406;
+<li>250 MSPS<ul>
+<li>Scintillator</li>
+<li>LaBr3</li>
+</ul>
 </li>
-<li>&#x3002;&#x3002;&#x3002;
-</li></ul>
-<hr><p><strong>Do Not Hot-Swap!</strong></p><p><strong>To avoid personal injury, and/or damage to the DGF-Pixie-16, always turn off crate power before removing the DGF-Pixie-16 from the crate!</strong></p><p><img alt="pixie16" src="../img/pixie16.jpg"></p><p>The DGF Pixie-16 is a 16-channel all-digital waveform acquisition and spectrometer card based on the CompactPCI/PXI standard for fast data readout to the host. It combines spectroscopy with waveform digitizing and the option of on-line pulse shape analysis. The Pixie-16 accepts signals from virtually any radiation detector. Incoming signals are digitized by 12/14/16-bit 100/250/500 MSPS ADCs. Waveforms of up to 163.8 &#x3BC;s in length for each channel can be stored in a FIFO.</p><p>The waveforms are available for onboard pulse shape analysis, which can be customized by adding user functions to the core processing software. Waveforms, timestamps, and the results of the pulse shape analysis can be read out by the host system for further off-line processing. Pulse heights are calculated to 16-bit precision and can be binned into spectra with up to 32K channels. The Pixie-16 supports coincidence spectroscopy and can recognize complex hit patterns.</p><p>Data readout rates through the CompactPCI/PXI backplane to the host computer can be up to 109 Mbyte/s. The standard PXI backplane, as well as additional custom backplane connections are used to distribute clocks and trigger signals between several Pixie-16 modules for group operation. A complete data acquisition and processing systems can be built by combining Pixie-16 modules with commercially available CompactPCI/PXI processor, controller or I/O modules in the same chassis.</p><p>The Pixie-16 is an instrument for waveform acquisition and MCA histogramming for arrays of gamma ray or other radiation detectors such as</p><ul><li><p>100 MSPS</p><ul><li>Segmented HPGe detectors.
+<li>500 MSPS<ul>
+<li>Scintillator</li>
+<li>LaBr3</li>
+</ul>
 </li>
-<li>Scintillator/PMT combinations: NaI, CsI, BGO and many others.
-</li>
-<li>Gas detector.
-</li>
-<li>Silicon strip detectors.
-</li></ul>
-</li>
-<li><p>250 MSPS</p><ul><li>Scintillator
-</li>
-<li>LaBr3
-</li></ul>
-</li>
-<li><p>500 MSPS</p><ul><li>Scintillator
-</li>
-<li>LaBr3
-</li></ul>
-</li></ul>
-<p>The Pixie-16 modules must be operated in a custom 6U CompactPCI/PXI chassis providing high currents at specific voltages not included in the CompactPCI/PXI standard 1 . Currently XIA provides a 14-slot chassis. Put the host computer(or remote PXI controller) in the system slot (slot 1) of your chassis. Put the Pixie-16 modules into any free peripheral slot (slot 2-14) with the chassis still powered down. After modules are installed, power up the chassis (Pixie-16 modules are not hot swappable). If using a remote controller, be sure to boot the host computer after powering up the chassis.</p><hr><h2 id="clock-distribution">Clock distribution</h2><p>In a multi-module system there will be one clock master and a number of clock slaves or repeaters. The clock function of a module can be selected by setting shunts on Jumper JP101 at the rear of the board.</p><p><img alt="ClockDistribution" src="../img/ClockDistribution.png"></p><p>Jumper Settings for different clock distribution modes. An individual module uses its own local clock (a). In a group of modules, there will be one daisy-chained clock master in the leftmost position and several repeaters (b). Alternatively, the PXI clock distribution path can be used, with the module in slot 2 the PXI clock master and the other modules as PXI clock recipients (c). In multi-chassis systems, the module in slot 2 in the clock master chassis should be configured shown in the top picture of (d), the modules in slot 2 in all other chassis as shown in the bottom picture of (d), and modules in any other slot as in the bottom picture of (c). The local clock can be substituted by an LVDS clock input on the front panel by using the &#x201C;Loc&#x201D; pin instead of the &#x201C;FP&#x201D; pin and setting jumper JP5 to &#x201C;Clk&#x201D;.</p><h3 id="individual-clock-mode">Individual Clock mode</h3><p>If only one Pixie-16 module is used in the system, or if clocks between modules do not have to be synchronized, the module should be set into individual clock mode, as shown in Figure a.</p><p>Connect pin 7 of JP101 (the clock input) with a shunt to pin 8 (LOC &#x2013; IN). This will use the local clock crystal as the clock source.</p><h3 id="daisy-chained-clock-mode">Daisy-chained Clock Mode</h3><p>The preferred way to distribute clocks between modules is to daisy-chain the clocks from module to module, where each module repeats and amplifies the signal. This requires one master module, located in the leftmost slot of the group of Pixie-16 modules. The master module has the same jumper settings shown in Figure b (top), using its local crystal as the input and sending its output to the right (LOC &#x2013; IN, OUT &#x2013; Right). Configure the other modules in the chassis as clock repeaters by setting the jumpers as shown in Figure b (bottom), using the signal from the left neighbor as the input and sending its output to the right (Left &#x2013; IN, OUT &#x2013; Right). There must be no gaps between modules.</p><h3 id="pxi-clock-mode">PXI Clock Mode</h3><p>A further option for clock distribution is to use the PXI clock distributed on the backplane. This clock is by default generated on the backplane (10MHz), repeated by a fan out buffer and connected to each slot by a dedicated line with minimum skew. Though the 10MHz is too slow to be a useful clock for the Pixie-16, it can be overridden by a signal from a module in slot 2.</p><p>The Pixie-16 can be configured to be the PXI clock master in slot 2, by connecting pins 6 and 8 (Loc &#x2013; BP). All modules, including the clock master, should be set to receive the PXI clock by connecting pin 1 and 3 on JP101 (PXI &#x2013; IN), see Figure c.</p><h3 id="multi-chassis-clock-mode">Multi-Chassis Clock Mode</h3><p>In multi-chassis systems (Figure d), the &#x201C;left&#x201D; and &#x201C;right&#x201D; connections are taken over by a P16Trigger board on the rear backplane. The module in slot 2 in the clock master chassis should be configured to send its local clock to the P16Trigger board (Loc - Right), receive it back from the P16trigger board and send it to the PXI clock input (Left - BP), and receive the PXI clock as the input for on-board distribution (PXI &#x2013; IN), see Figure d (top). The modules in slot 2 in all other chassis receive the clock from the P16trigger board and send it to the PXI clock input (Left &#x2013; BP), and also receive the PXI clock as the input for on-board distribution (PXI &#x2013; IN), see Figure d (bottom). The modules in any other slot should be set to use the PXI clock as the input (PXI-IN) as in Figure c (bottom).</p><hr><h2 id="&#x6570;&#x636E;&#x7ED3;&#x6784;">&#x6570;&#x636E;&#x7ED3;&#x6784;</h2><p><img alt="Header 100M" src="../img/data_100M.PNG">
-<img alt="Header 250M" src="../img/data_250M.PNG">
-<img alt="Header 500M" src="../img/data_500M.PNG"></p><p><em>&#x4EE5;&#x4E0B;&#x4E3A;&#x53EF;&#x9009;&#x62E9;&#x8F93;&#x51FA;</em></p><p><strong>TODO &#x9700;&#x8981;&#x8C03;&#x8282;&#x56FE;&#x7247;&#x5C3A;&#x5BF8;</strong></p><p><img alt="External 1" src="../img/data_ex1.PNG">
-<img alt="External 2" src="../img/data_ex2.PNG">
-<img alt="External 3" src="../img/data_ex3.PNG">
-<img alt="External 4" src="../img/data_ex4.PNG">
-<img alt="External 5" src="../img/data_ex5.PNG">
-<img alt="External 6" src="../img/data_ex6.PNG">
-<img alt="External 7" src="../img/data_ex7.PNG">
-<img alt="External 8" src="../img/data_ex8.PNG"></p><p>If trace recording is enabled, trace data will immediately follow the last word of the event header. Since raw ADC data points are 14-bit number, two 14-bit numbers are packed into one 32-bit word,as shown below. Since the event header could have variable length(4,6,8,10,12,14 ,16 or 18 words) depending on the selection of various output data options, the header length, event length and trace length that are recorded in the first 4 words of the event header should be used to navigate through the output data stream.</p><ul><li>CAEN &#x63D2;&#x4EF6;&#x5728;&#x91C7;&#x96C6;&#x6CE2;&#x5F62;&#x65F6;&#xFF0C;&#x4E00;&#x4E2A;&#x63D2;&#x4EF6;&#x6240;&#x6709;&#x901A;&#x9053;&#x6BCF;&#x4E2A;&#x4E8B;&#x4EF6;&#x6CE2;&#x5F62;&#x91C7;&#x96C6;&#x957F;&#x5EA6;&#x53EA;&#x80FD;&#x8BBE;&#x7F6E;&#x6210;&#x76F8;&#x540C;&#x7684;&#x3002;
-</li>
-<li>XIA &#x63D2;&#x4EF6;&#x53EF;&#x4EE5;&#x6BCF;&#x4E2A;&#x901A;&#x9053;&#x5355;&#x72EC;&#x8BBE;&#x7F6E;&#x6570;&#x636E;&#x957F;&#x5EA6;&#x3002;&#x4F8B;&#x5982;&#xFF1A;ch-0 &#x8BBE;&#x7F6E;&#x91C7;3000&#x4E2A;&#x70B9;&#xFF0C;ch-1 &#x8BBE;&#x7F6E;&#x91C7;2000&#x4E2A;&#x70B9;&#xFF0C;ch-2 &#x8BBE;&#x7F6E;&#x91C7;5000&#x4E2A;&#x70B9;&#xFF0C;ch-3 &#x8BBE;&#x7F6E;&#x6210;&#x4E0D;&#x91C7;&#x96C6;&#x6CE2;&#x5F62;&#x2026;&#x2026;&#x3002;&#x53E6;&#x5916;&#xFF0C;&#x8FD8;&#x53EF;&#x6BCF;&#x4E2A;&#x901A;&#x9053;&#x9009;&#x62E9;&#x662F;&#x5426;&#x8BB0;&#x5F55;baseline sum&#x3001;QDC&#x3001;external timestamps&#x3002;
-</li>
-<li>XIA&#x8FD8;&#x53EF;&#x8BBE;&#x7F6E;&#x5BF9;pile up&#x4E8B;&#x4EF6;&#x7684;&#x5904;&#x7406;&#x3002;&#x4F8B;&#x5982;pile up&#x4E8B;&#x4EF6;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#xFF0C;&#x5176;&#x5B83;&#x4E8B;&#x4EF6;&#x5219;&#x4E0D;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#x3002;&#x610F;&#x5473;&#x7740;&#x4E00;&#x4E2A;channel &#x4E0D;&#x540C;&#x4E8B;&#x4EF6;&#x5176;&#x6570;&#x636E;&#x957F;&#x5EA6;&#x4E5F;&#x4E0D;&#x4E00;&#x5B9A;&#x76F8;&#x7B49;&#x3002;
-</li>
-<li>&#x5728;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x65F6;&#x5019;&#xFF0C;CAEN &#x63D2;&#x4EF6;&#x6BCF;&#x6B21;&#x62FF;&#x5230;&#x7684;&#x6570;&#x636E;&#x90FD;&#x662F;&#x5B8C;&#x6574;&#x4E8B;&#x4EF6;&#x7684;&#x6570;&#x636E;&#x3002; &#x800C; XIA &#x63D2;&#x4EF6; FIFO &#x7684;&#x8BFB;&#x6307;&#x9488;&#x3001;&#x5199;&#x6307;&#x9488;&#x662F;&#x72EC;&#x7ACB;&#x7684;&#x3001;&#x540C;&#x65F6;&#x8FDB;&#x884C;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x6BCF;&#x6B21;&#x6211;&#x4EEC;&#x8981;&#x53D6;&#x6570;&#x636E;&#x65F6;&#x5019;&#x90FD;&#x9700;&#x8981;&#x5148;&#x67E5;&#x8BE2;&#x4E0B;&#x5F53;&#x524D; FIFO &#x6709;&#x591A;&#x5C11;&#x6570;&#x636E;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x6307;&#x5B9A;&#x8BE5;&#x6B21;&#x8BFB;&#x53D6;&#x591A;&#x5C11;&#x6570;&#x636E;&#x3002;&#x56E0;&#x4E3A;FIFO&#x8BFB;&#x3001;&#x5199;&#x662F;&#x72EC;&#x7ACB;&#x7684;&#xFF0C;&#x56E0;&#x800C;&#x67E5;&#x8BE2;&#x5230;&#x7684;&#x6570;&#x636E;&#x91CF;&#x662F;&#x8BE5;&#x65F6;&#x523B;&#x62E5;&#x6709;&#x7684;&#x6570;&#x636E;&#x91CF;&#xFF0C;&#x8FD9;&#x4E2A;&#x6570;&#x636E;&#x91CF;&#x57FA;&#x672C;&#x90FD;&#x4E0D;&#x662F;&#x5B8C;&#x6574;&#x4E8B;&#x4EF6;&#x7684;&#x6570;&#x636E;&#x91CF;&#xFF08;&#x8FD8;&#x6709;&#x90E8;&#x5206;&#x662F;&#x5F53;&#x524D;&#x4E8B;&#x4EF6;&#x6B63;&#x5728;&#x5199;&#x5165;&#x7684;&#xFF09;&#x3002;&#x6BCF;&#x4E2A;&#x4E8B;&#x4EF6;&#x9664;&#x4E86;&#x6709; 4 words &#x7684; header &#x53CA;&#x540E;&#x9762;&#x7D27;&#x8DDF;&#x7740;&#x7684;&#x6570;&#x636E;&#x5916;&#x5E76;&#x6CA1;&#x6709;&#x4E8B;&#x4EF6;&#x6807;&#x8BB0;&#x7B26;&#xFF0C;&#x5F53;&#x7136;&#x8FD9;&#x6837;&#x8BBE;&#x8BA1;&#x6700;&#x5927;&#x7684;&#x597D;&#x5904;&#x5C31;&#x662F;&#x901F;&#x5EA6;&#x5FEB;&#x3002;
-</li></ul>
-<p>&#x57FA;&#x4E8E;&#x4EE5;&#x4E0A;&#x4E8B;&#x5B9E;&#xFF0C;&#x4E24;&#x4E2A;&#x516C;&#x53F8;&#x7684;&#x4EA7;&#x54C1;&#x5BF9;&#x7528;&#x6237;&#x5199;&#x65F6;&#x65F6;&#x76D1;&#x89C6;&#x83B7;&#x53D6;&#x7387;&#x3001;&#x5728;&#x7EBF;&#x76D1;&#x89C6;&#x7A0B;&#x5E8F;&#x7B49;&#x7684;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x5B58;&#x5728;&#x8F83;&#x5927;&#x5DEE;&#x5F02;&#x3002;</p><ul><li>CAEN&#xFF1A; &#x7531;&#x4E8E; CAEN &#x4E00;&#x4E2A;&#x63D2;&#x4EF6;&#x4E0A;&#x6BCF;&#x4E2A;&#x901A;&#x9053;&#x7684;&#x91C7;&#x6837;&#x6570;&#x76F8;&#x540C;&#xFF0C;&#x56E0;&#x800C;&#x4ED6;&#x4EEC;&#x6BCF;&#x4E2A;&#x4E8B;&#x4EF6;&#x7684;&#x957F;&#x5EA6;&#x662F;&#x4E00;&#x81F4;&#x7684;&#x3002;&#x5728;&#x62FF;&#x5230;&#x6570;&#x636E;&#x65F6;&#x5373;&#x53EF;&#x5B58;&#x6587;&#x4EF6;&#x6216;&#x8005; decode &#x51FA;&#x6BCF;&#x4E2A;&#x4E8B;&#x4EF6;&#x7684;&#x4FE1;&#x606F;&#x7528;&#x6765;&#x7EDF;&#x8BA1;&#x65F6;&#x65F6;&#x83B7;&#x53D6;&#x901F;&#x7387;&#xFF0C;&#x4E5F;&#x53EF;&#x5C06;&#x6570;&#x636E;&#x53D1;&#x9001;&#x5230;&#x5728;&#x7EBF;&#x7A0B;&#x5E8F;&#x3002;
-</li>
-<li>XIA&#xFF1A; &#x7531;&#x4E8E;&#x5176;&#x4E0A;&#x6BCF;&#x4E2A;&#x901A;&#x9053;&#x6570;&#x636E;&#x957F;&#x5EA6;&#x53EF;&#x5355;&#x72EC;&#x8BBE;&#x7F6E;&#xFF0C;&#x8FD9;&#x662F; XIA &#x63D2;&#x4EF6;&#x7684;&#x7075;&#x6D3B;&#x6027;&#x3002;&#x53C8; FIFO &#x67E5;&#x8BE2;&#x5230;&#x7684;&#x6570;&#x636E;&#x91CF;&#x662F;&#x5F53;&#x524D;&#x65F6;&#x523B;&#x7684;&#x6570;&#x636E;&#x91CF;&#xFF0C;&#x8FD9;&#x6837;&#x6BCF;&#x6B21;&#x53D6;&#x5230;&#x7684;&#x6570;&#x636E;&#x90FD;&#x4E0D;&#x662F;&#x5B8C;&#x6574;&#x4E8B;&#x4EF6;&#x7684;&#x6570;&#x636E;&#x3002;
-</li>
-<li>&#x5BF9;&#x4E8E;&#x591A;&#x4E2A;&#x63D2;&#x4EF6;&#x7684;&#x7CFB;&#x7EDF;&#xFF0C;&#x83B7;&#x53D6;&#x65F6;&#x5019;&#x4E00;&#x76F4;&#x5FAA;&#x73AF;&#x8BFB;&#x53D6;&#x6BCF;&#x4E00;&#x4E2A;&#x63D2;&#x4EF6;&#x4E0A;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5982;&#x679C;&#x5C06;&#x6240;&#x6709;&#x63D2;&#x4EF6;&#x7684;&#x6570;&#x636E;&#x5B58;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x5185;&#xFF0C;&#x5C06;&#x9020;&#x6210;&#x6570;&#x636E;&#x7684;&#x9519;&#x4E71;&#x3002;&#x5982;&#x679C;&#x6BCF;&#x4E2A;&#x63D2;&#x4EF6;&#x7684;&#x6570;&#x636E;&#x5355;&#x72EC;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x5185;&#xFF0C;&#x90A3;&#x4E48;&#x4E0B;&#x4E00;&#x6B21;&#x8BFB;&#x53D6;&#x7684;&#x8BE5;&#x63D2;&#x4EF6;&#x7684;&#x6570;&#x636E;&#x4E2D;&#x5F00;&#x5934;&#x7684;&#x4E0D;&#x5B8C;&#x6574;&#x4E8B;&#x4EF6;&#x7684;&#x6570;&#x636E;&#x521A;&#x597D;&#x63A5;&#x4E0A;&#x4E00;&#x6B21;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x4E0D;&#x5B8C;&#x6574;&#x4E8B;&#x4EF6;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x53EF;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x3002;
-</li>
-<li>&#x7531;&#x4E8E;&#x6BCF;&#x6B21;&#x62FF;&#x5230;&#x7684;&#x4E0D;&#x662F;&#x5B8C;&#x6574;&#x6570;&#x636E;&#xFF0C;&#x56E0;&#x6B64;&#x4E5F;&#x4E0D;&#x597D; decode &#x5F53;&#x524D;&#x6570;&#x636E;&#x6765;&#x83B7;&#x5F97;&#x6BCF;&#x4E2A;&#x4E8B;&#x4EF6;&#x7684;&#x4FE1;&#x606F;&#xFF08;&#x4ECE;&#x5F00;&#x59CB;&#x5C31;decode&#x8BB0;&#x5F55;&#x6BCF;&#x6B21;&#x6570;&#x636E;&#x7684;&#x4E0D;&#x5B8C;&#x6574;&#x4E8B;&#x4EF6;&#x7684;&#x60C5;&#x51B5;&#x4E5F;&#x53EF;&#x89E3;&#x51B3;&#x8BE5;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x6837;decode&#x9700;&#x8981;&#x989D;&#x5916;&#x7684;&#x65F6;&#x95F4;&#xFF09;&#x3002;&#x4F46;&#x662F; XIA &#x5185;&#x90E8; DSP&#x4E0A;&#x7EDF;&#x8BA1;&#x7740;&#x4FE1;&#x53F7;&#x8F93;&#x5165;&#x91CF;&#x3001;&#x83B7;&#x53D6;&#x63A5;&#x6536;&#x91CF;&#x3001;&#x6D3B;&#x65F6;&#x7B49;&#x4FE1;&#x606F;&#x3002;&#x53EF;&#x9891;&#x7E41;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x8BFB;&#x53D6; DSP &#x4E0A;&#x7684;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x6765;&#x76D1;&#x89C6;&#x65F6;&#x65F6;&#x83B7;&#x53D6;&#x901F;&#x7387;&#x3002;&#x4F46;&#x662F;&#x9891;&#x7E41;&#x8C03;&#x7528;&#x8BE5;&#x51FD;&#x6570;&#x4F1A;&#x5BF9;&#x83B7;&#x53D6;&#x7684; I/O &#x6709;&#x4E00;&#x70B9;&#x5F71;&#x54CD;&#x3002;&#x51E0;&#x79D2;&#x949F;&#x8C03;&#x7528;&#x4E00;&#x6B21;&#x8BE5;&#x51FD;&#x6570;&#xFF0C;&#x8FD9;&#x4E2A;&#x5F71;&#x54CD;&#x57FA;&#x672C;&#x53EF;&#x4EE5;&#x5FFD;&#x7565;&#x3002;
-</li>
-<li>&#x7531;&#x4E8E;&#x6BCF;&#x6B21;&#x62FF;&#x5230;&#x7684;&#x4E0D;&#x662F;&#x5B8C;&#x6574;&#x6570;&#x636E;&#xFF0C;&#x56E0;&#x6B64;&#x5171;&#x4EAB;&#x5185;&#x5B58;&#x7684;&#x5728;&#x7EBF;&#x76D1;&#x89C6;&#x4E5F;&#x4E0D;&#x5BB9;&#x6613;&#x5B9E;&#x73B0;&#xFF0C;&#x5982;&#x82E5;&#x8981;&#x5B9E;&#x73B0;&#xFF0C;&#x4E5F;&#x4E0D;&#x662F;&#x6CA1;&#x529E;&#x6CD5;&#xFF08;&#x4ECE;&#x5F00;&#x59CB;&#x5C31;decode&#x8BB0;&#x5F55;&#x6BCF;&#x6B21;&#x6570;&#x636E;&#x7684;&#x4E0D;&#x5B8C;&#x6574;&#x4E8B;&#x4EF6;&#x7684;&#x60C5;&#x51B5;&#x4E5F;&#x53EF;&#x89E3;&#x51B3;&#x8BE5;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x6837;decode&#x9700;&#x8981;&#x989D;&#x5916;&#x7684;&#x65F6;&#x95F4;&#xFF09;&#x3002;
-</li>
-<li>&#x4E0B;&#x9762;&#x7ED9;&#x51FA;&#x4E00;&#x4E9B;&#x56F0;&#x96BE;&#x7684;&#x89E3;&#x51B3;&#x601D;&#x8DEF;&#xFF1A; &#x727A;&#x7272;XIA&#x63D2;&#x4EF6;&#x7684;&#x7075;&#x6D3B;&#x6027;&#xFF0C;&#x5BF9;&#x4E00;&#x4E2A;&#x63D2;&#x4EF6;&#x8BBE;&#x7F6E;&#x6210;&#x6BCF;&#x4E2A;&#x901A;&#x9053;&#x91C7;&#x96C6;&#x6CE2;&#x5F62;&#x957F;&#x5EA6;&#x76F8;&#x540C;&#xFF08;&#x8FD9;&#x6837;&#x5C31;&#x4E0E;CAEN&#x4E00;&#x6837;&#x4E86;&#xFF09;&#xFF0C;&#x56E0;&#x4E3A;&#x6BCF;&#x4E2A;&#x901A;&#x9053;&#x7684;&#x6BCF;&#x4E2A;&#x4E8B;&#x4EF6;&#x6570;&#x636E;&#x7684;&#x957F;&#x5EA6;&#x76F8;&#x7B49;&#xFF0C;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x65F6;&#x5019;&#x67E5;&#x8BE2;&#x5230;&#x5F53;&#x524D;&#x7684;&#x6570;&#x636E;&#x91CF;&#x4E4B;&#x540E;&#xFF0C;&#x7136;&#x540E;&#x53EA;&#x8BFB;&#x53D6;&#x4E8B;&#x4EF6;&#x957F;&#x5EA6;&#x6574;&#x6570;&#x500D;&#x7684;&#x6700;&#x5927;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x6837;&#x6BCF;&#x6B21;&#x62FF;&#x5230;&#x7684;&#x90FD;&#x662F;&#x5B8C;&#x6574;&#x7684;&#x4E8B;&#x4EF6;&#x6570;&#x636E;&#x4E86;&#xFF0C;&#x53EF;&#x53C2;&#x7167;CAEN&#x7684;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x3002;
-</li>
-<li>&#x5BF9;&#x91C7;&#x6CE2;&#x5F62;&#x65F6;&#x5019;&#xFF0C;&#x53EF;&#x91C7;&#x7528;&#x201C;&#x4F2A;&#x201D;&#x5728;&#x7EBF;&#x76D1;&#x89C6;&#x83B7;&#x53D6;&#x60C5;&#x51B5;&#xFF0C;&#x5373;&#x83B7;&#x53D6;&#x6587;&#x4EF6;&#x6BCF;&#x9694;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x4FDD;&#x5B58;&#x4E00;&#x6B21;&#xFF0C;&#x7528;&#x4E0A;&#x4E00;&#x8F6E;&#x7684;&#x6570;&#x636E;&#x4F5C;&#x4E3A;&#x201C;&#x5728;&#x7EBF;&#x201D;&#x6570;&#x636E;&#x3002;
-</li></ul>
+</ul>
+<p>The Pixie-16 modules must be operated in a custom 6U CompactPCI/PXI chassis providing high currents at specific voltages not included in the CompactPCI/PXI standard 1 . Currently XIA provides a 14-slot chassis. Put the host computer(or remote PXI controller) in the system slot (slot 1) of your chassis. Put the Pixie-16 modules into any free peripheral slot (slot 2-14) with the chassis still powered down. After modules are installed, power up the chassis (Pixie-16 modules are not hot swappable). If using a remote controller, be sure to boot the host computer after powering up the chassis.</p>
+<hr>
+<h2 id="clock-distribution"><a name="clock-distribution" class="plugin-anchor" href="#clock-distribution"><i class="fa fa-link" aria-hidden="true"></i></a>Clock distribution</h2>
+<p>In a multi-module system there will be one clock master and a number of clock slaves or repeaters. The clock function of a module can be selected by setting shunts on Jumper JP101 at the rear of the board.</p>
+<figure id="fig1.3.2"><img src="../img/ClockDistribution.png" alt="ClockDistribution"><figcaption>Figure: ClockDistribution</figcaption></figure>
+<p>Jumper Settings for different clock distribution modes. An individual module uses its own local clock (a). In a group of modules, there will be one daisy-chained clock master in the leftmost position and several repeaters (b). Alternatively, the PXI clock distribution path can be used, with the module in slot 2 the PXI clock master and the other modules as PXI clock recipients (c). In multi-chassis systems, the module in slot 2 in the clock master chassis should be configured shown in the top picture of (d), the modules in slot 2 in all other chassis as shown in the bottom picture of (d), and modules in any other slot as in the bottom picture of (c). The local clock can be substituted by an LVDS clock input on the front panel by using the &#x201C;Loc&#x201D; pin instead of the &#x201C;FP&#x201D; pin and setting jumper JP5 to &#x201C;Clk&#x201D;.</p>
+<h3 id="individual-clock-mode"><a name="individual-clock-mode" class="plugin-anchor" href="#individual-clock-mode"><i class="fa fa-link" aria-hidden="true"></i></a>Individual Clock mode</h3>
+<p>If only one Pixie-16 module is used in the system, or if clocks between modules do not have to be synchronized, the module should be set into individual clock mode, as shown in Figure a.</p>
+<p>Connect pin 7 of JP101 (the clock input) with a shunt to pin 8 (LOC &#x2013; IN). This will use the local clock crystal as the clock source.</p>
+<h3 id="daisy-chained-clock-mode"><a name="daisy-chained-clock-mode" class="plugin-anchor" href="#daisy-chained-clock-mode"><i class="fa fa-link" aria-hidden="true"></i></a>Daisy-chained Clock Mode</h3>
+<p>The preferred way to distribute clocks between modules is to daisy-chain the clocks from module to module, where each module repeats and amplifies the signal. This requires one master module, located in the leftmost slot of the group of Pixie-16 modules. The master module has the same jumper settings shown in Figure b (top), using its local crystal as the input and sending its output to the right (LOC &#x2013; IN, OUT &#x2013; Right). Configure the other modules in the chassis as clock repeaters by setting the jumpers as shown in Figure b (bottom), using the signal from the left neighbor as the input and sending its output to the right (Left &#x2013; IN, OUT &#x2013; Right). There must be no gaps between modules.</p>
+<h3 id="pxi-clock-mode"><a name="pxi-clock-mode" class="plugin-anchor" href="#pxi-clock-mode"><i class="fa fa-link" aria-hidden="true"></i></a>PXI Clock Mode</h3>
+<p>A further option for clock distribution is to use the PXI clock distributed on the backplane. This clock is by default generated on the backplane (10MHz), repeated by a fan out buffer and connected to each slot by a dedicated line with minimum skew. Though the 10MHz is too slow to be a useful clock for the Pixie-16, it can be overridden by a signal from a module in slot 2.</p>
+<p>The Pixie-16 can be configured to be the PXI clock master in slot 2, by connecting pins 6 and 8 (Loc &#x2013; BP). All modules, including the clock master, should be set to receive the PXI clock by connecting pin 1 and 3 on JP101 (PXI &#x2013; IN), see Figure c.</p>
+<h3 id="multi-chassis-clock-mode"><a name="multi-chassis-clock-mode" class="plugin-anchor" href="#multi-chassis-clock-mode"><i class="fa fa-link" aria-hidden="true"></i></a>Multi-Chassis Clock Mode</h3>
+<p>In multi-chassis systems (Figure d), the &#x201C;left&#x201D; and &#x201C;right&#x201D; connections are taken over by a P16Trigger board on the rear backplane. The module in slot 2 in the clock master chassis should be configured to send its local clock to the P16Trigger board (Loc - Right), receive it back from the P16trigger board and send it to the PXI clock input (Left - BP), and receive the PXI clock as the input for on-board distribution (PXI &#x2013; IN), see Figure d (top). The modules in slot 2 in all other chassis receive the clock from the P16trigger board and send it to the PXI clock input (Left &#x2013; BP), and also receive the PXI clock as the input for on-board distribution (PXI &#x2013; IN), see Figure d (bottom). The modules in any other slot should be set to use the PXI clock as the input (PXI-IN) as in Figure c (bottom).</p>
+<hr>
+<h2 id="&#x6570;&#x636E;&#x7ED3;&#x6784;"><a name="&#x6570;&#x636E;&#x7ED3;&#x6784;" class="plugin-anchor" href="#&#x6570;&#x636E;&#x7ED3;&#x6784;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x6570;&#x636E;&#x7ED3;&#x6784;</h2>
+<p><img src="../img/data_100M.PNG" alt="Header 100M">
+<img src="../img/data_250M.PNG" alt="Header 250M">
+<img src="../img/data_500M.PNG" alt="Header 500M"></p>
+<p><em>&#x4EE5;&#x4E0B;&#x4E3A;&#x53EF;&#x9009;&#x62E9;&#x8F93;&#x51FA;</em></p>
+<p><strong>TODO &#x9700;&#x8981;&#x8C03;&#x8282;&#x56FE;&#x7247;&#x5C3A;&#x5BF8;</strong></p>
+<p><img src="../img/data_ex1.PNG" alt="External 1">
+<img src="../img/data_ex2.PNG" alt="External 2">
+<img src="../img/data_ex3.PNG" alt="External 3">
+<img src="../img/data_ex4.PNG" alt="External 4">
+<img src="../img/data_ex5.PNG" alt="External 5">
+<img src="../img/data_ex6.PNG" alt="External 6">
+<img src="../img/data_ex7.PNG" alt="External 7">
+<img src="../img/data_ex8.PNG" alt="External 8"></p>
+<p>If trace recording is enabled, trace data will immediately follow the last word of the event header. Since raw ADC data points are 14-bit number, two 14-bit numbers are packed into one 32-bit word,as shown below. Since the event header could have variable length(4,6,8,10,12,14 ,16 or 18 words) depending on the selection of various output data options, the header length, event length and trace length that are recorded in the first 4 words of the event header should be used to navigate through the output data stream.</p>
+<ul>
+<li>CAEN &#x63D2;&#x4EF6;&#x5728;&#x91C7;&#x96C6;&#x6CE2;&#x5F62;&#x65F6;&#xFF0C;&#x4E00;&#x4E2A;&#x63D2;&#x4EF6;&#x6240;&#x6709;&#x901A;&#x9053;&#x6BCF;&#x4E2A;&#x4E8B;&#x4EF6;&#x6CE2;&#x5F62;&#x91C7;&#x96C6;&#x957F;&#x5EA6;&#x53EA;&#x80FD;&#x8BBE;&#x7F6E;&#x6210;&#x76F8;&#x540C;&#x7684;&#x3002;</li>
+<li>XIA &#x63D2;&#x4EF6;&#x53EF;&#x4EE5;&#x6BCF;&#x4E2A;&#x901A;&#x9053;&#x5355;&#x72EC;&#x8BBE;&#x7F6E;&#x6570;&#x636E;&#x957F;&#x5EA6;&#x3002;&#x4F8B;&#x5982;&#xFF1A;ch-0 &#x8BBE;&#x7F6E;&#x91C7;3000&#x4E2A;&#x70B9;&#xFF0C;ch-1 &#x8BBE;&#x7F6E;&#x91C7;2000&#x4E2A;&#x70B9;&#xFF0C;ch-2 &#x8BBE;&#x7F6E;&#x91C7;5000&#x4E2A;&#x70B9;&#xFF0C;ch-3 &#x8BBE;&#x7F6E;&#x6210;&#x4E0D;&#x91C7;&#x96C6;&#x6CE2;&#x5F62;&#x2026;&#x2026;&#x3002;&#x53E6;&#x5916;&#xFF0C;&#x8FD8;&#x53EF;&#x6BCF;&#x4E2A;&#x901A;&#x9053;&#x9009;&#x62E9;&#x662F;&#x5426;&#x8BB0;&#x5F55;baseline sum&#x3001;QDC&#x3001;external timestamps&#x3002;</li>
+<li>XIA&#x8FD8;&#x53EF;&#x8BBE;&#x7F6E;&#x5BF9;pile up&#x4E8B;&#x4EF6;&#x7684;&#x5904;&#x7406;&#x3002;&#x4F8B;&#x5982;pile up&#x4E8B;&#x4EF6;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#xFF0C;&#x5176;&#x5B83;&#x4E8B;&#x4EF6;&#x5219;&#x4E0D;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#x3002;&#x610F;&#x5473;&#x7740;&#x4E00;&#x4E2A;channel &#x4E0D;&#x540C;&#x4E8B;&#x4EF6;&#x5176;&#x6570;&#x636E;&#x957F;&#x5EA6;&#x4E5F;&#x4E0D;&#x4E00;&#x5B9A;&#x76F8;&#x7B49;&#x3002;</li>
+<li>&#x5728;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x65F6;&#x5019;&#xFF0C;CAEN &#x63D2;&#x4EF6;&#x6BCF;&#x6B21;&#x62FF;&#x5230;&#x7684;&#x6570;&#x636E;&#x90FD;&#x662F;&#x5B8C;&#x6574;&#x4E8B;&#x4EF6;&#x7684;&#x6570;&#x636E;&#x3002; &#x800C; XIA &#x63D2;&#x4EF6; FIFO &#x7684;&#x8BFB;&#x6307;&#x9488;&#x3001;&#x5199;&#x6307;&#x9488;&#x662F;&#x72EC;&#x7ACB;&#x7684;&#x3001;&#x540C;&#x65F6;&#x8FDB;&#x884C;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x6BCF;&#x6B21;&#x6211;&#x4EEC;&#x8981;&#x53D6;&#x6570;&#x636E;&#x65F6;&#x5019;&#x90FD;&#x9700;&#x8981;&#x5148;&#x67E5;&#x8BE2;&#x4E0B;&#x5F53;&#x524D; FIFO &#x6709;&#x591A;&#x5C11;&#x6570;&#x636E;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x6307;&#x5B9A;&#x8BE5;&#x6B21;&#x8BFB;&#x53D6;&#x591A;&#x5C11;&#x6570;&#x636E;&#x3002;&#x56E0;&#x4E3A;FIFO&#x8BFB;&#x3001;&#x5199;&#x662F;&#x72EC;&#x7ACB;&#x7684;&#xFF0C;&#x56E0;&#x800C;&#x67E5;&#x8BE2;&#x5230;&#x7684;&#x6570;&#x636E;&#x91CF;&#x662F;&#x8BE5;&#x65F6;&#x523B;&#x62E5;&#x6709;&#x7684;&#x6570;&#x636E;&#x91CF;&#xFF0C;&#x8FD9;&#x4E2A;&#x6570;&#x636E;&#x91CF;&#x57FA;&#x672C;&#x90FD;&#x4E0D;&#x662F;&#x5B8C;&#x6574;&#x4E8B;&#x4EF6;&#x7684;&#x6570;&#x636E;&#x91CF;&#xFF08;&#x8FD8;&#x6709;&#x90E8;&#x5206;&#x662F;&#x5F53;&#x524D;&#x4E8B;&#x4EF6;&#x6B63;&#x5728;&#x5199;&#x5165;&#x7684;&#xFF09;&#x3002;&#x6BCF;&#x4E2A;&#x4E8B;&#x4EF6;&#x9664;&#x4E86;&#x6709; 4 words &#x7684; header &#x53CA;&#x540E;&#x9762;&#x7D27;&#x8DDF;&#x7740;&#x7684;&#x6570;&#x636E;&#x5916;&#x5E76;&#x6CA1;&#x6709;&#x4E8B;&#x4EF6;&#x6807;&#x8BB0;&#x7B26;&#xFF0C;&#x5F53;&#x7136;&#x8FD9;&#x6837;&#x8BBE;&#x8BA1;&#x6700;&#x5927;&#x7684;&#x597D;&#x5904;&#x5C31;&#x662F;&#x901F;&#x5EA6;&#x5FEB;&#x3002;</li>
+</ul>
+<p>&#x57FA;&#x4E8E;&#x4EE5;&#x4E0A;&#x4E8B;&#x5B9E;&#xFF0C;&#x4E24;&#x4E2A;&#x516C;&#x53F8;&#x7684;&#x4EA7;&#x54C1;&#x5BF9;&#x7528;&#x6237;&#x5199;&#x65F6;&#x65F6;&#x76D1;&#x89C6;&#x83B7;&#x53D6;&#x7387;&#x3001;&#x5728;&#x7EBF;&#x76D1;&#x89C6;&#x7A0B;&#x5E8F;&#x7B49;&#x7684;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x5B58;&#x5728;&#x8F83;&#x5927;&#x5DEE;&#x5F02;&#x3002;</p>
+<ul>
+<li>CAEN&#xFF1A; &#x7531;&#x4E8E; CAEN &#x4E00;&#x4E2A;&#x63D2;&#x4EF6;&#x4E0A;&#x6BCF;&#x4E2A;&#x901A;&#x9053;&#x7684;&#x91C7;&#x6837;&#x6570;&#x76F8;&#x540C;&#xFF0C;&#x56E0;&#x800C;&#x4ED6;&#x4EEC;&#x6BCF;&#x4E2A;&#x4E8B;&#x4EF6;&#x7684;&#x957F;&#x5EA6;&#x662F;&#x4E00;&#x81F4;&#x7684;&#x3002;&#x5728;&#x62FF;&#x5230;&#x6570;&#x636E;&#x65F6;&#x5373;&#x53EF;&#x5B58;&#x6587;&#x4EF6;&#x6216;&#x8005; decode &#x51FA;&#x6BCF;&#x4E2A;&#x4E8B;&#x4EF6;&#x7684;&#x4FE1;&#x606F;&#x7528;&#x6765;&#x7EDF;&#x8BA1;&#x65F6;&#x65F6;&#x83B7;&#x53D6;&#x901F;&#x7387;&#xFF0C;&#x4E5F;&#x53EF;&#x5C06;&#x6570;&#x636E;&#x53D1;&#x9001;&#x5230;&#x5728;&#x7EBF;&#x7A0B;&#x5E8F;&#x3002;</li>
+<li>XIA&#xFF1A; &#x7531;&#x4E8E;&#x5176;&#x4E0A;&#x6BCF;&#x4E2A;&#x901A;&#x9053;&#x6570;&#x636E;&#x957F;&#x5EA6;&#x53EF;&#x5355;&#x72EC;&#x8BBE;&#x7F6E;&#xFF0C;&#x8FD9;&#x662F; XIA &#x63D2;&#x4EF6;&#x7684;&#x7075;&#x6D3B;&#x6027;&#x3002;&#x53C8; FIFO &#x67E5;&#x8BE2;&#x5230;&#x7684;&#x6570;&#x636E;&#x91CF;&#x662F;&#x5F53;&#x524D;&#x65F6;&#x523B;&#x7684;&#x6570;&#x636E;&#x91CF;&#xFF0C;&#x8FD9;&#x6837;&#x6BCF;&#x6B21;&#x53D6;&#x5230;&#x7684;&#x6570;&#x636E;&#x90FD;&#x4E0D;&#x662F;&#x5B8C;&#x6574;&#x4E8B;&#x4EF6;&#x7684;&#x6570;&#x636E;&#x3002;</li>
+<li>&#x5BF9;&#x4E8E;&#x591A;&#x4E2A;&#x63D2;&#x4EF6;&#x7684;&#x7CFB;&#x7EDF;&#xFF0C;&#x83B7;&#x53D6;&#x65F6;&#x5019;&#x4E00;&#x76F4;&#x5FAA;&#x73AF;&#x8BFB;&#x53D6;&#x6BCF;&#x4E00;&#x4E2A;&#x63D2;&#x4EF6;&#x4E0A;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5982;&#x679C;&#x5C06;&#x6240;&#x6709;&#x63D2;&#x4EF6;&#x7684;&#x6570;&#x636E;&#x5B58;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x5185;&#xFF0C;&#x5C06;&#x9020;&#x6210;&#x6570;&#x636E;&#x7684;&#x9519;&#x4E71;&#x3002;&#x5982;&#x679C;&#x6BCF;&#x4E2A;&#x63D2;&#x4EF6;&#x7684;&#x6570;&#x636E;&#x5355;&#x72EC;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x5185;&#xFF0C;&#x90A3;&#x4E48;&#x4E0B;&#x4E00;&#x6B21;&#x8BFB;&#x53D6;&#x7684;&#x8BE5;&#x63D2;&#x4EF6;&#x7684;&#x6570;&#x636E;&#x4E2D;&#x5F00;&#x5934;&#x7684;&#x4E0D;&#x5B8C;&#x6574;&#x4E8B;&#x4EF6;&#x7684;&#x6570;&#x636E;&#x521A;&#x597D;&#x63A5;&#x4E0A;&#x4E00;&#x6B21;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x4E0D;&#x5B8C;&#x6574;&#x4E8B;&#x4EF6;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x53EF;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x3002;</li>
+<li>&#x7531;&#x4E8E;&#x6BCF;&#x6B21;&#x62FF;&#x5230;&#x7684;&#x4E0D;&#x662F;&#x5B8C;&#x6574;&#x6570;&#x636E;&#xFF0C;&#x56E0;&#x6B64;&#x4E5F;&#x4E0D;&#x597D; decode &#x5F53;&#x524D;&#x6570;&#x636E;&#x6765;&#x83B7;&#x5F97;&#x6BCF;&#x4E2A;&#x4E8B;&#x4EF6;&#x7684;&#x4FE1;&#x606F;&#xFF08;&#x4ECE;&#x5F00;&#x59CB;&#x5C31;decode&#x8BB0;&#x5F55;&#x6BCF;&#x6B21;&#x6570;&#x636E;&#x7684;&#x4E0D;&#x5B8C;&#x6574;&#x4E8B;&#x4EF6;&#x7684;&#x60C5;&#x51B5;&#x4E5F;&#x53EF;&#x89E3;&#x51B3;&#x8BE5;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x6837;decode&#x9700;&#x8981;&#x989D;&#x5916;&#x7684;&#x65F6;&#x95F4;&#xFF09;&#x3002;&#x4F46;&#x662F; XIA &#x5185;&#x90E8; DSP&#x4E0A;&#x7EDF;&#x8BA1;&#x7740;&#x4FE1;&#x53F7;&#x8F93;&#x5165;&#x91CF;&#x3001;&#x83B7;&#x53D6;&#x63A5;&#x6536;&#x91CF;&#x3001;&#x6D3B;&#x65F6;&#x7B49;&#x4FE1;&#x606F;&#x3002;&#x53EF;&#x9891;&#x7E41;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x8BFB;&#x53D6; DSP &#x4E0A;&#x7684;&#x7EDF;&#x8BA1;&#x4FE1;&#x606F;&#x6765;&#x76D1;&#x89C6;&#x65F6;&#x65F6;&#x83B7;&#x53D6;&#x901F;&#x7387;&#x3002;&#x4F46;&#x662F;&#x9891;&#x7E41;&#x8C03;&#x7528;&#x8BE5;&#x51FD;&#x6570;&#x4F1A;&#x5BF9;&#x83B7;&#x53D6;&#x7684; I/O &#x6709;&#x4E00;&#x70B9;&#x5F71;&#x54CD;&#x3002;&#x51E0;&#x79D2;&#x949F;&#x8C03;&#x7528;&#x4E00;&#x6B21;&#x8BE5;&#x51FD;&#x6570;&#xFF0C;&#x8FD9;&#x4E2A;&#x5F71;&#x54CD;&#x57FA;&#x672C;&#x53EF;&#x4EE5;&#x5FFD;&#x7565;&#x3002;</li>
+<li>&#x7531;&#x4E8E;&#x6BCF;&#x6B21;&#x62FF;&#x5230;&#x7684;&#x4E0D;&#x662F;&#x5B8C;&#x6574;&#x6570;&#x636E;&#xFF0C;&#x56E0;&#x6B64;&#x5171;&#x4EAB;&#x5185;&#x5B58;&#x7684;&#x5728;&#x7EBF;&#x76D1;&#x89C6;&#x4E5F;&#x4E0D;&#x5BB9;&#x6613;&#x5B9E;&#x73B0;&#xFF0C;&#x5982;&#x82E5;&#x8981;&#x5B9E;&#x73B0;&#xFF0C;&#x4E5F;&#x4E0D;&#x662F;&#x6CA1;&#x529E;&#x6CD5;&#xFF08;&#x4ECE;&#x5F00;&#x59CB;&#x5C31;decode&#x8BB0;&#x5F55;&#x6BCF;&#x6B21;&#x6570;&#x636E;&#x7684;&#x4E0D;&#x5B8C;&#x6574;&#x4E8B;&#x4EF6;&#x7684;&#x60C5;&#x51B5;&#x4E5F;&#x53EF;&#x89E3;&#x51B3;&#x8BE5;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x6837;decode&#x9700;&#x8981;&#x989D;&#x5916;&#x7684;&#x65F6;&#x95F4;&#xFF09;&#x3002;</li>
+<li>&#x4E0B;&#x9762;&#x7ED9;&#x51FA;&#x4E00;&#x4E9B;&#x56F0;&#x96BE;&#x7684;&#x89E3;&#x51B3;&#x601D;&#x8DEF;&#xFF1A; &#x727A;&#x7272;XIA&#x63D2;&#x4EF6;&#x7684;&#x7075;&#x6D3B;&#x6027;&#xFF0C;&#x5BF9;&#x4E00;&#x4E2A;&#x63D2;&#x4EF6;&#x8BBE;&#x7F6E;&#x6210;&#x6BCF;&#x4E2A;&#x901A;&#x9053;&#x91C7;&#x96C6;&#x6CE2;&#x5F62;&#x957F;&#x5EA6;&#x76F8;&#x540C;&#xFF08;&#x8FD9;&#x6837;&#x5C31;&#x4E0E;CAEN&#x4E00;&#x6837;&#x4E86;&#xFF09;&#xFF0C;&#x56E0;&#x4E3A;&#x6BCF;&#x4E2A;&#x901A;&#x9053;&#x7684;&#x6BCF;&#x4E2A;&#x4E8B;&#x4EF6;&#x6570;&#x636E;&#x7684;&#x957F;&#x5EA6;&#x76F8;&#x7B49;&#xFF0C;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x65F6;&#x5019;&#x67E5;&#x8BE2;&#x5230;&#x5F53;&#x524D;&#x7684;&#x6570;&#x636E;&#x91CF;&#x4E4B;&#x540E;&#xFF0C;&#x7136;&#x540E;&#x53EA;&#x8BFB;&#x53D6;&#x4E8B;&#x4EF6;&#x957F;&#x5EA6;&#x6574;&#x6570;&#x500D;&#x7684;&#x6700;&#x5927;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x6837;&#x6BCF;&#x6B21;&#x62FF;&#x5230;&#x7684;&#x90FD;&#x662F;&#x5B8C;&#x6574;&#x7684;&#x4E8B;&#x4EF6;&#x6570;&#x636E;&#x4E86;&#xFF0C;&#x53EF;&#x53C2;&#x7167;CAEN&#x7684;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x3002;</li>
+<li>&#x5BF9;&#x91C7;&#x6CE2;&#x5F62;&#x65F6;&#x5019;&#xFF0C;&#x53EF;&#x91C7;&#x7528;&#x201C;&#x4F2A;&#x201D;&#x5728;&#x7EBF;&#x76D1;&#x89C6;&#x83B7;&#x53D6;&#x60C5;&#x51B5;&#xFF0C;&#x5373;&#x83B7;&#x53D6;&#x6587;&#x4EF6;&#x6BCF;&#x9694;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x4FDD;&#x5B58;&#x4E00;&#x6B21;&#xFF0C;&#x7528;&#x4E0A;&#x4E00;&#x8F6E;&#x7684;&#x6570;&#x636E;&#x4F5C;&#x4E3A;&#x201C;&#x5728;&#x7EBF;&#x201D;&#x6570;&#x636E;&#x3002;</li>
+</ul>
 <!-- README.md ends here -->
+<script type="text/javascript">var className='atoc';</script>
 
-
-
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> <a href="http://wuhongyi.cn/" target="_blank">&#xA9; Hongyi Wu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated:</i> 2018-09-17 13:33:16 </span> </footer>
                                 
                                 </section>
                             
@@ -431,10 +549,11 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Users Guide","level":"1.3","depth":1,"next":{"title":"firmware","level":"1.3.1","depth":2,"path":"UsersGuide/FIRMWARE.md","ref":"UsersGuide/FIRMWARE.md","articles":[]},"previous":{"title":"INSTALL","level":"1.2","depth":1,"path":"INSTALL.md","ref":"INSTALL.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"UsersGuide/README.md","mtime":"2018-05-27T00:40:45.062Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-27T22:00:12.622Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Users Guide","level":"1.3","depth":1,"next":{"title":"firmware","level":"1.3.1","depth":2,"path":"UsersGuide/FIRMWARE.md","ref":"UsersGuide/FIRMWARE.md","articles":[]},"previous":{"title":"INSTALL","level":"1.2","depth":1,"path":"INSTALL.md","ref":"INSTALL.md","articles":[]},"dir":"ltr"},"config":{"plugins":["search","sharing","fontsettings","livereload","highlight","github","-prism","ad","alerts","atoc","splitter","sitemap","image-captions","anchors","latex-codecogs","-katex","mermaid","ace","page-footer-ex","sectionx","mcqx","fbqx","spoiler","anchor-navigation","youtubex","redirect","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"latex-codecogs":{"type":"gif"},"spoiler":{},"ad":{"contentBottom":"","contentTop":""},"ace":{},"github":{"url":"https://github.com/wuhongyi"},"fbqx":{},"livereload":{},"page-footer-ex":{"copyright":"[© Hongyi Wu](http://wuhongyi.cn/)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated:</i>"},"atoc":{"addClass":true,"className":"atoc"},"splitter":{},"search":{},"mermaid":{},"anchor-navigation":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"serif","size":2,"theme":"sepia"},"sectionx":{},"highlight":{},"sitemap":{"hostname":"http://wuhongyi.cn/"},"youtubex":{"embedDescription":{"de":"Eingebettetes Video:","default":"Embedded video:"}},"alerts":{},"sharing":{"all":["facebook","google","twitter","weibo","instapaper"],"facebook":true,"google":false,"instapaper":false,"twitter":true,"vk":false,"weibo":false},"redirect":{},"mcqx":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"expandable-chapters":{},"image-captions":{"variable_name":"_pictures"}},"theme":"default","author":"Hongyi Wu(吴鸿毅)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"_pictures":[{"backlink":"UsersGuide/index.html#fig1.3.1","level":"1.3","list_caption":"Figure: pixie16","alt":"pixie16","nro":1,"url":"/img/pixie16.jpg","index":1,"caption_template":"Figure: _CAPTION_","label":"pixie16","attributes":{},"skip":false,"key":"1.3.1"},{"backlink":"UsersGuide/index.html#fig1.3.2","level":"1.3","list_caption":"Figure: ClockDistribution","alt":"ClockDistribution","nro":2,"url":"/img/ClockDistribution.png","index":2,"caption_template":"Figure: _CAPTION_","label":"ClockDistribution","attributes":{},"skip":false,"key":"1.3.2"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.1","level":"1.3.3","list_caption":"Figure: MainFrame","alt":"MainFrame","nro":3,"url":"/img/mainframe.png","index":1,"caption_template":"Figure: _CAPTION_","label":"MainFrame","attributes":{},"skip":false,"key":"1.3.3.1"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.2","level":"1.3.3","list_caption":"Figure: About","alt":"About","nro":4,"url":"/img/About.png","index":2,"caption_template":"Figure: _CAPTION_","label":"About","attributes":{},"skip":false,"key":"1.3.3.2"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.3","level":"1.3.3","list_caption":"Figure: Base Setup","alt":"Base Setup","nro":5,"url":"/img/BaseSetup.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Base Setup","attributes":{},"skip":false,"key":"1.3.3.3"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.4","level":"1.3.3","list_caption":"Figure: Trigger Filter","alt":"Trigger Filter","nro":6,"url":"/img/TriggerFilter.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Trigger Filter","attributes":{},"skip":false,"key":"1.3.3.4"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.5","level":"1.3.3","list_caption":"Figure: Energy","alt":"Energy","nro":7,"url":"/img/Energy.png","index":5,"caption_template":"Figure: _CAPTION_","label":"Energy","attributes":{},"skip":false,"key":"1.3.3.5"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.6","level":"1.3.3","list_caption":"Figure: filter range","alt":"filter range","nro":8,"url":"/img/filterrange_format.PNG","index":6,"caption_template":"Figure: _CAPTION_","label":"filter range","attributes":{},"skip":false,"key":"1.3.3.6"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.7","level":"1.3.3","list_caption":"Figure: CFD","alt":"CFD","nro":9,"url":"/img/CFDPars.png","index":7,"caption_template":"Figure: _CAPTION_","label":"CFD","attributes":{},"skip":false,"key":"1.3.3.7"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.8","level":"1.3.3","list_caption":"Figure: QDC","alt":"QDC","nro":10,"url":"/img/QDCPars.png","index":8,"caption_template":"Figure: _CAPTION_","label":"QDC","attributes":{},"skip":false,"key":"1.3.3.8"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.9","level":"1.3.3","list_caption":"Figure: Decimation","alt":"Decimation","nro":11,"url":"/img/Decimation.png","index":9,"caption_template":"Figure: _CAPTION_","label":"Decimation","attributes":{},"skip":false,"key":"1.3.3.9"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.10","level":"1.3.3","list_caption":"Figure: Copy Pars","alt":"Copy Pars","nro":12,"url":"/img/CopyPars.png","index":10,"caption_template":"Figure: _CAPTION_","label":"Copy Pars","attributes":{},"skip":false,"key":"1.3.3.10"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.11","level":"1.3.3","list_caption":"Figure: Save2File","alt":"Save2File","nro":13,"url":"/img/Save2File.png","index":11,"caption_template":"Figure: _CAPTION_","label":"Save2File","attributes":{},"skip":false,"key":"1.3.3.11"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.12","level":"1.3.3","list_caption":"Figure: Module Variables","alt":"Module Variables","nro":14,"url":"/img/ModuleVariables.png","index":12,"caption_template":"Figure: _CAPTION_","label":"Module Variables","attributes":{},"skip":false,"key":"1.3.3.12"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.13","level":"1.3.3","list_caption":"Figure: CSRA","alt":"CSRA","nro":15,"url":"/img/CSRA.png","index":13,"caption_template":"Figure: _CAPTION_","label":"CSRA","attributes":{},"skip":false,"key":"1.3.3.13"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.14","level":"1.3.3","list_caption":"Figure: Logic Set","alt":"Logic Set","nro":16,"url":"/img/LogicTrigger.png","index":14,"caption_template":"Figure: _CAPTION_","label":"Logic Set","attributes":{},"skip":false,"key":"1.3.3.14"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.15","level":"1.3.3","list_caption":"Figure: stretch length","alt":"stretch length","nro":17,"url":"/img/stretchlength.PNG","index":15,"caption_template":"Figure: _CAPTION_","label":"stretch length","attributes":{},"skip":false,"key":"1.3.3.15"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.16","level":"1.3.3","list_caption":"Figure: Hist & XDT","alt":"Hist & XDT","nro":18,"url":"/img/HistXDT.png","index":16,"caption_template":"Figure: _CAPTION_","label":"Hist & XDT","attributes":{},"skip":false,"key":"1.3.3.16"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.17","level":"1.3.3","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":19,"url":"/img/Trace.png","index":17,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.3.17"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.18","level":"1.3.3","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":20,"url":"/img/BaselineHist.png","index":18,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.3.18"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.19","level":"1.3.3","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":21,"url":"/img/BaselineTimestamps.png","index":19,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.3.19"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.20","level":"1.3.3","list_caption":"Figure: Adjust Par","alt":"Adjust Par","nro":22,"url":"/img/AdjustPar.png","index":20,"caption_template":"Figure: _CAPTION_","label":"Adjust Par","attributes":{},"skip":false,"key":"1.3.3.20"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.21","level":"1.3.3","list_caption":"Figure: offlineapi","alt":"offlineapi","nro":23,"url":"/img/OfflineAPI.png","index":21,"caption_template":"Figure: _CAPTION_","label":"offlineapi","attributes":{},"skip":false,"key":"1.3.3.21"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.22","level":"1.3.3","list_caption":"Figure: Adjustpars3","alt":"Adjustpars3","nro":24,"url":"/img/Adjustpars3.png","index":22,"caption_template":"Figure: _CAPTION_","label":"Adjustpars3","attributes":{},"skip":false,"key":"1.3.3.22"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.23","level":"1.3.3","list_caption":"Figure: Adjustpars1","alt":"Adjustpars1","nro":25,"url":"/img/Adjustpars1.png","index":23,"caption_template":"Figure: _CAPTION_","label":"Adjustpars1","attributes":{},"skip":false,"key":"1.3.3.23"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.24","level":"1.3.3","list_caption":"Figure: Adjustpars2","alt":"Adjustpars2","nro":26,"url":"/img/Adjustpars2.png","index":24,"caption_template":"Figure: _CAPTION_","label":"Adjustpars2","attributes":{},"skip":false,"key":"1.3.3.24"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.25","level":"1.3.3","list_caption":"Figure: Waveform16","alt":"Waveform16","nro":27,"url":"/img/Waveform16.png","index":25,"caption_template":"Figure: _CAPTION_","label":"Waveform16","attributes":{},"skip":false,"key":"1.3.3.25"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.26","level":"1.3.3","list_caption":"Figure: Energy16","alt":"Energy16","nro":28,"url":"/img/Energy16.png","index":26,"caption_template":"Figure: _CAPTION_","label":"Energy16","attributes":{},"skip":false,"key":"1.3.3.26"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.27","level":"1.3.3","list_caption":"Figure: OrigEnergy","alt":"OrigEnergy","nro":29,"url":"/img/OrigEnergy.png","index":27,"caption_template":"Figure: _CAPTION_","label":"OrigEnergy","attributes":{},"skip":false,"key":"1.3.3.27"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.28","level":"1.3.3","list_caption":"Figure: OrigEnergyFit","alt":"OrigEnergyFit","nro":30,"url":"/img/OrigEnergyFit.png","index":28,"caption_template":"Figure: _CAPTION_","label":"OrigEnergyFit","attributes":{},"skip":false,"key":"1.3.3.28"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.29","level":"1.3.3","list_caption":"Figure: CalcEnergy","alt":"CalcEnergy","nro":31,"url":"/img/CalcEnergy.png","index":29,"caption_template":"Figure: _CAPTION_","label":"CalcEnergy","attributes":{},"skip":false,"key":"1.3.3.29"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.30","level":"1.3.3","list_caption":"Figure: FFCFDThre","alt":"FFCFDThre","nro":32,"url":"/img/FFCFDThre.png","index":30,"caption_template":"Figure: _CAPTION_","label":"FFCFDThre","attributes":{},"skip":false,"key":"1.3.3.30"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.31","level":"1.3.3","list_caption":"Figure: FFCFDThreFFProjectY","alt":"FFCFDThreFFProjectY","nro":33,"url":"/img/FFCFDThreFFProjectY.png","index":31,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreFFProjectY","attributes":{},"skip":false,"key":"1.3.3.31"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.32","level":"1.3.3","list_caption":"Figure: FFCFDThreCFDProjectY","alt":"FFCFDThreCFDProjectY","nro":34,"url":"/img/FFCFDThreCFDProjectY.png","index":32,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreCFDProjectY","attributes":{},"skip":false,"key":"1.3.3.32"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.33","level":"1.3.3","list_caption":"Figure: FFCFDThreCFD","alt":"FFCFDThreCFD","nro":35,"url":"/img/FFCFDThreCFD.png","index":33,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreCFD","attributes":{},"skip":false,"key":"1.3.3.33"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.34","level":"1.3.3","list_caption":"Figure: EnergyFFGraph","alt":"EnergyFFGraph","nro":36,"url":"/img/EnergyFFGraph.png","index":34,"caption_template":"Figure: _CAPTION_","label":"EnergyFFGraph","attributes":{},"skip":false,"key":"1.3.3.34"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.35","level":"1.3.3","list_caption":"Figure: EnergyFFHist","alt":"EnergyFFHist","nro":37,"url":"/img/EnergyFFHist.png","index":35,"caption_template":"Figure: _CAPTION_","label":"EnergyFFHist","attributes":{},"skip":false,"key":"1.3.3.35"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.36","level":"1.3.3","list_caption":"Figure: FFT","alt":"FFT","nro":38,"url":"/img/FFT.png","index":36,"caption_template":"Figure: _CAPTION_","label":"FFT","attributes":{},"skip":false,"key":"1.3.3.36"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.37","level":"1.3.3","list_caption":"Figure: Time Diff","alt":"Time Diff","nro":39,"url":"/img/TimeDiff.png","index":37,"caption_template":"Figure: _CAPTION_","label":"Time Diff","attributes":{},"skip":false,"key":"1.3.3.37"},{"backlink":"UsersGuide/OnlineStattics.html#fig1.3.4.1","level":"1.3.4","list_caption":"Figure: OnlineMainFrame","alt":"OnlineMainFrame","nro":40,"url":"/img/OnlineMainFrame.png","index":1,"caption_template":"Figure: _CAPTION_","label":"OnlineMainFrame","attributes":{},"skip":false,"key":"1.3.4.1"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.1","level":"1.3.6","list_caption":"Figure: frontpanel","alt":"frontpanel","nro":41,"url":"/img/frontpanel_pku.png","index":1,"caption_template":"Figure: _CAPTION_","label":"frontpanel","attributes":{},"skip":false,"key":"1.3.6.1"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.2","level":"1.3.6","list_caption":"Figure: Lupo x495","alt":"Lupo x495","nro":42,"url":"/img/lupox495.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Lupo x495","attributes":{},"skip":false,"key":"1.3.6.2"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.1","level":"1.3.7","list_caption":"Figure: Signal Process FPGA","alt":"Signal Process FPGA","nro":43,"url":"/img/signalprocessfpga.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Signal Process FPGA","attributes":{},"skip":false,"key":"1.3.7.1"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.2","level":"1.3.7","list_caption":"Figure: System FPGA","alt":"System FPGA","nro":44,"url":"/img/SystemFPGA.png","index":2,"caption_template":"Figure: _CAPTION_","label":"System FPGA","attributes":{},"skip":false,"key":"1.3.7.2"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.3","level":"1.3.7","list_caption":"Figure: fast trigger stretch/delay","alt":"fast trigger stretch/delay","nro":45,"url":"/img/fasttrigger_stretch_delay.png","index":3,"caption_template":"Figure: _CAPTION_","label":"fast trigger stretch/delay","attributes":{},"skip":false,"key":"1.3.7.3"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.4","level":"1.3.7","list_caption":"Figure: validation trigger","alt":"validation trigger","nro":46,"url":"/img/validationtrigger.png","index":4,"caption_template":"Figure: _CAPTION_","label":"validation trigger","attributes":{},"skip":false,"key":"1.3.7.4"}]},"title":"","gitbook":"*","description":"吴鸿毅笔记"},"file":{"path":"UsersGuide/README.md","mtime":"2018-09-17T05:33:16.530Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-17T05:33:35.222Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
+
 
         
     <script src="../gitbook/gitbook.js"></script>
@@ -449,19 +568,91 @@
         
     
         
-        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
         <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
         
     
         
         <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ad/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-atoc/atoc.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ace/ace/ace.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ace/ace.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sectionx/sectionx.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-mcqx/js.cookie.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-mcqx/mcqx.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fbqx/fbqx.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-spoiler/spoiler.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-youtubex/player.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
         
     
 

@@ -4,14 +4,14 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:55 2018 (+0800)
-;; Last-Updated: 一 5月 28 05:40:57 2018 (+0800)
+;; Last-Updated: 一 9月 17 13:32:21 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 30
+;;     Update #: 31
 ;; URL: http://wuhongyi.cn -->
 
 # GUI
 
-
+<!-- toc -->
 
 
 配置好 **parset** 内参数文件

@@ -2,13 +2,13 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>GUI · GitBook</title>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>GUI · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.0">
-        
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Hongyi Wu(吴鸿毅)">
         
         
     
@@ -17,15 +17,91 @@
     
             
                 
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
                 
             
                 
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-ad/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-atoc/atoc.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-image-captions/image-captions.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-latex-codecogs/latex-codecogs.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-ace/ace.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-sectionx/sectionx.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-mcqx/mcqx.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fbqx/fbqx.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-spoiler/spoiler.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-youtubex/player.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
                 
             
         
@@ -66,6 +142,13 @@
     </head>
     <body>
         
+  <script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  </script>
+  
 <div class="book">
     <div class="book-summary">
         
@@ -321,262 +404,449 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:55 2018 (+0800)
-;; Last-Updated: 一 5月 28 05:40:57 2018 (+0800)
+;; Last-Updated: 一 9月 17 13:32:21 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 30
+;;     Update #: 31
 ;; URL: http://wuhongyi.cn -->
-
-
-<h1 id="gui">GUI</h1><p>&#x914D;&#x7F6E;&#x597D; <strong>parset</strong> &#x5185;&#x53C2;&#x6570;&#x6587;&#x4EF6;
-&#x8FDB;&#x5165; GUI &#x76EE;&#x5F55;&#xFF0C;&#x6267;&#x884C;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x5373;&#x53EF;&#x5F39;&#x51FA;&#x4E3B;&#x63A7;&#x5236;&#x754C;&#x9762;</p><pre><code class="lang-bash">./pku</code></pre>
-<h2 id="&#x4E3B;&#x63A7;&#x5236;&#x754C;&#x9762;">&#x4E3B;&#x63A7;&#x5236;&#x754C;&#x9762;</h2><p><img alt="MainFrame" src="../img/mainframe.png"></p><p>&#x4E3B;&#x754C;&#x9762;&#x6700;&#x4E0A;&#x65B9;&#x662F;File&#x3001;UV_Setup&#x3001;Expert&#x3001;Monitor&#x3001;Offiline&#x4E94;&#x4E2A;&#x4E0B;&#x62C9;&#x680F;&#x3002;&#x91CC;&#x9762;&#x7684;&#x5B50;&#x83DC;&#x5355;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p><ul><li><p>File</p><ul><li>Exit
+<h1 id="gui"><a name="gui" class="plugin-anchor" href="#gui"><i class="fa fa-link" aria-hidden="true"></i></a>GUI</h1>
+<!-- toc -->
+<ul>
+<li><a href="#&#x4E3B;&#x63A7;&#x5236;&#x754C;&#x9762;">&#x4E3B;&#x63A7;&#x5236;&#x754C;&#x9762;</a></li>
+<li><a href="#file-&#x4E0B;&#x62C9;&#x680F;">File &#x4E0B;&#x62C9;&#x680F;</a><ul>
+<li><a href="#about">About</a></li>
+</ul>
 </li>
-<li>About
-</li></ul>
+<li><a href="#uvsetup-&#x4E0B;&#x62C9;&#x680F;">UV_Setup &#x4E0B;&#x62C9;&#x680F;</a><ul>
+<li><a href="#base-setup">Base Setup</a></li>
+<li><a href="#trigger-filter">Trigger Filter</a></li>
+<li><a href="#energy">Energy</a></li>
+<li><a href="#cfd">CFD</a></li>
+<li><a href="#qdc">QDC</a></li>
+<li><a href="#decimation">Decimation</a></li>
+<li><a href="#copy-pars">Copy Pars</a></li>
+<li><a href="#save2file">Save2File</a></li>
+</ul>
 </li>
-<li><p>UV_Setup</p><ul><li>Base Setup
+<li><a href="#expert-&#x4E0B;&#x62C9;&#x680F;">Expert &#x4E0B;&#x62C9;&#x680F;</a><ul>
+<li><a href="#module-variables">Module Variables</a></li>
+<li><a href="#csra">CSRA</a></li>
+<li><a href="#logic-set">Logic Set</a></li>
+</ul>
 </li>
-<li>Trigger Filter
+<li><a href="#monitor-&#x4E0B;&#x62C9;&#x680F;">Monitor &#x4E0B;&#x62C9;&#x680F;</a><ul>
+<li><a href="#hist--xdt">Hist &amp; XDT</a></li>
+<li><a href="#trace--baseline">Trace &amp; Baseline</a></li>
+</ul>
 </li>
-<li>Energy
+<li><a href="#offiline-&#x4E0B;&#x62C9;&#x680F;">Offiline &#x4E0B;&#x62C9;&#x680F;</a><ul>
+<li><a href="#adjust-par">Adjust Par</a><ul>
+<li><a href="#initdata">InitData</a></li>
+<li><a href="#adjust-par">Adjust Par</a></li>
+<li><a href="#wave-16">Wave-16</a></li>
+<li><a href="#energy-16">Energy-16</a></li>
+<li><a href="#orig-energy">Orig Energy</a></li>
+<li><a href="#calc-energy">Calc Energy</a></li>
+<li><a href="#ffcfd-thre">FF/CFD Thre</a></li>
+<li><a href="#energy-ff">Energy-FF</a></li>
+<li><a href="#qdc">QDC</a></li>
+<li><a href="#fft">FFT</a></li>
+<li><a href="#time-diff">Time Diff</a></li>
+</ul>
 </li>
-<li>CFD
+<li><a href="#simulation&#x6682;&#x672A;&#x5B9E;&#x73B0;">Simulation(&#x6682;&#x672A;&#x5B9E;&#x73B0;)</a></li>
+</ul>
 </li>
-<li>QDC
+</ul>
+<!-- tocstop -->
+<p>&#x914D;&#x7F6E;&#x597D; <strong>parset</strong> &#x5185;&#x53C2;&#x6570;&#x6587;&#x4EF6;
+&#x8FDB;&#x5165; GUI &#x76EE;&#x5F55;&#xFF0C;&#x6267;&#x884C;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#x5373;&#x53EF;&#x5F39;&#x51FA;&#x4E3B;&#x63A7;&#x5236;&#x754C;&#x9762;</p>
+<pre><code class="lang-bash">./pku
+</code></pre>
+<h2 id="&#x4E3B;&#x63A7;&#x5236;&#x754C;&#x9762;"><a name="&#x4E3B;&#x63A7;&#x5236;&#x754C;&#x9762;" class="plugin-anchor" href="#&#x4E3B;&#x63A7;&#x5236;&#x754C;&#x9762;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x4E3B;&#x63A7;&#x5236;&#x754C;&#x9762;</h2>
+<figure id="fig1.3.3.1"><img src="../img/mainframe.png" alt="MainFrame"><figcaption>Figure: MainFrame</figcaption></figure>
+<p>&#x4E3B;&#x754C;&#x9762;&#x6700;&#x4E0A;&#x65B9;&#x662F;File&#x3001;UV_Setup&#x3001;Expert&#x3001;Monitor&#x3001;Offiline&#x4E94;&#x4E2A;&#x4E0B;&#x62C9;&#x680F;&#x3002;&#x91CC;&#x9762;&#x7684;&#x5B50;&#x83DC;&#x5355;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<ul>
+<li>File<ul>
+<li>Exit</li>
+<li>About</li>
+</ul>
 </li>
-<li>Decimation
+<li>UV_Setup<ul>
+<li>Base Setup</li>
+<li>Trigger Filter</li>
+<li>Energy</li>
+<li>CFD</li>
+<li>QDC</li>
+<li>Decimation</li>
+<li>Copy Pars</li>
+<li>Save2File</li>
+</ul>
 </li>
-<li>Copy Pars
+<li>Expert<ul>
+<li>Module Variables</li>
+<li>CSRA</li>
+<li>Logic Set</li>
+</ul>
 </li>
-<li>Save2File
-</li></ul>
+<li>Monitor<ul>
+<li>Hist &amp; XDT</li>
+<li>Trace &amp; Baseline</li>
+</ul>
 </li>
-<li><p>Expert</p><ul><li>Module Variables
+<li>Offiline<ul>
+<li>Adjust Par</li>
+<li>Simulation(&#x6682;&#x672A;&#x5B9E;&#x73B0;)</li>
+</ul>
 </li>
-<li>CSRA
-</li>
-<li>Logic Set
-</li></ul>
-</li>
-<li><p>Monitor</p><ul><li>Hist &amp; XDT
-</li>
-<li>Trace &amp; Baseline
-</li></ul>
-</li>
-<li><p>Offiline</p><ul><li>Adjust Par
-</li>
-<li>Simulation(&#x6682;&#x672A;&#x5B9E;&#x73B0;)
-</li></ul>
-</li></ul>
-<p>&#x5F00;&#x542F;&#x83B7;&#x53D6;&#x4E3B;&#x754C;&#x9762;&#x4E4B;&#x540E;&#xFF0C;&#x9009;&#x62E9; <strong>Online Mode</strong> &#x9009;&#x9879;&#x8868;&#x793A;&#x5728;&#x7EBF;&#x6A21;&#x5F0F;&#xFF0C;&#x9700;&#x8981;&#x8FDE;&#x63A5;&#x673A;&#x7BB1;&#xFF0C;&#x8BE5;&#x6A21;&#x5F0F;&#x4E0B;&#x53EF;&#x4F7F;&#x7528;&#x6240;&#x6709;&#x7684;&#x529F;&#x80FD;&#xFF08;&#x5305;&#x62EC;&#x79BB;&#x7EBF;&#x5206;&#x6790;&#x529F;&#x80FD;&#xFF09;&#x3002;&#x4E0D;&#x9009;&#x62E9;<strong>Online Mode</strong> &#x9009;&#x9879;&#x5219;&#x8868;&#x793A;&#x5F00;&#x542F;&#x79BB;&#x7EBF;&#x6A21;&#x5F0F;&#xFF0C;&#x53EF;&#x8BBE;&#x7F6E;&#x3001;&#x4FEE;&#x6539;&#x83B7;&#x53D6;&#x53C2;&#x6570;&#xFF0C;&#x5206;&#x6790;&#x5DF2;&#x91C7;&#x96C6;&#x6CE2;&#x5F62;&#x3002;</p><p>&#x9009;&#x62E9;&#x3001;&#x6216;&#x8005;&#x4E0D;&#x9009;&#x62E9; <strong>Online Mode</strong> &#x9009;&#x9879;&#x4E4B;&#x540E;&#xFF0C;&#x6309; <strong>Boot</strong> &#x6309;&#x94AE;&#x5F00;&#x542F;&#x521D;&#x59CB;&#x5316;&#x8FC7;&#x7A0B;&#xFF0C;&#x53EF;&#x770B;&#x5230;&#x6700;&#x4E0B;&#x65B9; <em>Information</em> &#x680F;&#x76EE;&#x4E2D;&#x7684;&#x72B6;&#x6001;&#x53D8;&#x5316;&#x3002;</p><p>&#x7CFB;&#x7EDF;&#x521D;&#x59CB;&#x5316;&#x6210;&#x529F;&#x540E;&#xFF0C;&#x518D;&#x6B21;&#x786E;&#x8BA4; <em>Setup</em> &#x680F;&#x4E2D;&#x7684;&#x83B7;&#x53D6;&#x6587;&#x4EF6;&#x5B58;&#x653E;&#x8DEF;&#x5F84;&#x3001;&#x6587;&#x4EF6;&#x540D;&#x3001;&#x6587;&#x4EF6;&#x7F16;&#x53F7;&#x662F;&#x5426;&#x6709;&#x95EE;&#x9898;&#xFF0C;&#x5982;&#x679C;&#x6709;&#x95EE;&#x9898;&#x5219;&#x76F4;&#x63A5;&#x4FEE;&#x6539;&#xFF0C;&#x786E;&#x8BA4;&#x4E4B;&#x540E;&#x6309; <strong>Complete</strong>&#x3002;</p><p>&#x786E;&#x8BA4; <em>Setup</em> &#x680F;&#x4E2D;&#x7684;&#x4FE1;&#x606F;&#x4E4B;&#x540E;&#xFF0C; <em>Control</em> &#x680F;&#x4E2D;&#x7684;&#x4E3B;&#x6309;&#x94AE; <strong>LSRunStart</strong> &#x5219;&#x5F00;&#x542F;&#xFF0C;&#x6B64;&#x65F6;&#x70B9;&#x51FB;&#x8BE5;&#x6309;&#x94AE;&#xFF0C;&#x83B7;&#x53D6;&#x5219;&#x5F00;&#x542F;&#xFF0C;&#x6309;&#x94AE;&#x72B6;&#x6001;&#x66F4;&#x6539;&#x4E3A; <strong>LSRunStop</strong>&#xFF0C;&#x518D;&#x6B21;&#x70B9;&#x51FB;&#x8BE5;&#x6309;&#x94AE;&#xFF0C;&#x83B7;&#x53D6;&#x7ED3;&#x675F;&#xFF0C;&#x8FD0;&#x884C;&#x7684; <em>Run Num</em> &#x53F7;&#x7801;&#x81EA;&#x52A8;&#x52A0;&#x4E00;&#x3002;&#x518D;&#x6B21;&#x70B9;&#x51FB; <strong>LSRunStart</strong> &#x5F00;&#x542F;&#x4E0B;&#x8F6E;&#x83B7;&#x53D6;&#x3002;</p><p>&#x5F53;&#x524D;&#xFF0C;&#x83B7;&#x53D6;&#x4E4B;&#x524D;&#x53EF;&#x901A;&#x8FC7;&#x6700;&#x4E0A;&#x65B9;&#x7684;&#x4E0B;&#x62C9;&#x680F;&#x91CC;&#x9762;&#x7684;&#x5B50;&#x83DC;&#x5355;&#x6765;&#x8C03;&#x8282;&#x3001;&#x4FEE;&#x6539;&#x53C2;&#x6570;&#x3002;&#x83B7;&#x53D6;&#x6570;&#x636E;&#x65F6;&#x8BF7;&#x52FF;&#x64CD;&#x4F5C; <em>Control</em>&#x680F;&#x4E4B;&#x5916;&#x7684;&#x6240;&#x6709;&#x9009;&#x9879;&#x3002;</p><p><em>Control</em> &#x680F;&#x5185;&#x7684; <strong>Online Statistics</strong> &#x9009;&#x9879;&#x5F00;&#x542F;&#x5219;&#x83B7;&#x53D6;&#x6BCF; <strong>3 s</strong> &#x5411; <em>OnineStatistics</em> &#x7A0B;&#x5E8F;&#x53D1;&#x9001;&#x65F6;&#x65F6;&#x6BCF;&#x8DEF;&#x4FE1;&#x53F7;&#x7684;&#x8F93;&#x5165;&#x7387;&#x3001;&#x8F93;&#x51FA;&#x7387;&#x4FE1;&#x606F;&#x3002;</p><p><strong>&#x70B9;&#x51FB; Update Energy Monitor &#x9009;&#x9879;&#x4E00;&#x6B21;&#xFF0C;&#x5219;&#x5C06;&#x6240;&#x6709;&#x91C7;&#x96C6;&#x5361;&#x5185;&#x90E8;&#x5BC4;&#x5B58;&#x5668;&#x4E2D;&#x6BCF;&#x8DEF;&#x7684;&#x4E00;&#x7EF4;&#x80FD;&#x8C31;&#x53D1;&#x9001;&#x5230; Online Statistics &#x7A0B;&#x5E8F;&#xFF0C;&#x53D1;&#x9001;&#x8BE5;&#x4FE1;&#x606F;&#x4F1A;&#x5BFC;&#x81F4;&#x4E00;&#x5B9A;&#x7684;&#x6B7B;&#x65F6;&#x95F4;&#xFF0C;&#x8BF7;&#x4E0D;&#x8981;&#x9891;&#x7E41;&#x70B9;&#x51FB;&#x8BE5;&#x9009;&#x9879;&#x3002;</strong></p><hr><h2 id="file-&#x4E0B;&#x62C9;&#x680F;">File &#x4E0B;&#x62C9;&#x680F;</h2><p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x5185;&#x5BB9;&#x6CA1;&#x6709;&#x5B9E;&#x9645;&#x7528;&#x9014;&#x3002;</p><h3 id="about">About</h3><p><img alt="About" src="../img/About.png"></p><p>&#x8F6F;&#x4EF6;&#x5F00;&#x53D1;&#x8005;&#x4ECB;&#x7ECD;&#x3002;&#x4E4B;&#x540E;&#x5C06;&#x4F1A;&#x6DFB;&#x52A0;&#x4E3B;&#x7A0B;&#x5E8F;&#x57FA;&#x672C;&#x64CD;&#x4F5C;&#x8BF4;&#x660E;&#x3002;</p><hr><h2 id="uvsetup-&#x4E0B;&#x62C9;&#x680F;">UV_Setup &#x4E0B;&#x62C9;&#x680F;</h2><p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x8C03;&#x8282;&#x5185;&#x5BB9;&#x4E3A;&#x57FA;&#x7840;&#x5185;&#x5BB9;&#xFF0C;&#x4EFB;&#x4F55;&#x4F7F;&#x7528;Pixie16&#x83B7;&#x53D6;&#x7CFB;&#x7EDF;&#x7684;&#x4EBA;&#x5458;&#x90FD;&#x5E94;&#x8BE5;&#x719F;&#x6089;&#x5E76;&#x638C;&#x63E1;&#x5176;&#x8C03;&#x8282;&#x6280;&#x5DE7;&#x3002;</p><h3 id="base-setup">Base Setup</h3><p><img alt="Base Setup" src="../img/BaseSetup.png"></p><p>&#x754C;&#x9762;&#x4E0B;&#x65B9;&#x7684; Status &#x663E;&#x793A;&#x4E3A;<strong>&#x7EFF;&#x8272;&#x7684; Ready</strong> &#x65F6;&#x8868;&#x793A;&#x53EF;&#x64CD;&#x4F5C;&#x8BE5;&#x754C;&#x9762;&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x3002;</p><p>&#x754C;&#x9762;&#x4E2D; Module &#x540E;&#x9762;&#x7684;&#x53C2;&#x6570;&#x7528;&#x6765;&#x9009;&#x62E9;&#x8C03;&#x8282;&#x7684;&#x91C7;&#x96C6;&#x5361;&#x6A21;&#x5757;&#xFF0C; <strong>Load</strong> &#x8868;&#x793A;&#x8BFB;&#x53D6;&#x8BE5;&#x91C7;&#x96C6;&#x5361;&#x7684;&#x53C2;&#x6570;&#x6570;&#x503C;&#xFF0C; <strong>Apply</strong> &#x8868;&#x793A;&#x5C06;&#x754C;&#x9762;&#x4E2D;&#x7684;&#x6570;&#x503C;&#x5199;&#x5165;&#x91C7;&#x96C6;&#x5361;&#x3002;</p><p>&#x754C;&#x9762;&#x4E0B;&#x65B9;&#x7684; Select Channel &#x540E;&#x9762;&#x7684;&#x53C2;&#x6570;&#x8868;&#x793A;&#x9009;&#x62E9;&#x7528;&#x6765;&#x5C06;&#x754C;&#x9762;&#x4E0A;&#x8BE5;&#x901A;&#x9053;&#x7684;&#x53C2;&#x6570;&#x590D;&#x5236;&#x7ED9;&#x5176;&#x5B83;&#x901A;&#x9053;&#xFF0C;&#x70B9;&#x51FB;&#x540E;&#x9762; <strong>Copy</strong> &#x5B8C;&#x6210;&#x590D;&#x5236;&#xFF0C;&#x7136;&#x540E;&#x9700;&#x8981; <strong>Apply</strong> &#x6765;&#x5C06;&#x53C2;&#x6570;&#x5199;&#x5165;&#x91C7;&#x96C6;&#x5361;&#x3002;</p><ul><li>&#x9009;&#x9879; <em>Gain</em> &#x4E3A;&#x589E;&#x76CA;&#x8C03;&#x8282;&#xFF0C;&#x7528;&#x6237;&#x53EF;&#x9009;&#x62E9; Larger &#x6216;&#x8005; Small &#x6863;&#xFF0C;&#x5177;&#x4F53;&#x6BCF;&#x4E2A;&#x91C7;&#x96C6;&#x5361;&#x8FD9;&#x4E24;&#x6863;&#x6240;&#x5BF9;&#x5E94;&#x7684;&#x589E;&#x76CA;&#x53C2;&#x6570;&#x7528;&#x6237;&#x53EF;&#x81EA;&#x884C;&#x6D4B;&#x8BD5;&#x6216;&#x8005;&#x54A8;&#x8BE2;&#x5382;&#x5BB6;&#x3002;
-</li>
-<li>&#x9009;&#x9879; <em>Sign</em> &#x9009;&#x62E9;&#x8F93;&#x5165;&#x4FE1;&#x53F7;&#x7684;&#x6781;&#x6027;&#xFF0C;&#x8F93;&#x5165;&#x6B63;&#x4FE1;&#x53F7;&#x9009;&#x62E9; &quot;+&quot;&#xFF0C;&#x8F93;&#x5165;&#x8D1F;&#x4FE1;&#x53F7;&#x5219;&#x9009;&#x62E9; &quot;-&quot;&#x3002;
-</li>
-<li>&#x9009;&#x9879; <em>GC</em> &#x8868;&#x793A;&#x662F;&#x5426;&#x5F00;&#x542F;&#x8BE5;&#x901A;&#x9053;&#xFF0C;&#x9009;&#x62E9;&#x8868;&#x793A;&#x5F00;&#x542F;&#x8BE5;&#x901A;&#x9053;&#xFF0C;&#x4E0D;&#x9009;&#x62E9;&#x8868;&#x793A;&#x4E0D;&#x5F00;&#x542F;&#x3002;
-</li>
-<li>&#x9009;&#x9879; <em>ECT</em> &#x9009;&#x62E9;&#x8868;&#x793A;&#x5F00;&#x542F;CFD&#x529F;&#x80FD;&#x3002;
-</li></ul>
-<p>&#x7EA2;&#x8272;&#x7684;<em>TC</em>&#xFF0C;<em>EQS</em>&#xFF0C;<em>ERB</em>&#x7528;&#x6765;&#x9009;&#x62E9;&#x8F93;&#x51FA;&#x54EA;&#x4E9B;&#x539F;&#x59CB;&#x6570;&#x636E;&#xFF1A;</p><ul><li>&#x9009;&#x9879; <em>TC</em> &#x9009;&#x62E9;&#x8868;&#x793A;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#xFF0C;&#x6B64;&#x65F6;<em>TraceDelay</em>&#x3001;<em>TraceLength</em>&#x751F;&#x6548;&#xFF0C;&#x4E0D;&#x9009;&#x62E9;&#x5219;&#x8868;&#x793A;&#x4E0D;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#x3002;
-</li>
-<li>&#x9009;&#x9879; <em>EQS</em> &#x9009;&#x62E9;&#x8868;&#x793A;&#x8BB0;&#x5F55;&#x516B;&#x4E2A;QDC&#x7684;&#x79EF;&#x5206;&#xFF0C;&#x4E0D;&#x9009;&#x62E9;&#x5219;&#x4E0D;&#x8BB0;&#x5F55;&#x3002;
-</li>
-<li>&#x9009;&#x9879; <em>ERB</em> &#x9009;&#x62E9;&#x8868;&#x793A;&#x8BB0;&#x5F55;&#x80FD;&#x91CF;&#x68AF;&#x5F62;&#x7684;&#x4E09;&#x90E8;&#x5206;&#x9762;&#x79EF;&#x79EF;&#x5206;&#x53CA;&#x68AF;&#x5F62;&#x8BA1;&#x7B97;&#x7684;&#x57FA;&#x7EBF;&#x6570;&#x503C;&#x3002;
-</li></ul>
-<p>&#x7EFF;&#x8272;&#x7684;<em>TraceDelay</em>&#x3001;<em>TraceLength</em>&#x4E3A;&#x8F93;&#x51FA;&#x6570;&#x636E;&#x7684;&#x70B9;&#x6570;&#xFF0C;<strong>&#x8BE5;&#x53C2;&#x6570;&#x9664;&#x4EE5;&#x91C7;&#x96C6;&#x5361;&#x7684;&#x6807;&#x79F0;&#x91C7;&#x6837;&#x7387;&#x5373;&#x4E3A;&#x6CE2;&#x5F62;&#x5B9E;&#x9645;&#x8F93;&#x51FA;&#x6570;&#x636E;&#x70B9;&#x6570;</strong>&#xFF1A;</p><ul><li><em>TraceDelay</em> &#x8868;&#x793A;&#x89E6;&#x53D1;&#x524D;&#x7684;&#x91C7;&#x96C6;&#x6CE2;&#x5F62;&#x957F;&#x5EA6;&#x3002;
-</li>
+</ul>
+<p>&#x5F00;&#x542F;&#x83B7;&#x53D6;&#x4E3B;&#x754C;&#x9762;&#x4E4B;&#x540E;&#xFF0C;&#x9009;&#x62E9; <strong>Online Mode</strong> &#x9009;&#x9879;&#x8868;&#x793A;&#x5728;&#x7EBF;&#x6A21;&#x5F0F;&#xFF0C;&#x9700;&#x8981;&#x8FDE;&#x63A5;&#x673A;&#x7BB1;&#xFF0C;&#x8BE5;&#x6A21;&#x5F0F;&#x4E0B;&#x53EF;&#x4F7F;&#x7528;&#x6240;&#x6709;&#x7684;&#x529F;&#x80FD;&#xFF08;&#x5305;&#x62EC;&#x79BB;&#x7EBF;&#x5206;&#x6790;&#x529F;&#x80FD;&#xFF09;&#x3002;&#x4E0D;&#x9009;&#x62E9;<strong>Online Mode</strong> &#x9009;&#x9879;&#x5219;&#x8868;&#x793A;&#x5F00;&#x542F;&#x79BB;&#x7EBF;&#x6A21;&#x5F0F;&#xFF0C;&#x53EF;&#x8BBE;&#x7F6E;&#x3001;&#x4FEE;&#x6539;&#x83B7;&#x53D6;&#x53C2;&#x6570;&#xFF0C;&#x5206;&#x6790;&#x5DF2;&#x91C7;&#x96C6;&#x6CE2;&#x5F62;&#x3002;</p>
+<p>&#x9009;&#x62E9;&#x3001;&#x6216;&#x8005;&#x4E0D;&#x9009;&#x62E9; <strong>Online Mode</strong> &#x9009;&#x9879;&#x4E4B;&#x540E;&#xFF0C;&#x6309; <strong>Boot</strong> &#x6309;&#x94AE;&#x5F00;&#x542F;&#x521D;&#x59CB;&#x5316;&#x8FC7;&#x7A0B;&#xFF0C;&#x53EF;&#x770B;&#x5230;&#x6700;&#x4E0B;&#x65B9; <em>Information</em> &#x680F;&#x76EE;&#x4E2D;&#x7684;&#x72B6;&#x6001;&#x53D8;&#x5316;&#x3002;</p>
+<p>&#x7CFB;&#x7EDF;&#x521D;&#x59CB;&#x5316;&#x6210;&#x529F;&#x540E;&#xFF0C;&#x518D;&#x6B21;&#x786E;&#x8BA4; <em>Setup</em> &#x680F;&#x4E2D;&#x7684;&#x83B7;&#x53D6;&#x6587;&#x4EF6;&#x5B58;&#x653E;&#x8DEF;&#x5F84;&#x3001;&#x6587;&#x4EF6;&#x540D;&#x3001;&#x6587;&#x4EF6;&#x7F16;&#x53F7;&#x662F;&#x5426;&#x6709;&#x95EE;&#x9898;&#xFF0C;&#x5982;&#x679C;&#x6709;&#x95EE;&#x9898;&#x5219;&#x76F4;&#x63A5;&#x4FEE;&#x6539;&#xFF0C;&#x786E;&#x8BA4;&#x4E4B;&#x540E;&#x6309; <strong>Complete</strong>&#x3002;</p>
+<p>&#x786E;&#x8BA4; <em>Setup</em> &#x680F;&#x4E2D;&#x7684;&#x4FE1;&#x606F;&#x4E4B;&#x540E;&#xFF0C; <em>Control</em> &#x680F;&#x4E2D;&#x7684;&#x4E3B;&#x6309;&#x94AE; <strong>LSRunStart</strong> &#x5219;&#x5F00;&#x542F;&#xFF0C;&#x6B64;&#x65F6;&#x70B9;&#x51FB;&#x8BE5;&#x6309;&#x94AE;&#xFF0C;&#x83B7;&#x53D6;&#x5219;&#x5F00;&#x542F;&#xFF0C;&#x6309;&#x94AE;&#x72B6;&#x6001;&#x66F4;&#x6539;&#x4E3A; <strong>LSRunStop</strong>&#xFF0C;&#x518D;&#x6B21;&#x70B9;&#x51FB;&#x8BE5;&#x6309;&#x94AE;&#xFF0C;&#x83B7;&#x53D6;&#x7ED3;&#x675F;&#xFF0C;&#x8FD0;&#x884C;&#x7684; <em>Run Num</em> &#x53F7;&#x7801;&#x81EA;&#x52A8;&#x52A0;&#x4E00;&#x3002;&#x518D;&#x6B21;&#x70B9;&#x51FB; <strong>LSRunStart</strong> &#x5F00;&#x542F;&#x4E0B;&#x8F6E;&#x83B7;&#x53D6;&#x3002;</p>
+<p>&#x5F53;&#x524D;&#xFF0C;&#x83B7;&#x53D6;&#x4E4B;&#x524D;&#x53EF;&#x901A;&#x8FC7;&#x6700;&#x4E0A;&#x65B9;&#x7684;&#x4E0B;&#x62C9;&#x680F;&#x91CC;&#x9762;&#x7684;&#x5B50;&#x83DC;&#x5355;&#x6765;&#x8C03;&#x8282;&#x3001;&#x4FEE;&#x6539;&#x53C2;&#x6570;&#x3002;&#x83B7;&#x53D6;&#x6570;&#x636E;&#x65F6;&#x8BF7;&#x52FF;&#x64CD;&#x4F5C; <em>Control</em>&#x680F;&#x4E4B;&#x5916;&#x7684;&#x6240;&#x6709;&#x9009;&#x9879;&#x3002;</p>
+<p><em>Control</em> &#x680F;&#x5185;&#x7684; <strong>Online Statistics</strong> &#x9009;&#x9879;&#x5F00;&#x542F;&#x5219;&#x83B7;&#x53D6;&#x6BCF; <strong>3 s</strong> &#x5411; <em>OnineStatistics</em> &#x7A0B;&#x5E8F;&#x53D1;&#x9001;&#x65F6;&#x65F6;&#x6BCF;&#x8DEF;&#x4FE1;&#x53F7;&#x7684;&#x8F93;&#x5165;&#x7387;&#x3001;&#x8F93;&#x51FA;&#x7387;&#x4FE1;&#x606F;&#x3002;</p>
+<p><strong>&#x70B9;&#x51FB; Update Energy Monitor &#x9009;&#x9879;&#x4E00;&#x6B21;&#xFF0C;&#x5219;&#x5C06;&#x6240;&#x6709;&#x91C7;&#x96C6;&#x5361;&#x5185;&#x90E8;&#x5BC4;&#x5B58;&#x5668;&#x4E2D;&#x6BCF;&#x8DEF;&#x7684;&#x4E00;&#x7EF4;&#x80FD;&#x8C31;&#x53D1;&#x9001;&#x5230; Online Statistics &#x7A0B;&#x5E8F;&#xFF0C;&#x53D1;&#x9001;&#x8BE5;&#x4FE1;&#x606F;&#x4F1A;&#x5BFC;&#x81F4;&#x4E00;&#x5B9A;&#x7684;&#x6B7B;&#x65F6;&#x95F4;&#xFF0C;&#x8BF7;&#x4E0D;&#x8981;&#x9891;&#x7E41;&#x70B9;&#x51FB;&#x8BE5;&#x9009;&#x9879;&#x3002;</strong> </p>
+<hr>
+<h2 id="file-&#x4E0B;&#x62C9;&#x680F;"><a name="file-&#x4E0B;&#x62C9;&#x680F;" class="plugin-anchor" href="#file-&#x4E0B;&#x62C9;&#x680F;"><i class="fa fa-link" aria-hidden="true"></i></a>File &#x4E0B;&#x62C9;&#x680F;</h2>
+<p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x5185;&#x5BB9;&#x6CA1;&#x6709;&#x5B9E;&#x9645;&#x7528;&#x9014;&#x3002;</p>
+<h3 id="about"><a name="about" class="plugin-anchor" href="#about"><i class="fa fa-link" aria-hidden="true"></i></a>About</h3>
+<figure id="fig1.3.3.2"><img src="../img/About.png" alt="About"><figcaption>Figure: About</figcaption></figure>
+<p>&#x8F6F;&#x4EF6;&#x5F00;&#x53D1;&#x8005;&#x4ECB;&#x7ECD;&#x3002;&#x4E4B;&#x540E;&#x5C06;&#x4F1A;&#x6DFB;&#x52A0;&#x4E3B;&#x7A0B;&#x5E8F;&#x57FA;&#x672C;&#x64CD;&#x4F5C;&#x8BF4;&#x660E;&#x3002;</p>
+<hr>
+<h2 id="uvsetup-&#x4E0B;&#x62C9;&#x680F;"><a name="uvsetup-&#x4E0B;&#x62C9;&#x680F;" class="plugin-anchor" href="#uvsetup-&#x4E0B;&#x62C9;&#x680F;"><i class="fa fa-link" aria-hidden="true"></i></a>UV_Setup &#x4E0B;&#x62C9;&#x680F;</h2>
+<p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x8C03;&#x8282;&#x5185;&#x5BB9;&#x4E3A;&#x57FA;&#x7840;&#x5185;&#x5BB9;&#xFF0C;&#x4EFB;&#x4F55;&#x4F7F;&#x7528;Pixie16&#x83B7;&#x53D6;&#x7CFB;&#x7EDF;&#x7684;&#x4EBA;&#x5458;&#x90FD;&#x5E94;&#x8BE5;&#x719F;&#x6089;&#x5E76;&#x638C;&#x63E1;&#x5176;&#x8C03;&#x8282;&#x6280;&#x5DE7;&#x3002;</p>
+<h3 id="base-setup"><a name="base-setup" class="plugin-anchor" href="#base-setup"><i class="fa fa-link" aria-hidden="true"></i></a>Base Setup</h3>
+<figure id="fig1.3.3.3"><img src="../img/BaseSetup.png" alt="Base Setup"><figcaption>Figure: Base Setup</figcaption></figure>
+<p>&#x754C;&#x9762;&#x4E0B;&#x65B9;&#x7684; Status &#x663E;&#x793A;&#x4E3A;<strong>&#x7EFF;&#x8272;&#x7684; Ready</strong> &#x65F6;&#x8868;&#x793A;&#x53EF;&#x64CD;&#x4F5C;&#x8BE5;&#x754C;&#x9762;&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x3002;</p>
+<p>&#x754C;&#x9762;&#x4E2D; Module &#x540E;&#x9762;&#x7684;&#x53C2;&#x6570;&#x7528;&#x6765;&#x9009;&#x62E9;&#x8C03;&#x8282;&#x7684;&#x91C7;&#x96C6;&#x5361;&#x6A21;&#x5757;&#xFF0C; <strong>Load</strong> &#x8868;&#x793A;&#x8BFB;&#x53D6;&#x8BE5;&#x91C7;&#x96C6;&#x5361;&#x7684;&#x53C2;&#x6570;&#x6570;&#x503C;&#xFF0C; <strong>Apply</strong> &#x8868;&#x793A;&#x5C06;&#x754C;&#x9762;&#x4E2D;&#x7684;&#x6570;&#x503C;&#x5199;&#x5165;&#x91C7;&#x96C6;&#x5361;&#x3002;</p>
+<p>&#x754C;&#x9762;&#x4E0B;&#x65B9;&#x7684; Select Channel &#x540E;&#x9762;&#x7684;&#x53C2;&#x6570;&#x8868;&#x793A;&#x9009;&#x62E9;&#x7528;&#x6765;&#x5C06;&#x754C;&#x9762;&#x4E0A;&#x8BE5;&#x901A;&#x9053;&#x7684;&#x53C2;&#x6570;&#x590D;&#x5236;&#x7ED9;&#x5176;&#x5B83;&#x901A;&#x9053;&#xFF0C;&#x70B9;&#x51FB;&#x540E;&#x9762; <strong>Copy</strong> &#x5B8C;&#x6210;&#x590D;&#x5236;&#xFF0C;&#x7136;&#x540E;&#x9700;&#x8981; <strong>Apply</strong> &#x6765;&#x5C06;&#x53C2;&#x6570;&#x5199;&#x5165;&#x91C7;&#x96C6;&#x5361;&#x3002;</p>
+<ul>
+<li>&#x9009;&#x9879; <em>Gain</em> &#x4E3A;&#x589E;&#x76CA;&#x8C03;&#x8282;&#xFF0C;&#x7528;&#x6237;&#x53EF;&#x9009;&#x62E9; Larger &#x6216;&#x8005; Small &#x6863;&#xFF0C;&#x5177;&#x4F53;&#x6BCF;&#x4E2A;&#x91C7;&#x96C6;&#x5361;&#x8FD9;&#x4E24;&#x6863;&#x6240;&#x5BF9;&#x5E94;&#x7684;&#x589E;&#x76CA;&#x53C2;&#x6570;&#x7528;&#x6237;&#x53EF;&#x81EA;&#x884C;&#x6D4B;&#x8BD5;&#x6216;&#x8005;&#x54A8;&#x8BE2;&#x5382;&#x5BB6;&#x3002;</li>
+<li>&#x9009;&#x9879; <em>Sign</em> &#x9009;&#x62E9;&#x8F93;&#x5165;&#x4FE1;&#x53F7;&#x7684;&#x6781;&#x6027;&#xFF0C;&#x8F93;&#x5165;&#x6B63;&#x4FE1;&#x53F7;&#x9009;&#x62E9; &quot;+&quot;&#xFF0C;&#x8F93;&#x5165;&#x8D1F;&#x4FE1;&#x53F7;&#x5219;&#x9009;&#x62E9; &quot;-&quot;&#x3002;</li>
+<li>&#x9009;&#x9879; <em>GC</em> &#x8868;&#x793A;&#x662F;&#x5426;&#x5F00;&#x542F;&#x8BE5;&#x901A;&#x9053;&#xFF0C;&#x9009;&#x62E9;&#x8868;&#x793A;&#x5F00;&#x542F;&#x8BE5;&#x901A;&#x9053;&#xFF0C;&#x4E0D;&#x9009;&#x62E9;&#x8868;&#x793A;&#x4E0D;&#x5F00;&#x542F;&#x3002;</li>
+<li>&#x9009;&#x9879; <em>ECT</em> &#x9009;&#x62E9;&#x8868;&#x793A;&#x5F00;&#x542F;CFD&#x529F;&#x80FD;&#x3002;</li>
+</ul>
+<p>&#x7EA2;&#x8272;&#x7684;<em>TC</em>&#xFF0C;<em>EQS</em>&#xFF0C;<em>ERB</em>&#x7528;&#x6765;&#x9009;&#x62E9;&#x8F93;&#x51FA;&#x54EA;&#x4E9B;&#x539F;&#x59CB;&#x6570;&#x636E;&#xFF1A;</p>
+<ul>
+<li>&#x9009;&#x9879; <em>TC</em> &#x9009;&#x62E9;&#x8868;&#x793A;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#xFF0C;&#x6B64;&#x65F6;<em>TraceDelay</em>&#x3001;<em>TraceLength</em>&#x751F;&#x6548;&#xFF0C;&#x4E0D;&#x9009;&#x62E9;&#x5219;&#x8868;&#x793A;&#x4E0D;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#x3002;</li>
+<li>&#x9009;&#x9879; <em>EQS</em> &#x9009;&#x62E9;&#x8868;&#x793A;&#x8BB0;&#x5F55;&#x516B;&#x4E2A;QDC&#x7684;&#x79EF;&#x5206;&#xFF0C;&#x4E0D;&#x9009;&#x62E9;&#x5219;&#x4E0D;&#x8BB0;&#x5F55;&#x3002;</li>
+<li>&#x9009;&#x9879; <em>ERB</em> &#x9009;&#x62E9;&#x8868;&#x793A;&#x8BB0;&#x5F55;&#x80FD;&#x91CF;&#x68AF;&#x5F62;&#x7684;&#x4E09;&#x90E8;&#x5206;&#x9762;&#x79EF;&#x79EF;&#x5206;&#x53CA;&#x68AF;&#x5F62;&#x8BA1;&#x7B97;&#x7684;&#x57FA;&#x7EBF;&#x6570;&#x503C;&#x3002;</li>
+</ul>
+<p>&#x7EFF;&#x8272;&#x7684;<em>TraceDelay</em>&#x3001;<em>TraceLength</em>&#x4E3A;&#x8F93;&#x51FA;&#x6570;&#x636E;&#x7684;&#x70B9;&#x6570;&#xFF0C;<strong>&#x8BE5;&#x53C2;&#x6570;&#x9664;&#x4EE5;&#x91C7;&#x96C6;&#x5361;&#x7684;&#x6807;&#x79F0;&#x91C7;&#x6837;&#x7387;&#x5373;&#x4E3A;&#x6CE2;&#x5F62;&#x5B9E;&#x9645;&#x8F93;&#x51FA;&#x6570;&#x636E;&#x70B9;&#x6570;</strong>&#xFF1A;</p>
+<ul>
+<li><em>TraceDelay</em> &#x8868;&#x793A;&#x89E6;&#x53D1;&#x524D;&#x7684;&#x91C7;&#x96C6;&#x6CE2;&#x5F62;&#x957F;&#x5EA6;&#x3002;</li>
 <li><em>TraceLength</em> &#x8868;&#x793A;&#x6574;&#x4E2A;&#x6CE2;&#x5F62;&#x91C7;&#x96C6;&#x957F;&#x5EA6;&#x3002;
-&#x9700;&#x8981;&#x7279;&#x522B;&#x8BF4;&#x660E;&#x7684;&#x662F;&#x91C7;&#x7528;&#x964D;&#x9891;&#x6A21;&#x5F0F;&#x65F6;&#xFF0C;&#x5B9E;&#x9645;&#x6CE2;&#x5F62;&#x957F;&#x5EA6;&#x4E3A; TraceDelay x 2^N / TraceLength x 2^N&#xFF08;N &#x4E3A;&#x964D;&#x9891;&#x53C2;&#x6570;&#xFF09;
-</li></ul>
-<p>&#x84DD;&#x8272;&#x7684; <em>Baseline</em> &#x7528;&#x6765;&#x8C03;&#x8282;&#x57FA;&#x7EBF;&#x4F4D;&#x7F6E;&#xFF0C;&#x901A;&#x8FC7;&#x7535;&#x538B;&#x7684;&#x8865;&#x507F;&#x5C06;&#x57FA;&#x7EBF;&#x8C03;&#x8282;&#x5230;&#x7528;&#x6237;&#x9884;&#x671F;&#x7684;&#x4F4D;&#x7F6E;&#xFF1A;</p><ul><li><em>Baseline</em> &#x53EF;&#x8C03;&#x8282;&#x8303;&#x56F4;&#x4E3A; 0 - 100&#xFF0C;&#x8868;&#x793A;&#x6CE2;&#x5F62;&#x57FA;&#x7EBF;&#x843D;&#x5728;&#x6EE1;&#x91CF;&#x7A0B;&#x7684;&#x4F4D;&#x7F6E;&#x767E;&#x5206;&#x6BD4;&#x3002;&#x4F8B;&#x5982;&#x5782;&#x76F4;&#x7CBE;&#x5EA6; 14 bit&#x91C7;&#x96C6;&#x5361;&#xFF0C;&#x8BE5;&#x53C2;&#x6570;&#x8BBE;&#x7F6E;&#x4E3A;10&#x610F;&#x5473;&#x7740;&#x964D;&#x57FA;&#x7EBF;&#x8865;&#x507F;&#x8C03;&#x8282;&#x5230;&#x6EE1;&#x91CF;&#x7A0B; 16384 &#x9053;&#x7684; 10% &#x5DE6;&#x53F3;&#x5373; 1638 &#x9644;&#x8FD1;&#x3002;
-</li></ul>
-<p>&#x7D2B;&#x8272;&#x7684; <em>DCOffset</em>&#x3001;<em>BLcut</em> &#x7528;&#x6237;&#x4E0D;&#x9700;&#x8981;&#x4FEE;&#x6539;&#xFF0C;&#x91C7;&#x7528;&#x81EA;&#x52A8;&#x8C03;&#x8282;&#x53C2;&#x6570;&#x5373;&#x53EF;&#x3002;&#x672C;&#x5B50;&#x83DC;&#x5355;&#x4E2D;&#x4FEE;&#x6539;&#x4E86; <em>Baseline</em>&#x3001;<em>Gain</em>&#x3001;<em>Sign</em> &#x4E4B;&#x540E;&#xFF0C;&#x9700;&#x8981;&#x6309;&#x6700;&#x4E0B;&#x65B9;&#x7684; <strong>AdjustOffset</strong>&#xFF0C;&#x4E4B;&#x540E;&#x518D;&#x6309;<strong>BLcutFinder</strong> &#x6765;&#x81EA;&#x52A8;&#x8C03;&#x8282;&#x8FD9;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#x3002;</p><ul><li>Good channel. Only channels marked as good will have their events recorded.
+&#x9700;&#x8981;&#x7279;&#x522B;&#x8BF4;&#x660E;&#x7684;&#x662F;&#x91C7;&#x7528;&#x964D;&#x9891;&#x6A21;&#x5F0F;&#x65F6;&#xFF0C;&#x5B9E;&#x9645;&#x6CE2;&#x5F62;&#x957F;&#x5EA6;&#x4E3A; TraceDelay x 2^N / TraceLength x 2^N&#xFF08;N &#x4E3A;&#x964D;&#x9891;&#x53C2;&#x6570;&#xFF09;</li>
+</ul>
+<p>&#x84DD;&#x8272;&#x7684; <em>Baseline</em> &#x7528;&#x6765;&#x8C03;&#x8282;&#x57FA;&#x7EBF;&#x4F4D;&#x7F6E;&#xFF0C;&#x901A;&#x8FC7;&#x7535;&#x538B;&#x7684;&#x8865;&#x507F;&#x5C06;&#x57FA;&#x7EBF;&#x8C03;&#x8282;&#x5230;&#x7528;&#x6237;&#x9884;&#x671F;&#x7684;&#x4F4D;&#x7F6E;&#xFF1A;</p>
+<ul>
+<li><em>Baseline</em> &#x53EF;&#x8C03;&#x8282;&#x8303;&#x56F4;&#x4E3A; 0 - 100&#xFF0C;&#x8868;&#x793A;&#x6CE2;&#x5F62;&#x57FA;&#x7EBF;&#x843D;&#x5728;&#x6EE1;&#x91CF;&#x7A0B;&#x7684;&#x4F4D;&#x7F6E;&#x767E;&#x5206;&#x6BD4;&#x3002;&#x4F8B;&#x5982;&#x5782;&#x76F4;&#x7CBE;&#x5EA6; 14 bit&#x91C7;&#x96C6;&#x5361;&#xFF0C;&#x8BE5;&#x53C2;&#x6570;&#x8BBE;&#x7F6E;&#x4E3A;10&#x610F;&#x5473;&#x7740;&#x964D;&#x57FA;&#x7EBF;&#x8865;&#x507F;&#x8C03;&#x8282;&#x5230;&#x6EE1;&#x91CF;&#x7A0B; 16384 &#x9053;&#x7684; 10% &#x5DE6;&#x53F3;&#x5373; 1638 &#x9644;&#x8FD1;&#x3002;</li>
+</ul>
+<p>&#x7D2B;&#x8272;&#x7684; <em>DCOffset</em>&#x3001;<em>BLcut</em> &#x7528;&#x6237;&#x4E0D;&#x9700;&#x8981;&#x4FEE;&#x6539;&#xFF0C;&#x91C7;&#x7528;&#x81EA;&#x52A8;&#x8C03;&#x8282;&#x53C2;&#x6570;&#x5373;&#x53EF;&#x3002;&#x672C;&#x5B50;&#x83DC;&#x5355;&#x4E2D;&#x4FEE;&#x6539;&#x4E86; <em>Baseline</em>&#x3001;<em>Gain</em>&#x3001;<em>Sign</em> &#x4E4B;&#x540E;&#xFF0C;&#x9700;&#x8981;&#x6309;&#x6700;&#x4E0B;&#x65B9;&#x7684; <strong>AdjustOffset</strong>&#xFF0C;&#x4E4B;&#x540E;&#x518D;&#x6309;<strong>BLcutFinder</strong> &#x6765;&#x81EA;&#x52A8;&#x8C03;&#x8282;&#x8FD9;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#x3002;</p>
+<ul>
+<li>Good channel. Only channels marked as good will have their events recorded.
 This setting has no bearing on the channel&apos;s capability to issue a trigger. There
 can be a triggering channel whose data are discarded. Channels not marked as
-good will be excluded from the automatic offset adjustment.
-</li>
+good will be excluded from the automatic offset adjustment.</li>
 <li>Capture trace. When this box is checked, trace will be captured and recorded
 for each event, along with other list mode information, e.g. timestamp, energy,
-etc.
-</li>
+etc.</li>
 <li>Capture QDC sums. When this box is checked, eight QDC sums will be
 recorded for each event. QDC sums are consecutive sums of the list mode
-trace.
-</li>
+trace.</li>
 <li>Enable CFD trigger. Check this box to enable this channel&#x2019;s CFD trigger.
-Otherwise, regular trapezoidal fast trigger will be used.
-</li>
+Otherwise, regular trapezoidal fast trigger will be used.</li>
 <li>Capture raw energy sums and baseline. Check this box to record raw energy
-sums and baseline value for each event.
-</li></ul>
-<p>The <strong>Base Setup</strong> page controls the analog gain, offset and polarity for each channel. It is useful to click on <strong>Trace &amp; Baseline</strong> in the top control <strong>Monitor</strong> bar to view the signal read from the ADCs while adjusting these parameters. The display shows one or all 16 channels of a module; you can set the sampling interval for each block to capture a longer time frame in <strong>Hist &amp; XDT</strong> page. Click <strong>Draw</strong> to update the graph.</p><p>Pulses from the detector should fall in the range from 0 to 12/14/16-bit -1, with the baseline at ~400 to allow for drifts and/or undershoots and no clipping at the upper limit. If there is clipping, adjust the Gain and Offset or click on the Adjust Offsets button to let the software set the DC offsets to proper levels.<strong>TODO &#x8FD9;&#x6BB5;&#x8FD8;&#x9700;&#x8981;&#x8FDB;&#x4E00;&#x6B65;&#x4FEE;&#x6539;</strong></p><p>Since the trigger/filter circuits in the FPGA only act on rising pulses, negative pulses are inverted at the input of the FPGA, and the waveforms shown in the ADC trace display include this optional inversion. Thus set the channel&#x2019;s Polarity such that pulses from the detector appear with positive amplitude (rising edge).</p><p>In the <strong>Base Setup</strong>  tab, you can set the total trace length and the pre-trigger trace delay for the waveforms to be acquired in list mode runs.</p><p>The Pixie-16 constantly takes baseline measurements when no pulse is detected and keeps a
+sums and baseline value for each event.</li>
+</ul>
+<p>The <strong>Base Setup</strong> page controls the analog gain, offset and polarity for each channel. It is useful to click on <strong>Trace &amp; Baseline</strong> in the top control <strong>Monitor</strong> bar to view the signal read from the ADCs while adjusting these parameters. The display shows one or all 16 channels of a module; you can set the sampling interval for each block to capture a longer time frame in <strong>Hist &amp; XDT</strong> page. Click <strong>Draw</strong> to update the graph.</p>
+<p>Pulses from the detector should fall in the range from 0 to 12/14/16-bit -1, with the baseline at ~400 to allow for drifts and/or undershoots and no clipping at the upper limit. If there is clipping, adjust the Gain and Offset or click on the Adjust Offsets button to let the software set the DC offsets to proper levels.<strong>TODO &#x8FD9;&#x6BB5;&#x8FD8;&#x9700;&#x8981;&#x8FDB;&#x4E00;&#x6B65;&#x4FEE;&#x6539;</strong></p>
+<p>Since the trigger/filter circuits in the FPGA only act on rising pulses, negative pulses are inverted at the input of the FPGA, and the waveforms shown in the ADC trace display include this optional inversion. Thus set the channel&#x2019;s Polarity such that pulses from the detector appear with positive amplitude (rising edge).</p>
+<p>In the <strong>Base Setup</strong>  tab, you can set the total trace length and the pre-trigger trace delay for the waveforms to be acquired in list mode runs.</p>
+<p>The Pixie-16 constantly takes baseline measurements when no pulse is detected and keeps a
 baseline average to be subtracted from the energy filter output during pulse height
 reconstruction. Baseline measurements that differ from the average by more than Baseline Cut
 will be rejected as they are likely contaminated with small pulses below the trigger threshold.
 You can click on the Acquire Baseline button to view a series of baseline measurements for each
 channel, and in the single channel view you can build a histogram of baselines to verify that the
 Baseline Cut does not reject measurements falling into the main (ideally Gaussian) peak in the
-baseline distribution. Usually, it is sufficient to keep Baseline Cut at its default value.</p><p>Note: Since the baseline computation takes into account the exponential decay, no pulses
+baseline distribution. Usually, it is sufficient to keep Baseline Cut at its default value.</p>
+<p>Note: Since the baseline computation takes into account the exponential decay, no pulses
 should be noticeable in the baseline display if a) the decay time is set correctly and b) the
-detector pulses are truly exponential.</p><p>Baseline Percent is a parameter used for automatic offset adjustment; by clicking on the
+detector pulses are truly exponential.</p>
+<p>Baseline Percent is a parameter used for automatic offset adjustment; by clicking on the
 Adjust Offsets button, offsets will be set such that the baseline seen in the ADC trace display falls
 at the Baseline Percent fraction of the full ADC range (e.g. for Baseline Percent = 10% the
-baseline falls at ADC step 1638 out of 16384 total).</p><h3 id="trigger-filter">Trigger Filter</h3><p><img alt="Trigger Filter" src="../img/TriggerFilter.png"></p><p>&#x754C;&#x9762;&#x4E0B;&#x65B9;&#x7684; Status &#x663E;&#x793A;&#x4E3A;<strong>&#x7EFF;&#x8272;&#x7684; Ready</strong> &#x65F6;&#x8868;&#x793A;&#x53EF;&#x64CD;&#x4F5C;&#x8BE5;&#x754C;&#x9762;&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x3002;&#x5E95;&#x4E0B;&#x6309;&#x94AE;&#x7684;&#x64CD;&#x4F5C;&#x540C;&#x4E0A;&#x3002;</p><ul><li>&#x53C2;&#x6570; <em>Rise Time</em> &#x3002;&#x3002;&#x3002;
-</li>
-<li>&#x53C2;&#x6570; <em>Flat Top</em> &#x3002;&#x3002;&#x3002;
-</li>
-<li>&#x53C2;&#x6570; <em>Thresh.</em> &#x8868;&#x793A;&#x9608;&#x503C;&#xFF0C;&#x8BE5;&#x6570;&#x503C;&#x7684;&#x8BBE;&#x7F6E;&#x662F;&#x76F8;&#x5BF9; fast filter &#x6CE2;&#x5F62;&#x3002;
-</li></ul>
-<p><strong>TODO   &#x8FD9;&#x91CC;&#x9700;&#x8981;&#x8865;&#x5145;&#x4E00;&#x4E2A;&#x793A;&#x610F;&#x56FE;&#xFF0C;&#x8FD8;&#x6709;&#x8BA1;&#x7B97;&#x516C;&#x5F0F;&#x3002;</strong></p><p>Assume the digitized waveform stream can be represented by data series Trace[i], i=0,1,2,... First the fast filter response of the digitized waveform is computed as follows:</p><p><strong>TODO&#x516C;&#x5F0F;</strong></p><p>Where FL is called the fast length and FG is called the fast gap of the digital trapezoidal filter.</p><ul><li>A longer trigger filter rise time averages more samples and thus allows setting lower thresholds without triggering on noise.
-</li>
-<li>Typically the threshold should be set as low as possible, just above the noise level.
-</li>
-<li>A longer trigger filter flat top time makes it easier to detect slow rising pulses.
-</li></ul>
-<h3 id="energy">Energy</h3><p><img alt="Energy" src="../img/Energy.png"></p><p>&#x754C;&#x9762;&#x4E0B;&#x65B9;&#x7684; Status &#x663E;&#x793A;&#x4E3A;<strong>&#x7EFF;&#x8272;&#x7684; Ready</strong> &#x65F6;&#x8868;&#x793A;&#x53EF;&#x64CD;&#x4F5C;&#x8BE5;&#x754C;&#x9762;&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x3002;&#x5E95;&#x4E0B;&#x6309;&#x94AE;&#x7684;&#x64CD;&#x4F5C;&#x540C;&#x4E0A;&#x3002;</p><ul><li>&#x53C2;&#x6570; <em>Rise Time</em> &#x3002;&#x3002;&#x3002;
-</li>
-<li>&#x53C2;&#x6570; <em>Flat Top</em> &#x3002;&#x3002;&#x3002;
-</li>
-<li>&#x53C2;&#x6570; <em>Tau</em> &#x3002;&#x3002;&#x3002;
-</li></ul>
-<p><strong>TODO</strong></p><p>The most critical parameter for the energy computation is the signal decay time Tau. It is used
+baseline falls at ADC step 1638 out of 16384 total).</p>
+<h3 id="trigger-filter"><a name="trigger-filter" class="plugin-anchor" href="#trigger-filter"><i class="fa fa-link" aria-hidden="true"></i></a>Trigger Filter</h3>
+<figure id="fig1.3.3.4"><img src="../img/TriggerFilter.png" alt="Trigger Filter"><figcaption>Figure: Trigger Filter</figcaption></figure>
+<p>&#x754C;&#x9762;&#x4E0B;&#x65B9;&#x7684; Status &#x663E;&#x793A;&#x4E3A;<strong>&#x7EFF;&#x8272;&#x7684; Ready</strong> &#x65F6;&#x8868;&#x793A;&#x53EF;&#x64CD;&#x4F5C;&#x8BE5;&#x754C;&#x9762;&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x3002;&#x5E95;&#x4E0B;&#x6309;&#x94AE;&#x7684;&#x64CD;&#x4F5C;&#x540C;&#x4E0A;&#x3002;</p>
+<ul>
+<li>&#x53C2;&#x6570; <em>Rise Time</em> &#x3002;&#x3002;&#x3002;</li>
+<li>&#x53C2;&#x6570; <em>Flat Top</em> &#x3002;&#x3002;&#x3002;</li>
+<li>&#x53C2;&#x6570; <em>Thresh.</em> &#x8868;&#x793A;&#x9608;&#x503C;&#xFF0C;&#x8BE5;&#x6570;&#x503C;&#x7684;&#x8BBE;&#x7F6E;&#x662F;&#x76F8;&#x5BF9; fast filter &#x6CE2;&#x5F62;&#x3002;</li>
+</ul>
+<p><strong>TODO   &#x8FD9;&#x91CC;&#x9700;&#x8981;&#x8865;&#x5145;&#x4E00;&#x4E2A;&#x793A;&#x610F;&#x56FE;&#xFF0C;&#x8FD8;&#x6709;&#x8BA1;&#x7B97;&#x516C;&#x5F0F;&#x3002;</strong></p>
+<p>Assume the digitized waveform stream can be represented by data series Trace[i], i=0,1,2,... First the fast filter response of the digitized waveform is computed as follows:<br><strong>TODO&#x516C;&#x5F0F;</strong><br>Where FL is called the fast length and FG is called the fast gap of the digital trapezoidal filter.</p>
+<ul>
+<li>A longer trigger filter rise time averages more samples and thus allows setting lower thresholds without triggering on noise.</li>
+<li>Typically the threshold should be set as low as possible, just above the noise level.</li>
+<li>A longer trigger filter flat top time makes it easier to detect slow rising pulses.</li>
+</ul>
+<h3 id="energy"><a name="energy" class="plugin-anchor" href="#energy"><i class="fa fa-link" aria-hidden="true"></i></a>Energy</h3>
+<figure id="fig1.3.3.5"><img src="../img/Energy.png" alt="Energy"><figcaption>Figure: Energy</figcaption></figure>
+<p>&#x754C;&#x9762;&#x4E0B;&#x65B9;&#x7684; Status &#x663E;&#x793A;&#x4E3A;<strong>&#x7EFF;&#x8272;&#x7684; Ready</strong> &#x65F6;&#x8868;&#x793A;&#x53EF;&#x64CD;&#x4F5C;&#x8BE5;&#x754C;&#x9762;&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x3002;&#x5E95;&#x4E0B;&#x6309;&#x94AE;&#x7684;&#x64CD;&#x4F5C;&#x540C;&#x4E0A;&#x3002;</p>
+<ul>
+<li>&#x53C2;&#x6570; <em>Rise Time</em> &#x3002;&#x3002;&#x3002;</li>
+<li>&#x53C2;&#x6570; <em>Flat Top</em> &#x3002;&#x3002;&#x3002;</li>
+<li>&#x53C2;&#x6570; <em>Tau</em> &#x3002;&#x3002;&#x3002;</li>
+</ul>
+<p><strong>TODO</strong></p>
+<p>The most critical parameter for the energy computation is the signal decay time Tau. It is used
 to compensate for the falling edge of a previous pulse in the computation of the energy. You can
 either enter Tau directly for each channel, or enter an approximate value in the right control,
 select a channel, and click Find it to let the software determine the decay time automatically.
 Click Accept it to apply the found value to the channel. (If the approximate value is unchanged,
-the software could not find a better value.)  <strong>TODO &#x8FD9;&#x6BB5;&#x8FD8;&#x9700;&#x8981;&#x8FDB;&#x4E00;&#x6B65;&#x4FEE;&#x6539;</strong></p><ul><li>The energy filter flat top time should be about the same as the pulse rise time.
-</li>
-<li>The energy filter rise time can be varied to balance resolution and throughput. Typically, energy resolution increases with the length of the filter rise time, up to an optimum when longer filters only add more noise into the measurement. The filter dead time is about TD = 2 &#xD7; (T rise + T flat ), and the maximum throughput for Poisson statistics is 1/(TD*e). For HPGe detectors, a rise time of 4-6&#x3BC;s is usually appropriate.
-</li>
-<li>Choose the smallest energy filter range that allows setting the optimum energy filter rise time. Larger filter ranges allow longer filter sums, but increase the granularity of possible values for the energy filter rise time and flat top time and increase the jitter of latching the energy filter output relative to the rising edge of the pulse. This is usually only important for very fast pulses.
-</li></ul>
-<p><img alt="filter range" src="../img/filterrange_format.PNG"></p><h3 id="cfd">CFD</h3><p><img alt="CFD" src="../img/CFDPars.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><p>Then the CFD is computed as follows:</p><p><strong>TODO&#x516C;&#x5F0F;</strong></p><p>Where D is called the CFD delay length and W is called the CFD scaling factor.</p><p>The CFD zero crossing point (ZCP) is then determined when CFD[i] &gt; 0 and CFD[i+1] &lt; 0.
+the software could not find a better value.)  <strong>TODO &#x8FD9;&#x6BB5;&#x8FD8;&#x9700;&#x8981;&#x8FDB;&#x4E00;&#x6B65;&#x4FEE;&#x6539;</strong></p>
+<ul>
+<li>The energy filter flat top time should be about the same as the pulse rise time.</li>
+<li>The energy filter rise time can be varied to balance resolution and throughput. Typically, energy resolution increases with the length of the filter rise time, up to an optimum when longer filters only add more noise into the measurement. The filter dead time is about TD = 2 &#xD7; (T rise + T flat ), and the maximum throughput for Poisson statistics is 1/(TD*e). For HPGe detectors, a rise time of 4-6&#x3BC;s is usually appropriate.</li>
+<li>Choose the smallest energy filter range that allows setting the optimum energy filter rise time. Larger filter ranges allow longer filter sums, but increase the granularity of possible values for the energy filter rise time and flat top time and increase the jitter of latching the energy filter output relative to the rising edge of the pulse. This is usually only important for very fast pulses.</li>
+</ul>
+<figure id="fig1.3.3.6"><img src="../img/filterrange_format.PNG" alt="filter range"><figcaption>Figure: filter range</figcaption></figure>
+<h3 id="cfd"><a name="cfd" class="plugin-anchor" href="#cfd"><i class="fa fa-link" aria-hidden="true"></i></a>CFD</h3>
+<figure id="fig1.3.3.7"><img src="../img/CFDPars.png" alt="CFD"><figcaption>Figure: CFD</figcaption></figure>
+<p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p>
+<p>Then the CFD is computed as follows:<br><strong>TODO&#x516C;&#x5F0F;</strong><br>Where D is called the CFD delay length and W is called the CFD scaling factor.</p>
+<p>The CFD zero crossing point (ZCP) is then determined when CFD[i] &gt; 0 and CFD[i+1] &lt; 0.
 The timestamp is latched at Trace point i, and the fraction time f is given by the ratio of the two
-CFD response amplitudes right before and after the ZCP.</p><p><strong>TODO&#x516C;&#x5F0F;</strong></p><p>Where CFDout1 is the CFD response amplitude right before the ZCP and CFDout2 is the CFD
+CFD response amplitudes right before and after the ZCP.</p>
+<p><strong>TODO&#x516C;&#x5F0F;</strong><br>Where CFDout1 is the CFD response amplitude right before the ZCP and CFDout2 is the CFD
 response amplitude (absolute value since CFDout2 is negative) right after the ZCP. The Pixie-16
 DSP computes the CFD final value as shown below and stored it in the output data stream for
-online or offline analysis.</p><p>Valid CFD Scale values and corresponding CFD scaling factors are
-<img alt="cfd scale" src="../img/cfdscale_format.PNG"></p><h3 id="qdc">QDC</h3><p><img alt="QDC" src="../img/QDCPars.png"></p><p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p><p>Eight QDC sums, each of which can have different length varying from 10 ns to 327.68 &#x3BC;s,
+online or offline analysis.</p>
+<p>Valid CFD Scale values and corresponding CFD scaling factors are
+<img src="../img/cfdscale_format.PNG" alt="cfd scale"></p>
+<h3 id="qdc"><a name="qdc" class="plugin-anchor" href="#qdc"><i class="fa fa-link" aria-hidden="true"></i></a>QDC</h3>
+<figure id="fig1.3.3.8"><img src="../img/QDCPars.png" alt="QDC"><figcaption>Figure: QDC</figcaption></figure>
+<p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p>
+<p>Eight QDC sums, each of which can have different length varying from 10 ns to 327.68 &#x3BC;s,
 are computed in the signal processing FPGA of a Pixie-16 module for each channel and the sums
 are written to the output data stream if the user requests so. The recording of QDC sums starts at
 the waveform point which is Pre-trigger Trace Length earlier than the trigger point, which is
 either the CFD trigger or local fast trigger depending on whether or not CFD trigger mode is
 enabled. The eight QDC sums are computed one by one continuously, but they are not
 overlapping. Both the QDC sum length and the Pre-trigger trace length are set by the user. The
-recording of QDC sums ends when the eight intervals have passed.</p><h3 id="decimation">Decimation</h3><p><img alt="Decimation" src="../img/Decimation.png"></p><p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p><h3 id="copy-pars">Copy Pars</h3><p><img alt="Copy Pars" src="../img/CopyPars.png"></p><p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p><h3 id="save2file">Save2File</h3><p><img alt="Save2File" src="../img/Save2File.png"></p><p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p><hr><h2 id="expert-&#x4E0B;&#x62C9;&#x680F;">Expert &#x4E0B;&#x62C9;&#x680F;</h2><p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x8C03;&#x8282;&#x5185;&#x5BB9;&#x4E3A;&#x9AD8;&#x9636;&#x5185;&#x5BB9;&#xFF0C;&#x9700;&#x8981;&#x5BF9;&#x83B7;&#x53D6;&#x903B;&#x8F91;&#x6709;&#x4E00;&#x5B9A;&#x57FA;&#x7840;&#x7684;&#x4EBA;&#x5B66;&#x4E60;&#x638C;&#x63E1;&#x3002;</p><p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p><h3 id="module-variables">Module Variables</h3><p><img alt="Module Variables" src="../img/ModuleVariables.png"></p><p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p><p>Module Control Register B affecting the module as a whole.</p><ul><li>a) Enable pullups for backplane bus lines. This should be enabled for only one module in the crate.
+recording of QDC sums ends when the eight intervals have passed.</p>
+<h3 id="decimation"><a name="decimation" class="plugin-anchor" href="#decimation"><i class="fa fa-link" aria-hidden="true"></i></a>Decimation</h3>
+<figure id="fig1.3.3.9"><img src="../img/Decimation.png" alt="Decimation"><figcaption>Figure: Decimation</figcaption></figure>
+<p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p>
+<h3 id="copy-pars"><a name="copy-pars" class="plugin-anchor" href="#copy-pars"><i class="fa fa-link" aria-hidden="true"></i></a>Copy Pars</h3>
+<figure id="fig1.3.3.10"><img src="../img/CopyPars.png" alt="Copy Pars"><figcaption>Figure: Copy Pars</figcaption></figure>
+<p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p>
+<h3 id="save2file"><a name="save2file" class="plugin-anchor" href="#save2file"><i class="fa fa-link" aria-hidden="true"></i></a>Save2File</h3>
+<figure id="fig1.3.3.11"><img src="../img/Save2File.png" alt="Save2File"><figcaption>Figure: Save2File</figcaption></figure>
+<p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p>
+<hr>
+<h2 id="expert-&#x4E0B;&#x62C9;&#x680F;"><a name="expert-&#x4E0B;&#x62C9;&#x680F;" class="plugin-anchor" href="#expert-&#x4E0B;&#x62C9;&#x680F;"><i class="fa fa-link" aria-hidden="true"></i></a>Expert &#x4E0B;&#x62C9;&#x680F;</h2>
+<p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x8C03;&#x8282;&#x5185;&#x5BB9;&#x4E3A;&#x9AD8;&#x9636;&#x5185;&#x5BB9;&#xFF0C;&#x9700;&#x8981;&#x5BF9;&#x83B7;&#x53D6;&#x903B;&#x8F91;&#x6709;&#x4E00;&#x5B9A;&#x57FA;&#x7840;&#x7684;&#x4EBA;&#x5B66;&#x4E60;&#x638C;&#x63E1;&#x3002;</p>
+<p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p>
+<h3 id="module-variables"><a name="module-variables" class="plugin-anchor" href="#module-variables"><i class="fa fa-link" aria-hidden="true"></i></a>Module Variables</h3>
+<figure id="fig1.3.3.12"><img src="../img/ModuleVariables.png" alt="Module Variables"><figcaption>Figure: Module Variables</figcaption></figure>
+<p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p>
+<p>Module Control Register B affecting the module as a whole.</p>
+<ul>
+<li>a) Enable pullups for backplane bus lines. This should be enabled for only one module in the crate.</li>
+<li>b) Connect trigger signals to backplane. You can set the module to share triggers over the backplane with other modules, unless you run each module (or channel) independently.</li>
+<li>c) Accept external trigger and run inhibit signals. Enable this option to let this module accept external trigger and run inhibit signals and then put the signals on the backplane so that all modules can see the same signals. This should be enabled for only one module in the crate.</li>
+<li>d) Crate master module (multiple crates only). This option is only used when multiple Pixie-16 crates communicate with each other. By enabling this option,the mater module in each crate is responsible for sending synchronization or trigger signals to certain backplane lines. This should be enabled for only one module in the crate.</li>
+<li>e) Enable run inhibit signal input. This option is only applicable to the module which has the &#x201C;Accept external trigger and run inhibit signals&#x201D; option enabled. This should be enabled for only one module in the crate.</li>
+<li>f) Multiple crates. This option is only used when multiple Pixie-16 crates communicate with each other.</li>
+</ul>
+<h3 id="csra"><a name="csra" class="plugin-anchor" href="#csra"><i class="fa fa-link" aria-hidden="true"></i></a>CSRA</h3>
+<figure id="fig1.3.3.13"><img src="../img/CSRA.png" alt="CSRA"><figcaption>Figure: CSRA</figcaption></figure>
+<ul>
+<li>&#x9EC4;&#x8272; FTS&#x3001;GTS &#x7EC4;&#x5408;&#x6765;&#x9009;&#x62E9; channel fast trigger&#xFF1A;<ul>
+<li>&#x4E24;&#x4E2A;&#x5747;&#x4E0D;&#x9009;&#x65F6;&#x4E3A; local fast trigger</li>
+<li>&#x9009;&#x62E9; FTS &#x65F6;&#x4E3A; latched module fast trigger</li>
+<li>FTS &#x4E0D;&#x9009;&#x3001;GTS &#x9009;&#x4E0A;&#x65F6;&#x4E3A; latched channel validation trigger</li>
+</ul>
 </li>
-<li>b) Connect trigger signals to backplane. You can set the module to share triggers over the backplane with other modules, unless you run each module (or channel) independently.
+<li>&#x84DD;&#x8272; MSE&#x3001;CSE&#x3001;MVT&#x3001;CVT &#x7528;&#x6765;&#x9009;&#x62E9; module/channel validation trigger&#xFF1A;<ul>
+<li>MVT &#x4E3A;&#x662F;&#x5426;&#x5F00;&#x542F; module validation trigger</li>
+<li>CVT &#x4E3A;&#x662F;&#x5426;&#x5F00;&#x542F; channel validation trigger</li>
+<li>MSE&#x9009;&#x62E9; module validation trigger &#x6765;&#x6E90;&#x4E8E; System FPGA &#x8FD8;&#x662F;&#x524D;&#x9762;&#x677F; module GATE</li>
+<li>CSE&#x9009;&#x62E9; channel validation trigger &#x6765;&#x6E90;&#x4E8E; System FPGA &#x8FD8;&#x662F;&#x524D;&#x9762;&#x677F; channel GATE</li>
+</ul>
 </li>
-<li>c) Accept external trigger and run inhibit signals. Enable this option to let this module accept external trigger and run inhibit signals and then put the signals on the backplane so that all modules can see the same signals. This should be enabled for only one module in the crate.
+<li>&#x7C89;&#x7EA2;&#x8272; NPR&#x3001;IPR &#x7EC4;&#x5408;&#x9009;&#x62E9; pileup &#x4E8B;&#x4EF6;&#x7684;&#x5904;&#x7406;&#xFF1A;<ul>
+<li>&#x4E24;&#x4E2A;&#x5747;&#x4E0D;&#x9009;&#x65F6;&#x5219;&#x8BB0;&#x5F55;&#x6240;&#x6709;&#x4E8B;&#x4EF6;&#xFF0C;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;&#x80FD;&#x91CF;&#x503C;&#x4E3A;&#x65E0;&#x6548;</li>
+<li>NPR &#x9009;&#x62E9; IPR &#x4E0D;&#x9009;&#x65F6;&#x4E0D;&#x8BB0;&#x5F55;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;</li>
+<li>NPR &#x4E0D;&#x9009; IPR &#x9009;&#x62E9;&#x65F6;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#x3001;&#x4E0D;&#x5806;&#x79EF;&#x65F6;&#x5019;&#x4E0D;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;</li>
+<li>&#x4E24;&#x4E2A;&#x5747;&#x9009;&#x62E9;&#x65F6;&#x53EA;&#x8BB0;&#x5F55;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;</li>
+</ul>
 </li>
-<li>d) Crate master module (multiple crates only). This option is only used when multiple Pixie-16 crates communicate with each other. By enabling this option,the mater module in each crate is responsible for sending synchronization or trigger signals to certain backplane lines. This should be enabled for only one module in the crate.
+<li>&#x7EFF;&#x8272;CTV&#x3001;CVS&#x3001;MVS&#x7528;&#x6765;&#x9009;&#x62E9;module/channel veto&#xFF1A;<ul>
+<li>MVS &#x9009;&#x62E9; module veto &#x6765;&#x6E90;&#x4E8E;&#x524D;&#x9762;&#x677F; module GATE &#x8FD8;&#x662F; module validation trigger</li>
+<li>CVS &#x9009;&#x62E9; channel veto &#x6765;&#x6E90;&#x4E8E;&#x524D;&#x9762;&#x677F; channel GATE &#x8FD8;&#x662F; channel validation trigger</li>
+<li>CTV &#x4E3A;&#x662F;&#x5426;&#x5F00;&#x542F; channel trigger veto</li>
+</ul>
 </li>
-<li>e) Enable run inhibit signal input. This option is only applicable to the module which has the &#x201C;Accept external trigger and run inhibit signals&#x201D; option enabled. This should be enabled for only one module in the crate.
+<li>&#x7EA2;&#x8272;&#x4E3A;&#x57FA;&#x7840;&#x8BBE;&#x7F6E;<ul>
+<li>&#x9ED1;&#x8272; NTL &#x662F;&#x5426;&#x4FDD;&#x7559;&#x8D85;&#x51FA;&#x91CF;&#x7A0B;&#x7684;&#x6CE2;&#x5F62;</li>
+<li>&#x9ED1;&#x8272; ETS &#x662F;&#x5426;&#x8BB0;&#x5F55;&#x5916;&#x90E8;&#x65F6;&#x949F;&#x7684;&#x6570;&#x636E;</li>
+</ul>
 </li>
-<li>f) Multiple crates. This option is only used when multiple Pixie-16 crates communicate with each other.
-</li></ul>
-<h3 id="csra">CSRA</h3><p><img alt="CSRA" src="../img/CSRA.png"></p><ul><li><p>&#x9EC4;&#x8272; FTS&#x3001;GTS &#x7EC4;&#x5408;&#x6765;&#x9009;&#x62E9; channel fast trigger&#xFF1A;</p><ul><li>&#x4E24;&#x4E2A;&#x5747;&#x4E0D;&#x9009;&#x65F6;&#x4E3A; local fast trigger
-</li>
-<li>&#x9009;&#x62E9; FTS &#x65F6;&#x4E3A; latched module fast trigger
-</li>
-<li>FTS &#x4E0D;&#x9009;&#x3001;GTS &#x9009;&#x4E0A;&#x65F6;&#x4E3A; latched channel validation trigger
-</li></ul>
-</li>
-<li><p>&#x84DD;&#x8272; MSE&#x3001;CSE&#x3001;MVT&#x3001;CVT &#x7528;&#x6765;&#x9009;&#x62E9; module/channel validation trigger&#xFF1A;</p><ul><li>MVT &#x4E3A;&#x662F;&#x5426;&#x5F00;&#x542F; module validation trigger
-</li>
-<li>CVT &#x4E3A;&#x662F;&#x5426;&#x5F00;&#x542F; channel validation trigger
-</li>
-<li>MSE&#x9009;&#x62E9; module validation trigger &#x6765;&#x6E90;&#x4E8E; System FPGA &#x8FD8;&#x662F;&#x524D;&#x9762;&#x677F; module GATE
-</li>
-<li>CSE&#x9009;&#x62E9; channel validation trigger &#x6765;&#x6E90;&#x4E8E; System FPGA &#x8FD8;&#x662F;&#x524D;&#x9762;&#x677F; channel GATE
-</li></ul>
-</li>
-<li><p>&#x7C89;&#x7EA2;&#x8272; NPR&#x3001;IPR &#x7EC4;&#x5408;&#x9009;&#x62E9; pileup &#x4E8B;&#x4EF6;&#x7684;&#x5904;&#x7406;&#xFF1A;</p><ul><li>&#x4E24;&#x4E2A;&#x5747;&#x4E0D;&#x9009;&#x65F6;&#x5219;&#x8BB0;&#x5F55;&#x6240;&#x6709;&#x4E8B;&#x4EF6;&#xFF0C;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;&#x80FD;&#x91CF;&#x503C;&#x4E3A;&#x65E0;&#x6548;
-</li>
-<li>NPR &#x9009;&#x62E9; IPR &#x4E0D;&#x9009;&#x65F6;&#x4E0D;&#x8BB0;&#x5F55;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;
-</li>
-<li>NPR &#x4E0D;&#x9009; IPR &#x9009;&#x62E9;&#x65F6;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#x3001;&#x4E0D;&#x5806;&#x79EF;&#x65F6;&#x5019;&#x4E0D;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;
-</li>
-<li>&#x4E24;&#x4E2A;&#x5747;&#x9009;&#x62E9;&#x65F6;&#x53EA;&#x8BB0;&#x5F55;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;
-</li></ul>
-</li>
-<li><p>&#x7EFF;&#x8272;CTV&#x3001;CVS&#x3001;MVS&#x7528;&#x6765;&#x9009;&#x62E9;module/channel veto&#xFF1A;</p><ul><li>MVS &#x9009;&#x62E9; module veto &#x6765;&#x6E90;&#x4E8E;&#x524D;&#x9762;&#x677F; module GATE &#x8FD8;&#x662F; module validation trigger
-</li>
-<li>CVS &#x9009;&#x62E9; channel veto &#x6765;&#x6E90;&#x4E8E;&#x524D;&#x9762;&#x677F; channel GATE &#x8FD8;&#x662F; channel validation trigger
-</li>
-<li>CTV &#x4E3A;&#x662F;&#x5426;&#x5F00;&#x542F; channel trigger veto
-</li></ul>
-</li>
-<li><p>&#x7EA2;&#x8272;&#x4E3A;&#x57FA;&#x7840;&#x8BBE;&#x7F6E;</p><ul><li>&#x9ED1;&#x8272; NTL &#x662F;&#x5426;&#x4FDD;&#x7559;&#x8D85;&#x51FA;&#x91CF;&#x7A0B;&#x7684;&#x6CE2;&#x5F62;
-</li>
-<li>&#x9ED1;&#x8272; ETS &#x662F;&#x5426;&#x8BB0;&#x5F55;&#x5916;&#x90E8;&#x65F6;&#x949F;&#x7684;&#x6570;&#x636E;
-</li></ul>
-</li>
-<li><p>&#x5269;&#x4F59;&#x7684;BDA&#x4E0D;&#x9009;&#xFF0C;HE&#x4E0D;&#x7BA1;</p></li></ul>
-<p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p><p>Channel Control Register A affecting each channel individually</p><ul><li>Good channel. Only channels marked as good will have their events recorded.
+<li>&#x5269;&#x4F59;&#x7684;BDA&#x4E0D;&#x9009;&#xFF0C;HE&#x4E0D;&#x7BA1;</li>
+</ul>
+<p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p>
+<p>Channel Control Register A affecting each channel individually </p>
+<ul>
+<li>Good channel. Only channels marked as good will have their events recorded.
 This setting has no bearing on the channel&apos;s capability to issue a trigger. There
 can be a triggering channel whose data are discarded. Channels not marked as
-good will be excluded from the automatic offset adjustment.
-</li>
+good will be excluded from the automatic offset adjustment.</li>
 <li>Histogram energies. When this box is checked, pulse height (energy) computed
 for each event will be incremented to an energy histogram in the MCA
-memory.
-</li>
+memory.</li>
 <li>Capture trace. When this box is checked, trace will be captured and recorded
 for each event, along with other list mode information, e.g. timestamp, energy,
-etc.
-</li>
+etc.</li>
 <li>Capture QDC sums. When this box is checked, eight QDC sums will be
 recorded for each event. QDC sums are consecutive sums of the list mode
-trace.
-</li>
+trace.</li>
 <li>Enable CFD trigger. Check this box to enable this channel&#x2019;s CFD trigger.
-Otherwise, regular trapezoidal fast trigger will be used.
-</li>
+Otherwise, regular trapezoidal fast trigger will be used.</li>
 <li>Require global external trigger for validation. Check this box to require global
-external trigger to validate events for this channel.
-</li>
+external trigger to validate events for this channel.</li>
 <li>Capture raw energy sums and baseline. Check this box to record raw energy
-sums and baseline value for each event.
-</li>
+sums and baseline value for each event.</li>
 <li>Require channel external trigger for validation. Check this box to require
-channel external trigger to validate events for this channel.
-</li>
+channel external trigger to validate events for this channel.</li>
 <li>Enable pileup rejection. Check this box to enable pileup rejection for this
 channel. Otherwise, pulses will still be recorded even if they are piled up.
-<strong>TODO &#x8FD9;&#x6BB5;&#x8FD8;&#x9700;&#x8981;&#x8FDB;&#x4E00;&#x6B65;&#x4FEE;&#x6539;</strong>
-</li></ul>
-<h3 id="logic-set">Logic Set</h3><p><img alt="Logic Set" src="../img/LogicTrigger.png"></p><p><strong>TODO</strong></p><p><img alt="stretch length" src="../img/stretchlength.PNG"></p><hr><h2 id="monitor-&#x4E0B;&#x62C9;&#x680F;">Monitor &#x4E0B;&#x62C9;&#x680F;</h2><p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x8C03;&#x8282;&#x5185;&#x5BB9;&#x4E3A;&#x76D1;&#x89C6;&#x6CE2;&#x5F62;&#x566A;&#x58F0;&#x6C34;&#x5E73;&#x3001;&#x57FA;&#x7EBF;&#x5206;&#x5E03;&#x7B49;&#x3002;</p><h3 id="hist--xdt">Hist &amp; XDT</h3><p><img alt="Hist &amp; XDT" src="../img/HistXDT.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><p>The binning factor controls the number of MCA bins in the spectrum. Energies are computed as 16 bit numbers, allowing in principle 64K MCA bins.</p><p>However, spectrum memory for each channel is limited to 32K bins, so computed energy values are divided by 2 binning factor before building the histogram. Binning Factor is usually set to 1, but for low count rates and wide peaks, it might be useful to set it to a larger value to obtain a spectrum with fewer bins, but more counts per bin.</p><p>Emin is reserved for a future function to subtract a constant &#x201C;minimum energy&#x201D; from the computed energy value before binning to essentially cut off the lower end of the spectrum.</p><h3 id="trace--baseline">Trace &amp; Baseline</h3><p><img alt="Trace &amp; Baseline" src="../img/Trace.png"></p><p><img alt="Trace &amp; Baseline" src="../img/BaselineHist.png"></p><p><img alt="Trace &amp; Baseline" src="../img/BaselineTimestamps.png"></p><p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p><hr><h2 id="offiline-&#x4E0B;&#x62C9;&#x680F;">Offiline &#x4E0B;&#x62C9;&#x680F;</h2><p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x4E3A;&#x79BB;&#x7EBF;&#x53C2;&#x6570;&#x4F18;&#x5316;&#x8C03;&#x8282;&#x3002;</p><h3 id="adjust-par">Adjust Par</h3><h4 id="initdata">InitData</h4><p><img alt="Adjust Par" src="../img/AdjustPar.png"></p><ul><li>Run &#x9009;&#x62E9;&#x8981;&#x8BFB;&#x53D6;&#x7684;&#x6587;&#x4EF6;&#x8FD0;&#x884C;&#x7F16;&#x53F7;&#xFF0C;Mod &#x9009;&#x62E9;&#x8981;&#x8BFB;&#x53D6;&#x7B2C;&#x51E0;&#x4E2A;&#x91C7;&#x96C6;&#x5361;&#xFF0C;&#x6309;&#x94AE; Read &#x5C06;&#x6587;&#x4EF6;&#x4E3B;&#x8981;&#x4FE1;&#x606F;(&#x9053;&#x5740;&#x3001;&#x80FD;&#x91CF;&#x3001;&#x6CE2;&#x5F62;&#x4F4D;&#x7F6E;&#x7B49;)&#x8F7D;&#x5165;&#x5185;&#x5B58;&#x3002;
-</li>
-<li><p>Additional analysis: &#x4E09;&#x4E2A;&#x9009;&#x9879;&#x4E2D;&#xFF0C;&#x9009;&#x62E9;&#x8868;&#x793A;&#x8BFB;&#x53D6;&#x8BE5;&#x6587;&#x4EF6;&#x6570;&#x636E;&#x5230;&#x5185;&#x5B58;&#x4E2D;&#x65F6;&#x5305;&#x62EC;&#x8BE5;&#x4FE1;&#x606F;&#x3002;&#x53EA;&#x6709;&#x8BFB;&#x53D6;&#x4E86;&#x8BE5;&#x6570;&#x636E;&#xFF0C;&#x624D;&#x80FD;&#x542F;&#x7528;&#x4E00;&#x4E9B;&#x5206;&#x6790;&#x65B9;&#x6CD5;&#x3002;&#x4F46;&#x662F;&#x524D;&#x63D0;&#x662F;&#x6570;&#x636E;&#x91C7;&#x96C6;&#x65F6;&#x5019;&#x9700;&#x8981;&#x8BB0;&#x5F55;&#x8BE5;&#x4FE1;&#x606F;&#x3002;</p></li>
-<li><p>InitData: This page. Read the binary file.</p></li>
-<li>Adjust Par:  Waveform/fast filter/energy filter/cfd/threshould of the select channel.
-</li>
-<li>Wave-16:  Waveform/fast filter/energy filter/cfd filter/threshould of the 16 channels.
-</li>
-<li>Energy-16:  The original energy spectrum of the 16 channel..
-</li>
-<li>Orig Energy:  The original energy spectrum of the select channel.
-</li>
-<li>Calc Energy:  Recalculation of energy spectrum by waveforms.
-</li>
-<li>FF/CFD Thre:   Accumulation of a large number of fast filter/cfd filter waveforms to determine the threshold.
-</li>
-<li>Energy-FF:  The two dimensional relationship between energy and fast filter first/second peak height.
-</li>
-<li>QDC:  It will be finished soon.
-</li>
-<li>FFT:  Fourier transformation of a single waveform. User can choose XIA/CAEN/FFTW3 functions.
-</li>
-<li>Time Diff:  Time difference of two signal.
-</li></ul>
-<hr><h4 id="adjust-par">Adjust Par</h4><p><img alt="offlineapi" src="../img/OfflineAPI.png"></p><p>&#x8981;&#x901A;&#x8FC7;&#x91C7;&#x96C6;&#x7684;&#x6CE2;&#x5F62;&#x79BB;&#x7EBF;&#x8BA1;&#x7B97;fast filter&#x3001;slow filter cfd &#x66F2;&#x7EBF;&#xFF0C;&#x5BF9;&#x91C7;&#x96C6;&#x7684;&#x6CE2;&#x5F62;&#x6709;&#x4EE5;&#x4E0B;&#x8981;&#x6C42;&#x3002;&#x5982;&#x4E0A;&#x56FE;&#x4E2D;&#xFF0C;&#x8BA1;&#x7B97;&#x7684;&#x80FD;&#x91CF;&#x662F;&#x7B97;&#x6CD5;&#x7684;&#x80FD;&#x91CF;&#x4E0E;&#x7B97;&#x6CD5;&#x7684;&#x57FA;&#x7EBF;&#x7684;&#x5DEE;&#xFF0C;&#x8981;&#x5F97;&#x5230;&#x6B63;&#x786E;&#x7684;&#x68AF;&#x5F62;&#xFF0C;&#x90A3;&#x4E48;&#x524D;&#x63D0;&#x662F;&#x524D;&#x9762;&#x6709;&#x8DB3;&#x591F;&#x957F;&#x7684;&#x70B9;&#x6765;&#x8BA1;&#x7B97;&#x57FA;&#x7EBF;&#x3002;</p><p>&#x56FE;&#x4E2D; EFRT &#x8868;&#x793A; <em>Energy Filter Rise Time</em>&#xFF0C;EFFT &#x8868;&#x793A; <em>Energy Filter Flat Top</em>&#x3002;</p><p>To compute energy filter response offline, the ideal settings are:</p><ul><li>Total trance length &gt; 2 <em> ( 2 </em> EFRT + EFFT)
-</li>
-<li>Pre-trigger trace (Trace-delay) length &gt; ( 3 * EFRT + EFFT )
-</li></ul>
-<p>&#x5F53;&#x7136;&#xFF0C;&#x8FD9;&#x53EA;&#x662F;&#x8BA1;&#x7B97;&#x68AF;&#x5F62;&#x7684;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x8BB0;&#x5F55;&#x4E86;&#x6BCF;&#x4E2A;&#x4E8B;&#x4EF6;&#x7684;&#x80FD;&#x91CF;&#x68AF;&#x5F62;&#x7684;&#x57FA;&#x7EBF;&#xFF0C;&#x5E76;&#x4E14;&#x91C7;&#x7528;pre-trigger&#x90E8;&#x5206;&#x70B9;&#x7684;&#x5E73;&#x5747;&#x503C;&#x4F5C;&#x4E3A;&#x6CE2;&#x5F62;&#x5DE6;&#x4FA7;&#x7684;&#x65E0;&#x9650;&#x5EF6;&#x4F38;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x4E0D;&#x53D7; Pre-trigger trace length &gt; ( 3 x EFRT + EFFT ) &#x6761;&#x4EF6;&#x7684;&#x9650;&#x5236;&#x4E86;&#x3002;&#x4E0B;&#x9762;&#x7684;&#x9875;&#x9762;&#x4E2D;&#xFF0C;&#x5F53;&#x91C7;&#x7528; Old Baseline &#x65B9;&#x6CD5;&#x6765;&#x8BA1;&#x7B97;&#x80FD;&#x91CF;&#x68AF;&#x5F62;&#x65F6;&#xFF0C;&#x6709;&#x4E2A;&#x524D;&#x63D0;&#x662F; pre-trigger trace length &#x81F3;&#x5C11;&#x9700;&#x8981;&#x6709; 200 &#x4E2A;&#x70B9;&#xFF0C;&#x56E0;&#x4E3A;&#x6CE2;&#x5F62;&#x5DE6;&#x4FA7;&#x5EF6;&#x4F38;&#x91C7;&#x7528;&#x524D; 200 &#x4E2A;&#x70B9;&#x6765;&#x5E73;&#x5747;&#x3002;</p><p><img alt="Adjustpars3" src="../img/Adjustpars3.png"></p><p>&#x5F53;&#x91C7;&#x96C6;&#x7684;&#x6CE2;&#x5F62; pre-trigger trace length &gt; 3 x EFRT + EFFT &#x65F6;&#xFF0C;pre-trigger trace &#x63D0;&#x4F9B;&#x8DB3;&#x591F;&#x591A;&#x7684;&#x70B9;&#x6765;&#x8BA1;&#x7B97;&#x57FA;&#x7EBF;&#xFF0C;SF BL &#x7B97;&#x6CD5;&#x53EF;&#x9009;&#x62E9; Calculate&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x9009;&#x62E9; Old Baseline &#x7B97;&#x6CD5;&#x3002;&#x9009;&#x62E9;Old Baseline &#x7B97;&#x6CD5;&#x7684;&#x524D;&#x63D0;&#x65F6;&#x8BB0;&#x5F55;&#x6570;&#x636E;&#x7684;&#x65F6;&#x5019;&#xFF0C; &#x9009;&#x62E9;&#x5F00;&#x542F;&#x8BB0;&#x5F55; &#x68AF;&#x5F62;&#x7684;baseline&#xFF0C;&#x5E76;&#x4E14; InitData &#x9875;&#x9762;&#x7684; raw E sums/baseline &#x9009;&#x9879;&#x5F00;&#x542F;&#x3002;&#x5F53;&#x9009;&#x62E9; Old Baseline &#x7B97;&#x6CD5;&#x65F6;&#xFF0C;&#x4E4B;&#x540E;&#x7684;&#x56DB;&#x4E2A;&#x9009;&#x9879;&#x53C2;&#x6570;&#x751F;&#x6548;&#xFF0C;&#x8BE5;&#x56DB;&#x4E2A;&#x53C2;&#x6570;&#x4E3A;&#x8BE5;&#x6570;&#x636E;&#x91C7;&#x96C6;&#x65F6;&#x5019;&#x6240;&#x7528;&#x7684;&#x80FD;&#x91CF;&#x68AF;&#x5F62;&#x7684;&#x53C2;&#x6570;&#x3002;</p><p>&#x4E0A;&#x56FE;&#x4E2D;&#x7EFF;&#x8272;&#x66F2;&#x7EBF;&#x4E3A;&#x5178;&#x578B;&#x7684;&#x4E0D;&#x6EE1;&#x8DB3; pre-trigger trace length &gt; 3 x EFRT + EFFT &#x65F6;&#xFF0C;&#x91C7;&#x7528;&#x7684; Calculate &#x7B97;&#x6CD5;&#x9020;&#x6210;&#x7684;&#x7ED3;&#x679C;&#x3002;&#x56FE;&#x4E2D;&#x663E;&#x793A; pre-trigger trace length &#x4E3A; 10 us&#xFF0C;EFRT &#x4E3A; 5.04 us&#xFF0C;EFFT &#x4E3A; 1.60 us&#x3002;</p><p>&#x6B64;&#x65F6;&#xFF0C;&#x5E94;&#x8BE5;&#x91C7;&#x7528;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#x7684;  Old Baseline &#x7B97;&#x6CD5;&#x3002;</p><p><img alt="Adjustpars1" src="../img/Adjustpars1.png"></p><p>&#x7528;&#x6237;&#x53EF;&#x9009;&#x62E9;&#x67E5;&#x770B;&#x6CE2;&#x5F62;&#x7684;&#x901A;&#x9053;&#xFF0C;&#x6309;&#x94AE; Load &#x53EF;&#x8BFB;&#x53D6;&#x5E76;&#x663E;&#x793A;&#x5F53;&#x524D;&#x7684;&#x53C2;&#x6570;&#x8BBE;&#x7F6E;&#x60C5;&#x51B5;&#xFF0C;&#x5F53;&#x4FEE;&#x6539;&#x4EE5;&#x4E0A;&#x7684;&#x53C2;&#x6570;&#x65F6;&#x5019;&#xFF0C;&#x9700;&#x8981;&#x6309; Apply &#x6309;&#x94AE;&#x4F7F;&#x4E4B;&#x751F;&#x6548;&#x3002;&#x6309;&#x94AE; Draw &#x7528;&#x6765;&#x663E;&#x793A;&#x4E0B;&#x4E00;&#x4E2A;&#x8BE5;&#x901A;&#x9053;&#x7684;&#x4E8B;&#x4EF6;&#x6CE2;&#x5F62;&#x3002;</p><p>&#x7528;&#x6237;&#x53EF;&#x9009;&#x62E9;&#x540C;&#x65F6;&#x663E;&#x793A; Wave / Slow Filter/ Fast filter / Thres / CFD / CFD Thres &#x4E2D;&#x7684;&#x591A;&#x4E2A;&#x6CE2;&#x5F62;&#x3002;&#x6216;&#x8005;&#x9009;&#x62E9;&#x66F2;&#x7EBF;&#x7684;&#x7ED8;&#x753B;&#x6837;&#x5F0F;&#x3002;</p><p><img alt="Adjustpars2" src="../img/Adjustpars2.png"></p><p>&#x4E0A;&#x56FE;&#x5C55;&#x793A;&#x4E86;&#x663E;&#x793A; fast filter&#x3001;Thres&#x3001;CFD&#x3001;CFD Thres &#x56DB;&#x4E2A;&#x6CE2;&#x5F62;&#xFF0C;&#x56FE;&#x6837;&#x91C7;&#x7528;&#x70B9;&#x663E;&#x793A;&#x65B9;&#x5F0F;&#x3002;&#x6700;&#x4F4E;&#x7AEF;&#x7684;&#x6C34;&#x5E73;&#x6761;&#x4E24;&#x7AEF;&#x53EF;&#x4EE5;&#x62D6;&#x52A8;&#xFF0C;&#x7528;&#x6237;&#x53EF;&#x62C9;&#x52A8;&#x6765;&#x63A7;&#x5236;&#x6CE2;&#x5F62;&#x6A2A;&#x5750;&#x6807;&#x7684;&#x663E;&#x793A;&#x8303;&#x56F4;&#xFF0C;&#x5982;&#x56FE;&#x4E2D;&#x663E;&#x793A;800 - 1300 &#x7684;&#x70B9;&#x3002;&#x8BE5;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x70B9;&#x51FB; Draw &#x6309;&#x94AE;&#xFF0C;&#x5C06;&#x4F1A;&#x4FDD;&#x6301;&#x8BE5;&#x6307;&#x5B9A;&#x7684;&#x5750;&#x6807;&#x8303;&#x56F4;&#x3002;</p><hr><h4 id="wave-16">Wave-16</h4><p><img alt="Waveform16" src="../img/Waveform16.png"></p><p>&#x8BE5;&#x9875;&#x9762;&#x7528;&#x4E8E;&#x540C;&#x65F6;&#x67E5;&#x770B;16&#x901A;&#x9053;&#x7684;&#x539F;&#x59CB;&#x6CE2;&#x5F62;&#x3001;filter &#x6CE2;&#x5F62;&#xFF0C;&#x9608;&#x503C;&#x7B49;&#x3002;&#x7528;&#x6237;&#x53EF;&#x9009;&#x62E9;&#x540C;&#x65F6;&#x663E;&#x793A; Wave / Slow Filter/ Fast filter / Thres / CFD / CFD Thres &#x4E2D;&#x7684;&#x591A;&#x4E2A;&#x6CE2;&#x5F62;&#x3002;</p><p>&#x7528;&#x6237;&#x53EF;&#x901A;&#x8FC7;&#x8BE5;&#x9875;&#x9762;&#xFF0C;&#x5FEB;&#x901F;&#x67E5;&#x770B;&#x8BE5;&#x91C7;&#x96C6;&#x5361;&#x6240;&#x6709;&#x901A;&#x9053;&#x7684;&#x6CE2;&#x5F62;&#x662F;&#x5426;&#x6B63;&#x5E38;&#xFF0C;&#x53C2;&#x6570;&#x8BBE;&#x7F6E;&#x662F;&#x5426;&#x5408;&#x7406;&#x3002;&#x70B9;&#x51FB;&#x6309;&#x94AE; Draw &#x4E00;&#x6B21;&#xFF0C;&#x5219;&#x663E;&#x793A;&#x6240;&#x6709;&#x901A;&#x9053;&#x4E0B;&#x4E00;&#x4E2A;&#x6CE2;&#x5F62;&#x3002;</p><p><em>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x4E00;&#x70B9;&#xFF0C;&#x672C;&#x9875;&#x9762;&#x7684; Slow Filter &#x6CE2;&#x5F62;&#x9700;&#x8981;&#x5728;&#x91C7;&#x96C6;&#x7684;&#x6CE2;&#x5F62; pre-trigger trace &#x957F;&#x5EA6;&#x5927;&#x4E8E; 3 x EFRT + EFFT &#x65F6;&#x624D;&#x662F;&#x6B63;&#x786E;&#x7684;&#x3002;</em></p><hr><h4 id="energy-16">Energy-16</h4><p><img alt="Energy16" src="../img/Energy16.png"></p><p>&#x8BE5;&#x754C;&#x9762;&#x7528;&#x4E8E;&#x540C;&#x65F6;&#x67E5;&#x770B; 16 &#x901A;&#x9053;&#x7684;&#x4E00;&#x7EF4;&#x80FD;&#x8C31;&#x3002;&#x70B9;&#x51FB;&#x53F3;&#x4E0A;&#x89D2;&#x7684;&#x6309;&#x94AE; Draw &#x5373;&#x53EF;&#x3002;</p><hr><h4 id="orig-energy">Orig Energy</h4><p><img alt="OrigEnergy" src="../img/OrigEnergy.png"></p><p>&#x8BE5;&#x9875;&#x9762;&#x7528;&#x6765;&#x5FEB;&#x901F;&#x67E5;&#x770B;&#x67D0;&#x901A;&#x9053;&#x7684;&#x80FD;&#x8C31;&#x3002;&#x7528;&#x6237;&#x9009;&#x62E9;&#x80FD;&#x8C31;&#x7684;&#x5206; Bin &#x6570;&#xFF0C;&#x8BE5;&#x6570;&#x503C;&#x8868;&#x793A;&#x5C06; 0 - 65536 &#x9053;&#x5206;&#x6210;&#x591A;&#x5C11;&#x5206;&#x3002;&#x9009;&#x62E9;&#x67E5;&#x770B;&#x901A;&#x9053;&#x3002;&#x7136;&#x540E;&#x6309; Draw &#x6309;&#x94AE;&#x5373;&#x53EF;&#x3002;</p><p><img alt="OrigEnergyFit" src="../img/OrigEnergyFit.png"></p><p>&#x5DE6;&#x4E0A;&#x89D2;&#x7684; Open Fit &#x6309;&#x94AE;&#x7528;&#x6765;&#x5FEB;&#x901F;&#x9AD8;&#x65AF;&#x62DF;&#x5408;&#x770B;&#x80FD;&#x91CF;&#x5206;&#x8FA8;&#x3002;&#x70B9;&#x51FB;&#x6309;&#x94AE;&#xFF0C;&#x5F00;&#x542F;&#x62DF;&#x5408;&#x6A21;&#x5F0F;&#xFF0C;&#x518D;&#x6B21;&#x70B9;&#x51FB;&#x6309;&#x94AE;&#x5219;&#x5173;&#x95ED;&#x8BE5;&#x529F;&#x80FD;&#x3002;&#x5C06;&#x9F20;&#x6807;&#x79FB;&#x52A8;&#x5230;&#x76F4;&#x65B9;&#x56FE;&#x7684;&#x84DD;&#x7EBF;&#x4E0A;&#xFF0C;&#x9F20;&#x6807;&#x5341;&#x5B57;&#x5C06;&#x4F1A;&#x53D8;&#x6210;&#x4E09;&#x89D2;&#x7BAD;&#x5934;&#x3002;&#x4E09;&#x89D2;&#x7BAD;&#x5934;&#x7684;&#x9F20;&#x6807;&#x70B9;&#x51FB;&#x76F4;&#x65B9;&#x56FE;&#x4E2D;&#x7684;&#x4E24;&#x4E2A;&#x4F4D;&#x7F6E;&#xFF0C;&#x4E24;&#x70B9;&#x6240;&#x5728;&#x533A;&#x95F4;&#x5373;&#x4E3A;&#x62DF;&#x5408;&#x533A;&#x95F4;&#xFF0C;&#x5219;&#x53EF;&#x67E5;&#x770B;&#x80FD;&#x91CF;&#x5206;&#x8FA8;&#x3002;</p><hr><h4 id="calc-energy">Calc Energy</h4><p><img alt="CalcEnergy" src="../img/CalcEnergy.png"></p><p>&#x8BE5;&#x9875;&#x9762;&#x5229;&#x7528;&#x91C7;&#x96C6;&#x7684;&#x6CE2;&#x5F62;&#x91CD;&#x65B0;&#x8BA1;&#x7B97;&#x80FD;&#x91CF;&#x3002;&#x540C; Adjust Par &#x9875;&#x9762;&#x4E00;&#x6837;&#xFF0C;SF BL &#x7B97;&#x6CD5;&#x53EF;&#x9009;&#x62E9;Calculate&#x7B97;&#x6CD5;&#x6216;&#x8005; Old Baseline &#x7B97;&#x6CD5;&#x3002;</p><p>&#x8BA1;&#x7B97;&#x80FD;&#x91CF;&#x91C7;&#x7528;&#x7684;fast filter&#x3001;energy filter&#x53C2;&#x6570;&#x91C7;&#x7528;&#x91C7;&#x96C6;&#x5361;&#x7684;&#x8BBE;&#x7F6E;&#x53C2;&#x6570;&#xFF0C;&#x7528;&#x6237;&#x9700;&#x8981;&#x9009;&#x62E9;&#x80FD;&#x91CF; 0-65536 &#x5206;&#x6210;&#x591A;&#x5C11;&#x4E2A; bin&#xFF0C;&#x53EF;&#x9009;&#x62E9; 1024/2048/4096/8192/16384/32768/65536&#xFF0C;&#x9009;&#x62E9;&#x8BA1;&#x7B97;&#x7684;&#x901A;&#x9053;&#xFF0C;&#x7136;&#x540E;&#x6309;&#x6309;&#x94AE; Draw&#x5373;&#x5F00;&#x59CB;&#x8BA1;&#x7B97;&#xFF0C;&#x5DE6;&#x4E0A;&#x89D2;&#x5C06;&#x4F1A;&#x663E;&#x793A;&#x8BA1;&#x7B97;&#x7684;&#x8FDB;&#x5EA6;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x6309;&#x6309;&#x94AE; Stop &#x63D0;&#x524D;&#x7EC8;&#x6B62;&#x8BA1;&#x7B97;&#x3002;&#x5F53;&#x8BA1;&#x7B97;&#x7EC8;&#x6B62;&#x65F6;&#xFF0C;&#x753B;&#x677F;&#x4E0A;&#x5C06;&#x663E;&#x793A;&#x80FD;&#x8C31;&#x3002;</p><hr><h4 id="ffcfd-thre">FF/CFD Thre</h4><p><img alt="FFCFDThre" src="../img/FFCFDThre.png"></p><p>&#x8BE5;&#x754C;&#x9762;&#x7528;&#x4E8E; fast filter&#x6CE2;&#x5F62;&#x3001;cfd filter&#x6CE2;&#x5F62;&#x7684;&#x7D2F;&#x52A0;&#x3002;&#x7528;&#x6237;&#x9009;&#x62E9;&#x67E5;&#x770B;&#x901A;&#x9053;&#xFF0C;&#x7136;&#x540E;&#x6309; Draw &#x6309;&#x94AE;&#x5219;&#x5F00;&#x59CB;&#x8FDB;&#x5165;&#x8BA1;&#x7B97;&#xFF0C;&#x5DE6;&#x4E0A;&#x89D2;&#x53EF;&#x65F6;&#x65F6;&#x76D1;&#x89C6;&#x8FDB;&#x5EA6;&#xFF0C;&#x4E5F;&#x53EF;&#x6309; Stop &#x6309;&#x94AE;&#x63D0;&#x524D;&#x7EC8;&#x6B62;&#x8BA1;&#x7B97;&#x3002;&#x8BA1;&#x7B97;&#x7ED3;&#x675F;&#x5F97;&#x5230;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#x3002;</p><p>&#x4E0A;&#x65B9;&#x6309;&#x94AE; FFProjectY&#x3001;CFDProjectY&#x3001;OriginalCFD&#x3001;CalculateCFD &#x5206;&#x522B;&#x53EF;&#x5F39;&#x51FA;&#x5B50;&#x753B;&#x677F;&#x3002;</p><p><img alt="FFCFDThreFFProjectY" src="../img/FFCFDThreFFProjectY.png"></p><p>&#x70B9;&#x51FB;&#x6309;&#x94AE; FFProjectY&#xFF0C;&#x5219;&#x5F00;&#x542F;&#x67E5;&#x770B;fast filter&#x6295;&#x5F71;&#x56FE;&#xFF0C;&#x518D;&#x6B21;&#x70B9;&#x51FB;&#x5219;&#x5173;&#x95ED;&#x8BE5;&#x529F;&#x80FD;&#x3002;&#x5F00;&#x542F;&#x529F;&#x80FD;&#x65F6;&#xFF0C;&#x5C06;&#x9F20;&#x6807;&#x653E;&#x5728;&#x4E8C;&#x7EF4;&#x56FE;&#x4E0A;&#xFF0C;&#x5DE6;&#x53F3;&#x79FB;&#x52A8;&#x9F20;&#x6807;&#xFF0C; Fast Filter ShowProjectY &#x5B50;&#x753B;&#x677F;&#x5219;&#x663E;&#x793A;&#x9F20;&#x6807;&#x6307;&#x5411;&#x7684;&#x8BE5;&#x4F4D;&#x7F6E;&#x7684;&#x6295;&#x5F71;&#x5206;&#x5E03;&#x3002;&#x89E6;&#x53D1;&#x524D;&#x7684;&#x8BE5;&#x5206;&#x5E03;&#xFF0C;&#x4E5F;&#x8868;&#x5F81;&#x566A;&#x58F0;&#x7684;&#x6C34;&#x5E73;&#x3002;</p><p><img alt="FFCFDThreCFDProjectY" src="../img/FFCFDThreCFDProjectY.png"></p><p>&#x540C;&#x7406;&#xFF0C;&#x6309;&#x94AE; CFDProjectY &#x529F;&#x80FD;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#x3002;</p><p><img alt="FFCFDThreCFD" src="../img/FFCFDThreCFD.png"></p><p>&#x70B9;&#x51FB;&#x6309;&#x94AE; OriginalCFD&#xFF0C;&#x5219;&#x5C55;&#x793A;&#x5DE6;&#x56FE;&#x4E2D;&#x539F;&#x59CB;&#x6570;&#x636E;&#x4E2D; CFD &#x6570;&#x503C;&#x7684;&#x5206;&#x5E03;&#x3002;&#x70B9;&#x51FB;&#x6309;&#x94AE; CalculateCFD&#xFF0C;&#x5219;&#x5C55;&#x793A;&#x53F3;&#x56FE;&#x4E2D;&#x901A;&#x8FC7;&#x79BB;&#x7EBF;&#x6CE2;&#x5F62;&#x8BA1;&#x7B97;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x8BA1;&#x7B97;&#x6240;&#x7528;&#x53C2;&#x6570;&#x4E3A;&#x5F53;&#x524D;&#x7684;&#x53C2;&#x6570;&#x3002;&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;&#x5408;&#x9002;&#x7684; CFD &#x53C2;&#x6570;&#x8BBE;&#x7F6E;&#xFF0C;&#x8BE5;CFD&#x5206;&#x5E03;&#x8BE5;&#x662F;&#x5E73;&#x5747;&#x5206;&#x5E03;&#x7684;&#x3002;</p><hr><h4 id="energy-ff">Energy-FF</h4><p><img alt="EnergyFFGraph" src="../img/EnergyFFGraph.png"></p><p>&#x8BE5;&#x754C;&#x9762;&#x662F;&#x80FD;&#x91CF;&#x4E0E; fast filter &#x5CF0;&#x9AD8;&#x7684;&#x4E8C;&#x7EF4;&#x5173;&#x8054;&#x56FE;&#x3002;&#x7528;&#x4E8E;&#x786E;&#x5B9A;&#x5408;&#x9002;&#x7684;&#x9608;&#x503C;&#x3002;&#x5DE6;&#x56FE;&#x662F;&#x80FD;&#x91CF;&#x4E0E; fast filter&#x7684;&#x4E8C;&#x7EF4;&#x5173;&#x8054;&#xFF0C;&#x5B83;&#x4EEC;&#x5E94;&#x8BE5;&#x6709;&#x4E2A;&#x8F83;&#x597D;&#x7684;&#x7EBF;&#x6027;&#x5173;&#x7CFB;&#xFF0C;&#x53F3;&#x56FE;&#x4E3A;&#x80FD;&#x91CF;&#x4E0E; fast filer &#x4E2D;&#x629B;&#x9664;&#x68AF;&#x5F62;&#x90E8;&#x5206;&#x5269;&#x4F59;&#x4E2D;&#x6700;&#x5927;&#x503C;&#x7684;&#x4E8C;&#x7EF4;&#x5173;&#x8054;&#xFF0C;&#x629B;&#x9664;&#x68AF;&#x5F62;&#x90E8;&#x5206;&#x5269;&#x4F59;&#x5206;&#x5E03;&#x7684;&#x6700;&#x5927;&#x503C;&#x8868;&#x5F81;&#x566A;&#x58F0;&#x6C34;&#x5E73;&#xFF0C;&#x80FD;&#x91CF;&#x8DDF;&#x8BE5;&#x503C;&#x5E94;&#x8BE5;&#x662F;&#x6CA1;&#x6709;&#x5173;&#x8054;&#x7684;&#x3002;</p><p>&#x9996;&#x5148; Draw Style &#x9009;&#x62E9; Graph&#xFF0C;&#x5373;&#x4E8C;&#x7EF4;&#x6563;&#x70B9;&#x56FE;&#x6A21;&#x5F0F;&#x3002;&#x9009;&#x62E9;&#x67E5;&#x770B;&#x901A;&#x9053;&#xFF0C;&#x7136;&#x540E;&#x6309; Draw &#x6309;&#x94AE;&#x5219;&#x5F00;&#x59CB;&#x8FDB;&#x5165;&#x8BA1;&#x7B97;&#xFF0C;&#x5DE6;&#x4E0A;&#x89D2;&#x53EF;&#x65F6;&#x65F6;&#x76D1;&#x89C6;&#x8FDB;&#x5EA6;&#xFF0C;&#x4E5F;&#x53EF;&#x6309; Stop &#x6309;&#x94AE;&#x63D0;&#x524D;&#x7EC8;&#x6B62;&#x8BA1;&#x7B97;&#x3002;&#x8BA1;&#x7B97;&#x7ED3;&#x675F;&#x5F97;&#x5230;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#x3002;</p><p><img alt="EnergyFFHist" src="../img/EnergyFFHist.png"></p><p>&#x4E8C;&#x7EF4;&#x6563;&#x70B9;&#x56FE;&#x5E76;&#x4E0D;&#x80FD;&#x5F88;&#x76F4;&#x89C2;&#x663E;&#x793A;&#x5C55;&#x793A;&#x6570;&#x636E;&#x70B9;&#x7684;&#x5BC6;&#x5EA6;&#x5206;&#x5E03;&#xFF0C;&#x56E0;&#x6B64; Draw Style &#x9009;&#x62E9; Hist &#x6A21;&#x5F0F;&#xFF0C;&#x9009;&#x62E9; X&#x3001;Y&#x8F74;&#x7684;&#x5206; bin &#x6570;&#x5373;&#x8303;&#x56F4;&#xFF0C;&#x7136;&#x540E;&#x540C;&#x6837;&#x6309; Draw &#x6309;&#x94AE;&#x5F00;&#x59CB;&#x8BA1;&#x7B97;&#x3002;&#x7ED3;&#x679C;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x53F3;&#x56FE;&#x53CD;&#x6620;&#x4E86;&#x566A;&#x58F0;&#x7684;&#x6C34;&#x5E73;&#x3002;</p><hr><h4 id="qdc">QDC</h4><p><strong>QDC  TODO   &#x529F;&#x80FD;&#x672A;&#x5B8C;&#x6210;</strong></p><hr><h4 id="fft">FFT</h4><p><img alt="FFT" src="../img/FFT.png"></p><p>&#x8BE5;&#x754C;&#x9762;&#x7528;&#x4E8E;&#x5FEB;&#x901F;&#x67E5;&#x770B;&#x6CE2;&#x5F62;&#x7684;&#x5085;&#x7ACB;&#x53F6;&#x53D8;&#x6362;&#x3002;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x4E0D;&#x540C;&#x7684;&#x7B97;&#x6CD5;&#xFF0C;&#x4F8B;&#x5982; XIA&#x3001;fftw3&#x3001;CAEN(HANNING)&#x3001;CAEN(HAMMING)&#x3001;CAEN(BLACKMAN)&#x3001;CAEN(RECT)&#x3002;&#x9009;&#x62E9;&#x67E5;&#x770B;&#x901A;&#x9053;&#x3002;&#x7136;&#x540E;&#x6309; Draw &#x6309;&#x94AE;&#x5373;&#x53EF;&#xFF0C;&#x6BCF;&#x70B9;&#x51FB;&#x4E00;&#x6B21;&#x8BE5;&#x6309;&#x94AE;&#xFF0C;&#x5219;&#x663E;&#x793A;&#x4E0B;&#x4E00;&#x4E2A;&#x7ED3;&#x679C;&#x3002;</p><p>the ADC trace display also includes the option to view a FFT of the acquired trace. This is useful to diagnose noise contributions.</p><hr><h4 id="time-diff">Time Diff</h4><p><img alt="Time Diff" src="../img/TimeDiff.png"></p><p>&#x8BE5;&#x754C;&#x9762;&#x7528;&#x4E8E;&#x5FEB;&#x901F;&#x67E5;&#x770B;&#x4E24;&#x8DEF;&#x4FE1;&#x53F7;&#x7684;&#x65F6;&#x95F4;&#x5206;&#x8FA8;&#x3002;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x67E5;&#x770B; CFD &#x7B97;&#x6CD5;&#x8FC7;&#x96F6;&#x70B9;&#x7684;&#x65F6;&#x95F4;&#x5DEE;&#x6216;&#x8005; fast filter &#x8FC7;&#x9608;&#x503C;&#x7684;&#x65F6;&#x95F4;&#x5DEE;&#x3002;Xbin &#x8868;&#x793A;&#x6A2A;&#x5750;&#x6807;&#x5206; bin &#x6570;&#xFF0C;Xmin &#x8868;&#x793A;&#x6A2A;&#x5750;&#x6807;&#x7684;&#x6700;&#x5C0F;&#x503C;&#xFF0C;Xmax &#x8868;&#x793A;&#x6A2A;&#x5750;&#x6807;&#x7684;&#x6700;&#x5927;&#x503C;&#x3002;&#x901A;&#x8FC7; Ch A&#x3001;Ch B &#x6765;&#x9009;&#x62E9;&#x60F3;&#x8981;&#x67E5;&#x770B;&#x7684;&#x4E24;&#x4E2A;&#x901A;&#x9053;&#x3002;&#x7136;&#x540E;&#x6309; Draw &#x6309;&#x94AE;&#x5373;&#x53EF;&#x3002;</p><p>&#x9009;&#x9879; Limits &#x9009;&#x62E9;&#x5219;&#x5F00;&#x542F;&#x80FD;&#x91CF;&#x8303;&#x56F4;&#x7EA6;&#x675F;&#x3002;&#x9009;&#x62E9;&#x8BE5;&#x9009;&#x9879;&#x540E;&#xFF0C;&#x4E4B;&#x540E;&#x7684;&#x56DB;&#x4E2A;&#x53C2;&#x6570; AL&#x3001;AR&#x3001;BL&#x3001;BR&#x624D;&#x751F;&#x6548;&#xFF0C;&#x5176;&#x5206;&#x522B;&#x8868;&#x793A; Ch A/B &#x80FD;&#x91CF;&#x9053;&#x5740;&#x7684;&#x5DE6;&#x53F3;&#x8303;&#x56F4;&#xFF0C;&#x53EA;&#x6709;&#x80FD;&#x91CF;&#x843D;&#x5728;&#x8FD9;&#x4E2A;&#x533A;&#x95F4;&#x7684;&#x4E8B;&#x4EF6;&#x624D;&#x586B;&#x5145;&#x5230;&#x76F4;&#x65B9;&#x56FE;&#x4E2D;&#x3002;&#x7528;&#x6237;&#x53EF;&#x901A;&#x8FC7; Orig Energy &#x9875;&#x9762;&#x6765;&#x9009;&#x62E9;&#x5408;&#x9002;&#x7684;&#x80FD;&#x91CF;&#x9053;&#x5740;&#x533A;&#x95F4;&#x3002;</p><hr><h3 id="simulation&#x6682;&#x672A;&#x5B9E;&#x73B0;">Simulation(&#x6682;&#x672A;&#x5B9E;&#x73B0;)</h3><p>&#x901A;&#x8FC7;&#x6A21;&#x578B;&#x4EA7;&#x751F;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#x63A2;&#x6D4B;&#x3001;&#x4E0D;&#x540C;&#x4FE1;&#x566A;&#x6BD4;&#x7684;&#x6CE2;&#x5F62;&#xFF0C;&#x8F85;&#x52A9;&#x4F7F;&#x7528;&#x8005;&#x5B66;&#x4E60;&#x53C2;&#x6570;&#x4F18;&#x5316;&#x8C03;&#x8282;&#x7684;&#x3002;</p><!-- GUI.md ends here -->
+<strong>TODO &#x8FD9;&#x6BB5;&#x8FD8;&#x9700;&#x8981;&#x8FDB;&#x4E00;&#x6B65;&#x4FEE;&#x6539;</strong></li>
+</ul>
+<h3 id="logic-set"><a name="logic-set" class="plugin-anchor" href="#logic-set"><i class="fa fa-link" aria-hidden="true"></i></a>Logic Set</h3>
+<figure id="fig1.3.3.14"><img src="../img/LogicTrigger.png" alt="Logic Set"><figcaption>Figure: Logic Set</figcaption></figure>
+<p><strong>TODO</strong></p>
+<figure id="fig1.3.3.15"><img src="../img/stretchlength.PNG" alt="stretch length"><figcaption>Figure: stretch length</figcaption></figure>
+<hr>
+<h2 id="monitor-&#x4E0B;&#x62C9;&#x680F;"><a name="monitor-&#x4E0B;&#x62C9;&#x680F;" class="plugin-anchor" href="#monitor-&#x4E0B;&#x62C9;&#x680F;"><i class="fa fa-link" aria-hidden="true"></i></a>Monitor &#x4E0B;&#x62C9;&#x680F;</h2>
+<p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x8C03;&#x8282;&#x5185;&#x5BB9;&#x4E3A;&#x76D1;&#x89C6;&#x6CE2;&#x5F62;&#x566A;&#x58F0;&#x6C34;&#x5E73;&#x3001;&#x57FA;&#x7EBF;&#x5206;&#x5E03;&#x7B49;&#x3002;</p>
+<h3 id="hist--xdt"><a name="hist--xdt" class="plugin-anchor" href="#hist--xdt"><i class="fa fa-link" aria-hidden="true"></i></a>Hist &amp; XDT</h3>
+<figure id="fig1.3.3.16"><img src="../img/HistXDT.png" alt="Hist &amp; XDT"><figcaption>Figure: Hist &amp; XDT</figcaption></figure>
+<p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p>
+<p>The binning factor controls the number of MCA bins in the spectrum. Energies are computed as 16 bit numbers, allowing in principle 64K MCA bins.</p>
+<p>However, spectrum memory for each channel is limited to 32K bins, so computed energy values are divided by 2 binning factor before building the histogram. Binning Factor is usually set to 1, but for low count rates and wide peaks, it might be useful to set it to a larger value to obtain a spectrum with fewer bins, but more counts per bin.</p>
+<p>Emin is reserved for a future function to subtract a constant &#x201C;minimum energy&#x201D; from the computed energy value before binning to essentially cut off the lower end of the spectrum.</p>
+<h3 id="trace--baseline"><a name="trace--baseline" class="plugin-anchor" href="#trace--baseline"><i class="fa fa-link" aria-hidden="true"></i></a>Trace &amp; Baseline</h3>
+<figure id="fig1.3.3.17"><img src="../img/Trace.png" alt="Trace &amp; Baseline"><figcaption>Figure: Trace &amp; Baseline</figcaption></figure>
+<figure id="fig1.3.3.18"><img src="../img/BaselineHist.png" alt="Trace &amp; Baseline"><figcaption>Figure: Trace &amp; Baseline</figcaption></figure>
+<figure id="fig1.3.3.19"><img src="../img/BaselineTimestamps.png" alt="Trace &amp; Baseline"><figcaption>Figure: Trace &amp; Baseline</figcaption></figure>
+<p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p>
+<hr>
+<h2 id="offiline-&#x4E0B;&#x62C9;&#x680F;"><a name="offiline-&#x4E0B;&#x62C9;&#x680F;" class="plugin-anchor" href="#offiline-&#x4E0B;&#x62C9;&#x680F;"><i class="fa fa-link" aria-hidden="true"></i></a>Offiline &#x4E0B;&#x62C9;&#x680F;</h2>
+<p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x4E3A;&#x79BB;&#x7EBF;&#x53C2;&#x6570;&#x4F18;&#x5316;&#x8C03;&#x8282;&#x3002;</p>
+<h3 id="adjust-par"><a name="adjust-par" class="plugin-anchor" href="#adjust-par"><i class="fa fa-link" aria-hidden="true"></i></a>Adjust Par</h3>
+<h4 id="initdata"><a name="initdata" class="plugin-anchor" href="#initdata"><i class="fa fa-link" aria-hidden="true"></i></a>InitData</h4>
+<figure id="fig1.3.3.20"><img src="../img/AdjustPar.png" alt="Adjust Par"><figcaption>Figure: Adjust Par</figcaption></figure>
+<ul>
+<li>Run &#x9009;&#x62E9;&#x8981;&#x8BFB;&#x53D6;&#x7684;&#x6587;&#x4EF6;&#x8FD0;&#x884C;&#x7F16;&#x53F7;&#xFF0C;Mod &#x9009;&#x62E9;&#x8981;&#x8BFB;&#x53D6;&#x7B2C;&#x51E0;&#x4E2A;&#x91C7;&#x96C6;&#x5361;&#xFF0C;&#x6309;&#x94AE; Read &#x5C06;&#x6587;&#x4EF6;&#x4E3B;&#x8981;&#x4FE1;&#x606F;(&#x9053;&#x5740;&#x3001;&#x80FD;&#x91CF;&#x3001;&#x6CE2;&#x5F62;&#x4F4D;&#x7F6E;&#x7B49;)&#x8F7D;&#x5165;&#x5185;&#x5B58;&#x3002;</li>
+<li>Additional analysis: &#x4E09;&#x4E2A;&#x9009;&#x9879;&#x4E2D;&#xFF0C;&#x9009;&#x62E9;&#x8868;&#x793A;&#x8BFB;&#x53D6;&#x8BE5;&#x6587;&#x4EF6;&#x6570;&#x636E;&#x5230;&#x5185;&#x5B58;&#x4E2D;&#x65F6;&#x5305;&#x62EC;&#x8BE5;&#x4FE1;&#x606F;&#x3002;&#x53EA;&#x6709;&#x8BFB;&#x53D6;&#x4E86;&#x8BE5;&#x6570;&#x636E;&#xFF0C;&#x624D;&#x80FD;&#x542F;&#x7528;&#x4E00;&#x4E9B;&#x5206;&#x6790;&#x65B9;&#x6CD5;&#x3002;&#x4F46;&#x662F;&#x524D;&#x63D0;&#x662F;&#x6570;&#x636E;&#x91C7;&#x96C6;&#x65F6;&#x5019;&#x9700;&#x8981;&#x8BB0;&#x5F55;&#x8BE5;&#x4FE1;&#x606F;&#x3002;</li>
+</ul>
+<ul>
+<li>InitData: This page. Read the binary file.</li>
+<li>Adjust Par:  Waveform/fast filter/energy filter/cfd/threshould of the select channel.</li>
+<li>Wave-16:  Waveform/fast filter/energy filter/cfd filter/threshould of the 16 channels.</li>
+<li>Energy-16:  The original energy spectrum of the 16 channel..</li>
+<li>Orig Energy:  The original energy spectrum of the select channel.</li>
+<li>Calc Energy:  Recalculation of energy spectrum by waveforms.</li>
+<li>FF/CFD Thre:   Accumulation of a large number of fast filter/cfd filter waveforms to determine the threshold.</li>
+<li>Energy-FF:  The two dimensional relationship between energy and fast filter first/second peak height.</li>
+<li>QDC:  It will be finished soon.</li>
+<li>FFT:  Fourier transformation of a single waveform. User can choose XIA/CAEN/FFTW3 functions.</li>
+<li>Time Diff:  Time difference of two signal.</li>
+</ul>
+<hr>
+<h4 id="adjust-par"><a name="adjust-par" class="plugin-anchor" href="#adjust-par"><i class="fa fa-link" aria-hidden="true"></i></a>Adjust Par</h4>
+<figure id="fig1.3.3.21"><img src="../img/OfflineAPI.png" alt="offlineapi"><figcaption>Figure: offlineapi</figcaption></figure>
+<p>&#x8981;&#x901A;&#x8FC7;&#x91C7;&#x96C6;&#x7684;&#x6CE2;&#x5F62;&#x79BB;&#x7EBF;&#x8BA1;&#x7B97;fast filter&#x3001;slow filter cfd &#x66F2;&#x7EBF;&#xFF0C;&#x5BF9;&#x91C7;&#x96C6;&#x7684;&#x6CE2;&#x5F62;&#x6709;&#x4EE5;&#x4E0B;&#x8981;&#x6C42;&#x3002;&#x5982;&#x4E0A;&#x56FE;&#x4E2D;&#xFF0C;&#x8BA1;&#x7B97;&#x7684;&#x80FD;&#x91CF;&#x662F;&#x7B97;&#x6CD5;&#x7684;&#x80FD;&#x91CF;&#x4E0E;&#x7B97;&#x6CD5;&#x7684;&#x57FA;&#x7EBF;&#x7684;&#x5DEE;&#xFF0C;&#x8981;&#x5F97;&#x5230;&#x6B63;&#x786E;&#x7684;&#x68AF;&#x5F62;&#xFF0C;&#x90A3;&#x4E48;&#x524D;&#x63D0;&#x662F;&#x524D;&#x9762;&#x6709;&#x8DB3;&#x591F;&#x957F;&#x7684;&#x70B9;&#x6765;&#x8BA1;&#x7B97;&#x57FA;&#x7EBF;&#x3002;</p>
+<p>&#x56FE;&#x4E2D; EFRT &#x8868;&#x793A; <em>Energy Filter Rise Time</em>&#xFF0C;EFFT &#x8868;&#x793A; <em>Energy Filter Flat Top</em>&#x3002;</p>
+<p>To compute energy filter response offline, the ideal settings are:</p>
+<ul>
+<li>Total trance length &gt; 2 <em> ( 2 </em> EFRT + EFFT)</li>
+<li>Pre-trigger trace (Trace-delay) length &gt; ( 3 * EFRT + EFFT )</li>
+</ul>
+<p>&#x5F53;&#x7136;&#xFF0C;&#x8FD9;&#x53EA;&#x662F;&#x8BA1;&#x7B97;&#x68AF;&#x5F62;&#x7684;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x8BB0;&#x5F55;&#x4E86;&#x6BCF;&#x4E2A;&#x4E8B;&#x4EF6;&#x7684;&#x80FD;&#x91CF;&#x68AF;&#x5F62;&#x7684;&#x57FA;&#x7EBF;&#xFF0C;&#x5E76;&#x4E14;&#x91C7;&#x7528;pre-trigger&#x90E8;&#x5206;&#x70B9;&#x7684;&#x5E73;&#x5747;&#x503C;&#x4F5C;&#x4E3A;&#x6CE2;&#x5F62;&#x5DE6;&#x4FA7;&#x7684;&#x65E0;&#x9650;&#x5EF6;&#x4F38;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x4E0D;&#x53D7; Pre-trigger trace length &gt; ( 3 x EFRT + EFFT ) &#x6761;&#x4EF6;&#x7684;&#x9650;&#x5236;&#x4E86;&#x3002;&#x4E0B;&#x9762;&#x7684;&#x9875;&#x9762;&#x4E2D;&#xFF0C;&#x5F53;&#x91C7;&#x7528; Old Baseline &#x65B9;&#x6CD5;&#x6765;&#x8BA1;&#x7B97;&#x80FD;&#x91CF;&#x68AF;&#x5F62;&#x65F6;&#xFF0C;&#x6709;&#x4E2A;&#x524D;&#x63D0;&#x662F; pre-trigger trace length &#x81F3;&#x5C11;&#x9700;&#x8981;&#x6709; 200 &#x4E2A;&#x70B9;&#xFF0C;&#x56E0;&#x4E3A;&#x6CE2;&#x5F62;&#x5DE6;&#x4FA7;&#x5EF6;&#x4F38;&#x91C7;&#x7528;&#x524D; 200 &#x4E2A;&#x70B9;&#x6765;&#x5E73;&#x5747;&#x3002;</p>
+<figure id="fig1.3.3.22"><img src="../img/Adjustpars3.png" alt="Adjustpars3"><figcaption>Figure: Adjustpars3</figcaption></figure>
+<p>&#x5F53;&#x91C7;&#x96C6;&#x7684;&#x6CE2;&#x5F62; pre-trigger trace length &gt; 3 x EFRT + EFFT &#x65F6;&#xFF0C;pre-trigger trace &#x63D0;&#x4F9B;&#x8DB3;&#x591F;&#x591A;&#x7684;&#x70B9;&#x6765;&#x8BA1;&#x7B97;&#x57FA;&#x7EBF;&#xFF0C;SF BL &#x7B97;&#x6CD5;&#x53EF;&#x9009;&#x62E9; Calculate&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x9009;&#x62E9; Old Baseline &#x7B97;&#x6CD5;&#x3002;&#x9009;&#x62E9;Old Baseline &#x7B97;&#x6CD5;&#x7684;&#x524D;&#x63D0;&#x65F6;&#x8BB0;&#x5F55;&#x6570;&#x636E;&#x7684;&#x65F6;&#x5019;&#xFF0C; &#x9009;&#x62E9;&#x5F00;&#x542F;&#x8BB0;&#x5F55; &#x68AF;&#x5F62;&#x7684;baseline&#xFF0C;&#x5E76;&#x4E14; InitData &#x9875;&#x9762;&#x7684; raw E sums/baseline &#x9009;&#x9879;&#x5F00;&#x542F;&#x3002;&#x5F53;&#x9009;&#x62E9; Old Baseline &#x7B97;&#x6CD5;&#x65F6;&#xFF0C;&#x4E4B;&#x540E;&#x7684;&#x56DB;&#x4E2A;&#x9009;&#x9879;&#x53C2;&#x6570;&#x751F;&#x6548;&#xFF0C;&#x8BE5;&#x56DB;&#x4E2A;&#x53C2;&#x6570;&#x4E3A;&#x8BE5;&#x6570;&#x636E;&#x91C7;&#x96C6;&#x65F6;&#x5019;&#x6240;&#x7528;&#x7684;&#x80FD;&#x91CF;&#x68AF;&#x5F62;&#x7684;&#x53C2;&#x6570;&#x3002;</p>
+<p>&#x4E0A;&#x56FE;&#x4E2D;&#x7EFF;&#x8272;&#x66F2;&#x7EBF;&#x4E3A;&#x5178;&#x578B;&#x7684;&#x4E0D;&#x6EE1;&#x8DB3; pre-trigger trace length &gt; 3 x EFRT + EFFT &#x65F6;&#xFF0C;&#x91C7;&#x7528;&#x7684; Calculate &#x7B97;&#x6CD5;&#x9020;&#x6210;&#x7684;&#x7ED3;&#x679C;&#x3002;&#x56FE;&#x4E2D;&#x663E;&#x793A; pre-trigger trace length &#x4E3A; 10 us&#xFF0C;EFRT &#x4E3A; 5.04 us&#xFF0C;EFFT &#x4E3A; 1.60 us&#x3002;</p>
+<p>&#x6B64;&#x65F6;&#xFF0C;&#x5E94;&#x8BE5;&#x91C7;&#x7528;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#x7684;  Old Baseline &#x7B97;&#x6CD5;&#x3002;</p>
+<figure id="fig1.3.3.23"><img src="../img/Adjustpars1.png" alt="Adjustpars1"><figcaption>Figure: Adjustpars1</figcaption></figure>
+<p>&#x7528;&#x6237;&#x53EF;&#x9009;&#x62E9;&#x67E5;&#x770B;&#x6CE2;&#x5F62;&#x7684;&#x901A;&#x9053;&#xFF0C;&#x6309;&#x94AE; Load &#x53EF;&#x8BFB;&#x53D6;&#x5E76;&#x663E;&#x793A;&#x5F53;&#x524D;&#x7684;&#x53C2;&#x6570;&#x8BBE;&#x7F6E;&#x60C5;&#x51B5;&#xFF0C;&#x5F53;&#x4FEE;&#x6539;&#x4EE5;&#x4E0A;&#x7684;&#x53C2;&#x6570;&#x65F6;&#x5019;&#xFF0C;&#x9700;&#x8981;&#x6309; Apply &#x6309;&#x94AE;&#x4F7F;&#x4E4B;&#x751F;&#x6548;&#x3002;&#x6309;&#x94AE; Draw &#x7528;&#x6765;&#x663E;&#x793A;&#x4E0B;&#x4E00;&#x4E2A;&#x8BE5;&#x901A;&#x9053;&#x7684;&#x4E8B;&#x4EF6;&#x6CE2;&#x5F62;&#x3002;</p>
+<p>&#x7528;&#x6237;&#x53EF;&#x9009;&#x62E9;&#x540C;&#x65F6;&#x663E;&#x793A; Wave / Slow Filter/ Fast filter / Thres / CFD / CFD Thres &#x4E2D;&#x7684;&#x591A;&#x4E2A;&#x6CE2;&#x5F62;&#x3002;&#x6216;&#x8005;&#x9009;&#x62E9;&#x66F2;&#x7EBF;&#x7684;&#x7ED8;&#x753B;&#x6837;&#x5F0F;&#x3002;</p>
+<figure id="fig1.3.3.24"><img src="../img/Adjustpars2.png" alt="Adjustpars2"><figcaption>Figure: Adjustpars2</figcaption></figure>
+<p>&#x4E0A;&#x56FE;&#x5C55;&#x793A;&#x4E86;&#x663E;&#x793A; fast filter&#x3001;Thres&#x3001;CFD&#x3001;CFD Thres &#x56DB;&#x4E2A;&#x6CE2;&#x5F62;&#xFF0C;&#x56FE;&#x6837;&#x91C7;&#x7528;&#x70B9;&#x663E;&#x793A;&#x65B9;&#x5F0F;&#x3002;&#x6700;&#x4F4E;&#x7AEF;&#x7684;&#x6C34;&#x5E73;&#x6761;&#x4E24;&#x7AEF;&#x53EF;&#x4EE5;&#x62D6;&#x52A8;&#xFF0C;&#x7528;&#x6237;&#x53EF;&#x62C9;&#x52A8;&#x6765;&#x63A7;&#x5236;&#x6CE2;&#x5F62;&#x6A2A;&#x5750;&#x6807;&#x7684;&#x663E;&#x793A;&#x8303;&#x56F4;&#xFF0C;&#x5982;&#x56FE;&#x4E2D;&#x663E;&#x793A;800 - 1300 &#x7684;&#x70B9;&#x3002;&#x8BE5;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x70B9;&#x51FB; Draw &#x6309;&#x94AE;&#xFF0C;&#x5C06;&#x4F1A;&#x4FDD;&#x6301;&#x8BE5;&#x6307;&#x5B9A;&#x7684;&#x5750;&#x6807;&#x8303;&#x56F4;&#x3002;</p>
+<hr>
+<h4 id="wave-16"><a name="wave-16" class="plugin-anchor" href="#wave-16"><i class="fa fa-link" aria-hidden="true"></i></a>Wave-16</h4>
+<figure id="fig1.3.3.25"><img src="../img/Waveform16.png" alt="Waveform16"><figcaption>Figure: Waveform16</figcaption></figure>
+<p>&#x8BE5;&#x9875;&#x9762;&#x7528;&#x4E8E;&#x540C;&#x65F6;&#x67E5;&#x770B;16&#x901A;&#x9053;&#x7684;&#x539F;&#x59CB;&#x6CE2;&#x5F62;&#x3001;filter &#x6CE2;&#x5F62;&#xFF0C;&#x9608;&#x503C;&#x7B49;&#x3002;&#x7528;&#x6237;&#x53EF;&#x9009;&#x62E9;&#x540C;&#x65F6;&#x663E;&#x793A; Wave / Slow Filter/ Fast filter / Thres / CFD / CFD Thres &#x4E2D;&#x7684;&#x591A;&#x4E2A;&#x6CE2;&#x5F62;&#x3002;</p>
+<p>&#x7528;&#x6237;&#x53EF;&#x901A;&#x8FC7;&#x8BE5;&#x9875;&#x9762;&#xFF0C;&#x5FEB;&#x901F;&#x67E5;&#x770B;&#x8BE5;&#x91C7;&#x96C6;&#x5361;&#x6240;&#x6709;&#x901A;&#x9053;&#x7684;&#x6CE2;&#x5F62;&#x662F;&#x5426;&#x6B63;&#x5E38;&#xFF0C;&#x53C2;&#x6570;&#x8BBE;&#x7F6E;&#x662F;&#x5426;&#x5408;&#x7406;&#x3002;&#x70B9;&#x51FB;&#x6309;&#x94AE; Draw &#x4E00;&#x6B21;&#xFF0C;&#x5219;&#x663E;&#x793A;&#x6240;&#x6709;&#x901A;&#x9053;&#x4E0B;&#x4E00;&#x4E2A;&#x6CE2;&#x5F62;&#x3002;</p>
+<p><em>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x4E00;&#x70B9;&#xFF0C;&#x672C;&#x9875;&#x9762;&#x7684; Slow Filter &#x6CE2;&#x5F62;&#x9700;&#x8981;&#x5728;&#x91C7;&#x96C6;&#x7684;&#x6CE2;&#x5F62; pre-trigger trace &#x957F;&#x5EA6;&#x5927;&#x4E8E; 3 x EFRT + EFFT &#x65F6;&#x624D;&#x662F;&#x6B63;&#x786E;&#x7684;&#x3002;</em></p>
+<hr>
+<h4 id="energy-16"><a name="energy-16" class="plugin-anchor" href="#energy-16"><i class="fa fa-link" aria-hidden="true"></i></a>Energy-16</h4>
+<figure id="fig1.3.3.26"><img src="../img/Energy16.png" alt="Energy16"><figcaption>Figure: Energy16</figcaption></figure>
+<p>&#x8BE5;&#x754C;&#x9762;&#x7528;&#x4E8E;&#x540C;&#x65F6;&#x67E5;&#x770B; 16 &#x901A;&#x9053;&#x7684;&#x4E00;&#x7EF4;&#x80FD;&#x8C31;&#x3002;&#x70B9;&#x51FB;&#x53F3;&#x4E0A;&#x89D2;&#x7684;&#x6309;&#x94AE; Draw &#x5373;&#x53EF;&#x3002;</p>
+<hr>
+<h4 id="orig-energy"><a name="orig-energy" class="plugin-anchor" href="#orig-energy"><i class="fa fa-link" aria-hidden="true"></i></a>Orig Energy</h4>
+<figure id="fig1.3.3.27"><img src="../img/OrigEnergy.png" alt="OrigEnergy"><figcaption>Figure: OrigEnergy</figcaption></figure>
+<p>&#x8BE5;&#x9875;&#x9762;&#x7528;&#x6765;&#x5FEB;&#x901F;&#x67E5;&#x770B;&#x67D0;&#x901A;&#x9053;&#x7684;&#x80FD;&#x8C31;&#x3002;&#x7528;&#x6237;&#x9009;&#x62E9;&#x80FD;&#x8C31;&#x7684;&#x5206; Bin &#x6570;&#xFF0C;&#x8BE5;&#x6570;&#x503C;&#x8868;&#x793A;&#x5C06; 0 - 65536 &#x9053;&#x5206;&#x6210;&#x591A;&#x5C11;&#x5206;&#x3002;&#x9009;&#x62E9;&#x67E5;&#x770B;&#x901A;&#x9053;&#x3002;&#x7136;&#x540E;&#x6309; Draw &#x6309;&#x94AE;&#x5373;&#x53EF;&#x3002;</p>
+<figure id="fig1.3.3.28"><img src="../img/OrigEnergyFit.png" alt="OrigEnergyFit"><figcaption>Figure: OrigEnergyFit</figcaption></figure>
+<p>&#x5DE6;&#x4E0A;&#x89D2;&#x7684; Open Fit &#x6309;&#x94AE;&#x7528;&#x6765;&#x5FEB;&#x901F;&#x9AD8;&#x65AF;&#x62DF;&#x5408;&#x770B;&#x80FD;&#x91CF;&#x5206;&#x8FA8;&#x3002;&#x70B9;&#x51FB;&#x6309;&#x94AE;&#xFF0C;&#x5F00;&#x542F;&#x62DF;&#x5408;&#x6A21;&#x5F0F;&#xFF0C;&#x518D;&#x6B21;&#x70B9;&#x51FB;&#x6309;&#x94AE;&#x5219;&#x5173;&#x95ED;&#x8BE5;&#x529F;&#x80FD;&#x3002;&#x5C06;&#x9F20;&#x6807;&#x79FB;&#x52A8;&#x5230;&#x76F4;&#x65B9;&#x56FE;&#x7684;&#x84DD;&#x7EBF;&#x4E0A;&#xFF0C;&#x9F20;&#x6807;&#x5341;&#x5B57;&#x5C06;&#x4F1A;&#x53D8;&#x6210;&#x4E09;&#x89D2;&#x7BAD;&#x5934;&#x3002;&#x4E09;&#x89D2;&#x7BAD;&#x5934;&#x7684;&#x9F20;&#x6807;&#x70B9;&#x51FB;&#x76F4;&#x65B9;&#x56FE;&#x4E2D;&#x7684;&#x4E24;&#x4E2A;&#x4F4D;&#x7F6E;&#xFF0C;&#x4E24;&#x70B9;&#x6240;&#x5728;&#x533A;&#x95F4;&#x5373;&#x4E3A;&#x62DF;&#x5408;&#x533A;&#x95F4;&#xFF0C;&#x5219;&#x53EF;&#x67E5;&#x770B;&#x80FD;&#x91CF;&#x5206;&#x8FA8;&#x3002;</p>
+<hr>
+<h4 id="calc-energy"><a name="calc-energy" class="plugin-anchor" href="#calc-energy"><i class="fa fa-link" aria-hidden="true"></i></a>Calc Energy</h4>
+<figure id="fig1.3.3.29"><img src="../img/CalcEnergy.png" alt="CalcEnergy"><figcaption>Figure: CalcEnergy</figcaption></figure>
+<p>&#x8BE5;&#x9875;&#x9762;&#x5229;&#x7528;&#x91C7;&#x96C6;&#x7684;&#x6CE2;&#x5F62;&#x91CD;&#x65B0;&#x8BA1;&#x7B97;&#x80FD;&#x91CF;&#x3002;&#x540C; Adjust Par &#x9875;&#x9762;&#x4E00;&#x6837;&#xFF0C;SF BL &#x7B97;&#x6CD5;&#x53EF;&#x9009;&#x62E9;Calculate&#x7B97;&#x6CD5;&#x6216;&#x8005; Old Baseline &#x7B97;&#x6CD5;&#x3002;</p>
+<p>&#x8BA1;&#x7B97;&#x80FD;&#x91CF;&#x91C7;&#x7528;&#x7684;fast filter&#x3001;energy filter&#x53C2;&#x6570;&#x91C7;&#x7528;&#x91C7;&#x96C6;&#x5361;&#x7684;&#x8BBE;&#x7F6E;&#x53C2;&#x6570;&#xFF0C;&#x7528;&#x6237;&#x9700;&#x8981;&#x9009;&#x62E9;&#x80FD;&#x91CF; 0-65536 &#x5206;&#x6210;&#x591A;&#x5C11;&#x4E2A; bin&#xFF0C;&#x53EF;&#x9009;&#x62E9; 1024/2048/4096/8192/16384/32768/65536&#xFF0C;&#x9009;&#x62E9;&#x8BA1;&#x7B97;&#x7684;&#x901A;&#x9053;&#xFF0C;&#x7136;&#x540E;&#x6309;&#x6309;&#x94AE; Draw&#x5373;&#x5F00;&#x59CB;&#x8BA1;&#x7B97;&#xFF0C;&#x5DE6;&#x4E0A;&#x89D2;&#x5C06;&#x4F1A;&#x663E;&#x793A;&#x8BA1;&#x7B97;&#x7684;&#x8FDB;&#x5EA6;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x6309;&#x6309;&#x94AE; Stop &#x63D0;&#x524D;&#x7EC8;&#x6B62;&#x8BA1;&#x7B97;&#x3002;&#x5F53;&#x8BA1;&#x7B97;&#x7EC8;&#x6B62;&#x65F6;&#xFF0C;&#x753B;&#x677F;&#x4E0A;&#x5C06;&#x663E;&#x793A;&#x80FD;&#x8C31;&#x3002;</p>
+<hr>
+<h4 id="ffcfd-thre"><a name="ffcfd-thre" class="plugin-anchor" href="#ffcfd-thre"><i class="fa fa-link" aria-hidden="true"></i></a>FF/CFD Thre</h4>
+<figure id="fig1.3.3.30"><img src="../img/FFCFDThre.png" alt="FFCFDThre"><figcaption>Figure: FFCFDThre</figcaption></figure>
+<p>&#x8BE5;&#x754C;&#x9762;&#x7528;&#x4E8E; fast filter&#x6CE2;&#x5F62;&#x3001;cfd filter&#x6CE2;&#x5F62;&#x7684;&#x7D2F;&#x52A0;&#x3002;&#x7528;&#x6237;&#x9009;&#x62E9;&#x67E5;&#x770B;&#x901A;&#x9053;&#xFF0C;&#x7136;&#x540E;&#x6309; Draw &#x6309;&#x94AE;&#x5219;&#x5F00;&#x59CB;&#x8FDB;&#x5165;&#x8BA1;&#x7B97;&#xFF0C;&#x5DE6;&#x4E0A;&#x89D2;&#x53EF;&#x65F6;&#x65F6;&#x76D1;&#x89C6;&#x8FDB;&#x5EA6;&#xFF0C;&#x4E5F;&#x53EF;&#x6309; Stop &#x6309;&#x94AE;&#x63D0;&#x524D;&#x7EC8;&#x6B62;&#x8BA1;&#x7B97;&#x3002;&#x8BA1;&#x7B97;&#x7ED3;&#x675F;&#x5F97;&#x5230;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#x3002;</p>
+<p>&#x4E0A;&#x65B9;&#x6309;&#x94AE; FFProjectY&#x3001;CFDProjectY&#x3001;OriginalCFD&#x3001;CalculateCFD &#x5206;&#x522B;&#x53EF;&#x5F39;&#x51FA;&#x5B50;&#x753B;&#x677F;&#x3002;</p>
+<figure id="fig1.3.3.31"><img src="../img/FFCFDThreFFProjectY.png" alt="FFCFDThreFFProjectY"><figcaption>Figure: FFCFDThreFFProjectY</figcaption></figure>
+<p>&#x70B9;&#x51FB;&#x6309;&#x94AE; FFProjectY&#xFF0C;&#x5219;&#x5F00;&#x542F;&#x67E5;&#x770B;fast filter&#x6295;&#x5F71;&#x56FE;&#xFF0C;&#x518D;&#x6B21;&#x70B9;&#x51FB;&#x5219;&#x5173;&#x95ED;&#x8BE5;&#x529F;&#x80FD;&#x3002;&#x5F00;&#x542F;&#x529F;&#x80FD;&#x65F6;&#xFF0C;&#x5C06;&#x9F20;&#x6807;&#x653E;&#x5728;&#x4E8C;&#x7EF4;&#x56FE;&#x4E0A;&#xFF0C;&#x5DE6;&#x53F3;&#x79FB;&#x52A8;&#x9F20;&#x6807;&#xFF0C; Fast Filter ShowProjectY &#x5B50;&#x753B;&#x677F;&#x5219;&#x663E;&#x793A;&#x9F20;&#x6807;&#x6307;&#x5411;&#x7684;&#x8BE5;&#x4F4D;&#x7F6E;&#x7684;&#x6295;&#x5F71;&#x5206;&#x5E03;&#x3002;&#x89E6;&#x53D1;&#x524D;&#x7684;&#x8BE5;&#x5206;&#x5E03;&#xFF0C;&#x4E5F;&#x8868;&#x5F81;&#x566A;&#x58F0;&#x7684;&#x6C34;&#x5E73;&#x3002;</p>
+<figure id="fig1.3.3.32"><img src="../img/FFCFDThreCFDProjectY.png" alt="FFCFDThreCFDProjectY"><figcaption>Figure: FFCFDThreCFDProjectY</figcaption></figure>
+<p>&#x540C;&#x7406;&#xFF0C;&#x6309;&#x94AE; CFDProjectY &#x529F;&#x80FD;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#x3002;</p>
+<figure id="fig1.3.3.33"><img src="../img/FFCFDThreCFD.png" alt="FFCFDThreCFD"><figcaption>Figure: FFCFDThreCFD</figcaption></figure>
+<p>&#x70B9;&#x51FB;&#x6309;&#x94AE; OriginalCFD&#xFF0C;&#x5219;&#x5C55;&#x793A;&#x5DE6;&#x56FE;&#x4E2D;&#x539F;&#x59CB;&#x6570;&#x636E;&#x4E2D; CFD &#x6570;&#x503C;&#x7684;&#x5206;&#x5E03;&#x3002;&#x70B9;&#x51FB;&#x6309;&#x94AE; CalculateCFD&#xFF0C;&#x5219;&#x5C55;&#x793A;&#x53F3;&#x56FE;&#x4E2D;&#x901A;&#x8FC7;&#x79BB;&#x7EBF;&#x6CE2;&#x5F62;&#x8BA1;&#x7B97;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x8BA1;&#x7B97;&#x6240;&#x7528;&#x53C2;&#x6570;&#x4E3A;&#x5F53;&#x524D;&#x7684;&#x53C2;&#x6570;&#x3002;&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;&#x5408;&#x9002;&#x7684; CFD &#x53C2;&#x6570;&#x8BBE;&#x7F6E;&#xFF0C;&#x8BE5;CFD&#x5206;&#x5E03;&#x8BE5;&#x662F;&#x5E73;&#x5747;&#x5206;&#x5E03;&#x7684;&#x3002; </p>
+<hr>
+<h4 id="energy-ff"><a name="energy-ff" class="plugin-anchor" href="#energy-ff"><i class="fa fa-link" aria-hidden="true"></i></a>Energy-FF</h4>
+<figure id="fig1.3.3.34"><img src="../img/EnergyFFGraph.png" alt="EnergyFFGraph"><figcaption>Figure: EnergyFFGraph</figcaption></figure>
+<p>&#x8BE5;&#x754C;&#x9762;&#x662F;&#x80FD;&#x91CF;&#x4E0E; fast filter &#x5CF0;&#x9AD8;&#x7684;&#x4E8C;&#x7EF4;&#x5173;&#x8054;&#x56FE;&#x3002;&#x7528;&#x4E8E;&#x786E;&#x5B9A;&#x5408;&#x9002;&#x7684;&#x9608;&#x503C;&#x3002;&#x5DE6;&#x56FE;&#x662F;&#x80FD;&#x91CF;&#x4E0E; fast filter&#x7684;&#x4E8C;&#x7EF4;&#x5173;&#x8054;&#xFF0C;&#x5B83;&#x4EEC;&#x5E94;&#x8BE5;&#x6709;&#x4E2A;&#x8F83;&#x597D;&#x7684;&#x7EBF;&#x6027;&#x5173;&#x7CFB;&#xFF0C;&#x53F3;&#x56FE;&#x4E3A;&#x80FD;&#x91CF;&#x4E0E; fast filer &#x4E2D;&#x629B;&#x9664;&#x68AF;&#x5F62;&#x90E8;&#x5206;&#x5269;&#x4F59;&#x4E2D;&#x6700;&#x5927;&#x503C;&#x7684;&#x4E8C;&#x7EF4;&#x5173;&#x8054;&#xFF0C;&#x629B;&#x9664;&#x68AF;&#x5F62;&#x90E8;&#x5206;&#x5269;&#x4F59;&#x5206;&#x5E03;&#x7684;&#x6700;&#x5927;&#x503C;&#x8868;&#x5F81;&#x566A;&#x58F0;&#x6C34;&#x5E73;&#xFF0C;&#x80FD;&#x91CF;&#x8DDF;&#x8BE5;&#x503C;&#x5E94;&#x8BE5;&#x662F;&#x6CA1;&#x6709;&#x5173;&#x8054;&#x7684;&#x3002;</p>
+<p>&#x9996;&#x5148; Draw Style &#x9009;&#x62E9; Graph&#xFF0C;&#x5373;&#x4E8C;&#x7EF4;&#x6563;&#x70B9;&#x56FE;&#x6A21;&#x5F0F;&#x3002;&#x9009;&#x62E9;&#x67E5;&#x770B;&#x901A;&#x9053;&#xFF0C;&#x7136;&#x540E;&#x6309; Draw &#x6309;&#x94AE;&#x5219;&#x5F00;&#x59CB;&#x8FDB;&#x5165;&#x8BA1;&#x7B97;&#xFF0C;&#x5DE6;&#x4E0A;&#x89D2;&#x53EF;&#x65F6;&#x65F6;&#x76D1;&#x89C6;&#x8FDB;&#x5EA6;&#xFF0C;&#x4E5F;&#x53EF;&#x6309; Stop &#x6309;&#x94AE;&#x63D0;&#x524D;&#x7EC8;&#x6B62;&#x8BA1;&#x7B97;&#x3002;&#x8BA1;&#x7B97;&#x7ED3;&#x675F;&#x5F97;&#x5230;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#x3002;</p>
+<figure id="fig1.3.3.35"><img src="../img/EnergyFFHist.png" alt="EnergyFFHist"><figcaption>Figure: EnergyFFHist</figcaption></figure>
+<p>&#x4E8C;&#x7EF4;&#x6563;&#x70B9;&#x56FE;&#x5E76;&#x4E0D;&#x80FD;&#x5F88;&#x76F4;&#x89C2;&#x663E;&#x793A;&#x5C55;&#x793A;&#x6570;&#x636E;&#x70B9;&#x7684;&#x5BC6;&#x5EA6;&#x5206;&#x5E03;&#xFF0C;&#x56E0;&#x6B64; Draw Style &#x9009;&#x62E9; Hist &#x6A21;&#x5F0F;&#xFF0C;&#x9009;&#x62E9; X&#x3001;Y&#x8F74;&#x7684;&#x5206; bin &#x6570;&#x5373;&#x8303;&#x56F4;&#xFF0C;&#x7136;&#x540E;&#x540C;&#x6837;&#x6309; Draw &#x6309;&#x94AE;&#x5F00;&#x59CB;&#x8BA1;&#x7B97;&#x3002;&#x7ED3;&#x679C;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x53F3;&#x56FE;&#x53CD;&#x6620;&#x4E86;&#x566A;&#x58F0;&#x7684;&#x6C34;&#x5E73;&#x3002;</p>
+<hr>
+<h4 id="qdc"><a name="qdc" class="plugin-anchor" href="#qdc"><i class="fa fa-link" aria-hidden="true"></i></a>QDC</h4>
+<p><strong>QDC  TODO   &#x529F;&#x80FD;&#x672A;&#x5B8C;&#x6210;</strong></p>
+<hr>
+<h4 id="fft"><a name="fft" class="plugin-anchor" href="#fft"><i class="fa fa-link" aria-hidden="true"></i></a>FFT</h4>
+<figure id="fig1.3.3.36"><img src="../img/FFT.png" alt="FFT"><figcaption>Figure: FFT</figcaption></figure>
+<p>&#x8BE5;&#x754C;&#x9762;&#x7528;&#x4E8E;&#x5FEB;&#x901F;&#x67E5;&#x770B;&#x6CE2;&#x5F62;&#x7684;&#x5085;&#x7ACB;&#x53F6;&#x53D8;&#x6362;&#x3002;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x4E0D;&#x540C;&#x7684;&#x7B97;&#x6CD5;&#xFF0C;&#x4F8B;&#x5982; XIA&#x3001;fftw3&#x3001;CAEN(HANNING)&#x3001;CAEN(HAMMING)&#x3001;CAEN(BLACKMAN)&#x3001;CAEN(RECT)&#x3002;&#x9009;&#x62E9;&#x67E5;&#x770B;&#x901A;&#x9053;&#x3002;&#x7136;&#x540E;&#x6309; Draw &#x6309;&#x94AE;&#x5373;&#x53EF;&#xFF0C;&#x6BCF;&#x70B9;&#x51FB;&#x4E00;&#x6B21;&#x8BE5;&#x6309;&#x94AE;&#xFF0C;&#x5219;&#x663E;&#x793A;&#x4E0B;&#x4E00;&#x4E2A;&#x7ED3;&#x679C;&#x3002;</p>
+<p>the ADC trace display also includes the option to view a FFT of the acquired trace. This is useful to diagnose noise contributions.</p>
+<hr>
+<h4 id="time-diff"><a name="time-diff" class="plugin-anchor" href="#time-diff"><i class="fa fa-link" aria-hidden="true"></i></a>Time Diff</h4>
+<figure id="fig1.3.3.37"><img src="../img/TimeDiff.png" alt="Time Diff"><figcaption>Figure: Time Diff</figcaption></figure>
+<p>&#x8BE5;&#x754C;&#x9762;&#x7528;&#x4E8E;&#x5FEB;&#x901F;&#x67E5;&#x770B;&#x4E24;&#x8DEF;&#x4FE1;&#x53F7;&#x7684;&#x65F6;&#x95F4;&#x5206;&#x8FA8;&#x3002;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x67E5;&#x770B; CFD &#x7B97;&#x6CD5;&#x8FC7;&#x96F6;&#x70B9;&#x7684;&#x65F6;&#x95F4;&#x5DEE;&#x6216;&#x8005; fast filter &#x8FC7;&#x9608;&#x503C;&#x7684;&#x65F6;&#x95F4;&#x5DEE;&#x3002;Xbin &#x8868;&#x793A;&#x6A2A;&#x5750;&#x6807;&#x5206; bin &#x6570;&#xFF0C;Xmin &#x8868;&#x793A;&#x6A2A;&#x5750;&#x6807;&#x7684;&#x6700;&#x5C0F;&#x503C;&#xFF0C;Xmax &#x8868;&#x793A;&#x6A2A;&#x5750;&#x6807;&#x7684;&#x6700;&#x5927;&#x503C;&#x3002;&#x901A;&#x8FC7; Ch A&#x3001;Ch B &#x6765;&#x9009;&#x62E9;&#x60F3;&#x8981;&#x67E5;&#x770B;&#x7684;&#x4E24;&#x4E2A;&#x901A;&#x9053;&#x3002;&#x7136;&#x540E;&#x6309; Draw &#x6309;&#x94AE;&#x5373;&#x53EF;&#x3002;</p>
+<p>&#x9009;&#x9879; Limits &#x9009;&#x62E9;&#x5219;&#x5F00;&#x542F;&#x80FD;&#x91CF;&#x8303;&#x56F4;&#x7EA6;&#x675F;&#x3002;&#x9009;&#x62E9;&#x8BE5;&#x9009;&#x9879;&#x540E;&#xFF0C;&#x4E4B;&#x540E;&#x7684;&#x56DB;&#x4E2A;&#x53C2;&#x6570; AL&#x3001;AR&#x3001;BL&#x3001;BR&#x624D;&#x751F;&#x6548;&#xFF0C;&#x5176;&#x5206;&#x522B;&#x8868;&#x793A; Ch A/B &#x80FD;&#x91CF;&#x9053;&#x5740;&#x7684;&#x5DE6;&#x53F3;&#x8303;&#x56F4;&#xFF0C;&#x53EA;&#x6709;&#x80FD;&#x91CF;&#x843D;&#x5728;&#x8FD9;&#x4E2A;&#x533A;&#x95F4;&#x7684;&#x4E8B;&#x4EF6;&#x624D;&#x586B;&#x5145;&#x5230;&#x76F4;&#x65B9;&#x56FE;&#x4E2D;&#x3002;&#x7528;&#x6237;&#x53EF;&#x901A;&#x8FC7; Orig Energy &#x9875;&#x9762;&#x6765;&#x9009;&#x62E9;&#x5408;&#x9002;&#x7684;&#x80FD;&#x91CF;&#x9053;&#x5740;&#x533A;&#x95F4;&#x3002;</p>
+<hr>
+<h3 id="simulation&#x6682;&#x672A;&#x5B9E;&#x73B0;"><a name="simulation&#x6682;&#x672A;&#x5B9E;&#x73B0;" class="plugin-anchor" href="#simulation&#x6682;&#x672A;&#x5B9E;&#x73B0;"><i class="fa fa-link" aria-hidden="true"></i></a>Simulation(&#x6682;&#x672A;&#x5B9E;&#x73B0;)</h3>
+<p>&#x901A;&#x8FC7;&#x6A21;&#x578B;&#x4EA7;&#x751F;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#x63A2;&#x6D4B;&#x3001;&#x4E0D;&#x540C;&#x4FE1;&#x566A;&#x6BD4;&#x7684;&#x6CE2;&#x5F62;&#xFF0C;&#x8F85;&#x52A9;&#x4F7F;&#x7528;&#x8005;&#x5B66;&#x4E60;&#x53C2;&#x6570;&#x4F18;&#x5316;&#x8C03;&#x8282;&#x7684;&#x3002;</p>
+<!-- GUI.md ends here -->
+<script type="text/javascript">var className='atoc';</script>
 
-
-
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> <a href="http://wuhongyi.cn/" target="_blank">&#xA9; Hongyi Wu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated:</i> 2018-09-17 13:32:22 </span> </footer>
                                 
                                 </section>
                             
@@ -619,10 +889,11 @@ channel. Otherwise, pulses will still be recorded even if they are piled up.
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"GUI","level":"1.3.3","depth":2,"next":{"title":"OnlineStattics","level":"1.3.4","depth":2,"path":"UsersGuide/OnlineStattics.md","ref":"UsersGuide/OnlineStattics.md","articles":[]},"previous":{"title":"Decode","level":"1.3.2","depth":2,"path":"UsersGuide/Decode.md","ref":"UsersGuide/Decode.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"UsersGuide/GUI.md","mtime":"2018-05-27T21:40:57.048Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-27T22:00:12.622Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"GUI","level":"1.3.3","depth":2,"next":{"title":"OnlineStattics","level":"1.3.4","depth":2,"path":"UsersGuide/OnlineStattics.md","ref":"UsersGuide/OnlineStattics.md","articles":[]},"previous":{"title":"Decode","level":"1.3.2","depth":2,"path":"UsersGuide/Decode.md","ref":"UsersGuide/Decode.md","articles":[]},"dir":"ltr"},"config":{"plugins":["search","sharing","fontsettings","livereload","highlight","github","-prism","ad","alerts","atoc","splitter","sitemap","image-captions","anchors","latex-codecogs","-katex","mermaid","ace","page-footer-ex","sectionx","mcqx","fbqx","spoiler","anchor-navigation","youtubex","redirect","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"latex-codecogs":{"type":"gif"},"spoiler":{},"ad":{"contentBottom":"","contentTop":""},"ace":{},"github":{"url":"https://github.com/wuhongyi"},"fbqx":{},"livereload":{},"page-footer-ex":{"copyright":"[© Hongyi Wu](http://wuhongyi.cn/)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated:</i>"},"atoc":{"addClass":true,"className":"atoc"},"splitter":{},"search":{},"mermaid":{},"anchor-navigation":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"serif","size":2,"theme":"sepia"},"sectionx":{},"highlight":{},"sitemap":{"hostname":"http://wuhongyi.cn/"},"youtubex":{"embedDescription":{"de":"Eingebettetes Video:","default":"Embedded video:"}},"alerts":{},"sharing":{"all":["facebook","google","twitter","weibo","instapaper"],"facebook":true,"google":false,"instapaper":false,"twitter":true,"vk":false,"weibo":false},"redirect":{},"mcqx":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"expandable-chapters":{},"image-captions":{"variable_name":"_pictures"}},"theme":"default","author":"Hongyi Wu(吴鸿毅)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"_pictures":[{"backlink":"UsersGuide/index.html#fig1.3.1","level":"1.3","list_caption":"Figure: pixie16","alt":"pixie16","nro":1,"url":"/img/pixie16.jpg","index":1,"caption_template":"Figure: _CAPTION_","label":"pixie16","attributes":{},"skip":false,"key":"1.3.1"},{"backlink":"UsersGuide/index.html#fig1.3.2","level":"1.3","list_caption":"Figure: ClockDistribution","alt":"ClockDistribution","nro":2,"url":"/img/ClockDistribution.png","index":2,"caption_template":"Figure: _CAPTION_","label":"ClockDistribution","attributes":{},"skip":false,"key":"1.3.2"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.1","level":"1.3.3","list_caption":"Figure: MainFrame","alt":"MainFrame","nro":3,"url":"/img/mainframe.png","index":1,"caption_template":"Figure: _CAPTION_","label":"MainFrame","attributes":{},"skip":false,"key":"1.3.3.1"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.2","level":"1.3.3","list_caption":"Figure: About","alt":"About","nro":4,"url":"/img/About.png","index":2,"caption_template":"Figure: _CAPTION_","label":"About","attributes":{},"skip":false,"key":"1.3.3.2"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.3","level":"1.3.3","list_caption":"Figure: Base Setup","alt":"Base Setup","nro":5,"url":"/img/BaseSetup.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Base Setup","attributes":{},"skip":false,"key":"1.3.3.3"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.4","level":"1.3.3","list_caption":"Figure: Trigger Filter","alt":"Trigger Filter","nro":6,"url":"/img/TriggerFilter.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Trigger Filter","attributes":{},"skip":false,"key":"1.3.3.4"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.5","level":"1.3.3","list_caption":"Figure: Energy","alt":"Energy","nro":7,"url":"/img/Energy.png","index":5,"caption_template":"Figure: _CAPTION_","label":"Energy","attributes":{},"skip":false,"key":"1.3.3.5"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.6","level":"1.3.3","list_caption":"Figure: filter range","alt":"filter range","nro":8,"url":"/img/filterrange_format.PNG","index":6,"caption_template":"Figure: _CAPTION_","label":"filter range","attributes":{},"skip":false,"key":"1.3.3.6"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.7","level":"1.3.3","list_caption":"Figure: CFD","alt":"CFD","nro":9,"url":"/img/CFDPars.png","index":7,"caption_template":"Figure: _CAPTION_","label":"CFD","attributes":{},"skip":false,"key":"1.3.3.7"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.8","level":"1.3.3","list_caption":"Figure: QDC","alt":"QDC","nro":10,"url":"/img/QDCPars.png","index":8,"caption_template":"Figure: _CAPTION_","label":"QDC","attributes":{},"skip":false,"key":"1.3.3.8"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.9","level":"1.3.3","list_caption":"Figure: Decimation","alt":"Decimation","nro":11,"url":"/img/Decimation.png","index":9,"caption_template":"Figure: _CAPTION_","label":"Decimation","attributes":{},"skip":false,"key":"1.3.3.9"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.10","level":"1.3.3","list_caption":"Figure: Copy Pars","alt":"Copy Pars","nro":12,"url":"/img/CopyPars.png","index":10,"caption_template":"Figure: _CAPTION_","label":"Copy Pars","attributes":{},"skip":false,"key":"1.3.3.10"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.11","level":"1.3.3","list_caption":"Figure: Save2File","alt":"Save2File","nro":13,"url":"/img/Save2File.png","index":11,"caption_template":"Figure: _CAPTION_","label":"Save2File","attributes":{},"skip":false,"key":"1.3.3.11"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.12","level":"1.3.3","list_caption":"Figure: Module Variables","alt":"Module Variables","nro":14,"url":"/img/ModuleVariables.png","index":12,"caption_template":"Figure: _CAPTION_","label":"Module Variables","attributes":{},"skip":false,"key":"1.3.3.12"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.13","level":"1.3.3","list_caption":"Figure: CSRA","alt":"CSRA","nro":15,"url":"/img/CSRA.png","index":13,"caption_template":"Figure: _CAPTION_","label":"CSRA","attributes":{},"skip":false,"key":"1.3.3.13"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.14","level":"1.3.3","list_caption":"Figure: Logic Set","alt":"Logic Set","nro":16,"url":"/img/LogicTrigger.png","index":14,"caption_template":"Figure: _CAPTION_","label":"Logic Set","attributes":{},"skip":false,"key":"1.3.3.14"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.15","level":"1.3.3","list_caption":"Figure: stretch length","alt":"stretch length","nro":17,"url":"/img/stretchlength.PNG","index":15,"caption_template":"Figure: _CAPTION_","label":"stretch length","attributes":{},"skip":false,"key":"1.3.3.15"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.16","level":"1.3.3","list_caption":"Figure: Hist & XDT","alt":"Hist & XDT","nro":18,"url":"/img/HistXDT.png","index":16,"caption_template":"Figure: _CAPTION_","label":"Hist & XDT","attributes":{},"skip":false,"key":"1.3.3.16"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.17","level":"1.3.3","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":19,"url":"/img/Trace.png","index":17,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.3.17"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.18","level":"1.3.3","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":20,"url":"/img/BaselineHist.png","index":18,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.3.18"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.19","level":"1.3.3","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":21,"url":"/img/BaselineTimestamps.png","index":19,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.3.19"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.20","level":"1.3.3","list_caption":"Figure: Adjust Par","alt":"Adjust Par","nro":22,"url":"/img/AdjustPar.png","index":20,"caption_template":"Figure: _CAPTION_","label":"Adjust Par","attributes":{},"skip":false,"key":"1.3.3.20"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.21","level":"1.3.3","list_caption":"Figure: offlineapi","alt":"offlineapi","nro":23,"url":"/img/OfflineAPI.png","index":21,"caption_template":"Figure: _CAPTION_","label":"offlineapi","attributes":{},"skip":false,"key":"1.3.3.21"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.22","level":"1.3.3","list_caption":"Figure: Adjustpars3","alt":"Adjustpars3","nro":24,"url":"/img/Adjustpars3.png","index":22,"caption_template":"Figure: _CAPTION_","label":"Adjustpars3","attributes":{},"skip":false,"key":"1.3.3.22"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.23","level":"1.3.3","list_caption":"Figure: Adjustpars1","alt":"Adjustpars1","nro":25,"url":"/img/Adjustpars1.png","index":23,"caption_template":"Figure: _CAPTION_","label":"Adjustpars1","attributes":{},"skip":false,"key":"1.3.3.23"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.24","level":"1.3.3","list_caption":"Figure: Adjustpars2","alt":"Adjustpars2","nro":26,"url":"/img/Adjustpars2.png","index":24,"caption_template":"Figure: _CAPTION_","label":"Adjustpars2","attributes":{},"skip":false,"key":"1.3.3.24"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.25","level":"1.3.3","list_caption":"Figure: Waveform16","alt":"Waveform16","nro":27,"url":"/img/Waveform16.png","index":25,"caption_template":"Figure: _CAPTION_","label":"Waveform16","attributes":{},"skip":false,"key":"1.3.3.25"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.26","level":"1.3.3","list_caption":"Figure: Energy16","alt":"Energy16","nro":28,"url":"/img/Energy16.png","index":26,"caption_template":"Figure: _CAPTION_","label":"Energy16","attributes":{},"skip":false,"key":"1.3.3.26"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.27","level":"1.3.3","list_caption":"Figure: OrigEnergy","alt":"OrigEnergy","nro":29,"url":"/img/OrigEnergy.png","index":27,"caption_template":"Figure: _CAPTION_","label":"OrigEnergy","attributes":{},"skip":false,"key":"1.3.3.27"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.28","level":"1.3.3","list_caption":"Figure: OrigEnergyFit","alt":"OrigEnergyFit","nro":30,"url":"/img/OrigEnergyFit.png","index":28,"caption_template":"Figure: _CAPTION_","label":"OrigEnergyFit","attributes":{},"skip":false,"key":"1.3.3.28"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.29","level":"1.3.3","list_caption":"Figure: CalcEnergy","alt":"CalcEnergy","nro":31,"url":"/img/CalcEnergy.png","index":29,"caption_template":"Figure: _CAPTION_","label":"CalcEnergy","attributes":{},"skip":false,"key":"1.3.3.29"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.30","level":"1.3.3","list_caption":"Figure: FFCFDThre","alt":"FFCFDThre","nro":32,"url":"/img/FFCFDThre.png","index":30,"caption_template":"Figure: _CAPTION_","label":"FFCFDThre","attributes":{},"skip":false,"key":"1.3.3.30"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.31","level":"1.3.3","list_caption":"Figure: FFCFDThreFFProjectY","alt":"FFCFDThreFFProjectY","nro":33,"url":"/img/FFCFDThreFFProjectY.png","index":31,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreFFProjectY","attributes":{},"skip":false,"key":"1.3.3.31"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.32","level":"1.3.3","list_caption":"Figure: FFCFDThreCFDProjectY","alt":"FFCFDThreCFDProjectY","nro":34,"url":"/img/FFCFDThreCFDProjectY.png","index":32,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreCFDProjectY","attributes":{},"skip":false,"key":"1.3.3.32"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.33","level":"1.3.3","list_caption":"Figure: FFCFDThreCFD","alt":"FFCFDThreCFD","nro":35,"url":"/img/FFCFDThreCFD.png","index":33,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreCFD","attributes":{},"skip":false,"key":"1.3.3.33"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.34","level":"1.3.3","list_caption":"Figure: EnergyFFGraph","alt":"EnergyFFGraph","nro":36,"url":"/img/EnergyFFGraph.png","index":34,"caption_template":"Figure: _CAPTION_","label":"EnergyFFGraph","attributes":{},"skip":false,"key":"1.3.3.34"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.35","level":"1.3.3","list_caption":"Figure: EnergyFFHist","alt":"EnergyFFHist","nro":37,"url":"/img/EnergyFFHist.png","index":35,"caption_template":"Figure: _CAPTION_","label":"EnergyFFHist","attributes":{},"skip":false,"key":"1.3.3.35"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.36","level":"1.3.3","list_caption":"Figure: FFT","alt":"FFT","nro":38,"url":"/img/FFT.png","index":36,"caption_template":"Figure: _CAPTION_","label":"FFT","attributes":{},"skip":false,"key":"1.3.3.36"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.37","level":"1.3.3","list_caption":"Figure: Time Diff","alt":"Time Diff","nro":39,"url":"/img/TimeDiff.png","index":37,"caption_template":"Figure: _CAPTION_","label":"Time Diff","attributes":{},"skip":false,"key":"1.3.3.37"},{"backlink":"UsersGuide/OnlineStattics.html#fig1.3.4.1","level":"1.3.4","list_caption":"Figure: OnlineMainFrame","alt":"OnlineMainFrame","nro":40,"url":"/img/OnlineMainFrame.png","index":1,"caption_template":"Figure: _CAPTION_","label":"OnlineMainFrame","attributes":{},"skip":false,"key":"1.3.4.1"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.1","level":"1.3.6","list_caption":"Figure: frontpanel","alt":"frontpanel","nro":41,"url":"/img/frontpanel_pku.png","index":1,"caption_template":"Figure: _CAPTION_","label":"frontpanel","attributes":{},"skip":false,"key":"1.3.6.1"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.2","level":"1.3.6","list_caption":"Figure: Lupo x495","alt":"Lupo x495","nro":42,"url":"/img/lupox495.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Lupo x495","attributes":{},"skip":false,"key":"1.3.6.2"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.1","level":"1.3.7","list_caption":"Figure: Signal Process FPGA","alt":"Signal Process FPGA","nro":43,"url":"/img/signalprocessfpga.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Signal Process FPGA","attributes":{},"skip":false,"key":"1.3.7.1"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.2","level":"1.3.7","list_caption":"Figure: System FPGA","alt":"System FPGA","nro":44,"url":"/img/SystemFPGA.png","index":2,"caption_template":"Figure: _CAPTION_","label":"System FPGA","attributes":{},"skip":false,"key":"1.3.7.2"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.3","level":"1.3.7","list_caption":"Figure: fast trigger stretch/delay","alt":"fast trigger stretch/delay","nro":45,"url":"/img/fasttrigger_stretch_delay.png","index":3,"caption_template":"Figure: _CAPTION_","label":"fast trigger stretch/delay","attributes":{},"skip":false,"key":"1.3.7.3"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.4","level":"1.3.7","list_caption":"Figure: validation trigger","alt":"validation trigger","nro":46,"url":"/img/validationtrigger.png","index":4,"caption_template":"Figure: _CAPTION_","label":"validation trigger","attributes":{},"skip":false,"key":"1.3.7.4"}]},"title":"","gitbook":"*","description":"吴鸿毅笔记"},"file":{"path":"UsersGuide/GUI.md","mtime":"2018-09-17T05:32:22.020Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-17T05:33:35.222Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
+
 
         
     <script src="../gitbook/gitbook.js"></script>
@@ -637,19 +908,91 @@ channel. Otherwise, pulses will still be recorded even if they are piled up.
         
     
         
-        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
         <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
         
     
         
         <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ad/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-atoc/atoc.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ace/ace/ace.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ace/ace.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sectionx/sectionx.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-mcqx/js.cookie.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-mcqx/mcqx.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fbqx/fbqx.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-spoiler/spoiler.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-youtubex/player.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
         
     
 

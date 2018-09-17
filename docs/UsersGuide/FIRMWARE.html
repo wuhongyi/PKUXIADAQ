@@ -2,13 +2,13 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>firmware · GitBook</title>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>firmware · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.0">
-        
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Hongyi Wu(吴鸿毅)">
         
         
     
@@ -17,15 +17,91 @@
     
             
                 
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
                 
             
                 
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-ad/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-atoc/atoc.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-image-captions/image-captions.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-latex-codecogs/latex-codecogs.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-ace/ace.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-sectionx/sectionx.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-mcqx/mcqx.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fbqx/fbqx.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-spoiler/spoiler.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-youtubex/player.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
                 
             
         
@@ -66,6 +142,13 @@
     </head>
     <body>
         
+  <script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  </script>
+  
 <div class="book">
     <div class="book-summary">
         
@@ -325,30 +408,29 @@
 ;;           By: Hongyi Wu(吴鸿毅)
 ;;     Update #: 2
 ;; URL: http://wuhongyi.cn -->
-
-
-<h1 id="firmware">FIRMWARE</h1><p><strong>&#x5317;&#x4EAC;&#x5927;&#x5B66;&#x5B9A;&#x5236;&#x56FA;&#x4EF6;</strong></p><p>&#x5728;&#x6807;&#x51C6;&#x56FA;&#x4EF6;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x6DFB;&#x52A0;&#x4E86;&#x4EE5;&#x4E0B;&#x529F;&#x80FD;&#xFF1A;</p><ul><li><p>100MHz 14 bit(pixie16_revfpku_14b100m_dsp_update_05082018)</p><ul><li>MultiplicityMaskHigh[31]=0&#x548C;1 &#x65F6;&#x5019;&#x524D;&#x9762;&#x7248;&#x5747;&#x80FD;&#x8F93;&#x51FA; multiplicity &#x7ED3;&#x679C;&#x3002;
+<h1 id="firmware"><a name="firmware" class="plugin-anchor" href="#firmware"><i class="fa fa-link" aria-hidden="true"></i></a>FIRMWARE</h1>
+<p><strong>&#x5317;&#x4EAC;&#x5927;&#x5B66;&#x5B9A;&#x5236;&#x56FA;&#x4EF6;</strong>  </p>
+<p>&#x5728;&#x6807;&#x51C6;&#x56FA;&#x4EF6;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x6DFB;&#x52A0;&#x4E86;&#x4EE5;&#x4E0B;&#x529F;&#x80FD;&#xFF1A;</p>
+<ul>
+<li>100MHz 14 bit(pixie16_revfpku_14b100m_dsp_update_05082018)<ul>
+<li>MultiplicityMaskHigh[31]=0&#x548C;1 &#x65F6;&#x5019;&#x524D;&#x9762;&#x7248;&#x5747;&#x80FD;&#x8F93;&#x51FA; multiplicity &#x7ED3;&#x679C;&#x3002;</li>
+<li>&#x5F53;&#x8BA1;&#x7B97;&#x7684;&#x80FD;&#x91CF;&#x4E3A;&#x8D1F;&#x6570;&#x65F6;&#xFF0C;&#x8BE5;&#x503C;&#x8BBE;&#x7F6E;&#x4E3A; 0&#x3002;</li>
+<li>pileup &#x4E8B;&#x4EF6;&#x80FD;&#x91CF;&#x4FDD;&#x7559;&#xFF0C;&#x4E0D;&#x8BBE;&#x7F6E;&#x4E3A; 0&#x3002;</li>
+<li>&#x5728;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;waveform &#x7684;buffer&#x6EE1;&#x4E86;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x63D2;&#x4EF6;&#x4E0D;busy&#xFF0C;header&#x7EE7;&#x7EED;&#x8BB0;&#x5F55;&#xFF0C;&#x8BE5;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x8F93;&#x51FA;&#x7684;&#x6570;&#x636E;&#x6CA1;&#x6709;&#x6CE2;&#x5F62;&#x3002;</li>
+<li>&#x5728;&#x91C7;&#x96C6;&#x6CE2;&#x5F62;&#x65F6;&#x5019;&#xFF0C;&#x589E;&#x52A0;&#x4E86;&#x964D;&#x9891;&#x8F93;&#x51FA;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x91C7;&#x53D6;&#x7684;&#x7B56;&#x7565;&#x4E3A;&#x53EF;&#x9009;&#x62E9;1&#xFF0C;1/2&#xFF0C;1/4&#xFF0C;1/8&#xFF0C;1/16&#xFF0C;1/32&#xFF0C;1/64&#xFF0C;1/128&#x9891;&#x7387;&#x7684;&#x8F93;&#x51FA;&#xFF0C;&#x5373;&#x591A;&#x5C11;&#x4E2A;&#x70B9;&#x4FDD;&#x7559;&#x4E00;&#x4E2A;&#x70B9;&#x3002;&#x4FDD;&#x7559;&#x7684;&#x70B9;&#x662F;&#x5E73;&#x5747;&#x540E;&#x7684;&#x503C;&#x3002;</li>
+</ul>
 </li>
-<li>&#x5F53;&#x8BA1;&#x7B97;&#x7684;&#x80FD;&#x91CF;&#x4E3A;&#x8D1F;&#x6570;&#x65F6;&#xFF0C;&#x8BE5;&#x503C;&#x8BBE;&#x7F6E;&#x4E3A; 0&#x3002;
+<li>250MHz 14bit(pixie16_revf_14b250m_firmware_release_04222018)<ul>
+<li>&#x524D;&#x9762;&#x677F;&#x591A;&#x91CD;&#x6027;MultiplicityMaskHigh[31]=0&#x548C;1 &#x65F6;&#x5019;&#x524D;&#x9762;&#x7248;&#x5747;&#x80FD;&#x8F93;&#x51FA; multiplicity &#x7ED3;&#x679C;&#x3002;</li>
+<li>&#x5F53;&#x8BA1;&#x7B97;&#x7684;&#x80FD;&#x91CF;&#x4E3A;&#x8D1F;&#x6570;&#x65F6;&#xFF0C;&#x8BE5;&#x503C;&#x8BBE;&#x7F6E;&#x4E3A; 0&#x3002;</li>
+<li>pileup &#x4E8B;&#x4EF6;&#x80FD;&#x91CF;&#x4FDD;&#x7559;&#xFF0C;&#x4E0D;&#x8BBE;&#x7F6E;&#x4E3A; 0&#x3002;</li>
+</ul>
 </li>
-<li>pileup &#x4E8B;&#x4EF6;&#x80FD;&#x91CF;&#x4FDD;&#x7559;&#xFF0C;&#x4E0D;&#x8BBE;&#x7F6E;&#x4E3A; 0&#x3002;
-</li>
-<li>&#x5728;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#x6A21;&#x5F0F;&#x4E0B;&#xFF0C;waveform &#x7684;buffer&#x6EE1;&#x4E86;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x63D2;&#x4EF6;&#x4E0D;busy&#xFF0C;header&#x7EE7;&#x7EED;&#x8BB0;&#x5F55;&#xFF0C;&#x8BE5;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x8F93;&#x51FA;&#x7684;&#x6570;&#x636E;&#x6CA1;&#x6709;&#x6CE2;&#x5F62;&#x3002;
-</li>
-<li>&#x5728;&#x91C7;&#x96C6;&#x6CE2;&#x5F62;&#x65F6;&#x5019;&#xFF0C;&#x589E;&#x52A0;&#x4E86;&#x964D;&#x9891;&#x8F93;&#x51FA;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x91C7;&#x53D6;&#x7684;&#x7B56;&#x7565;&#x4E3A;&#x53EF;&#x9009;&#x62E9;1&#xFF0C;1/2&#xFF0C;1/4&#xFF0C;1/8&#xFF0C;1/16&#xFF0C;1/32&#xFF0C;1/64&#xFF0C;1/128&#x9891;&#x7387;&#x7684;&#x8F93;&#x51FA;&#xFF0C;&#x5373;&#x591A;&#x5C11;&#x4E2A;&#x70B9;&#x4FDD;&#x7559;&#x4E00;&#x4E2A;&#x70B9;&#x3002;&#x4FDD;&#x7559;&#x7684;&#x70B9;&#x662F;&#x5E73;&#x5747;&#x540E;&#x7684;&#x503C;&#x3002;
-</li></ul>
-</li>
-<li><p>250MHz 14bit(pixie16_revf_14b250m_firmware_release_04222018)</p><ul><li>&#x524D;&#x9762;&#x677F;&#x591A;&#x91CD;&#x6027;MultiplicityMaskHigh[31]=0&#x548C;1 &#x65F6;&#x5019;&#x524D;&#x9762;&#x7248;&#x5747;&#x80FD;&#x8F93;&#x51FA; multiplicity &#x7ED3;&#x679C;&#x3002;
-</li>
-<li>&#x5F53;&#x8BA1;&#x7B97;&#x7684;&#x80FD;&#x91CF;&#x4E3A;&#x8D1F;&#x6570;&#x65F6;&#xFF0C;&#x8BE5;&#x503C;&#x8BBE;&#x7F6E;&#x4E3A; 0&#x3002;
-</li>
-<li>pileup &#x4E8B;&#x4EF6;&#x80FD;&#x91CF;&#x4FDD;&#x7559;&#xFF0C;&#x4E0D;&#x8BBE;&#x7F6E;&#x4E3A; 0&#x3002;
-</li></ul>
-</li></ul>
+</ul>
 <!-- FIRMWARE.md ends here -->
+<script type="text/javascript">var className='atoc';</script>
 
-
-
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> <a href="http://wuhongyi.cn/" target="_blank">&#xA9; Hongyi Wu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated:</i> 2018-05-16 19:06:53 </span> </footer>
                                 
                                 </section>
                             
@@ -391,10 +473,11 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"firmware","level":"1.3.1","depth":2,"next":{"title":"Decode","level":"1.3.2","depth":2,"path":"UsersGuide/Decode.md","ref":"UsersGuide/Decode.md","articles":[]},"previous":{"title":"Users Guide","level":"1.3","depth":1,"path":"UsersGuide/README.md","ref":"UsersGuide/README.md","articles":[{"title":"firmware","level":"1.3.1","depth":2,"path":"UsersGuide/FIRMWARE.md","ref":"UsersGuide/FIRMWARE.md","articles":[]},{"title":"Decode","level":"1.3.2","depth":2,"path":"UsersGuide/Decode.md","ref":"UsersGuide/Decode.md","articles":[]},{"title":"GUI","level":"1.3.3","depth":2,"path":"UsersGuide/GUI.md","ref":"UsersGuide/GUI.md","articles":[]},{"title":"OnlineStattics","level":"1.3.4","depth":2,"path":"UsersGuide/OnlineStattics.md","ref":"UsersGuide/OnlineStattics.md","articles":[]},{"title":"MakeEvent","level":"1.3.5","depth":2,"path":"UsersGuide/MakeEvent.md","ref":"UsersGuide/MakeEvent.md","articles":[]},{"title":"FrontPanel","level":"1.3.6","depth":2,"path":"UsersGuide/FrontPanel.md","ref":"UsersGuide/FrontPanel.md","articles":[]},{"title":"Logic","level":"1.3.7","depth":2,"path":"UsersGuide/Logic.md","ref":"UsersGuide/Logic.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"UsersGuide/FIRMWARE.md","mtime":"2018-05-16T11:06:53.616Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-27T22:00:12.622Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"firmware","level":"1.3.1","depth":2,"next":{"title":"Decode","level":"1.3.2","depth":2,"path":"UsersGuide/Decode.md","ref":"UsersGuide/Decode.md","articles":[]},"previous":{"title":"Users Guide","level":"1.3","depth":1,"path":"UsersGuide/README.md","ref":"UsersGuide/README.md","articles":[{"title":"firmware","level":"1.3.1","depth":2,"path":"UsersGuide/FIRMWARE.md","ref":"UsersGuide/FIRMWARE.md","articles":[]},{"title":"Decode","level":"1.3.2","depth":2,"path":"UsersGuide/Decode.md","ref":"UsersGuide/Decode.md","articles":[]},{"title":"GUI","level":"1.3.3","depth":2,"path":"UsersGuide/GUI.md","ref":"UsersGuide/GUI.md","articles":[]},{"title":"OnlineStattics","level":"1.3.4","depth":2,"path":"UsersGuide/OnlineStattics.md","ref":"UsersGuide/OnlineStattics.md","articles":[]},{"title":"MakeEvent","level":"1.3.5","depth":2,"path":"UsersGuide/MakeEvent.md","ref":"UsersGuide/MakeEvent.md","articles":[]},{"title":"FrontPanel","level":"1.3.6","depth":2,"path":"UsersGuide/FrontPanel.md","ref":"UsersGuide/FrontPanel.md","articles":[]},{"title":"Logic","level":"1.3.7","depth":2,"path":"UsersGuide/Logic.md","ref":"UsersGuide/Logic.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["search","sharing","fontsettings","livereload","highlight","github","-prism","ad","alerts","atoc","splitter","sitemap","image-captions","anchors","latex-codecogs","-katex","mermaid","ace","page-footer-ex","sectionx","mcqx","fbqx","spoiler","anchor-navigation","youtubex","redirect","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"latex-codecogs":{"type":"gif"},"spoiler":{},"ad":{"contentBottom":"","contentTop":""},"ace":{},"github":{"url":"https://github.com/wuhongyi"},"fbqx":{},"livereload":{},"page-footer-ex":{"copyright":"[© Hongyi Wu](http://wuhongyi.cn/)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated:</i>"},"atoc":{"addClass":true,"className":"atoc"},"splitter":{},"search":{},"mermaid":{},"anchor-navigation":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"serif","size":2,"theme":"sepia"},"sectionx":{},"highlight":{},"sitemap":{"hostname":"http://wuhongyi.cn/"},"youtubex":{"embedDescription":{"de":"Eingebettetes Video:","default":"Embedded video:"}},"alerts":{},"sharing":{"all":["facebook","google","twitter","weibo","instapaper"],"facebook":true,"google":false,"instapaper":false,"twitter":true,"vk":false,"weibo":false},"redirect":{},"mcqx":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"expandable-chapters":{},"image-captions":{"variable_name":"_pictures"}},"theme":"default","author":"Hongyi Wu(吴鸿毅)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"_pictures":[{"backlink":"UsersGuide/index.html#fig1.3.1","level":"1.3","list_caption":"Figure: pixie16","alt":"pixie16","nro":1,"url":"/img/pixie16.jpg","index":1,"caption_template":"Figure: _CAPTION_","label":"pixie16","attributes":{},"skip":false,"key":"1.3.1"},{"backlink":"UsersGuide/index.html#fig1.3.2","level":"1.3","list_caption":"Figure: ClockDistribution","alt":"ClockDistribution","nro":2,"url":"/img/ClockDistribution.png","index":2,"caption_template":"Figure: _CAPTION_","label":"ClockDistribution","attributes":{},"skip":false,"key":"1.3.2"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.1","level":"1.3.3","list_caption":"Figure: MainFrame","alt":"MainFrame","nro":3,"url":"/img/mainframe.png","index":1,"caption_template":"Figure: _CAPTION_","label":"MainFrame","attributes":{},"skip":false,"key":"1.3.3.1"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.2","level":"1.3.3","list_caption":"Figure: About","alt":"About","nro":4,"url":"/img/About.png","index":2,"caption_template":"Figure: _CAPTION_","label":"About","attributes":{},"skip":false,"key":"1.3.3.2"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.3","level":"1.3.3","list_caption":"Figure: Base Setup","alt":"Base Setup","nro":5,"url":"/img/BaseSetup.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Base Setup","attributes":{},"skip":false,"key":"1.3.3.3"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.4","level":"1.3.3","list_caption":"Figure: Trigger Filter","alt":"Trigger Filter","nro":6,"url":"/img/TriggerFilter.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Trigger Filter","attributes":{},"skip":false,"key":"1.3.3.4"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.5","level":"1.3.3","list_caption":"Figure: Energy","alt":"Energy","nro":7,"url":"/img/Energy.png","index":5,"caption_template":"Figure: _CAPTION_","label":"Energy","attributes":{},"skip":false,"key":"1.3.3.5"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.6","level":"1.3.3","list_caption":"Figure: filter range","alt":"filter range","nro":8,"url":"/img/filterrange_format.PNG","index":6,"caption_template":"Figure: _CAPTION_","label":"filter range","attributes":{},"skip":false,"key":"1.3.3.6"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.7","level":"1.3.3","list_caption":"Figure: CFD","alt":"CFD","nro":9,"url":"/img/CFDPars.png","index":7,"caption_template":"Figure: _CAPTION_","label":"CFD","attributes":{},"skip":false,"key":"1.3.3.7"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.8","level":"1.3.3","list_caption":"Figure: QDC","alt":"QDC","nro":10,"url":"/img/QDCPars.png","index":8,"caption_template":"Figure: _CAPTION_","label":"QDC","attributes":{},"skip":false,"key":"1.3.3.8"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.9","level":"1.3.3","list_caption":"Figure: Decimation","alt":"Decimation","nro":11,"url":"/img/Decimation.png","index":9,"caption_template":"Figure: _CAPTION_","label":"Decimation","attributes":{},"skip":false,"key":"1.3.3.9"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.10","level":"1.3.3","list_caption":"Figure: Copy Pars","alt":"Copy Pars","nro":12,"url":"/img/CopyPars.png","index":10,"caption_template":"Figure: _CAPTION_","label":"Copy Pars","attributes":{},"skip":false,"key":"1.3.3.10"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.11","level":"1.3.3","list_caption":"Figure: Save2File","alt":"Save2File","nro":13,"url":"/img/Save2File.png","index":11,"caption_template":"Figure: _CAPTION_","label":"Save2File","attributes":{},"skip":false,"key":"1.3.3.11"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.12","level":"1.3.3","list_caption":"Figure: Module Variables","alt":"Module Variables","nro":14,"url":"/img/ModuleVariables.png","index":12,"caption_template":"Figure: _CAPTION_","label":"Module Variables","attributes":{},"skip":false,"key":"1.3.3.12"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.13","level":"1.3.3","list_caption":"Figure: CSRA","alt":"CSRA","nro":15,"url":"/img/CSRA.png","index":13,"caption_template":"Figure: _CAPTION_","label":"CSRA","attributes":{},"skip":false,"key":"1.3.3.13"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.14","level":"1.3.3","list_caption":"Figure: Logic Set","alt":"Logic Set","nro":16,"url":"/img/LogicTrigger.png","index":14,"caption_template":"Figure: _CAPTION_","label":"Logic Set","attributes":{},"skip":false,"key":"1.3.3.14"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.15","level":"1.3.3","list_caption":"Figure: stretch length","alt":"stretch length","nro":17,"url":"/img/stretchlength.PNG","index":15,"caption_template":"Figure: _CAPTION_","label":"stretch length","attributes":{},"skip":false,"key":"1.3.3.15"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.16","level":"1.3.3","list_caption":"Figure: Hist & XDT","alt":"Hist & XDT","nro":18,"url":"/img/HistXDT.png","index":16,"caption_template":"Figure: _CAPTION_","label":"Hist & XDT","attributes":{},"skip":false,"key":"1.3.3.16"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.17","level":"1.3.3","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":19,"url":"/img/Trace.png","index":17,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.3.17"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.18","level":"1.3.3","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":20,"url":"/img/BaselineHist.png","index":18,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.3.18"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.19","level":"1.3.3","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":21,"url":"/img/BaselineTimestamps.png","index":19,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.3.19"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.20","level":"1.3.3","list_caption":"Figure: Adjust Par","alt":"Adjust Par","nro":22,"url":"/img/AdjustPar.png","index":20,"caption_template":"Figure: _CAPTION_","label":"Adjust Par","attributes":{},"skip":false,"key":"1.3.3.20"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.21","level":"1.3.3","list_caption":"Figure: offlineapi","alt":"offlineapi","nro":23,"url":"/img/OfflineAPI.png","index":21,"caption_template":"Figure: _CAPTION_","label":"offlineapi","attributes":{},"skip":false,"key":"1.3.3.21"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.22","level":"1.3.3","list_caption":"Figure: Adjustpars3","alt":"Adjustpars3","nro":24,"url":"/img/Adjustpars3.png","index":22,"caption_template":"Figure: _CAPTION_","label":"Adjustpars3","attributes":{},"skip":false,"key":"1.3.3.22"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.23","level":"1.3.3","list_caption":"Figure: Adjustpars1","alt":"Adjustpars1","nro":25,"url":"/img/Adjustpars1.png","index":23,"caption_template":"Figure: _CAPTION_","label":"Adjustpars1","attributes":{},"skip":false,"key":"1.3.3.23"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.24","level":"1.3.3","list_caption":"Figure: Adjustpars2","alt":"Adjustpars2","nro":26,"url":"/img/Adjustpars2.png","index":24,"caption_template":"Figure: _CAPTION_","label":"Adjustpars2","attributes":{},"skip":false,"key":"1.3.3.24"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.25","level":"1.3.3","list_caption":"Figure: Waveform16","alt":"Waveform16","nro":27,"url":"/img/Waveform16.png","index":25,"caption_template":"Figure: _CAPTION_","label":"Waveform16","attributes":{},"skip":false,"key":"1.3.3.25"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.26","level":"1.3.3","list_caption":"Figure: Energy16","alt":"Energy16","nro":28,"url":"/img/Energy16.png","index":26,"caption_template":"Figure: _CAPTION_","label":"Energy16","attributes":{},"skip":false,"key":"1.3.3.26"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.27","level":"1.3.3","list_caption":"Figure: OrigEnergy","alt":"OrigEnergy","nro":29,"url":"/img/OrigEnergy.png","index":27,"caption_template":"Figure: _CAPTION_","label":"OrigEnergy","attributes":{},"skip":false,"key":"1.3.3.27"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.28","level":"1.3.3","list_caption":"Figure: OrigEnergyFit","alt":"OrigEnergyFit","nro":30,"url":"/img/OrigEnergyFit.png","index":28,"caption_template":"Figure: _CAPTION_","label":"OrigEnergyFit","attributes":{},"skip":false,"key":"1.3.3.28"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.29","level":"1.3.3","list_caption":"Figure: CalcEnergy","alt":"CalcEnergy","nro":31,"url":"/img/CalcEnergy.png","index":29,"caption_template":"Figure: _CAPTION_","label":"CalcEnergy","attributes":{},"skip":false,"key":"1.3.3.29"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.30","level":"1.3.3","list_caption":"Figure: FFCFDThre","alt":"FFCFDThre","nro":32,"url":"/img/FFCFDThre.png","index":30,"caption_template":"Figure: _CAPTION_","label":"FFCFDThre","attributes":{},"skip":false,"key":"1.3.3.30"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.31","level":"1.3.3","list_caption":"Figure: FFCFDThreFFProjectY","alt":"FFCFDThreFFProjectY","nro":33,"url":"/img/FFCFDThreFFProjectY.png","index":31,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreFFProjectY","attributes":{},"skip":false,"key":"1.3.3.31"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.32","level":"1.3.3","list_caption":"Figure: FFCFDThreCFDProjectY","alt":"FFCFDThreCFDProjectY","nro":34,"url":"/img/FFCFDThreCFDProjectY.png","index":32,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreCFDProjectY","attributes":{},"skip":false,"key":"1.3.3.32"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.33","level":"1.3.3","list_caption":"Figure: FFCFDThreCFD","alt":"FFCFDThreCFD","nro":35,"url":"/img/FFCFDThreCFD.png","index":33,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreCFD","attributes":{},"skip":false,"key":"1.3.3.33"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.34","level":"1.3.3","list_caption":"Figure: EnergyFFGraph","alt":"EnergyFFGraph","nro":36,"url":"/img/EnergyFFGraph.png","index":34,"caption_template":"Figure: _CAPTION_","label":"EnergyFFGraph","attributes":{},"skip":false,"key":"1.3.3.34"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.35","level":"1.3.3","list_caption":"Figure: EnergyFFHist","alt":"EnergyFFHist","nro":37,"url":"/img/EnergyFFHist.png","index":35,"caption_template":"Figure: _CAPTION_","label":"EnergyFFHist","attributes":{},"skip":false,"key":"1.3.3.35"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.36","level":"1.3.3","list_caption":"Figure: FFT","alt":"FFT","nro":38,"url":"/img/FFT.png","index":36,"caption_template":"Figure: _CAPTION_","label":"FFT","attributes":{},"skip":false,"key":"1.3.3.36"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.37","level":"1.3.3","list_caption":"Figure: Time Diff","alt":"Time Diff","nro":39,"url":"/img/TimeDiff.png","index":37,"caption_template":"Figure: _CAPTION_","label":"Time Diff","attributes":{},"skip":false,"key":"1.3.3.37"},{"backlink":"UsersGuide/OnlineStattics.html#fig1.3.4.1","level":"1.3.4","list_caption":"Figure: OnlineMainFrame","alt":"OnlineMainFrame","nro":40,"url":"/img/OnlineMainFrame.png","index":1,"caption_template":"Figure: _CAPTION_","label":"OnlineMainFrame","attributes":{},"skip":false,"key":"1.3.4.1"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.1","level":"1.3.6","list_caption":"Figure: frontpanel","alt":"frontpanel","nro":41,"url":"/img/frontpanel_pku.png","index":1,"caption_template":"Figure: _CAPTION_","label":"frontpanel","attributes":{},"skip":false,"key":"1.3.6.1"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.2","level":"1.3.6","list_caption":"Figure: Lupo x495","alt":"Lupo x495","nro":42,"url":"/img/lupox495.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Lupo x495","attributes":{},"skip":false,"key":"1.3.6.2"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.1","level":"1.3.7","list_caption":"Figure: Signal Process FPGA","alt":"Signal Process FPGA","nro":43,"url":"/img/signalprocessfpga.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Signal Process FPGA","attributes":{},"skip":false,"key":"1.3.7.1"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.2","level":"1.3.7","list_caption":"Figure: System FPGA","alt":"System FPGA","nro":44,"url":"/img/SystemFPGA.png","index":2,"caption_template":"Figure: _CAPTION_","label":"System FPGA","attributes":{},"skip":false,"key":"1.3.7.2"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.3","level":"1.3.7","list_caption":"Figure: fast trigger stretch/delay","alt":"fast trigger stretch/delay","nro":45,"url":"/img/fasttrigger_stretch_delay.png","index":3,"caption_template":"Figure: _CAPTION_","label":"fast trigger stretch/delay","attributes":{},"skip":false,"key":"1.3.7.3"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.4","level":"1.3.7","list_caption":"Figure: validation trigger","alt":"validation trigger","nro":46,"url":"/img/validationtrigger.png","index":4,"caption_template":"Figure: _CAPTION_","label":"validation trigger","attributes":{},"skip":false,"key":"1.3.7.4"}]},"title":"","gitbook":"*","description":"吴鸿毅笔记"},"file":{"path":"UsersGuide/FIRMWARE.md","mtime":"2018-05-16T11:06:53.616Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-17T05:33:35.222Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
+
 
         
     <script src="../gitbook/gitbook.js"></script>
@@ -409,19 +492,91 @@
         
     
         
-        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
         <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
         
     
         
         <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ad/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-atoc/atoc.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ace/ace/ace.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ace/ace.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sectionx/sectionx.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-mcqx/js.cookie.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-mcqx/mcqx.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fbqx/fbqx.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-spoiler/spoiler.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-youtubex/player.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
         
     
 

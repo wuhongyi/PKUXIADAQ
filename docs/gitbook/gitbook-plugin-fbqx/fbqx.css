@@ -1,0 +1,50 @@
+.FBQbox {
+	line-height: 200% !important;
+	font-size: small;
+
+	padding: 20px;
+	padding-bottom: 5px;
+	border: 8px solid #F5F5F5;
+	border-radius: 5px;
+	color: black;
+}
+
+.FBQbox *:not(.FBQmessage) {
+	display: inline-block;
+}
+
+.FBQbox > .ans {
+	vertical-align: middle;
+}
+
+.FBQbox > .ans > input {
+	height: 25px;
+	border: none;
+	border-bottom: 2px solid grey;
+	background-color: transparent !important;
+	box-shadow: none;
+	width: 100px;
+}
+
+.FBQbox > .FBQsubmit {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.ans {
+	display: inline-block;
+}
+
+.wrong {
+	color: red;
+	border-bottom: 2px solid red !important;
+}
+
+.correct {
+	color: green;
+	border-bottom: 2px solid green !important;
+}
+
+.display {
+	display: none;
+}

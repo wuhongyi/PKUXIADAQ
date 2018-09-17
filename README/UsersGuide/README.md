@@ -4,12 +4,14 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 15:47:48 2018 (+0800)
-;; Last-Updated: 日 5月 27 08:40:44 2018 (+0800)
+;; Last-Updated: 一 9月 17 13:33:16 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 8
+;;     Update #: 9
 ;; URL: http://wuhongyi.cn -->
 
 # Guide
+
+<!-- toc -->
 
 **User's Manual** *Digital Gamma Finder (DGF) PIXIE-16*  **Version 1.40, October 2009**
 

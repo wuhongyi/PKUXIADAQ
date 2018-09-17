@@ -1,0 +1,52 @@
+.mcqBox {
+  padding-top: 20px;
+  padding-bottom: 10px;
+  border: 8px solid #F5F5F5;
+  border-radius: 5px;
+  color: black;
+}
+
+.mcqBox.dark {
+  border: 8px solid #373B4E;
+  color: white;
+}
+
+.mcqBox > .container-fluid > blockquote {
+  font-size: 15px;
+  color: black !important;
+}
+
+.mcqBox.dark > .container-fluid > blockquote {
+  color: white !important;
+}
+
+.mcqBox.dark > .container-fluid > .MCQmessage {
+  background-color: #373B4E !important;
+  color: white;
+}
+
+.hint_message {
+  color: grey;
+  display: none;
+  margin-bottom: 10px;
+}
+
+.MCQbutton {
+  display: inline-block;
+  margin-top: 15px;
+}
+
+.submitMCQ {
+  margin-right: 3px;
+}
+
+.MCQoption {
+  display: inline-block;
+}
+
+.MCQdescription {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  font-size: small;
+}
