@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 9月 25 13:27:37 2018 (+0800)
-;; Last-Updated: 二 9月 25 15:12:51 2018 (+0800)
+;; Last-Updated: 二 9月 25 15:20:16 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 5
+;;     Update #: 6
 ;; URL: http://wuhongyi.cn -->
 
 # Multiple Modules Synchronously
@@ -15,7 +15,7 @@
 
 When many Pixie-16 modules are operated together as a system, it may be required to synchronize clocks and timers between them and to distribute triggers across modules. It will also be necessary to ensure that runs are started and stopped synchronously in all modules. All these signals are distributed through the PXI backplane of the Pixie-16 crate.
 
-![JP101](img/multiplemodulessynchronously.png)
+![JP101](/img/multiplemodulessynchronously.png)
 
 In a multi-module system there will be one clock master and a number of clock slaves or repeaters. The clock function of a module can be selected by setting shunts on Jumper JP101 near the bottom right corner of the board. The 10-pin Jumper JP101 is shown in the picture on the top with those pins labelled in red color. Shunts are provided to connect pins that are appropriate for each chosen clock distribution mode. Four clock distribution modes, individual clock mode, PXI clock mode, daisy-chained clock mode, and multi- crate clock mode, are described below.
 
@@ -32,7 +32,7 @@ In a multi-module system there will be one clock master and a number of clock sl
 
 ## Individual Clock Mode
 
-![individual clock mode](img/individualclockmode.png)
+![individual clock mode](/img/individualclockmode.png)
 
 If only one Pixie-16 module is used in the system, or if clocks between modules do not need to be synchronized, the module(s) should be set into individual clock mode. Connect pin 7 of JP101 (the clock input) with a shunt to pin 8 (loc – IN). This will use the 50 MHz local crystal oscillator of the Pixie-16 module as the clock source.
 
@@ -41,7 +41,7 @@ If only one Pixie-16 module is used in the system, or if clocks between modules 
 
 ## PXI Clock Mode
 
-![PXI clock mode](img/pxiclockmode.png)
+![PXI clock mode](/img/pxiclockmode.png)
 
 The preferred way to distribute clocks among multiple Pixie-16 modules is to use the PXI clock distributed on the backplane. This clock is by default generated on the backplane and is a 10MHz clock signal, which is then repeated by a fan out buffer and connected to each crate slot by a dedicated line with minimum skew(equal trace length to each slot). Although the 10MHz is too slow to be a useful clock for the Pixie-16, it can be overridden by a local clock signal from a Pixie-16 module that is installed in slot 2 through proper shunt settings on the JP101.
 
@@ -54,7 +54,7 @@ One other advantage of the PXI clock mode over the daisy-chained clock mode, whi
 
 ## Daisy-chained Clock Mode
 
-![daisy-chained clock mode](img/daisychainedclockmode.png)
+![daisy-chained clock mode](/img/daisychainedclockmode.png)
 
 A further option for clock distribution is to daisy-chain the clocks from one module to the other, with each module repeating the clock signal and transmitting it to the neighbor on the right. This requires one master module, located in the leftmost slot of the group of Pixie-16 modules. The master module uses its local crystal oscillator as the input and sends its output to the right (loc – IN, out – right). Other Pixie-16 modules in the crate should be configured as clock repeaters by using the signal from the left neighbor as the input and sending its output to the right (left – IN, out – right). However, as mentioned earlier, there must be no slot gap between modules.
 
@@ -63,7 +63,7 @@ A further option for clock distribution is to daisy-chain the clocks from one mo
 
 ## Multi-Crate Clock Mode
 
-![multi-crate clock mode](img/multicrateclockmode.png)
+![multi-crate clock mode](/img/multicrateclockmode.png)
 
 In multi- crate systems, a global clock signal can be distributed among these crates using dedicated trigger and clock distribution cards, i.e. the Pixie-16 Rear I/O trigger modules, which are available from XIA.
 
@@ -79,13 +79,13 @@ The Pixie-16 module installed in slot 2 of the Slave crate is called the crate M
 
 ### Clock Jumper (JP101) Settings on the Pixie-16 Modules
 
-![Module Definitions in a 2-crate System](img/moduledefinitionsina2cratesystem.png)
+![Module Definitions in a 2-crate System](/img/moduledefinitionsina2cratesystem.png)
 
 
 
 ### Cable Connections for Pixie-16 Rear I/O Trigger Modules
 
-![Clock Jumper JP101 Settings in a 2-crate System](img/clockjumperjp101settingsina2cratesystem.png)
+![Clock Jumper JP101 Settings in a 2-crate System](/img/clockjumperjp101settingsina2cratesystem.png)
 
 
 
