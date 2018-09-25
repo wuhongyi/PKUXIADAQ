@@ -4,34 +4,53 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 一 9月 17 13:30:36 2018 (+0800)
+;; Last-Updated: 二 9月 25 12:35:33 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 86
+;;     Update #: 93
 ;; URL: http://wuhongyi.cn -->
 
 # README
 
 <!-- toc -->
 
-**最新版本号 Version:2018.05.27**  
+## Version/版本
 
-程序下载请访问(*私有仓库，暂未开放下载*)
+**We recommend users to download a stable version(我们建议用户下载稳定版本)**
+
+### Stable Version/稳定版本
+
+**Stable Version（稳定版本） Version:2018.05.27**  
+
+Download the latest version, please click(下载最新版本，请点击):  
+https://github.com/pkuNucExp/PKUXIADAQ
+
+Web page manual, please click(网页版说明书请访问):  
+https://pkunucexp.github.io/PKUXIADAQ/
+
+markdown version manual(md版说明书)  README/  
+
+Offline web version manual(离线网页版说明书)  docs/  
+
+pdf version manual(pdf版本说明书)  README.pdf  
+
+
+### Pre-alpha/准预览版本
+
+Download the latest version(程序下载请访问):  
 https://github.com/wuhongyi/PKUXIADAQ
 
-网页版说明书请访问
+Web page manual(网页版说明书请访问):  
 http://wuhongyi.cn/PKUXIADAQ/
 
-markdown 版本说明书请访问  README/  
-
-离线网页版说明书请访问  docs/  
-
-pdf版本说明书请访问  README.pdf  
 
 
-- 对本获取程序有任何的意见及建议(功能添加及改进)，欢迎给吴鸿毅(wuhongyi@qq.com)发邮件。
-- 我们将会尽快完善软件的中英文使用说明书，当前基本以操作演示讲解软件的使用为主。
+- Have any comments or suggestions for this project(function addition or improvement), please send an email to Hongyi Wu(wuhongyi@qq.com). 对本获取程序有任何的意见及建议(功能添加及改进)，欢迎给吴鸿毅(wuhongyi@qq.com)发邮件。
+- We will improve the Chinese/English manuals of the software as soon as possible. Currently, we mainly use the software to explain the use of the software. 我们将会尽快完善软件的中英文使用说明书，当前主要以操作演示来讲解软件的使用。
+
 
 ----
+
+## About/关于
 
 **This manual applies only to XIA LLC Pixie-16**
 
@@ -50,9 +69,8 @@ Software Developer 软件主要开发者:
 
 Principal author of the instruction 说明书主要撰写者:
 - Hongyi Wu 吴鸿毅
-- Xiang Wang 王翔
 - Diwen Luo 罗迪雯
-
+- Xiang Wang 王翔
 
 
 The development of this program is supported by the following 本程序的开发得到以下单位的支持：
@@ -73,30 +91,33 @@ The development of this program is supported by the following 本程序的开发
 
 ----
 
-用户使用程序包中包含以下文件/文件夹:
+## contents / 目录
 
-- Decode(将原始二进制数据转为 ROOT)
-- docs(使用说明书，网页版)
+The following files/folders are included in the user's use package 用户使用程序包中包含以下文件/文件夹:
+
+- Decode(Convert raw binary data to ROOT file / 将原始二进制数据转为 ROOT)
+- docs(Web page manual / 使用说明书，网页版)
 - firmware(固件)
-	- firmware/firmware.md(历史各版本固件说明)
+	- firmware/firmware.md(History of firmware / 历史各版本固件说明)
 - GUI(图形软件)
 - MakeEvent(事件重构程序，可选)
-- NOGUI(非图形软件。新版本升级中，暂时不可用)
-- OnlineStattics(在线监视程序)
-- parset(参数设置文件)
-- PlxSdk.tar.gz(Plx9054 驱动)
-- README(说明书 markdown 版)
-- README.md(github首页介绍)
-- README.pdf(pdf版本说明书)
-- software(pixie16驱动API，非官方标准，已经被吴鸿毅修改)
-- TestTool(开发者测试工具，用户不需要！！！)
+- NOGUI(Non-graphics software. New version upgrade, temporarily unavailable / 非图形软件。新版本升级中，暂时不可用)
+- OnlineStattics(Online monitoring program / 在线监视程序)
+- parset(parameter setting file / 参数设置文件)
+- PlxSdk.tar.gz(Plx9054 driver)
+- README(markdown version manual)
+- README.md(home page introduction)
+- README.pdf(pdf version manual)
+- software(unofficial standards pixie16 driver API, have been revised by Hongyi Wu)
+- TestTool(Developer testing tool, users don't need / 开发者测试工具，用户不需要！！！)
 
 ----
 
-## 升级计划：
+## Update/升级计划：
 
-- 当前基于 ROOT GUI 开发的主控制界面复杂度高，用户修改难度大。其它用户不容易基于其发展适合自己的版本。
-- 我们也在开发基于网页控制的获取在线/离线分析程序:
+- The main control interface developed based on the ROOT GUI is highly complex and difficult for users to modify now. Users do not easy to develop their own version based on this program. 当前基于 ROOT GUI 开发的主控制界面复杂度高，用户修改难度大。其它用户不容易基于其发展适合自己的版本。
+- We are also developing a web control for online/offline analysis 我们也在开发基于网页控制的获取在线/离线分析程序:
+	- ZeroMQ
 	- FastCGI
 	- JSROOT
 	- web

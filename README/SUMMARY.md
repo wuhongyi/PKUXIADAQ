@@ -10,6 +10,7 @@
 	* [MakeEvent](UsersGuide/MakeEvent.md)
 	* [FrontPanel](UsersGuide/FrontPanel.md)
 	* [Logic](UsersGuide/Logic.md)
+	* [MultipleModulesSynchronously](UsersGuide/MultipleModulesSynchronously.md)
 * [Programmers Guide](ProgrammersGuide/README.md)
 	* [XIA API](ProgrammersGuide/XIAAPI.md)
 	* [PKU code](ProgrammersGuide/PKUCode.md)
