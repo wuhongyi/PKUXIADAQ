@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:55 2018 (+0800)
-;; Last-Updated: 一 9月 17 13:32:21 2018 (+0800)
+;; Last-Updated: 四 9月 27 13:00:46 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 31
+;;     Update #: 32
 ;; URL: http://wuhongyi.cn -->
 
 # GUI
@@ -294,6 +294,23 @@ recording of QDC sums ends when the eight intervals have passed.
 
 ![Module Variables](/img/ModuleVariables.png)
 
+
+In addition to distributing the global clock signal, the Pixie-16 rear I/O trigger module can also share global triggers and run synchronization signals. The global trigger signals include the global validation trigger and global fast trigger, plus the Pixie-16 FPGA data storage buffers’ full flag signal. The run synchronization signals include synchronous run start and stop signals that can be shared among multiple crates.
+
+In order to enable the distribution of such global triggers and run synchronization signals, certain Pixie-16 parameters have to be set properly. The parameter that controls the trigger distribution and run synchronization is the Module Control Register B (ModCSRB).
+
+ModCSRB is a 32-bit parameter with each of 32 bits controlling different operation modes of the Pixie-16 module.
+
+> **[info] Trigger Distribution and Run Synchronization**
+>
+> For the System Director module that is installed in the Master crate, bits 0, 4, 6 and 11 of ModCSRB should be set to 1 (checked & enabled).
+>
+> For the Crate Master module that is installed in the Slave crate, bits 0, 6 and 11 of ModCSRB should be set to 1 (checked & enabled).
+>
+> For the General modules that are installed in both the Slave crate and Master crate, bit 11 of ModCSRB should be set to 1 (checked & enabled).
+
+
+
 **。。TODO。。**
 
 Module Control Register B affecting the module as a whole.
@@ -304,6 +321,9 @@ Module Control Register B affecting the module as a whole.
 - d) Crate master module (multiple crates only). This option is only used when multiple Pixie-16 crates communicate with each other. By enabling this option,the mater module in each crate is responsible for sending synchronization or trigger signals to certain backplane lines. This should be enabled for only one module in the crate.
 - e) Enable run inhibit signal input. This option is only applicable to the module which has the “Accept external trigger and run inhibit signals” option enabled. This should be enabled for only one module in the crate.
 - f) Multiple crates. This option is only used when multiple Pixie-16 crates communicate with each other.
+
+
+
 
 
 

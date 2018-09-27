@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 9月 25 13:27:37 2018 (+0800)
-;; Last-Updated: 二 9月 25 15:20:16 2018 (+0800)
+;; Last-Updated: 四 9月 27 12:49:13 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 6
+;;     Update #: 9
 ;; URL: http://wuhongyi.cn -->
 
 # Multiple Modules Synchronously
@@ -21,6 +21,7 @@ In a multi-module system there will be one clock master and a number of clock sl
 
 
 > **[warning] Please Note**
+>
 > In 250 MHz or 500 MHz Pixie-16 modules, the frequency of signal processing clock 
 > in the FPGA has been divided down to either 125 MHz or 100 MHz, respectively, for 
 > more practical implementation of the design. That division might result in different 
@@ -77,23 +78,48 @@ The Pixie-16 module installed in slot 2 of the Master crate is designated as the
 
 The Pixie-16 module installed in slot 2 of the Slave crate is called the crate Master module, which is responsible for receiving the global clock from the Master crate and sending such clock to all modules in that crate through length-matched traces on the backplane. The System Director Module is also responsible for sending the global clock to all modules in the Master crate. Therefore, it is also a crate Master module. Other modules in these two crates are regular modules. Table shows the different types of modules in a 2-crate system.
 
-### Clock Jumper (JP101) Settings on the Pixie-16 Modules
-
 ![Module Definitions in a 2-crate System](/img/moduledefinitionsina2cratesystem.png)
 
 
+### Clock Jumper (JP101) Settings on the Pixie-16 Modules
 
-### Cable Connections for Pixie-16 Rear I/O Trigger Modules
+or all Pixie-16 modules in a 2-crate system to use the same global clock signal, the clock jumper (JP101) in all modules should be set according to Table *Clock Jumper JP101 Settings in a 2-crate System* and Figure *multi-crate clock mode*.
 
 ![Clock Jumper JP101 Settings in a 2-crate System](/img/clockjumperjp101settingsina2cratesystem.png)
 
 
+### Cable Connections for Pixie-16 Rear I/O Trigger Modules
 
+The Pixie-16 Rear I/O trigger modules are installed at the rear side of each crate where a 6U card cage is installed. Figure *rear I/O trigger modules* shows a Pixie-16 Rear I/O trigger module is installed directly behind either the Director or the Master module, respectively, to share clock, triggers, and run start or stop synchronization signals among multiple Pixie-16 crates. The rear of the backplane has connectors J3, J4 and J5, but it does not have J1 and J2, since it does not need to use CompactPCI or PXI communication.
+
+Typically the first slot at the rear of the backplane with J3, J4, J5 connectors installed is the slot where the Pixie-16 Rear I/O trigger module should be installed. While installing the module, please ensure the alignment of top and bottom rails with the trigger module to avoid damage to the backplane pins.
+
+![rear I/O trigger modules](/img/reariotriggermodules.png)
+
+Figure *Cable connections between two Pixie-16 rear I/O trigger modules* shows the cable connections between two Pixie-16 rear I/O trigger modules that are installed in two separate crates. All connection cables are Category 5 or 6 Ethernet cables and shall have the same length to minimize clock phase difference between Pixie-16 modules in the two crates.
+
+![Cable connections between two Pixie-16 rear I/O trigger modules](/img/cableconnectionsbetweentwopixie16reariotriggermodules.png)
 
 ### Jumper Settings on the Pixie-16 Rear I/O Trigger Modules
 
+Trigger module #1 is installed in the rear slot #2 of crate #1. As mentioned earlier, the rear slot #2 is located at the back of the crate and is at the direct opposite side of the front slot #2 of the crate. Care should be taken when installing the trigger module into the rear slot #2 by avoiding bending any pins of the rear side of the backplane, since that could cause the 3.3V pin to be shorted to neighboring ground pin and thus damage the whole backplane.
+
+Please note pin numbering for all jumpers on the trigger module is counted from right to left when facing the top side of the module, i.e. the backplane connectors J3 to J5 are on the left (only exception is JP1, which is in vertical orientation and should be counted from bottom to top). A tiny ‘1’ label is painted on the right hand side of the jumpers, indicating pin 1. Figure *Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module* shows the pin ‘1’ in red boxes.
+
+![Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module](/img/pinnumberingforthejumpersonthepixie16reariotriggermodule.png)
 
 
+Table *Rear I/O Trigger Module #1’s Jumper Settings* shows the jumper settings of the Pixie-16 rear I/O trigger module #1 in a 2-crate system.
+
+![Rear I/O Trigger Module #1’s Jumper Settings](/img/reariotrigger1sjumpersettings.png)
+
+Trigger module #2 is installed in the rear slot #2 of crate #2. Table *Rear I/O Trigger Module #2’s Jumper Settings* shows the jumper settings of the Pixie-16 rear I/O trigger module #2 in a 2-crate system.
+
+![Rear I/O Trigger Module #2’s Jumper Settings](/img/reariotriggermodule2sjumpersettings.png)
+
+![Cable connections among four Pixie-16 rear I/O trigger modules](/img/cableconnectionsamongfourpixie16reariotriggermodules.png)
+
+Please note, if there are a total of four crates, the cable connections among those four Pixie-16 rear I/O trigger modules that are installed in those four separate crates should follow the connection methods shown in Figure 1-17. For the jumper settings on the Pixie-16 rear I/O trigger modules, trigger module #1 and #2 should use the same jumper settings as those in the trigger module #1 and #2 of the 2-crate system, respectively, whereas trigger module #3 and #4 should use the same jumper settings as those in trigger module #2.
 
 
 <!-- MultipleModulesSynchronously.md ends here -->
