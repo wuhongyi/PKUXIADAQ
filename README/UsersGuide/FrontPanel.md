@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 五 7月 29 15:38:49 2016 (+0800)
-;; Last-Updated: 五 9月 28 10:09:28 2018 (+0800)
+;; Last-Updated: 五 9月 28 10:13:33 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 33
+;;     Update #: 34
 ;; URL: http://wuhongyi.cn -->
 
 # Front Panel
@@ -30,7 +30,7 @@ Each Pixie-16 module accepts 16 analog input signals, and each input connector i
 
 Each Pixie-16 module is equipped with one LVDS I/O port on its front panel. LVDS stands for low voltage differential signaling. The LVDS I/O connector is a RJ45 connector, which implies that the same Cat 5 or Cat 6 Ethernet cables can be used to connect signals to or from this I/O port. However, no Ethernet connectivity is available through this Pixie-16 I/O port.
 
-Four differential signal pairs, i.e., between pin-pairs $$Fo_{1p}$$/$$Fo_{1n}$$ , $Fi_{1p}$/$Fi_{1n}$ , $Fi_{5p}$/$Fi_{5n}$ , and $Fo_{5p}$/$Fo_{5n}$ , are available from this I/O port. Each pair can be configured as either an input or output signal.
+Four differential signal pairs, i.e., between pin-pairs $$Fo_{1p}$$/$$Fo_{1n}$$ , $$Fi_{1p}$$/$$Fi_{1n}$$ , $$Fi_{5p}$$/$$Fi_{5n}$$ , and $$Fo_{5p}$$/$$Fo_{5n}$$ , are available from this I/O port. Each pair can be configured as either an input or output signal.
 
 ## Digital I/O Connectors(Rev. F only)
 

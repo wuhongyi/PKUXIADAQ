@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:55 2018 (+0800)
-;; Last-Updated: 四 9月 27 13:00:46 2018 (+0800)
+;; Last-Updated: 五 9月 28 11:09:18 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 32
+;;     Update #: 35
 ;; URL: http://wuhongyi.cn -->
 
 # GUI
@@ -137,33 +137,36 @@ sums and baseline value for each event.
 
 The **Base Setup** page controls the analog gain, offset and polarity for each channel. It is useful to click on **Trace & Baseline** in the top control **Monitor** bar to view the signal read from the ADCs while adjusting these parameters. The display shows one or all 16 channels of a module; you can set the sampling interval for each block to capture a longer time frame in **Hist & XDT** page. Click **Draw** to update the graph.
 
-Pulses from the detector should fall in the range from 0 to 12/14/16-bit -1, with the baseline at ~400 to allow for drifts and/or undershoots and no clipping at the upper limit. If there is clipping, adjust the Gain and Offset or click on the Adjust Offsets button to let the software set the DC offsets to proper levels.**TODO 这段还需要进一步修改**
+Pulses from the detector should fall in the range from 0 to 16383(14 bit), with the baseline at ~1638 to allow for drifts and/or undershoots and no clipping at the upper limit. If there is clipping, adjust the Gain and Offset or click on the *AdjustOffset* button to let the software set the DC offsets to proper levels.**TODO 这段还需要进一步修改**
 
 Since the trigger/filter circuits in the FPGA only act on rising pulses, negative pulses are inverted at the input of the FPGA, and the waveforms shown in the ADC trace display include this optional inversion. Thus set the channel’s Polarity such that pulses from the detector appear with positive amplitude (rising edge).
 
 
 In the **Base Setup**  tab, you can set the total trace length and the pre-trigger trace delay for the waveforms to be acquired in list mode runs.
 
-
-The Pixie-16 constantly takes baseline measurements when no pulse is detected and keeps a
-baseline average to be subtracted from the energy filter output during pulse height
-reconstruction. Baseline measurements that differ from the average by more than Baseline Cut
-will be rejected as they are likely contaminated with small pulses below the trigger threshold.
-You can click on the Acquire Baseline button to view a series of baseline measurements for each
-channel, and in the single channel view you can build a histogram of baselines to verify that the
-Baseline Cut does not reject measurements falling into the main (ideally Gaussian) peak in the
-baseline distribution. Usually, it is sufficient to keep Baseline Cut at its default value.
+The trace delay cannot be longer than the trace length, and for each Pixie-16 variant, there is also a limit for the maximum value of trace delay and trace length.
 
 
-Note: Since the baseline computation takes into account the exponential decay, no pulses
-should be noticeable in the baseline display if a) the decay time is set correctly and b) the
-detector pulses are truly exponential.
+> **[info] trace length in 500 MHz**
+>
+> For the 500 MHz Pixie-16 modules, the ADCs are running at 500 MHz, but the traces are recorded with 100 MHz clocks in the FPGA with 5 ADC samples captured in each 10 ns interval. In addition, the data packing from the FPGA to the onboard External FIFO is two sets of 5 ADC samples in one transfer. So the trace length should be multiples of 20 ns, i.e., 20 ns, 40 ns, ... for instance, a trace length of 500 ns and a trace delay of 200 ns.
 
 
-Baseline Percent is a parameter used for automatic offset adjustment; by clicking on the
-Adjust Offsets button, offsets will be set such that the baseline seen in the ADC trace display falls
-at the Baseline Percent fraction of the full ADC range (e.g. for Baseline Percent = 10% the
-baseline falls at ADC step 1638 out of 16384 total).
+
+
+
+The Pixie-16 constantly takes baseline measurements when no pulse is detected and keeps a baseline average to be subtracted from the energy filter output during pulse height reconstruction. Baseline measurements that differ from the average by more than the BaselineCut value will be rejected as they are likely contaminated with small pulses below the trigger threshold.
+
+A series of baseline measurements for each channel can be viewed in **Trace & Baseline** page, and in the BASELINE panel a histogram of baselines can be built to verify that the Baseline Cut does not reject measurements falling into the main (ideally Gaussian) peak in the baseline distribution.
+
+Usually, it is sufficient to keep Baseline Cut at its default value.
+
+
+Note: Since the baseline computation takes into account the exponential decay, no pulses should be noticeable in the baseline display if  
+- a) the decay time is set correctly and 
+- b) the detector pulses are truly exponential.
+
+Baseline Percent is a parameter used for automatic offset adjustment; by clicking on the *AdjustOffses* button, offsets will be set such that the baseline seen in the ADC trace display falls at the Baseline Percent fraction of the full ADC range (e.g. for a 12-bit ADC and Baseline Percent = 10% the baseline falls at ADC step 409 out of 4096 total).
 
 
 
@@ -186,12 +189,13 @@ Assume the digitized waveform stream can be represented by data series Trace[i],
 **TODO公式**  
 Where FL is called the fast length and FG is called the fast gap of the digital trapezoidal filter.
 
-
-
+General rules of thumb for the following important parameters are:
 
 - A longer trigger filter rise time averages more samples and thus allows setting lower thresholds without triggering on noise.
 - Typically the threshold should be set as low as possible, just above the noise level.
 - A longer trigger filter flat top time makes it easier to detect slow rising pulses.
+
+
 
 
 ### Energy
@@ -208,16 +212,26 @@ Where FL is called the fast length and FG is called the fast gap of the digital 
 **TODO**
 
 
-The most critical parameter for the energy computation is the signal decay time Tau. It is used
-to compensate for the falling edge of a previous pulse in the computation of the energy. You can
-either enter Tau directly for each channel, or enter an approximate value in the right control,
-select a channel, and click Find it to let the software determine the decay time automatically.
-Click Accept it to apply the found value to the channel. (If the approximate value is unchanged,
-the software could not find a better value.)  **TODO 这段还需要进一步修改**
+The most critical parameter for the energy computation is the signal decay time Tau. It is used to compensate for the falling edge of a previous pulse in the computation of the energy. You can either enter Tau directly for each channel, or enter an approximate value in the right control, select a channel, and click Find it to let the software determine the decay time automatically.
+Click Accept it to apply the found value to the channel. (If the approximate value is unchanged,the software could not find a better value.)  
 
 
-- The energy filter flat top time should be about the same as the pulse rise time.
-- The energy filter rise time can be varied to balance resolution and throughput. Typically, energy resolution increases with the length of the filter rise time, up to an optimum when longer filters only add more noise into the measurement. The filter dead time is about TD = 2 × (T rise + T flat ), and the maximum throughput for Poisson statistics is 1/(TD*e). For HPGe detectors, a rise time of 4-6μs is usually appropriate.
+At high count rates, pulses overlap with each other at higher frequency. In order to compute the energy or pulse height of those pulses accurately without the need to wait until they decay back to baseline level completely, the pulse height computation algorithm implemented in the Pixie-16 uses the decay time to compute and remove the contribution from the exponentially decaying tail of the overlapping prior pulse when computing the pulse height of the current pulse.
+
+> **[danger] single exponential decay constant**
+>
+> It is assumed the pulses have only a single exponential decay constant. If pulses have multiple decay constants, it might be possible to use the decay constant that dominates the decay of the pulse, but the accuracy of pulse height computation will be degraded.
+
+
+
+
+
+General rules of thumb for the following important parameters are:
+
+- The energy filter flat top time should be larger than the longest pulse rise time.
+- The energy filter rise time can be varied to balance the resolution and throughput.
+- In general, energy resolution improves with the increase of energy filter rise time, up to an optimum when longer filters only add more noise into the measurement.
+- The energy filter dead time TD is about $$2×(T_{rise}+T_{flat})$$, and the maximum throughput for Poisson statistics is 1/(TD*e). For HPGe detectors, a rise time of 4-6us and a flat top of 1us are usually appropriate.
 - Choose the smallest energy filter range that allows setting the optimum energy filter rise time. Larger filter ranges allow longer filter sums, but increase the granularity of possible values for the energy filter rise time and flat top time and increase the jitter of latching the energy filter output relative to the rising edge of the pulse. This is usually only important for very fast pulses.
 
 
@@ -315,15 +329,38 @@ ModCSRB is a 32-bit parameter with each of 32 bits controlling different operati
 
 Module Control Register B affecting the module as a whole.
 
-- a) Enable pullups for backplane bus lines. This should be enabled for only one module in the crate.
-- b) Connect trigger signals to backplane. You can set the module to share triggers over the backplane with other modules, unless you run each module (or channel) independently.
-- c) Accept external trigger and run inhibit signals. Enable this option to let this module accept external trigger and run inhibit signals and then put the signals on the backplane so that all modules can see the same signals. This should be enabled for only one module in the crate.
-- d) Crate master module (multiple crates only). This option is only used when multiple Pixie-16 crates communicate with each other. By enabling this option,the mater module in each crate is responsible for sending synchronization or trigger signals to certain backplane lines. This should be enabled for only one module in the crate.
-- e) Enable run inhibit signal input. This option is only applicable to the module which has the “Accept external trigger and run inhibit signals” option enabled. This should be enabled for only one module in the crate.
-- f) Multiple crates. This option is only used when multiple Pixie-16 crates communicate with each other.
-
-
-
+- bit 0 - MODCSRB_CPLDPULLUP
+	- Enable pullups for PXI trigger lines on the backplane through an onboard CPLD. 
+	- With the pullups, those PXI trigger lines default to logic high state. 
+	- Only when one module actively pulls a line to logic low state will such a line be in the low state. 
+	- Therefore signals transmitted over those PXI trigger lines are actively low signals.
+	- **Note: enable this bit only for one module per crate (e.g. the crate master module)**
+- bit 4 - MODCSRB_DIRMOD
+	- Set this module as the Director module so that it can send triggers, trace and header DPM full signal and run synchronization signal to all crates through the rear I/O trigger modules. 
+	- Here triggers include fast trigger and validation trigger
+	- **Note: enable this bit only for one module among all crates (e.g. the system director module in multi-crate configuration)**
+- bit 6 - MODCSRB_CHASSISMASTER
+	- Set this module as the chassis master module so that it can send triggers, trace and header DPM full signal and run synchronization signal to the backplane of the local crate. 
+	- Here triggers include fast trigger and validation trigger
+	- **Note: enable this bit only for one module per crate(e.g. the crate master module)**
+- bit 7 - MODCSRB_GFTSEL
+	- Select external fast trigger source(=1: external validation trigger, =0: external fast trigger, in case these two signals are swapped at the Pixie-16 front panel input connectors)
+- bit 8 - MODCSRB_ETSEL
+	- Select external validation trigger source(=1: external fast trigger,
+=0: external validation trigger, in case these two signals are swapped at the Pixie-16 front panel input connectors)
+- bit 10 - MODCSRB_INHIBITENA
+	- Enable(=1) or disable(=0) the use of external INHIBIT signal.
+	- When enabled, the external INHIBIT signal in the logic high state will prevent the run from starting until this external INHIBIT signal goes to logic low state.
+- bit 11 - MODCSRB_MULTCRATES
+	- Set this module to run in the multi-crate mode(=1) or in the local-crate mode(=0). 
+	- If the module is running in multi-crate mode, it will use the trace and header DPM full signal and run synchronization signal that are generated and distributed among multiple crates. 
+	- If the module is running in local-crate mode, it will use the trace and header DPM full signal and run synchronization signal generated in the local crate.
+- bit 12 - MODCSRB_SORTEVENTS
+	- Sort(=1) or do not sort(=0) events from all 16 channels of a Pixie-16 module based on the timestamps of the events, before storing the events in the external FIFO.
+	- Note: all 16 channels must have the same DAQ parameters setting to use this feature
+- bit 13 - MODCSRB_BKPLFASTTRIG
+	- Enable(=1) or disable(=0) the sending of 16 local fast triggers to the 16 lines on the backplane of the crate.
+	- **Note: only one module can enable this option in each PCI bus segment of a crate(not limited to the crate master module, e.g. any module in each PCI bus segment)**
 
 
 
@@ -405,14 +442,11 @@ channel. Otherwise, pulses will still be recorded even if they are piled up.
 
 ![Hist & XDT](/img/HistXDT.png)
 
-。。TODO。。
-
-
 The binning factor controls the number of MCA bins in the spectrum. Energies are computed as 16 bit numbers, allowing in principle 64K MCA bins.
 
-However, spectrum memory for each channel is limited to 32K bins, so computed energy values are divided by 2 binning factor before building the histogram. Binning Factor is usually set to 1, but for low count rates and wide peaks, it might be useful to set it to a larger value to obtain a spectrum with fewer bins, but more counts per bin.
+However, spectrum memory for each channel is limited to 32K bins, so computed energy values are divided by $2^{binning factor}$$ before building the histogram. Binning Factor is usually set to 1, but for low count rates and wide peaks, it might be useful to set it to a larger value to obtain a spectrum with fewer bins, but more counts per bin.
 
-Emin is reserved for a future function to subtract a constant “minimum energy” from the computed energy value before binning to essentially cut off the lower end of the spectrum.
+$$E_{min}$$ is reserved for a future function to subtract a constant “minimum energy” from the computed energy value before binning to essentially cut off the lower end of the spectrum.
 
 
 
