@@ -4,16 +4,16 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 五 9月 28 13:18:37 2018 (+0800)
+;; Last-Updated: 五 9月 28 13:31:02 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 95
+;;     Update #: 97
 ;; URL: http://wuhongyi.cn -->
 
 # README
 
 <!-- toc -->
 
-![PKU logo](README/img/pkulogo100.jpg)
+![PKU logo](pkulogo100.jpg)
 
 ## Version/版本
 
@@ -64,6 +64,7 @@ http://wuhongyi.cn/PKUXIADAQ/
 Technical adviser 技术指导:
 - Zhihuan Li  李智焕
 - Hui Tan  谭辉(XIA LLC)
+- Wolfgang Hennig(XIA LLC)
 
 Software Developer 软件主要开发者:
 - Hongyi Wu 吴鸿毅(wuhongyi@qq.com)
