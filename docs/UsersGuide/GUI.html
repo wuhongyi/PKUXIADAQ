@@ -417,9 +417,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:55 2018 (+0800)
-;; Last-Updated: 五 9月 28 12:06:17 2018 (+0800)
+;; Last-Updated: 五 9月 28 12:44:33 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 38
+;;     Update #: 40
 ;; URL: http://wuhongyi.cn -->
 <h1 id="gui"><a name="gui" class="plugin-anchor" href="#gui"><i class="fa fa-link" aria-hidden="true"></i></a>GUI</h1>
 <!-- toc -->
@@ -640,267 +640,309 @@ Click Accept it to apply the found value to the channel. (If the approximate val
 <h4 id="100-mhz-and-250-mhz-modules"><a name="100-mhz-and-250-mhz-modules" class="plugin-anchor" href="#100-mhz-and-250-mhz-modules"><i class="fa fa-link" aria-hidden="true"></i></a>100 MHz and 250 MHz modules</h4>
 <p>The following CFD algorithm is implemented in the signal processing FPGA of the 100 MHz(Rev. B, C, D and F) and 250 MHz(Rev. F) Pixie-16 modules. </p>
 <p>Assume the digitized waveform can be represented by data series Trace[i], i = 0, 1, 2, ... First the fast filter response(FF) of the digitized waveform is computed as follows:
-<img src="https://latex.codecogs.com/gif.latex?FF[i]=\sum_{j=i-(FL-1)}^{i}Trace[j]-\sum_{j=i-(2xFL+FG-1)}^{i-(FL+FG)}Trace[j]" class="latex-codecogs mode-inline">
-Where FL is called the fast length and FG is called the fast gap of the digital trapezoidal filter. Then the CFD is computed as follows:
-<img src="https://latex.codecogs.com/gif.latex?CFD[i+D]=FF[i+D]x(1-w/8)-FF[i]" class="latex-codecogs mode-inline">
-Where D is called the CFD delay length and w is called the CFD scaling factor(w=0, 1,..., 7).</p>
-<h4 id="500-mhz-modules"><a name="500-mhz-modules" class="plugin-anchor" href="#500-mhz-modules"><i class="fa fa-link" aria-hidden="true"></i></a>500 MHz modules</h4>
-<p>Valid CFD Scale values and corresponding CFD scaling factors are
-<img src="../img/cfdscale_format.PNG" alt="cfd scale"></p>
-<h3 id="qdc"><a name="qdc" class="plugin-anchor" href="#qdc"><i class="fa fa-link" aria-hidden="true"></i></a>QDC</h3>
-<figure id="fig1.3.3.8"><img src="../img/QDCPars.png" alt="QDC"><figcaption>Figure: QDC</figcaption></figure>
-<p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p>
-<p>Eight QDC sums, each of which can have different length varying from 10 ns to 327.68 &#x3BC;s,
+<img src="https://latex.codecogs.com/gif.latex?FF[i]=\sum_{j=i-(FL-1)}^{i}Trace[j]-\sum_{j=i-(2\timesFL+FG-1)}^{i-(FL+FG)}Trace[j]" class="latex-codecogs mode-inline"></p>
+<p>Where FL is called the fast length and FG is called the fast gap of the digital trapezoidal filter. Then the CFD is computed as follows:
+<img src="https://latex.codecogs.com/gif.latex?CFD[i+D]=FF[i+D]\times(1-w/8)-FF[i]" class="latex-codecogs mode-inline"></p>
+<p>Where D is called the CFD delay length and w is called the CFD scaling factor(w=0, 1,..., 7).</p>
+<p>The CFD zero crossing point(ZCP) is then determined when <img src="https://latex.codecogs.com/gif.latex?CFD[i]\leq0" class="latex-codecogs mode-inline"> and <img src="https://latex.codecogs.com/gif.latex?CFD[i+1]&lt;0$. The timestamp is latched at Trace point " class="latex-codecogs mode-inline">i<img src="https://latex.codecogs.com/gif.latex?, and the fraction time " class="latex-codecogs mode-inline">f<img src="https://latex.codecogs.com/gif.latex? is given by the ratio of the two CFD response amplitudes right before and after the ZCP.
+
+" class="latex-codecogs mode-inline">f=\frac{CFDout1}{CFDout1-CFDout2}<img src="https://latex.codecogs.com/gif.latex?
+
+Where CFDout1 is the CFD response amplitude right before the ZCP, and CFDout2 is the CFD response amplitude right after the ZCP(subtraction is used in the denominator since CFDout2 is negative). The Pixie-16 DSP computes the CFD final value as follows and stores it in the output data stream for online or offline analysis.
+
+" class="latex-codecogs mode-block">CFD=\frac{CFDout1}{CFDout1-CFDout2}\timesN<img src="https://latex.codecogs.com/gif.latex?
+
+Where N is scaling factor, which equals to 32768 for 100 MHz modules and 16384 for 250 MHz modules, respectively.
+
+![WAVEFORM](/img/adcsamples_cfd.png)  
+![FASTFILTER](/img/fastfilter_cfd.png)  
+![CFDFILTER](/img/cfdfilter_cfd.png)
+
+Figure shows a sample ADC trace, its fast filter response and its CFD response, respectively. 
+
+The top figure shows a raw ADC trace. After computing the fast filter response on the raw ADC trace using Equation " class="latex-codecogs mode-block">FF[i]<img src="https://latex.codecogs.com/gif.latex?, the fast filter response is compared against the fast filter threshold as shown in the middle figure. The ADC sample where the fast filter response crosses the fast filter threshold is called the fast trigger point, which also starts the search for the CFD zero crossing point. 
+
+The CFD response is computed using Equation " class="latex-codecogs mode-inline">CFD[i+D]<img 250="" src="https://latex.codecogs.com/gif.latex? and is shown in the bottom figure(for actual implementation in the firmware, the fast filter response FF is delayed slightly before being used for computing the CFD response so that there are sufficient number of CFD response points to look for the zero crossing point after the fast trigger). To prevent premature CFD trigger as a result of the noise in the CFD response before the actual trigger, a DSP parameter called CFDThresh is used to suppress those noise-caused zero crossing. However, if a zero crossing point cannot be found within a certain period after the fast trigger (typically 32 clock cycles), e.g., due to unnecessarily high CFDThresh, a forced CFD Trigger will be issued and a flag will be set in an event header word to indicate that the recorded CFD time for this event is invalid.
+
+However, the event will still have a valid timestamp which is latched by the fast filter trigger when fast filter crosses over the trigger threshold. The aforementioned CFD parameters correspond to the following DSP parameters.
+
+![Corresponding DSP Parameters for the CFD Parameters](/img/correspondingdspparametersforthecfdparmeters.png)
+
+
+&gt; **[info] 250 MHz**
+&gt;
+&gt; In the 250 MHz Pixie-16 modules, the event timestamp is counted with 125 MHz clock ticks, i.e., 8 ns intervals, and two consecutive 250 MHz ADC samples are captured in one 8 ns interval as well. 
+&gt;
+&gt; The CFD trigger also runs at 125 MHz, but the CFD zero crossing point is still reported as a fractional time between two neighboring 250 MHz ADC samples, which are processed by the FPGA in one 125 MHz clock cycle. 
+&gt;
+&gt; However, the CFD zero crossing point could be in either the odd or even clock cycle of the captured 250 MHz ADC waveforms. 
+&gt;
+&gt; Therefore, the firmware outputs a " cfd="" trigger="" source"="" bit="" in="" the="" output="" data="" stream="" to="" indicate="" whether="" zero="" crossing="" point="" is="" odd="" or="" even="" clock="" cycle="" of="" captured="" mhz="" adc="" waveforms.=""> **[info] 100 MHz**
+&gt;
+&gt; In the 100 MHz Pixie-16 modules, event timestamp, CFD trigger, and ADC waveform capture are all carried out with the same 100 MHz clock. So there is no need to report &quot;CFD trigger source&quot; for the 100 MHz Pixie-16 modules.
+
+
+
+%23%23%23%23 500 MHz modules
+
+The CFD algorithm discussed in the previous section for the 100 MHz and 250 MHz Pixie-16 modules can also be written in the following format:  
+&quot; class=&quot;latex-codecogs mode-inline&quot; /&gt;CFD(k)=w\cdot\left(\sum<em>{i=k}^{k+L}a(i)-\sum</em>{i=k-B}^{k-B+L}a(i)\right)-\left(\sum<em>{i=k-D}^{k-D+L}a(i)-\sum</em>{i=k-D-B}^{k-D-B+L}a(i)\right)<img src="https://latex.codecogs.com/gif.latex?
+
+Where a(i) is the ADC trace data, k is the index, and w, B, D, and L are CFD parameters.
+
+The CFD algorithm implemented in the 500 MHz Pixie-16 modules is special when compared to the one implemented in the 100 MHz and 250 MHz Pixie-16 modules in terms of the ability to adjust parameters w, B, D, and L. 
+
+The reason for this is that in the 500 MHz Pixie-16 modules, ADC data that come into the FPGA at the speed of 500 MHz is first slowed down with a ratio of 1:5, in other words, the FPGA captures 5 ADC samples at the rate of 100 MHz, i.e., every 10 ns. The FPGA then tries to find the CFD trigger point between any two adjacent 2-ns ADC samples within that 10 ns by first building sums of ADC samples and then calculating differences between delayed and non-delayed sums until the zero crossing point is found. However, in the 500 MHz Pixie-16 modules, the FPGA does not have enough resources to build sums for 5 ADC samples in parallel with variable delays. Therefore, the CFD algorithm for the 500 MHz modules was implemented using a set of fixed CFD parameters as shown in Table *Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules*. Tests show these fixed parameters give best performance for LaBr3(Ce) detectors.
+
+![Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules](/img/fixedcfdparametervaluesfor500mhzpixie16modules.png)
+
+The CFD time given by the 500 MHz Pixie-16 modules consists of two parts: a shift within the 5 ADC samples and a fractional time between two ADC samples where the CFD zero crossing occurred. The shift within the 5 ADC samples is reported as the 3-bit CFD trigger source[2:0] is defined as follows.
+
+![Meanings of the CFD Trigger Source for 500 MHz Pixie-16 Modules](/img/meaningofthecfdtriggersourcefor500mhzpixie16modules.png)
+
+The CFD fractional time is given as follows.
+" class="latex-codecogs mode-block">CFD=\frac{CFDout1}{CFDout1-CFDout2}\times8192<img src="https://latex.codecogs.com/gif.latex?
+
+
+%23%23%23 QDC
+
+![QDC](/img/QDCPars.png)
+
+**&#x3002;&#x3002;TODO&#x3002;&#x3002;**
+
+Eight QDC sums, each of which can have different length varying from 10 ns to 327.68 &#x3BC;s,
 are computed in the signal processing FPGA of a Pixie-16 module for each channel and the sums
 are written to the output data stream if the user requests so. The recording of QDC sums starts at
 the waveform point which is Pre-trigger Trace Length earlier than the trigger point, which is
 either the CFD trigger or local fast trigger depending on whether or not CFD trigger mode is
 enabled. The eight QDC sums are computed one by one continuously, but they are not
 overlapping. Both the QDC sum length and the Pre-trigger trace length are set by the user. The
-recording of QDC sums ends when the eight intervals have passed.</p>
-<h3 id="decimation"><a name="decimation" class="plugin-anchor" href="#decimation"><i class="fa fa-link" aria-hidden="true"></i></a>Decimation</h3>
-<figure id="fig1.3.3.9"><img src="../img/Decimation.png" alt="Decimation"><figcaption>Figure: Decimation</figcaption></figure>
-<p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p>
-<h3 id="copy-pars"><a name="copy-pars" class="plugin-anchor" href="#copy-pars"><i class="fa fa-link" aria-hidden="true"></i></a>Copy Pars</h3>
-<figure id="fig1.3.3.10"><img src="../img/CopyPars.png" alt="Copy Pars"><figcaption>Figure: Copy Pars</figcaption></figure>
-<p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p>
-<h3 id="save2file"><a name="save2file" class="plugin-anchor" href="#save2file"><i class="fa fa-link" aria-hidden="true"></i></a>Save2File</h3>
-<figure id="fig1.3.3.11"><img src="../img/Save2File.png" alt="Save2File"><figcaption>Figure: Save2File</figcaption></figure>
-<p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p>
-<hr>
-<h2 id="expert-&#x4E0B;&#x62C9;&#x680F;"><a name="expert-&#x4E0B;&#x62C9;&#x680F;" class="plugin-anchor" href="#expert-&#x4E0B;&#x62C9;&#x680F;"><i class="fa fa-link" aria-hidden="true"></i></a>Expert &#x4E0B;&#x62C9;&#x680F;</h2>
-<p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x8C03;&#x8282;&#x5185;&#x5BB9;&#x4E3A;&#x9AD8;&#x9636;&#x5185;&#x5BB9;&#xFF0C;&#x9700;&#x8981;&#x5BF9;&#x83B7;&#x53D6;&#x903B;&#x8F91;&#x6709;&#x4E00;&#x5B9A;&#x57FA;&#x7840;&#x7684;&#x4EBA;&#x5B66;&#x4E60;&#x638C;&#x63E1;&#x3002;</p>
-<p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p>
-<h3 id="module-variables"><a name="module-variables" class="plugin-anchor" href="#module-variables"><i class="fa fa-link" aria-hidden="true"></i></a>Module Variables</h3>
-<figure id="fig1.3.3.12"><img src="../img/ModuleVariables.png" alt="Module Variables"><figcaption>Figure: Module Variables</figcaption></figure>
-<p>In addition to distributing the global clock signal, the Pixie-16 rear I/O trigger module can also share global triggers and run synchronization signals. The global trigger signals include the global validation trigger and global fast trigger, plus the Pixie-16 FPGA data storage buffers&#x2019; full flag signal. The run synchronization signals include synchronous run start and stop signals that can be shared among multiple crates.</p>
-<p>In order to enable the distribution of such global triggers and run synchronization signals, certain Pixie-16 parameters have to be set properly. The parameter that controls the trigger distribution and run synchronization is the Module Control Register B (ModCSRB).</p>
-<p>ModCSRB is a 32-bit parameter with each of 32 bits controlling different operation modes of the Pixie-16 module.</p>
-<blockquote>
-<p><strong>[info] Trigger Distribution and Run Synchronization</strong></p>
-<p>For the System Director module that is installed in the Master crate, bits 0, 4, 6 and 11 of ModCSRB should be set to 1 (checked &amp; enabled).</p>
-<p>For the Crate Master module that is installed in the Slave crate, bits 0, 6 and 11 of ModCSRB should be set to 1 (checked &amp; enabled).</p>
-<p>For the General modules that are installed in both the Slave crate and Master crate, bit 11 of ModCSRB should be set to 1 (checked &amp; enabled).</p>
-</blockquote>
-<p><strong>&#x3002;&#x3002;TODO&#x3002;&#x3002;</strong></p>
-<p>Module Control Register B affecting the module as a whole.</p>
-<ul>
-<li>bit 0 - MODCSRB_CPLDPULLUP<ul>
-<li>Enable pullups for PXI trigger lines on the backplane through an onboard CPLD. </li>
-<li>With the pullups, those PXI trigger lines default to logic high state. </li>
-<li>Only when one module actively pulls a line to logic low state will such a line be in the low state. </li>
-<li>Therefore signals transmitted over those PXI trigger lines are actively low signals.</li>
-<li><strong>Note: enable this bit only for one module per crate (e.g. the crate master module)</strong></li>
-</ul>
-</li>
-<li>bit 4 - MODCSRB_DIRMOD<ul>
-<li>Set this module as the Director module so that it can send triggers, trace and header DPM full signal and run synchronization signal to all crates through the rear I/O trigger modules. </li>
-<li>Here triggers include fast trigger and validation trigger</li>
-<li><strong>Note: enable this bit only for one module among all crates (e.g. the system director module in multi-crate configuration)</strong></li>
-</ul>
-</li>
-<li>bit 6 - MODCSRB_CHASSISMASTER<ul>
-<li>Set this module as the chassis master module so that it can send triggers, trace and header DPM full signal and run synchronization signal to the backplane of the local crate. </li>
-<li>Here triggers include fast trigger and validation trigger</li>
-<li><strong>Note: enable this bit only for one module per crate(e.g. the crate master module)</strong></li>
-</ul>
-</li>
-<li>bit 7 - MODCSRB_GFTSEL<ul>
-<li>Select external fast trigger source(=1: external validation trigger, =0: external fast trigger, in case these two signals are swapped at the Pixie-16 front panel input connectors)</li>
-</ul>
-</li>
-<li>bit 8 - MODCSRB_ETSEL<ul>
-<li>Select external validation trigger source(=1: external fast trigger,
-=0: external validation trigger, in case these two signals are swapped at the Pixie-16 front panel input connectors)</li>
-</ul>
-</li>
-<li>bit 10 - MODCSRB_INHIBITENA<ul>
-<li>Enable(=1) or disable(=0) the use of external INHIBIT signal.</li>
-<li>When enabled, the external INHIBIT signal in the logic high state will prevent the run from starting until this external INHIBIT signal goes to logic low state.</li>
-</ul>
-</li>
-<li>bit 11 - MODCSRB_MULTCRATES<ul>
-<li>Set this module to run in the multi-crate mode(=1) or in the local-crate mode(=0). </li>
-<li>If the module is running in multi-crate mode, it will use the trace and header DPM full signal and run synchronization signal that are generated and distributed among multiple crates. </li>
-<li>If the module is running in local-crate mode, it will use the trace and header DPM full signal and run synchronization signal generated in the local crate.</li>
-</ul>
-</li>
-<li>bit 12 - MODCSRB_SORTEVENTS<ul>
-<li>Sort(=1) or do not sort(=0) events from all 16 channels of a Pixie-16 module based on the timestamps of the events, before storing the events in the external FIFO.</li>
-<li>Note: all 16 channels must have the same DAQ parameters setting to use this feature</li>
-</ul>
-</li>
-<li>bit 13 - MODCSRB_BKPLFASTTRIG<ul>
-<li>Enable(=1) or disable(=0) the sending of 16 local fast triggers to the 16 lines on the backplane of the crate.</li>
-<li><strong>Note: only one module can enable this option in each PCI bus segment of a crate(not limited to the crate master module, e.g. any module in each PCI bus segment)</strong></li>
-</ul>
-</li>
-</ul>
-<h3 id="csra"><a name="csra" class="plugin-anchor" href="#csra"><i class="fa fa-link" aria-hidden="true"></i></a>CSRA</h3>
-<figure id="fig1.3.3.13"><img src="../img/CSRA.png" alt="CSRA"><figcaption>Figure: CSRA</figcaption></figure>
-<ul>
-<li>&#x9EC4;&#x8272; FTS&#x3001;GTS &#x7EC4;&#x5408;&#x6765;&#x9009;&#x62E9; channel fast trigger&#xFF1A;<ul>
-<li>&#x4E24;&#x4E2A;&#x5747;&#x4E0D;&#x9009;&#x65F6;&#x4E3A; local fast trigger</li>
-<li>&#x9009;&#x62E9; FTS &#x65F6;&#x4E3A; latched module fast trigger</li>
-<li>FTS &#x4E0D;&#x9009;&#x3001;GTS &#x9009;&#x4E0A;&#x65F6;&#x4E3A; latched channel validation trigger</li>
-</ul>
-</li>
-<li>&#x84DD;&#x8272; MSE&#x3001;CSE&#x3001;MVT&#x3001;CVT &#x7528;&#x6765;&#x9009;&#x62E9; module/channel validation trigger&#xFF1A;<ul>
-<li>MVT &#x4E3A;&#x662F;&#x5426;&#x5F00;&#x542F; module validation trigger</li>
-<li>CVT &#x4E3A;&#x662F;&#x5426;&#x5F00;&#x542F; channel validation trigger</li>
-<li>MSE&#x9009;&#x62E9; module validation trigger &#x6765;&#x6E90;&#x4E8E; System FPGA &#x8FD8;&#x662F;&#x524D;&#x9762;&#x677F; module GATE</li>
-<li>CSE&#x9009;&#x62E9; channel validation trigger &#x6765;&#x6E90;&#x4E8E; System FPGA &#x8FD8;&#x662F;&#x524D;&#x9762;&#x677F; channel GATE</li>
-</ul>
-</li>
-<li>&#x7C89;&#x7EA2;&#x8272; NPR&#x3001;IPR &#x7EC4;&#x5408;&#x9009;&#x62E9; pileup &#x4E8B;&#x4EF6;&#x7684;&#x5904;&#x7406;&#xFF1A;<ul>
-<li>&#x4E24;&#x4E2A;&#x5747;&#x4E0D;&#x9009;&#x65F6;&#x5219;&#x8BB0;&#x5F55;&#x6240;&#x6709;&#x4E8B;&#x4EF6;&#xFF0C;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;&#x80FD;&#x91CF;&#x503C;&#x4E3A;&#x65E0;&#x6548;</li>
-<li>NPR &#x9009;&#x62E9; IPR &#x4E0D;&#x9009;&#x65F6;&#x4E0D;&#x8BB0;&#x5F55;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;</li>
-<li>NPR &#x4E0D;&#x9009; IPR &#x9009;&#x62E9;&#x65F6;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#x3001;&#x4E0D;&#x5806;&#x79EF;&#x65F6;&#x5019;&#x4E0D;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;</li>
-<li>&#x4E24;&#x4E2A;&#x5747;&#x9009;&#x62E9;&#x65F6;&#x53EA;&#x8BB0;&#x5F55;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;</li>
-</ul>
-</li>
-<li>&#x7EFF;&#x8272;CTV&#x3001;CVS&#x3001;MVS&#x7528;&#x6765;&#x9009;&#x62E9;module/channel veto&#xFF1A;<ul>
-<li>MVS &#x9009;&#x62E9; module veto &#x6765;&#x6E90;&#x4E8E;&#x524D;&#x9762;&#x677F; module GATE &#x8FD8;&#x662F; module validation trigger</li>
-<li>CVS &#x9009;&#x62E9; channel veto &#x6765;&#x6E90;&#x4E8E;&#x524D;&#x9762;&#x677F; channel GATE &#x8FD8;&#x662F; channel validation trigger</li>
-<li>CTV &#x4E3A;&#x662F;&#x5426;&#x5F00;&#x542F; channel trigger veto</li>
-</ul>
-</li>
-<li>&#x7EA2;&#x8272;&#x4E3A;&#x57FA;&#x7840;&#x8BBE;&#x7F6E;<ul>
-<li>&#x9ED1;&#x8272; NTL &#x662F;&#x5426;&#x4FDD;&#x7559;&#x8D85;&#x51FA;&#x91CF;&#x7A0B;&#x7684;&#x6CE2;&#x5F62;</li>
-<li>&#x9ED1;&#x8272; ETS &#x662F;&#x5426;&#x8BB0;&#x5F55;&#x5916;&#x90E8;&#x65F6;&#x949F;&#x7684;&#x6570;&#x636E;</li>
-</ul>
-</li>
-<li>&#x5269;&#x4F59;&#x7684;BDA&#x4E0D;&#x9009;&#xFF0C;HE&#x4E0D;&#x7BA1;</li>
-</ul>
-<p>Channel Control Register A affecting each channel individually </p>
-<ul>
-<li>bit 0 - CCSRA_FTRIGSEL<ul>
-<li>Channel fast trigger selection(=1: module fast trigger from the System FPGA; =0: the selection depends on the value of another bit CCSRA_GROUPTRIGSEL &#x2013; if CCSRA_GROUPTRIGSEL = 1, select the channel validation trigger from the System FPGA, and if CCSRA_GROUPTRIGSEL = 0, select this channel&#x2019;s local fast trigger)</li>
-</ul>
-</li>
-<li>bit 1 - CCSRA_EXTTRIGSEL<ul>
-<li>Module validation trigger selection(=1: module gate input from the Pixie-16 front panel Module Gate LVDS connector; =0: module validation trigger from the System FPGA)</li>
-</ul>
-</li>
-<li>bit 2 - CCSRA_GOOD<ul>
-<li>Set this channel as a Good channel(=1) or a not Good channel(=0).</li>
-<li><strong>When a channel is set to be a not Good channel, it still generates local fast triggers, which could be used in multiplicity computation, etc., but this channel will not record list mode data or MCA data, and will not update its baseline value</strong></li>
-</ul>
-</li>
-<li>bit 3 - CCSRA_CHANTRIGSEL<ul>
-<li>Channel validation signal selection(=1: channel gate input from the Pixie-16 front panel Channel Gate LVDS connector; =0:channel validation trigger from the System FPGA)</li>
-</ul>
-</li>
-<li>bit 4 - CCSRA_SYNCDATAACQ<ul>
-<li>Choose the level of synchronous data acquisition for this channel(=1: stops taking data when the trace or header DPM for any channel of any Pixie-16 module in the system is full; =0: stops taking data only when the trace or header DPM for this channel of this Pixie-16 module is full)</li>
-</ul>
-</li>
-<li>bit 5 - CCSRA_POLARITY<ul>
-<li>Choose this channel&#x2019;s input signal polarity(=1: invert input signal&#x2019;s polarity; =0: do not invert input signal&#x2019;s polarity).</li>
-<li><strong>Please note in Pixie-16, signal processing requires positive rising input signal. So if input signal has a negative falling edge, it should be inverted by setting this CCSRA_POLARITY bit to 1</strong></li>
-</ul>
-</li>
-<li>bit 6 - CCSRA_VETOENA<ul>
-<li>Enable(=1) or disable(=0) this channel&#x2019;s veto. </li>
-<li>If veto is enabled, this channel&#x2019;s fast trigger will be vetoed by either the module veto signal(see bit 20 CCSRA_MODVETOSEL below) or channel veto signal(see bit 19 CCSRA_CHANVETOSEL below). </li>
-<li>But if veto is disabled, this channel&#x2019;s fast trigger will not be vetoed by either veto signal, even if either veto signal is present</li>
-</ul>
-</li>
-<li>bit 7 - CCSRA_HISTOE<ul>
-<li>Enable(=1) or disable(=0) the histogramming of pulse energy values in the onboard MCA memory. </li>
-<li>However, the current Pixie-16 firmware always histograms pulse energy values in the onboard MCA memory. </li>
-<li>So this CCSRA_HISTOE is essentially not in use at the moment</li>
-</ul>
-</li>
-<li>bit 8 - CCSRA_TRACEENA<ul>
-<li>Enable(=1) or disable(=0) trace capture in the list mode run for this channel</li>
-</ul>
-</li>
-<li>bit 9 - CCSRA_QDCENA<ul>
-<li>Enable(=1) or disable(=0) QDC sums recording in the list mode run for this channel. </li>
-<li>There are a total of 8 QDC sums for each event</li>
-</ul>
-</li>
-<li>bit 10 - CCSRA_CFDMODE<ul>
-<li>Enable(=1) or disable(=0) CFD trigger in the list mode run for this channel. </li>
-<li>CFD trigger is used to latch sub-sample timing for the event time of arrival or timestamp</li>
-</ul>
-</li>
-<li>bit 11 - CCSRA_GLOBTRIG<ul>
-<li>Enable(=1) or disable(=0) the requirement of module validation trigger for this channel. </li>
-<li>If enabled, only when module validation trigger overlaps the channel fast trigger will the events be recorded for this channel</li>
-</ul>
-</li>
-<li>bit 12 - CCSRA_ESUMSENA<ul>
-<li>Enable(=1) or disable(=0) the recording of raw energy sums and baseline values in the list mode run for this channel. </li>
-<li>There are a total of three raw energy sums and one baseline value for each event. </li>
-<li><strong>Please note the baseline value is stored in the format of 32-bit IEEE float point(IEEE 754)</strong></li>
-</ul>
-</li>
-<li>bit 13 - CCSRA_CHANTRIG<ul>
-<li>Enable(=1) or disable(=0) the requirement of channel validation trigger for this channel. </li>
-<li>If enabled, only when channel validation trigger overlaps the channel fast trigger will the events be recorded for this channel</li>
-</ul>
-</li>
-<li>bit 14 - CCSRA_ENARELAY<ul>
-<li>Switch between two attenuations or gains for the input signal in this channel through an input relay(=1: close the input relay resulting in no input signal attenuation; =0: open the input relay resulting in a 1&#x2044;4 input signal attenuation)</li>
-</ul>
-</li>
-<li>bit 15/16 - CCSRA_PILEUPCTRL/CCSRA_INVERSEPILEUP<ul>
-<li>Control normal pileup rejection(bit 15) and inverse pileup rejection(bit 16) for list mode runs:</li>
-<li>1) Bits [16:15] = 00, record all events</li>
-<li>2) Bits [16:15] = 01, only record single events, i.e., reject piled up events</li>
-<li>3) Bits [16:15] = 10, record everything for piled up events, but will not record trace for single events even if trace recording is enabled, i.e., only record event header</li>
-<li>4) Bits [16:15] = 11, only record piled up events, i.e., reject single events</li>
-<li>In all cases, if the event is piled up, no energy will be computed for such event</li>
-</ul>
-</li>
-<li>bit 17 - CCSRA_ENAENERGYCUT<ul>
-<li>Enable(=1) or disable(=0) the &#x201C;no traces for large pulses&#x201D; feature. </li>
-<li>If enabled, trace will be not be recorded if the event energy is larger than the value set in DSP parameter EnergyLow</li>
-</ul>
-</li>
-<li>bit 18 - CCSRA_GROUPTRIGSEL<ul>
-<li>Select channel fast trigger &#x2013; this bit works together with the CCSRA_FTRIGSEL bit(bit 0): if CCSRA_FTRIGSEL=1, this CCSRA_GROUPTRIGSEL bit has no effect; if CCSRA_FTRIGSEL=0, then if CCSRA_GROUPTRIGSEL=1, select the channel validation trigger from the System FPGA, and if CCSRA_GROUPTRIGSEL=0, select this channel&#x2019;s local fast trigger</li>
-</ul>
-</li>
-<li>bit 19 - CCSRA_CHANVETOSEL<ul>
-<li>Channel veto signal selection(=1: channel validation trigger from the System FPGA; =0: channel gate input from the Pixie-16 front panel Channel Gate LVDS connector)</li>
-</ul>
-</li>
-<li>bit 20 - CCSRA_MODVETOSEL<ul>
-<li>Module veto signal selection(=1: module validation trigger from the System FPGA; =0: module gate input from the Pixie-16 front panel Module Gate LVDS connector)</li>
-</ul>
-</li>
-<li>bit 21 - CCSRA_EXTTSENA<ul>
-<li>Enable(=1) or disable(=0) the recording of the 48-bit external clock timestamp in the event header during list mode run for this channel</li>
-</ul>
-</li>
-</ul>
-<h3 id="logic-set"><a name="logic-set" class="plugin-anchor" href="#logic-set"><i class="fa fa-link" aria-hidden="true"></i></a>Logic Set</h3>
-<figure id="fig1.3.3.14"><img src="../img/LogicTrigger.png" alt="Logic Set"><figcaption>Figure: Logic Set</figcaption></figure>
-<p><strong>TODO</strong></p>
-<figure id="fig1.3.3.15"><img src="../img/stretchlength.PNG" alt="stretch length"><figcaption>Figure: stretch length</figcaption></figure>
-<hr>
-<h2 id="monitor-&#x4E0B;&#x62C9;&#x680F;"><a name="monitor-&#x4E0B;&#x62C9;&#x680F;" class="plugin-anchor" href="#monitor-&#x4E0B;&#x62C9;&#x680F;"><i class="fa fa-link" aria-hidden="true"></i></a>Monitor &#x4E0B;&#x62C9;&#x680F;</h2>
-<p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x8C03;&#x8282;&#x5185;&#x5BB9;&#x4E3A;&#x76D1;&#x89C6;&#x6CE2;&#x5F62;&#x566A;&#x58F0;&#x6C34;&#x5E73;&#x3001;&#x57FA;&#x7EBF;&#x5206;&#x5E03;&#x7B49;&#x3002;</p>
-<h3 id="hist--xdt"><a name="hist--xdt" class="plugin-anchor" href="#hist--xdt"><i class="fa fa-link" aria-hidden="true"></i></a>Hist &amp; XDT</h3>
-<figure id="fig1.3.3.16"><img src="../img/HistXDT.png" alt="Hist &amp; XDT"><figcaption>Figure: Hist &amp; XDT</figcaption></figure>
-<p>The binning factor controls the number of MCA bins in the spectrum. Energies are computed as 16 bit numbers, allowing in principle 64K MCA bins.</p>
-<p>However, spectrum memory for each channel is limited to 32K bins, so computed energy values are divided by $2^{binning factor}<img src="https://latex.codecogs.com/gif.latex? before building the histogram. Binning Factor is usually set to 1, but for low count rates and wide peaks, it might be useful to set it to a larger value to obtain a spectrum with fewer bins, but more counts per bin.
+recording of QDC sums ends when the eight intervals have passed.
 
-" class="latex-codecogs mode-inline">E_{min}$$ is reserved for a future function to subtract a constant &#x201C;minimum energy&#x201D; from the computed energy value before binning to essentially cut off the lower end of the spectrum.</p>
+
+%23%23%23 Decimation
+
+![Decimation](/img/Decimation.png)
+
+**&#x3002;&#x3002;TODO&#x3002;&#x3002;**
+
+%23%23%23 Copy Pars
+
+![Copy Pars](/img/CopyPars.png)
+
+**&#x3002;&#x3002;TODO&#x3002;&#x3002;**
+
+%23%23%23 Save2File
+
+![Save2File](/img/Save2File.png)
+
+**&#x3002;&#x3002;TODO&#x3002;&#x3002;**
+
+----
+
+%23%23 Expert &#x4E0B;&#x62C9;&#x680F;
+
+&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x8C03;&#x8282;&#x5185;&#x5BB9;&#x4E3A;&#x9AD8;&#x9636;&#x5185;&#x5BB9;&#xFF0C;&#x9700;&#x8981;&#x5BF9;&#x83B7;&#x53D6;&#x903B;&#x8F91;&#x6709;&#x4E00;&#x5B9A;&#x57FA;&#x7840;&#x7684;&#x4EBA;&#x5B66;&#x4E60;&#x638C;&#x63E1;&#x3002;
+
+**&#x3002;&#x3002;TODO&#x3002;&#x3002;**
+
+%23%23%23 Module Variables
+
+![Module Variables](/img/ModuleVariables.png)
+
+
+In addition to distributing the global clock signal, the Pixie-16 rear I/O trigger module can also share global triggers and run synchronization signals. The global trigger signals include the global validation trigger and global fast trigger, plus the Pixie-16 FPGA data storage buffers&#x2019; full flag signal. The run synchronization signals include synchronous run start and stop signals that can be shared among multiple crates.
+
+In order to enable the distribution of such global triggers and run synchronization signals, certain Pixie-16 parameters have to be set properly. The parameter that controls the trigger distribution and run synchronization is the Module Control Register B (ModCSRB).
+
+ModCSRB is a 32-bit parameter with each of 32 bits controlling different operation modes of the Pixie-16 module.
+
+&gt; **[info] Trigger Distribution and Run Synchronization**
+&gt;
+&gt; For the System Director module that is installed in the Master crate, bits 0, 4, 6 and 11 of ModCSRB should be set to 1 (checked &amp; enabled).
+&gt;
+&gt; For the Crate Master module that is installed in the Slave crate, bits 0, 6 and 11 of ModCSRB should be set to 1 (checked &amp; enabled).
+&gt;
+&gt; For the General modules that are installed in both the Slave crate and Master crate, bit 11 of ModCSRB should be set to 1 (checked &amp; enabled).
+
+
+
+**&#x3002;&#x3002;TODO&#x3002;&#x3002;**
+
+Module Control Register B affecting the module as a whole.
+
+- bit 0 - MODCSRB_CPLDPULLUP
+	- Enable pullups for PXI trigger lines on the backplane through an onboard CPLD. 
+	- With the pullups, those PXI trigger lines default to logic high state. 
+	- Only when one module actively pulls a line to logic low state will such a line be in the low state. 
+	- Therefore signals transmitted over those PXI trigger lines are actively low signals.
+	- **Note: enable this bit only for one module per crate (e.g. the crate master module)**
+- bit 4 - MODCSRB_DIRMOD
+	- Set this module as the Director module so that it can send triggers, trace and header DPM full signal and run synchronization signal to all crates through the rear I/O trigger modules. 
+	- Here triggers include fast trigger and validation trigger
+	- **Note: enable this bit only for one module among all crates (e.g. the system director module in multi-crate configuration)**
+- bit 6 - MODCSRB_CHASSISMASTER
+	- Set this module as the chassis master module so that it can send triggers, trace and header DPM full signal and run synchronization signal to the backplane of the local crate. 
+	- Here triggers include fast trigger and validation trigger
+	- **Note: enable this bit only for one module per crate(e.g. the crate master module)**
+- bit 7 - MODCSRB_GFTSEL
+	- Select external fast trigger source(=1: external validation trigger, =0: external fast trigger, in case these two signals are swapped at the Pixie-16 front panel input connectors)
+- bit 8 - MODCSRB_ETSEL
+	- Select external validation trigger source(=1: external fast trigger,
+=0: external validation trigger, in case these two signals are swapped at the Pixie-16 front panel input connectors)
+- bit 10 - MODCSRB_INHIBITENA
+	- Enable(=1) or disable(=0) the use of external INHIBIT signal.
+	- When enabled, the external INHIBIT signal in the logic high state will prevent the run from starting until this external INHIBIT signal goes to logic low state.
+- bit 11 - MODCSRB_MULTCRATES
+	- Set this module to run in the multi-crate mode(=1) or in the local-crate mode(=0). 
+	- If the module is running in multi-crate mode, it will use the trace and header DPM full signal and run synchronization signal that are generated and distributed among multiple crates. 
+	- If the module is running in local-crate mode, it will use the trace and header DPM full signal and run synchronization signal generated in the local crate.
+- bit 12 - MODCSRB_SORTEVENTS
+	- Sort(=1) or do not sort(=0) events from all 16 channels of a Pixie-16 module based on the timestamps of the events, before storing the events in the external FIFO.
+	- Note: all 16 channels must have the same DAQ parameters setting to use this feature
+- bit 13 - MODCSRB_BKPLFASTTRIG
+	- Enable(=1) or disable(=0) the sending of 16 local fast triggers to the 16 lines on the backplane of the crate.
+	- **Note: only one module can enable this option in each PCI bus segment of a crate(not limited to the crate master module, e.g. any module in each PCI bus segment)**
+
+
+
+
+%23%23%23 CSRA
+
+![CSRA](/img/CSRA.png)
+
+- &#x9EC4;&#x8272; FTS&#x3001;GTS &#x7EC4;&#x5408;&#x6765;&#x9009;&#x62E9; channel fast trigger&#xFF1A;
+	- &#x4E24;&#x4E2A;&#x5747;&#x4E0D;&#x9009;&#x65F6;&#x4E3A; local fast trigger
+	- &#x9009;&#x62E9; FTS &#x65F6;&#x4E3A; latched module fast trigger
+	- FTS &#x4E0D;&#x9009;&#x3001;GTS &#x9009;&#x4E0A;&#x65F6;&#x4E3A; latched channel validation trigger
+- &#x84DD;&#x8272; MSE&#x3001;CSE&#x3001;MVT&#x3001;CVT &#x7528;&#x6765;&#x9009;&#x62E9; module/channel validation trigger&#xFF1A;
+	- MVT &#x4E3A;&#x662F;&#x5426;&#x5F00;&#x542F; module validation trigger
+	- CVT &#x4E3A;&#x662F;&#x5426;&#x5F00;&#x542F; channel validation trigger
+	- MSE&#x9009;&#x62E9; module validation trigger &#x6765;&#x6E90;&#x4E8E; System FPGA &#x8FD8;&#x662F;&#x524D;&#x9762;&#x677F; module GATE
+	- CSE&#x9009;&#x62E9; channel validation trigger &#x6765;&#x6E90;&#x4E8E; System FPGA &#x8FD8;&#x662F;&#x524D;&#x9762;&#x677F; channel GATE
+- &#x7C89;&#x7EA2;&#x8272; NPR&#x3001;IPR &#x7EC4;&#x5408;&#x9009;&#x62E9; pileup &#x4E8B;&#x4EF6;&#x7684;&#x5904;&#x7406;&#xFF1A;
+	- &#x4E24;&#x4E2A;&#x5747;&#x4E0D;&#x9009;&#x65F6;&#x5219;&#x8BB0;&#x5F55;&#x6240;&#x6709;&#x4E8B;&#x4EF6;&#xFF0C;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;&#x80FD;&#x91CF;&#x503C;&#x4E3A;&#x65E0;&#x6548;
+	- NPR &#x9009;&#x62E9; IPR &#x4E0D;&#x9009;&#x65F6;&#x4E0D;&#x8BB0;&#x5F55;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;
+	- NPR &#x4E0D;&#x9009; IPR &#x9009;&#x62E9;&#x65F6;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#x3001;&#x4E0D;&#x5806;&#x79EF;&#x65F6;&#x5019;&#x4E0D;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;
+	- &#x4E24;&#x4E2A;&#x5747;&#x9009;&#x62E9;&#x65F6;&#x53EA;&#x8BB0;&#x5F55;&#x5806;&#x79EF;&#x4E8B;&#x4EF6;
+- &#x7EFF;&#x8272;CTV&#x3001;CVS&#x3001;MVS&#x7528;&#x6765;&#x9009;&#x62E9;module/channel veto&#xFF1A;
+	- MVS &#x9009;&#x62E9; module veto &#x6765;&#x6E90;&#x4E8E;&#x524D;&#x9762;&#x677F; module GATE &#x8FD8;&#x662F; module validation trigger
+	- CVS &#x9009;&#x62E9; channel veto &#x6765;&#x6E90;&#x4E8E;&#x524D;&#x9762;&#x677F; channel GATE &#x8FD8;&#x662F; channel validation trigger
+	- CTV &#x4E3A;&#x662F;&#x5426;&#x5F00;&#x542F; channel trigger veto
+- &#x7EA2;&#x8272;&#x4E3A;&#x57FA;&#x7840;&#x8BBE;&#x7F6E;
+	- &#x9ED1;&#x8272; NTL &#x662F;&#x5426;&#x4FDD;&#x7559;&#x8D85;&#x51FA;&#x91CF;&#x7A0B;&#x7684;&#x6CE2;&#x5F62;
+	- &#x9ED1;&#x8272; ETS &#x662F;&#x5426;&#x8BB0;&#x5F55;&#x5916;&#x90E8;&#x65F6;&#x949F;&#x7684;&#x6570;&#x636E;
+- &#x5269;&#x4F59;&#x7684;BDA&#x4E0D;&#x9009;&#xFF0C;HE&#x4E0D;&#x7BA1;
+
+
+
+
+
+Channel Control Register A affecting each channel individually 
+
+- bit 0 - CCSRA_FTRIGSEL
+	- Channel fast trigger selection(=1: module fast trigger from the System FPGA; =0: the selection depends on the value of another bit CCSRA_GROUPTRIGSEL &#x2013; if CCSRA_GROUPTRIGSEL = 1, select the channel validation trigger from the System FPGA, and if CCSRA_GROUPTRIGSEL = 0, select this channel&#x2019;s local fast trigger)
+- bit 1 - CCSRA_EXTTRIGSEL
+	- Module validation trigger selection(=1: module gate input from the Pixie-16 front panel Module Gate LVDS connector; =0: module validation trigger from the System FPGA)
+- bit 2 - CCSRA_GOOD
+	- Set this channel as a Good channel(=1) or a not Good channel(=0).
+	- **When a channel is set to be a not Good channel, it still generates local fast triggers, which could be used in multiplicity computation, etc., but this channel will not record list mode data or MCA data, and will not update its baseline value**
+- bit 3 - CCSRA_CHANTRIGSEL
+	- Channel validation signal selection(=1: channel gate input from the Pixie-16 front panel Channel Gate LVDS connector; =0:channel validation trigger from the System FPGA)
+- bit 4 - CCSRA_SYNCDATAACQ
+	- Choose the level of synchronous data acquisition for this channel(=1: stops taking data when the trace or header DPM for any channel of any Pixie-16 module in the system is full; =0: stops taking data only when the trace or header DPM for this channel of this Pixie-16 module is full)
+- bit 5 - CCSRA_POLARITY
+	- Choose this channel&#x2019;s input signal polarity(=1: invert input signal&#x2019;s polarity; =0: do not invert input signal&#x2019;s polarity).
+	- **Please note in Pixie-16, signal processing requires positive rising input signal. So if input signal has a negative falling edge, it should be inverted by setting this CCSRA_POLARITY bit to 1**
+- bit 6 - CCSRA_VETOENA
+	- Enable(=1) or disable(=0) this channel&#x2019;s veto. 
+	- If veto is enabled, this channel&#x2019;s fast trigger will be vetoed by either the module veto signal(see bit 20 CCSRA_MODVETOSEL below) or channel veto signal(see bit 19 CCSRA_CHANVETOSEL below). 
+	- But if veto is disabled, this channel&#x2019;s fast trigger will not be vetoed by either veto signal, even if either veto signal is present
+- bit 7 - CCSRA_HISTOE
+	- Enable(=1) or disable(=0) the histogramming of pulse energy values in the onboard MCA memory. 
+	- However, the current Pixie-16 firmware always histograms pulse energy values in the onboard MCA memory. 
+	- So this CCSRA_HISTOE is essentially not in use at the moment
+- bit 8 - CCSRA_TRACEENA
+	- Enable(=1) or disable(=0) trace capture in the list mode run for this channel
+- bit 9 - CCSRA_QDCENA
+	- Enable(=1) or disable(=0) QDC sums recording in the list mode run for this channel. 
+	- There are a total of 8 QDC sums for each event
+- bit 10 - CCSRA_CFDMODE
+	- Enable(=1) or disable(=0) CFD trigger in the list mode run for this channel. 
+	- CFD trigger is used to latch sub-sample timing for the event time of arrival or timestamp
+- bit 11 - CCSRA_GLOBTRIG
+	- Enable(=1) or disable(=0) the requirement of module validation trigger for this channel. 
+	- If enabled, only when module validation trigger overlaps the channel fast trigger will the events be recorded for this channel
+- bit 12 - CCSRA_ESUMSENA
+	- Enable(=1) or disable(=0) the recording of raw energy sums and baseline values in the list mode run for this channel. 
+	- There are a total of three raw energy sums and one baseline value for each event. 
+	- **Please note the baseline value is stored in the format of 32-bit IEEE float point(IEEE 754)**
+- bit 13 - CCSRA_CHANTRIG
+	- Enable(=1) or disable(=0) the requirement of channel validation trigger for this channel. 
+	- If enabled, only when channel validation trigger overlaps the channel fast trigger will the events be recorded for this channel
+- bit 14 - CCSRA_ENARELAY
+	- Switch between two attenuations or gains for the input signal in this channel through an input relay(=1: close the input relay resulting in no input signal attenuation; =0: open the input relay resulting in a 1&#x2044;4 input signal attenuation)
+- bit 15/16 - CCSRA_PILEUPCTRL/CCSRA_INVERSEPILEUP
+	- Control normal pileup rejection(bit 15) and inverse pileup rejection(bit 16) for list mode runs:
+	- 1) Bits [16:15] = 00, record all events
+	- 2) Bits [16:15] = 01, only record single events, i.e., reject piled up events
+	- 3) Bits [16:15] = 10, record everything for piled up events, but will not record trace for single events even if trace recording is enabled, i.e., only record event header
+	- 4) Bits [16:15] = 11, only record piled up events, i.e., reject single events
+	- In all cases, if the event is piled up, no energy will be computed for such event
+- bit 17 - CCSRA_ENAENERGYCUT
+	- Enable(=1) or disable(=0) the &#x201C;no traces for large pulses&#x201D; feature. 
+	- If enabled, trace will be not be recorded if the event energy is larger than the value set in DSP parameter EnergyLow
+- bit 18 - CCSRA_GROUPTRIGSEL
+	- Select channel fast trigger &#x2013; this bit works together with the CCSRA_FTRIGSEL bit(bit 0): if CCSRA_FTRIGSEL=1, this CCSRA_GROUPTRIGSEL bit has no effect; if CCSRA_FTRIGSEL=0, then if CCSRA_GROUPTRIGSEL=1, select the channel validation trigger from the System FPGA, and if CCSRA_GROUPTRIGSEL=0, select this channel&#x2019;s local fast trigger
+- bit 19 - CCSRA_CHANVETOSEL
+	- Channel veto signal selection(=1: channel validation trigger from the System FPGA; =0: channel gate input from the Pixie-16 front panel Channel Gate LVDS connector)
+- bit 20 - CCSRA_MODVETOSEL
+	- Module veto signal selection(=1: module validation trigger from the System FPGA; =0: module gate input from the Pixie-16 front panel Module Gate LVDS connector)
+- bit 21 - CCSRA_EXTTSENA
+	- Enable(=1) or disable(=0) the recording of the 48-bit external clock timestamp in the event header during list mode run for this channel
+
+
+
+
+
+
+
+
+%23%23%23 Logic Set
+
+![Logic Set](/img/LogicTrigger.png)
+
+**TODO**
+
+
+![stretch length](/img/stretchlength.PNG)
+
+
+----
+
+%23%23 Monitor &#x4E0B;&#x62C9;&#x680F;
+
+&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x8C03;&#x8282;&#x5185;&#x5BB9;&#x4E3A;&#x76D1;&#x89C6;&#x6CE2;&#x5F62;&#x566A;&#x58F0;&#x6C34;&#x5E73;&#x3001;&#x57FA;&#x7EBF;&#x5206;&#x5E03;&#x7B49;&#x3002;
+
+%23%23%23 Hist &amp; XDT
+
+![Hist &amp; XDT](/img/HistXDT.png)
+
+The binning factor controls the number of MCA bins in the spectrum. Energies are computed as 16 bit numbers, allowing in principle 64K MCA bins.
+
+However, spectrum memory for each channel is limited to 32K bins, so computed energy values are divided by $2^{binning factor}" class="latex-codecogs mode-block"> before building the histogram. Binning Factor is usually set to 1, but for low count rates and wide peaks, it might be useful to set it to a larger value to obtain a spectrum with fewer bins, but more counts per bin.</p>
+<p><img src="https://latex.codecogs.com/gif.latex?E_{min}" class="latex-codecogs mode-inline"> is reserved for a future function to subtract a constant &#x201C;minimum energy&#x201D; from the computed energy value before binning to essentially cut off the lower end of the spectrum.</p>
 <h3 id="trace--baseline"><a name="trace--baseline" class="plugin-anchor" href="#trace--baseline"><i class="fa fa-link" aria-hidden="true"></i></a>Trace &amp; Baseline</h3>
-<figure id="fig1.3.3.17"><img src="../img/Trace.png" alt="Trace &amp; Baseline"><figcaption>Figure: Trace &amp; Baseline</figcaption></figure>
-<figure id="fig1.3.3.18"><img src="../img/BaselineHist.png" alt="Trace &amp; Baseline"><figcaption>Figure: Trace &amp; Baseline</figcaption></figure>
-<figure id="fig1.3.3.19"><img src="../img/BaselineTimestamps.png" alt="Trace &amp; Baseline"><figcaption>Figure: Trace &amp; Baseline</figcaption></figure>
+<figure id="fig1.3.3.8"><img src="../img/Trace.png" alt="Trace &amp; Baseline"><figcaption>Figure: Trace &amp; Baseline</figcaption></figure>
+<figure id="fig1.3.3.9"><img src="../img/BaselineHist.png" alt="Trace &amp; Baseline"><figcaption>Figure: Trace &amp; Baseline</figcaption></figure>
+<figure id="fig1.3.3.10"><img src="../img/BaselineTimestamps.png" alt="Trace &amp; Baseline"><figcaption>Figure: Trace &amp; Baseline</figcaption></figure>
 <p>&#x3002;&#x3002;TODO&#x3002;&#x3002;</p>
 <hr>
 <h2 id="offiline-&#x4E0B;&#x62C9;&#x680F;"><a name="offiline-&#x4E0B;&#x62C9;&#x680F;" class="plugin-anchor" href="#offiline-&#x4E0B;&#x62C9;&#x680F;"><i class="fa fa-link" aria-hidden="true"></i></a>Offiline &#x4E0B;&#x62C9;&#x680F;</h2>
 <p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x4E3A;&#x79BB;&#x7EBF;&#x53C2;&#x6570;&#x4F18;&#x5316;&#x8C03;&#x8282;&#x3002;</p>
 <h3 id="adjust-par"><a name="adjust-par" class="plugin-anchor" href="#adjust-par"><i class="fa fa-link" aria-hidden="true"></i></a>Adjust Par</h3>
 <h4 id="initdata"><a name="initdata" class="plugin-anchor" href="#initdata"><i class="fa fa-link" aria-hidden="true"></i></a>InitData</h4>
-<figure id="fig1.3.3.20"><img src="../img/AdjustPar.png" alt="Adjust Par"><figcaption>Figure: Adjust Par</figcaption></figure>
+<figure id="fig1.3.3.11"><img src="../img/AdjustPar.png" alt="Adjust Par"><figcaption>Figure: Adjust Par</figcaption></figure>
 <ul>
 <li>Run &#x9009;&#x62E9;&#x8981;&#x8BFB;&#x53D6;&#x7684;&#x6587;&#x4EF6;&#x8FD0;&#x884C;&#x7F16;&#x53F7;&#xFF0C;Mod &#x9009;&#x62E9;&#x8981;&#x8BFB;&#x53D6;&#x7B2C;&#x51E0;&#x4E2A;&#x91C7;&#x96C6;&#x5361;&#xFF0C;&#x6309;&#x94AE; Read &#x5C06;&#x6587;&#x4EF6;&#x4E3B;&#x8981;&#x4FE1;&#x606F;(&#x9053;&#x5740;&#x3001;&#x80FD;&#x91CF;&#x3001;&#x6CE2;&#x5F62;&#x4F4D;&#x7F6E;&#x7B49;)&#x8F7D;&#x5165;&#x5185;&#x5B58;&#x3002;</li>
 <li>Additional analysis: &#x4E09;&#x4E2A;&#x9009;&#x9879;&#x4E2D;&#xFF0C;&#x9009;&#x62E9;&#x8868;&#x793A;&#x8BFB;&#x53D6;&#x8BE5;&#x6587;&#x4EF6;&#x6570;&#x636E;&#x5230;&#x5185;&#x5B58;&#x4E2D;&#x65F6;&#x5305;&#x62EC;&#x8BE5;&#x4FE1;&#x606F;&#x3002;&#x53EA;&#x6709;&#x8BFB;&#x53D6;&#x4E86;&#x8BE5;&#x6570;&#x636E;&#xFF0C;&#x624D;&#x80FD;&#x542F;&#x7528;&#x4E00;&#x4E9B;&#x5206;&#x6790;&#x65B9;&#x6CD5;&#x3002;&#x4F46;&#x662F;&#x524D;&#x63D0;&#x662F;&#x6570;&#x636E;&#x91C7;&#x96C6;&#x65F6;&#x5019;&#x9700;&#x8981;&#x8BB0;&#x5F55;&#x8BE5;&#x4FE1;&#x606F;&#x3002;</li>
@@ -920,7 +962,7 @@ recording of QDC sums ends when the eight intervals have passed.</p>
 </ul>
 <hr>
 <h4 id="adjust-par"><a name="adjust-par" class="plugin-anchor" href="#adjust-par"><i class="fa fa-link" aria-hidden="true"></i></a>Adjust Par</h4>
-<figure id="fig1.3.3.21"><img src="../img/OfflineAPI.png" alt="offlineapi"><figcaption>Figure: offlineapi</figcaption></figure>
+<figure id="fig1.3.3.12"><img src="../img/OfflineAPI.png" alt="offlineapi"><figcaption>Figure: offlineapi</figcaption></figure>
 <p>&#x8981;&#x901A;&#x8FC7;&#x91C7;&#x96C6;&#x7684;&#x6CE2;&#x5F62;&#x79BB;&#x7EBF;&#x8BA1;&#x7B97;fast filter&#x3001;slow filter cfd &#x66F2;&#x7EBF;&#xFF0C;&#x5BF9;&#x91C7;&#x96C6;&#x7684;&#x6CE2;&#x5F62;&#x6709;&#x4EE5;&#x4E0B;&#x8981;&#x6C42;&#x3002;&#x5982;&#x4E0A;&#x56FE;&#x4E2D;&#xFF0C;&#x8BA1;&#x7B97;&#x7684;&#x80FD;&#x91CF;&#x662F;&#x7B97;&#x6CD5;&#x7684;&#x80FD;&#x91CF;&#x4E0E;&#x7B97;&#x6CD5;&#x7684;&#x57FA;&#x7EBF;&#x7684;&#x5DEE;&#xFF0C;&#x8981;&#x5F97;&#x5230;&#x6B63;&#x786E;&#x7684;&#x68AF;&#x5F62;&#xFF0C;&#x90A3;&#x4E48;&#x524D;&#x63D0;&#x662F;&#x524D;&#x9762;&#x6709;&#x8DB3;&#x591F;&#x957F;&#x7684;&#x70B9;&#x6765;&#x8BA1;&#x7B97;&#x57FA;&#x7EBF;&#x3002;</p>
 <p>&#x56FE;&#x4E2D; EFRT &#x8868;&#x793A; <em>Energy Filter Rise Time</em>&#xFF0C;EFFT &#x8868;&#x793A; <em>Energy Filter Flat Top</em>&#x3002;</p>
 <p>To compute energy filter response offline, the ideal settings are:</p>
@@ -929,65 +971,65 @@ recording of QDC sums ends when the eight intervals have passed.</p>
 <li>Pre-trigger trace (Trace-delay) length &gt; ( 3 * EFRT + EFFT )</li>
 </ul>
 <p>&#x5F53;&#x7136;&#xFF0C;&#x8FD9;&#x53EA;&#x662F;&#x8BA1;&#x7B97;&#x68AF;&#x5F62;&#x7684;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x8BB0;&#x5F55;&#x4E86;&#x6BCF;&#x4E2A;&#x4E8B;&#x4EF6;&#x7684;&#x80FD;&#x91CF;&#x68AF;&#x5F62;&#x7684;&#x57FA;&#x7EBF;&#xFF0C;&#x5E76;&#x4E14;&#x91C7;&#x7528;pre-trigger&#x90E8;&#x5206;&#x70B9;&#x7684;&#x5E73;&#x5747;&#x503C;&#x4F5C;&#x4E3A;&#x6CE2;&#x5F62;&#x5DE6;&#x4FA7;&#x7684;&#x65E0;&#x9650;&#x5EF6;&#x4F38;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x4E0D;&#x53D7; Pre-trigger trace length &gt; ( 3 x EFRT + EFFT ) &#x6761;&#x4EF6;&#x7684;&#x9650;&#x5236;&#x4E86;&#x3002;&#x4E0B;&#x9762;&#x7684;&#x9875;&#x9762;&#x4E2D;&#xFF0C;&#x5F53;&#x91C7;&#x7528; Old Baseline &#x65B9;&#x6CD5;&#x6765;&#x8BA1;&#x7B97;&#x80FD;&#x91CF;&#x68AF;&#x5F62;&#x65F6;&#xFF0C;&#x6709;&#x4E2A;&#x524D;&#x63D0;&#x662F; pre-trigger trace length &#x81F3;&#x5C11;&#x9700;&#x8981;&#x6709; 200 &#x4E2A;&#x70B9;&#xFF0C;&#x56E0;&#x4E3A;&#x6CE2;&#x5F62;&#x5DE6;&#x4FA7;&#x5EF6;&#x4F38;&#x91C7;&#x7528;&#x524D; 200 &#x4E2A;&#x70B9;&#x6765;&#x5E73;&#x5747;&#x3002;</p>
-<figure id="fig1.3.3.22"><img src="../img/Adjustpars3.png" alt="Adjustpars3"><figcaption>Figure: Adjustpars3</figcaption></figure>
+<figure id="fig1.3.3.13"><img src="../img/Adjustpars3.png" alt="Adjustpars3"><figcaption>Figure: Adjustpars3</figcaption></figure>
 <p>&#x5F53;&#x91C7;&#x96C6;&#x7684;&#x6CE2;&#x5F62; pre-trigger trace length &gt; 3 x EFRT + EFFT &#x65F6;&#xFF0C;pre-trigger trace &#x63D0;&#x4F9B;&#x8DB3;&#x591F;&#x591A;&#x7684;&#x70B9;&#x6765;&#x8BA1;&#x7B97;&#x57FA;&#x7EBF;&#xFF0C;SF BL &#x7B97;&#x6CD5;&#x53EF;&#x9009;&#x62E9; Calculate&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x9009;&#x62E9; Old Baseline &#x7B97;&#x6CD5;&#x3002;&#x9009;&#x62E9;Old Baseline &#x7B97;&#x6CD5;&#x7684;&#x524D;&#x63D0;&#x65F6;&#x8BB0;&#x5F55;&#x6570;&#x636E;&#x7684;&#x65F6;&#x5019;&#xFF0C; &#x9009;&#x62E9;&#x5F00;&#x542F;&#x8BB0;&#x5F55; &#x68AF;&#x5F62;&#x7684;baseline&#xFF0C;&#x5E76;&#x4E14; InitData &#x9875;&#x9762;&#x7684; raw E sums/baseline &#x9009;&#x9879;&#x5F00;&#x542F;&#x3002;&#x5F53;&#x9009;&#x62E9; Old Baseline &#x7B97;&#x6CD5;&#x65F6;&#xFF0C;&#x4E4B;&#x540E;&#x7684;&#x56DB;&#x4E2A;&#x9009;&#x9879;&#x53C2;&#x6570;&#x751F;&#x6548;&#xFF0C;&#x8BE5;&#x56DB;&#x4E2A;&#x53C2;&#x6570;&#x4E3A;&#x8BE5;&#x6570;&#x636E;&#x91C7;&#x96C6;&#x65F6;&#x5019;&#x6240;&#x7528;&#x7684;&#x80FD;&#x91CF;&#x68AF;&#x5F62;&#x7684;&#x53C2;&#x6570;&#x3002;</p>
 <p>&#x4E0A;&#x56FE;&#x4E2D;&#x7EFF;&#x8272;&#x66F2;&#x7EBF;&#x4E3A;&#x5178;&#x578B;&#x7684;&#x4E0D;&#x6EE1;&#x8DB3; pre-trigger trace length &gt; 3 x EFRT + EFFT &#x65F6;&#xFF0C;&#x91C7;&#x7528;&#x7684; Calculate &#x7B97;&#x6CD5;&#x9020;&#x6210;&#x7684;&#x7ED3;&#x679C;&#x3002;&#x56FE;&#x4E2D;&#x663E;&#x793A; pre-trigger trace length &#x4E3A; 10 us&#xFF0C;EFRT &#x4E3A; 5.04 us&#xFF0C;EFFT &#x4E3A; 1.60 us&#x3002;</p>
 <p>&#x6B64;&#x65F6;&#xFF0C;&#x5E94;&#x8BE5;&#x91C7;&#x7528;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#x7684;  Old Baseline &#x7B97;&#x6CD5;&#x3002;</p>
-<figure id="fig1.3.3.23"><img src="../img/Adjustpars1.png" alt="Adjustpars1"><figcaption>Figure: Adjustpars1</figcaption></figure>
+<figure id="fig1.3.3.14"><img src="../img/Adjustpars1.png" alt="Adjustpars1"><figcaption>Figure: Adjustpars1</figcaption></figure>
 <p>&#x7528;&#x6237;&#x53EF;&#x9009;&#x62E9;&#x67E5;&#x770B;&#x6CE2;&#x5F62;&#x7684;&#x901A;&#x9053;&#xFF0C;&#x6309;&#x94AE; Load &#x53EF;&#x8BFB;&#x53D6;&#x5E76;&#x663E;&#x793A;&#x5F53;&#x524D;&#x7684;&#x53C2;&#x6570;&#x8BBE;&#x7F6E;&#x60C5;&#x51B5;&#xFF0C;&#x5F53;&#x4FEE;&#x6539;&#x4EE5;&#x4E0A;&#x7684;&#x53C2;&#x6570;&#x65F6;&#x5019;&#xFF0C;&#x9700;&#x8981;&#x6309; Apply &#x6309;&#x94AE;&#x4F7F;&#x4E4B;&#x751F;&#x6548;&#x3002;&#x6309;&#x94AE; Draw &#x7528;&#x6765;&#x663E;&#x793A;&#x4E0B;&#x4E00;&#x4E2A;&#x8BE5;&#x901A;&#x9053;&#x7684;&#x4E8B;&#x4EF6;&#x6CE2;&#x5F62;&#x3002;</p>
 <p>&#x7528;&#x6237;&#x53EF;&#x9009;&#x62E9;&#x540C;&#x65F6;&#x663E;&#x793A; Wave / Slow Filter/ Fast filter / Thres / CFD / CFD Thres &#x4E2D;&#x7684;&#x591A;&#x4E2A;&#x6CE2;&#x5F62;&#x3002;&#x6216;&#x8005;&#x9009;&#x62E9;&#x66F2;&#x7EBF;&#x7684;&#x7ED8;&#x753B;&#x6837;&#x5F0F;&#x3002;</p>
-<figure id="fig1.3.3.24"><img src="../img/Adjustpars2.png" alt="Adjustpars2"><figcaption>Figure: Adjustpars2</figcaption></figure>
+<figure id="fig1.3.3.15"><img src="../img/Adjustpars2.png" alt="Adjustpars2"><figcaption>Figure: Adjustpars2</figcaption></figure>
 <p>&#x4E0A;&#x56FE;&#x5C55;&#x793A;&#x4E86;&#x663E;&#x793A; fast filter&#x3001;Thres&#x3001;CFD&#x3001;CFD Thres &#x56DB;&#x4E2A;&#x6CE2;&#x5F62;&#xFF0C;&#x56FE;&#x6837;&#x91C7;&#x7528;&#x70B9;&#x663E;&#x793A;&#x65B9;&#x5F0F;&#x3002;&#x6700;&#x4F4E;&#x7AEF;&#x7684;&#x6C34;&#x5E73;&#x6761;&#x4E24;&#x7AEF;&#x53EF;&#x4EE5;&#x62D6;&#x52A8;&#xFF0C;&#x7528;&#x6237;&#x53EF;&#x62C9;&#x52A8;&#x6765;&#x63A7;&#x5236;&#x6CE2;&#x5F62;&#x6A2A;&#x5750;&#x6807;&#x7684;&#x663E;&#x793A;&#x8303;&#x56F4;&#xFF0C;&#x5982;&#x56FE;&#x4E2D;&#x663E;&#x793A;800 - 1300 &#x7684;&#x70B9;&#x3002;&#x8BE5;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x70B9;&#x51FB; Draw &#x6309;&#x94AE;&#xFF0C;&#x5C06;&#x4F1A;&#x4FDD;&#x6301;&#x8BE5;&#x6307;&#x5B9A;&#x7684;&#x5750;&#x6807;&#x8303;&#x56F4;&#x3002;</p>
 <hr>
 <h4 id="wave-16"><a name="wave-16" class="plugin-anchor" href="#wave-16"><i class="fa fa-link" aria-hidden="true"></i></a>Wave-16</h4>
-<figure id="fig1.3.3.25"><img src="../img/Waveform16.png" alt="Waveform16"><figcaption>Figure: Waveform16</figcaption></figure>
+<figure id="fig1.3.3.16"><img src="../img/Waveform16.png" alt="Waveform16"><figcaption>Figure: Waveform16</figcaption></figure>
 <p>&#x8BE5;&#x9875;&#x9762;&#x7528;&#x4E8E;&#x540C;&#x65F6;&#x67E5;&#x770B;16&#x901A;&#x9053;&#x7684;&#x539F;&#x59CB;&#x6CE2;&#x5F62;&#x3001;filter &#x6CE2;&#x5F62;&#xFF0C;&#x9608;&#x503C;&#x7B49;&#x3002;&#x7528;&#x6237;&#x53EF;&#x9009;&#x62E9;&#x540C;&#x65F6;&#x663E;&#x793A; Wave / Slow Filter/ Fast filter / Thres / CFD / CFD Thres &#x4E2D;&#x7684;&#x591A;&#x4E2A;&#x6CE2;&#x5F62;&#x3002;</p>
 <p>&#x7528;&#x6237;&#x53EF;&#x901A;&#x8FC7;&#x8BE5;&#x9875;&#x9762;&#xFF0C;&#x5FEB;&#x901F;&#x67E5;&#x770B;&#x8BE5;&#x91C7;&#x96C6;&#x5361;&#x6240;&#x6709;&#x901A;&#x9053;&#x7684;&#x6CE2;&#x5F62;&#x662F;&#x5426;&#x6B63;&#x5E38;&#xFF0C;&#x53C2;&#x6570;&#x8BBE;&#x7F6E;&#x662F;&#x5426;&#x5408;&#x7406;&#x3002;&#x70B9;&#x51FB;&#x6309;&#x94AE; Draw &#x4E00;&#x6B21;&#xFF0C;&#x5219;&#x663E;&#x793A;&#x6240;&#x6709;&#x901A;&#x9053;&#x4E0B;&#x4E00;&#x4E2A;&#x6CE2;&#x5F62;&#x3002;</p>
 <p><em>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x4E00;&#x70B9;&#xFF0C;&#x672C;&#x9875;&#x9762;&#x7684; Slow Filter &#x6CE2;&#x5F62;&#x9700;&#x8981;&#x5728;&#x91C7;&#x96C6;&#x7684;&#x6CE2;&#x5F62; pre-trigger trace &#x957F;&#x5EA6;&#x5927;&#x4E8E; 3 x EFRT + EFFT &#x65F6;&#x624D;&#x662F;&#x6B63;&#x786E;&#x7684;&#x3002;</em></p>
 <hr>
 <h4 id="energy-16"><a name="energy-16" class="plugin-anchor" href="#energy-16"><i class="fa fa-link" aria-hidden="true"></i></a>Energy-16</h4>
-<figure id="fig1.3.3.26"><img src="../img/Energy16.png" alt="Energy16"><figcaption>Figure: Energy16</figcaption></figure>
+<figure id="fig1.3.3.17"><img src="../img/Energy16.png" alt="Energy16"><figcaption>Figure: Energy16</figcaption></figure>
 <p>&#x8BE5;&#x754C;&#x9762;&#x7528;&#x4E8E;&#x540C;&#x65F6;&#x67E5;&#x770B; 16 &#x901A;&#x9053;&#x7684;&#x4E00;&#x7EF4;&#x80FD;&#x8C31;&#x3002;&#x70B9;&#x51FB;&#x53F3;&#x4E0A;&#x89D2;&#x7684;&#x6309;&#x94AE; Draw &#x5373;&#x53EF;&#x3002;</p>
 <hr>
 <h4 id="orig-energy"><a name="orig-energy" class="plugin-anchor" href="#orig-energy"><i class="fa fa-link" aria-hidden="true"></i></a>Orig Energy</h4>
-<figure id="fig1.3.3.27"><img src="../img/OrigEnergy.png" alt="OrigEnergy"><figcaption>Figure: OrigEnergy</figcaption></figure>
+<figure id="fig1.3.3.18"><img src="../img/OrigEnergy.png" alt="OrigEnergy"><figcaption>Figure: OrigEnergy</figcaption></figure>
 <p>&#x8BE5;&#x9875;&#x9762;&#x7528;&#x6765;&#x5FEB;&#x901F;&#x67E5;&#x770B;&#x67D0;&#x901A;&#x9053;&#x7684;&#x80FD;&#x8C31;&#x3002;&#x7528;&#x6237;&#x9009;&#x62E9;&#x80FD;&#x8C31;&#x7684;&#x5206; Bin &#x6570;&#xFF0C;&#x8BE5;&#x6570;&#x503C;&#x8868;&#x793A;&#x5C06; 0 - 65536 &#x9053;&#x5206;&#x6210;&#x591A;&#x5C11;&#x5206;&#x3002;&#x9009;&#x62E9;&#x67E5;&#x770B;&#x901A;&#x9053;&#x3002;&#x7136;&#x540E;&#x6309; Draw &#x6309;&#x94AE;&#x5373;&#x53EF;&#x3002;</p>
-<figure id="fig1.3.3.28"><img src="../img/OrigEnergyFit.png" alt="OrigEnergyFit"><figcaption>Figure: OrigEnergyFit</figcaption></figure>
+<figure id="fig1.3.3.19"><img src="../img/OrigEnergyFit.png" alt="OrigEnergyFit"><figcaption>Figure: OrigEnergyFit</figcaption></figure>
 <p>&#x5DE6;&#x4E0A;&#x89D2;&#x7684; Open Fit &#x6309;&#x94AE;&#x7528;&#x6765;&#x5FEB;&#x901F;&#x9AD8;&#x65AF;&#x62DF;&#x5408;&#x770B;&#x80FD;&#x91CF;&#x5206;&#x8FA8;&#x3002;&#x70B9;&#x51FB;&#x6309;&#x94AE;&#xFF0C;&#x5F00;&#x542F;&#x62DF;&#x5408;&#x6A21;&#x5F0F;&#xFF0C;&#x518D;&#x6B21;&#x70B9;&#x51FB;&#x6309;&#x94AE;&#x5219;&#x5173;&#x95ED;&#x8BE5;&#x529F;&#x80FD;&#x3002;&#x5C06;&#x9F20;&#x6807;&#x79FB;&#x52A8;&#x5230;&#x76F4;&#x65B9;&#x56FE;&#x7684;&#x84DD;&#x7EBF;&#x4E0A;&#xFF0C;&#x9F20;&#x6807;&#x5341;&#x5B57;&#x5C06;&#x4F1A;&#x53D8;&#x6210;&#x4E09;&#x89D2;&#x7BAD;&#x5934;&#x3002;&#x4E09;&#x89D2;&#x7BAD;&#x5934;&#x7684;&#x9F20;&#x6807;&#x70B9;&#x51FB;&#x76F4;&#x65B9;&#x56FE;&#x4E2D;&#x7684;&#x4E24;&#x4E2A;&#x4F4D;&#x7F6E;&#xFF0C;&#x4E24;&#x70B9;&#x6240;&#x5728;&#x533A;&#x95F4;&#x5373;&#x4E3A;&#x62DF;&#x5408;&#x533A;&#x95F4;&#xFF0C;&#x5219;&#x53EF;&#x67E5;&#x770B;&#x80FD;&#x91CF;&#x5206;&#x8FA8;&#x3002;</p>
 <hr>
 <h4 id="calc-energy"><a name="calc-energy" class="plugin-anchor" href="#calc-energy"><i class="fa fa-link" aria-hidden="true"></i></a>Calc Energy</h4>
-<figure id="fig1.3.3.29"><img src="../img/CalcEnergy.png" alt="CalcEnergy"><figcaption>Figure: CalcEnergy</figcaption></figure>
+<figure id="fig1.3.3.20"><img src="../img/CalcEnergy.png" alt="CalcEnergy"><figcaption>Figure: CalcEnergy</figcaption></figure>
 <p>&#x8BE5;&#x9875;&#x9762;&#x5229;&#x7528;&#x91C7;&#x96C6;&#x7684;&#x6CE2;&#x5F62;&#x91CD;&#x65B0;&#x8BA1;&#x7B97;&#x80FD;&#x91CF;&#x3002;&#x540C; Adjust Par &#x9875;&#x9762;&#x4E00;&#x6837;&#xFF0C;SF BL &#x7B97;&#x6CD5;&#x53EF;&#x9009;&#x62E9;Calculate&#x7B97;&#x6CD5;&#x6216;&#x8005; Old Baseline &#x7B97;&#x6CD5;&#x3002;</p>
 <p>&#x8BA1;&#x7B97;&#x80FD;&#x91CF;&#x91C7;&#x7528;&#x7684;fast filter&#x3001;energy filter&#x53C2;&#x6570;&#x91C7;&#x7528;&#x91C7;&#x96C6;&#x5361;&#x7684;&#x8BBE;&#x7F6E;&#x53C2;&#x6570;&#xFF0C;&#x7528;&#x6237;&#x9700;&#x8981;&#x9009;&#x62E9;&#x80FD;&#x91CF; 0-65536 &#x5206;&#x6210;&#x591A;&#x5C11;&#x4E2A; bin&#xFF0C;&#x53EF;&#x9009;&#x62E9; 1024/2048/4096/8192/16384/32768/65536&#xFF0C;&#x9009;&#x62E9;&#x8BA1;&#x7B97;&#x7684;&#x901A;&#x9053;&#xFF0C;&#x7136;&#x540E;&#x6309;&#x6309;&#x94AE; Draw&#x5373;&#x5F00;&#x59CB;&#x8BA1;&#x7B97;&#xFF0C;&#x5DE6;&#x4E0A;&#x89D2;&#x5C06;&#x4F1A;&#x663E;&#x793A;&#x8BA1;&#x7B97;&#x7684;&#x8FDB;&#x5EA6;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x6309;&#x6309;&#x94AE; Stop &#x63D0;&#x524D;&#x7EC8;&#x6B62;&#x8BA1;&#x7B97;&#x3002;&#x5F53;&#x8BA1;&#x7B97;&#x7EC8;&#x6B62;&#x65F6;&#xFF0C;&#x753B;&#x677F;&#x4E0A;&#x5C06;&#x663E;&#x793A;&#x80FD;&#x8C31;&#x3002;</p>
 <hr>
 <h4 id="ffcfd-thre"><a name="ffcfd-thre" class="plugin-anchor" href="#ffcfd-thre"><i class="fa fa-link" aria-hidden="true"></i></a>FF/CFD Thre</h4>
-<figure id="fig1.3.3.30"><img src="../img/FFCFDThre.png" alt="FFCFDThre"><figcaption>Figure: FFCFDThre</figcaption></figure>
+<figure id="fig1.3.3.21"><img src="../img/FFCFDThre.png" alt="FFCFDThre"><figcaption>Figure: FFCFDThre</figcaption></figure>
 <p>&#x8BE5;&#x754C;&#x9762;&#x7528;&#x4E8E; fast filter&#x6CE2;&#x5F62;&#x3001;cfd filter&#x6CE2;&#x5F62;&#x7684;&#x7D2F;&#x52A0;&#x3002;&#x7528;&#x6237;&#x9009;&#x62E9;&#x67E5;&#x770B;&#x901A;&#x9053;&#xFF0C;&#x7136;&#x540E;&#x6309; Draw &#x6309;&#x94AE;&#x5219;&#x5F00;&#x59CB;&#x8FDB;&#x5165;&#x8BA1;&#x7B97;&#xFF0C;&#x5DE6;&#x4E0A;&#x89D2;&#x53EF;&#x65F6;&#x65F6;&#x76D1;&#x89C6;&#x8FDB;&#x5EA6;&#xFF0C;&#x4E5F;&#x53EF;&#x6309; Stop &#x6309;&#x94AE;&#x63D0;&#x524D;&#x7EC8;&#x6B62;&#x8BA1;&#x7B97;&#x3002;&#x8BA1;&#x7B97;&#x7ED3;&#x675F;&#x5F97;&#x5230;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#x3002;</p>
 <p>&#x4E0A;&#x65B9;&#x6309;&#x94AE; FFProjectY&#x3001;CFDProjectY&#x3001;OriginalCFD&#x3001;CalculateCFD &#x5206;&#x522B;&#x53EF;&#x5F39;&#x51FA;&#x5B50;&#x753B;&#x677F;&#x3002;</p>
-<figure id="fig1.3.3.31"><img src="../img/FFCFDThreFFProjectY.png" alt="FFCFDThreFFProjectY"><figcaption>Figure: FFCFDThreFFProjectY</figcaption></figure>
+<figure id="fig1.3.3.22"><img src="../img/FFCFDThreFFProjectY.png" alt="FFCFDThreFFProjectY"><figcaption>Figure: FFCFDThreFFProjectY</figcaption></figure>
 <p>&#x70B9;&#x51FB;&#x6309;&#x94AE; FFProjectY&#xFF0C;&#x5219;&#x5F00;&#x542F;&#x67E5;&#x770B;fast filter&#x6295;&#x5F71;&#x56FE;&#xFF0C;&#x518D;&#x6B21;&#x70B9;&#x51FB;&#x5219;&#x5173;&#x95ED;&#x8BE5;&#x529F;&#x80FD;&#x3002;&#x5F00;&#x542F;&#x529F;&#x80FD;&#x65F6;&#xFF0C;&#x5C06;&#x9F20;&#x6807;&#x653E;&#x5728;&#x4E8C;&#x7EF4;&#x56FE;&#x4E0A;&#xFF0C;&#x5DE6;&#x53F3;&#x79FB;&#x52A8;&#x9F20;&#x6807;&#xFF0C; Fast Filter ShowProjectY &#x5B50;&#x753B;&#x677F;&#x5219;&#x663E;&#x793A;&#x9F20;&#x6807;&#x6307;&#x5411;&#x7684;&#x8BE5;&#x4F4D;&#x7F6E;&#x7684;&#x6295;&#x5F71;&#x5206;&#x5E03;&#x3002;&#x89E6;&#x53D1;&#x524D;&#x7684;&#x8BE5;&#x5206;&#x5E03;&#xFF0C;&#x4E5F;&#x8868;&#x5F81;&#x566A;&#x58F0;&#x7684;&#x6C34;&#x5E73;&#x3002;</p>
-<figure id="fig1.3.3.32"><img src="../img/FFCFDThreCFDProjectY.png" alt="FFCFDThreCFDProjectY"><figcaption>Figure: FFCFDThreCFDProjectY</figcaption></figure>
+<figure id="fig1.3.3.23"><img src="../img/FFCFDThreCFDProjectY.png" alt="FFCFDThreCFDProjectY"><figcaption>Figure: FFCFDThreCFDProjectY</figcaption></figure>
 <p>&#x540C;&#x7406;&#xFF0C;&#x6309;&#x94AE; CFDProjectY &#x529F;&#x80FD;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#x3002;</p>
-<figure id="fig1.3.3.33"><img src="../img/FFCFDThreCFD.png" alt="FFCFDThreCFD"><figcaption>Figure: FFCFDThreCFD</figcaption></figure>
+<figure id="fig1.3.3.24"><img src="../img/FFCFDThreCFD.png" alt="FFCFDThreCFD"><figcaption>Figure: FFCFDThreCFD</figcaption></figure>
 <p>&#x70B9;&#x51FB;&#x6309;&#x94AE; OriginalCFD&#xFF0C;&#x5219;&#x5C55;&#x793A;&#x5DE6;&#x56FE;&#x4E2D;&#x539F;&#x59CB;&#x6570;&#x636E;&#x4E2D; CFD &#x6570;&#x503C;&#x7684;&#x5206;&#x5E03;&#x3002;&#x70B9;&#x51FB;&#x6309;&#x94AE; CalculateCFD&#xFF0C;&#x5219;&#x5C55;&#x793A;&#x53F3;&#x56FE;&#x4E2D;&#x901A;&#x8FC7;&#x79BB;&#x7EBF;&#x6CE2;&#x5F62;&#x8BA1;&#x7B97;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x8BA1;&#x7B97;&#x6240;&#x7528;&#x53C2;&#x6570;&#x4E3A;&#x5F53;&#x524D;&#x7684;&#x53C2;&#x6570;&#x3002;&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;&#x5408;&#x9002;&#x7684; CFD &#x53C2;&#x6570;&#x8BBE;&#x7F6E;&#xFF0C;&#x8BE5;CFD&#x5206;&#x5E03;&#x8BE5;&#x662F;&#x5E73;&#x5747;&#x5206;&#x5E03;&#x7684;&#x3002; </p>
 <hr>
 <h4 id="energy-ff"><a name="energy-ff" class="plugin-anchor" href="#energy-ff"><i class="fa fa-link" aria-hidden="true"></i></a>Energy-FF</h4>
-<figure id="fig1.3.3.34"><img src="../img/EnergyFFGraph.png" alt="EnergyFFGraph"><figcaption>Figure: EnergyFFGraph</figcaption></figure>
+<figure id="fig1.3.3.25"><img src="../img/EnergyFFGraph.png" alt="EnergyFFGraph"><figcaption>Figure: EnergyFFGraph</figcaption></figure>
 <p>&#x8BE5;&#x754C;&#x9762;&#x662F;&#x80FD;&#x91CF;&#x4E0E; fast filter &#x5CF0;&#x9AD8;&#x7684;&#x4E8C;&#x7EF4;&#x5173;&#x8054;&#x56FE;&#x3002;&#x7528;&#x4E8E;&#x786E;&#x5B9A;&#x5408;&#x9002;&#x7684;&#x9608;&#x503C;&#x3002;&#x5DE6;&#x56FE;&#x662F;&#x80FD;&#x91CF;&#x4E0E; fast filter&#x7684;&#x4E8C;&#x7EF4;&#x5173;&#x8054;&#xFF0C;&#x5B83;&#x4EEC;&#x5E94;&#x8BE5;&#x6709;&#x4E2A;&#x8F83;&#x597D;&#x7684;&#x7EBF;&#x6027;&#x5173;&#x7CFB;&#xFF0C;&#x53F3;&#x56FE;&#x4E3A;&#x80FD;&#x91CF;&#x4E0E; fast filer &#x4E2D;&#x629B;&#x9664;&#x68AF;&#x5F62;&#x90E8;&#x5206;&#x5269;&#x4F59;&#x4E2D;&#x6700;&#x5927;&#x503C;&#x7684;&#x4E8C;&#x7EF4;&#x5173;&#x8054;&#xFF0C;&#x629B;&#x9664;&#x68AF;&#x5F62;&#x90E8;&#x5206;&#x5269;&#x4F59;&#x5206;&#x5E03;&#x7684;&#x6700;&#x5927;&#x503C;&#x8868;&#x5F81;&#x566A;&#x58F0;&#x6C34;&#x5E73;&#xFF0C;&#x80FD;&#x91CF;&#x8DDF;&#x8BE5;&#x503C;&#x5E94;&#x8BE5;&#x662F;&#x6CA1;&#x6709;&#x5173;&#x8054;&#x7684;&#x3002;</p>
 <p>&#x9996;&#x5148; Draw Style &#x9009;&#x62E9; Graph&#xFF0C;&#x5373;&#x4E8C;&#x7EF4;&#x6563;&#x70B9;&#x56FE;&#x6A21;&#x5F0F;&#x3002;&#x9009;&#x62E9;&#x67E5;&#x770B;&#x901A;&#x9053;&#xFF0C;&#x7136;&#x540E;&#x6309; Draw &#x6309;&#x94AE;&#x5219;&#x5F00;&#x59CB;&#x8FDB;&#x5165;&#x8BA1;&#x7B97;&#xFF0C;&#x5DE6;&#x4E0A;&#x89D2;&#x53EF;&#x65F6;&#x65F6;&#x76D1;&#x89C6;&#x8FDB;&#x5EA6;&#xFF0C;&#x4E5F;&#x53EF;&#x6309; Stop &#x6309;&#x94AE;&#x63D0;&#x524D;&#x7EC8;&#x6B62;&#x8BA1;&#x7B97;&#x3002;&#x8BA1;&#x7B97;&#x7ED3;&#x675F;&#x5F97;&#x5230;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#x3002;</p>
-<figure id="fig1.3.3.35"><img src="../img/EnergyFFHist.png" alt="EnergyFFHist"><figcaption>Figure: EnergyFFHist</figcaption></figure>
+<figure id="fig1.3.3.26"><img src="../img/EnergyFFHist.png" alt="EnergyFFHist"><figcaption>Figure: EnergyFFHist</figcaption></figure>
 <p>&#x4E8C;&#x7EF4;&#x6563;&#x70B9;&#x56FE;&#x5E76;&#x4E0D;&#x80FD;&#x5F88;&#x76F4;&#x89C2;&#x663E;&#x793A;&#x5C55;&#x793A;&#x6570;&#x636E;&#x70B9;&#x7684;&#x5BC6;&#x5EA6;&#x5206;&#x5E03;&#xFF0C;&#x56E0;&#x6B64; Draw Style &#x9009;&#x62E9; Hist &#x6A21;&#x5F0F;&#xFF0C;&#x9009;&#x62E9; X&#x3001;Y&#x8F74;&#x7684;&#x5206; bin &#x6570;&#x5373;&#x8303;&#x56F4;&#xFF0C;&#x7136;&#x540E;&#x540C;&#x6837;&#x6309; Draw &#x6309;&#x94AE;&#x5F00;&#x59CB;&#x8BA1;&#x7B97;&#x3002;&#x7ED3;&#x679C;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x53F3;&#x56FE;&#x53CD;&#x6620;&#x4E86;&#x566A;&#x58F0;&#x7684;&#x6C34;&#x5E73;&#x3002;</p>
 <hr>
 <h4 id="qdc"><a name="qdc" class="plugin-anchor" href="#qdc"><i class="fa fa-link" aria-hidden="true"></i></a>QDC</h4>
 <p><strong>QDC  TODO   &#x529F;&#x80FD;&#x672A;&#x5B8C;&#x6210;</strong></p>
 <hr>
 <h4 id="fft"><a name="fft" class="plugin-anchor" href="#fft"><i class="fa fa-link" aria-hidden="true"></i></a>FFT</h4>
-<figure id="fig1.3.3.36"><img src="../img/FFT.png" alt="FFT"><figcaption>Figure: FFT</figcaption></figure>
+<figure id="fig1.3.3.27"><img src="../img/FFT.png" alt="FFT"><figcaption>Figure: FFT</figcaption></figure>
 <p>&#x8BE5;&#x754C;&#x9762;&#x7528;&#x4E8E;&#x5FEB;&#x901F;&#x67E5;&#x770B;&#x6CE2;&#x5F62;&#x7684;&#x5085;&#x7ACB;&#x53F6;&#x53D8;&#x6362;&#x3002;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x4E0D;&#x540C;&#x7684;&#x7B97;&#x6CD5;&#xFF0C;&#x4F8B;&#x5982; XIA&#x3001;fftw3&#x3001;CAEN(HANNING)&#x3001;CAEN(HAMMING)&#x3001;CAEN(BLACKMAN)&#x3001;CAEN(RECT)&#x3002;&#x9009;&#x62E9;&#x67E5;&#x770B;&#x901A;&#x9053;&#x3002;&#x7136;&#x540E;&#x6309; Draw &#x6309;&#x94AE;&#x5373;&#x53EF;&#xFF0C;&#x6BCF;&#x70B9;&#x51FB;&#x4E00;&#x6B21;&#x8BE5;&#x6309;&#x94AE;&#xFF0C;&#x5219;&#x663E;&#x793A;&#x4E0B;&#x4E00;&#x4E2A;&#x7ED3;&#x679C;&#x3002;</p>
 <p>the ADC trace display also includes the option to view a FFT of the acquired trace. This is useful to diagnose noise contributions.</p>
 <hr>
 <h4 id="time-diff"><a name="time-diff" class="plugin-anchor" href="#time-diff"><i class="fa fa-link" aria-hidden="true"></i></a>Time Diff</h4>
-<figure id="fig1.3.3.37"><img src="../img/TimeDiff.png" alt="Time Diff"><figcaption>Figure: Time Diff</figcaption></figure>
+<figure id="fig1.3.3.28"><img src="../img/TimeDiff.png" alt="Time Diff"><figcaption>Figure: Time Diff</figcaption></figure>
 <p>&#x8BE5;&#x754C;&#x9762;&#x7528;&#x4E8E;&#x5FEB;&#x901F;&#x67E5;&#x770B;&#x4E24;&#x8DEF;&#x4FE1;&#x53F7;&#x7684;&#x65F6;&#x95F4;&#x5206;&#x8FA8;&#x3002;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x67E5;&#x770B; CFD &#x7B97;&#x6CD5;&#x8FC7;&#x96F6;&#x70B9;&#x7684;&#x65F6;&#x95F4;&#x5DEE;&#x6216;&#x8005; fast filter &#x8FC7;&#x9608;&#x503C;&#x7684;&#x65F6;&#x95F4;&#x5DEE;&#x3002;Xbin &#x8868;&#x793A;&#x6A2A;&#x5750;&#x6807;&#x5206; bin &#x6570;&#xFF0C;Xmin &#x8868;&#x793A;&#x6A2A;&#x5750;&#x6807;&#x7684;&#x6700;&#x5C0F;&#x503C;&#xFF0C;Xmax &#x8868;&#x793A;&#x6A2A;&#x5750;&#x6807;&#x7684;&#x6700;&#x5927;&#x503C;&#x3002;&#x901A;&#x8FC7; Ch A&#x3001;Ch B &#x6765;&#x9009;&#x62E9;&#x60F3;&#x8981;&#x67E5;&#x770B;&#x7684;&#x4E24;&#x4E2A;&#x901A;&#x9053;&#x3002;&#x7136;&#x540E;&#x6309; Draw &#x6309;&#x94AE;&#x5373;&#x53EF;&#x3002;</p>
 <p>&#x9009;&#x9879; Limits &#x9009;&#x62E9;&#x5219;&#x5F00;&#x542F;&#x80FD;&#x91CF;&#x8303;&#x56F4;&#x7EA6;&#x675F;&#x3002;&#x9009;&#x62E9;&#x8BE5;&#x9009;&#x9879;&#x540E;&#xFF0C;&#x4E4B;&#x540E;&#x7684;&#x56DB;&#x4E2A;&#x53C2;&#x6570; AL&#x3001;AR&#x3001;BL&#x3001;BR&#x624D;&#x751F;&#x6548;&#xFF0C;&#x5176;&#x5206;&#x522B;&#x8868;&#x793A; Ch A/B &#x80FD;&#x91CF;&#x9053;&#x5740;&#x7684;&#x5DE6;&#x53F3;&#x8303;&#x56F4;&#xFF0C;&#x53EA;&#x6709;&#x80FD;&#x91CF;&#x843D;&#x5728;&#x8FD9;&#x4E2A;&#x533A;&#x95F4;&#x7684;&#x4E8B;&#x4EF6;&#x624D;&#x586B;&#x5145;&#x5230;&#x76F4;&#x65B9;&#x56FE;&#x4E2D;&#x3002;&#x7528;&#x6237;&#x53EF;&#x901A;&#x8FC7; Orig Energy &#x9875;&#x9762;&#x6765;&#x9009;&#x62E9;&#x5408;&#x9002;&#x7684;&#x80FD;&#x91CF;&#x9053;&#x5740;&#x533A;&#x95F4;&#x3002;</p>
 <hr>
@@ -996,7 +1038,7 @@ recording of QDC sums ends when the eight intervals have passed.</p>
 <!-- GUI.md ends here -->
 <script type="text/javascript">var className='atoc';</script>
 
-<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> <a href="http://wuhongyi.cn/" target="_blank">&#xA9; Hongyi Wu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated:</i> 2018-09-28 12:06:17 </span> </footer>
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> <a href="http://wuhongyi.cn/" target="_blank">&#xA9; Hongyi Wu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated:</i> 2018-09-28 12:44:33 </span> </footer>
                                 
                                 </section>
                             
@@ -1039,7 +1081,7 @@ recording of QDC sums ends when the eight intervals have passed.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"GUI","level":"1.3.3","depth":2,"next":{"title":"OnlineStattics","level":"1.3.4","depth":2,"path":"UsersGuide/OnlineStattics.md","ref":"UsersGuide/OnlineStattics.md","articles":[]},"previous":{"title":"Decode","level":"1.3.2","depth":2,"path":"UsersGuide/Decode.md","ref":"UsersGuide/Decode.md","articles":[]},"dir":"ltr"},"config":{"plugins":["search","sharing","fontsettings","livereload","highlight","github","-prism","ad","alerts","atoc","splitter","sitemap","image-captions","anchors","latex-codecogs","-katex","mermaid","ace","page-footer-ex","sectionx","mcqx","fbqx","spoiler","anchor-navigation","youtubex","redirect","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"latex-codecogs":{"type":"gif"},"spoiler":{},"ad":{"contentBottom":"","contentTop":""},"ace":{},"github":{"url":"https://github.com/wuhongyi"},"fbqx":{},"livereload":{},"page-footer-ex":{"copyright":"[© Hongyi Wu](http://wuhongyi.cn/)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated:</i>"},"atoc":{"addClass":true,"className":"atoc"},"splitter":{},"search":{},"mermaid":{},"anchor-navigation":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"serif","size":2,"theme":"sepia"},"sectionx":{},"highlight":{},"sitemap":{"hostname":"http://wuhongyi.cn/"},"youtubex":{"embedDescription":{"de":"Eingebettetes Video:","default":"Embedded video:"}},"alerts":{},"sharing":{"all":["facebook","google","twitter","weibo","instapaper"],"facebook":true,"google":false,"instapaper":false,"twitter":true,"vk":false,"weibo":false},"redirect":{},"mcqx":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"expandable-chapters":{},"image-captions":{"variable_name":"_pictures"}},"theme":"default","author":"Hongyi Wu(吴鸿毅)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"_pictures":[{"backlink":"UsersGuide/index.html#fig1.3.1","level":"1.3","list_caption":"Figure: pixie16","alt":"pixie16","nro":1,"url":"/img/pixie16.jpg","index":1,"caption_template":"Figure: _CAPTION_","label":"pixie16","attributes":{},"skip":false,"key":"1.3.1"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.1","level":"1.3.3","list_caption":"Figure: MainFrame","alt":"MainFrame","nro":2,"url":"/img/mainframe.png","index":1,"caption_template":"Figure: _CAPTION_","label":"MainFrame","attributes":{},"skip":false,"key":"1.3.3.1"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.2","level":"1.3.3","list_caption":"Figure: About","alt":"About","nro":3,"url":"/img/About.png","index":2,"caption_template":"Figure: _CAPTION_","label":"About","attributes":{},"skip":false,"key":"1.3.3.2"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.3","level":"1.3.3","list_caption":"Figure: Base Setup","alt":"Base Setup","nro":4,"url":"/img/BaseSetup.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Base Setup","attributes":{},"skip":false,"key":"1.3.3.3"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.4","level":"1.3.3","list_caption":"Figure: Trigger Filter","alt":"Trigger Filter","nro":5,"url":"/img/TriggerFilter.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Trigger Filter","attributes":{},"skip":false,"key":"1.3.3.4"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.5","level":"1.3.3","list_caption":"Figure: Energy","alt":"Energy","nro":6,"url":"/img/Energy.png","index":5,"caption_template":"Figure: _CAPTION_","label":"Energy","attributes":{},"skip":false,"key":"1.3.3.5"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.6","level":"1.3.3","list_caption":"Figure: filter range","alt":"filter range","nro":7,"url":"/img/filterrange_format.PNG","index":6,"caption_template":"Figure: _CAPTION_","label":"filter range","attributes":{},"skip":false,"key":"1.3.3.6"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.7","level":"1.3.3","list_caption":"Figure: CFD","alt":"CFD","nro":8,"url":"/img/CFDPars.png","index":7,"caption_template":"Figure: _CAPTION_","label":"CFD","attributes":{},"skip":false,"key":"1.3.3.7"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.8","level":"1.3.3","list_caption":"Figure: QDC","alt":"QDC","nro":9,"url":"/img/QDCPars.png","index":8,"caption_template":"Figure: _CAPTION_","label":"QDC","attributes":{},"skip":false,"key":"1.3.3.8"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.9","level":"1.3.3","list_caption":"Figure: Decimation","alt":"Decimation","nro":10,"url":"/img/Decimation.png","index":9,"caption_template":"Figure: _CAPTION_","label":"Decimation","attributes":{},"skip":false,"key":"1.3.3.9"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.10","level":"1.3.3","list_caption":"Figure: Copy Pars","alt":"Copy Pars","nro":11,"url":"/img/CopyPars.png","index":10,"caption_template":"Figure: _CAPTION_","label":"Copy Pars","attributes":{},"skip":false,"key":"1.3.3.10"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.11","level":"1.3.3","list_caption":"Figure: Save2File","alt":"Save2File","nro":12,"url":"/img/Save2File.png","index":11,"caption_template":"Figure: _CAPTION_","label":"Save2File","attributes":{},"skip":false,"key":"1.3.3.11"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.12","level":"1.3.3","list_caption":"Figure: Module Variables","alt":"Module Variables","nro":13,"url":"/img/ModuleVariables.png","index":12,"caption_template":"Figure: _CAPTION_","label":"Module Variables","attributes":{},"skip":false,"key":"1.3.3.12"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.13","level":"1.3.3","list_caption":"Figure: CSRA","alt":"CSRA","nro":14,"url":"/img/CSRA.png","index":13,"caption_template":"Figure: _CAPTION_","label":"CSRA","attributes":{},"skip":false,"key":"1.3.3.13"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.14","level":"1.3.3","list_caption":"Figure: Logic Set","alt":"Logic Set","nro":15,"url":"/img/LogicTrigger.png","index":14,"caption_template":"Figure: _CAPTION_","label":"Logic Set","attributes":{},"skip":false,"key":"1.3.3.14"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.15","level":"1.3.3","list_caption":"Figure: stretch length","alt":"stretch length","nro":16,"url":"/img/stretchlength.PNG","index":15,"caption_template":"Figure: _CAPTION_","label":"stretch length","attributes":{},"skip":false,"key":"1.3.3.15"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.16","level":"1.3.3","list_caption":"Figure: Hist & XDT","alt":"Hist & XDT","nro":17,"url":"/img/HistXDT.png","index":16,"caption_template":"Figure: _CAPTION_","label":"Hist & XDT","attributes":{},"skip":false,"key":"1.3.3.16"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.17","level":"1.3.3","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":18,"url":"/img/Trace.png","index":17,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.3.17"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.18","level":"1.3.3","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":19,"url":"/img/BaselineHist.png","index":18,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.3.18"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.19","level":"1.3.3","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":20,"url":"/img/BaselineTimestamps.png","index":19,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.3.19"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.20","level":"1.3.3","list_caption":"Figure: Adjust Par","alt":"Adjust Par","nro":21,"url":"/img/AdjustPar.png","index":20,"caption_template":"Figure: _CAPTION_","label":"Adjust Par","attributes":{},"skip":false,"key":"1.3.3.20"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.21","level":"1.3.3","list_caption":"Figure: offlineapi","alt":"offlineapi","nro":22,"url":"/img/OfflineAPI.png","index":21,"caption_template":"Figure: _CAPTION_","label":"offlineapi","attributes":{},"skip":false,"key":"1.3.3.21"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.22","level":"1.3.3","list_caption":"Figure: Adjustpars3","alt":"Adjustpars3","nro":23,"url":"/img/Adjustpars3.png","index":22,"caption_template":"Figure: _CAPTION_","label":"Adjustpars3","attributes":{},"skip":false,"key":"1.3.3.22"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.23","level":"1.3.3","list_caption":"Figure: Adjustpars1","alt":"Adjustpars1","nro":24,"url":"/img/Adjustpars1.png","index":23,"caption_template":"Figure: _CAPTION_","label":"Adjustpars1","attributes":{},"skip":false,"key":"1.3.3.23"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.24","level":"1.3.3","list_caption":"Figure: Adjustpars2","alt":"Adjustpars2","nro":25,"url":"/img/Adjustpars2.png","index":24,"caption_template":"Figure: _CAPTION_","label":"Adjustpars2","attributes":{},"skip":false,"key":"1.3.3.24"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.25","level":"1.3.3","list_caption":"Figure: Waveform16","alt":"Waveform16","nro":26,"url":"/img/Waveform16.png","index":25,"caption_template":"Figure: _CAPTION_","label":"Waveform16","attributes":{},"skip":false,"key":"1.3.3.25"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.26","level":"1.3.3","list_caption":"Figure: Energy16","alt":"Energy16","nro":27,"url":"/img/Energy16.png","index":26,"caption_template":"Figure: _CAPTION_","label":"Energy16","attributes":{},"skip":false,"key":"1.3.3.26"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.27","level":"1.3.3","list_caption":"Figure: OrigEnergy","alt":"OrigEnergy","nro":28,"url":"/img/OrigEnergy.png","index":27,"caption_template":"Figure: _CAPTION_","label":"OrigEnergy","attributes":{},"skip":false,"key":"1.3.3.27"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.28","level":"1.3.3","list_caption":"Figure: OrigEnergyFit","alt":"OrigEnergyFit","nro":29,"url":"/img/OrigEnergyFit.png","index":28,"caption_template":"Figure: _CAPTION_","label":"OrigEnergyFit","attributes":{},"skip":false,"key":"1.3.3.28"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.29","level":"1.3.3","list_caption":"Figure: CalcEnergy","alt":"CalcEnergy","nro":30,"url":"/img/CalcEnergy.png","index":29,"caption_template":"Figure: _CAPTION_","label":"CalcEnergy","attributes":{},"skip":false,"key":"1.3.3.29"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.30","level":"1.3.3","list_caption":"Figure: FFCFDThre","alt":"FFCFDThre","nro":31,"url":"/img/FFCFDThre.png","index":30,"caption_template":"Figure: _CAPTION_","label":"FFCFDThre","attributes":{},"skip":false,"key":"1.3.3.30"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.31","level":"1.3.3","list_caption":"Figure: FFCFDThreFFProjectY","alt":"FFCFDThreFFProjectY","nro":32,"url":"/img/FFCFDThreFFProjectY.png","index":31,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreFFProjectY","attributes":{},"skip":false,"key":"1.3.3.31"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.32","level":"1.3.3","list_caption":"Figure: FFCFDThreCFDProjectY","alt":"FFCFDThreCFDProjectY","nro":33,"url":"/img/FFCFDThreCFDProjectY.png","index":32,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreCFDProjectY","attributes":{},"skip":false,"key":"1.3.3.32"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.33","level":"1.3.3","list_caption":"Figure: FFCFDThreCFD","alt":"FFCFDThreCFD","nro":34,"url":"/img/FFCFDThreCFD.png","index":33,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreCFD","attributes":{},"skip":false,"key":"1.3.3.33"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.34","level":"1.3.3","list_caption":"Figure: EnergyFFGraph","alt":"EnergyFFGraph","nro":35,"url":"/img/EnergyFFGraph.png","index":34,"caption_template":"Figure: _CAPTION_","label":"EnergyFFGraph","attributes":{},"skip":false,"key":"1.3.3.34"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.35","level":"1.3.3","list_caption":"Figure: EnergyFFHist","alt":"EnergyFFHist","nro":36,"url":"/img/EnergyFFHist.png","index":35,"caption_template":"Figure: _CAPTION_","label":"EnergyFFHist","attributes":{},"skip":false,"key":"1.3.3.35"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.36","level":"1.3.3","list_caption":"Figure: FFT","alt":"FFT","nro":37,"url":"/img/FFT.png","index":36,"caption_template":"Figure: _CAPTION_","label":"FFT","attributes":{},"skip":false,"key":"1.3.3.36"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.37","level":"1.3.3","list_caption":"Figure: Time Diff","alt":"Time Diff","nro":38,"url":"/img/TimeDiff.png","index":37,"caption_template":"Figure: _CAPTION_","label":"Time Diff","attributes":{},"skip":false,"key":"1.3.3.37"},{"backlink":"UsersGuide/OnlineStattics.html#fig1.3.4.1","level":"1.3.4","list_caption":"Figure: OnlineMainFrame","alt":"OnlineMainFrame","nro":39,"url":"/img/OnlineMainFrame.png","index":1,"caption_template":"Figure: _CAPTION_","label":"OnlineMainFrame","attributes":{},"skip":false,"key":"1.3.4.1"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.1","level":"1.3.6","list_caption":"Figure: LVDS I/O Port","alt":"LVDS I/O Port","nro":40,"url":"/img/lvdsioport.png","index":1,"caption_template":"Figure: _CAPTION_","label":"LVDS I/O Port","attributes":{},"skip":false,"key":"1.3.6.1"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.2","level":"1.3.6","list_caption":"Figure: Digital I/O Connectors A, B, C, D and E","alt":"Digital I/O Connectors A, B, C, D and E","nro":41,"url":"/img/digitalioconnectorsabcdande.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Digital I/O Connectors A, B, C, D and E","attributes":{},"skip":false,"key":"1.3.6.2"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.3","level":"1.3.6","list_caption":"Figure: 2mm pitch har-link connector from HARTING","alt":"2mm pitch har-link connector from HARTING","nro":42,"url":"/img/2mmpitchharlinkconnectorfromharting.png","index":3,"caption_template":"Figure: _CAPTION_","label":"2mm pitch har-link connector from HARTING","attributes":{},"skip":false,"key":"1.3.6.3"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.4","level":"1.3.6","list_caption":"Figure: Rev. F Module’s Digital I/O Connectors","alt":"Rev. F Module’s Digital I/O Connectors","nro":43,"url":"/img/revfmoduledigitalioconnectors.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Rev. F Module’s Digital I/O Connectors","attributes":{},"skip":false,"key":"1.3.6.4"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.5","level":"1.3.6","list_caption":"Figure: frontpanel","alt":"frontpanel","nro":44,"url":"/img/frontpanel_pku.png","index":5,"caption_template":"Figure: _CAPTION_","label":"frontpanel","attributes":{},"skip":false,"key":"1.3.6.5"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.6","level":"1.3.6","list_caption":"Figure: Front Panel LEDs for the Pixie-16 Modules","alt":"Front Panel LEDs for the Pixie-16 Modules","nro":45,"url":"/img/frontpanelledsforthepixie16modules.png","index":6,"caption_template":"Figure: _CAPTION_","label":"Front Panel LEDs for the Pixie-16 Modules","attributes":{},"skip":false,"key":"1.3.6.6"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.7","level":"1.3.6","list_caption":"Figure: Rev. D Module’s 3.3V I/O Connector","alt":"Rev. D Module’s 3.3V I/O Connector","nro":46,"url":"/img/revdmodules33vioconnector.png","index":7,"caption_template":"Figure: _CAPTION_","label":"Rev. D Module’s 3.3V I/O Connector","attributes":{},"skip":false,"key":"1.3.6.7"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.8","level":"1.3.6","list_caption":"Figure: Rev. D Module’s GATE Inputs","alt":"Rev. D Module’s GATE Inputs","nro":47,"url":"/img/revdmodulesgateinputs.png","index":8,"caption_template":"Figure: _CAPTION_","label":"Rev. D Module’s GATE Inputs","attributes":{},"skip":false,"key":"1.3.6.8"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.9","level":"1.3.6","list_caption":"Figure: Rev. D Module’s GATE INPUTS Connector","alt":"Rev. D Module’s GATE INPUTS Connector","nro":48,"url":"/img/revdmodulesgateinputsconnector.png","index":9,"caption_template":"Figure: _CAPTION_","label":"Rev. D Module’s GATE INPUTS Connector","attributes":{},"skip":false,"key":"1.3.6.9"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.10","level":"1.3.6","list_caption":"Figure: Rev. B and C Module’s 3.3V I/O Connector","alt":"Rev. B and C Module’s 3.3V I/O Connector","nro":49,"url":"/img/revbandcmodules33vioconnector.png","index":10,"caption_template":"Figure: _CAPTION_","label":"Rev. B and C Module’s 3.3V I/O Connector","attributes":{},"skip":false,"key":"1.3.6.10"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.11","level":"1.3.6","list_caption":"Figure: TTL Digital Input Signals","alt":"TTL Digital Input Signals","nro":50,"url":"/img/ttldigitalinputsignals.png","index":11,"caption_template":"Figure: _CAPTION_","label":"TTL Digital Input Signals","attributes":{},"skip":false,"key":"1.3.6.11"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.12","level":"1.3.6","list_caption":"Figure: Connector J101 LVDS I/O Port Signals","alt":"Connector J101 LVDS I/O Port Signals","nro":51,"url":"/img/connectorj101lvdsioportsignals.png","index":12,"caption_template":"Figure: _CAPTION_","label":"Connector J101 LVDS I/O Port Signals","attributes":{},"skip":false,"key":"1.3.6.12"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.13","level":"1.3.6","list_caption":"Figure: TTL Digital Output Signals","alt":"TTL Digital Output Signals","nro":52,"url":"/img/ttldigitaloutputsignals.png","index":13,"caption_template":"Figure: _CAPTION_","label":"TTL Digital Output Signals","attributes":{},"skip":false,"key":"1.3.6.13"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.14","level":"1.3.6","list_caption":"Figure: Lupo x495","alt":"Lupo x495","nro":53,"url":"/img/lupox495.png","index":14,"caption_template":"Figure: _CAPTION_","label":"Lupo x495","attributes":{},"skip":false,"key":"1.3.6.14"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.1","level":"1.3.7","list_caption":"Figure: Signal Process FPGA","alt":"Signal Process FPGA","nro":54,"url":"/img/signalprocessfpga.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Signal Process FPGA","attributes":{},"skip":false,"key":"1.3.7.1"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.2","level":"1.3.7","list_caption":"Figure: System FPGA","alt":"System FPGA","nro":55,"url":"/img/SystemFPGA.png","index":2,"caption_template":"Figure: _CAPTION_","label":"System FPGA","attributes":{},"skip":false,"key":"1.3.7.2"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.3","level":"1.3.7","list_caption":"Figure: fast trigger stretch/delay","alt":"fast trigger stretch/delay","nro":56,"url":"/img/fasttrigger_stretch_delay.png","index":3,"caption_template":"Figure: _CAPTION_","label":"fast trigger stretch/delay","attributes":{},"skip":false,"key":"1.3.7.3"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.4","level":"1.3.7","list_caption":"Figure: validation trigger","alt":"validation trigger","nro":57,"url":"/img/validationtrigger.png","index":4,"caption_template":"Figure: _CAPTION_","label":"validation trigger","attributes":{},"skip":false,"key":"1.3.7.4"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.1","level":"1.3.8","list_caption":"Figure: JP101","alt":"JP101","nro":58,"url":"/img/multiplemodulessynchronously.png","index":1,"caption_template":"Figure: _CAPTION_","label":"JP101","attributes":{},"skip":false,"key":"1.3.8.1"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.2","level":"1.3.8","list_caption":"Figure: individual clock mode","alt":"individual clock mode","nro":59,"url":"/img/individualclockmode.png","index":2,"caption_template":"Figure: _CAPTION_","label":"individual clock mode","attributes":{},"skip":false,"key":"1.3.8.2"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.3","level":"1.3.8","list_caption":"Figure: PXI clock mode","alt":"PXI clock mode","nro":60,"url":"/img/pxiclockmode.png","index":3,"caption_template":"Figure: _CAPTION_","label":"PXI clock mode","attributes":{},"skip":false,"key":"1.3.8.3"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.4","level":"1.3.8","list_caption":"Figure: daisy-chained clock mode","alt":"daisy-chained clock mode","nro":61,"url":"/img/daisychainedclockmode.png","index":4,"caption_template":"Figure: _CAPTION_","label":"daisy-chained clock mode","attributes":{},"skip":false,"key":"1.3.8.4"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.5","level":"1.3.8","list_caption":"Figure: multi-crate clock mode","alt":"multi-crate clock mode","nro":62,"url":"/img/multicrateclockmode.png","index":5,"caption_template":"Figure: _CAPTION_","label":"multi-crate clock mode","attributes":{},"skip":false,"key":"1.3.8.5"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.6","level":"1.3.8","list_caption":"Figure: Module Definitions in a 2-crate System","alt":"Module Definitions in a 2-crate System","nro":63,"url":"/img/moduledefinitionsina2cratesystem.png","index":6,"caption_template":"Figure: _CAPTION_","label":"Module Definitions in a 2-crate System","attributes":{},"skip":false,"key":"1.3.8.6"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.7","level":"1.3.8","list_caption":"Figure: Clock Jumper JP101 Settings in a 2-crate System","alt":"Clock Jumper JP101 Settings in a 2-crate System","nro":64,"url":"/img/clockjumperjp101settingsina2cratesystem.png","index":7,"caption_template":"Figure: _CAPTION_","label":"Clock Jumper JP101 Settings in a 2-crate System","attributes":{},"skip":false,"key":"1.3.8.7"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.8","level":"1.3.8","list_caption":"Figure: rear I/O trigger modules","alt":"rear I/O trigger modules","nro":65,"url":"/img/reariotriggermodules.png","index":8,"caption_template":"Figure: _CAPTION_","label":"rear I/O trigger modules","attributes":{},"skip":false,"key":"1.3.8.8"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.9","level":"1.3.8","list_caption":"Figure: Cable connections between two Pixie-16 rear I/O trigger modules","alt":"Cable connections between two Pixie-16 rear I/O trigger modules","nro":66,"url":"/img/cableconnectionsbetweentwopixie16reariotriggermodules.png","index":9,"caption_template":"Figure: _CAPTION_","label":"Cable connections between two Pixie-16 rear I/O trigger modules","attributes":{},"skip":false,"key":"1.3.8.9"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.10","level":"1.3.8","list_caption":"Figure: Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module","alt":"Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module","nro":67,"url":"/img/pinnumberingforthejumpersonthepixie16reariotriggermodule.png","index":10,"caption_template":"Figure: _CAPTION_","label":"Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module","attributes":{},"skip":false,"key":"1.3.8.10"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.11","level":"1.3.8","list_caption":"Figure: Rear I/O Trigger Module #1’s Jumper Settings","alt":"Rear I/O Trigger Module #1’s Jumper Settings","nro":68,"url":"/img/reariotrigger1sjumpersettings.png","index":11,"caption_template":"Figure: _CAPTION_","label":"Rear I/O Trigger Module #1’s Jumper Settings","attributes":{},"skip":false,"key":"1.3.8.11"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.12","level":"1.3.8","list_caption":"Figure: Rear I/O Trigger Module #2’s Jumper Settings","alt":"Rear I/O Trigger Module #2’s Jumper Settings","nro":69,"url":"/img/reariotriggermodule2sjumpersettings.png","index":12,"caption_template":"Figure: _CAPTION_","label":"Rear I/O Trigger Module #2’s Jumper Settings","attributes":{},"skip":false,"key":"1.3.8.12"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.13","level":"1.3.8","list_caption":"Figure: Cable connections among four Pixie-16 rear I/O trigger modules","alt":"Cable connections among four Pixie-16 rear I/O trigger modules","nro":70,"url":"/img/cableconnectionsamongfourpixie16reariotriggermodules.png","index":13,"caption_template":"Figure: _CAPTION_","label":"Cable connections among four Pixie-16 rear I/O trigger modules","attributes":{},"skip":false,"key":"1.3.8.13"}]},"title":"","gitbook":"*","description":"吴鸿毅笔记"},"file":{"path":"UsersGuide/GUI.md","mtime":"2018-09-28T04:06:17.378Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-28T04:06:29.443Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"GUI","level":"1.3.3","depth":2,"next":{"title":"OnlineStattics","level":"1.3.4","depth":2,"path":"UsersGuide/OnlineStattics.md","ref":"UsersGuide/OnlineStattics.md","articles":[]},"previous":{"title":"Decode","level":"1.3.2","depth":2,"path":"UsersGuide/Decode.md","ref":"UsersGuide/Decode.md","articles":[]},"dir":"ltr"},"config":{"plugins":["search","sharing","fontsettings","livereload","highlight","github","-prism","ad","alerts","atoc","splitter","sitemap","image-captions","anchors","latex-codecogs","-katex","mermaid","ace","page-footer-ex","sectionx","mcqx","fbqx","spoiler","anchor-navigation","youtubex","redirect","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"latex-codecogs":{"type":"gif"},"spoiler":{},"ad":{"contentBottom":"","contentTop":""},"ace":{},"github":{"url":"https://github.com/wuhongyi"},"fbqx":{},"livereload":{},"page-footer-ex":{"copyright":"[© Hongyi Wu](http://wuhongyi.cn/)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated:</i>"},"atoc":{"addClass":true,"className":"atoc"},"splitter":{},"search":{},"mermaid":{},"anchor-navigation":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"serif","size":2,"theme":"sepia"},"sectionx":{},"highlight":{},"sitemap":{"hostname":"http://wuhongyi.cn/"},"youtubex":{"embedDescription":{"de":"Eingebettetes Video:","default":"Embedded video:"}},"alerts":{},"sharing":{"all":["facebook","google","twitter","weibo","instapaper"],"facebook":true,"google":false,"instapaper":false,"twitter":true,"vk":false,"weibo":false},"redirect":{},"mcqx":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"expandable-chapters":{},"image-captions":{"variable_name":"_pictures"}},"theme":"default","author":"Hongyi Wu(吴鸿毅)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"_pictures":[{"backlink":"UsersGuide/index.html#fig1.3.1","level":"1.3","list_caption":"Figure: pixie16","alt":"pixie16","nro":1,"url":"/img/pixie16.jpg","index":1,"caption_template":"Figure: _CAPTION_","label":"pixie16","attributes":{},"skip":false,"key":"1.3.1"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.1","level":"1.3.3","list_caption":"Figure: MainFrame","alt":"MainFrame","nro":2,"url":"/img/mainframe.png","index":1,"caption_template":"Figure: _CAPTION_","label":"MainFrame","attributes":{},"skip":false,"key":"1.3.3.1"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.2","level":"1.3.3","list_caption":"Figure: About","alt":"About","nro":3,"url":"/img/About.png","index":2,"caption_template":"Figure: _CAPTION_","label":"About","attributes":{},"skip":false,"key":"1.3.3.2"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.3","level":"1.3.3","list_caption":"Figure: Base Setup","alt":"Base Setup","nro":4,"url":"/img/BaseSetup.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Base Setup","attributes":{},"skip":false,"key":"1.3.3.3"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.4","level":"1.3.3","list_caption":"Figure: Trigger Filter","alt":"Trigger Filter","nro":5,"url":"/img/TriggerFilter.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Trigger Filter","attributes":{},"skip":false,"key":"1.3.3.4"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.5","level":"1.3.3","list_caption":"Figure: Energy","alt":"Energy","nro":6,"url":"/img/Energy.png","index":5,"caption_template":"Figure: _CAPTION_","label":"Energy","attributes":{},"skip":false,"key":"1.3.3.5"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.6","level":"1.3.3","list_caption":"Figure: filter range","alt":"filter range","nro":7,"url":"/img/filterrange_format.PNG","index":6,"caption_template":"Figure: _CAPTION_","label":"filter range","attributes":{},"skip":false,"key":"1.3.3.6"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.7","level":"1.3.3","list_caption":"Figure: CFD","alt":"CFD","nro":8,"url":"/img/CFDPars.png","index":7,"caption_template":"Figure: _CAPTION_","label":"CFD","attributes":{},"skip":false,"key":"1.3.3.7"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.8","level":"1.3.3","list_caption":"Figure: Corresponding DSP Parameters for the CFD Parameters","alt":"Corresponding DSP Parameters for the CFD Parameters","nro":9,"url":"/img/correspondingdspparametersforthecfdparmeters.png","index":8,"caption_template":"Figure: _CAPTION_","label":"Corresponding DSP Parameters for the CFD Parameters","attributes":{},"skip":false,"key":"1.3.3.8"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.9","level":"1.3.3","list_caption":"Figure: Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules","alt":"Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules","nro":10,"url":"/img/fixedcfdparametervaluesfor500mhzpixie16modules.png","index":9,"caption_template":"Figure: _CAPTION_","label":"Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules","attributes":{},"skip":false,"key":"1.3.3.9"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.10","level":"1.3.3","list_caption":"Figure: Meanings of the CFD Trigger Source for 500 MHz Pixie-16 Modules","alt":"Meanings of the CFD Trigger Source for 500 MHz Pixie-16 Modules","nro":11,"url":"/img/meaningofthecfdtriggersourcefor500mhzpixie16modules.png","index":10,"caption_template":"Figure: _CAPTION_","label":"Meanings of the CFD Trigger Source for 500 MHz Pixie-16 Modules","attributes":{},"skip":false,"key":"1.3.3.10"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.11","level":"1.3.3","list_caption":"Figure: QDC","alt":"QDC","nro":12,"url":"/img/QDCPars.png","index":11,"caption_template":"Figure: _CAPTION_","label":"QDC","attributes":{},"skip":false,"key":"1.3.3.11"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.12","level":"1.3.3","list_caption":"Figure: Decimation","alt":"Decimation","nro":13,"url":"/img/Decimation.png","index":12,"caption_template":"Figure: _CAPTION_","label":"Decimation","attributes":{},"skip":false,"key":"1.3.3.12"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.13","level":"1.3.3","list_caption":"Figure: Copy Pars","alt":"Copy Pars","nro":14,"url":"/img/CopyPars.png","index":13,"caption_template":"Figure: _CAPTION_","label":"Copy Pars","attributes":{},"skip":false,"key":"1.3.3.13"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.14","level":"1.3.3","list_caption":"Figure: Save2File","alt":"Save2File","nro":15,"url":"/img/Save2File.png","index":14,"caption_template":"Figure: _CAPTION_","label":"Save2File","attributes":{},"skip":false,"key":"1.3.3.14"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.15","level":"1.3.3","list_caption":"Figure: Module Variables","alt":"Module Variables","nro":16,"url":"/img/ModuleVariables.png","index":15,"caption_template":"Figure: _CAPTION_","label":"Module Variables","attributes":{},"skip":false,"key":"1.3.3.15"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.16","level":"1.3.3","list_caption":"Figure: CSRA","alt":"CSRA","nro":17,"url":"/img/CSRA.png","index":16,"caption_template":"Figure: _CAPTION_","label":"CSRA","attributes":{},"skip":false,"key":"1.3.3.16"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.17","level":"1.3.3","list_caption":"Figure: Logic Set","alt":"Logic Set","nro":18,"url":"/img/LogicTrigger.png","index":17,"caption_template":"Figure: _CAPTION_","label":"Logic Set","attributes":{},"skip":false,"key":"1.3.3.17"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.18","level":"1.3.3","list_caption":"Figure: stretch length","alt":"stretch length","nro":19,"url":"/img/stretchlength.PNG","index":18,"caption_template":"Figure: _CAPTION_","label":"stretch length","attributes":{},"skip":false,"key":"1.3.3.18"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.19","level":"1.3.3","list_caption":"Figure: Hist & XDT","alt":"Hist & XDT","nro":20,"url":"/img/HistXDT.png","index":19,"caption_template":"Figure: _CAPTION_","label":"Hist & XDT","attributes":{},"skip":false,"key":"1.3.3.19"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.20","level":"1.3.3","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":21,"url":"/img/Trace.png","index":20,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.3.20"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.21","level":"1.3.3","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":22,"url":"/img/BaselineHist.png","index":21,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.3.21"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.22","level":"1.3.3","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":23,"url":"/img/BaselineTimestamps.png","index":22,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.3.22"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.23","level":"1.3.3","list_caption":"Figure: Adjust Par","alt":"Adjust Par","nro":24,"url":"/img/AdjustPar.png","index":23,"caption_template":"Figure: _CAPTION_","label":"Adjust Par","attributes":{},"skip":false,"key":"1.3.3.23"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.24","level":"1.3.3","list_caption":"Figure: offlineapi","alt":"offlineapi","nro":25,"url":"/img/OfflineAPI.png","index":24,"caption_template":"Figure: _CAPTION_","label":"offlineapi","attributes":{},"skip":false,"key":"1.3.3.24"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.25","level":"1.3.3","list_caption":"Figure: Adjustpars3","alt":"Adjustpars3","nro":26,"url":"/img/Adjustpars3.png","index":25,"caption_template":"Figure: _CAPTION_","label":"Adjustpars3","attributes":{},"skip":false,"key":"1.3.3.25"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.26","level":"1.3.3","list_caption":"Figure: Adjustpars1","alt":"Adjustpars1","nro":27,"url":"/img/Adjustpars1.png","index":26,"caption_template":"Figure: _CAPTION_","label":"Adjustpars1","attributes":{},"skip":false,"key":"1.3.3.26"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.27","level":"1.3.3","list_caption":"Figure: Adjustpars2","alt":"Adjustpars2","nro":28,"url":"/img/Adjustpars2.png","index":27,"caption_template":"Figure: _CAPTION_","label":"Adjustpars2","attributes":{},"skip":false,"key":"1.3.3.27"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.28","level":"1.3.3","list_caption":"Figure: Waveform16","alt":"Waveform16","nro":29,"url":"/img/Waveform16.png","index":28,"caption_template":"Figure: _CAPTION_","label":"Waveform16","attributes":{},"skip":false,"key":"1.3.3.28"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.29","level":"1.3.3","list_caption":"Figure: Energy16","alt":"Energy16","nro":30,"url":"/img/Energy16.png","index":29,"caption_template":"Figure: _CAPTION_","label":"Energy16","attributes":{},"skip":false,"key":"1.3.3.29"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.30","level":"1.3.3","list_caption":"Figure: OrigEnergy","alt":"OrigEnergy","nro":31,"url":"/img/OrigEnergy.png","index":30,"caption_template":"Figure: _CAPTION_","label":"OrigEnergy","attributes":{},"skip":false,"key":"1.3.3.30"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.31","level":"1.3.3","list_caption":"Figure: OrigEnergyFit","alt":"OrigEnergyFit","nro":32,"url":"/img/OrigEnergyFit.png","index":31,"caption_template":"Figure: _CAPTION_","label":"OrigEnergyFit","attributes":{},"skip":false,"key":"1.3.3.31"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.32","level":"1.3.3","list_caption":"Figure: CalcEnergy","alt":"CalcEnergy","nro":33,"url":"/img/CalcEnergy.png","index":32,"caption_template":"Figure: _CAPTION_","label":"CalcEnergy","attributes":{},"skip":false,"key":"1.3.3.32"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.33","level":"1.3.3","list_caption":"Figure: FFCFDThre","alt":"FFCFDThre","nro":34,"url":"/img/FFCFDThre.png","index":33,"caption_template":"Figure: _CAPTION_","label":"FFCFDThre","attributes":{},"skip":false,"key":"1.3.3.33"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.34","level":"1.3.3","list_caption":"Figure: FFCFDThreFFProjectY","alt":"FFCFDThreFFProjectY","nro":35,"url":"/img/FFCFDThreFFProjectY.png","index":34,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreFFProjectY","attributes":{},"skip":false,"key":"1.3.3.34"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.35","level":"1.3.3","list_caption":"Figure: FFCFDThreCFDProjectY","alt":"FFCFDThreCFDProjectY","nro":36,"url":"/img/FFCFDThreCFDProjectY.png","index":35,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreCFDProjectY","attributes":{},"skip":false,"key":"1.3.3.35"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.36","level":"1.3.3","list_caption":"Figure: FFCFDThreCFD","alt":"FFCFDThreCFD","nro":37,"url":"/img/FFCFDThreCFD.png","index":36,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreCFD","attributes":{},"skip":false,"key":"1.3.3.36"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.37","level":"1.3.3","list_caption":"Figure: EnergyFFGraph","alt":"EnergyFFGraph","nro":38,"url":"/img/EnergyFFGraph.png","index":37,"caption_template":"Figure: _CAPTION_","label":"EnergyFFGraph","attributes":{},"skip":false,"key":"1.3.3.37"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.38","level":"1.3.3","list_caption":"Figure: EnergyFFHist","alt":"EnergyFFHist","nro":39,"url":"/img/EnergyFFHist.png","index":38,"caption_template":"Figure: _CAPTION_","label":"EnergyFFHist","attributes":{},"skip":false,"key":"1.3.3.38"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.39","level":"1.3.3","list_caption":"Figure: FFT","alt":"FFT","nro":40,"url":"/img/FFT.png","index":39,"caption_template":"Figure: _CAPTION_","label":"FFT","attributes":{},"skip":false,"key":"1.3.3.39"},{"backlink":"UsersGuide/GUI.html#fig1.3.3.40","level":"1.3.3","list_caption":"Figure: Time Diff","alt":"Time Diff","nro":41,"url":"/img/TimeDiff.png","index":40,"caption_template":"Figure: _CAPTION_","label":"Time Diff","attributes":{},"skip":false,"key":"1.3.3.40"},{"backlink":"UsersGuide/OnlineStattics.html#fig1.3.4.1","level":"1.3.4","list_caption":"Figure: OnlineMainFrame","alt":"OnlineMainFrame","nro":42,"url":"/img/OnlineMainFrame.png","index":1,"caption_template":"Figure: _CAPTION_","label":"OnlineMainFrame","attributes":{},"skip":false,"key":"1.3.4.1"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.1","level":"1.3.6","list_caption":"Figure: LVDS I/O Port","alt":"LVDS I/O Port","nro":43,"url":"/img/lvdsioport.png","index":1,"caption_template":"Figure: _CAPTION_","label":"LVDS I/O Port","attributes":{},"skip":false,"key":"1.3.6.1"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.2","level":"1.3.6","list_caption":"Figure: Digital I/O Connectors A, B, C, D and E","alt":"Digital I/O Connectors A, B, C, D and E","nro":44,"url":"/img/digitalioconnectorsabcdande.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Digital I/O Connectors A, B, C, D and E","attributes":{},"skip":false,"key":"1.3.6.2"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.3","level":"1.3.6","list_caption":"Figure: 2mm pitch har-link connector from HARTING","alt":"2mm pitch har-link connector from HARTING","nro":45,"url":"/img/2mmpitchharlinkconnectorfromharting.png","index":3,"caption_template":"Figure: _CAPTION_","label":"2mm pitch har-link connector from HARTING","attributes":{},"skip":false,"key":"1.3.6.3"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.4","level":"1.3.6","list_caption":"Figure: Rev. F Module’s Digital I/O Connectors","alt":"Rev. F Module’s Digital I/O Connectors","nro":46,"url":"/img/revfmoduledigitalioconnectors.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Rev. F Module’s Digital I/O Connectors","attributes":{},"skip":false,"key":"1.3.6.4"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.5","level":"1.3.6","list_caption":"Figure: frontpanel","alt":"frontpanel","nro":47,"url":"/img/frontpanel_pku.png","index":5,"caption_template":"Figure: _CAPTION_","label":"frontpanel","attributes":{},"skip":false,"key":"1.3.6.5"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.6","level":"1.3.6","list_caption":"Figure: Front Panel LEDs for the Pixie-16 Modules","alt":"Front Panel LEDs for the Pixie-16 Modules","nro":48,"url":"/img/frontpanelledsforthepixie16modules.png","index":6,"caption_template":"Figure: _CAPTION_","label":"Front Panel LEDs for the Pixie-16 Modules","attributes":{},"skip":false,"key":"1.3.6.6"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.7","level":"1.3.6","list_caption":"Figure: Rev. D Module’s 3.3V I/O Connector","alt":"Rev. D Module’s 3.3V I/O Connector","nro":49,"url":"/img/revdmodules33vioconnector.png","index":7,"caption_template":"Figure: _CAPTION_","label":"Rev. D Module’s 3.3V I/O Connector","attributes":{},"skip":false,"key":"1.3.6.7"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.8","level":"1.3.6","list_caption":"Figure: Rev. D Module’s GATE Inputs","alt":"Rev. D Module’s GATE Inputs","nro":50,"url":"/img/revdmodulesgateinputs.png","index":8,"caption_template":"Figure: _CAPTION_","label":"Rev. D Module’s GATE Inputs","attributes":{},"skip":false,"key":"1.3.6.8"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.9","level":"1.3.6","list_caption":"Figure: Rev. D Module’s GATE INPUTS Connector","alt":"Rev. D Module’s GATE INPUTS Connector","nro":51,"url":"/img/revdmodulesgateinputsconnector.png","index":9,"caption_template":"Figure: _CAPTION_","label":"Rev. D Module’s GATE INPUTS Connector","attributes":{},"skip":false,"key":"1.3.6.9"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.10","level":"1.3.6","list_caption":"Figure: Rev. B and C Module’s 3.3V I/O Connector","alt":"Rev. B and C Module’s 3.3V I/O Connector","nro":52,"url":"/img/revbandcmodules33vioconnector.png","index":10,"caption_template":"Figure: _CAPTION_","label":"Rev. B and C Module’s 3.3V I/O Connector","attributes":{},"skip":false,"key":"1.3.6.10"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.11","level":"1.3.6","list_caption":"Figure: TTL Digital Input Signals","alt":"TTL Digital Input Signals","nro":53,"url":"/img/ttldigitalinputsignals.png","index":11,"caption_template":"Figure: _CAPTION_","label":"TTL Digital Input Signals","attributes":{},"skip":false,"key":"1.3.6.11"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.12","level":"1.3.6","list_caption":"Figure: Connector J101 LVDS I/O Port Signals","alt":"Connector J101 LVDS I/O Port Signals","nro":54,"url":"/img/connectorj101lvdsioportsignals.png","index":12,"caption_template":"Figure: _CAPTION_","label":"Connector J101 LVDS I/O Port Signals","attributes":{},"skip":false,"key":"1.3.6.12"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.13","level":"1.3.6","list_caption":"Figure: TTL Digital Output Signals","alt":"TTL Digital Output Signals","nro":55,"url":"/img/ttldigitaloutputsignals.png","index":13,"caption_template":"Figure: _CAPTION_","label":"TTL Digital Output Signals","attributes":{},"skip":false,"key":"1.3.6.13"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.6.14","level":"1.3.6","list_caption":"Figure: Lupo x495","alt":"Lupo x495","nro":56,"url":"/img/lupox495.png","index":14,"caption_template":"Figure: _CAPTION_","label":"Lupo x495","attributes":{},"skip":false,"key":"1.3.6.14"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.1","level":"1.3.7","list_caption":"Figure: Signal Process FPGA","alt":"Signal Process FPGA","nro":57,"url":"/img/signalprocessfpga.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Signal Process FPGA","attributes":{},"skip":false,"key":"1.3.7.1"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.2","level":"1.3.7","list_caption":"Figure: System FPGA","alt":"System FPGA","nro":58,"url":"/img/SystemFPGA.png","index":2,"caption_template":"Figure: _CAPTION_","label":"System FPGA","attributes":{},"skip":false,"key":"1.3.7.2"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.3","level":"1.3.7","list_caption":"Figure: fast trigger stretch/delay","alt":"fast trigger stretch/delay","nro":59,"url":"/img/fasttrigger_stretch_delay.png","index":3,"caption_template":"Figure: _CAPTION_","label":"fast trigger stretch/delay","attributes":{},"skip":false,"key":"1.3.7.3"},{"backlink":"UsersGuide/Logic.html#fig1.3.7.4","level":"1.3.7","list_caption":"Figure: validation trigger","alt":"validation trigger","nro":60,"url":"/img/validationtrigger.png","index":4,"caption_template":"Figure: _CAPTION_","label":"validation trigger","attributes":{},"skip":false,"key":"1.3.7.4"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.1","level":"1.3.8","list_caption":"Figure: JP101","alt":"JP101","nro":61,"url":"/img/multiplemodulessynchronously.png","index":1,"caption_template":"Figure: _CAPTION_","label":"JP101","attributes":{},"skip":false,"key":"1.3.8.1"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.2","level":"1.3.8","list_caption":"Figure: individual clock mode","alt":"individual clock mode","nro":62,"url":"/img/individualclockmode.png","index":2,"caption_template":"Figure: _CAPTION_","label":"individual clock mode","attributes":{},"skip":false,"key":"1.3.8.2"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.3","level":"1.3.8","list_caption":"Figure: PXI clock mode","alt":"PXI clock mode","nro":63,"url":"/img/pxiclockmode.png","index":3,"caption_template":"Figure: _CAPTION_","label":"PXI clock mode","attributes":{},"skip":false,"key":"1.3.8.3"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.4","level":"1.3.8","list_caption":"Figure: daisy-chained clock mode","alt":"daisy-chained clock mode","nro":64,"url":"/img/daisychainedclockmode.png","index":4,"caption_template":"Figure: _CAPTION_","label":"daisy-chained clock mode","attributes":{},"skip":false,"key":"1.3.8.4"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.5","level":"1.3.8","list_caption":"Figure: multi-crate clock mode","alt":"multi-crate clock mode","nro":65,"url":"/img/multicrateclockmode.png","index":5,"caption_template":"Figure: _CAPTION_","label":"multi-crate clock mode","attributes":{},"skip":false,"key":"1.3.8.5"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.6","level":"1.3.8","list_caption":"Figure: Module Definitions in a 2-crate System","alt":"Module Definitions in a 2-crate System","nro":66,"url":"/img/moduledefinitionsina2cratesystem.png","index":6,"caption_template":"Figure: _CAPTION_","label":"Module Definitions in a 2-crate System","attributes":{},"skip":false,"key":"1.3.8.6"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.7","level":"1.3.8","list_caption":"Figure: Clock Jumper JP101 Settings in a 2-crate System","alt":"Clock Jumper JP101 Settings in a 2-crate System","nro":67,"url":"/img/clockjumperjp101settingsina2cratesystem.png","index":7,"caption_template":"Figure: _CAPTION_","label":"Clock Jumper JP101 Settings in a 2-crate System","attributes":{},"skip":false,"key":"1.3.8.7"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.8","level":"1.3.8","list_caption":"Figure: rear I/O trigger modules","alt":"rear I/O trigger modules","nro":68,"url":"/img/reariotriggermodules.png","index":8,"caption_template":"Figure: _CAPTION_","label":"rear I/O trigger modules","attributes":{},"skip":false,"key":"1.3.8.8"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.9","level":"1.3.8","list_caption":"Figure: Cable connections between two Pixie-16 rear I/O trigger modules","alt":"Cable connections between two Pixie-16 rear I/O trigger modules","nro":69,"url":"/img/cableconnectionsbetweentwopixie16reariotriggermodules.png","index":9,"caption_template":"Figure: _CAPTION_","label":"Cable connections between two Pixie-16 rear I/O trigger modules","attributes":{},"skip":false,"key":"1.3.8.9"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.10","level":"1.3.8","list_caption":"Figure: Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module","alt":"Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module","nro":70,"url":"/img/pinnumberingforthejumpersonthepixie16reariotriggermodule.png","index":10,"caption_template":"Figure: _CAPTION_","label":"Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module","attributes":{},"skip":false,"key":"1.3.8.10"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.11","level":"1.3.8","list_caption":"Figure: Rear I/O Trigger Module #1’s Jumper Settings","alt":"Rear I/O Trigger Module #1’s Jumper Settings","nro":71,"url":"/img/reariotrigger1sjumpersettings.png","index":11,"caption_template":"Figure: _CAPTION_","label":"Rear I/O Trigger Module #1’s Jumper Settings","attributes":{},"skip":false,"key":"1.3.8.11"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.12","level":"1.3.8","list_caption":"Figure: Rear I/O Trigger Module #2’s Jumper Settings","alt":"Rear I/O Trigger Module #2’s Jumper Settings","nro":72,"url":"/img/reariotriggermodule2sjumpersettings.png","index":12,"caption_template":"Figure: _CAPTION_","label":"Rear I/O Trigger Module #2’s Jumper Settings","attributes":{},"skip":false,"key":"1.3.8.12"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.8.13","level":"1.3.8","list_caption":"Figure: Cable connections among four Pixie-16 rear I/O trigger modules","alt":"Cable connections among four Pixie-16 rear I/O trigger modules","nro":73,"url":"/img/cableconnectionsamongfourpixie16reariotriggermodules.png","index":13,"caption_template":"Figure: _CAPTION_","label":"Cable connections among four Pixie-16 rear I/O trigger modules","attributes":{},"skip":false,"key":"1.3.8.13"}]},"title":"","gitbook":"*","description":"吴鸿毅笔记"},"file":{"path":"UsersGuide/GUI.md","mtime":"2018-09-28T04:44:33.004Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-28T04:45:06.594Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
