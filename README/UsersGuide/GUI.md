@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:55 2018 (+0800)
-;; Last-Updated: 五 9月 28 12:44:33 2018 (+0800)
+;; Last-Updated: 五 9月 28 13:05:24 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 40
+;;     Update #: 42
 ;; URL: http://wuhongyi.cn -->
 
 # GUI
@@ -247,14 +247,16 @@ General rules of thumb for the following important parameters are:
 The following CFD algorithm is implemented in the signal processing FPGA of the 100 MHz(Rev. B, C, D and F) and 250 MHz(Rev. F) Pixie-16 modules. 
 
 Assume the digitized waveform can be represented by data series Trace[i], i = 0, 1, 2, ... First the fast filter response(FF) of the digitized waveform is computed as follows:
+
 $$FF[i]=\sum_{j=i-(FL-1)}^{i}Trace[j]-\sum_{j=i-(2\timesFL+FG-1)}^{i-(FL+FG)}Trace[j]$$
 
 Where FL is called the fast length and FG is called the fast gap of the digital trapezoidal filter. Then the CFD is computed as follows:
+
 $$CFD[i+D]=FF[i+D]\times(1-w/8)-FF[i]$$
 
 Where D is called the CFD delay length and w is called the CFD scaling factor(w=0, 1,..., 7).
 
-The CFD zero crossing point(ZCP) is then determined when $$CFD[i]\leq0$$ and $$CFD[i+1]<0$. The timestamp is latched at Trace point $$i$$, and the fraction time $$f$$ is given by the ratio of the two CFD response amplitudes right before and after the ZCP.
+The CFD zero crossing point(ZCP) is then determined when $$CFD[i]\leq0$$ and $$CFD[i+1]<0$$. The timestamp is latched at Trace point $$i$$, and the fraction time $$f$$ is given by the ratio of the two CFD response amplitudes right before and after the ZCP.
 
 $$f=\frac{CFDout1}{CFDout1-CFDout2}$$
 
@@ -320,16 +322,14 @@ $$CFD=\frac{CFDout1}{CFDout1-CFDout2}\times8192$$
 
 ![QDC](/img/QDCPars.png)
 
-**。。TODO。。**
 
-Eight QDC sums, each of which can have different length varying from 10 ns to 327.68 μs,
-are computed in the signal processing FPGA of a Pixie-16 module for each channel and the sums
-are written to the output data stream if the user requests so. The recording of QDC sums starts at
-the waveform point which is Pre-trigger Trace Length earlier than the trigger point, which is
-either the CFD trigger or local fast trigger depending on whether or not CFD trigger mode is
-enabled. The eight QDC sums are computed one by one continuously, but they are not
-overlapping. Both the QDC sum length and the Pre-trigger trace length are set by the user. The
-recording of QDC sums ends when the eight intervals have passed.
+Eight QDC sums, each of which can have different lengths, are computed in the Signal Processing FPGA of a Pixie-16 module for each channel and the sums are written to the list mode output data stream if the user requests so. 
+
+The recording of QDC sums starts at the waveform point which is *Pre-trigger Trace Length* or *Trace Delay* earlier than the trigger point, which is either the CFD trigger or channel fast trigger depending on whether or not CFD trigger mode is enabled. 
+
+The eight QDC sums are computed one by one continuously, but they are not overlapping. The recording of QDC sums ends when the eight intervals have all passed.
+
+![The 8 QDC sums of a triggered event](/img/the8qdcsumsofatriggeredevent.png)
 
 
 ### Decimation
