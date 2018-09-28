@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 15:47:48 2018 (+0800)
-;; Last-Updated: 五 9月 28 13:23:36 2018 (+0800)
+;; Last-Updated: 五 9月 28 13:38:49 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 11
+;;     Update #: 13
 ;; URL: http://wuhongyi.cn -->
 
 # Guide
@@ -28,6 +28,7 @@
 > **[danger] IMPORTANT**
 >
 > The amplitude of the detector output signals is not recommended to exceed +/-3.5V if 50Ohm input termination jumper is installed and the 1:4 attenuation is not used.
+>
 > Do Not Hot-Swap!
 >
 > To avoid personal injury, and/or damage to the DGF-Pixie-16, always turn off crate power before removing the DGF-Pixie-16 from the crate!

@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 五 9月 28 13:31:02 2018 (+0800)
+;; Last-Updated: 五 9月 28 13:40:49 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 97
+;;     Update #: 98
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -116,7 +116,7 @@ The following files/folders are included in the user's use package 用户使用�
 
 ----
 
-## Update/升级计划：
+## Update/升级计划
 
 - The main control interface developed based on the ROOT GUI is highly complex and difficult for users to modify now. Users do not easy to develop their own version based on this program. 当前基于 ROOT GUI 开发的主控制界面复杂度高，用户修改难度大。其它用户不容易基于其发展适合自己的版本。
 - We are also developing a web control for online/offline analysis 我们也在开发基于网页控制的获取在线/离线分析程序:
