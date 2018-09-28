@@ -4,18 +4,33 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 15:47:48 2018 (+0800)
-;; Last-Updated: 五 9月 28 11:53:08 2018 (+0800)
+;; Last-Updated: 五 9月 28 13:23:36 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 10
+;;     Update #: 11
 ;; URL: http://wuhongyi.cn -->
 
 # Guide
 
 <!-- toc -->
 
-**User's Manual** *Digital Gamma Finder (DGF) PIXIE-16*  **Version 1.40, October 2009**
+**User's Manual** *Digital Gamma Finder (DGF) PIXIE-16*  **Version 1.40, October 2009**  
+**Pixie-16 User Manual**  **Version 3.00**  **August 21, 2018**
 
 
+> **[info] IMPORTANT**
+>
+> The Pixie-16 is designed for single exponentially decaying signals. 
+>
+> Step pulses or short non-exponential pulses can be accommodated with specific parameter settings. 
+>
+> Staircase type signals from reset preamplifiers generally need to be AC coupled.
+
+> **[danger] IMPORTANT**
+>
+> The amplitude of the detector output signals is not recommended to exceed +/-3.5V if 50Ohm input termination jumper is installed and the 1:4 attenuation is not used.
+> Do Not Hot-Swap!
+>
+> To avoid personal injury, and/or damage to the DGF-Pixie-16, always turn off crate power before removing the DGF-Pixie-16 from the crate!
 
 - 这里需要介绍跳线接法
 - 原始数据定义
@@ -24,9 +39,7 @@
 
 ----
 
-**Do Not Hot-Swap!**
 
-**To avoid personal injury, and/or damage to the DGF-Pixie-16, always turn off crate power before removing the DGF-Pixie-16 from the crate!**
 
 ![pixie16](/img/pixie16.jpg)
 

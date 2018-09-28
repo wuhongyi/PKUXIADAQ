@@ -4,16 +4,16 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 五 9月 28 13:07:32 2018 (+0800)
+;; Last-Updated: 五 9月 28 13:18:37 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 94
+;;     Update #: 95
 ;; URL: http://wuhongyi.cn -->
 
 # README
 
 <!-- toc -->
 
-![PKU logo](/README/img/pkulogo100.jpg)
+![PKU logo](README/img/pkulogo100.jpg)
 
 ## Version/版本
 

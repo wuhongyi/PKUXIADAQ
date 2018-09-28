@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:55 2018 (+0800)
-;; Last-Updated: 五 9月 28 13:05:24 2018 (+0800)
+;; Last-Updated: 五 9月 28 13:15:57 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 42
+;;     Update #: 44
 ;; URL: http://wuhongyi.cn -->
 
 # GUI
@@ -262,7 +262,7 @@ $$f=\frac{CFDout1}{CFDout1-CFDout2}$$
 
 Where CFDout1 is the CFD response amplitude right before the ZCP, and CFDout2 is the CFD response amplitude right after the ZCP(subtraction is used in the denominator since CFDout2 is negative). The Pixie-16 DSP computes the CFD final value as follows and stores it in the output data stream for online or offline analysis.
 
-$$CFD=\frac{CFDout1}{CFDout1-CFDout2}\timesN$$
+$$CFD=\frac{CFDout1}{CFDout1-CFDout2} \times N$$
 
 Where N is scaling factor, which equals to 32768 for 100 MHz modules and 16384 for 250 MHz modules, respectively.
 
@@ -314,7 +314,8 @@ The CFD time given by the 500 MHz Pixie-16 modules consists of two parts: a shif
 
 ![Meanings of the CFD Trigger Source for 500 MHz Pixie-16 Modules](/img/meaningofthecfdtriggersourcefor500mhzpixie16modules.png)
 
-The CFD fractional time is given as follows.
+The CFD fractional time is given as follows:
+
 $$CFD=\frac{CFDout1}{CFDout1-CFDout2}\times8192$$
 
 
