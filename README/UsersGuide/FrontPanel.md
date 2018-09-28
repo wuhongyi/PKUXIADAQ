@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 五 7月 29 15:38:49 2016 (+0800)
-;; Last-Updated: 四 9月 27 14:14:06 2018 (+0800)
+;; Last-Updated: 五 9月 28 10:09:28 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 31
+;;     Update #: 33
 ;; URL: http://wuhongyi.cn -->
 
 # Front Panel
@@ -30,7 +30,7 @@ Each Pixie-16 module accepts 16 analog input signals, and each input connector i
 
 Each Pixie-16 module is equipped with one LVDS I/O port on its front panel. LVDS stands for low voltage differential signaling. The LVDS I/O connector is a RJ45 connector, which implies that the same Cat 5 or Cat 6 Ethernet cables can be used to connect signals to or from this I/O port. However, no Ethernet connectivity is available through this Pixie-16 I/O port.
 
-Four differential signal pairs, i.e., between pin-pairs $Fo_{1p}$/$Fo_{1n}$ , $Fi_{1p}$/$Fi_{1n}$ , $Fi_{5p}$/$Fi_{5n}$ , and $Fo_{5p}$/$Fo_{5n}$ , are available from this I/O port. Each pair can be configured as either an input or output signal.
+Four differential signal pairs, i.e., between pin-pairs $$Fo_{1p}$$/$$Fo_{1n}$$ , $Fi_{1p}$/$Fi_{1n}$ , $Fi_{5p}$/$Fi_{5n}$ , and $Fo_{5p}$/$Fo_{5n}$ , are available from this I/O port. Each pair can be configured as either an input or output signal.
 
 ## Digital I/O Connectors(Rev. F only)
 
@@ -67,13 +67,13 @@ Near the bottom of the Pixie-16 front panel, there are three LEDs. They are labe
 
 ![Front Panel LEDs for the Pixie-16 Modules](/img/frontpanelledsforthepixie16modules.png)
 
-```
-The RUN LED will be turned on when a run in the Pixie-16 module is in progress, and will be turned off when the run is stopped or not started yet. 
 
-The I/O LED will blink when there is I/O activity on the PCI bus between the Pixie-16 module and host computer. 
+The **RUN LED** will be turned on when a run in the Pixie-16 module is in progress, and will be turned off when the run is stopped or not started yet. 
 
-The ERR LED is, in fact, not to signal any error condition in the Pixie-16 module. Instead, it is used to indicate whether or not the External FIFO of the Pixie-16 module is full. It will be ON when there is no more space in the External FIFO for storage of list mode event data, and OFF when there is sufficient space to store at least one more list mode event data. When the External FIFO is full, no more list mode event data can be written into it until the host software reads out part of the data in the External FIFO through the PCI bus.
-```
+The **I/O LED** will blink when there is I/O activity on the PCI bus between the Pixie-16 module and host computer. 
+
+The **ERR LED** is, in fact, not to signal any error condition in the Pixie-16 module. Instead, it is used to indicate whether or not the External FIFO of the Pixie-16 module is full. It will be ON when there is no more space in the External FIFO for storage of list mode event data, and OFF when there is sufficient space to store at least one more list mode event data. When the External FIFO is full, no more list mode event data can be written into it until the host software reads out part of the data in the External FIFO through the PCI bus.
+
 
 ## 3.3V I/O Connector(Rev. D only)
 
