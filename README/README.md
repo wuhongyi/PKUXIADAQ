@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 五 9月 28 13:40:49 2018 (+0800)
+;; Last-Updated: 五 10月  5 08:14:28 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 98
+;;     Update #: 99
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -71,8 +71,8 @@ Software Developer 软件主要开发者:
 - Jing Li 李晶(lijinger02@126.com)
 
 Principal author of the instruction 说明书主要撰写者:
-- Hongyi Wu 吴鸿毅
 - Diwen Luo 罗迪雯
+- Hongyi Wu 吴鸿毅
 - Xiang Wang 王翔
 
 
