@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 15:47:48 2018 (+0800)
-;; Last-Updated: 日 10月  7 10:52:08 2018 (+0800)
+;; Last-Updated: 日 10月  7 11:52:11 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 14
+;;     Update #: 15
 ;; URL: http://wuhongyi.cn -->
 
 # Guide
@@ -73,7 +73,7 @@ The Pixie-16 modules must be operated in a custom 6U CompactPCI/PXI chassis prov
 
 ----
 
-## 数据结构
+## Output Data Structures
 
 
 ![Header 100M](/img/data_100M.PNG)

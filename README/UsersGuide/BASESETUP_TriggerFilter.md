@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:35:24 2018 (+0800)
-;; Last-Updated: 日 10月  7 11:02:00 2018 (+0800)
+;; Last-Updated: 日 10月  7 11:22:56 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 5
+;;     Update #: 6
 ;; URL: http://wuhongyi.cn -->
 
 # Trigger Filter
@@ -50,7 +50,7 @@ Reducing noise in an electrical measurement is accomplished by filtering. Tradit
 
 Digital filtering proceeds from a slightly different perspective. Here the signal has been digitized and is no longer continuous. Instead it is a string of discrete values as shown in Figure. Figure is actually just a subset of Figure (b), in which the signal was digitized by a Tektronix 544 TDS digital oscilloscope at 10 MSPS (mega samples per second). Given this data set, and some kind of arithmetic processor, the obvious approach to determining Vx is to take some sort of average over the points before the step and subtract it from the value of the average over the points after the step. That is, as shown in Figure *Digitized version of the data of Figure (b) in the step region*, averages are computed over the two regions marked “Length” (the “Gap” region is omitted because the signal is changing rapidly here), and their difference taken as a measure of Vx . Thus the value Vx may be found from the following equation:
 
-$$V_{x,k}=-\sum{i(before)}W_{i}V_{i}+\sum{i(after)}W_{i}V_{i}$$
+$$V_{x,k}=-\sum_{i(before)}W_{i}V_{i}+\sum_{i(after)}W_{i}V_{i}$$
 
 Where the values of the weighting constants W i determine the type of average being computed. The sums of the values of the two sets of weights must be individually normalized.
 
@@ -66,7 +66,7 @@ In principle, the very best filtering is accomplished by using cusp-like weights
 
 It implements a fixed length filter with all W i values equal to unity and in fact computes this sum afresh for each new signal value k. Thus the equation implemented is:
 
-$$LV_{x,k}=-\sum{i=k-2L-G+1}{k-L-G}V_{i}+\sum{i=k-L+1}{k}V_{i}$$
+$$LV_{x,k}=-\sum_{i=k-2L-G+1}^{k-L-G}V_{i}+\sum_{i=k-L+1}^{k}V_{i}$$
 
 Where the filter length is $$L$$ and the gap is $$G$$. The factor $$L$$ multiplying $$V_{x,k}$$ arises because the sum of the weights here is not normalized. Accommodating this factor is trivial.
 
