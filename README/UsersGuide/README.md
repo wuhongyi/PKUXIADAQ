@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 15:47:48 2018 (+0800)
-;; Last-Updated: 五 9月 28 13:38:49 2018 (+0800)
+;; Last-Updated: 日 10月  7 10:52:08 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 13
+;;     Update #: 14
 ;; URL: http://wuhongyi.cn -->
 
 # Guide
@@ -33,10 +33,7 @@
 >
 > To avoid personal injury, and/or damage to the DGF-Pixie-16, always turn off crate power before removing the DGF-Pixie-16 from the crate!
 
-- 这里需要介绍跳线接法
-- 原始数据定义
-- 算法原理
-- 。。。
+
 
 ----
 
