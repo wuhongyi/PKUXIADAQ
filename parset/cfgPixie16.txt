@@ -33,6 +33,13 @@ ModuleBits 3 14 14 14
 
 ## The user does not modify the following parts
 
+100M12bit_sys ../firmware/pixie16_revd_12b100m_firmware_release_10092018/syspixie16_revdgeneral_r33157.bin
+100M12bit_fip ../firmware/pixie16_revd_12b100m_firmware_release_10092018/fippixie16_revdgeneral_r33320.bin
+100M12bit_dsplst ../firmware/pixie16_revd_12b100m_firmware_release_10092018/Pixie16DSP_RevDGeneral_r40804_NoNegEnergy_AlwaysCompEnergy.lst
+100M12bit_dspldr ../firmware/pixie16_revd_12b100m_firmware_release_10092018/Pixie16DSP_RevDGeneral_r40804_NoNegEnergy_AlwaysCompEnergy.ldr
+100M12bit_dspvar ../firmware/pixie16_revd_12b100m_firmware_release_10092018/Pixie16DSP_RevDGeneral_r40804_NoNegEnergy_AlwaysCompEnergy.var
+
+
 # 100M14bit_sys ../firmware/pixie16_revfpku_14b100m_firmware_release_05082018/syspixie16_revfpku_adc100mhz_r36481.bin
 # 100M14bit_fip ../firmware/pixie16_revfpku_14b100m_firmware_release_05082018/fippixie16_revfpku_14b100m_r39511.bin
 # 100M14bit_dsplst ../firmware/pixie16_revfpku_14b100m_firmware_release_05082018/Pixie16DSP_revfpku_14b100m_r39555.lst
@@ -47,6 +54,13 @@ ModuleBits 3 14 14 14
 100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_08232018/Pixie16DSP_revfpku_14b100m_r40391.var
 
 
+# 100M14bit_sys ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/syspixie16_revf_PKU_09272018.bin
+# 100M14bit_fip ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/fippixie16_revfpku_14b100m_r39574.bin
+# 100M14bit_dsplst ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.lst
+# 100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.ldr
+# 100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.var
+
+
 250M14bit_sys ../firmware/pixie16_revf_14b250m_firmware_release_04222018/syspixie16_revfpku_adc250mhz_r39398.bin
 250M14bit_fip ../firmware/pixie16_revf_14b250m_firmware_release_04222018/fippixie16_revfgeneral_14b250m_r35425.bin
 250M14bit_dsplst ../firmware/pixie16_revf_14b250m_firmware_release_04222018/Pixie16DSP_revfgeneral_14b250m_r39397.lst
@@ -56,11 +70,6 @@ ModuleBits 3 14 14 14
 
 ## TODO
 #After adding the following firmware, you need to modify the definition in the file Detector.hh.
-100M12bit_sys ../firmware/
-100M12bit_fip ../firmware/
-100M12bit_dsplst ../firmware/
-100M12bit_dspldr ../firmware/
-100M12bit_dspvar ../firmware/
 
 250M12bit_sys ../firmware/
 250M12bit_fip ../firmware/

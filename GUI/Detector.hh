@@ -16,7 +16,7 @@
 #include <cstring>
 #include <string>
 
-// #define FIRMWARE100M12BIT
+#define FIRMWARE100M12BIT
 #define FIRMWARE100M14BIT
 // #define FIRMWARE250M12BIT
 #define FIRMWARE250M14BIT
