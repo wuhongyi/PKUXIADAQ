@@ -4,14 +4,37 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:18:51 2018 (+0800)
-;; Last-Updated: 日 10月  7 09:19:09 2018 (+0800)
+;; Last-Updated: 六 10月 20 19:39:08 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 1
+;;     Update #: 2
 ;; URL: http://wuhongyi.cn -->
 
 # CSRA
 
 ![CSRA](/img/CSRA.png)
+
+- The yellow FTS and GTS combinations are used to select the channel fast trigger:
+    - When both are not selected, it is local fast trigger.
+    - When selecting FTS, it is a latched module fast trigger.
+    - FTS is not selected, GTS is selected as a latched channel validation trigger.
+- Blue MSE, CSE, MVT, CVT are used to select module/channel validation trigger:
+    - MVT is the module validation trigger.
+    - CVT is the channel validation trigger.
+    - MSE select module validation trigger depends on System FPGA or front panel module GATE.
+    - CSE selection channel validation trigger depends on System FPGA or front panel channel GATE.
+-  The pink NPR, IPR combination is used to select the treatment of the pileup event:
+   - All events are logged when both are not selected, and the accumulated event energy value is invalid.
+   - NPR selection does not record stacking events when IPR is not selected.
+   - When the NPR is not selected, the event record waveform is accumulated, and the waveform is not recorded when it is not stacked.
+   - When both NPR and IPR are selected, only the stacked events are recorded.
+- Green CTV, CVS, MVS are used to select module/channel veto:
+     - MVS select module veto depending on the front panel module GATE or module validation trigger.
+     - CVS select channel veto depending on the front panel channel GATE or channel validation trigger.
+     - CTV is whether to enable channel trigger veto.
+- The Red contents are the basic settings.
+    - Black NTL is to keep the waveform out of range.
+    - Black ETS is to record the data of the external clock.
+- The remaining BDA does not need to be selected, HE does not matter.
 
 - 黄色 FTS、GTS 组合来选择 channel fast trigger：
 	- 两个均不选时为 local fast trigger
@@ -38,7 +61,7 @@
 
 
 
-
+## Register definition
 
 Channel Control Register A affecting each channel individually 
 

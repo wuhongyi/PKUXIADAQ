@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:34:45 2018 (+0800)
-;; Last-Updated: 日 10月  7 11:51:07 2018 (+0800)
+;; Last-Updated: 六 10月 20 19:41:22 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 10
+;;     Update #: 11
 ;; URL: http://wuhongyi.cn -->
 
 # Energy
@@ -17,6 +17,13 @@
 
 ![Energy](/img/Energy.png)
 
+When the status below the interface is displaying **green Ready**, it means that the interface can be operated, otherwise you need to wait. The operation of the bottom button is the same as above.
+
+- The parameter Rise Time . . .
+- The parameter Flat Top. . .
+- The parameter Tau ...
+- The parameter filter range ...
+
 界面下方的 Status 显示为**绿色的 Ready** 时表示可操作该界面，否则需要等待。底下按钮的操作同上。
 
 - 参数 *Rise Time* 。。。
@@ -24,7 +31,7 @@
 - 参数 *Tau* 。。。
 - 参数 filter range
 
-**TODO**
+**TODO  这里应该补充不同探测器的推荐值**
 
 
 The most critical parameter for the energy computation is the signal decay time Tau. It is used to compensate for the falling edge of a previous pulse in the computation of the energy. You can either enter Tau directly for each channel, or enter an approximate value in the right control, select a channel, and click Find it to let the software determine the decay time automatically.
