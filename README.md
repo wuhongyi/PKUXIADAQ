@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 五 10月 12 10:47:22 2018 (+0800)
+;; Last-Updated: 五 10月 26 09:17:28 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 100
+;;     Update #: 101
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -90,7 +90,7 @@ This program is applicable to XIA Pixie16 module, supports 100/250/500 MHz(speci
 
 本程序适用于 XIA Pixie16 系列采集卡，支持 100/250/500 MHz 采集卡(具体支持型号可查看图形软件中的File->About)，最大支持 8 个机箱同步运行，即 1600+ 路信号同时采集。**本程序包要求使用 CERN ROOT6 版本。要求采用 1920x1080 及以上分辨率显示屏**。
 
-The program is designed to be compatible with the 100/250/500 MHz module. Simply add the firmware location of the corresponding sample rate capture card to cfgPixie16.txt. The program can automatically identify the capture card type and load the corresponding firmware. Currently we only have a 100/250 MHz 14 bit capture card, so this type of capture card can be run by default. To support other types, please contact XIA LLC to obtain the corresponding firmware or contact Wu Hongyi (wuhongyi@qq.com).
+The program is designed to be compatible with the 100/250/500 MHz modules. Simply add the firmware location of the corresponding sample rate modules to cfgPixie16.txt. The program can automatically identify the modules type and load the corresponding firmware. Currently we only have a 100/250 MHz 14 bit modules, so this type of modules can be run by default. To support other types, please contact XIA LLC to obtain the corresponding firmware or contact Wu Hongyi (wuhongyi@qq.com).
 
 本程序的设计兼容 100/250/500 MHz 采集卡的混合使用，只需在 cfgPixie16.txt 添加相应采样率采集卡的固件位置即可，程序在线能够自动识别采集卡类型并加载相应的固件。当前我们只有100/250 MHz 14 bit 的采集卡，因此默认可运行该类型的采集卡，如要支持其它类型，请联系 XIA LLC 获取对应固件或者联系吴鸿毅(wuhongyi@qq.com)。
 
