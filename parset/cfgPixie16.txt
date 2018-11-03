@@ -5,7 +5,7 @@ CrateID 0
 
 ## Register parameters
 
-SettingPars ../parset/DSPpar.set
+SettingPars ../parset/20181103.set
 
 
 ## -----------------------------------------------------------------------------
@@ -47,18 +47,18 @@ ModuleBits 3 14 14 14
 # 100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_05082018/Pixie16DSP_revfpku_14b100m_r39555.var
 
 
-100M14bit_sys ../firmware/pixie16_revfpku_14b100m_firmware_release_08232018/syspixie16_revfpku_adc100mhz_r36481.bin
-100M14bit_fip ../firmware/pixie16_revfpku_14b100m_firmware_release_08232018/fippixie16_revfpku_14b100m_r39574.bin
-100M14bit_dsplst ../firmware/pixie16_revfpku_14b100m_firmware_release_08232018/Pixie16DSP_revfpku_14b100m_r40391.lst
-100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_firmware_release_08232018/Pixie16DSP_revfpku_14b100m_r40391.ldr
-100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_08232018/Pixie16DSP_revfpku_14b100m_r40391.var
+# 100M14bit_sys ../firmware/pixie16_revfpku_14b100m_firmware_release_08232018/syspixie16_revfpku_adc100mhz_r36481.bin
+# 100M14bit_fip ../firmware/pixie16_revfpku_14b100m_firmware_release_08232018/fippixie16_revfpku_14b100m_r39574.bin
+# 100M14bit_dsplst ../firmware/pixie16_revfpku_14b100m_firmware_release_08232018/Pixie16DSP_revfpku_14b100m_r40391.lst
+# 100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_firmware_release_08232018/Pixie16DSP_revfpku_14b100m_r40391.ldr
+# 100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_08232018/Pixie16DSP_revfpku_14b100m_r40391.var
 
 
-# 100M14bit_sys ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/syspixie16_revf_PKU_09272018.bin
-# 100M14bit_fip ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/fippixie16_revfpku_14b100m_r39574.bin
-# 100M14bit_dsplst ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.lst
-# 100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.ldr
-# 100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.var
+100M14bit_sys ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/syspixie16_revf_PKU_09272018.bin
+100M14bit_fip ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/fippixie16_revfpku_14b100m_r39574.bin
+100M14bit_dsplst ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.lst
+100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.ldr
+100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.var
 
 
 250M14bit_sys ../firmware/pixie16_revf_14b250m_firmware_release_04222018/syspixie16_revfpku_adc250mhz_r39398.bin

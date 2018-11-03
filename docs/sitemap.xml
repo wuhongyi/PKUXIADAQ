@@ -3,6 +3,7 @@
 <url> <loc>http://wuhongyi.cn/./</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://wuhongyi.cn/INSTALL.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://wuhongyi.cn/UsersGuide/</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://wuhongyi.cn/UsersGuide/Crate.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://wuhongyi.cn/UsersGuide/FIRMWARE.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://wuhongyi.cn/UsersGuide/Decode.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://wuhongyi.cn/UsersGuide/GUI.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>

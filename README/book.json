@@ -1,6 +1,6 @@
 {
-    "title": "",
-    "description": "吴鸿毅笔记",
+    "title": "PKU XIA DAQ GUIDE",
+    "description": "北京大学实验核物理组数字化获取说明书",
     "author": "Hongyi Wu(吴鸿毅)",
     "plugins": [
 	"search",

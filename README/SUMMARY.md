@@ -3,6 +3,7 @@
 * [README](README.md)
 * [INSTALL](INSTALL.md)
 * [Users Guide](UsersGuide/README.md)
+	* [Crate](UsersGuide/Crate.md)
 	* [firmware](UsersGuide/FIRMWARE.md)
 	* [Decode](UsersGuide/Decode.md)
 	* [GUI](UsersGuide/GUI.md)
