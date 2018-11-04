@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 四 4月 26 22:48:43 2018 (+0800)
+// Last-Updated: 日 11月  4 14:48:55 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 180
+//     Update #: 215
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -105,6 +105,60 @@ void Online::Init()
       fstartloop = true;
     }
 }
+
+void Online::AlertRead()
+{
+  std::ifstream readalert;//fstream
+  readalert.open(alertfilenametext->GetText());
+  if(!readalert.is_open())
+    {
+      std::cout<<"can't open  "<<alertfilenametext->GetText()<<std::endl;
+      return;
+    }
+
+  double low,high;
+  for (int i = 0; i < 208; ++i)
+    {
+      readalert>>low>>high;
+      LowR[i]->SetNumber(low);
+      HighR[i]->SetNumber(high);	
+    }
+  
+  readalert.close();
+}
+
+void Online::AlertSave()
+{
+  std::ofstream writealert;//fstream
+  writealert.open(alertfilenametext->GetText());//ios::bin ios::app
+  if(!writealert.is_open())
+    {
+      std::cout<<"can't open  "<<alertfilenametext->GetText()<<std::endl;
+      return;
+    }
+
+  for (int i = 0; i < 208; ++i)
+    {
+      writealert<<LowR[i]->GetNumber()<<" "<<HighR[i]->GetNumber()<<std::endl;
+    }
+ 
+  writealert.close();
+}
+
+void Online::AlertDefault()
+{
+  fClient->GetColorByName("black", color);
+  for (int i = 0; i < 224; ++i)
+    {
+      LowR[i]->SetTextColor(color, false);
+      LowR[i]->SetText("0");
+      
+      HighR[i]->SetTextColor(color, false);
+      HighR[i]->SetText("0");     
+    }
+}
+
+
 
 void Online::CreateMenuBar()
 {
@@ -316,16 +370,12 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
   TabPanel->AddFrame(setgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
 
   // =================
-  cl0 = new TGTextEntry *[14];
-  LabelsI = new TGTextEntry *[14];
-  LabelsO = new TGTextEntry *[14];
-  ICR = new TGTextEntry *[224];
-  OCR = new TGTextEntry *[224];
-  Labels = new TGTextEntry *[224];
-
-
-  
-  char nnn[10];
+  TGTextEntry **cl0 = new TGTextEntry *[14];
+  TGTextEntry **LabelsI = new TGTextEntry *[14];
+  TGTextEntry **LabelsO = new TGTextEntry *[14];
+  TGTextEntry **Labels = new TGTextEntry *[224];
+  ICR = new TGTextEntry *[224];//[0-207] Input rate   >=208 File size
+  OCR = new TGTextEntry *[224];//[0-207] Output rate  >=208 not used
 
   TGGroupFrame *monitorgroup = new TGGroupFrame(TabPanel,"Monitor");
 
@@ -334,7 +384,7 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
   TGHorizontalFrame *horizontal2 = new TGHorizontalFrame(monitorgroup);
   monitorgroup->AddFrame(horizontal2,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
   
-  Column1 = new TGVerticalFrame *[42];
+  TGVerticalFrame **Column1 = new TGVerticalFrame *[42];
   for (int i = 0; i < 14; i++)
     {
       if(i < 7)
@@ -411,16 +461,14 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
 	  if(i == 13)
 	    {
 	      if(j < 13)
-		sprintf(nnn, "M%02d", j);
+		Labels[16*i+j]->SetText(TString::Format("M%02d",j).Data());
 	      else
-		strcpy(nnn, "");
-		// sprintf(nnn, "");
+		Labels[16*i+j]->SetText("");
 	    }
 	  else
 	    {
-	      sprintf(nnn, "%02d", j);
+	      Labels[16*i+j]->SetText(TString::Format("%02d",j).Data());
 	    }
-	  Labels[16*i+j]->SetText(nnn);
 	  Labels[16*i+j]->Resize(35, 20);
 	  Labels[16*i+j]->SetEnabled(kFALSE);
 	  Labels[16*i+j]->SetFrameDrawn(kTRUE);
@@ -477,6 +525,165 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
 
 void Online::MakeFold2Panel(TGCompositeFrame *TabPanel)
 {
+  TGGroupFrame *setgroup = new TGGroupFrame(TabPanel,"Setup");
+  TabPanel->AddFrame(setgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+
+  TGHorizontalFrame *filepath = new TGHorizontalFrame(setgroup);
+  setgroup->AddFrame(filepath,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+    
+  TGLabel *filenamelabel = new TGLabel(filepath,"File Name: ");
+  filepath->AddFrame(filenamelabel,new TGLayoutHints(kLHintsLeft | kLHintsTop, 10 ,3,4,0));
+
+  alertfilenametext = new TGTextEntry(filepath, new TGTextBuffer(20));
+  filepath->AddFrame(alertfilenametext,new TGLayoutHints(kLHintsLeft| kLHintsTop,10,3,4,0));
+  alertfilenametext->SetText("alert.dat");
+
+  alertread = new TGTextButton(filepath,"Read");
+  alertread->Connect("Pressed()","Online",this,"AlertRead()");
+  filepath->AddFrame(alertread,new TGLayoutHints(kLHintsLeft|kLHintsTop,10,3,4,4));
+
+  alertsave = new TGTextButton(filepath,"Save");
+  alertsave->Connect("Pressed()","Online",this,"AlertSave()");
+  filepath->AddFrame(alertsave,new TGLayoutHints(kLHintsLeft|kLHintsTop,10,3,4,4));
+
+  alertdefault = new TGTextButton(filepath,"Default");
+  alertdefault->Connect("Pressed()","Online",this,"AlertDefault()");
+  filepath->AddFrame(alertdefault,new TGLayoutHints(kLHintsLeft|kLHintsTop,10,3,4,4));
+
+
+  
+  
+  // =================
+
+  TGTextEntry **cl0 = new TGTextEntry *[14];
+  TGTextEntry **LabelsLow = new TGTextEntry *[14];
+  TGTextEntry **LabelsHigh = new TGTextEntry *[14];
+  TGTextEntry **Labels = new TGTextEntry *[224];
+  LowR = new TGNumberEntryField *[224];
+  HighR = new TGNumberEntryField *[224];
+
+  
+  TGGroupFrame *limitgroup = new TGGroupFrame(TabPanel,"Count rate limit");
+  TabPanel->AddFrame(limitgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+
+  TGHorizontalFrame *horizontal1 = new TGHorizontalFrame(limitgroup);
+  limitgroup->AddFrame(horizontal1,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  TGHorizontalFrame *horizontal2 = new TGHorizontalFrame(limitgroup);
+  limitgroup->AddFrame(horizontal2,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+
+  TGVerticalFrame **Column2 = new TGVerticalFrame *[42];
+  for (int i = 0; i < 14; i++)
+    {
+      if(i < 7)
+	{
+	  Column2[3*i] = new TGVerticalFrame(horizontal1, 200, 300);
+	  horizontal1->AddFrame(Column2[3*i], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
+	  Column2[3*i+1] = new TGVerticalFrame(horizontal1, 200, 300);
+	  horizontal1->AddFrame(Column2[3*i+1], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
+	  Column2[3*i+2] = new TGVerticalFrame(horizontal1, 200, 300);
+	  horizontal1->AddFrame(Column2[3*i+2], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
+	}
+      else
+	{
+	  Column2[3*i] = new TGVerticalFrame(horizontal2, 200, 300);
+	  horizontal2->AddFrame(Column2[3*i], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
+	  Column2[3*i+1] = new TGVerticalFrame(horizontal2, 200, 300);
+	  horizontal2->AddFrame(Column2[3*i+1], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
+	  Column2[3*i+2] = new TGVerticalFrame(horizontal2, 200, 300);
+	  horizontal2->AddFrame(Column2[3*i+2], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
+	}
+
+      cl0[i] = new TGTextEntry(Column2[3*i], new TGTextBuffer(100), 10000,
+			       cl0[i]->GetDefaultGC()(),
+			       cl0[i]->GetDefaultFontStruct(),
+			       kRaisedFrame | kDoubleBorder, GetWhitePixel());
+      cl0[i]->SetFont("-adobe-helvetica-bold-r-*-*-11-*-*-*-*-*-iso8859-1", false);
+      if(i == 13)
+	cl0[i]->SetText("File");
+      else
+	cl0[i]->SetText("ch #");
+      cl0[i]->Resize(35, 20);
+      cl0[i]->SetEnabled(kFALSE);
+      cl0[i]->SetFrameDrawn(kTRUE);
+      Column2[3*i]->AddFrame(cl0[i], new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+
+
+      LabelsLow[i] = new TGTextEntry(Column2[3*i+1], new TGTextBuffer(100), 10000,
+      				   LabelsLow[i]->GetDefaultGC()(),
+      				   LabelsLow[i]->GetDefaultFontStruct(),
+      				   kRaisedFrame | kDoubleBorder, GetWhitePixel());
+      LabelsLow[i]->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
+      if(i == 13)
+        LabelsLow[i]->SetText("Size/MB");
+      else
+	LabelsLow[i]->SetText("Low/s");
+      // LabelsLow[i]->SetAlignment(kTextCenterX);
+      LabelsLow[i]->Resize(90, 20);
+      LabelsLow[i]->SetEnabled(kFALSE);
+      LabelsLow[i]->SetFrameDrawn(kTRUE);
+      Column2[3*i+1]->AddFrame(LabelsLow[i], new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+
+
+      LabelsHigh[i] = new TGTextEntry(Column2[3*i+2], new TGTextBuffer(100), 10000,
+				   LabelsHigh[i]->GetDefaultGC()(),
+				   LabelsHigh[i]->GetDefaultFontStruct(),
+				   kRaisedFrame | kDoubleBorder, GetWhitePixel());
+      LabelsHigh[i]->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
+      if(i == 13)
+        LabelsHigh[i]->SetText("");
+      else
+	LabelsHigh[i]->SetText("High/s");
+      // LabelsHigh[i]->SetAlignment(kTextCenterX);
+      LabelsHigh[i]->Resize(90, 20);
+      LabelsHigh[i]->SetEnabled(kFALSE);
+      LabelsHigh[i]->SetFrameDrawn(kTRUE);
+      Column2[3*i+2]->AddFrame(LabelsHigh[i], new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+
+      
+
+      for (int j = 0; j < 16; j++)
+	{
+	  Labels[16*i+j] = new TGTextEntry(Column2[3*i], new TGTextBuffer(100), 10000,
+					   Labels[16*i+j]->GetDefaultGC()(),
+					   Labels[16*i+j]->GetDefaultFontStruct(),
+					   kRaisedFrame | kDoubleBorder,
+					   GetWhitePixel());
+	  if(i == 13)
+	    {
+	      if(j < 13)
+		Labels[16*i+j]->SetText(TString::Format("M%02d",j).Data());
+	      else
+		Labels[16*i+j]->SetText("");
+	    }
+	  else
+	    {
+	      Labels[16*i+j]->SetText(TString::Format("%02d",j).Data());
+	    }
+	  Labels[16*i+j]->Resize(35, 20);
+	  Labels[16*i+j]->SetEnabled(kFALSE);
+	  Labels[16*i+j]->SetFrameDrawn(kTRUE);
+	  Column2[3*i]->AddFrame(Labels[16*i+j], new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
+
+
+	  LowR[16*i+j] = new TGNumberEntryField(Column2[3*i+1], -1, 0, LowR[16*i+j]->GetDefaultGC()(),LowR[16*i+j]->GetDefaultFontStruct(),kRaisedFrame | kDoubleBorder, GetWhitePixel());
+	  LowR[16*i+j]->SetAlignment(kTextCenterX);
+	  LowR[16*i+j]->SetText("0");
+	  LowR[16*i+j]->Resize(35, 20);
+	  // LowR[16*i+j]->SetEnabled(kFALSE);
+	  // LowR[16*i+j]->SetFrameDrawn(kFALSE);
+	  Column2[3*i+1]->AddFrame(LowR[16*i+j], new TGLayoutHints(kLHintsExpandX, 0, 0, 0, 0));//kLHintsCenterX
+
+
+	  HighR[16*i+j] = new TGNumberEntryField(Column2[3*i+2], -1, 0, HighR[16*i+j]->GetDefaultGC()(),HighR[16*i+j]->GetDefaultFontStruct(),kRaisedFrame | kDoubleBorder, GetWhitePixel());
+	  HighR[16*i+j]->SetAlignment(kTextCenterX);
+	  HighR[16*i+j]->SetText("0");
+	  HighR[16*i+j]->Resize(35, 20);
+	  // HighR[16*i+j]->SetEnabled(kFALSE);
+	  // HighR[16*i+j]->SetFrameDrawn(kFALSE);
+	  Column2[3*i+2]->AddFrame(HighR[16*i+j], new TGLayoutHints(kLHintsExpandX, 0, 0, 0, 0));
+	}
+      
+    }
 
 
   
@@ -652,7 +859,18 @@ void Online::LoopRun()
 		  if(IsFileExists(Filename[i]))
 		    {
 		      filesize = GetFileSizeMB(Filename[i]);
-		      ss.clear();//重复使用前一定要清空
+		      if(LowR[208+i]->GetNumber() > 0 && filesize > LowR[208+i]->GetNumber())
+			{
+			  fClient->GetColorByName("red", color);
+			  ICR[208+i]->SetTextColor(color, false);
+			}
+		      else
+			{
+			  fClient->GetColorByName("black", color);
+			  ICR[208+i]->SetTextColor(color, false);
+			}
+
+		      ss.clear();
 		      ss<<filesize;
 		      ss>>tempstring;
 		      ICR[208+i]->SetText(tempstring.c_str());
@@ -703,7 +921,7 @@ void Online::LoopRun()
 	      for(int i = 0; i < ModNum;i++)
 		{
 		  memcpy(&tempsampingrate,buf_new+SHAREDMEMORYDATAOFFSET+2*i,2);
-		  ss.clear();//重复使用前一定要清空
+		  ss.clear();
 		  ss<<tempsampingrate;
 		  ss>>tempstring;
 		  OCR[208+i]->SetText(tempstring.c_str());
@@ -757,11 +975,28 @@ void Online::LoopRun()
 		      tempinputcountrate = int((FastPeaks_new[j]-FastPeaks[j])/(LiveTime_new[j]-LiveTime[j]) + 0.5);
 		      tempoutputcountrate = int((ChanEvents_new[j]-ChanEvents[j])/(RealTime_new-RealTime) +0.5);
 
-		      ss.clear();//重复使用前一定要清空
+		      if(LowR[16*i+j]->GetNumber() > 0 && tempinputcountrate < LowR[16*i+j]->GetNumber())
+			{
+			  fClient->GetColorByName("blue", color);
+			  ICR[16*i+j]->SetTextColor(color, false);
+			}
+		      else if(HighR[16*i+j]->GetNumber() > 0 && tempinputcountrate > HighR[16*i+j]->GetNumber())
+			{
+			  fClient->GetColorByName("red", color);
+			  ICR[16*i+j]->SetTextColor(color, false);
+			}
+		      else
+			{
+			  fClient->GetColorByName("black", color);
+			  ICR[16*i+j]->SetTextColor(color, false);
+			}
+
+		      ss.clear();
 		      ss<<tempinputcountrate;
 		      ss>>tempstring;
 		      ICR[16*i+j]->SetText(tempstring.c_str());
-		      ss.clear();//重复使用前一定要清空
+		      
+		      ss.clear();
 		      ss<<tempoutputcountrate;
 		      ss>>tempstring;
 		      OCR[16*i+j]->SetText(tempstring.c_str());
@@ -805,6 +1040,10 @@ void Online::LoopRun()
       usleep(400000);//sleep 400us
     }
 }
+
+
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 double Online::GetFileSizeMB(const char *name)
 {

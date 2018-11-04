@@ -4,12 +4,12 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 7月 12 11:13:59 2016 (+0800)
-// Last-Updated: 三 10月  5 19:56:18 2016 (+0800)
+// Last-Updated: 日 11月  4 12:17:14 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 16
+//     Update #: 17
 // URL: http://wuhongyi.cn 
 
-// 当前Online仅适用于采样率100MHz插件
+// 当前Online适用于采样率 100/250/500 MHz 插件
 
 #include "Online.hh"
 #include "TGApplication.h"

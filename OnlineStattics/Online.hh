@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:41 2016 (+0800)
-// Last-Updated: 四 4月 26 21:47:52 2018 (+0800)
+// Last-Updated: 日 11月  4 13:09:51 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 50
+//     Update #: 58
 // URL: http://wuhongyi.cn 
 
 #ifndef _ONLINE_H_
@@ -78,13 +78,17 @@ public:
 
   void Init();
   void StartStop();
+  void AlertRead();
+  void AlertSave();
+  void AlertDefault();
+
   
 private:
   virtual Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t);//process message queue
   void CloseWindow(); //close main window
   void CreateMenuBar(void); //creates menu bar of the main window
-  void MakeFold1Panel(TGCompositeFrame *TabPanel);
-  void MakeFold2Panel(TGCompositeFrame *TabPanel);
+  void MakeFold1Panel(TGCompositeFrame *TabPanel);//Count Rate
+  void MakeFold2Panel(TGCompositeFrame *TabPanel);//Alert
   void MakeFold3Panel(TGCompositeFrame *TabPanel);//energy
 
 
@@ -99,15 +103,9 @@ private:
   long get_time();
   
 private:
-  TGVerticalFrame **Column1;
-  
-  TGTextEntry **cl0;
-  TGTextEntry **LabelsI;
-  TGTextEntry **LabelsO;
-  
+ 
   TGTextEntry **ICR;//[0-207] Input rate   >=208 File size
   TGTextEntry **OCR;//[0-207] Output rate  >=208 not used
-  TGTextEntry **Labels;
   TGTextEntry **SampleRate;
   
   uint64_t CurrentTime;
@@ -130,6 +128,17 @@ private:
   bool flagrunnumber;
   char charrunstate[16];
 
+  // alert
+  TGTextEntry	*alertfilenametext;
+
+  TGNumberEntryField **LowR;//[0-207] Low rate   
+  TGNumberEntryField **HighR;//[0-207] High rate  
+
+  
+  TGTextButton	*alertread;
+  TGTextButton	*alertsave;
+  TGTextButton	*alertdefault;
+  
   // energy
   TCanvas *canvas3;
   TGTextButton* OnlineDrawButton3;  
