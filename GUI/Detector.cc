@@ -607,7 +607,7 @@ int Detector::SavetoFile(int nFile)
   }
   FILESIZE[nFile] += buffid[nFile];
   buffid[nFile] = 0;
-  std::cout<<"FILE: "<<nFile<<" SIZE: "<<FILESIZE[nFile]<<std::endl;
+  // std::cout<<"FILE: "<<nFile<<" SIZE: "<<FILESIZE[nFile]<<std::endl;
   return 0;
 }
 
