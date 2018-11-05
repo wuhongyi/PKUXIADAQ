@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 一 11月  5 15:49:29 2018 (+0800)
+;; Last-Updated: 一 11月  5 16:14:01 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 103
+;;     Update #: 107
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -14,6 +14,10 @@
 <!-- toc -->
 
 ![PKU logo](pkulogo100.jpg)
+
+[English](https://github.com/wuhongyi/PKUXIADAQ/README.md) | 简体中文
+
+<!-- [English](https://github.com/pkuNucExp/PKUXIADAQ/README.md) | 简体中文 -->
 
 ## Version
 
@@ -27,16 +31,16 @@ Download the latest version, please click:  [PKUXIADAQ stable](https://github.co
 
 Web page manual, please click:  [english](https://pkunucexp.github.io/PKUXIADAQ/)    [中文](https://pkunucexp.github.io/PKUXIADAQ/)
 
-- markdown version manual  README/  
-- Offline web version manual  docs/  
-- pdf version manual  README_en.pdf  README_ch.pdf  
+- markdown version manual: README/  
+- Offline web version manual: docs/  
+- pdf version manual: README_en.pdf  README_ch.pdf  
 
 
 ### Pre-alpha
 
 Download the latest version:  [PKUXIADAQ](https://github.com/wuhongyi/PKUXIADAQ)
 
-Web page manual:  [english](http://wuhongyi.cn/PKUXIADAQ/)   [中文](http://wuhongyi.cn/PKUXIADAQ/)
+Web page manual:  [english](http://wuhongyi.cn/PKUXIADAQ/en/)   [中文](http://wuhongyi.cn/PKUXIADAQ/zh/)
 
 
 
@@ -61,7 +65,7 @@ Technical adviser:
 - Wolfgang Hennig(XIA LLC)
 
 Software Developer:
-- 2016 - 2016
+- 2015 - 2016
 	- Jing Li 李晶(lijinger02@126.com) 
 - 2016 - now
 	- Hongyi Wu 吴鸿毅(wuhongyi@qq.com) 
