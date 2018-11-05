@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 一 11月  5 16:14:01 2018 (+0800)
+;; Last-Updated: 一 11月  5 16:23:04 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 106
+;;     Update #: 107
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -15,9 +15,9 @@
 
 ![PKU logo](pkulogo100.jpg)
 
-English | [简体中文](https://github.com/wuhongyi/PKUXIADAQ/README_zh.md)
+[English](https://github.com/wuhongyi/PKUXIADAQ/blob/master/README.md) | 简体中文
 
-<!-- English | [简体中文](https://github.com/pkuNucExp/PKUXIADAQ/README_zh.md) -->
+<!-- [English](https://github.com/pkuNucExp/PKUXIADAQ/blob/master/README.md) | 简体中文 -->
 
 ## 版本
 
