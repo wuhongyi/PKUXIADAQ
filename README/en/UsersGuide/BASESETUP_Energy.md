@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:34:45 2018 (+0800)
-;; Last-Updated: 五 10月 26 09:26:08 2018 (+0800)
+;; Last-Updated: 一 11月  5 16:56:29 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 12
+;;     Update #: 13
 ;; URL: http://wuhongyi.cn -->
 
 # Energy
@@ -23,13 +23,6 @@ When the status below the interface is displaying **green Ready**, it means that
 - The parameter Flat Top, please refer to *Trapezoidal Filtering*
 - The parameter Tau, please refer to *Baselines and Preamp. Decay Times*
 - The parameter filter range, please refer to *Filter Range*
-
-界面下方的 Status 显示为**绿色的 Ready** 时表示可操作该界面，否则需要等待。底下按钮的操作同上。
-
-- 参数 Rise Time，请参考*Trapezoidal Filtering*部分
-- 参数 Flat Top，请参考*Trapezoidal Filtering*部分
-- 参数 Tau，请参考*Baselines and Preamp. Decay Times*部分
-- 参数 filter range，请参考*Filter Range*部分
 
 **TODO  这里应该补充不同探测器的推荐值**
 

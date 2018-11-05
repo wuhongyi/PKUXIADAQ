@@ -6,7 +6,7 @@
 	* [机箱](UsersGuide/Crate.md)
 	* [固件](UsersGuide/FIRMWARE.md)
 	* [数据解码](UsersGuide/Decode.md)
-	* [GUI](UsersGuide/GUI.md)
+	* [图形交互界面](UsersGuide/GUI.md)
 		* [File](UsersGuide/DropDown0.md)
 		    * [About](UsersGuide/FILE_About.md)
 		* [UV_Setup](UsersGuide/DropDown1.md)

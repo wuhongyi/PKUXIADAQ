@@ -4,12 +4,12 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:14 2018 (+0800)
-;; Last-Updated: 一 11月  5 15:44:16 2018 (+0800)
+;; Last-Updated: 一 11月  5 16:30:42 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 11
+;;     Update #: 12
 ;; URL: http://wuhongyi.cn -->
 
-# Decode
+# 数据解码
 
 **Decode 程序用来将同一轮数据不同采集卡采集的数据转为一个 ROOT 文件。用户的物理分析以本程序产生的 ROOT 文件为基准。**
 

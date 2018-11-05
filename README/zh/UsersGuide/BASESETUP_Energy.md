@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:34:45 2018 (+0800)
-;; Last-Updated: 五 10月 26 09:26:08 2018 (+0800)
+;; Last-Updated: 一 11月  5 16:56:26 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 12
+;;     Update #: 13
 ;; URL: http://wuhongyi.cn -->
 
 # Energy
@@ -16,13 +16,6 @@
 ## GUI
 
 ![Energy](/img/Energy.png)
-
-When the status below the interface is displaying **green Ready**, it means that the interface can be operated, otherwise you need to wait. The operation of the bottom button is the same as above.
-
-- The parameter Rise Time, please refer to *Trapezoidal Filtering*
-- The parameter Flat Top, please refer to *Trapezoidal Filtering*
-- The parameter Tau, please refer to *Baselines and Preamp. Decay Times*
-- The parameter filter range, please refer to *Filter Range*
 
 界面下方的 Status 显示为**绿色的 Ready** 时表示可操作该界面，否则需要等待。底下按钮的操作同上。
 

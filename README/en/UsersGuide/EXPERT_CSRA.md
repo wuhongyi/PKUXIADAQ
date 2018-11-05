@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:18:51 2018 (+0800)
-;; Last-Updated: 六 10月 20 19:39:08 2018 (+0800)
+;; Last-Updated: 一 11月  5 16:57:49 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 2
+;;     Update #: 3
 ;; URL: http://wuhongyi.cn -->
 
 # CSRA
@@ -36,28 +36,7 @@
     - Black ETS is to record the data of the external clock.
 - The remaining BDA does not need to be selected, HE does not matter.
 
-- 黄色 FTS、GTS 组合来选择 channel fast trigger：
-	- 两个均不选时为 local fast trigger
-	- 选择 FTS 时为 latched module fast trigger
-	- FTS 不选、GTS 选上时为 latched channel validation trigger
-- 蓝色 MSE、CSE、MVT、CVT 用来选择 module/channel validation trigger：
-	- MVT 为是否开启 module validation trigger
-	- CVT 为是否开启 channel validation trigger
-	- MSE选择 module validation trigger 来源于 System FPGA 还是前面板 module GATE
-	- CSE选择 channel validation trigger 来源于 System FPGA 还是前面板 channel GATE
-- 粉红色 NPR、IPR 组合选择 pileup 事件的处理：
-	- 两个均不选时则记录所有事件，堆积事件能量值为无效
-	- NPR 选择 IPR 不选时不记录堆积事件
-	- NPR 不选 IPR 选择时堆积事件记录波形、不堆积时候不记录波形
-	- 两个均选择时只记录堆积事件
-- 绿色CTV、CVS、MVS用来选择module/channel veto：
-	- MVS 选择 module veto 来源于前面板 module GATE 还是 module validation trigger
-	- CVS 选择 channel veto 来源于前面板 channel GATE 还是 channel validation trigger
-	- CTV 为是否开启 channel trigger veto
-- 红色为基础设置
-	- 黑色 NTL 是否保留超出量程的波形
-	- 黑色 ETS 是否记录外部时钟的数据
-- 剩余的BDA不选，HE不管
+
 
 
 

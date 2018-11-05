@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:35:24 2018 (+0800)
-;; Last-Updated: 六 10月 20 19:43:01 2018 (+0800)
+;; Last-Updated: 一 11月  5 16:38:42 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 7
+;;     Update #: 8
 ;; URL: http://wuhongyi.cn -->
 
 # Trigger Filter
@@ -17,11 +17,6 @@
 
 ![Trigger Filter](/img/TriggerFilter.png)
 
-When the status below the interface is displaying **green Ready**, it means that the interface can be operated, otherwise you need to wait. The operation of the bottom button is the same as above.
-
-- The parameter Rise Time . . .
-- The parameter Flat Top. . .
-- The parameter Thresh. represents the threshold, which is set relative to the fast filter waveform.
 
 界面下方的 Status 显示为**绿色的 Ready** 时表示可操作该界面，否则需要等待。底下按钮的操作同上。
 

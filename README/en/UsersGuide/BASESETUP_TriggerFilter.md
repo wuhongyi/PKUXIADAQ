@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:35:24 2018 (+0800)
-;; Last-Updated: 六 10月 20 19:43:01 2018 (+0800)
+;; Last-Updated: 一 11月  5 16:38:44 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 7
+;;     Update #: 8
 ;; URL: http://wuhongyi.cn -->
 
 # Trigger Filter
@@ -22,13 +22,6 @@ When the status below the interface is displaying **green Ready**, it means that
 - The parameter Rise Time . . .
 - The parameter Flat Top. . .
 - The parameter Thresh. represents the threshold, which is set relative to the fast filter waveform.
-
-界面下方的 Status 显示为**绿色的 Ready** 时表示可操作该界面，否则需要等待。底下按钮的操作同上。
-
-- 参数 *Rise Time* 。。。
-- 参数 *Flat Top* 。。。
-- 参数 *Thresh.* 表示阈值，该数值的设置是相对 fast filter 波形。
-
 
 **TODO 这里需要给出不同探测器的推荐值**
 
