@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 一 11月  5 17:15:33 2018 (+0800)
+;; Last-Updated: 二 11月  6 11:20:24 2018 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 108
+;;     Update #: 110
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -66,7 +66,7 @@
 - Wolfgang Hennig(XIA LLC)
 
 软件主要开发者:
-- 2016 - 2016
+- 2015 - 2016
 	- Jing Li 李晶(lijinger02@126.com) 
 - 2016 - now
 	- Hongyi Wu 吴鸿毅(wuhongyi@qq.com) 
