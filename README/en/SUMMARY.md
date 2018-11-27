@@ -42,6 +42,7 @@
 	* [FrontPanel](UsersGuide/FrontPanel.md)
 	* [Logic](UsersGuide/Logic.md)
 	* [MultipleModulesSynchronously](UsersGuide/MultipleModulesSynchronously.md)
+* [Applications](Example/README.md)	
 * [Programmers Guide](ProgrammersGuide/README.md)
 	* [XIA API](ProgrammersGuide/XIAAPI.md)
 	* [PKU code](ProgrammersGuide/PKUCode.md)
