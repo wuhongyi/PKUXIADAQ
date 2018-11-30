@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 日 11月  4 14:48:55 2018 (+0800)
+// Last-Updated: 五 11月 30 19:31:49 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 215
+//     Update #: 216
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -855,7 +855,7 @@ void Online::LoopRun()
 	    {
 	      for(int i = 0;i < ModNum;i++)
 		{
-		  sprintf(Filename[i],"%s%s_R%04d_M%02d.bin",filepathtext->GetText(),filenametext->GetText(),RunNumber,i);
+		  sprintf(Filename[i],"%s%04d/%s_R%04d_M%02d.bin",filepathtext->GetText(),RunNumber,filenametext->GetText(),RunNumber,i);
 		  if(IsFileExists(Filename[i]))
 		    {
 		      filesize = GetFileSizeMB(Filename[i]);

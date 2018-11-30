@@ -60,16 +60,16 @@ ModuleBits 3 14 14 14
 100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.ldr
 100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.var
 
-
+# NoNegEnergy && AlwaysCompEnergy
 # 250M14bit_sys ../firmware/pixie16_revf_14b250m_firmware_release_04222018/syspixie16_revfpku_adc250mhz_r39398.bin
 # 250M14bit_fip ../firmware/pixie16_revf_14b250m_firmware_release_04222018/fippixie16_revfgeneral_14b250m_r35425.bin
 # 250M14bit_dsplst ../firmware/pixie16_revf_14b250m_firmware_release_04222018/Pixie16DSP_revfgeneral_14b250m_r39397.lst
 # 250M14bit_dspldr ../firmware/pixie16_revf_14b250m_firmware_release_04222018/Pixie16DSP_revfgeneral_14b250m_r39397.ldr
 # 250M14bit_dspvar ../firmware/pixie16_revf_14b250m_firmware_release_04222018/Pixie16DSP_revfgeneral_14b250m_r39397.var
 
-
+# NoNegEnergy && AlwaysCompEnergy
 # Multiplicity result output from RJ45
-250M14bit_sys ../firmware/pixie16_revf_14b250m_firmware_release_1108018/p16sys_PKU_14_250_181107_1103.bin
+250M14bit_sys ../firmware/pixie16_revf_14b250m_firmware_release_11082018/p16sys_PKU_14_250_181107_1103.bin
 250M14bit_fip ../firmware/pixie16_revf_14b250m_firmware_release_11082018/fippixie16_revfgeneral_14b250m_r35425.bin
 250M14bit_dsplst ../firmware/pixie16_revf_14b250m_firmware_release_11082018/Pixie16DSP_revfgeneral_14b250m_r39397.lst
 250M14bit_dspldr ../firmware/pixie16_revf_14b250m_firmware_release_11082018/Pixie16DSP_revfgeneral_14b250m_r39397.ldr

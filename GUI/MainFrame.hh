@@ -4,15 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:17 2018 (+0800)
-// Last-Updated: 日 5月 27 04:59:55 2018 (+0800)
+// Last-Updated: 五 11月 30 19:29:13 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 10
+//     Update #: 13
 // URL: http://wuhongyi.cn 
 
 #ifndef MAINFRAME_HH_
 #define MAINFRAME_HH_
 
-const char gVERSION[] = "Version: 2018.05.27";
+const char gVERSION[] = "Version: 2018.11.30";
 
 const char gAbout[] = "\
 Version: Beta ---> Developer version\n\
@@ -112,6 +112,7 @@ public:
   virtual ~MainFrame();
 
   void SetLSFileName();
+  void ConfigFileInfo();
   void StartLSRun();
   void SetLSonlinedataf();
   void SetOnlineMode();
@@ -193,6 +194,7 @@ private:
   
   void LSRunReadData();
   bool IsDirectoryExists(const char *path);//判断文件夹是否存在
+  bool CreateDirectory(const char *path);//创建文件夹
   
   ClassDef(MainFrame,1)
 };

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:39 2016 (+0800)
-// Last-Updated: 日 6月 10 04:16:57 2018 (+0800)
+// Last-Updated: 五 11月 30 20:54:01 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 72
+//     Update #: 73
 // URL: http://wuhongyi.cn 
 
 #include "r2root.hh"
@@ -68,7 +68,7 @@ r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int run
     {
       if(Crate0SamplingRate[i] == 100 || Crate0SamplingRate[i] == 250 || Crate0SamplingRate[i] == 500)
 	{
-	  sprintf(tempfilename,"%s%s_R%04d_M%02d.bin",rawfilepath.Data(),filename.Data(),runnumber,i);
+	  sprintf(tempfilename,"%s%04d/%s_R%04d_M%02d.bin",rawfilepath.Data(),runnumber,filename.Data(),runnumber,i);
 	  if(!IsFileExists(tempfilename))
 	    {
 	      std::cout<<"can't find raw data: "<<tempfilename<<std::endl;
@@ -91,7 +91,7 @@ r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int run
       if(Crate0SamplingRate[i] == 100 || Crate0SamplingRate[i] == 250 || Crate0SamplingRate[i] == 500)
 	{
 	  rawdec[i].setsamplerate(Crate0SamplingRate[i]);
-	  sprintf(tempfilename,"%s%s_R%04d_M%02d.bin",rawfilepath.Data(),filename.Data(),runnumber,i);
+	  sprintf(tempfilename,"%s%04d/%s_R%04d_M%02d.bin",rawfilepath.Data(),runnumber,filename.Data(),runnumber,i);
 	  rawdec[i].openfile(tempfilename);
 	}
       else

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 一 5月 28 05:48:48 2018 (+0800)
+// Last-Updated: 五 11月 30 20:23:09 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 840
+//     Update #: 845
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -1165,7 +1165,10 @@ void PanelGausFit()
 	}
       if(h->Fit("gaus","QL","",upxold,upx) == 0)
 	{
-	  h->SetTitle(TString::Format("Peak: %0.2f  #DeltaE/E: %0.2f%%",h->GetFunction("gaus")->GetParameter(1),h->GetFunction("gaus")->GetParameter(2)*2.355/h->GetFunction("gaus")->GetParameter(1)*100.0).Data());
+	  double posl = h->GetFunction("gaus")->GetParameter(1)-3*h->GetFunction("gaus")->GetParameter(2);
+	  double posr = h->GetFunction("gaus")->GetParameter(1)+3*h->GetFunction("gaus")->GetParameter(2);	  
+	    
+	  h->SetTitle(TString::Format("Peak: %0.2f  Peak-to-total: %0.2f%%  #DeltaE/E: %0.2f%%",h->GetFunction("gaus")->GetParameter(1),h->Integral(h->FindBin(posl),h->FindBin(posr))/h->GetEntries()*100,h->GetFunction("gaus")->GetParameter(2)*2.355/h->GetFunction("gaus")->GetParameter(1)*100.0).Data());
 	}
       else
 	{
@@ -4248,7 +4251,7 @@ void Offline::Panel0ReadFile()
       offlinedata->FlagExternalTimestamp(true);
     }
   
-  sprintf(offlinefilename,"%s%s_R%04d_M%02d.bin",filepathtext->GetText(),filenametext->GetText(),int(offlinefilerunnum->GetIntNumber()),int(offlinemodnum->GetIntNumber()));
+  sprintf(offlinefilename,"%s%04d/%s_R%04d_M%02d.bin",filepathtext->GetText(),int(offlinefilerunnum->GetIntNumber()),filenametext->GetText(),int(offlinefilerunnum->GetIntNumber()),int(offlinemodnum->GetIntNumber()));
 
   offlinedata->SetFileName(offlinefilename);
   offlinedata->ReadModuleEvents();
