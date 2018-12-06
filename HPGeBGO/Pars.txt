@@ -1,0 +1,15 @@
+
+HPGeModule  1
+HPGeChannel 0
+
+BGOModule   1
+BGOChannel  11
+
+DataWords   2000000
+
+BGOThreshold 10 2 5 8 10 15 30 50 100 150 200
+
+#############################################
+
+Cali_k  1.0
+Cali_b  0.0
