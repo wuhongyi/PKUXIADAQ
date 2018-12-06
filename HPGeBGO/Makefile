@@ -1,5 +1,3 @@
-OBJ = pku
-
 CXX=g++        
 CXXFLAGS:=-std=c++11 -g -Wall -lrt -I. -I../software/app -I../software/sys
 ROOTLIBS = $(shell root-config --libs)
@@ -11,28 +9,30 @@ LIBS:=../software/libPixie16App.a  ../software/libPixie16Sys.a  $(PLX_SDK_DIR)/P
 
 INCLUDES:=wuReadData.hh
 
-OBJECTS:=main.o
-
-SRCS:=main.cc
-
-all: $(OBJ)
 
 
-$(OBJ): $(SRCS) $(OBJECTS) $(INCLUDES)
-	$(CXX) -o  $@  $(OBJECTS) $(CXXFLAGS) $(LIBS) $(ROOTLIBS)
+all: daq tran
+
+
+daq: daq.o 
+	$(CXX) -o  $@  daq.o $(CXXFLAGS) $(LIBS) $(ROOTLIBS)
+
+tran: tran.o
+	$(CXX) -o  $@  tran.o $(CXXFLAGS) $(ROOTLIBS) 
+
 
 %.o: %.cxx 
-	$(CXX) $(CXXFLAGS) -c $< 
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< 
 %.o: %.cc
-	$(CXX) $(CXXFLAGS) -c $< 
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< 
 
 
 
 clean: 
-	rm -f *.o *~ $(OBJ) 
+	rm -f *.o *~ daq tran 
 
 very-clean:
-	rm -f $(OBJ) *.o *~
+	rm -f *.o *~ daq tran 
 
 .PHONY: clean very-clean
 #.SILENT:
