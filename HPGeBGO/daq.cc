@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 12月  6 19:12:16 2018 (+0800)
-// Last-Updated: 四 12月  6 22:43:35 2018 (+0800)
+// Last-Updated: 五 12月  7 16:19:55 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 19
+//     Update #: 20
 // URL: http://wuhongyi.cn 
 
 #include "../software/app/pixie16app_export.h"
@@ -229,6 +229,7 @@ int main(int argc, char *argv[])
   for (unsigned int i = 0; i < moduleslot->size(); ++i)
     {
       std::cout<<"Module "<<i<<" in slot "<<moduleslot->at(i)<<std::endl;
+      PXISlotMap[i] = moduleslot->at(i);
     }
 
 

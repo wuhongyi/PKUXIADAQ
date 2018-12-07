@@ -5,7 +5,7 @@ CrateID 0
 
 ## Register parameters
 
-SettingPars ../parset/20181103.set
+SettingPars ../parset/Test_RevF14-250-Aptec_highgain.set
 
 
 ## -----------------------------------------------------------------------------
@@ -13,7 +13,7 @@ SettingPars ../parset/20181103.set
 
 # module number and slot number
 # The first number mean how many modules, other number means every module slot number
-ModuleSlot 3 2 3 4
+ModuleSlot 2 2 3
 
 
 ## -----------------------------------------------------------------------------
@@ -21,11 +21,11 @@ ModuleSlot 3 2 3 4
 
 # module number and samping rate
 # The first number mean how many modules, other number means every module samping rate(100/250/500)
-ModuleSampingRate 3 100 250 250
+ModuleSampingRate 2 250 250
 
 # module number and bits
 # The first number mean how many modules, other number means every module bits(12/14/16)
-ModuleBits 3 14 14 14
+ModuleBits 2 14 14
 
 
 ## -----------------------------------------------------------------------------
