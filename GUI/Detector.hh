@@ -56,7 +56,9 @@ public:
   int StopLSMRun();
   int CloseFile();
   int SetOnlineF(bool flag);
+  void SetRecordFlag(bool flag);
   int SaveHistogram(char *fileN,int mod);
+  int SaveDSPPars(char *file);
   int OpenSharedMemory();
   int UpdateSharedMemory();
   void SetRunNumber(int r);
@@ -161,6 +163,7 @@ private:
   int    shmfd;  // shared memory id
   unsigned char *shmptr;// pointer to shm
   bool   fonline;
+  bool   frecord;
   int runnumber;
   //  	bool BootSystem (unsigned short NumModules, unsigned short *PXISlotMap);
 

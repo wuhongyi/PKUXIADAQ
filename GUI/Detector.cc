@@ -589,9 +589,14 @@ int Detector::OpenSaveFile(int n,const char *FileN)
   return 1;
 }
 
+void Detector::SetRecordFlag(bool flag)
+{
+  frecord = flag;
+}
+
 int Detector::SavetoFile(int nFile)
 {
-  std::cout<<"saving file ..."<<std::endl;
+  // std::cout<<"saving file ..."<<std::endl;
   if(fsave[nFile] == NULL)
     {
       std::cout<<"ERROR! No opened file found for store!"<<std::endl;
@@ -599,15 +604,20 @@ int Detector::SavetoFile(int nFile)
       buffid[nFile] = 0;
       return 1;
     }
-  
-  size_t n = fwrite(buff[nFile],4,buffid[nFile],fsave[nFile]);
-
-  if(n != (size_t)buffid[nFile]){
-    std::cout<<"Not All Data has been stored!"<<std::endl;
-  }
+      
+  if(frecord)
+    {
+      size_t n = fwrite(buff[nFile],4,buffid[nFile],fsave[nFile]);
+ 
+      if(n != (size_t)buffid[nFile])
+	{
+	  std::cout<<"Not All Data has been stored!"<<std::endl;
+	}
+    }
   FILESIZE[nFile] += buffid[nFile];
   buffid[nFile] = 0;
   // std::cout<<"FILE: "<<nFile<<" SIZE: "<<FILESIZE[nFile]<<std::endl;
+
   return 0;
 }
 
@@ -622,7 +632,7 @@ int Detector::CloseFile()
   return 1;
 }
 
-unsigned int  Detector::GetFileSize(int n)
+unsigned int Detector::GetFileSize(int n)
 {
   return (unsigned int)FILESIZE[n]/1024/1024*4;
 }
@@ -826,6 +836,17 @@ int Detector::SaveHistogram(char *fileN , int mod)
     {
     ErrorInfo("Detector.cc", "SaveHistogram(...)", "Pixie16SaveHistogramToFile", retval);
   }
+  return 0;
+}
+
+int Detector::SaveDSPPars(char *file)
+{
+  int retval ;
+  //Save DSP parameters to file
+  retval = Pixie16SaveDSPParametersToFile(file);
+  if (retval < 0)
+    std::cout<<"saving DSP parameters to file failed, retval="<<retval<<std::endl;
+
   return 0;
 }
 

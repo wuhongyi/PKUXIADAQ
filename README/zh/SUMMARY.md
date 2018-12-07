@@ -43,6 +43,7 @@
 	* [Logic](UsersGuide/Logic.md)
 	* [MultipleModulesSynchronously](UsersGuide/MultipleModulesSynchronously.md)
 * [应用案例](Example/README.md)	
+	* [推荐参数](Example/RecommendedParameters.md)
 * [编程指南](ProgrammersGuide/README.md)
 	* [XIA API](ProgrammersGuide/XIAAPI.md)
 	* [PKU code](ProgrammersGuide/PKUCode.md)

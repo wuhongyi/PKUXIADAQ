@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 五 11月 30 19:38:36 2018 (+0800)
+// Last-Updated: 五 12月  7 20:48:23 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 24
+//     Update #: 39
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -17,6 +17,7 @@
 #include "pixie16app_export.h"
 #include "pixie16sys_export.h"
 
+#include <fstream>
 #include <unistd.h>
 #include <sys/stat.h>//stat(const char *file_name,struct stat *buf)
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -232,6 +233,8 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      // gPad->SetCursor(kWatch);
 	      if(detector != 0) delete detector;
 	      detector = new Detector(flagonlinemode);
+	      detector->SetRecordFlag(true);
+	      recordchk->SetState(kButtonDown);
 	      if(detector->BootSystem())
 		{
 		  fClient->GetColorByName("green", color);
@@ -381,7 +384,17 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel)
   fonlinedata = 1;
   onlinechk->Connect("Clicked()","MainFrame",this,"SetLSonlinedataf()");
   cgrouphframe0->AddFrame(onlinechk,new TGLayoutHints(kLHintsExpandX|kLHintsTop,4,4,5,10));
+  // record/not record raw data
+  recordchk = new TGCheckButton(cgrouphframe0,"&Record");
+  fClient->GetColorByName("red", color);
+  recordchk->SetTextColor(color);
+  recordchk->SetState(kButtonDown);
+  frecorddata = 1;
+  recordchk->Connect("Clicked()","MainFrame",this,"SetRecordDataFlag()");
+  cgrouphframe0->AddFrame(recordchk,new TGLayoutHints(kLHintsExpandX|kLHintsTop,4,4,5,10));
+  
 
+  
   TGHorizontalFrame *cgrouphframe1 = new TGHorizontalFrame(controlgroup);
   controlgroup->AddFrame(cgrouphframe1,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
   // start/stop LSM run button
@@ -515,6 +528,9 @@ void MainFrame::SetLSFileName()
       // cout<<i<<" "<<Filename[i]<<endl;
     }
 
+  sprintf(DSPParsFileName,"%s%04d/DSPPar.set",path,runnum);
+  sprintf(LogFileName,"%s%04d/run.log",path,runnum);
+  
   if(IsDirectoryExists(TString::Format("%s%04d",path,runnum).Data()))
     {
       ofstream out("../parset/Run.config");
@@ -538,7 +554,8 @@ void MainFrame::StartLSRun()
     {
       onlinemode->SetEnabled(0);
       filesetdone->SetEnabled(0);
-
+      recordchk->SetEnabled(0);
+      
       SetMenuStatus(false,flagonlinemode);
       
       SetLSFileName();
@@ -553,6 +570,21 @@ void MainFrame::StartLSRun()
 	      return;
 	    }
 	}
+
+      
+      std::ofstream writelog;//fstream
+      writelog.open(LogFileName,ios::app);//ios::bin ios::app
+      if(!writelog.is_open())
+	{
+	  std::cout<<"can't open Log file."<<std::endl;
+	}
+      time_t timep;
+      time(&timep);
+      char tmp[64];
+      strftime(tmp, sizeof(tmp), "Start: %Y-%m-%d %H:%M:%S",localtime(&timep));
+      writelog<<tmp<<endl;
+      writelog.close();    
+      
       if(detector->StartLSMRun(0))
 	{
 	  std::cout<<"CANNOT start the LSM Run!"<<std::endl;
@@ -561,7 +593,7 @@ void MainFrame::StartLSRun()
 
 	  onlinemode->SetEnabled(1);
 	  filesetdone->SetEnabled(1);
-	  
+	  recordchk->SetEnabled(1);
 	  return;
 	}
 
@@ -589,8 +621,22 @@ void MainFrame::StartLSRun()
 
       SetMenuStatus(true,flagonlinemode);
 
+      std::ofstream writelog;//fstream
+      writelog.open(LogFileName,ios::app);//ios::bin ios::app
+      if(!writelog.is_open())
+	{
+	  std::cout<<"can't open Log file."<<std::endl;
+	}
+      time_t timep;
+      time(&timep);
+      char tmp[64];
+      strftime(tmp, sizeof(tmp), "Stop : %Y-%m-%d %H:%M:%S",localtime(&timep));
+      writelog<<tmp<<endl;
+      writelog.close();    
+      
       onlinemode->SetEnabled(1);
       filesetdone->SetEnabled(1);
+      recordchk->SetEnabled(1);
     }
 }
 
@@ -617,6 +663,7 @@ void MainFrame::LSRunReadData()
       if(counter > 10) break;
     }
 
+  detector->SaveDSPPars(DSPParsFileName);
   for(int i = 0;i < detector->NumModules; i++)
     {
       detector->SaveHistogram(Histogramname[i],i);
@@ -662,6 +709,23 @@ void MainFrame::SetLSonlinedataf()
       std::cout<<"DAQ wont send online data!"<<std::endl;
     }
 }
+
+void MainFrame::SetRecordDataFlag()
+{
+  if(recordchk->IsOn())
+    {
+      frecorddata = true;
+      detector->SetRecordFlag(true);
+      std::cout<<"DAQ will record data!"<<std::endl;
+    }
+  else
+    {
+      frecorddata = false;
+      detector->SetRecordFlag(false);
+      std::cout<<"DAQ wont record data!"<<std::endl;
+    }
+}
+
 
 bool MainFrame::IsDirectoryExists(const char *path)
 {

@@ -4,15 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:17 2018 (+0800)
-// Last-Updated: 五 11月 30 19:29:13 2018 (+0800)
+// Last-Updated: 五 12月  7 21:32:13 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 13
+//     Update #: 17
 // URL: http://wuhongyi.cn 
 
 #ifndef MAINFRAME_HH_
 #define MAINFRAME_HH_
 
-const char gVERSION[] = "Version: 2018.11.30";
+const char gVERSION[] = "Version: 2018.12.07";
 
 const char gAbout[] = "\
 Version: Beta ---> Developer version\n\
@@ -115,6 +115,7 @@ public:
   void ConfigFileInfo();
   void StartLSRun();
   void SetLSonlinedataf();
+  void SetRecordDataFlag();
   void SetOnlineMode();
 
   
@@ -167,8 +168,10 @@ private:
 
   
   // ******** File Setup Variables *********
-  char  Filename[PRESET_MAX_MODULES][256];
-  char  Histogramname[PRESET_MAX_MODULES][256];
+  char  LogFileName[1024];
+  char  DSPParsFileName[1024];
+  char  Filename[PRESET_MAX_MODULES][1024];
+  char  Histogramname[PRESET_MAX_MODULES][1024];
   char  Histofile[100];
   char  Staticfile[100];
   int   runnum;
@@ -183,8 +186,10 @@ private:
   // ******* ListMode Run Control **********
   TGTextButton	*startdaq;
   TGCheckButton   *onlinechk;
+  TGCheckButton   *recordchk;
   TGCheckButton   *updateenergyonline;
   bool            fonlinedata;
+  bool            frecorddata;
   bool            fstartdaq;
   bool            fstopdaq;
 

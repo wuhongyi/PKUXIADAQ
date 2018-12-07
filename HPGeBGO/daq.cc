@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 12月  6 19:12:16 2018 (+0800)
-// Last-Updated: 五 12月  7 16:19:55 2018 (+0800)
+// Last-Updated: 五 12月  7 19:20:00 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 20
+//     Update #: 21
 // URL: http://wuhongyi.cn 
 
 #include "../software/app/pixie16app_export.h"
@@ -241,7 +241,7 @@ int main(int argc, char *argv[])
     }
   else
     {
-      cout<<"Init OK "<<retval<<endl;
+      cout<<"Init OK "<<endl;
     }
 
 
@@ -464,13 +464,13 @@ int main(int argc, char *argv[])
       if(retval<0)
 	std::cout<<"Synch Wait problem "<<retval<<std::endl;
       else
-	std::cout<<"Synch Wait OK "<<retval<<std::endl;
+	std::cout<<"Synch Wait OK "<<std::endl;
 
       retval = Pixie16WriteSglModPar((char*)"IN_SYNCH", 0, modnum);
       if(retval<0)
 	std::cout<<"In Sync problem "<<retval<<std::endl;
       else
-	std::cout<<"In Synch OK "<<retval<<std::endl;
+	std::cout<<"In Synch OK "<<std::endl;
       //////////////////////////////
 
 
@@ -481,7 +481,7 @@ int main(int argc, char *argv[])
 	  return -3;
 	}
       else
-	std::cout<<"List Mode started OK "<<retval<<std::endl<<std::flush;
+	std::cout<<"List Mode started OK "<<std::endl<<std::flush;
 
       usleep(100000); //delay for the DSP boot
 
