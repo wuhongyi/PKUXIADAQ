@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 12月  6 22:48:21 2018 (+0800)
-// Last-Updated: 五 12月  7 15:25:43 2018 (+0800)
+// Last-Updated: 六 12月  8 08:59:47 2018 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 16
+//     Update #: 17
 // URL: http://wuhongyi.cn 
 
 #include "wuReadData.hh"
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 	      evte = rawdec->getevte();
 	      // std::cout<<iii<<"  "<<evte<<std::endl;
 	      double energy = Cali_k*(evte+gRandom->Rndm())+Cali_b;
-	      if(rawdec->getch() == HPGeChannel && energy > 0 && Cali_b < 2048)
+	      if(rawdec->getch() == HPGeChannel && energy > 0 && energy < 2048)
 		h[iii]->Fill(energy);
 	    }
 	  havedata = rawdec->getnextevt(); 
