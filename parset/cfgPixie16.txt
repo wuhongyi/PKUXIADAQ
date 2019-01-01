@@ -5,7 +5,7 @@ CrateID 0
 
 ## Register parameters
 
-SettingPars ../parset/Test_RevF14-250-Aptec_highgain.set
+SettingPars ../parset/par20190101.set
 
 
 ## -----------------------------------------------------------------------------
@@ -13,7 +13,7 @@ SettingPars ../parset/Test_RevF14-250-Aptec_highgain.set
 
 # module number and slot number
 # The first number mean how many modules, other number means every module slot number
-ModuleSlot 2 2 3
+ModuleSlot 4 2 3 4 5
 
 
 ## -----------------------------------------------------------------------------
@@ -21,11 +21,11 @@ ModuleSlot 2 2 3
 
 # module number and samping rate
 # The first number mean how many modules, other number means every module samping rate(100/250/500)
-ModuleSampingRate 2 250 250
+ModuleSampingRate 4 100 100 250 250
 
 # module number and bits
 # The first number mean how many modules, other number means every module bits(12/14/16)
-ModuleBits 2 14 14
+ModuleBits 4 14 14 14 14
 
 
 ## -----------------------------------------------------------------------------
@@ -53,12 +53,14 @@ ModuleBits 2 14 14
 # 100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_firmware_release_08232018/Pixie16DSP_revfpku_14b100m_r40391.ldr
 # 100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_08232018/Pixie16DSP_revfpku_14b100m_r40391.var
 
+
 # Multiplicity result output from RJ45
 100M14bit_sys ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/syspixie16_revf_PKU_09272018.bin
 100M14bit_fip ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/fippixie16_revfpku_14b100m_r39574.bin
 100M14bit_dsplst ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.lst
 100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.ldr
 100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.var
+
 
 # NoNegEnergy && AlwaysCompEnergy
 # 250M14bit_sys ../firmware/pixie16_revf_14b250m_firmware_release_04222018/syspixie16_revfpku_adc250mhz_r39398.bin

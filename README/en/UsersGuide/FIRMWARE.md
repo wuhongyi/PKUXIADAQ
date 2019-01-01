@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 三 5月 16 19:00:58 2018 (+0800)
-;; Last-Updated: 一 11月  5 15:38:32 2018 (+0800)
+;; Last-Updated: 二 1月  1 21:41:17 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 3
+;;     Update #: 5
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
@@ -15,16 +15,38 @@
 
 Added the following features based on standard firmware：
 
+- 100MHz 12 bit(pixie16_revd_12b100m_firmware_release_10092018)
+	- The value is set to 0 when the calculated energy is negative. 
+	- The pileup event energy is not set to 0, output calculated values directly.
+
+
+
+- 100MHz 14 bit(pixie16_revfpku_14b100m_firmware_release_08232018)
+	- multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1
+	- The value is set to 0 when the calculated energy is negative. 
+	- The pileup event energy is not set to 0, output calculated values directly.
+	- In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
+	- The record waveform mode with down frequency output. The strategy adopted is to select the output of 1, 1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128 frequency, ie how many points retain one point. The points retained are the averaged values.
+	- tried to speed up the event processing, by removing some of the unnecessary wait when reading trace from each channel.
+	- Also removed a few unnecessary processing routines in the DSP code:
+		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
+		- (2) removed "no traces for large pulses" feature.
+
+
+
 - 100MHz 14 bit(pixie16_revfpku_14b100m_dsp_update_05082018)
-	- MultiplicityMaskHigh[31]=0和1 时候前面版均能输出 multiplicity 结果。
-	- 当计算的能量为负数时，该值设置为 0。
-	- pileup 事件能量保留，不设置为 0。
-	- 在记录波形模式下，waveform 的buffer满了的时候，插件不busy，header继续记录，该情况下，输出的数据没有波形。
-	- 在采集波形时候，增加了降频输出的功能，采取的策略为可选择1，1/2，1/4，1/8，1/16，1/32，1/64，1/128频率的输出，即多少个点保留一个点。保留的点是平均后的值。
+	- multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1
+	- The value is set to 0 when the calculated energy is negative. 
+	- The pileup event energy is not set to 0, output calculated values directly.
+	- In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
+	- The record waveform mode with down frequency output. The strategy adopted is to select the output of 1, 1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128 frequency, ie how many points retain one point. The points retained are the averaged values.
+	
+	
+	
 - 250MHz 14bit(pixie16_revf_14b250m_firmware_release_04222018)
-	- 前面板多重性MultiplicityMaskHigh[31]=0和1 时候前面版均能输出 multiplicity 结果。
-	- 当计算的能量为负数时，该值设置为 0。
-	- pileup 事件能量保留，不设置为 0。
+	- multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1
+	- The value is set to 0 when the calculated energy is negative. 
+	- The pileup event energy is not set to 0, output calculated values directly.
 
 
 
