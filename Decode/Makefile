@@ -4,9 +4,9 @@
 ## Author: Hongyi Wu(吴鸿毅)
 ## Email: wuhongyi@qq.com 
 ## Created: 日 10月  2 19:40:07 2016 (+0800)
-## Last-Updated: 四 2月 22 17:12:17 2018 (+0800)
+## Last-Updated: 四 1月  3 18:29:01 2019 (+0800)
 ##           By: Hongyi Wu(吴鸿毅)
-##     Update #: 5
+##     Update #: 6
 ## URL: http://wuhongyi.cn 
 
 OBJ = decode
@@ -25,7 +25,7 @@ $(OBJ): $(sourcefile)
 	$(GXX) $(CFLAGS) $(ROOTCFLAGS) $(ROOTLIBS) -o $@ $(filter %.cc ,$(sourcefile))
 
 clean:
-	rm -f *~ *.o *.txt $(OBJ)
+	rm -f *~ *.o *.txt *.root $(OBJ)
 
 
 ######################################################################

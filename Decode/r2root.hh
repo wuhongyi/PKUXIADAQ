@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:31 2016 (+0800)
-// Last-Updated: 三 4月 25 10:31:41 2018 (+0800)
+// Last-Updated: 四 1月  3 18:14:50 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 30
+//     Update #: 31
 // URL: http://wuhongyi.cn 
 
 #ifndef _R2ROOT_H_
@@ -19,6 +19,7 @@
 #include "TTree.h"
 #include "TFile.h"
 #include "TBenchmark.h"
+#include "TH1.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -60,6 +61,7 @@ private:
   TBenchmark *benchmark;
   int Run;
   TString FileName;
+  TH1I *tHist[MAXBOARD][16];
   
 private:
   Short_t sr;//sampling rate

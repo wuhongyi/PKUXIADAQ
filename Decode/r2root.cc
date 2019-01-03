@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:39 2016 (+0800)
-// Last-Updated: 五 11月 30 20:54:01 2018 (+0800)
+// Last-Updated: 四 1月  3 18:20:00 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 73
+//     Update #: 77
 // URL: http://wuhongyi.cn 
 
 #include "r2root.hh"
@@ -82,6 +82,12 @@ r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int run
   rawdec = new decoder[flagfile];
   for (int i = 0; i < flagfile; ++i)
     {
+      for (int j = 0; j < 16; ++j)
+	{
+	  tHist[i][j] = new TH1I(TString::Format("T_%02d_%02d",i,j).Data(),"",TimesHist,0,TimesHist);
+	  tHist[i][j]->SetDirectory(0);
+	  tHist[i][j]->GetXaxis()->SetTitle("s");
+	}
       // OLD 20180221
       // rawdec[i].setsamplerate(100);
       // sprintf(tempfilename,"%s%s_R%04d_M%02d.bin",rawfilepath.Data(),filename.Data(),runnumber,i);
@@ -238,6 +244,16 @@ void r2root::Process()
 	}
       t->Fill();
 
+      if(sr==250)
+	{
+	  tHist[mark][ch]->Fill(ts*8/1000000000.0);
+	}
+      else
+	{
+	  tHist[mark][ch]->Fill(ts*10/1000000000.0);
+	}
+      
+      
       StatisticsEventCount[mark][ch]++;
       if(outofr) StatisticsOutOfRange[mark][ch]++;
       if(pileup) StatisticsPileup[mark][ch]++;
@@ -268,7 +284,7 @@ void r2root::Process()
 
   
   std::ofstream writetxt;
-  writetxt.open(TString::Format("%s_R%04d.txt",FileName.Data(), Run).Data());
+  writetxt.open(TString::Format("%s_S_R%04d.txt",FileName.Data(), Run).Data());
   if(!writetxt.is_open())
     {
       std::cout<<"can't open text file."<<std::endl;
@@ -286,6 +302,25 @@ void r2root::Process()
  
   writetxt.close();
 
+
+  
+  TFile *filet = new TFile(TString::Format("%s_T_R%04d.root",FileName.Data(), Run).Data(),"RECREATE");
+  if(!filet->IsOpen())
+    {
+      std::cout<<"Can't open root file"<<std::endl;
+    }
+ 
+  // filet->ls("");
+  filet->cd();
+  for (int i = 0; i < flagfile; ++i)
+    for (int j = 0; j < 16; ++j)
+      {
+  	tHist[i][j]->Write();
+      }
+  filet->Close();
+
+
+  
   
   benchmark->Show("r2root");//计时结束并输出时间
 }
