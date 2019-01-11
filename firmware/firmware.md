@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 12月 13 09:41:49 2016 (+0800)
-;; Last-Updated: 二 1月  1 21:42:03 2019 (+0800)
+;; Last-Updated: 五 1月 11 18:32:13 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 20
+;;     Update #: 21
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
@@ -37,7 +37,7 @@
 	- The value is set to 0 when the calculated energy is negative. 
 	- The pileup event energy is not set to 0, output calculated values directly.
 
-
+- pixie16_revf_16b250m_firmware standard firmware 
 
 ## testing firmware
 
