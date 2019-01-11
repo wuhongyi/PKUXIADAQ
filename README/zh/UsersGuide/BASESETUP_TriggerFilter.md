@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:35:24 2018 (+0800)
-;; Last-Updated: 一 11月  5 16:38:42 2018 (+0800)
+;; Last-Updated: 五 1月 11 21:07:29 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 8
+;;     Update #: 10
 ;; URL: http://wuhongyi.cn -->
 
 # Trigger Filter
@@ -25,7 +25,6 @@
 - 参数 *Thresh.* 表示阈值，该数值的设置是相对 fast filter 波形。
 
 
-**TODO 这里需要给出不同探测器的推荐值**
 
 
 General rules of thumb for the following important parameters are:
@@ -46,9 +45,9 @@ Reducing noise in an electrical measurement is accomplished by filtering. Tradit
 
 Digital filtering proceeds from a slightly different perspective. Here the signal has been digitized and is no longer continuous. Instead it is a string of discrete values as shown in Figure. Figure is actually just a subset of Figure (b), in which the signal was digitized by a Tektronix 544 TDS digital oscilloscope at 10 MSPS (mega samples per second). Given this data set, and some kind of arithmetic processor, the obvious approach to determining Vx is to take some sort of average over the points before the step and subtract it from the value of the average over the points after the step. That is, as shown in Figure *Digitized version of the data of Figure (b) in the step region*, averages are computed over the two regions marked “Length” (the “Gap” region is omitted because the signal is changing rapidly here), and their difference taken as a measure of Vx . Thus the value Vx may be found from the following equation:
 
-$$V_{x,k}=-\sum_{i(before)}W_{i}V_{i}+\sum_{i(after)}W_{i}V_{i}$$
+$LV_{x,k}=-\sum_{i=k-2L-G+1}^{k-L-G}V_{i}+\sum_{i=k-L+1}^{k}V_{i}$
 
-Where the values of the weighting constants W i determine the type of average being computed. The sums of the values of the two sets of weights must be individually normalized.
+Where the filter length is **L** and the gap is **G**. The factor **L** multiplying **V_{x,k}** arises because the sum of the weights here is not normalized. Accommodating this factor is trivial.
 
 **The primary differences between different digital signal processors lie in two areas: what set of weights Wi is used and how the regions are selected for the computation of Equation. **
 
