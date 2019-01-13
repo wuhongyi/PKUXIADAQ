@@ -4,16 +4,16 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:34:45 2018 (+0800)
-;; Last-Updated: 一 11月  5 16:56:26 2018 (+0800)
+;; Last-Updated: 六 1月 12 14:23:49 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 13
+;;     Update #: 14
 ;; URL: http://wuhongyi.cn -->
 
 # Energy
 
 <!-- toc -->
 
-## GUI
+## 图形界面(GUI)
 
 ![Energy](/img/Energy.png)
 
@@ -24,34 +24,29 @@
 - 参数 Tau，请参考*Baselines and Preamp. Decay Times*部分
 - 参数 filter range，请参考*Filter Range*部分
 
-**TODO  这里应该补充不同探测器的推荐值**
+能量计算的最关键参数是信号衰减时间 Tau。在计算能量时，用来补偿先前脉冲的下降沿。您可以直接为每个通道输入 Tau，也可以单击“FindTau”，让软件自动确定衰减时间。
+
+单击“Accept”将找到的值应用到通道。（如果近似值不变，软件找不到更好的值。）
+
+在高计数率下，脉冲以较高的频率重叠。为了精确地计算这些脉冲的能量或脉冲高度，而不需要等到它们完全衰减回基线水平，Pixie-16 中计算当前脉冲的脉冲高度时采用的脉冲高度计算算法使用衰减时间来计算和消除之前脉冲重叠得指数衰减尾的贡献。
 
 
-The most critical parameter for the energy computation is the signal decay time Tau. It is used to compensate for the falling edge of a previous pulse in the computation of the energy. You can either enter Tau directly for each channel, or enter an approximate value in the right control, select a channel, and click Find it to let the software determine the decay time automatically.
-Click Accept it to apply the found value to the channel. (If the approximate value is unchanged,the software could not find a better value.)  
-
-
-At high count rates, pulses overlap with each other at higher frequency. In order to compute the energy or pulse height of those pulses accurately without the need to wait until they decay back to baseline level completely, the pulse height computation algorithm implemented in the Pixie-16 uses the decay time to compute and remove the contribution from the exponentially decaying tail of the overlapping prior pulse when computing the pulse height of the current pulse.
-
-> **[danger] single exponential decay constant**
+> **[danger] 单指数衰减常数**
 >
-> It is assumed the pulses have only a single exponential decay constant. If pulses have multiple decay constants, it might be possible to use the decay constant that dominates the decay of the pulse, but the accuracy of pulse height computation will be degraded.
+> 假设脉冲只有一个指数衰减常数。如果脉冲具有多个衰减常数，则可以使用起主要作用的脉冲衰减的衰减常数，但会降低脉冲高度计算的精度。
 
 
+以下重要参数的一般经验如下：
 
-
-
-General rules of thumb for the following important parameters are:
-
-- The energy filter flat top time should be larger than the longest pulse rise time.
-- The energy filter rise time can be varied to balance the resolution and throughput.
-- In general, energy resolution improves with the increase of energy filter rise time, up to an optimum when longer filters only add more noise into the measurement.
-- The energy filter dead time TD is about $$2×(T_{rise}+T_{flat})$$, and the maximum throughput for Poisson statistics is 1/(TD*e). For HPGe detectors, a rise time of 4-6us and a flat top of 1us are usually appropriate.
-- Choose the smallest energy filter range that allows setting the optimum energy filter rise time. Larger filter ranges allow longer filter sums, but increase the granularity of possible values for the energy filter rise time and flat top time and increase the jitter of latching the energy filter output relative to the rising edge of the pulse. This is usually only important for very fast pulses.
+- 能量滤波平顶时间应大于最长脉冲上升时间。
+- 可以改变能量滤波的上升时间，以平衡分辨率和吞吐量。
+- 一般来说，能量分辨率随着能量滤波的上升时间的增加而提高，直到当较长的滤波只在测量中增加更多的噪声时达到最佳值。
+- 能量滤波区时间 TD 约为 $$2×(T_{rise}+T_{flat})$$，泊松统计的最大吞吐量为1/(TD*e)。对于 HPGe 探测器，上升时间为 4-6 us，平顶 1 us 通常是合适的。
+- 选择允许设置最佳能量滤波的上升时间的最小能量滤波补偿(Filter Range)。较大的滤波步长允许较长的滤波总长度之和，但会增加能量滤波的上升时间和平顶时间的可能值的梯度，并增加相对于脉冲上升沿锁定能量滤波输出的抖动。这通常只对非常快的脉冲很重要。
 
 ----
 
-## Filter Range
+## 滤波步长(Filter Range)
 
 To accommodate a wide range of energy filter rise times from tens of nanoseconds to tens of microseconds, the filters are implemented in the FPGA with different clock decimations(filter ranges). The ADC sampling rate is either 2ns, 4ns, or 10ns depending on the ADC variant that is used, but in higher clock decimations, several ADC samples are averaged before entering the energy filtering logic. In filter range 1, $$2^{1}$$ samples are averaged, $$2^{2}$$ samples in filter range 2, and so on. Since the sum of rise time and flat top is limited to 127 decimated clock cycles, filter time granularity and filter time are limited to the values listed in Table .
 
@@ -61,7 +56,7 @@ To accommodate a wide range of energy filter rise times from tens of nanoseconds
 
 ----
 
-## Trapezoidal Filtering
+## 梯形滤波(Trapezoidal Filtering)
 
 From this point onward, only trapezoidal filtering will be considered as it is implemented in a Pixie-16 module according to Equation $$LV_{x,k}=-\sum_{i=k-2L-G+1}^{k-L-G}V_{i}+\sum_{i=k-L+1}^{k}V_{i}$$. The result of applying such a filter with Length L=1 us and Gap G=0.4 us to a gamma-ray event is shown in Figure. The filter output is clearly trapezoidal in shape and has a rise time equal to L, a flattop equal to G, and a symmetrical fall time equal to L. The basewidth, which is a first-order measure of the filter’s noise reduction properties, is thus 2L+G.
 
@@ -79,7 +74,7 @@ One important characteristic of a digitally shaped trapezoidal pulse is its extr
 
 ----
 
-## Baselines and Preamp. Decay Times
+## 基线与前放衰减时间(Baselines and Preamp. Decay Times)
 
 Figure shows an event over a longer time interval and how the filter treats the preamplifier noise in regions when no gamma-ray pulses are present. 
 
@@ -97,7 +92,7 @@ Using the decay constant $$\tau$$, the baselines can be mapped back to the DC le
 
 ----
 
-## Pileup Inspection
+## 堆积检测(Pileup Inspection)
 
 As noted above, the goal is to capture a value of Vx for each amma-ray detected and use these values to construct a spectrum. 
 

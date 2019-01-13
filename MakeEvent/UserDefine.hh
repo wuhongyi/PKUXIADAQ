@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 10月 20 16:20:34 2017 (+0800)
-// Last-Updated: 日 5月 27 05:43:15 2018 (+0800)
+// Last-Updated: 日 1月 13 20:03:49 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 4
+//     Update #: 5
 // URL: http://wuhongyi.cn 
 
 // 本转换程序的使用前提，插件必须从第一个插槽开始，中间不留空插槽。
@@ -23,7 +23,7 @@
 
 
 // 设置插件个数
-#define BOARDNUMBER 1
+#define BOARDNUMBER 4
 
 
 #endif /* _USERDEFINE_H_ */

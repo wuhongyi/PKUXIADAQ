@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 15:47:48 2018 (+0800)
-;; Last-Updated: 一 11月  5 15:35:11 2018 (+0800)
+;; Last-Updated: 五 1月 11 23:48:04 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 17
+;;     Update #: 18
 ;; URL: http://wuhongyi.cn -->
 
 # Guide
@@ -82,7 +82,7 @@ The Pixie-16 modules must be operated in a custom 6U CompactPCI/PXI chassis prov
 
 
 
-If trace recording is enabled, trace data will immediately follow the last word of the event header. Since raw ADC data points are 14-bit number, two 14-bit numbers are packed into one 32-bit word,as shown below. Since the event header could have variable length(4,6,8,10,12,14 ,16 or 18 words) depending on the selection of various output data options, the header length, event length and trace length that are recorded in the first 4 words of the event header should be used to navigate through the output data stream.
+If trace recording is enabled, trace data will immediately follow the last word of the event header. Since raw ADC data points are 12/14/16-bit number, two 12/14/16-bit numbers are packed into one 32-bit word. Since the event header could have variable length(4,6,8,10,12,14 ,16 or 18 words) depending on the selection of various output data options, the header length, event length and trace length that are recorded in the first 4 words of the event header should be used to navigate through the output data stream.
 
 
 

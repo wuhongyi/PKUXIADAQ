@@ -4,12 +4,12 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 15:47:48 2018 (+0800)
-;; Last-Updated: 一 11月  5 15:22:28 2018 (+0800)
+;; Last-Updated: 五 1月 11 23:55:51 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 17
+;;     Update #: 18
 ;; URL: http://wuhongyi.cn -->
 
-# Guide
+# 用户指南
 
 <!-- toc -->
 
@@ -21,19 +21,19 @@
 
 > **[info] IMPORTANT**
 >
-> The Pixie-16 is designed for single exponentially decaying signals. 
+> Pixie-16 专为单个指数衰减信号而设计。
 >
-> Step pulses or short non-exponential pulses can be accommodated with specific parameter settings. 
+> 可以通过特定的参数设置来匹配步进脉冲(step pulses)或短的非指数脉冲(short non-exponential pulses)。
 >
-> Staircase type signals from reset preamplifiers generally need to be AC coupled.
+> 来自复位前置放大器(reset preamplifiers)的楼梯类型(staircase type)信号通常需要先进行交流耦合(AC coupled)处理。
 
 > **[danger] IMPORTANT**
 >
-> The amplitude of the detector output signals is not recommended to exceed +/-3.5V if 50Ohm input termination jumper is installed and the 1:4 attenuation is not used.
+> 如果安装了50欧姆输入端接跳线并且未使用1：4衰减，则建议探测器输出信号的幅度不要超过 +/-3.5V。
 >
-> Do Not Hot-Swap!
+> 不要热插拔!
 >
-> To avoid personal injury, and/or damage to the DGF-Pixie-16, always turn off crate power before removing the DGF-Pixie-16 from the crate!
+> 为避免人身伤害和/或损坏 DGF-Pixie-16，在从机箱中取出 DGF-Pixie-16之前，请务必关闭机箱电源！
 
 
 
@@ -43,35 +43,28 @@
 
 ![pixie16](/img/pixie16.jpg)
 
-The DGF Pixie-16 is a 16-channel all-digital waveform acquisition and spectrometer card based on the CompactPCI/PXI standard for fast data readout to the host. It combines spectroscopy with waveform digitizing and the option of on-line pulse shape analysis. The Pixie-16 accepts signals from virtually any radiation detector. Incoming signals are digitized by 12/14/16-bit 100/250/500 MSPS ADCs. Waveforms of up to 163.8 μs in length for each channel can be stored in a FIFO.
+DGF Pixie-16 是一款基于 CompactPCI/PXI 标准的 16 通道全数字波形采集和谱仪卡，可快速读取主机数据。 它将波形数字化的谱学和在线脉冲形状分析功能相结合。 Pixie-16 几乎可以接收来自任何辐射探测器的信号。 输入信号将被 12/14/16位 100/250/500 MSPS ADC 数字化。 每个通最高可以将长度 163.8 μs 的波形存储在FIFO中。
 
-The waveforms are available for onboard pulse shape analysis, which can be customized by adding user functions to the core processing software. Waveforms, timestamps, and the results of the pulse shape analysis can be read out by the host system for further off-line processing. Pulse heights are calculated to 16-bit precision and can be binned into spectra with up to 32K channels. The Pixie-16 supports coincidence spectroscopy and can recognize complex hit patterns.
+波形可用于板载脉冲形状分析，也可通过向核心处理软件中定制添加用户功能。 主机系统可以读出波形，时间戳和脉冲形状分析的结果，以进行进一步的离线处理。 脉冲高度计算为 16 位精度，在线最多可以记录分组为 32K bin 的能谱。 Pixie-16支持符合测量，可以实现复杂的触发模式。
 
+通过 CompactPCI/PXI 背板到主机的数据读出速率最高可达109 Mbyte/s。标准 PXI 背板以及其它定制背板连接用于在几个 Pixie-16 模块之间分配时钟和触发信号，以进行组操作。 通过将 Pixie-16 模块与市售的 CompactPCI/PXI 处理器，控制器或 I/O 模块组合在同一机箱中，可以构建完整的数据采集和处理系统。
 
-Data readout rates through the CompactPCI/PXI backplane to the host computer can be up to 109 Mbyte/s. The standard PXI backplane, as well as additional custom backplane connections are used to distribute clocks and trigger signals between several Pixie-16 modules for group operation. A complete data acquisition and processing systems can be built by combining Pixie-16 modules with commercially available CompactPCI/PXI processor, controller or I/O modules in the same chassis.
-
-
-The Pixie-16 is an instrument for waveform acquisition and MCA histogramming for arrays of gamma ray or other radiation detectors such as
+Pixie-16 是一种用于伽马射线或其它辐射探测器阵列的波形采集和 MCA 直方图的仪器：
 
 - 100 MSPS
-	- Segmented HPGe detectors.
-	- Scintillator/PMT combinations: NaI, CsI, BGO and many others.
-	- Gas detector.
-	- Silicon strip detectors.
+	- 高纯锗探测器/分块的高纯锗探测器
+	- 闪烁体/PMT组合：NaI，CsI，BGO 和许多其它组合
+	- 气体探测器
+	- 大面积硅探测器/硅条探测器
 - 250 MSPS
-	- Scintillator
-	- LaBr3
+	- 闪烁体
+	- 溴化镧
 - 500 MSPS
-	- Scintillator
-	- LaBr3
+	- 闪烁体
+	- 溴化镧
 
 
-
-
-
-The Pixie-16 modules must be operated in a custom 6U CompactPCI/PXI chassis providing high currents at specific voltages not included in the CompactPCI/PXI standard 1 . Currently XIA provides a 14-slot chassis. Put the host computer(or remote PXI controller) in the system slot (slot 1) of your chassis. Put the Pixie-16 modules into any free peripheral slot (slot 2-14) with the chassis still powered down. After modules are installed, power up the chassis (Pixie-16 modules are not hot swappable). If using a remote controller, be sure to boot the host computer after powering up the chassis.
-
-
+Pixie-16 模块必须在定制的 6U CompactPCI/PXI 机箱中运行，在 CompactPCI/PXI 标准 1 中未包含在特定电压下提供高电流。 目前 XIA 提供 14 插槽机箱。 将主机（或远程 PXI 控制器）放入机箱的系统插槽（插槽1）中。 z在机箱断电下将 Pixie-16 模块放入任何可用的插槽（插槽 2-14）。 安装模块后，打开机箱电源（Pixie-16 模块不支持热插拔）。 如果使用远程控制，请务必在打开机箱电源后再启动主机。
 
 ----
 
@@ -96,8 +89,7 @@ The Pixie-16 modules must be operated in a custom 6U CompactPCI/PXI chassis prov
 ![External 8](/img/data_ex8.PNG)
  -->
  
-If trace recording is enabled, trace data will immediately follow the last word of the event header. Since raw ADC data points are 14-bit number, two 14-bit numbers are packed into one 32-bit word,as shown below. Since the event header could have variable length(4,6,8,10,12,14 ,16 or 18 words) depending on the selection of various output data options, the header length, event length and trace length that are recorded in the first 4 words of the event header should be used to navigate through the output data stream.
-
+如果开启了波形记录，则波形数据将紧跟在事件头的最后。 由于原始 ADC 数据点是 12/14/16 位数，因此将两个 12/14/16 位数字打包成一个 32 位字。 由于事件头具有可变长度（4,6,8,10,12,14,16 或 18 个字），具体取决于各种输出数据选项的选择，事件长度，事件长度和波形长度记录在事件头的前 4 个字(words)来引导输出数据流。
 
 
 - CAEN 插件在采集波形时，一个插件所有通道每个事件波形采集长度只能设置成相同的。

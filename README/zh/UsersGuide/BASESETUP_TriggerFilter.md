@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:35:24 2018 (+0800)
-;; Last-Updated: 五 1月 11 21:19:57 2019 (+0800)
+;; Last-Updated: 六 1月 12 14:04:17 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 13
+;;     Update #: 15
 ;; URL: http://wuhongyi.cn -->
 
 # Trigger Filter
@@ -35,40 +35,39 @@
 
 ## 数字滤波
 
-Energy dispersive detectors, which include such solid state detectors as Si(Li), HPGe, HgI2 , CdTe and CZT detectors, are generally operated with charge sensitive preamplifiers as shown in Figure. Here the detector **D** is biased by voltage source **V** and connected to the input of **preamplifier A** which has feedback capacitor **Cf** and feedback resistor **Rf** .
+粒子能量探测器，包括诸如 Si（Li），HPGe，HgI2，CdTe 和 CZT 的固态探测器，通常采用电荷敏感前置放大器，如图所示。 这里，探测器**D**加偏置电压**V **，并连接到**前置放大器A**的输入端，后者具有反馈电容**Cf**和反馈电阻**Rf**。
 
 ![(a) Charge sensitive preamplifier with RC feedback; (b) Output on absorption of a gamma ray](/img/chargesenitivepreamplifierrcfeedbackoutputonabsorptionofagammaray.png)
 
-Reducing noise in an electrical measurement is accomplished by filtering. Traditional analog filters use combinations of a differentiation stage and multiple integration stages to convert the preamp output steps, such as shown in Figure (b), into either triangular or semi-Gaussian pulses whose amplitudes (with respect to their baselines) are then proportional to Vx and thus to the gamma-ray’s energy.
+通过滤波来降低测量中的噪声。传统的模拟电路使用微分电路和多个积分电路的组合将前置放大器输出步骤（如图（b）所示）转换为三角形或半高斯脉冲，其振幅（相对于基线）与 **Vx** 成比例，从而与伽马射线的能量成比例。
 
-Digital filtering proceeds from a slightly different perspective. Here the signal has been digitized and is no longer continuous. Instead it is a string of discrete values as shown in Figure. Figure is actually just a subset of Figure (b), in which the signal was digitized by a Tektronix 544 TDS digital oscilloscope at 10 MSPS (mega samples per second). Given this data set, and some kind of arithmetic processor, the obvious approach to determining Vx is to take some sort of average over the points before the step and subtract it from the value of the average over the points after the step. That is, as shown in Figure *Digitized version of the data of Figure (b) in the step region*, averages are computed over the two regions marked “Length” (the “Gap” region is omitted because the signal is changing rapidly here), and their difference taken as a measure of Vx . Thus the value Vx may be found from the following equation:
+数字滤波从一个稍微不同的角度进行。这里的信号已经数字化，不再是连续的。相反，它是一个离散值字符串，如图所示。图实际上只是图（b）的一个子集，图中的信号由 Tektronix 544 TDS 数字示波器以 10 MSPS（每秒百万采样数）进行数字化。鉴于此数据集和某种算术处理器，确定VX的明显方法是对步骤前的点取某种平均值，然后从步骤后的点的平均值中减去它。也就是说，如图*数字版本的图（b）在阶跃区域*中的数据所示，在标记为“长度”的两个区域上计算平均值（“间隙”区域被省略，因为这里的信号变化很快），并将其差作为VX的度量。因此，Vx值可从以下方程式中得出：
+
+数字滤波从一个稍微不同的角度进行。这里的信号已经数字化，不再是连续的。相反，它是一个离散值字符串，如图所示。图实际上只是图（b）的一个子集，图中的信号由 Tektronix 544 TDS 数字示波器以 10 MSPS（每秒百万采样数）进行数字化。鉴于此数据集和某种算术处理，确定**Vx**的明显方法是对当前处理点之前的点取某种平均值，然后从当前处理点之后点的平均值中减去它。也就是说，如下图中所示，计算标记为“Length”的两个区域的平均值（“Gap”区域被省略，因为这里的信号变化很快），并将其差作为**Vx**的度量。因此，**Vx**值可从以下方程式中得出：
 
 $$V_{x,k}=-\sum_{i(before)}W_{i}V_{i}+\sum_{i(after)}W_{i}V_{i}$$
 
-Where the values of the weighting constants Wi determine the type of average being computed. The sums of the values of the two sets of weights must be individually normalized.
+其中，加权常数**Wi**的值决定计算的平均值类型。两组权重的值之和必须单独归一化。
 
-**The primary differences between different digital signal processors lie in two areas: what set of weights Wi is used and how the regions are selected for the computation of Equation. **
+**不同数字信号处理算法之间的主要区别在于两个方面：使用哪组权重Wi以及如何选择区域来计算方程。**
 
-Thus, for example, when larger weighting values are used for the region close to the step while smaller values are used for the data away from the step, Equation  produces “cusp-like” filters. When the weighting values are constant, one obtains triangular (if the gap is zero) or trapezoidal filters. The concept behind cusp-like filters is that, since the points nearest the step carry the most information about its height, they should be most strongly weighted in the averaging process. How one chooses the filter lengths results in time variant (the lengths vary from pulse to pulse) or time invariant (the lengths are the same for all pulses) filters. Traditional analog filters are time invariant. The concept behind time variant filters is that, since the gamma-rays arrive randomly and the lengths between them vary accordingly, one can make maximum use of the available information by setting the length to the interpulse spacing.
+因此，例如，当靠近当前处理点的区域使用较大的权重值，而远离当前处理点的数据使用较小的值时，方程式生成“尖点样”滤波。当权重值为常量时，将获得三角形（如果间隙为零）或梯形滤波。尖点滤波背后的概念是，由于最接近台阶的点携带了关于其高度的最多信息，因此它们在平均过程中应该是最强大的权重。如何选择滤波长度会导致时间变化（长度随脉冲变化）或时间不变（所有脉冲的长度相同）滤波。传统的模拟滤波是不随时间变化的。时变滤波背后的概念是，由于伽马射线随机到达，它们之间的长度也相应变化，因此可以通过将长度设置为脉冲间隔来最大限度地利用可用信息。
 
-In principle, the very best filtering is accomplished by using cusp-like weights and time variant filter length selection. There are serious costs associated with this approach however, both in terms of computational power required to evaluate the sums in real time and in the complexity of the electronics required to generate (usually from stored coefficients) normalized Wi sets on a pulse by pulse basis.
+原则上，最佳过滤是通过使用尖点样权重(cusp-like weights)和时变滤波长度选择来完成的。然而，这种方法存在严重的成本问题，无论是在实时评估所需的总计算能力方面，还是在以脉冲为基础生成（通常由存储系数）归一化Wi集所需的电路的复杂性方面。
 
 ![Digitized version of the data of Figure (b) in the step region](/img/digitizedversionofthedataoffigurebinthestepregion.png)
 
-**The Pixie-16 takes a different approach because it was optimized for high speed operation.**
+**Pixie-16 采用了不同的方法，因为它针对高速处理进行了优化。**
 
-It implements a fixed length filter with all W i values equal to unity and in fact computes this sum afresh for each new signal value k. Thus the equation implemented is:
+它实现了一个固定长度的滤波算法，所有的*Wi**值均相等，实际上对每个新的信号值点 k 重新计算这个和。因此，所实现的方程是：
 
 $$LV_{x,k}=-\sum_{i=k-2L-G+1}^{k-L-G}V_{i}+\sum_{i=k-L+1}^{k}V_{i}$$
 
-Where the filter length is **L** and the gap is **G**. The factor **L** multiplying $$V_{x,k}$$ arises because the sum of the weights here is not normalized. Accommodating this factor is trivial.
+其中过滤长度为**L**，间隙为**G**。系数**L**乘以$$V_{x,k}$$，因为这里的权重总和未归一化。适应这一因素是微不足道的。
 
+虽然这种关系很简单，但仍然非常有效。首先，这是三角形（或梯形，如果g≠0）滤波的数字等价物，这是模拟行业的高速处理标准。第二，理论上可以证明，如果信号中的噪声在阶跃上下为白噪声（即高斯分布），这通常是用于高信号率处理的短整形时间的情况，那么方程中的平均值实际上在最小二乘意义上给出**Vx**的最佳估计。当然，这就是为什么三角过滤在高速率下更受欢迎的原因。
 
-While this relationship is very simple, it is still very effective. In the first place, this is the digital equivalent of triangular (or trapezoidal if G ≠ 0) filtering which is the analog industry’s standard for high rate processing. In the second place, one can show theoretically that if the noise in the signal is white (i.e., Gaussian distributed) above and below the step, which is typically the case for the short shaping times used for high signal rate processing, then the average in Equation actually gives the best estimate of Vx in the least squares sense. This, of course, is why triangular filtering has been preferred at high rates.
-
-Triangular filtering with time variant filter lengths can, in principle, achieve both somewhat superior resolution and higher throughputs but comes at the cost of a significantly more complex circuit and a rate dependent resolution, which is unacceptable for many types of precise analysis. In practice, XIA’s design has been found to duplicate the energy resolution of the best analog shapers while approximately doubling their throughput, providing experimental confirmation of the validity of the approach.
-
-
+原则上，带时变滤波器长度的三角形滤波既可以获得较高的分辨率，也可以获得更高的吞吐量，但其代价是电路要复杂得多，并且与速率相关的分辨率，这对于许多类型的精确分析来说是不可接受的。在实践中，XIA 的设计可以复制最佳模拟整形器的能量分辨率，同时使其吞吐量增加一倍，这为该方法的有效性提供了实验验证。
 
 
 <!-- BASESETUP_TriggerFilter.md ends here -->

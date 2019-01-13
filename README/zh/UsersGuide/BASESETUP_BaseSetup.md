@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:36:08 2018 (+0800)
-;; Last-Updated: 一 11月  5 16:38:00 2018 (+0800)
+;; Last-Updated: 六 1月 12 00:31:08 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 4
+;;     Update #: 5
 ;; URL: http://wuhongyi.cn -->
 
 # Base Setup
@@ -20,16 +20,19 @@
 界面下方的 Select Channel 后面的参数表示选择用来将界面上该通道的参数复制给其它通道，点击后面 **Copy** 完成复制，然后需要 **Apply** 来将参数写入采集卡。
 
 
-The **Base Setup** page controls the analog gain, offset and polarity for each channel. It is useful to click on **Trace & Baseline** in the top control **Monitor** bar to view the signal read from the ADCs while adjusting these parameters. The display shows one or all 16 channels of a module; you can set the sampling interval for each block to capture a longer time frame in **Hist & XDT** page. Click **Draw** to update the graph.
 
-Pulses from the detector should fall in the range from 0 to 16383(14 bit), with the baseline at ~1638 to allow for drifts and/or undershoots and no clipping at the upper limit. If there is clipping, adjust the Gain and Offset or click on the *AdjustOffset* button to let the software set the DC offsets to proper levels.
+**Base Setup**页面控制每个通道的模拟增益，便置和极性。单击顶部控制栏中**Monitor**的**Trace＆Baseline**可以查看从 ADC 读取的信号，同时调整这些参数。该页面可以显示模块的一个或全部 16 个通道。您可以在**Hist＆XDT**页面中设置每个模块每个通道的采样间隔以捕获更长的时间帧。单击**Draw**以更新图形。
 
-Since the trigger/filter circuits in the FPGA only act on rising pulses, negative pulses are inverted at the input of the FPGA, and the waveforms shown in the ADC trace display include this optional inversion. Thus set the channel’s Polarity such that pulses from the detector appear with positive amplitude (rising edge).
+来自探测器的脉冲应落在 0 到 16383（例如 14位）的范围内，基线在 ~1638 处允许漂移和/或下冲，并且在上限处没有削波。如果存在削波，请调整增益和偏置，或单击**AdjustOffset**按钮让软件将 DC 偏置设置为适当的水平。
+
+由于 FPGA 中的触发/滤波电路仅作用于正极性脉冲，因此负脉冲在输入 FPGA 处进行极性反转，并且 ADC 波形显示中显示的波形包括此可选的反转。因此，设置通道的极性，使得来自探测器的脉冲以正幅度（上升沿）出现。
 
 
-In the **Base Setup**  tab, you can set the total trace length and the pre-trigger trace delay for the waveforms to be acquired in list mode runs.
+在**Base Setup**选项卡中，您可以设置在列表模式运行中获取的波形的总跟踪长度和预触发跟踪延迟。
 
-The trace delay cannot be longer than the trace length, and for each Pixie-16 variant, there is also a limit for the maximum value of trace delay and trace length.
+跟踪延迟(trace delay)不能长于跟踪长度(trace length)，并且对于每个 Pixie-16 通道，跟踪延迟和跟踪长度的最大值也有限制。
+
+
 
 ----
 
@@ -59,42 +62,39 @@ The trace delay cannot be longer than the trace length, and for each Pixie-16 va
 紫色的 *DCOffset*、*BLcut* 用户不需要修改，采用自动调节参数即可。本子菜单中修改了 *Baseline*、*Gain*、*Sign* 之后，需要按最下方的 **AdjustOffset**，之后再按**BLcutFinder** 来自动调节这两个参数。
 
 
-## Important note
+## 重要信息
 
 
-> **[info] trace length in 500 MHz**
+> **[info] 500 MHz 模块中的波形**
 >
-> For the 500 MHz Pixie-16 modules, the ADCs are running at 500 MHz, but the traces are recorded with 100 MHz clocks in the FPGA with 5 ADC samples captured in each 10 ns interval. In addition, the data packing from the FPGA to the onboard External FIFO is two sets of 5 ADC samples in one transfer. So the trace length should be multiples of 20 ns, i.e., 20 ns, 40 ns, ... for instance, a trace length of 500 ns and a trace delay of 200 ns.
+> 对于500 MHz Pixie-16 模块，ADC 以 500 MHz 运行，但在 FPGA 中以 100 MHz 时钟记录波形，每 10 ns 间隔捕获 5 个 ADC 样本。 此外，从 FPGA 到板上外部 FIFO 的数据打包是一次传输两组 5 个 ADC 样本。 因此，波形长度应为 20 ns 的倍数，即 20 ns，40 ns，......例如，波形长度为 500 ns，波形延迟为 200 ns。
 
 ----
 
-> **[info] Good channel**
+> **[info] 好通道(Good channel)**
 >
-> Only channels marked as good will have their events recorded. 
+> 只有标记为好的通道才会记录其事件。
 >
-> This setting has no bearing on the channel's capability to issue a trigger. 
+> 此设置与通道自身触发的能力无关。
 >
-> There can be a triggering channel whose data are discarded. 
+> 可以有一个触发通道，其数据被丢弃。 
 >
-> Channels not marked as good will be excluded from the automatic offset adjustment.
+> 未标记为好的通道将从不会自动进行偏置调整。
 
 
+## 基线测量
 
-## Baseline measurements
+当没有检测到脉冲时，Pixie-16 不断地进行基线测量，并且在脉冲高度重建期间保持从能量滤波器输出中减去基线平均值。与平均值相差超过 BaselineCut 值的基线测量将被拒绝，因为它们可能被低于触发阈值的小脉冲污染。
 
-The Pixie-16 constantly takes baseline measurements when no pulse is detected and keeps a baseline average to be subtracted from the energy filter output during pulse height reconstruction. Baseline measurements that differ from the average by more than the BaselineCut value will be rejected as they are likely contaminated with small pulses below the trigger threshold.
+可以在**Trace＆Baseline**页面中查看每个通道的一系列基线测量值，在**BASELINE**面板中可以构建基线直方图，以验证基线切割(Baseline Cut)不会拒绝落入基线分布（理想情况下为高斯测量主峰值的测量。
 
-A series of baseline measurements for each channel can be viewed in **Trace & Baseline** page, and in the BASELINE panel a histogram of baselines can be built to verify that the Baseline Cut does not reject measurements falling into the main (ideally Gaussian) peak in the baseline distribution.
+通常，将基线切割(Baseline Cut)保持为默认值就足够了。
 
-Usually, it is sufficient to keep Baseline Cut at its default value.
+注意：由于基线计算考虑了指数衰减，因此如果基线显示中没有明显的脉冲，说明我们的设置满足了
+-  a）正确设置了衰减时间
+-  b）探测器脉冲是真正的指数衰减
 
-
-Note: Since the baseline computation takes into account the exponential decay, no pulses should be noticeable in the baseline display if  
-- a) the decay time is set correctly and 
-- b) the detector pulses are truly exponential.
-
-Baseline Percent is a parameter used for automatic offset adjustment; by clicking on the *AdjustOffses* button, offsets will be set such that the baseline seen in the ADC trace display falls at the Baseline Percent fraction of the full ADC range (e.g. for a 12-bit ADC and Baseline Percent = 10% the baseline falls at ADC step 409 out of 4096 total).
-
+基线百分比是用于自动偏置调整的参数。通过单击**AdjustOffses**按钮，将设置偏置，使 ADC 波形显示中看到的基线降至整个 ADC 范围的基线百分比（例如，对于 12 位 ADC 和基线百分比=基线的10％） 落在 ADC 整个量程4096个bin中的409个bin）。
 
 
 <!-- BASESETUP_BaseSetup.md ends here -->
