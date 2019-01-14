@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 1月  5 13:51:08 2019 (+0800)
-// Last-Updated: 六 1月  5 22:05:45 2019 (+0800)
+// Last-Updated: 一 1月 14 13:26:17 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 20
+//     Update #: 30
 // URL: http://wuhongyi.cn 
 
 #include "UserDefine.hh"
@@ -157,15 +157,14 @@ void merge::Process()
   while(true)
     {
       timestamp = LLONG_MAX;
-
+      mark = -1; 
       for (int i = 0; i < mhitcrate; ++i)
 	{
 	  if(havedata[i])
 	    {
 	      fileread[i]->cd();
-	      b_sr->GetEntry(CrateEntry[i]);
-	      b_ts->GetEntry(CrateEntry[i]);
-
+	      treeread[i]->GetEvent(CrateEntry[i]);
+	      
 	      switch(sr)
 	      	{
 	      	case 100:
@@ -203,8 +202,7 @@ void merge::Process()
 	{
 	  std::cout<<"\r"<<"nevt: "<<nevent;
 	  std::cout << std::flush;
-	}
-
+	}      
       CrateEntry[mark]++;
       if(CrateEntry[mark] >= TotalEntry[mark]) havedata[mark] = false;
       flagdata = false;
@@ -213,7 +211,6 @@ void merge::Process()
 	  flagdata += havedata[i];
 	}
       if(!flagdata) break;
-      
     }
   
   file->cd();

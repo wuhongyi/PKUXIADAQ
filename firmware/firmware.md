@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 12月 13 09:41:49 2016 (+0800)
-;; Last-Updated: 五 1月 11 18:32:13 2019 (+0800)
+;; Last-Updated: 一 1月 14 16:56:17 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 21
+;;     Update #: 23
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
@@ -59,6 +59,11 @@
 
 
 - pixie16_revd_12b100m_firmware_release_10092018  PKU firmware
+	- The value is set to 0 when the calculated energy is negative. 
+	- The pileup event energy is not set to 0, output calculated values directly.
+
+- pixie16_revfpku_16b250m_firmware_release_01132019   PKU firmware
+	- multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
 	- The value is set to 0 when the calculated energy is negative. 
 	- The pileup event energy is not set to 0, output calculated values directly.
 
