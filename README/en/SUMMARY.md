@@ -43,6 +43,7 @@
 	* [Logic](UsersGuide/Logic.md)
 	* [MultipleModulesSynchronously](UsersGuide/MultipleModulesSynchronously.md)
 * [Applications](Example/README.md)	
+    * [Time Resolution](Example/TimeResolution.md)
     * [Recom. Pars](Example/RecommendedParameters.md)
 * [Programmers Guide](ProgrammersGuide/README.md)
 	* [XIA API](ProgrammersGuide/XIAAPI.md)
