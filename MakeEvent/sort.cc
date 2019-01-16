@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 6月  3 09:27:02 2017 (+0800)
-// Last-Updated: 四 2月 22 17:15:33 2018 (+0800)
+// Last-Updated: 二 1月 15 09:33:54 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 36
+//     Update #: 37
 // URL: http://wuhongyi.cn 
 
 #include "UserDefine.hh"
@@ -187,37 +187,7 @@ void sort::InitEvent()
     }
      
 
-#if BOARDNUMBER > 1
-  if(evte >= adc[sid-2][ch])
-    {
-      sr[sid-2][ch] = sr_;
-      adc[sid-2][ch] = evte;
-      outofr[sid-2][ch] = outofr_;
-      tdc[sid-2][ch] = ts;
-      cfd[sid-2][ch] = cfd_;
-      cfdft[sid-2][ch] = cfdft_;
-      cfds[sid-2][ch] = cfds_;
-      for (int i = 0; i < 8; ++i)
-	{
-	  qdc[sid-2][ch][i] = qs[i];
-	}
-    }
-#else
-  if(evte >= adc[ch])
-    {
-      sr[ch] = sr_;
-      adc[ch] = evte;
-      outofr[ch] = outofr_;
-      tdc[ch] = ts;
-      cfd[ch] = cfd_;
-      cfdft[ch] = cfdft_;
-      cfds[ch] = cfds_;
-      for (int i = 0; i < 8; ++i)
-	{
-	  qdc[ch][i] = qs[i];
-	}
-    }
-#endif
+  ProcessEntry();
 }
 
 void sort::ProcessEntry()
