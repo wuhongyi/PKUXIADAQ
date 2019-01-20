@@ -90,19 +90,19 @@ ModuleBits 4 14 14 14 14
 250M14bit_dspvar ../firmware/pixie16_revf_14b250m_firmware_release_11082018/Pixie16DSP_revfgeneral_14b250m_r39397.var
 
 # standard firmware
-# 250M16bit_sys ../firmware/pixie16_revf_16b250m_firmware/syspixie16_revfgeneral_adc250mhz_r33339.bin
-# 250M16bit_fip ../firmware/pixie16_revf_16b250m_firmware/fippixie16_revfgeneral_16b250m_r35072.bin
-# 250M16bit_dsplst ../firmware/pixie16_revf_16b250m_firmware/Pixie16DSP_revfgeneral_16b250m_r35921.lst
-# 250M16bit_dspldr ../firmware/pixie16_revf_16b250m_firmware/Pixie16DSP_revfgeneral_16b250m_r35921.ldr
-# 250M16bit_dspvar ../firmware/pixie16_revf_16b250m_firmware/Pixie16DSP_revfgeneral_16b250m_r35921.var
+250M16bit_sys ../firmware/pixie16_revf_16b250m_firmware/syspixie16_revfgeneral_adc250mhz_r33339.bin
+250M16bit_fip ../firmware/pixie16_revf_16b250m_firmware/fippixie16_revfgeneral_16b250m_r35072.bin
+250M16bit_dsplst ../firmware/pixie16_revf_16b250m_firmware/Pixie16DSP_revfgeneral_16b250m_r35921.lst
+250M16bit_dspldr ../firmware/pixie16_revf_16b250m_firmware/Pixie16DSP_revfgeneral_16b250m_r35921.ldr
+250M16bit_dspvar ../firmware/pixie16_revf_16b250m_firmware/Pixie16DSP_revfgeneral_16b250m_r35921.var
 
 # NoNegEnergy && AlwaysCompEnergy
 # Multiplicity result output from RJ45
-250M16bit_sys ../firmware/pixie16_revfpku_16b250m_firmware_release_01132019/syspixie16_revfpku_adc250mhz_r41088.bin
-250M16bit_fip ../firmware/pixie16_revfpku_16b250m_firmware_release_01132019/fippixie16_revfgeneral_16b250m_r36563.bin
-250M16bit_dsplst ../firmware/pixie16_revfpku_16b250m_firmware_release_01132019/Pixie16DSP_revfgeneral_16b250m_r41591.lst
-250M16bit_dspldr ../firmware/pixie16_revfpku_16b250m_firmware_release_01132019/Pixie16DSP_revfgeneral_16b250m_r41591.ldr
-250M16bit_dspvar ../firmware/pixie16_revfpku_16b250m_firmware_release_01132019/Pixie16DSP_revfgeneral_16b250m_r41591.var
+# 250M16bit_sys ../firmware/pixie16_revfpku_16b250m_release_01192019/syspixie16_revfpku_adc250mhz_r41088.bin
+# 250M16bit_fip ../firmware/pixie16_revfpku_16b250m_release_01192019/fippixie16_revfgeneral_16b250m_r36563.bin
+# 250M16bit_dsplst ../firmware/pixie16_revfpku_16b250m_release_01192019/Pixie16DSP_revfgeneral_16b250m_r41630.lst
+# 250M16bit_dspldr ../firmware/pixie16_revfpku_16b250m_release_01192019/Pixie16DSP_revfgeneral_16b250m_r41630.ldr
+# 250M16bit_dspvar ../firmware/pixie16_revfpku_16b250m_release_01192019/Pixie16DSP_revfgeneral_16b250m_r41630.var
 
 
 
