@@ -209,7 +209,7 @@ int Qdc::load_info(Long_t mod)
 	{
 	  retval = Pixie16ReadSglChanPar(varN[j],&ChanParData,mod,i);
 	  if(retval < 0) ErrorInfo("Qdc.cc", "load_info(...)", "Pixie16ReadSglChanPar/QDCLen0-7", retval);
-	  NumEntry[j+1][i]->SetText(TString::Format("%1.2f",ChanParData).Data());
+	  NumEntry[j+1][i]->SetText(TString::Format("%1.3f",ChanParData).Data());
 	}
     }
 

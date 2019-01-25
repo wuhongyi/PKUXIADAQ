@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 11月 18 20:32:50 2016 (+0800)
-// Last-Updated: 六 5月 26 08:32:35 2018 (+0800)
+// Last-Updated: 五 1月 25 11:27:48 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 21
+//     Update #: 22
 // URL: http://wuhongyi.cn 
 
 #include "Energy.hh"
@@ -272,15 +272,15 @@ int Energy::load_info(Long_t mod)
     {
       retval = Pixie16ReadSglChanPar((char*)"ENERGY_RISETIME", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Energy.cc", "load_info(...)", "Pixie16ReadSglChanPar/ENERGY_RISETIME", retval);
-      NumEntry[1][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
+      NumEntry[1][i]->SetText(TString::Format("%1.3f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"ENERGY_FLATTOP", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Energy.cc", "load_info(...)", "Pixie16ReadSglChanPar/ENERGY_FLATTOP", retval);
-      NumEntry[2][i]->SetText (TString::Format("%1.2f", ChanParData).Data());
+      NumEntry[2][i]->SetText (TString::Format("%1.3f", ChanParData).Data());
       
       retval = Pixie16ReadSglChanPar((char*)"TAU", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Energy.cc", "load_info(...)", "Pixie16ReadSglChanPar/TAU", retval);
-      NumEntry[3][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
+      NumEntry[3][i]->SetText(TString::Format("%1.3f", ChanParData).Data());
     }
 
   unsigned int Range = 0; 

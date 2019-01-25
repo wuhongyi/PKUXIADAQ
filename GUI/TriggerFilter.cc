@@ -175,11 +175,11 @@ int TriggerFilter::load_info(Long_t mod)
     {
       retval = Pixie16ReadSglChanPar((char*)"TRIGGER_RISETIME", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("TriggerFilter.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRIGGER_RISETIME", retval);
-      NumEntry[1][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
+      NumEntry[1][i]->SetText(TString::Format("%1.3f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"TRIGGER_FLATTOP", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("TriggerFilter.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRIGGER_FLATTOP", retval);
-      NumEntry[2][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
+      NumEntry[2][i]->SetText(TString::Format("%1.3f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"TRIGGER_THRESHOLD", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("TriggerFilter.cc", "load_info(...)", "Pixie16ReadSglChanPar/TRIGGER_THRESHOLD", retval);
