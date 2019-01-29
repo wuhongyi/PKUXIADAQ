@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 22:17:54 2016 (+0800)
-// Last-Updated: 五 11月 11 13:51:03 2016 (+0800)
+// Last-Updated: 三 1月 30 01:55:49 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 12
+//     Update #: 16
 // URL: http://wuhongyi.cn 
 
 #ifndef _MANAGER_H_
@@ -41,23 +41,32 @@ protected:
   void SetLSFileName();
   // void LSRunReadData();
   void SetLSonlinedataf();
+
+  bool IsDirectoryExists(const char *path);//判断文件夹是否存在
+  bool CreateDirectory(const char *path);//创建文件夹
   
+  void PrintRunStatus();
 private:
-  
-  char Filename[PRESET_MAX_MODULES][256];
-  char  Histogramname[PRESET_MAX_MODULES][256];
+  char  LogFileName[1024];
+  char  DSPParsFileName[1024];  
+  char Filename[PRESET_MAX_MODULES][1024];
+  char  Histogramname[PRESET_MAX_MODULES][1024];
   
   std::string filepathtext;
   std::string filenametext;
   std::string filerunnum;
   int runnum;
 
+  bool fupdateenergyonline;
   bool fonlinedata;
+  bool frecorddata;
+  bool fautorun;
   bool fstartdaq;
   bool fstopdaq;
   
   Detector *detector;
-
+  int autoruntimes;//s
+  
   //run manager
   bool Quit;//true:exit  false:run
   bool AcqRun;//true:start  false:stop
@@ -68,3 +77,7 @@ private:
 #endif /* _MANAGER_H_ */
 // 
 // Manager.hh ends here
+
+
+
+

@@ -5,7 +5,7 @@ CrateID 0
 
 ## Register parameters
 
-SettingPars ../parset/labr3.set
+SettingPars ../parset/mztio.set
 
 
 ## -----------------------------------------------------------------------------
@@ -25,7 +25,7 @@ ModuleSampingRate 4 100 100 250 250
 
 # module number and bits
 # The first number mean how many modules, other number means every module bits(12/14/16)
-ModuleBits 4 14 14 14 14
+ModuleBits 4 14 14 16 14
 
 
 ## -----------------------------------------------------------------------------
@@ -104,6 +104,12 @@ ModuleBits 4 14 14 14 14
 250M16bit_dspldr ../firmware/pixie16_revfpku_16b250m_release_01192019/Pixie16DSP_revfgeneral_16b250m_r41630.ldr
 250M16bit_dspvar ../firmware/pixie16_revfpku_16b250m_release_01192019/Pixie16DSP_revfgeneral_16b250m_r41630.var
 
+#debug
+# 250M16bit_sys ../firmware/Pixie16DSP_RevF_16b250m_General_DebugCountRate/syspixie16_revfgeneral_adc250mhz_r33339.bin
+# 250M16bit_fip ../firmware/Pixie16DSP_RevF_16b250m_General_DebugCountRate/fippixie16_revfgeneral_16b250m_r35072.bin
+# 250M16bit_dsplst ../firmware/Pixie16DSP_RevF_16b250m_General_DebugCountRate/Pixie16DSP_RevF_16b250m_General_DebugCountRate.lst
+# 250M16bit_dspldr ../firmware/Pixie16DSP_RevF_16b250m_General_DebugCountRate/Pixie16DSP_RevF_16b250m_General_DebugCountRate.ldr
+# 250M16bit_dspvar ../firmware/Pixie16DSP_RevF_16b250m_General_DebugCountRate/Pixie16DSP_RevF_16b250m_General_DebugCountRate.var
 
 
 ## TODO

@@ -6,7 +6,7 @@ LIBS:= ../software/libPixie16App.a  ../software/libPixie16Sys.a $(PLX_SDK_DIR)/P
 
 
 
-INCLUDES:=Detector.hh Global.hh Manager.hh
+INCLUDES:=Detector.hh Global.hh Manager.hh wuReadData.hh
 
 OBJECTS:=Detector.o Global.o Manager.o main.o
 
