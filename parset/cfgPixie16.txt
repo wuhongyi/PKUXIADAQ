@@ -16,6 +16,9 @@ SettingPars ../parset/mztio.set
 ModuleSlot 4 2 3 4 5
 
 
+# Only use in NOGUI, unit: second
+AutoRunModeTimes   180
+
 ## -----------------------------------------------------------------------------
 ## Offline Mode
 

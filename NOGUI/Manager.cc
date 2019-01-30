@@ -4,12 +4,13 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 22:19:02 2016 (+0800)
-// Last-Updated: 三 1月 30 01:55:35 2019 (+0800)
+// Last-Updated: 三 1月 30 11:06:10 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 50
+//     Update #: 55
 // URL: http://wuhongyi.cn 
 
 #include "Manager.hh"
+#include "wuReadData.hh"
 
 #include "Global.hh"
 #include "Detector.hh"
@@ -32,7 +33,7 @@ Manager::Manager()
   fupdateenergyonline = false;
   fautorun = false;
 
-  autoruntimes = 180;
+  autoruntimes = wuReadData::ReadValue<int>("AutoRunModeTimes", "../parset/cfgPixie16.txt");
 
   
   // restore last run's file information
@@ -52,7 +53,7 @@ Manager::Manager()
   inrunnumber.close();
   
   std::stringstream ss;//sstream cstring
-  ss.clear();//重复使用前一定要清空
+  ss.clear();//
   ss<<filerunnum;
   ss>>runnum;
 
@@ -132,6 +133,92 @@ void Manager::SetLSonlinedataf()
     }
 }
 
+void Manager::PreStartRun()
+{
+  SetLSFileName();
+  detector->SetOnlineF(fonlinedata);
+
+  for(int i = 0;i < detector->NumModules;i++)
+    {
+      std::cout<<"open: "<<Filename[i]<<std::endl;
+      if(!detector->OpenSaveFile(i,Filename[i]))
+	{
+	  std::cout<<Filename[i]<<std::endl;
+	  return;
+	}
+    }
+
+  std::ofstream writelog;//fstream
+  writelog.open(LogFileName,std::ios::app);//ios::bin ios::app
+  if(!writelog.is_open())
+    {
+      std::cout<<"can't open Log file."<<std::endl;
+    }
+  time_t timep;
+  time(&timep);
+  char tmp[64];
+  strftime(tmp, sizeof(tmp), "Start: %Y-%m-%d %H:%M:%S",localtime(&timep));
+  writelog<<tmp<<std::endl;
+  writelog.close();    
+
+		
+  if(detector->StartLSMRun(0))
+    {
+      std::cout<<"CANNOT start the LSM Run!"<<std::endl;
+      return;
+    }
+  usleep(100000); //delay for the DSP boot 
+  // sleep(2);// wait 2 seconds for modules to be ready
+  // start a new run, not resume
+
+  AcqRun = true;
+
+  PrintRunStatus();
+}
+
+void Manager::PostStopRun()
+{
+  std::cout<<"done!!!!!!"<<std::endl;
+  int counter = 0;
+  while(detector->StopLSMRun())
+    {
+      // failed to stop run 
+      sleep(1); // wait 1s then try again
+      counter++;
+      if(counter > 10) break;
+    }
+
+  detector->SaveDSPPars(DSPParsFileName);
+  for(int i = 0;i < detector->NumModules;i++)
+    {
+      detector->SaveHistogram(Histogramname[i],i);
+    }
+		
+  std::cout<<"finish!"<<std::endl;
+		
+  AcqRun = false;
+
+  runnum++;
+  std::ofstream out("../parset/RunNumber");
+  out<<runnum;
+  out.close();
+
+  std::ofstream writelog;//fstream
+  writelog.open(LogFileName,std::ios::app);//ios::bin ios::app
+  if(!writelog.is_open())
+    {
+      std::cout<<"can't open Log file."<<std::endl;
+    }
+  time_t timep;
+  time(&timep);
+  char tmp[64];
+  strftime(tmp, sizeof(tmp), "Stop : %Y-%m-%d %H:%M:%S",localtime(&timep));
+  writelog<<tmp<<std::endl;
+  writelog.close();
+
+  PrintRunStatus();
+}
+
 void Manager::CheckKeyboard()
 {
   // Check keyboard
@@ -157,83 +244,11 @@ void Manager::CheckKeyboard()
 	  {
 	    if(AcqRun)
 	      {//running,do stop
-		std::cout<<"done!!!!!!"<<std::endl;
-		int counter = 0;
-		while(detector->StopLSMRun())
-		  {
-		    // failed to stop run 
-		    sleep(1); // wait 1s then try again
-		    counter++;
-		    if(counter > 10) break;
-		  }
-
-		detector->SaveDSPPars(DSPParsFileName);
-		for(int i = 0;i < detector->NumModules;i++)
-		  {
-		    detector->SaveHistogram(Histogramname[i],i);
-		  }
-		
-		std::cout<<"finish!"<<std::endl;
-		
-	        AcqRun = false;
-
-		runnum++;
-		std::ofstream out("../parset/RunNumber");
-		out<<runnum;
-		out.close();
-
-		std::ofstream writelog;//fstream
-		writelog.open(LogFileName,std::ios::app);//ios::bin ios::app
-		if(!writelog.is_open())
-		  {
-		    std::cout<<"can't open Log file."<<std::endl;
-		  }
-		time_t timep;
-		time(&timep);
-		char tmp[64];
-		strftime(tmp, sizeof(tmp), "Stop : %Y-%m-%d %H:%M:%S",localtime(&timep));
-		writelog<<tmp<<std::endl;
-		writelog.close();    
+		PostStopRun();
 	      }
 	    else
 	      {//stop,do run
-		SetLSFileName();
-		detector->SetOnlineF(fonlinedata);
-
-		for(int i = 0;i < detector->NumModules;i++)
-		  {
-		    std::cout<<"open: "<<Filename[i]<<std::endl;
-		    if(!detector->OpenSaveFile(i,Filename[i]))
-		      {
-			std::cout<<Filename[i]<<std::endl;
-			return;
-		      }
-		  }
-
-		std::ofstream writelog;//fstream
-		writelog.open(LogFileName,std::ios::app);//ios::bin ios::app
-		if(!writelog.is_open())
-		  {
-		    std::cout<<"can't open Log file."<<std::endl;
-		  }
-		time_t timep;
-		time(&timep);
-		char tmp[64];
-		strftime(tmp, sizeof(tmp), "Start: %Y-%m-%d %H:%M:%S",localtime(&timep));
-		writelog<<tmp<<std::endl;
-		writelog.close();    
-
-		
-		if(detector->StartLSMRun(0))
-		  {
-		    std::cout<<"CANNOT start the LSM Run!"<<std::endl;
-		    return;
-		  }
-		usleep(100000); //delay for the DSP boot 
-		// sleep(2);// wait 2 seconds for modules to be ready
-		// start a new run, not resume
-
-	        AcqRun = true;
+		PreStartRun();
 	      }
 	    break;
 	  }
@@ -280,10 +295,13 @@ void Manager::CheckKeyboard()
 	    if(fautorun)
 	      {
 		fautorun = false;
+		detector->SetAutoRunFlag(0);
 	      }
 	    else
 	      {
 		fautorun = true;
+		detector->SetAutoRunFlag(1);
+		detector->SetTimesPerRun(autoruntimes);
 		std::cout<<"The times for each run: "<<autoruntimes<<" s"<<std::endl;
 	      }
 	    break;
@@ -343,7 +361,13 @@ void Manager::RunManager()
       if(AcqRun)
 	{
 	  // std::cout<<"Main:: read loop.."<<std::endl;
-	  detector->ReadDataFromModules(0,0); // during the run
+	  if(detector->ReadDataFromModules(0,0) == 1898)
+	    {
+	      PostStopRun();
+
+	      PreStartRun();
+	    }
+	  
 	  if(fupdateenergyonline)
 	    {
 	      detector->UpdateEnergySpectrumForModule();
@@ -365,8 +389,7 @@ bool Manager::IsDirectoryExists(const char *path)
 
 bool Manager::CreateDirectory(const char *path)
 {
-  //创建文件夹
-  if(mkdir(path,0777)==0)//第一个0表示这里是八进制数
+  if(mkdir(path,0777)==0)//
     {
       printf("created the directory %s.\n",path);
       return true;

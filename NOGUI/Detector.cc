@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:52:00 2016 (+0800)
-// Last-Updated: 三 1月 30 00:59:20 2019 (+0800)
+// Last-Updated: 三 1月 30 11:02:34 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 34
+//     Update #: 37
 // URL: http://wuhongyi.cn 
 
 #include "Detector.hh"
@@ -33,7 +33,7 @@
 
 using namespace std;
 Detector::Detector()
-  :shmfd(-1),fonline(0),frecord(1)
+  :shmfd(-1),fonline(0),frecord(1),fautorun(0),timesperrun(600000)
 {
   OfflineMode = 0;
   PXISlotMap = NULL;
@@ -477,6 +477,14 @@ int Detector::ReadDataFromModules(int thres,unsigned short  endofrun){
       buffid[i]=buffid[i]+nwords;
       //    cout<<"nwords: "<<nwords<<endl;
     }
+
+  if(fautorun)
+    {
+      StopTime = get_time();
+      ElapsedTime = StopTime - StartTime;
+      if(ElapsedTime >= timesperrun) return 1898;
+    }
+  
   return 1;
 }
 
@@ -530,6 +538,16 @@ int Detector::OpenSaveFile(int n,const char *FileN)
 void Detector::SetRecordFlag(bool flag)
 {
   frecord = flag;
+}
+
+void Detector::SetAutoRunFlag(bool flag)
+{
+  fautorun = flag;
+}
+
+void Detector::SetTimesPerRun(int t)
+{
+  timesperrun = t*1000;
 }
 
 int Detector::SavetoFile(int nFile)
@@ -680,7 +698,7 @@ int Detector::UpdateSharedMemory()
       std::cout<<"sem_post error!"<<std::endl;
       return 1;
     }
-  std::cout<<"SHM updated!"<<std::endl;
+  // std::cout<<"SHM updated!"<<std::endl;
   return 0;
 }
 

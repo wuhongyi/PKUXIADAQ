@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 22:17:54 2016 (+0800)
-// Last-Updated: 三 1月 30 01:55:49 2019 (+0800)
+// Last-Updated: 三 1月 30 10:49:03 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 16
+//     Update #: 17
 // URL: http://wuhongyi.cn 
 
 #ifndef _MANAGER_H_
@@ -46,6 +46,9 @@ protected:
   bool CreateDirectory(const char *path);//创建文件夹
   
   void PrintRunStatus();
+
+  void PreStartRun();
+  void PostStopRun();
 private:
   char  LogFileName[1024];
   char  DSPParsFileName[1024];  

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:51:04 2016 (+0800)
-// Last-Updated: 二 1月 29 23:16:55 2019 (+0800)
+// Last-Updated: 三 1月 30 10:47:39 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 8
+//     Update #: 10
 // URL: http://wuhongyi.cn 
 
 #ifndef _DETECTOR_H_
@@ -69,6 +69,8 @@ public:
   int CloseFile();
   int SetOnlineF(bool flag);
   void SetRecordFlag(bool flag);
+  void SetAutoRunFlag(bool flag);
+  void SetTimesPerRun(int t);//s
   int SaveHistogram(char *fileN,int mod);
   int SaveDSPPars(char *file);
   int OpenSharedMemory();
@@ -172,6 +174,8 @@ private:
   unsigned char *shmptr;// pointer to shm
   bool   fonline;
   bool   frecord;
+  bool fautorun;
+  uint64_t  timesperrun;//ms
   int runnumber;
   
   uint64_t CurrentTime;
