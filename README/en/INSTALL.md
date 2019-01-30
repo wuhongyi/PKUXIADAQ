@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 3月 25 20:23:51 2018 (+0800)
-;; Last-Updated: 一 11月  5 15:21:49 2018 (+0800)
+;; Last-Updated: 三 1月 30 20:05:39 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 15
+;;     Update #: 17
 ;; URL: http://wuhongyi.cn -->
 
 # Installation of Software
@@ -21,6 +21,9 @@ Installation for this software is requrired by
 
 The operating system tested by this program includes Scientific Linux 7.2/7.3/7.4
 
+> **[danger] For danger**
+>
+> Graphical interface programs and non-graphical interface programs cannot run at the same time!
 
 ## The steps for Installation
 
@@ -30,6 +33,7 @@ The operating system tested by this program includes Scientific Linux 7.2/7.3/7.
 - Compile Plx9054 driver
 - Compile pixie16 driver API (this API has been modified by Wu Hongyi, driven by unofficial standards)
 - Compile graphical acquisition software
+- Compile non-graphical acquisition software
 - Compile online monitor program
 - Compile data converter program
 - Compile event reconstruction program (optional)
@@ -92,10 +96,9 @@ make
 # As long as no error is reported, the libPixie16App.a libPixie16Sys.a will be generated in the folder
 ```
 
+----
 
 ```bash
-## Compile graphical acquisition software
-
 # Modify settings parameters
 cd ~
 cd PKUXIADAQ/parset/
@@ -105,11 +108,16 @@ cd PKUXIADAQ/parset/
 # The value after CrateID indicates the chassis number, and the value is allowed to be 0-15. If there is only a chassis, the parameter is set freely (usually the default 0 is used). If multiple chassis are running synchronously, make sure that the number of each chassis is set to a different value.
 # SettingPars Following is the parameter setting file and write the parameter configuration file to be used.
 # ModuleSlot The first value number indicates the number of plugins, and if there are 3 plugins, it is 3. The following numbers are for each plug-in in the slot position of the chassis (the slot position is counted from 2), and there are three plugins followed by 2 3 4 respectively.
+#AutoRunModeTimes The following values are the time for automatic switching in automatic operation mode.
 # Parameter ModuleSampingRate and ModuleBits only take effect in offline mode. When the main interface is initialized in Offline mode, this parameter is read.
 
 
 # Modify the Run.config file, the first line in the file is the original data storage path, and the second is the file name.
 # Modify the RunNumber file, the value in this file is the run number of the actual run.
+```
+
+```bash
+## Compile graphical acquisition software
 
 cd ~
 cd PKUXIADAQ/GUI/
@@ -117,6 +125,14 @@ make clean
 make 
 ```
 
+```bash
+## Compile non-graphical acquisition software
+
+cd ~
+cd PKUXIADAQ/NOGUI/
+make clean
+make 
+```
 
 ```bash
 ## Compile online monitor program
@@ -198,6 +214,15 @@ cd ~/PKUXIADAQ/GUI
 # The LSRunStart button becomes operational at this time. You can start pressing Start and then press Stop for the second time.
 # Online Statistics option selections mean sending online statistics
 # Update Energy Monitor: Each time you select it, the energy spectrum information is read from the plug-in and sent to the online program (frequent select
+```
+
+
+```bash
+## Start the non-graphical interface program
+
+cd ~
+cd ~/PKUXIADAQ/NOGUI
+./pku
 ```
 
 

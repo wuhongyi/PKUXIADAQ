@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 12月  6 19:12:16 2018 (+0800)
-// Last-Updated: 五 12月  7 19:20:00 2018 (+0800)
+// Last-Updated: 三 1月 30 20:33:11 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 21
+//     Update #: 23
 // URL: http://wuhongyi.cn 
 
 #include "../software/app/pixie16app_export.h"
@@ -34,7 +34,7 @@ using namespace std;
 #define FIRMWARE100M14BIT
 // #define FIRMWARE250M12BIT
 #define FIRMWARE250M14BIT
-// #define FIRMWARE250M16BIT
+#define FIRMWARE250M16BIT
 // #define FIRMWARE500M12BIT
 // #define FIRMWARE500M14BIT
 
@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
   double t1 = 0, t2 = 0; 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-  unsigned int DataWords = wuReadData::ReadValue<unsigned int>("DataWords", "Pars.txt");
+  unsigned int RunTimesPerThreshold = wuReadData::ReadValue<unsigned int>("RunTimesPerThreshold", "Pars.txt");
   int HPGeModule = wuReadData::ReadValue<int>("HPGeModule", "Pars.txt");
   int HPGeChannel = wuReadData::ReadValue<int>("HPGeChannel", "Pars.txt");
   int BGOModule = wuReadData::ReadValue<int>("BGOModule", "Pars.txt");  
@@ -505,9 +505,12 @@ int main(int argc, char *argv[])
 		}
 	      nFIFOWords += mod_numwordsread;
 	    }
-	  if(nFIFOWords >= DataWords)
+
+	  gettimeofday (&tim, NULL);
+	  t2 = tim.tv_sec + (tim.tv_usec / 1000000.0);
+	  if(t2-t1 >= RunTimesPerThreshold)
 	    {
-	      cout<<"Number of events reached - ending run"<<endl<<flush;
+	      cout<<"Run times reached - ending run"<<endl<<flush;
 	      break;
 	    }
 		
@@ -517,7 +520,7 @@ int main(int argc, char *argv[])
 	  retval = Pixie16CheckRunStatus(0);
 	  if (retval == 0)
 	    {
-	      cout<<"Run was stopped but number of events are not reached yet"<<endl<<flush;
+	      cout<<"Run was stopped but run times are not reached yet"<<endl<<flush;
 	      break;
 	    }
 	}

@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 五 1月 25 21:35:17 2019 (+0800)
+;; Last-Updated: 三 1月 30 19:14:45 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 116
+;;     Update #: 117
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -29,11 +29,11 @@ English | [简体中文](https://github.com/wuhongyi/PKUXIADAQ/blob/master/READM
 
 Download the latest version, please click:  [PKUXIADAQ stable](https://github.com/pkuNucExp/PKUXIADAQ)
 
-Web page manual, please click:  [English](https://pkunucexp.github.io/PKUXIADAQ/en/)    [简体中文](https://pkunucexp.github.io/PKUXIADAQ/zh/)
+For web page manual, please click:  [English](https://pkunucexp.github.io/PKUXIADAQ/en/)    [简体中文](https://pkunucexp.github.io/PKUXIADAQ/zh/)
 
-- markdown version manual: README/  
-- Offline web version manual: docs/  
-- pdf version manual: README_en.pdf  README_ch.pdf  
+- manual version in markdown: README/  
+- manual version in offline web: docs/  
+- manual version in pdf: README_en.pdf  README_ch.pdf  
 
 
 ### Pre-alpha
@@ -42,12 +42,12 @@ Web page manual, please click:  [English](https://pkunucexp.github.io/PKUXIADAQ/
 
 Download the latest version:  [PKUXIADAQ](https://github.com/wuhongyi/PKUXIADAQ)
 
-Web page manual:  [English](http://wuhongyi.cn/PKUXIADAQ/en/)   [简体中文](http://wuhongyi.cn/PKUXIADAQ/zh/)
+manual version in web page:  [English](http://wuhongyi.cn/PKUXIADAQ/en/)   [简体中文](http://wuhongyi.cn/PKUXIADAQ/zh/)
 
 
 
-- Have any comments or suggestions for this project(function addition or improvement), please send an email to Hongyi Wu(wuhongyi@qq.com). 
-- We will improve the Chinese/English manuals of the software as soon as possible. Currently, we mainly use the software to explain the use of the software. 
+- If you have any comments or suggestions for this project(function addition or improvement), please send an email to Hongyi Wu(wuhongyi@qq.com). 
+- We will improve the Chinese/English manuals of the software as soon as possible. Currently, we mainly explain the use of the software through our demonstration. 
 
 
 ----
@@ -88,11 +88,11 @@ The development of this program is supported by the following：
 
 ----
 
-This program is applicable to XIA Pixie16 module, supports 100/250/500 MHz(specifically, the model can be found in File->About in the graphics software), and supports up to 8 chassis synchronous operation, that is, 1600+ signals are simultaneously collected. **This package requires the CERN ROOT6. Requires a 1920x1080 and above resolution display**.
+This program is applicable to XIA Pixie16 module, which supports the 100/250/500 MHz sampling rates(specifically, information about the module can be found in File->About in the graphics software) and supports up to 8-chassis synchronous operation, that maeans, at least 1600-channel signals are simultaneously collected. **This package requires the CERN ROOT6 version and the resolution display above 1920x1080**.
 
 
 
-The program is designed to be compatible with the 100/250/500 MHz modules. Simply add the firmware location of the corresponding sample rate modules to cfgPixie16.txt. The program can automatically identify the modules type and load the corresponding firmware. Currently we only have a 100/250 MHz 14 bit modules, so this type of modules can be run by default. To support other types, please contact XIA LLC to obtain the corresponding firmware or contact Hongyi Wu(wuhongyi@qq.com).
+The program is designed to be compatible with the 100/250/500 MHz modules. Simply add the firmware location of the corresponding sample rate modules to cfgPixie16.txt. The program can automatically identify the module's type and load the corresponding firmware. Currently we only have 14-bit 100/250 MHz modules, so this type of modules can be run by default. To support other types, please contact XIA LLC to obtain the corresponding firmware or contact Hongyi Wu(wuhongyi@qq.com).
 
 ----
 
@@ -100,28 +100,28 @@ The program is designed to be compatible with the 100/250/500 MHz modules. Simpl
 
 The following files/folders are included in the user's use package:
 
-- Decode(Convert raw binary data to ROOT file)
+- Decode(Converting raw binary data to ROOT file)
 - docs(Web page manual)
 - firmware
 	- firmware/firmware.md(History of firmware)
 - GUI
 - MakeEvent(event builder，optional)
-- NOGUI(Non-graphics software. New version upgrade, temporarily unavailable)
+- NOGUI(Non-graphics software. New version is upgrading, temporarily unavailable)
 - OnlineStattics(Online monitoring program)
 - parset(parameter setting file)
 - PlxSdk.tar.gz(Plx9054 driver)
-- README(markdown version manual)
-- README.md(home page introduction)
-- README.pdf(pdf version manual)
-- software(unofficial standards pixie16 driver API, have been revised by Hongyi Wu)
-- TestTool(Developer testing tool, users don't need)
+- README(manual version in markdown)
+- README.md(introduction for home page)
+- README.pdf(manual version in pdf)
+- software(non-standard pixie16 driver API revised by Hongyi Wu)
+- TestTool(testing tool for developer, not necessary for users)
 
 ----
 
 ## Update
 
-- The main control interface developed based on the ROOT GUI is highly complex and difficult for users to modify now. Users do not easy to develop their own version based on this program. 
-- We are also developing a web control for online/offline analysis:
+- The main control interface development based on the ROOT GUI is highly complex, which is difficult for users to modify now. It is not easy for users to develop their own version based on this program. 
+- We are also developing acquisition software  for online/offline analysis based on web control:
 	- ZeroMQ
 	- FastCGI
 	- JSROOT

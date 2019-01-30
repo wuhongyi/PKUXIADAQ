@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 12月  6 22:48:21 2018 (+0800)
-// Last-Updated: 六 12月  8 08:59:47 2018 (+0800)
+// Last-Updated: 三 1月 30 20:51:05 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 17
+//     Update #: 19
 // URL: http://wuhongyi.cn 
 
 #include "wuReadData.hh"
@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
       double count1332 = h[iii]->Integral(1327,1337);
       double count1040_1096 = h[iii]->Integral(1040,1096);
       
-      writetxt<<BGOThreshold->at(iii)<<" "<<(count1173+count1332)/counttotal*100.0<<" "<<count1332/count1040_1096<<std::endl;
+      writetxt<<BGOThreshold->at(iii)<<" "<<(count1173+count1332)/counttotal*100.0<<" "<<count1332/count1040_1096<<" "<<count1173+count1332<<" "<<counttotal<<std::endl;
     }
   
   file->Close();

@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 3月 25 20:23:51 2018 (+0800)
-;; Last-Updated: 一 11月  5 15:22:07 2018 (+0800)
+;; Last-Updated: 三 1月 30 20:05:39 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 18
+;;     Update #: 20
 ;; URL: http://wuhongyi.cn -->
 
 # 程序安装
@@ -22,6 +22,11 @@
 本程序测试过的系统包括 Scientific Linux 7.2/7.3/7.4
 
 
+> **[danger] For danger**
+>
+> 图形界面程序与非图形界面程序不能同时运行！
+
+
 ## 软件安装步骤
 
 - 删除个人目录下的老版本PKUXIADAQ文件夹
@@ -30,6 +35,7 @@
 - 编译Plx9054驱动
 - 编译pixie16驱动API(该API被吴鸿毅修改过，非官方标准驱动)
 - 编译图形化获取软件
+- 编译非图形化获取软件
 - 编译在线监视程序
 - 编译数据转换程序
 - 编译事件重构程序(可选)
@@ -87,10 +93,9 @@ make
 #只要没报错，并且该文件夹内生成libPixie16App.a libPixie16Sys.a
 ```
 
+----
 
 ```bash
-##编译图形化获取软件
-
 #修改设置参数
 cd ~
 cd PKUXIADAQ/parset/
@@ -100,16 +105,35 @@ cd PKUXIADAQ/parset/
 #其中CrateID 后面的数值表示机箱编号，该值允许0-15。如果单机箱则随意设置(一般就采用默认的0)，如果多个机箱同步运行务必让每个机箱的该编号设置为不同的数值。
 #SettingPars 后面为参数设置文件，写入要采用的参数配置文件即可。
 #ModuleSlot 后面第一个数值表示插件个数，如果有3个插件则为3。之后的数字未为每个插件在机箱的插槽位置（插槽位置从2开始计数），有三个插件则之后分别为2 3 4。
+#AutoRunModeTimes 后面数值为自动运行模式下自动切换的时间
+
 #参数 ModuleSampingRate与ModuleBits 只对离线模式生效，当主界面采用Offline模式初始化时则读取该参数。
 
 #修改Run.config文件，该文件中第一行为原始数据存放路径，第二行为文件名。
 #修改RunNumber文件，该文件中的数值为运行的run number。
+```
+
+```bash
+##编译图形化获取软件
+
 
 cd ~
 cd PKUXIADAQ/GUI/
 make clean
 make 
 ```
+
+
+```bash
+##编译非图形化获取软件
+
+
+cd ~
+cd PKUXIADAQ/NOGUI/
+make clean
+make 
+```
+
 
 
 ```bash
@@ -186,6 +210,17 @@ cd ~/PKUXIADAQ/GUI
 #此时 LSRunStart 按钮变为可操作。即可开始按Start，之后第二次按即为Stop。
 #Online Statistics选项选择表示发送在线统计
 #Update Energy Monitor每选择一次则从插件内部读取一次能谱信息并发送给在线程序（频繁选择会影响获取）
+```
+
+
+```bash
+##启动非图形界面程序
+
+cd ~
+cd ~/PKUXIADAQ/NOGUI
+./pku
+
+根据提示输入控制命令
 ```
 
 
