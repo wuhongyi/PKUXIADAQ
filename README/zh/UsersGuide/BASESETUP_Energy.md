@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:34:45 2018 (+0800)
-;; Last-Updated: 六 1月 12 14:23:49 2019 (+0800)
+;; Last-Updated: 日 2月  3 17:37:17 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 14
+;;     Update #: 17
 ;; URL: http://wuhongyi.cn -->
 
 # Energy
@@ -48,7 +48,7 @@
 
 ## 滤波步长(Filter Range)
 
-To accommodate a wide range of energy filter rise times from tens of nanoseconds to tens of microseconds, the filters are implemented in the FPGA with different clock decimations(filter ranges). The ADC sampling rate is either 2ns, 4ns, or 10ns depending on the ADC variant that is used, but in higher clock decimations, several ADC samples are averaged before entering the energy filtering logic. In filter range 1, $$2^{1}$$ samples are averaged, $$2^{2}$$ samples in filter range 2, and so on. Since the sum of rise time and flat top is limited to 127 decimated clock cycles, filter time granularity and filter time are limited to the values listed in Table .
+为了适应从数十纳秒到数十微秒各种上升时间的能量滤波器，滤波器在 FPGA 中具有不同的时钟抽取（滤波器范围）。 ADC 采样速率为 2 ns，4 ns 或 10 ns，具体取决于所使用的硬件版本，但在更高的时钟抽取中，几个 ADC 采样在进入能量滤波逻辑之前进行平均。 在过滤器范围 1 中，2 个样本被平均，在过滤器范围 2 中 4 个样本，依此类推。 由于上升时间和平顶的总和限制为 127 个抽取时钟周期，因此滤波时间粒度和滤波时间仅限于下表中列出的值。
 
 ![Filter clock decimations and filter time granularity for 100 MHz or 500 MHz](/img/filterclockdecimationsandfiltertimegranularityfor100mhzor500mhz.png)
 
@@ -58,76 +58,76 @@ To accommodate a wide range of energy filter rise times from tens of nanoseconds
 
 ## 梯形滤波(Trapezoidal Filtering)
 
-From this point onward, only trapezoidal filtering will be considered as it is implemented in a Pixie-16 module according to Equation $$LV_{x,k}=-\sum_{i=k-2L-G+1}^{k-L-G}V_{i}+\sum_{i=k-L+1}^{k}V_{i}$$. The result of applying such a filter with Length L=1 us and Gap G=0.4 us to a gamma-ray event is shown in Figure. The filter output is clearly trapezoidal in shape and has a rise time equal to L, a flattop equal to G, and a symmetrical fall time equal to L. The basewidth, which is a first-order measure of the filter’s noise reduction properties, is thus 2L+G.
+从这一点开始，仅考虑梯形滤波，因为它是根据公式 $$LV_{x,k}=-\sum_{i=k-2L-G+1}^{k-L-G}V_{i}+\sum_{i=k-L+1}^{k}V_{i}$$ 在 Pixie-16 模块中实现的。 将长度 L = 1 us 和 平顶 G = 0.4 us 的滤波器应用于伽马射线事件的结果如下图所示。 滤波器输出形状明显为梯形，上升时间等于 L，平顶等于 G，对称下降时间等于 L。基带宽度是滤波器降噪特性的一阶测量值，此时为 2L+G。
 
 ![Trapezoidal filtering of a preamplifier step with L=1μs and G=0.4μs](/img/trapezoidalfilteringofapreamplifierstepwithl1usandg04us.png)
 
+这在比较Pixie-16模块的噪声性能和模拟滤波放大器时提出了几个重点：
+- 首先，半高斯滤波器通常由成形时间指定。
+	- 它们的上升时间通常是这以时间的两倍，并且它们的脉冲不对称，因此基带宽度约为成形时间的 5.6 倍或上升时间的 2.8 倍。
+- 因此，半高斯滤波器通常具有比具有相同上升时间的三角滤波器稍好的能量分辨率，因为它具有更长的滤波时间。
+	- 这通常适用于通过将三角形上升时间拉伸一点来提供三角和半高斯滤波的放大器，因此真正的三角形上升时间通常是所选半高斯上升时间的 1.2 倍。
+    - 当其能量分辨率与具有相同标称上升时间的数字系统相比时，这也为模拟系统带来明显的优势。
 
-This raises several important points in comparing the noise performance of the Pixie-16 module to analog filtering amplifiers. 
-- First, semi-Gaussian filters are usually specified by a shaping time. 
-    - Their rise time is typically twice this and their pulses are not symmetric so that the basewidth is about 5.6 times the shaping time or 2.8 times their rise time. 
-- Thus a semi-Gaussian filter typically has a slightly better energy resolution than a triangular filter of the same rise time because it has a longer filtering time. 
-    - This is typically accommodated in amplifiers offering both triangular and semi-Gaussian filtering by stretching the triangular rise time a bit, so that the true triangular rise time is typically 1.2 times the selected semi-Gaussian rise time. 
-	- This also leads to an apparent advantage for the analog system when its energy resolution is compared to a digital system with the same nominal rise time.
-
-One important characteristic of a digitally shaped trapezoidal pulse is its extremely sharp termination on completion of the basewidth 2L+G. This may be compared to analog filtered pulses whose tails may persist up to 40% of the rise time, a phenomenon due to the finite bandwidth of the analog filter. As can be seen below, this sharp termination gives the digital filter a definite rate advantage in pileup free throughput.
+数字形梯形脉冲的一个重要特征是在基带宽度 2L+G 时极其尖锐地终止。 这可以与模拟滤波脉冲进行比较，模拟滤波脉冲其尾部可能持续高达上升时间的40％，这是由于模拟滤波器的有限带宽引起的现象。 从下面可以看出，这种尖锐的终止使数字滤波器在无堆积吞吐量方面具有明确的速率优势。
 
 ----
 
 ## 基线与前放衰减时间(Baselines and Preamp. Decay Times)
 
-Figure shows an event over a longer time interval and how the filter treats the preamplifier noise in regions when no gamma-ray pulses are present. 
+图中显示了较长时间间隔内的事件以及当没有伽马射线脉冲时滤波器如何处理区域中的前置放大器噪声。
 
 ![A gamma-ray event displayed over a longer time period to show baseline noise and the effect of preamplifier decay time](/img/agammaeventdisplayedoveralongertimeperiodtoshowbaselinenoiseandtheeffectofpreamplifierdecaytime.png)
 
-As may be seen the effect of the filter is both to reduce the amplitude of the fluctuations and reduce their high frequency content. This region is called the baseline because it establishes the reference level from which the gamma-ray peak amplitude Vx is to be measured. The fluctuations in the baseline have a standard deviation $\sigma_e$ which is referred to as the electronic noise of the system, a number which depends on the rise time of the filter used. Riding on top of this noise, the gamma-ray peaks contribute an additional noise term, the Fano noise, which arises from statistical fluctuations in the amount of charge Qx produced when the gamma-ray is absorbed in the detector. This Fano noise $$\sigma_f$$ adds in quadrature with the electronic noise, so that the total noise $$\sigma_t$$ in measuring Vx is found from:
+可以看出，滤波器的效果是减小波动的幅度并降低它们的高频含量。 该区域称为基线，因为它建立了要测量伽马射线峰值幅度 Vx 的参考电平。 基线的波动具有标准偏差 $\sigma_e$，其被称为系统的电子学噪声，该数字取决于所使用的滤波器的上升时间。 在这种噪声的基础上，伽马射线峰值会产生额外的噪声项，即 Fano 噪声，这是由于伽马射线在探测器中被吸收时产生的电荷量 Qx 的统计涨落引起的。 此 Fano 噪声 $$\sigma_f$$ 与电子噪声偶和，因此测量 Vx 时的总噪声 $$\sigma_t$$ 来自：
 
 $$\sigma_t=\sqrt{\sigma_{f}^{2}+\sigma_{e}^{2}}$$
 
-The Fano noise is only a property of the detector material. The electronic noise, on the other hand, may have contributions from both the preamplifier and the amplifier. When the preamplifier and amplifier are both well designed and well matched, however, the amplifier’s noise contribution should be essentially negligible. Achieving this in the mixed analog-digital environment of a digital pulse processor is a non-trivial task, however.
+Fano 噪声仅是探测器材料的特性。 另一方面，电子学噪声可能来自前置放大器和放大器。然而，当前置放大器和放大器设计良好且匹配良好时，放大器的噪声贡献基本上可以忽略不计。 然而，在数字脉冲处理器的混合模拟-数字环境中实现这一点是一项非常重要的任务。
 
-With a RC-type preamplifier, the slope of the preamplifier is rarely zero. Every step decays exponentially back to the DC level of the preamplifier. During such a decay, the baselines are obviously not zero. This can be seen in Figure, where the filter output during the exponential decay after the pulse is below the initial level. Note also that the flat top region is sloped downwards.
+使用RC型前置放大器时，前置放大器的斜率很少为零。 每一步都以指数方式衰减回前置放大器的 DC 电平。 在这种衰减过程中，基线显然不是零。 这可以在上图中看到，其中脉冲之后指数衰减期间的滤波器输出低于初始水平。 另外请注意一点，平顶区域向下倾斜。
 
-Using the decay constant $$\tau$$, the baselines can be mapped back to the DC level. This allows precise determination of gamma-ray energies, even if the pulse sits on the falling slope of a previous pulse. The value of $$\tau$$, being a characteristic of the preamplifier, has to be determined by the user and host software and downloaded to the module.
+使用衰减常数 $$\tau$$ 可以将基线映射回 DC 级别。这允许精确测定伽马射线能量，即使脉冲位于前一个脉冲的下降斜率上。作为前置放大器的一个特征，$$\tau$$ 的值必须由用户和获取程序确定并设置到模块中。
 
 ----
 
 ## 堆积检测(Pileup Inspection)
 
-As noted above, the goal is to capture a value of Vx for each amma-ray detected and use these values to construct a spectrum. 
+如上所述，目标是为检测到的每一条伽马射线捕获 Vx 值，并使用这些值构建一个能谱。
+
+
 
 > **[info] info**
 >
-> This process is also significantly different between digital and analog systems. 
-> In the analog system the peak value must be “captured” into an analog storage device, usually a capacitor, and “held” until it is digitized. 
-> Then the digital value is used to update a memory location to build the desired spectrum. 
-> During this analog to digital conversion process the system is dead to other events, which can severely reduce system throughput. 
-> Even single channel analyzer systems introduce significant deadtime at this stage since they must wait some period (typically a few microseconds) to determine whether or not the window condition is satisfied.
+> 此过程在数字和模拟系统之间也存在显着差异。
+> 在模拟系统中，峰值必须“捕获”到模拟存储设备（通常是电容器）中，并“保持”直到数字化为止。
+> 然后，该数字值用于更新存储位置以构建所需的能谱。
+> 在此模数转换过程中，系统对其它事件无效，这会严重降低系统吞吐量。
+> 即使是单通道分析仪系统也会在此阶段引入显著的死时间，因为它们必须等待一段时间（通常为几微秒）才能确定是否满足窗口条件。
 >
 >
-> Digital systems are much more efficient in this regard, since the values output by the filter are already digital values. 
-> All that is required is to take the filter sums, reconstruct the energy Vx , and add it to the spectrum. 
-> In the Pixie-16, the filter sums are continuously updated in the FPGA, and are captured into event buffers. 
-> Reconstructing the energy and incrementing the spectrum is done by the DSP, so that the FPGA is ready to take new data immediately (unless the buffers are full). 
-> This is a significant source of the enhanced throughput found in digital systems.
+> 数字系统在这方面效率更高，因为滤波器输出的值已经是数字值。
+> 所需要的只是获取滤波器加和数值，重建能量 Vx，并将其添加到能谱中。
+> 在 Pixie-16 中，滤波器加和数值在 FPGA 中不断更新，并被捕获到事件缓冲器中。
+> 重建能量并增加能谱由 DSP 完成，因此 FPGA 可以立即采集新数据（除非缓冲区已满）。
+> 这是数字系统中增强吞吐量的重要来源。
 
-The peak detection and sampling in a Pixie-16 module is handled as indicated in Figure *Peak detection and sampling*. Two trapezoidal filters are implemented, a fast filter and a slow filter. The fast filter is used to detect the arrival of gamma-rays, the slow filter is used for the measurement of Vx , with reduced noise at longer filter rise times. The fast filter has a filter length Lf = 0.1us and a gap Gf = 0.1us. The slow filter has Ls = 1.2us and Gs = 0.35us.
+Pixie-16 模块中的峰值检测和采样如下图所示进行处理。 图中实现了两个梯形滤波器，快速滤波器和慢速滤波器。 快速滤波器用于检测伽马射线的到达，慢速滤波器用于测量 Vx，在较长的滤波器上升时间内降低噪声。 快速滤波器的滤波器长度 Lf = 0.1 us，间隙 Gf = 0.1 us。 慢滤波器的 Ls = 1.2 us，Gs = 0.35 us。
 
 ![Peak detection and sampling](/img/peakdetectionandsampling.png)
 
-The arrival of the gamma-ray step(in the preamplifier output) is detected by digitally comparing the fast filter output to **THRESHOLD**, a digital constant set by the user. Crossing the threshold starts a delay line to wait **PEAKSAMP** clock cycles to arrive at the appropriate time to sample the value of the slow filter. Because the digital filtering processes are deterministic, P**EAKSAMP** depends only on the values of the fast and slow filter constants.
-The slow filter value captured following **PEAKSAMP** is then the slow digital filter’s estimate of Vx . Using a delay line allows to stage sampling of multiple pulses even within a **PEAKSAMP** interval (though the filter values themselves are then not correct representations of a single pulse’s height).
+通过将快速滤波器输出与用户设置的数字常数 **THRESHOLD** 进行数字比较来检测伽马射线步进（在前置放大器输出中）的到达。 越过阈值则开始延迟线等待 **PEAKSAMP** 个时钟周期，到达适当的时间来采样慢速滤波器的值。 由于数字滤波过程是确定性的，**PEAKSAMP** 仅取决于快速和慢速滤波器常数的值。
 
+在 **PEAKSAMP** 之后捕获的慢滤波器值则是慢速数字滤波器对 Vx 的估计。 使用延迟线允许甚至在 **PEAKSAMP** 间隔内对多个脉冲进行采样（尽管滤波器值本身不是单个脉冲高度的正确表示）。
 
-The value Vx captured will only be a valid measure of the associated gamma-ray’s energy provided that the filtered pulse is sufficiently well separated in time from its preceding and succeeding neighbor pulses so that their peak amplitudes are not distorted by the action of the trapezoidal filter. That is, if the pulse is not piled up. The relevant issues may be understood by reference to Figure, which shows 3 gamma-rays arriving separated by various intervals. The fast filter has a filter length Lf = 0.1us and a gap Gf =0.1us. The slow filter has Ls = 1.2us and Gs = 0.35us.
+捕获的值 Vx 将仅是相关伽马射线能量的有效测量，条件是滤波后的脉冲在时间上与其前一个和后一个相邻脉冲足够好地分开，使得它们的峰值幅度不会因梯形滤波器的作用而失真。 也就是说，如果脉冲没有堆积。 通过参考下图可以理解相关问题，图中示出了通过各种间隔分开的3个伽马射线。 快速滤波器的滤波器长度 Lf = 0.1 us，间隙 Gf = 0.1 us。 慢滤波器的 Ls = 1.2 us，Gs = 0.35 us。
 
 ![A sequence of 3 gamma-ray pulses separated by various intervals to show the origin of pileup and demonstrate how it is detected by the Pixie module](/img/asequenceof3gammaraypulsesseparatedbyvariousintervalstoshowtheoriginofpileupanddemonstratehowitisdetected.png)
 
-Because the trapezoidal filter is a linear filter, its output for a series of pulses is the linear sum of its outputs for the individual members in the series. Pileup occurs when the rising edge of one pulse lies under the peak (specifically the sampling point) of its neighbor. Thus, in Figure , peaks 1 an 2 are sufficiently well separated so that the leading edge of peak 2 falls after the peak of pulse 1. Because the trapezoidal filter function is symmetrical, this also means that pulse 1’s trailing edge also does not fall under the peak of pulse 2. For this to be true, the two pulses must be separated by at least an interval of L+G. Peaks 2 and 3, which are separated by less than 1.0 us, are thus seen to pileup in the present example with a 1.2 us rise time.
+由于梯形滤波器是线性滤波器，因此其对一系列脉冲的输出是其系列中各个成员的输出的线性和。 当一个脉冲的上升沿位于其邻居的峰值（特别是采样点）之下时，发生堆积。因此，在图中，峰1和2被充分分离，使得峰2的前沿在脉冲1的峰值之后下降。因为梯形滤波器函数是对称的，这也意味着脉冲1的后沿也不会落在脉冲2的峰中。为此，两个脉冲必须至少间隔 L+G。 因此，在本示例中看到峰值2和3，其间隔小于 1.0 us，具有1.2 us 的上升时间。
 
-This leads to an important point: whether pulses suffer slow pileup depends critically on the rise time of the filter being used. The amount of pileup which occurs at a given average signal rate will increase with longer rise times.
+这导致了一个重要的观点：脉冲是否遭受缓慢的堆积主要取决于所使用的过滤器的上升时间。 在给定的平均信号速率下发生的堆积量将随着上升时间的增加而增加。
 
-Because the fast filter rise time is only 0.1 us, these gamma-ray pulses do not pileup in the fast filter channel. The Pixie-16 module can therefore test for slow channel pileup by measuring the fast filter for the interval PEAKSEP after a pulse arrival time. If no second pulse occurs in this interval, then there is no trailing edge pileup and the pulse is validated for acquisition. **PEAKSEP** is usually set to a value close to L+G+1. Pulse 1 passes this test, as shown in Figure. Pulse 2, however, fails the **PEAKSEP** test because pulse 3 follows less than 1.0 us. Notice, by the symmetry of the trapezoidal filter, if pulse 2 is rejected because of pulse 3, then pulse 3 is similarly rejected because of pulse 2.
-
+由于快速滤波器上升时间仅为 0.1 us，因此这些伽马射线脉冲不会在快速滤波器通道中堆积。 因此，Pixie-16 模块可以通过在脉冲到达时间之后测量间隔 PEAKSEP 的快速滤波器来测试慢速通道堆积。 如果在该间隔中没有检测到第二个脉冲，则没有后沿堆积并且脉冲可以用于采集。 **PEAKSEP** 通常设置为接近 L+G+1 的值。 脉冲1通过此测试，如上图所示。 然而，脉冲2未通过 **PEAKSEP** 测试，因为脉冲3低于 1.0 us。 注意，通过梯形滤波器的对称性，如果脉冲2由于脉冲3而被拒绝，则脉冲3由于脉冲2而被类似地拒绝。
 
 <!-- BASESETUP_Energy.md ends here -->

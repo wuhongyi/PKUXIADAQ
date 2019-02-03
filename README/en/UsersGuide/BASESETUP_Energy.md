@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:34:45 2018 (+0800)
-;; Last-Updated: 日 2月  3 15:35:59 2019 (+0800)
+;; Last-Updated: 日 2月  3 17:37:23 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 14
+;;     Update #: 16
 ;; URL: http://wuhongyi.cn -->
 
 # Energy
@@ -24,19 +24,15 @@ When the status below the interface is displaying **green Ready**, it means that
 - The parameter Tau, please refer to *Baselines and Preamp. Decay Times*
 - The parameter filter range, please refer to *Filter Range*
 
-
 The most critical parameter for the energy computation is the signal decay time Tau. It is used to compensate for the falling edge of a previous pulse in the computation of the energy. You can either enter Tau directly for each channel, or enter an approximate value in the right control, select a channel, and click Find it to let the software determine the decay time automatically.
 Click Accept it to apply the found value to the channel. (If the approximate value is unchanged,the software could not find a better value.)  
 
-
 At high count rates, pulses overlap with each other at higher frequency. In order to compute the energy or pulse height of those pulses accurately without the need to wait until they decay back to baseline level completely, the pulse height computation algorithm implemented in the Pixie-16 uses the decay time to compute and remove the contribution from the exponentially decaying tail of the overlapping prior pulse when computing the pulse height of the current pulse.
+
 
 > **[danger] single exponential decay constant**
 >
 > It is assumed the pulses have only a single exponential decay constant. If pulses have multiple decay constants, it might be possible to use the decay constant that dominates the decay of the pulse, but the accuracy of pulse height computation will be degraded.
-
-
-
 
 
 General rules of thumb for the following important parameters are:
@@ -97,7 +93,7 @@ Using the decay constant $$\tau$$, the baselines can be mapped back to the DC le
 
 ## Pileup Inspection
 
-As noted above, the goal is to capture a value of Vx for each amma-ray detected and use these values to construct a spectrum. 
+As noted above, the goal is to capture a value of Vx for each gamma-ray detected and use these values to construct a spectrum. 
 
 > **[info] info**
 >
@@ -118,7 +114,8 @@ The peak detection and sampling in a Pixie-16 module is handled as indicated in 
 
 ![Peak detection and sampling](/img/peakdetectionandsampling.png)
 
-The arrival of the gamma-ray step(in the preamplifier output) is detected by digitally comparing the fast filter output to **THRESHOLD**, a digital constant set by the user. Crossing the threshold starts a delay line to wait **PEAKSAMP** clock cycles to arrive at the appropriate time to sample the value of the slow filter. Because the digital filtering processes are deterministic, P**EAKSAMP** depends only on the values of the fast and slow filter constants.
+The arrival of the gamma-ray step(in the preamplifier output) is detected by digitally comparing the fast filter output to **THRESHOLD**, a digital constant set by the user. Crossing the threshold starts a delay line to wait **PEAKSAMP** clock cycles to arrive at the appropriate time to sample the value of the slow filter. Because the digital filtering processes are deterministic, **PEAKSAMP** depends only on the values of the fast and slow filter constants.
+
 The slow filter value captured following **PEAKSAMP** is then the slow digital filter’s estimate of Vx . Using a delay line allows to stage sampling of multiple pulses even within a **PEAKSAMP** interval (though the filter values themselves are then not correct representations of a single pulse’s height).
 
 
