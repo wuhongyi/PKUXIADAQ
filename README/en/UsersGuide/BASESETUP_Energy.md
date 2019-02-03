@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:34:45 2018 (+0800)
-;; Last-Updated: 一 11月  5 16:56:29 2018 (+0800)
+;; Last-Updated: 日 2月  3 15:35:59 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 13
+;;     Update #: 14
 ;; URL: http://wuhongyi.cn -->
 
 # Energy
@@ -23,8 +23,6 @@ When the status below the interface is displaying **green Ready**, it means that
 - The parameter Flat Top, please refer to *Trapezoidal Filtering*
 - The parameter Tau, please refer to *Baselines and Preamp. Decay Times*
 - The parameter filter range, please refer to *Filter Range*
-
-**TODO  这里应该补充不同探测器的推荐值**
 
 
 The most critical parameter for the energy computation is the signal decay time Tau. It is used to compensate for the falling edge of a previous pulse in the computation of the energy. You can either enter Tau directly for each channel, or enter an approximate value in the right control, select a channel, and click Find it to let the software determine the decay time automatically.
