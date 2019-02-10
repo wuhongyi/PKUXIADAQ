@@ -5,7 +5,7 @@ CrateID 0
 
 ## Register parameters
 
-SettingPars ../parset/mztio.set
+SettingPars ../parset/labr3.set
 
 
 ## -----------------------------------------------------------------------------
@@ -101,11 +101,11 @@ ModuleBits 4 14 14 16 14
 
 # NoNegEnergy && AlwaysCompEnergy
 # Multiplicity result output from RJ45
-250M16bit_sys ../firmware/pixie16_revfpku_16b250m_release_01192019/syspixie16_revfpku_adc250mhz_r41088.bin
-250M16bit_fip ../firmware/pixie16_revfpku_16b250m_release_01192019/fippixie16_revfgeneral_16b250m_r36563.bin
-250M16bit_dsplst ../firmware/pixie16_revfpku_16b250m_release_01192019/Pixie16DSP_revfgeneral_16b250m_r41630.lst
-250M16bit_dspldr ../firmware/pixie16_revfpku_16b250m_release_01192019/Pixie16DSP_revfgeneral_16b250m_r41630.ldr
-250M16bit_dspvar ../firmware/pixie16_revfpku_16b250m_release_01192019/Pixie16DSP_revfgeneral_16b250m_r41630.var
+# 250M16bit_sys ../firmware/pixie16_revfpku_16b250m_release_01192019/syspixie16_revfpku_adc250mhz_r41088.bin
+# 250M16bit_fip ../firmware/pixie16_revfpku_16b250m_release_01192019/fippixie16_revfgeneral_16b250m_r36563.bin
+# 250M16bit_dsplst ../firmware/pixie16_revfpku_16b250m_release_01192019/Pixie16DSP_revfgeneral_16b250m_r41630.lst
+# 250M16bit_dspldr ../firmware/pixie16_revfpku_16b250m_release_01192019/Pixie16DSP_revfgeneral_16b250m_r41630.ldr
+# 250M16bit_dspvar ../firmware/pixie16_revfpku_16b250m_release_01192019/Pixie16DSP_revfgeneral_16b250m_r41630.var
 
 #debug
 # 250M16bit_sys ../firmware/Pixie16DSP_RevF_16b250m_General_DebugCountRate/syspixie16_revfgeneral_adc250mhz_r33339.bin
@@ -114,6 +114,11 @@ ModuleBits 4 14 14 16 14
 # 250M16bit_dspldr ../firmware/Pixie16DSP_RevF_16b250m_General_DebugCountRate/Pixie16DSP_RevF_16b250m_General_DebugCountRate.ldr
 # 250M16bit_dspvar ../firmware/Pixie16DSP_RevF_16b250m_General_DebugCountRate/Pixie16DSP_RevF_16b250m_General_DebugCountRate.var
 
+250M16bit_sys ../firmware/pixie16_revfpku_16b250m_release_02072019/syspixie16_revfpku_adc250mhz_r41088.bin
+250M16bit_fip ../firmware/pixie16_revfpku_16b250m_release_02072019/fippixie16_revfgeneral_16b250m_r41719.bin
+250M16bit_dsplst ../firmware/pixie16_revfpku_16b250m_release_02072019/Pixie16DSP_revfgeneral_16b250m_r41630.lst
+250M16bit_dspldr ../firmware/pixie16_revfpku_16b250m_release_02072019/Pixie16DSP_revfgeneral_16b250m_r41630.ldr
+250M16bit_dspvar ../firmware/pixie16_revfpku_16b250m_release_02072019/Pixie16DSP_revfgeneral_16b250m_r41630.var
 
 ## TODO
 #After adding the following firmware, you need to modify the definition in the file Detector.hh.

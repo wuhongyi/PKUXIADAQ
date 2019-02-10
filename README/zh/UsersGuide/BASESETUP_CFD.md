@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:27:38 2018 (+0800)
-;; Last-Updated: 日 10月  7 09:28:11 2018 (+0800)
+;; Last-Updated: 日 2月  3 20:57:28 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 2
+;;     Update #: 3
 ;; URL: http://wuhongyi.cn -->
 
 # CFD
@@ -88,7 +88,7 @@ The CFD time given by the 500 MHz Pixie-16 modules consists of two parts: a shif
 
 ![Meanings of the CFD Trigger Source for 500 MHz Pixie-16 Modules](/img/meaningofthecfdtriggersourcefor500mhzpixie16modules.png)
 
-The CFD fractional time is given as follows:
+CFD 分数时间如下：
 
 $$CFD=\frac{CFDout1}{CFDout1-CFDout2}\times8192$$
 
