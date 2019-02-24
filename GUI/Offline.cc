@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 五 11月 30 20:23:09 2018 (+0800)
+// Last-Updated: 日 2月 24 14:44:59 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 845
+//     Update #: 846
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -2350,31 +2350,31 @@ void Offline::OfflineLoadValues(int mod,int ch)
   
   retval = Pixie16ReadSglChanPar((char*)"TRIGGER_RISETIME", &ChanParData, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/TRIGGER_RISETIME", retval);
-  offlinefilters[0]->SetText(TString::Format("%1.2f", ChanParData).Data());
+  offlinefilters[0]->SetText(TString::Format("%1.3f", ChanParData).Data());
 
   retval = Pixie16ReadSglChanPar((char*)"TRIGGER_FLATTOP", &ChanParData, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/TRIGGER_FLATTOP", retval);  
-  offlinefilters[1]->SetText(TString::Format("%1.2f", ChanParData).Data());
+  offlinefilters[1]->SetText(TString::Format("%1.3f", ChanParData).Data());
 
   retval = Pixie16ReadSglChanPar((char*)"ENERGY_RISETIME", &ChanParData, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/ENERGY_RISETIME", retval);
-  offlinefilters[2]->SetText(TString::Format("%1.2f", ChanParData).Data());
+  offlinefilters[2]->SetText(TString::Format("%1.3f", ChanParData).Data());
 
   retval = Pixie16ReadSglChanPar((char*)"ENERGY_FLATTOP", &ChanParData, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/ENERGY_FLATTOP", retval);  
-  offlinefilters[3]->SetText(TString::Format("%1.2f", ChanParData).Data());
+  offlinefilters[3]->SetText(TString::Format("%1.3f", ChanParData).Data());
 
   retval = Pixie16ReadSglChanPar((char*)"TAU", &ChanParData, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/TAU", retval);
-  offlinefilters[4]->SetText(TString::Format("%1.2f", ChanParData).Data());
+  offlinefilters[4]->SetText(TString::Format("%1.3f", ChanParData).Data());
 
   retval = Pixie16ReadSglChanPar((char*)"CFDDelay", &ChanParData, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/CFDDelay", retval);
-  offlinefilters[5]->SetText(TString::Format("%1.2f", ChanParData).Data());
+  offlinefilters[5]->SetText(TString::Format("%1.3f", ChanParData).Data());
 
   retval = Pixie16ReadSglChanPar((char*)"CFDScale", &ChanParData, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/CFDScale", retval); 
-  offlinefilters[6]->SetText(TString::Format("%1.2f", ChanParData).Data());
+  offlinefilters[6]->SetText(TString::Format("%d", (int)ChanParData).Data());
 
   retval = Pixie16ReadSglChanPar((char*)"TRIGGER_THRESHOLD", &ChanParData, mod, ch);
   if(retval < 0) ErrorInfo("Offline.cc", "OfflineLoadValues(...)", "Pixie16ReadSglChanPar/TRIGGER_THRESHOLD", retval);

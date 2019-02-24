@@ -179,11 +179,11 @@ int Cfd::load_info(Long_t mod)
 
       retval = Pixie16ReadSglChanPar((char*)"CFDScale", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Cfd.cc", "load_info(...)", "Pixie16ReadSglChanPar/CFDScale", retval);  
-      NumEntry[2][i]->SetText(TString::Format("%1.3f", ChanParData).Data());
+      NumEntry[2][i]->SetText(TString::Format("%d", (int)ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"CFDThresh", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("Cfd.cc", "load_info(...)", "Pixie16ReadSglChanPar/CFDThresh", retval);     
-      NumEntry[3][i]->SetText(TString::Format("%1.3f", ChanParData).Data());
+      NumEntry[3][i]->SetText(TString::Format("%d", (int)ChanParData).Data());
     }
   //  std::cout << "loading info\n";
   return 1;

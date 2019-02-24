@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 10月 20 16:16:28 2017 (+0800)
-// Last-Updated: 五 2月  8 17:00:12 2019 (+0800)
+// Last-Updated: 日 2月 24 14:29:12 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 18
+//     Update #: 19
 // URL: http://wuhongyi.cn 
 
 // 用户需要修改本文件中的参数
@@ -23,8 +23,8 @@
 #define TimesHist 3600  // second
 
 #define Crate0
-#define Crate0num 1   //该机箱中使用插件数
-const int Crate0SamplingRate[Crate0num] = {250};//分别指定每个插件的采样率  100/250/500三种采样率  0为跳过该插件
+#define Crate0num 4   //该机箱中使用插件数
+const int Crate0SamplingRate[Crate0num] = {100,100,250,250};//分别指定每个插件的采样率  100/250/500三种采样率  0为跳过该插件
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
