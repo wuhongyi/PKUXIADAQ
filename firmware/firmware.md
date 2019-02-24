@@ -4,15 +4,26 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 12月 13 09:41:49 2016 (+0800)
-;; Last-Updated: 五 2月 22 10:52:20 2019 (+0800)
+;; Last-Updated: 日 2月 24 13:53:30 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 26
+;;     Update #: 27
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
 
 
 ## current firmware version
+
+- pixie16_revfpku_14b100m_firmware_release_09272018  PKU firmware
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1.  Output from front panel A and RJ45.
+	- The value is set to 0 when the calculated energy is negative. 
+	- The pileup event energy is not set to 0, output calculated values directly.
+	- In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
+	- The record waveform mode with down frequency output. The strategy adopted is to select the output of 1, 1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128 frequency, ie how many points retain one point. The points retained are the averaged values.
+	- tried to speed up the event processing, by removing some of the unnecessary wait when reading trace from each channel.
+	- Also removed a few unnecessary processing routines in the DSP code:
+		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
+		- (2) removed "no traces for large pulses" feature.
 
 - pixie16_revfpku_14b100m_firmware_release_05082018  PKU firmware
 	- multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1
@@ -32,30 +43,9 @@
 		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
 		- (2) removed "no traces for large pulses" feature.
 
-- pixie16_revf_14b250m_firmware_release_04222018  PKU firmware(Pixie16AdjustOffsets函数调用BLcut值异常，影响可忽略)
-	- multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1
-	- The value is set to 0 when the calculated energy is negative. 
-	- The pileup event energy is not set to 0, output calculated values directly.
-
 
 
 ## testing firmware
-
-- pixie16_revfpku_14b100m_firmware_release_09272018  PKU firmware
-	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1.  Output from front panel A and RJ45.
-	- The value is set to 0 when the calculated energy is negative. 
-	- The pileup event energy is not set to 0, output calculated values directly.
-	- In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
-	- The record waveform mode with down frequency output. The strategy adopted is to select the output of 1, 1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128 frequency, ie how many points retain one point. The points retained are the averaged values.
-	- tried to speed up the event processing, by removing some of the unnecessary wait when reading trace from each channel.
-	- Also removed a few unnecessary processing routines in the DSP code:
-		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
-		- (2) removed "no traces for large pulses" feature.
-
-- pixie16_revf_14b250m_firmware_release_11082018  PKU firmware
-	- multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
-	- The value is set to 0 when the calculated energy is negative. 
-	- The pileup event energy is not set to 0, output calculated values directly.
 
 
 - pixie16_revd_12b100m_firmware_release_10092018  PKU firmware
@@ -63,10 +53,14 @@
 	- The pileup event energy is not set to 0, output calculated values directly.
 
 - pixie16_revfpku_16b250m_release_02182019   PKU firmware
-	- multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
 	- The value is set to 0 when the calculated energy is negative. 
 	- The pileup event energy is not set to 0, output calculated values directly.
 
+- pixie16_revfpku_14b250m_release_02232019  PKU firmware
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
+	- The value is set to 0 when the calculated energy is negative. 
+	- The pileup event energy is not set to 0, output calculated values directly.
 
 
 ----
@@ -88,7 +82,7 @@
 	- In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
 	- The record waveform mode with down frequency output. The strategy adopted is to select the output of 1, 1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128 frequency, ie how many points retain one point. The points retained are the averaged values.
 	
-- pixie16_revf_14b250m_firmware_release_04222018  PKU firmware(Pixie16AdjustOffsets函数调用BLcut值异常，影响可忽略)
+- pixie16_revf_14b250m_firmware_release_04222018  PKU firmware (OCR > ICR at same pars setting)
 	- multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1
 	- The value is set to 0 when the calculated energy is negative. 
 	- The pileup event energy is not set to 0, output calculated values directly.
@@ -144,31 +138,38 @@
 	- The value is set to 0 when the calculated energy is negative. 
 	- The pileup event energy is not set to 0, output calculated values directly.
 
-- pixie16_revf_14b250m_firmware_release_11082018  PKU firmware
-	- multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
+- pixie16_revf_14b250m_firmware_release_11082018  PKU firmware (OCR > ICR at same pars setting)
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
 	- The value is set to 0 when the calculated energy is negative. 
 	- The pileup event energy is not set to 0, output calculated values directly.
 
 - pixie16_revf_16b250m_firmware standard firmware (OCR > ICR at same pars setting)
 
 - pixie16_revfpku_16b250m_firmware_release_01132019   PKU firmware(not anything output)
-	- multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
 	- The value is set to 0 when the calculated energy is negative. 
 	- The pileup event energy is not set to 0, output calculated values directly.
 
 - pixie16_revfpku_16b250m_release_01192019   PKU firmware(OCR > ICR at same pars setting)
-	- multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
 	- The value is set to 0 when the calculated energy is negative. 
 	- The pileup event energy is not set to 0, output calculated values directly.
 
 - pixie16_revfpku_16b250m_release_02072019   PKU firmware(OCR > ICR at same pars setting)
-	- multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
 	- The value is set to 0 when the calculated energy is negative. 
 	- The pileup event energy is not set to 0, output calculated values directly.
 
 - pixie16_revfpku_16b250m_release_02182019   PKU firmware
-	- multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
 	- The value is set to 0 when the calculated energy is negative. 
 	- The pileup event energy is not set to 0, output calculated values directly.
+
+- pixie16_revfpku_14b250m_release_02232019  PKU firmware
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
+	- The value is set to 0 when the calculated energy is negative. 
+	- The pileup event energy is not set to 0, output calculated values directly.
+
+
 
 <!-- firmware.md ends here -->
