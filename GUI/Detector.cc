@@ -160,7 +160,6 @@ bool Detector::BootSystem()
   for(unsigned short k = 0; k < NumModules; k++)
     {
       PXISlotMap[k] = moduleslot->at(k);
-      ModuleInformation[k].Module_OfflineVariant = OfflineMode;
     }
 
   
@@ -174,6 +173,15 @@ bool Detector::BootSystem()
     }
 
 
+  if(OfflineMode != 0)
+    {
+      for(unsigned short k = 0; k < NumModules; k++)
+	{
+	  ModuleInformation[k].Module_OfflineVariant = OfflineMode;
+	}
+    }
+  
+  
   for(unsigned short k = 0; k < NumModules; k++)
     {
       retval = Pixie16ReadModuleInfo(k, &ModuleInformation[k].Module_Rev, &ModuleInformation[k].Module_SerNum, &ModuleInformation[k].Module_ADCBits, &ModuleInformation[k].Module_ADCMSPS);
