@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 三 5月 16 19:00:58 2018 (+0800)
-;; Last-Updated: 二 1月  1 21:41:17 2019 (+0800)
+;; Last-Updated: 五 3月  8 16:48:09 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 5
+;;     Update #: 6
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
@@ -43,11 +43,18 @@ Added the following features based on standard firmware：
 	
 	
 	
-- 250MHz 14bit(pixie16_revf_14b250m_firmware_release_04222018)
-	- multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1
+
+- 250MHz 16bit(pixie16_revfpku_16b250m_release_02182019)
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
 	- The value is set to 0 when the calculated energy is negative. 
 	- The pileup event energy is not set to 0, output calculated values directly.
 
+
+
+- 250MHz 14bit(pixie16_revfpku_14b250m_release_02232019)
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
+	- The value is set to 0 when the calculated energy is negative. 
+	- The pileup event energy is not set to 0, output calculated values directly.
 
 
 

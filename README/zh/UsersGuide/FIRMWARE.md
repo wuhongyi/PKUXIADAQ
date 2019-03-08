@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 三 5月 16 19:00:58 2018 (+0800)
-;; Last-Updated: 二 1月  1 21:41:52 2019 (+0800)
+;; Last-Updated: 五 3月  8 16:48:10 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 4
+;;     Update #: 5
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
@@ -29,12 +29,16 @@
 	
 	
 	
-- 250MHz 14bit(pixie16_revf_14b250m_firmware_release_04222018)
-	- 前面板多重性MultiplicityMaskHigh[31]=0和1 时候前面版均能输出 multiplicity 结果。
+- 250MHz 14bit(pixie16_revfpku_14b250m_release_02232019)
+	- MultiplicityMaskHigh[31]=0和1 时候RJ45口与前面板均能输出 multiplicity 结果。
 	- 当计算的能量为负数时，该值设置为 0。
 	- pileup 事件能量保留，不设置为 0。
 
 
+- 250MHz 16bit(pixie16_revfpku_16b250m_release_02182019)
+	- MultiplicityMaskHigh[31]=0和1 时候RJ45口与前面板均能输出 multiplicity 结果。
+	- 当计算的能量为负数时，该值设置为 0。
+	- pileup 事件能量保留，不设置为 0。
 
 
 
