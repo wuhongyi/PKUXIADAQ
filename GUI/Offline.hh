@@ -4,24 +4,27 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 日 5月 27 09:10:43 2018 (+0800)
+// Last-Updated: 六 5月  4 20:21:25 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 160
+//     Update #: 169
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
 #define _OFFLINE_HH_
 
-const char gOfflineGuides[11][128] =
+
+#define PANELNUMBER 12
+const char gOfflineGuides[PANELNUMBER][128] =
   {
     "InitData: This page. Read the binary file.",
     "Adjust Par:  Waveform/fast filter/energy filter/cfd/threshould of the select channel.",
     "Wave-16:  Waveform/fast filter/energy filter/cfd filter/threshould of the 16 channels.",
-    "Energy-16:  The original energy spectrum of the 16 channel..",
+    "Energy-16:  The original energy spectrum of the 16 channel.",
     "Orig Energy:  The original energy spectrum of the select channel.",
     "Calc Energy:  Recalculation of energy spectrum by waveforms.",
     "FF/CFD Thre:   Accumulation of a large number of fast filter/cfd filter waveforms to determine the threshold.",
     "Energy-FF:  The two dimensional relationship between energy and fast filter first/second peak height.",
+    "Energy-CFD:   The two dimensional relationship between energy and cfd vaule",
     "QDC:  It will be finished soon.",
     "FFT:  Fourier transformation of a single waveform. User can choose XIA/CAEN/FFTW3 functions.",
     "Time Diff:  Time difference of two signal."
@@ -74,6 +77,8 @@ public:
   void MakeFold8Panel(TGCompositeFrame *TabPanel);//Energy-FF
   void MakeFold9Panel(TGCompositeFrame *TabPanel);//FFT
   void MakeFold10Panel(TGCompositeFrame *TabPanel);//Time Diff
+  void MakeFold11Panel(TGCompositeFrame *TabPanel);//Energy-CFD
+
   
   void SelectRawEnergySumsBaseline(Bool_t on);
   void SelectQDCSums(Bool_t on);
@@ -134,6 +139,7 @@ private:
       OFFLINECHNUM9,
       OFFLINECHNUMA10,
       OFFLINECHNUMB10,
+      OFFLINECHNUM11,
       OFFLINEREAD,
       OFFLINELOAD,
       OFFLINEAPPLY,
@@ -147,6 +153,7 @@ private:
       OFFLINEDRAW8,
       OFFLINEDRAW9,
       OFFLINEDRAW10,
+      OFFLINEDRAW11,
       OFFLINEFASTLENGTH,
       OFFLINEFASTGAP,
       OFFLINESLOWLENGTH,
@@ -361,8 +368,19 @@ private:
   TGCheckButton *offlineenergylimit10;
   TGNumberEntryField *energylimitsab10[4];//0-AL  1-AR  2-BL  3-BR 
 
-
-
+  // Fold11
+  TCanvas *canvas11;
+  TGTextButton* OfflineDrawButton11;
+  TGNumberEntry	*offlinechnum11;//int
+  int chanNumber11;//
+  TH1I *offlineth1icfdinvalid11;
+  TH1I *offlineth1icfdvalid11;
+  TH1I *offlineth1icfd11;
+  TH2I *offlineth2i11;
+  TGComboBox *choosedenergybin11;
+  TGComboBox *choosedcfdbin11;
+  TGTextEntry* printtextinfor11;
+  
   
   void DrawButtonStatus(bool flag);
   
@@ -377,7 +395,7 @@ private:
   void Panel8Draw();
   void Panel9Draw();
   void Panel10Draw();
-
+  void Panel11Draw();
   
   void Panel0ReadFile();
 

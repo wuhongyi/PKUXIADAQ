@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 日 2月 24 14:44:59 2019 (+0800)
+// Last-Updated: 六 5月  4 20:25:35 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 846
+//     Update #: 877
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -95,6 +95,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   chanNumber9 = 0;
   chanNumberA10 = 0;
   chanNumberB10 = 0;
+  chanNumber11 = 0;
   fileRunNum = 0;
 
   adjustdslider = false;
@@ -183,7 +184,14 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
 
   offlineth1i10 = NULL;
   
+  offlineth1icfdinvalid11 = NULL;
+  offlineth1icfdvalid11 = NULL; 
+  offlineth1icfd11 = NULL;      
+  offlineth2i11 = NULL;         
 
+  
+
+  
   
   fClient->GetColorByName("pink", color);
   
@@ -236,6 +244,12 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   fClient->GetColorByName("pink", color);
   TabPanel->GetTabTab("Energy-FF")->ChangeBackground(color);
   MakeFold8Panel(Tab8);
+
+  TGCompositeFrame *Tab11 = TabPanel->AddTab("Energy-CFD");
+  // fClient->GetColorByName("azure", color);
+  fClient->GetColorByName("pink", color);
+  TabPanel->GetTabTab("Energy-CFD")->ChangeBackground(color);
+  MakeFold11Panel(Tab11);
   
   TGCompositeFrame *Tab7 = TabPanel->AddTab("QDC");
   // fClient->GetColorByName("teal", color);
@@ -254,8 +268,6 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   fClient->GetColorByName("pink", color);
   TabPanel->GetTabTab("Time Diff")->ChangeBackground(color);
   MakeFold10Panel(Tab10);
-
-
 
 
   
@@ -308,6 +320,11 @@ Offline::~Offline()
 
   if(offlineth1i10 != NULL) delete offlineth1i10;
 
+  if(offlineth1icfdinvalid11 != NULL) delete offlineth1icfdinvalid11;
+  if(offlineth1icfdvalid11 != NULL) delete offlineth1icfdvalid11;
+  if(offlineth1icfd11 != NULL) delete offlineth1icfd11;
+  if(offlineth2i11 != NULL) delete offlineth2i11;
+  
   
   for (int i = 0; i < 16; ++i)
     {
@@ -445,11 +462,8 @@ void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
 
   TGHorizontalFrame *guideframe[10];
   TGTextEntry *guidetextinfor[10];
-
-
-
   
-  for (int i = 0; i < 11; ++i)
+  for (int i = 0; i < PANELNUMBER; ++i)
     {
       guideframe[i] = new TGHorizontalFrame(informationgroup);
       informationgroup->AddFrame(guideframe[i],new TGLayoutHints(kLHintsExpandX | kLHintsTop,0,0,5,0));
@@ -463,7 +477,6 @@ void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
       guidetextinfor[i]->SetFrameDrawn(kFALSE);
     }
   
-
 }
 
 
@@ -1288,7 +1301,8 @@ void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
 void Offline::MakeFold6Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  
   // stop
   OfflineStopButton6 = new TGTextButton( parFrame, "&Stop", OFFLINESTOPDRAW6);
   OfflineStopButton6->SetEnabled(0);
@@ -1312,51 +1326,7 @@ void Offline::MakeFold6Panel(TGCompositeFrame *TabPanel)
   GausFitButton6->SetEnabled(0);
   GausFitButton6->Associate(this);
   parFrame->AddFrame(GausFitButton6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 30, 0, 0));
-  
 
-  //slow filter baseline
-  TGLabel *LabelChooseSlowFIlterBaseline = new TGLabel(parFrame, "SF BL:"); 
-  parFrame->AddFrame(LabelChooseSlowFIlterBaseline, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelChooseSlowFIlterBaseline->SetTextColor(color, false);
-  chooseslowfilterbaselinep6 = new TGComboBox(parFrame);
-  parFrame->AddFrame(chooseslowfilterbaselinep6, new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
-  chooseslowfilterbaselinep6->Resize(80, 20);
-  chooseslowfilterbaselinep6->AddEntry("Calculate", 0);
-  chooseslowfilterbaselinep6->AddEntry("Old Baseline", 1);
-  chooseslowfilterbaselinep6->Select(0);
-
-  TGLabel *LabelOldSlowFilterSL = new TGLabel(parFrame," 'Old BL' choose -> SL:");
-  parFrame->AddFrame(LabelOldSlowFilterSL, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelOldSlowFilterSL->SetTextColor(color, false);
-  oldslowfilterparameterp6[0] = new TGNumberEntryField(parFrame, -1, 3.04, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.04,81.28);
-  parFrame->AddFrame(oldslowfilterparameterp6[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
-  oldslowfilterparameterp6[0]->Resize(40, 20);
-  TGLabel *LabelOldSlowFilterSG = new TGLabel(parFrame,"SG:");
-  parFrame->AddFrame(LabelOldSlowFilterSG, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelOldSlowFilterSG->SetTextColor(color, false);
-  oldslowfilterparameterp6[1] = new TGNumberEntryField(parFrame, -1, 0.64, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.06,81.28);
-  parFrame->AddFrame(oldslowfilterparameterp6[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
-  oldslowfilterparameterp6[1]->Resize(40, 20);
-  TGLabel *LabelOldSlowFilterTAU = new TGLabel(parFrame,"Tau:");
-  parFrame->AddFrame(LabelOldSlowFilterTAU, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelOldSlowFilterTAU->SetTextColor(color, false);
-  oldslowfilterparameterp6[2] = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESReal);
-  parFrame->AddFrame(oldslowfilterparameterp6[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
-  oldslowfilterparameterp6[2]->Resize(40, 20);
-  TGLabel *oldslowfilterrange = new TGLabel(parFrame, "FilRan:");
-  fClient->GetColorByName("purple", color);
-  oldslowfilterrange->SetTextColor(color, false);
-  parFrame->AddFrame(oldslowfilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
-  oldofflinefilterrangep6 = new TGNumberEntry(parFrame, 0, 2, -1, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 1, 6);
-  parFrame->AddFrame(oldofflinefilterrangep6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-  oldofflinefilterrangep6->SetIntNumber(3);
-
-  
-  
   // draw
   OfflineDrawButton6 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW6);
   OfflineDrawButton6->SetEnabled(0);
@@ -1390,9 +1360,52 @@ void Offline::MakeFold6Panel(TGCompositeFrame *TabPanel)
   LabelBinNumber->SetToolTipText("Choose TH1D bin number.");
   parFrame->AddFrame(LabelBinNumber, new TGLayoutHints(kLHintsRight | kLHintsExpandY, 0, 0, 3, 0));
 
+
   
 
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  TGCompositeFrame *slowfilterparFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+  TabPanel->AddFrame(slowfilterparFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+
+  //slow filter baseline
+  TGLabel *LabelChooseSlowFIlterBaseline = new TGLabel(slowfilterparFrame, "SF BL:"); 
+  slowfilterparFrame->AddFrame(LabelChooseSlowFIlterBaseline, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelChooseSlowFIlterBaseline->SetTextColor(color, false);
+  chooseslowfilterbaselinep6 = new TGComboBox(slowfilterparFrame);
+  slowfilterparFrame->AddFrame(chooseslowfilterbaselinep6, new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
+  chooseslowfilterbaselinep6->Resize(80, 20);
+  chooseslowfilterbaselinep6->AddEntry("Calculate", 0);
+  chooseslowfilterbaselinep6->AddEntry("Old Baseline", 1);
+  chooseslowfilterbaselinep6->Select(0);
+
+  TGLabel *LabelOldSlowFilterSL = new TGLabel(slowfilterparFrame," 'Old BL' choose -> SL:");
+  slowfilterparFrame->AddFrame(LabelOldSlowFilterSL, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelOldSlowFilterSL->SetTextColor(color, false);
+  oldslowfilterparameterp6[0] = new TGNumberEntryField(slowfilterparFrame, -1, 3.04, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.04,81.28);
+  slowfilterparFrame->AddFrame(oldslowfilterparameterp6[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  oldslowfilterparameterp6[0]->Resize(40, 20);
+  TGLabel *LabelOldSlowFilterSG = new TGLabel(slowfilterparFrame,"SG:");
+  slowfilterparFrame->AddFrame(LabelOldSlowFilterSG, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelOldSlowFilterSG->SetTextColor(color, false);
+  oldslowfilterparameterp6[1] = new TGNumberEntryField(slowfilterparFrame, -1, 0.64, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.06,81.28);
+  slowfilterparFrame->AddFrame(oldslowfilterparameterp6[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  oldslowfilterparameterp6[1]->Resize(40, 20);
+  TGLabel *LabelOldSlowFilterTAU = new TGLabel(slowfilterparFrame,"Tau:");
+  slowfilterparFrame->AddFrame(LabelOldSlowFilterTAU, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelOldSlowFilterTAU->SetTextColor(color, false);
+  oldslowfilterparameterp6[2] = new TGNumberEntryField(slowfilterparFrame, -1, 0, TGNumberFormat::kNESReal);
+  slowfilterparFrame->AddFrame(oldslowfilterparameterp6[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  oldslowfilterparameterp6[2]->Resize(40, 20);
+  TGLabel *oldslowfilterrange = new TGLabel(slowfilterparFrame, "FilRan:");
+  fClient->GetColorByName("purple", color);
+  oldslowfilterrange->SetTextColor(color, false);
+  slowfilterparFrame->AddFrame(oldslowfilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  oldofflinefilterrangep6 = new TGNumberEntry(slowfilterparFrame, 0, 2, -1, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 1, 6);
+  slowfilterparFrame->AddFrame(oldofflinefilterrangep6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  oldofflinefilterrangep6->SetIntNumber(3);
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
@@ -1444,7 +1457,8 @@ void Offline::MakeFold7Panel(TGCompositeFrame *TabPanel)
 void Offline::MakeFold8Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  
   // stop
   OfflineStopButton8 = new TGTextButton(parFrame, "&Stop", OFFLINESTOPDRAW8);
   OfflineStopButton8->SetEnabled(0);
@@ -1462,81 +1476,7 @@ void Offline::MakeFold8Panel(TGCompositeFrame *TabPanel)
   printtextinfor8->SetFrameDrawn(kFALSE);
   parFrame->AddFrame(printtextinfor8, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
 
-  
-  // Draw Style
-  TGLabel *LabelChooseDrawStyle = new TGLabel(parFrame, "Draw Style:"); 
-  parFrame->AddFrame(LabelChooseDrawStyle, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("red", color);
-  LabelChooseDrawStyle->SetTextColor(color, false);
-  choosedrawstyle8 = new TGComboBox(parFrame);
-  parFrame->AddFrame(choosedrawstyle8, new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
-  choosedrawstyle8->Resize(55, 20);
-  choosedrawstyle8->AddEntry("Graph", 0);
-  choosedrawstyle8->AddEntry("Hist", 1);
-  choosedrawstyle8->Select(0);
 
-  TGLabel *LabelChooseHistBinX = new TGLabel(parFrame,"  'Hist' mode choose -> BinX:");
-  parFrame->AddFrame(LabelChooseHistBinX, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelChooseHistBinX->SetTextColor(color, false);
-  choosehistbinxy[0] = new TGComboBox(parFrame);
-  parFrame->AddFrame(choosehistbinxy[0], new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
-  choosehistbinxy[0]->Resize(50, 20);
-  choosehistbinxy[0]->AddEntry("100", 100);
-  choosehistbinxy[0]->AddEntry("200", 200);
-  choosehistbinxy[0]->AddEntry("500", 500);
-  choosehistbinxy[0]->AddEntry("1000", 1000);
-  choosehistbinxy[0]->AddEntry("1500", 1500);
-  choosehistbinxy[0]->AddEntry("2000", 2000);
-  choosehistbinxy[0]->Select(1000);
-
-  TGLabel *LabelChooseHistXmin = new TGLabel(parFrame,"Xmin:");
-  parFrame->AddFrame(LabelChooseHistXmin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelChooseHistXmin->SetTextColor(color, false);
-  histxyminmax8[0] = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
-  parFrame->AddFrame(histxyminmax8[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
-  histxyminmax8[0]->Resize(40, 20);
-  
-  TGLabel *LabelChooseHistXmax = new TGLabel(parFrame,"Xmax:");
-  parFrame->AddFrame(LabelChooseHistXmax, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelChooseHistXmax->SetTextColor(color, false);
-  histxyminmax8[1] = new TGNumberEntryField(parFrame, -1, 1000, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
-  parFrame->AddFrame(histxyminmax8[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
-  histxyminmax8[1]->Resize(40, 20);  
-
-  TGLabel *LabelChooseHistBinY = new TGLabel(parFrame,"BinY:");
-  parFrame->AddFrame(LabelChooseHistBinY, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelChooseHistBinY->SetTextColor(color, false);
-  choosehistbinxy[1] = new TGComboBox(parFrame);
-  parFrame->AddFrame(choosehistbinxy[1], new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
-  choosehistbinxy[1]->Resize(50, 20);
-  choosehistbinxy[1]->AddEntry("512", 512);
-  choosehistbinxy[1]->AddEntry("1024", 1024);
-  choosehistbinxy[1]->AddEntry("2048", 2048);
-  choosehistbinxy[1]->Select(1024);
-
-  TGLabel *LabelChooseHistYmin = new TGLabel(parFrame,"Ymin:");
-  parFrame->AddFrame(LabelChooseHistYmin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelChooseHistYmin->SetTextColor(color, false);
-  histxyminmax8[2] = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
-  parFrame->AddFrame(histxyminmax8[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
-  histxyminmax8[2]->Resize(40, 20);
-
-  TGLabel *LabelChooseHistYmax = new TGLabel(parFrame,"Ymax:");
-  parFrame->AddFrame(LabelChooseHistYmax, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelChooseHistYmax->SetTextColor(color, false);
-  histxyminmax8[3] = new TGNumberEntryField(parFrame, -1, 65536, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
-  parFrame->AddFrame(histxyminmax8[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
-  histxyminmax8[3]->Resize(40, 20);
-
-
-  
-  
   // draw
   OfflineDrawButton8 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW8);
   OfflineDrawButton8->SetEnabled(0);
@@ -1552,7 +1492,81 @@ void Offline::MakeFold8Panel(TGCompositeFrame *TabPanel)
   parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
   
 
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  
+  // Draw Style
+  TGCompositeFrame *drawstyleparFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+  TabPanel->AddFrame(drawstyleparFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  
+
+  TGLabel *LabelChooseDrawStyle = new TGLabel(drawstyleparFrame, "Draw Style:"); 
+  drawstyleparFrame->AddFrame(LabelChooseDrawStyle, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("red", color);
+  LabelChooseDrawStyle->SetTextColor(color, false);
+  choosedrawstyle8 = new TGComboBox(drawstyleparFrame);
+  drawstyleparFrame->AddFrame(choosedrawstyle8, new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
+  choosedrawstyle8->Resize(55, 20);
+  choosedrawstyle8->AddEntry("Graph", 0);
+  choosedrawstyle8->AddEntry("Hist", 1);
+  choosedrawstyle8->Select(0);
+
+  TGLabel *LabelChooseHistBinX = new TGLabel(drawstyleparFrame,"  'Hist' mode choose -> BinX:");
+  drawstyleparFrame->AddFrame(LabelChooseHistBinX, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelChooseHistBinX->SetTextColor(color, false);
+  choosehistbinxy[0] = new TGComboBox(drawstyleparFrame);
+  drawstyleparFrame->AddFrame(choosehistbinxy[0], new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
+  choosehistbinxy[0]->Resize(50, 20);
+  choosehistbinxy[0]->AddEntry("100", 100);
+  choosehistbinxy[0]->AddEntry("200", 200);
+  choosehistbinxy[0]->AddEntry("500", 500);
+  choosehistbinxy[0]->AddEntry("1000", 1000);
+  choosehistbinxy[0]->AddEntry("1500", 1500);
+  choosehistbinxy[0]->AddEntry("2000", 2000);
+  choosehistbinxy[0]->Select(1000);
+
+  TGLabel *LabelChooseHistXmin = new TGLabel(drawstyleparFrame,"Xmin:");
+  drawstyleparFrame->AddFrame(LabelChooseHistXmin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelChooseHistXmin->SetTextColor(color, false);
+  histxyminmax8[0] = new TGNumberEntryField(drawstyleparFrame, -1, 0, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  drawstyleparFrame->AddFrame(histxyminmax8[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  histxyminmax8[0]->Resize(40, 20);
+  
+  TGLabel *LabelChooseHistXmax = new TGLabel(drawstyleparFrame,"Xmax:");
+  drawstyleparFrame->AddFrame(LabelChooseHistXmax, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelChooseHistXmax->SetTextColor(color, false);
+  histxyminmax8[1] = new TGNumberEntryField(drawstyleparFrame, -1, 1000, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  drawstyleparFrame->AddFrame(histxyminmax8[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  histxyminmax8[1]->Resize(40, 20);  
+
+  TGLabel *LabelChooseHistBinY = new TGLabel(drawstyleparFrame,"BinY:");
+  drawstyleparFrame->AddFrame(LabelChooseHistBinY, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelChooseHistBinY->SetTextColor(color, false);
+  choosehistbinxy[1] = new TGComboBox(drawstyleparFrame);
+  drawstyleparFrame->AddFrame(choosehistbinxy[1], new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
+  choosehistbinxy[1]->Resize(50, 20);
+  choosehistbinxy[1]->AddEntry("512", 512);
+  choosehistbinxy[1]->AddEntry("1024", 1024);
+  choosehistbinxy[1]->AddEntry("2048", 2048);
+  choosehistbinxy[1]->Select(1024);
+
+  TGLabel *LabelChooseHistYmin = new TGLabel(drawstyleparFrame,"Ymin:");
+  drawstyleparFrame->AddFrame(LabelChooseHistYmin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelChooseHistYmin->SetTextColor(color, false);
+  histxyminmax8[2] = new TGNumberEntryField(drawstyleparFrame, -1, 0, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  drawstyleparFrame->AddFrame(histxyminmax8[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  histxyminmax8[2]->Resize(40, 20);
+
+  TGLabel *LabelChooseHistYmax = new TGLabel(drawstyleparFrame,"Ymax:");
+  drawstyleparFrame->AddFrame(LabelChooseHistYmax, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("green", color);
+  LabelChooseHistYmax->SetTextColor(color, false);
+  histxyminmax8[3] = new TGNumberEntryField(drawstyleparFrame, -1, 65536, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  drawstyleparFrame->AddFrame(histxyminmax8[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  histxyminmax8[3]->Resize(40, 20);
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
@@ -1671,82 +1685,87 @@ void Offline::MakeFold10Panel(TGCompositeFrame *TabPanel)
   printtextinfor10->SetFrameDrawn(kFALSE);
   parFrame->AddFrame(printtextinfor10, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
 
+
+  
   // Draw Style
-  TGLabel *LabelChooseDrawStyle = new TGLabel(parFrame, "Draw Style:"); 
-  parFrame->AddFrame(LabelChooseDrawStyle, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  TGCompositeFrame *drawstyleparFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+  TabPanel->AddFrame(drawstyleparFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+
+  TGLabel *LabelChooseDrawStyle = new TGLabel(drawstyleparFrame, "Draw Style:"); 
+  drawstyleparFrame->AddFrame(LabelChooseDrawStyle, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
   fClient->GetColorByName("red", color);
   LabelChooseDrawStyle->SetTextColor(color, false);
-  choosedrawstyle10 = new TGComboBox(parFrame);
-  parFrame->AddFrame(choosedrawstyle10, new TGLayoutHints(kLHintsLeft, 0, 10, 2, 2));
+  choosedrawstyle10 = new TGComboBox(drawstyleparFrame);
+  drawstyleparFrame->AddFrame(choosedrawstyle10, new TGLayoutHints(kLHintsLeft, 0, 10, 2, 2));
   choosedrawstyle10->Resize(55, 20);
   choosedrawstyle10->AddEntry("CFD", 0);
   choosedrawstyle10->AddEntry("FF", 1);
   choosedrawstyle10->Select(0);
 
   
-  TGLabel *LabelChooseHistXbin = new TGLabel(parFrame,"Xbin:");
-  parFrame->AddFrame(LabelChooseHistXbin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  TGLabel *LabelChooseHistXbin = new TGLabel(drawstyleparFrame,"Xbin:");
+  drawstyleparFrame->AddFrame(LabelChooseHistXbin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
   // fClient->GetColorByName("green", color);
   // LabelChooseHistXbin->SetTextColor(color, false);
-  histxminmax10[0] = new TGNumberEntryField(parFrame, -1, 10000, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,1,100000);
-  parFrame->AddFrame(histxminmax10[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  histxminmax10[0] = new TGNumberEntryField(drawstyleparFrame, -1, 10000, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,1,100000);
+  drawstyleparFrame->AddFrame(histxminmax10[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
   histxminmax10[0]->Resize(50, 20);
   
-  TGLabel *LabelChooseHistXmin = new TGLabel(parFrame,"Xmin(ns):");
-  parFrame->AddFrame(LabelChooseHistXmin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  TGLabel *LabelChooseHistXmin = new TGLabel(drawstyleparFrame,"Xmin(ns):");
+  drawstyleparFrame->AddFrame(LabelChooseHistXmin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
   // fClient->GetColorByName("green", color);
   // LabelChooseHistXmin->SetTextColor(color, false);
-  histxminmax10[1] = new TGNumberEntryField(parFrame, -1, -100, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,-500,500);
-  parFrame->AddFrame(histxminmax10[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  histxminmax10[1] = new TGNumberEntryField(drawstyleparFrame, -1, -100, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,-500,500);
+  drawstyleparFrame->AddFrame(histxminmax10[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
   histxminmax10[1]->Resize(40, 20);
   
-  TGLabel *LabelChooseHistXmax = new TGLabel(parFrame,"Xmax(ns):");
-  parFrame->AddFrame(LabelChooseHistXmax, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  TGLabel *LabelChooseHistXmax = new TGLabel(drawstyleparFrame,"Xmax(ns):");
+  drawstyleparFrame->AddFrame(LabelChooseHistXmax, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
   // fClient->GetColorByName("green", color);
   // LabelChooseHistXmax->SetTextColor(color, false);
-  histxminmax10[2] = new TGNumberEntryField(parFrame, -1, 100, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,-500,500);
-  parFrame->AddFrame(histxminmax10[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  histxminmax10[2] = new TGNumberEntryField(drawstyleparFrame, -1, 100, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,-500,500);
+  drawstyleparFrame->AddFrame(histxminmax10[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
   histxminmax10[2]->Resize(40, 20);  
 
 
   
-  offlineenergylimit10 = new TGCheckButton(parFrame, "Limits");
+  offlineenergylimit10 = new TGCheckButton(drawstyleparFrame, "Limits");
   offlineenergylimit10->SetOn(kFALSE);
   fClient->GetColorByName("green", color);
   offlineenergylimit10->SetTextColor(color, false);
-  parFrame->AddFrame(offlineenergylimit10, new TGLayoutHints(kLHintsLeft | kLHintsTop, 35, 5, 4, 0));
+  drawstyleparFrame->AddFrame(offlineenergylimit10, new TGLayoutHints(kLHintsLeft | kLHintsTop, 35, 5, 4, 0));
 
 
-  TGLabel *LabelELimits0 = new TGLabel(parFrame,"AL:");
-  parFrame->AddFrame(LabelELimits0, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  TGLabel *LabelELimits0 = new TGLabel(drawstyleparFrame,"AL:");
+  drawstyleparFrame->AddFrame(LabelELimits0, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
   fClient->GetColorByName("green", color);
   LabelELimits0->SetTextColor(color, false);
-  energylimitsab10[0] = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
-  parFrame->AddFrame(energylimitsab10[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  energylimitsab10[0] = new TGNumberEntryField(drawstyleparFrame, -1, 0, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  drawstyleparFrame->AddFrame(energylimitsab10[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
   energylimitsab10[0]->Resize(40, 20);
 
-  TGLabel *LabelELimits1 = new TGLabel(parFrame,"AR:");
-  parFrame->AddFrame(LabelELimits1, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  TGLabel *LabelELimits1 = new TGLabel(drawstyleparFrame,"AR:");
+  drawstyleparFrame->AddFrame(LabelELimits1, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
   fClient->GetColorByName("green", color);
   LabelELimits1->SetTextColor(color, false);
-  energylimitsab10[1] = new TGNumberEntryField(parFrame, -1, 65536, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
-  parFrame->AddFrame(energylimitsab10[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  energylimitsab10[1] = new TGNumberEntryField(drawstyleparFrame, -1, 65536, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  drawstyleparFrame->AddFrame(energylimitsab10[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
   energylimitsab10[1]->Resize(40, 20);
 
-  TGLabel *LabelELimits2 = new TGLabel(parFrame,"BL:");
-  parFrame->AddFrame(LabelELimits2, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  TGLabel *LabelELimits2 = new TGLabel(drawstyleparFrame,"BL:");
+  drawstyleparFrame->AddFrame(LabelELimits2, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
   fClient->GetColorByName("green", color);
   LabelELimits2->SetTextColor(color, false);
-  energylimitsab10[2] = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
-  parFrame->AddFrame(energylimitsab10[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  energylimitsab10[2] = new TGNumberEntryField(drawstyleparFrame, -1, 0, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  drawstyleparFrame->AddFrame(energylimitsab10[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
   energylimitsab10[2]->Resize(40, 20);
   
-  TGLabel *LabelELimits3 = new TGLabel(parFrame,"BR:");
-  parFrame->AddFrame(LabelELimits3, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  TGLabel *LabelELimits3 = new TGLabel(drawstyleparFrame,"BR:");
+  drawstyleparFrame->AddFrame(LabelELimits3, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
   fClient->GetColorByName("green", color);
   LabelELimits3->SetTextColor(color, false);
-  energylimitsab10[3] = new TGNumberEntryField(parFrame, -1, 65536, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
-  parFrame->AddFrame(energylimitsab10[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  energylimitsab10[3] = new TGNumberEntryField(drawstyleparFrame, -1, 65536, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  drawstyleparFrame->AddFrame(energylimitsab10[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
   energylimitsab10[3]->Resize(40, 20);
   
 
@@ -1758,6 +1777,86 @@ void Offline::MakeFold10Panel(TGCompositeFrame *TabPanel)
   TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas10", adCanvasFrame, 100, 100);
 
   canvas10 = adjCanvas->GetCanvas();
+  adCanvasFrame->AddFrame(adjCanvas, Hint);
+  TabPanel->AddFrame(adCanvasFrame, Hint);
+}
+
+
+void Offline::MakeFold11Panel(TGCompositeFrame *TabPanel)
+{
+  TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+
+  // text
+  printtextinfor11 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  printtextinfor11->SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
+  fClient->GetColorByName("blue", color);
+  printtextinfor11->SetTextColor(color, false);
+  printtextinfor11->SetText("Choose 'Bin/Ch' then enter button 'Draw'.");
+  printtextinfor11->Resize(450, 12);
+  printtextinfor11->SetEnabled(kFALSE);
+  printtextinfor11->SetFrameDrawn(kFALSE);
+  parFrame->AddFrame(printtextinfor11, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+
+  
+  // draw
+  OfflineDrawButton11 = new TGTextButton(parFrame, "&Draw", OFFLINEDRAW11);
+  parFrame->AddFrame(OfflineDrawButton11, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));   
+  OfflineDrawButton11->SetEnabled(0);
+  OfflineDrawButton11->Associate(this);
+
+  // ch
+  offlinechnum11 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM11, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  parFrame->AddFrame(offlinechnum11, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
+  offlinechnum11->SetButtonToNum(0);
+  offlinechnum11->Associate(this);
+  TGLabel *ch = new TGLabel(parFrame, "Ch:"); 
+  parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+   
+
+  // Draw Style
+  choosedenergybin11 = new TGComboBox(parFrame);
+  parFrame->AddFrame(choosedenergybin11, new TGLayoutHints(kLHintsRight, 0, 20, 2, 2));
+  choosedenergybin11->Resize(100, 20);
+  choosedenergybin11->AddEntry("4096(65536)", 0);
+  choosedenergybin11->AddEntry("2048(65536)", 1);
+  choosedenergybin11->AddEntry("1024(65536)", 2);
+  choosedenergybin11->AddEntry("4096(32768)", 3);
+  choosedenergybin11->AddEntry("2048(32768)", 4);
+  choosedenergybin11->AddEntry("1024(32768)", 5);
+  choosedenergybin11->AddEntry("4096(16384)", 6);
+  choosedenergybin11->AddEntry("2048(16384)", 7);
+  choosedenergybin11->AddEntry("1024(16384)", 8);
+  choosedenergybin11->AddEntry("5000(10000)", 9);
+  choosedenergybin11->AddEntry("2000(10000)", 10);
+  choosedenergybin11->AddEntry("5000(5000)", 11);
+  choosedenergybin11->AddEntry("2500(5000)", 12);
+  choosedenergybin11->AddEntry("2000(2000)", 13);
+  choosedenergybin11->AddEntry("1000(1000)", 14);  
+  choosedenergybin11->Select(0);
+  TGLabel *LabelChooseEnergyBinDrawStyle = new TGLabel(parFrame, "E Bin:"); 
+  parFrame->AddFrame(LabelChooseEnergyBinDrawStyle, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 5, 0));
+
+  choosedcfdbin11 = new TGComboBox(parFrame);
+  parFrame->AddFrame(choosedcfdbin11, new TGLayoutHints(kLHintsRight, 0, 20, 2, 2));
+  choosedcfdbin11->Resize(50, 20);
+  choosedcfdbin11->AddEntry("4096", 0);
+  choosedcfdbin11->AddEntry("2048", 1);
+  choosedcfdbin11->AddEntry("1024", 2);
+  choosedcfdbin11->Select(0);
+  TGLabel *LabelChooseCFDBinDrawStyle = new TGLabel(parFrame, "CFD Bin:"); 
+  parFrame->AddFrame(LabelChooseCFDBinDrawStyle, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 5, 0));  
+
+
+  
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
+  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
+
+  TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas11", adCanvasFrame, 100, 100);
+
+  canvas11 = adjCanvas->GetCanvas();
   adCanvasFrame->AddFrame(adjCanvas, Hint);
   TabPanel->AddFrame(adCanvasFrame, Hint);
 }
@@ -1853,7 +1952,9 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    case OFFLINEDRAW10:
 	      Panel10Draw();
 	      break;
-
+	    case OFFLINEDRAW11:
+	      Panel11Draw();
+	      break;
 	      
 	    case OFFLINEGAUSFIT4:
 	      GausFit4();
@@ -2117,7 +2218,25 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		    }
 		}
 	      break;
-	      
+	    case OFFLINECHNUM11:
+	      if (parm2 == 0)
+		{
+		  if (chanNumber11 != 15)
+		    {
+		      ++chanNumber11;
+		      offlinechnum11->SetIntNumber(chanNumber11);
+		    }
+		}
+	      else
+		{
+		  if (chanNumber11 != 0)
+		    {
+		      if (--chanNumber11 == 0)
+			chanNumber11 = 0;
+		      offlinechnum11->SetIntNumber(chanNumber11);
+		    }
+		}
+	      break;	      
 	      
 	      
 	    default:
@@ -2249,7 +2368,19 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 	    }
 	  break;
-	  
+	case OFFLINECHNUM11:
+	  switch (GET_SUBMSG(msg))
+	    {
+	    case kTE_ENTER:
+	      chanNumber11 = offlinechnum11->GetIntNumber();
+	      if(chanNumber11 > 15) chanNumber11 = 15;
+	      if(chanNumber11 < 0) chanNumber11 = 0;
+	      offlinechnum11->SetIntNumber(chanNumber11);
+	      break;
+	    default:
+	      break;
+	    }
+	  break;	  
 	  
 	  
 	case OFFLINEFILTERRANGE:
@@ -2833,7 +2964,7 @@ void Offline::Panel2Draw()
 	{
 	  tracelength2[i] = offlinedata->GetEventTraceLength(OfflineCurrentCount2[i]);//trace length
 
-	  if(tracelength2[i] == 0)//没有波形事件
+	  if(tracelength2[i] == 0)//not waveform event
 	    {
 	      offlinemultigraph2[i]->Clear();
 	      canvas2->cd(1+i);
@@ -4198,6 +4329,178 @@ void Offline::Panel10Draw()
 }
 
 
+void Offline::Panel11Draw()
+{
+  OfflineReadFileButton->SetEnabled(0);
+  OfflineDrawButton11->SetEnabled(0);
+
+  printtextinfor11->SetText("Drawing...please wait a moment.");
+  canvas11->cd();
+  canvas11->Clear();
+  canvas11->Divide(2,2);
+  canvas11->Modified();
+  canvas11->Update();
+  gSystem->ProcessEvents();
+  
+  if(offlineth1icfdinvalid11 != NULL)
+    {
+      delete offlineth1icfdinvalid11;
+      offlineth1icfdinvalid11 = NULL;
+    }
+  if(offlineth1icfdvalid11 != NULL)
+    {
+      delete offlineth1icfdvalid11;
+      offlineth1icfdvalid11 = NULL;
+    }
+  if(offlineth1icfd11 != NULL)
+    {
+      delete offlineth1icfd11;
+      offlineth1icfd11 = NULL;
+    }
+  if(offlineth2i11 != NULL)
+    {
+      delete offlineth2i11;
+      offlineth2i11 = NULL;
+    }
+
+  int cfdmax,energymax,energybin,cfdbin;
+  switch(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()))
+    {
+    case 100://100
+      cfdmax = 32768;
+      break;
+    case 250://250
+      cfdmax = 16384;
+      break;
+    case 500://500
+      cfdmax = 8192;
+      break;
+    default:
+      std::cout<<"ERROR: Please call Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
+      break;
+    }
+
+  switch(choosedenergybin11->GetSelected())
+    {
+    case 0:
+      energymax = 65536;
+      energybin = 4096;
+      break;
+    case 1:
+      energymax = 65536;
+      energybin = 2048;
+      break;
+    case 2:
+      energymax = 65536;
+      energybin = 1024;
+      break;
+    case 3:
+      energymax = 32768;
+      energybin = 4096;
+      break;
+    case 4:
+      energymax = 32768;
+      energybin = 2048;
+      break;
+    case 5:
+      energymax = 32768;
+      energybin = 1024;
+      break;
+    case 6:
+      energymax = 16384;
+      energybin = 4096;
+      break;
+    case 7:
+      energymax = 16384;
+      energybin = 2048;
+      break;
+    case 8:
+      energymax = 16384;
+      energybin = 1024;
+      break;
+    case 9:
+      energymax = 10000;
+      energybin = 5000;
+      break;
+    case 10:
+      energymax = 10000;
+      energybin = 2000;
+      break;
+    case 11:
+      energymax = 5000;
+      energybin = 5000;
+      break;
+    case 12:
+      energymax = 5000;
+      energybin = 2500;
+      break;
+    case 13:
+      energymax = 2000;
+      energybin = 2000;
+      break;
+    case 14:
+      energymax = 1000;
+      energybin = 1000;
+      break;
+    default:
+      std::cout<<"ERROR: Please check TGComboBox number."<<std::endl;
+      break;     
+    }
+  
+  if(choosedcfdbin11->GetSelected() == 0)
+    cfdbin = 4096;
+  else if(choosedcfdbin11->GetSelected() == 1)
+    cfdbin = 2048;
+  else if(choosedcfdbin11->GetSelected() == 2)
+    cfdbin = 1024;
+  else
+    std::cout<<"ERROR: Please check TGComboBox number."<<std::endl;
+  
+  offlineth1icfdinvalid11 = new TH1I("energy_cfdinvalid11","energy(cfd invalid)",65536,0,65536);
+  offlineth1icfdinvalid11->GetXaxis()->SetTitle("ch");
+  offlineth1icfdvalid11 = new TH1I("energy_cfdvalid11","energy(cfd valid)",65536,0,65536);
+  offlineth1icfdvalid11->GetXaxis()->SetTitle("ch");
+  offlineth1icfd11 = new TH1I("cfd_dis11","cfd",cfdmax,0,cfdmax);
+  offlineth1icfd11->GetXaxis()->SetTitle("cfd vaule");
+  offlineth2i11 = new TH2I("energycfd11","energy-cfd",cfdbin,0,cfdmax,energybin,0,energymax);
+  offlineth2i11->GetXaxis()->SetTitle("cfd vaule");
+  offlineth2i11->GetYaxis()->SetTitle("ch");
+  for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
+    {
+      if(offlinechnum11->GetIntNumber() == offlinedata->GetEventChannel(i))//ch
+	{
+	  if(offlinedata->GetEventCfdForcedTriggerBit(i))
+	    {// forced cfd trigger
+	      offlineth1icfdinvalid11->Fill(offlinedata->GetEventEnergy(i));
+	    }
+	  else
+	    {
+	      offlineth1icfdvalid11->Fill(offlinedata->GetEventEnergy(i));
+	      offlineth1icfd11->Fill(offlinedata->GetEventCfd(i));
+	      offlineth2i11->Fill(offlinedata->GetEventCfd(i),offlinedata->GetEventEnergy(i));
+	    }
+	}
+    }
+
+  
+
+
+  canvas11->cd(1);
+  offlineth1icfdinvalid11->Draw();
+  canvas11->cd(2);
+  offlineth1icfd11->Draw();
+  canvas11->cd(3);
+  offlineth1icfdvalid11->Draw();
+  canvas11->cd(4);
+  offlineth2i11->Draw("colz");
+  canvas11->Modified();
+  canvas11->Update();
+
+  printtextinfor11->SetText("Draw Done!");
+  OfflineDrawButton11->SetEnabled(1);
+  OfflineReadFileButton->SetEnabled(1);
+  gSystem->ProcessEvents();  
+}
 
 
 
@@ -4398,6 +4701,7 @@ void Offline::DrawButtonStatus(bool flag)
   OfflineDrawButton8->SetEnabled(flag);
   OfflineDrawButton9->SetEnabled(flag);
   OfflineDrawButton10->SetEnabled(flag);
+  OfflineDrawButton11->SetEnabled(flag);
 }
 
 
