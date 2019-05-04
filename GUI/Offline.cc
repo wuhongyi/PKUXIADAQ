@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 六 5月  4 20:25:35 2019 (+0800)
+// Last-Updated: 六 5月  4 21:03:30 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 877
+//     Update #: 882
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -859,7 +859,7 @@ void Offline::SelectDrawOptionPanel1(Bool_t on)
       adjustCanvas->cd();
       adjustCanvas->Clear();
       
-      offlinemultigraph->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount)).Data());
+      offlinemultigraph->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld   %s",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount),offlinedata->GetEventCfdForcedTriggerBit(OfflineCurrentCount)?"cfd: invalid":"cfd: valid").Data());
       if(choosedrawmarkerstyle->GetSelected() == 0 || choosedrawmarkerstyle->GetSelected() == 3) offlinemultigraph->Draw("AL");
       if(choosedrawmarkerstyle->GetSelected() == 2) offlinemultigraph->Draw("AP");
       if(choosedrawmarkerstyle->GetSelected() == 1 || choosedrawmarkerstyle->GetSelected() == 4) offlinemultigraph->Draw("ALP");
@@ -2734,7 +2734,7 @@ void Offline::Panel1Draw()
       adjustCanvas->Clear();
       TLatex l;
       l.SetTextSize(0.1);
-      l.DrawLatex(0.1,0.5,TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount)).Data());
+      l.DrawLatex(0.1,0.5,TString::Format("Event: %d   e: %d   ts: %lld   %s",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount),offlinedata->GetEventCfdForcedTriggerBit(OfflineCurrentCount)?"cfd: invalid":"cfd: valid").Data());
       
       adjustCanvas->Modified();
       adjustCanvas->Update();
@@ -2844,8 +2844,7 @@ void Offline::Panel1Draw()
   if(offlinedrawoption1[2]->IsOn())
     offlinemultigraph->Add(ffilterdata);
 
-  offlinemultigraph->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount)).Data());
-
+  offlinemultigraph->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld   %s",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount),offlinedata->GetEventCfdForcedTriggerBit(OfflineCurrentCount)?"cfd: invalid":"cfd: valid").Data());
   
   if(choosedrawmarkerstyle->GetSelected() == 0 || choosedrawmarkerstyle->GetSelected() == 3) offlinemultigraph->Draw("AL");
   if(choosedrawmarkerstyle->GetSelected() == 2) offlinemultigraph->Draw("AP");
@@ -2970,7 +2969,7 @@ void Offline::Panel2Draw()
 	      canvas2->cd(1+i);
 	      TLatex l;
 	      l.SetTextSize(0.04);
-	      l.DrawLatex(0.1,0.5,TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount2[i],offlinedata->GetEventEnergy(OfflineCurrentCount2[i]),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount2[i])))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount2[i])).Data());
+	      l.DrawLatex(0.1,0.5,TString::Format("Event: %d   e: %d   ts: %lld   %s",OfflineCurrentCount2[i],offlinedata->GetEventEnergy(OfflineCurrentCount2[i]),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount2[i])))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount2[i]),offlinedata->GetEventCfdForcedTriggerBit(OfflineCurrentCount2[i])?"cfd: invalid":"cfd: valid").Data());
 	      continue;
 	    }
 	  
@@ -3031,7 +3030,7 @@ void Offline::Panel2Draw()
 	  if(offlinedrawoption2[2]->IsOn())
 	    offlinemultigraph2[i]->Add(ffilterdata2[i]);
 	  canvas2->cd(1+i);
-	  offlinemultigraph2[i]->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld",OfflineCurrentCount2[i],offlinedata->GetEventEnergy(OfflineCurrentCount2[i]),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount2[i])))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount2[i])).Data());//energy timestamp
+	  offlinemultigraph2[i]->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld   %s",OfflineCurrentCount2[i],offlinedata->GetEventEnergy(OfflineCurrentCount2[i]),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount2[i])))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount2[i]),offlinedata->GetEventCfdForcedTriggerBit(OfflineCurrentCount2[i])?"cfd: invalid":"cfd: valid").Data());//energy timestamp
 	  // std::cout<<TString::Format("%d",OfflineCurrentCount2[i]).Data()<<std::endl;
 	  offlinemultigraph2[i]->Draw("AL");
 	}
