@@ -33,6 +33,7 @@
 			   * [Calc Energy](UsersGuide/OFFLINE_Calc Energy.md)
 			   * [FF/CFD Thre](UsersGuide/OFFLINE_FFCFDThre.md)
 			   * [Energy-FF](UsersGuide/OFFLINE_Energy-FF.md)
+			   * [Energy-CFD](UsersGuide/OFFLINE_Energy-CFD.md)
 			   * [QDC](UsersGuide/OFFLINE_QDC.md)
 			   * [FFT](UsersGuide/OFFLINE_FFT.md)
 			   * [Time Diff](UsersGuide/OFFLINE_TimeDiff.md)
