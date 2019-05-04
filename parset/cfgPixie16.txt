@@ -5,7 +5,7 @@ CrateID 0
 
 ## Register parameters
 
-SettingPars ../parset/LaBr3_BC_111914_2_xia.set
+SettingPars ../parset/DSPpar.set
 
 
 ## -----------------------------------------------------------------------------
@@ -13,22 +13,22 @@ SettingPars ../parset/LaBr3_BC_111914_2_xia.set
 
 # module number and slot number
 # The first number mean how many modules, other number means every module slot number
-ModuleSlot 4 2 3 4 5
+ModuleSlot 3 2 3 4
 
 
 # Only use in NOGUI, unit: second
-AutoRunModeTimes   180
+AutoRunModeTimes   1800
 
 ## -----------------------------------------------------------------------------
 ## Offline Mode
 
 # module number and samping rate
 # The first number mean how many modules, other number means every module samping rate(100/250/500)
-ModuleSampingRate 4 250 250 250 250
+ModuleSampingRate 3 250 250 250
 
 # module number and bits
 # The first number mean how many modules, other number means every module bits(12/14/16)
-ModuleBits 4 14 14 14 16
+ModuleBits 3 14 14 14
 
 
 ## -----------------------------------------------------------------------------

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 五 11月 30 19:31:49 2018 (+0800)
+// Last-Updated: 六 5月  4 15:00:33 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 216
+//     Update #: 217
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -21,10 +21,12 @@ ClassImp(Online)
 
 Online::Online(const TGWindow * p)
 {
-  buf = new unsigned char[(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*2+SHAREDMEMORYDATAOFFSET];
-  buf_new = new unsigned char[(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*2+SHAREDMEMORYDATAOFFSET];
+  ModNum = 0;
   number = UINT_MAX;
   flagrunnumber = false;
+  
+  buf = new unsigned char[(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*2+SHAREDMEMORYDATAOFFSET];
+  buf_new = new unsigned char[(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*2+SHAREDMEMORYDATAOFFSET];
 
   for (int i = 0; i < 16; ++i)
     {

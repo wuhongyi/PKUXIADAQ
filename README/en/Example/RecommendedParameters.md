@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 五 12月  7 19:15:17 2018 (+0800)
-;; Last-Updated: 五 12月  7 19:15:47 2018 (+0800)
+;; Last-Updated: 六 3月  9 08:22:00 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 1
+;;     Update #: 2
 ;; URL: http://wuhongyi.cn -->
 
 # Recommended Parameters
@@ -77,20 +77,19 @@
 
 - fast filter
 	- FL: 0.08
-	- GF: 0.02
+	- GF: 0.016
 - slow filter
-	- SL: 0.14/0.13
-	- SG: 0.05
+	- SL: 0.144/0.128
+	- SG: 0.048
 	- Range: 1
-	- TAU: 以实际测量为准(0.02)
+	- TAU: 以实际测量为准(0.023)
 - cfd filter
-	- dealy: 0.02
+	- dealy: 0.024
 	- scale: 0
 - Trace
 	- Delay: 1.496
 	- Length: 3.504
-- QDC
-	- 0.12,0.25,0.35,0.45,0.55,0.65,0.75,0.85
+
 
 ----
 
