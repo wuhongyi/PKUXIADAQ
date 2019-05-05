@@ -36,12 +36,12 @@ ModuleBits 6 12 12 12 12 12 12
 
 ## The user does not modify the following parts
 
-# NoNegEnergy && AlwaysCompEnergy
-100M12bit_sys ../firmware/pixie16_revd_12b100m_firmware_release_10092018/syspixie16_revdgeneral_r33157.bin
-100M12bit_fip ../firmware/pixie16_revd_12b100m_firmware_release_10092018/fippixie16_revdgeneral_r33320.bin
-100M12bit_dsplst ../firmware/pixie16_revd_12b100m_firmware_release_10092018/Pixie16DSP_RevDGeneral_r40804_NoNegEnergy_AlwaysCompEnergy.lst
-100M12bit_dspldr ../firmware/pixie16_revd_12b100m_firmware_release_10092018/Pixie16DSP_RevDGeneral_r40804_NoNegEnergy_AlwaysCompEnergy.ldr
-100M12bit_dspvar ../firmware/pixie16_revd_12b100m_firmware_release_10092018/Pixie16DSP_RevDGeneral_r40804_NoNegEnergy_AlwaysCompEnergy.var
+# standard firmware
+100M12bit_sys ../firmware/pixie16_revd_12b100m_firmware_release/syspixie16_revdgeneral_r33157.bin
+100M12bit_fip ../firmware/pixie16_revd_12b100m_firmware_release/fippixie16_revdgeneral_r32495.bin
+100M12bit_dsplst ../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.lst
+100M12bit_dspldr ../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.ldr
+100M12bit_dspvar ../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.var
 
 # Multiplicity result output from front panel A
 # NoNegEnergy && AlwaysCompEnergy

@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 三 5月 16 19:00:58 2018 (+0800)
-;; Last-Updated: 五 3月  8 16:48:09 2019 (+0800)
+;; Last-Updated: 日 5月  5 10:04:31 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 6
+;;     Update #: 7
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
@@ -15,14 +15,14 @@
 
 Added the following features based on standard firmware：
 
-- 100MHz 12 bit(pixie16_revd_12b100m_firmware_release_10092018)
-	- The value is set to 0 when the calculated energy is negative. 
-	- The pileup event energy is not set to 0, output calculated values directly.
+- 100MHz 12 bit(pixie16_revd_12b100m_firmware_release)
+	- standord firmware
 
 
 
-- 100MHz 14 bit(pixie16_revfpku_14b100m_firmware_release_08232018)
-	- multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1
+
+- 100MHz 14 bit(pixie16_revfpku_14b100m_firmware_release_09272018)
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1.  Output from front panel A and RJ45.
 	- The value is set to 0 when the calculated energy is negative. 
 	- The pileup event energy is not set to 0, output calculated values directly.
 	- In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.

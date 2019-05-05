@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 12月 13 09:41:49 2016 (+0800)
-;; Last-Updated: 日 2月 24 13:53:30 2019 (+0800)
+;; Last-Updated: 日 5月  5 09:48:02 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 27
+;;     Update #: 28
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
@@ -48,9 +48,7 @@
 ## testing firmware
 
 
-- pixie16_revd_12b100m_firmware_release_10092018  PKU firmware
-	- The value is set to 0 when the calculated energy is negative. 
-	- The pileup event energy is not set to 0, output calculated values directly.
+- pixie16_revd_12b100m_firmware_release  standord firmware
 
 - pixie16_revfpku_16b250m_release_02182019   PKU firmware
 	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
@@ -134,7 +132,7 @@
 		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
 		- (2) removed "no traces for large pulses" feature.
 
-- Pixie16DSP_RevDGeneral_r40804_NoNegEnergy_AlwaysCompEnergy   PKU firmware
+- Pixie16DSP_RevDGeneral_r40804_NoNegEnergy_AlwaysCompEnergy   PKU firmware(cfd sometime not working)
 	- The value is set to 0 when the calculated energy is negative. 
 	- The pileup event energy is not set to 0, output calculated values directly.
 
