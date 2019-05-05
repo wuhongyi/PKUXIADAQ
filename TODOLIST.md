@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 五 11月 30 20:59:18 2018 (+0800)
-;; Last-Updated: 五 11月 30 21:05:50 2018 (+0800)
+;; Last-Updated: 日 5月  5 09:30:19 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 1
+;;     Update #: 2
 ;; URL: http://wuhongyi.cn -->
 
 # TODO
@@ -29,7 +29,7 @@
 - 多机箱同步测试
 - 插件时间分辨再测试，录制教程
 - offline 添加PSD优化窗口功能
-
+- cfd 过阈值与没过阈值是，timestamp对比
 
 
 
