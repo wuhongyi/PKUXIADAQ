@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 五 12月  7 20:48:23 2018 (+0800)
+// Last-Updated: 一 5月  6 20:53:27 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 39
+//     Update #: 40
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -288,12 +288,12 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel)
 
   TGCompositeFrame *LogoFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 
-  TGImageMap* fImagePKU = new TGImageMap(LogoFrame, "pkulogo100.jpg");
+  TGImageMap* fImagePKU = new TGImageMap(LogoFrame, "../icons/logo1.jpg");
   fImagePKU->Resize(100,100);
   fImagePKU->ChangeOptions(fImagePKU->GetOptions() | kFixedSize);
   LogoFrame->AddFrame(fImagePKU,new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 0, 0));
 
-  TGImageMap* fImageWHY = new TGImageMap(LogoFrame, "why.jpg");
+  TGImageMap* fImageWHY = new TGImageMap(LogoFrame, "../icons/logo2.jpg");
   fImageWHY->Resize(100,100);
   fImageWHY->ChangeOptions(fImageWHY->GetOptions() | kFixedSize);
   LogoFrame->AddFrame(fImageWHY,new TGLayoutHints(kLHintsTop | kLHintsRight, 100, 0, 0, 0));

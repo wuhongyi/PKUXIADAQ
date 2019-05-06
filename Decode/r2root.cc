@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:39 2016 (+0800)
-// Last-Updated: 四 1月  3 18:20:00 2019 (+0800)
+// Last-Updated: 一 5月  6 20:15:20 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 77
+//     Update #: 80
 // URL: http://wuhongyi.cn 
 
 #include "r2root.hh"
@@ -30,6 +30,10 @@ r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int run
 	StatisticsEnergy0[i][j] = 0;
 	StatisticsWaveformCount[i][j] = 0;
 	StatisticsEventCount[i][j] = 0;
+
+	tHist[i][j] = NULL;
+	eHist[i][j] = NULL;
+	cfdHist[i][j] = NULL;
       }
   Run = runnumber;
   FileName = filename;
@@ -87,6 +91,12 @@ r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int run
 	  tHist[i][j] = new TH1I(TString::Format("T_%02d_%02d",i,j).Data(),"",TimesHist,0,TimesHist);
 	  tHist[i][j]->SetDirectory(0);
 	  tHist[i][j]->GetXaxis()->SetTitle("s");
+	  eHist[i][j] = new TH1I(TString::Format("E_%02d_%02d",i,j).Data(),"",65536,0,65536);
+	  eHist[i][j]->SetDirectory(0);
+	  eHist[i][j]->GetXaxis()->SetTitle("ch");
+	  cfdHist[i][j] = new TH1I(TString::Format("CFD_%02d_%02d",i,j).Data(),"",32768,0,32768);
+	  cfdHist[i][j]->SetDirectory(0);
+	  cfdHist[i][j]->GetXaxis()->SetTitle("cfd");
 	}
       // OLD 20180221
       // rawdec[i].setsamplerate(100);
@@ -252,7 +262,8 @@ void r2root::Process()
 	{
 	  tHist[mark][ch]->Fill(ts*10/1000000000.0);
 	}
-      
+      eHist[mark][ch]->Fill(evte);
+      cfdHist[mark][ch]->Fill(cfd);
       
       StatisticsEventCount[mark][ch]++;
       if(outofr) StatisticsOutOfRange[mark][ch]++;
@@ -304,7 +315,7 @@ void r2root::Process()
 
 
   
-  TFile *filet = new TFile(TString::Format("%s_T_R%04d.root",FileName.Data(), Run).Data(),"RECREATE");
+  TFile *filet = new TFile(TString::Format("%s_S_R%04d.root",FileName.Data(), Run).Data(),"RECREATE");
   if(!filet->IsOpen())
     {
       std::cout<<"Can't open root file"<<std::endl;
@@ -316,6 +327,8 @@ void r2root::Process()
     for (int j = 0; j < 16; ++j)
       {
   	tHist[i][j]->Write();
+	eHist[i][j]->Write();
+	cfdHist[i][j]->Write();
       }
   filet->Close();
 
