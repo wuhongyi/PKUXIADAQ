@@ -48,6 +48,7 @@
     * [时间分辨](Example/TimeResolution.md)
 	* [推荐参数](Example/RecommendedParameters.md)
 	* [在束伽马谱学](Example/InBeamGammaCIAE.md)	
+* [采购建议](ProcurementProposal.md)
 * [编程指南](ProgrammersGuide/README.md)
 	* [XIA API](ProgrammersGuide/XIAAPI.md)
 	* [PKU code](ProgrammersGuide/PKUCode.md)
