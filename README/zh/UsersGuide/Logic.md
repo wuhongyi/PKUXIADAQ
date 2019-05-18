@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 5月 26 09:17:06 2018 (+0800)
-;; Last-Updated: 五 9月 28 13:01:23 2018 (+0800)
+;; Last-Updated: 六 5月 18 20:30:10 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 7
+;;     Update #: 8
 ;; URL: http://wuhongyi.cn -->
 
 # Logic
@@ -31,31 +31,32 @@ Control logic：
 
 ![illustrates the signal processing in the Pixie-16 modules](/img/illustratesthesignalprocessinginthepixie16modules.png)
 
-As shown in Figure, the incoming analog pulse is first digitized by the ADC and then enters the signal processing circuitries in the Signal Processing FPGA, each of which processes ADC data from 4 channels of a Pixie-16 module. 
+如图所示，输入模拟脉冲首先由 ADC 数字化，然后进入信号处理 FPGA 中的信号处理电路，每个信号处理电路处理来自 Pixie-16 模块的 4 个通道的 ADC 数据。
 
-The digitized data stream is first fed into two branches: a fast filter generating fast triggers to be sent to the System FPGA and a Delay FIFO which could be used to compensate for the delay between fast triggers and the external triggers. 
+数字化数据流首先被送入两个分支：快速过滤器(fast filter)生成快速触发(fast triggers)以发送到系统 FPGA，延迟 FIFO 可用于补偿快速触发(fast triggers)和外部触发(external triggers)之间的延迟。
 
-The digitized data stream passing through the Delay FIFO is then branched into four parts: 
-- 1) energy filter which samples energy running sums at the PeakSample time; 
-- 2) trigger filter which detects pulse and performs pileup inspection; 
-- 3) capture FIFO which delays the ADC data according to the trace delay parameter value before the ADC data is streamed into the Trace Dual Port Memory (DPM) when a valid pulse is detected; 
-- 4) CFD circuitry where a CFD trigger is generated to trigger the computation of QDC sums, latch timestamps and record traces. 
+然后，通过延迟 FIFO 的数字化数据流分为四个部分：
+ - 能量滤波器，采集能量滤波器在 PeakSample 时间的能量;
+ - 触发滤波器，检测脉冲并进行堆积检查;
+ - 捕获FIFO，当检测到有效脉冲时，ADC 数据在流入跟踪双端口存储器(DPM)之前根据跟踪延迟参数值延迟 ADC 数据;
+ - CFD 电路，其中生成 CFD 触发以触发 QDC，锁存时间戳和记录波形的计算。
 
-The Control Logic in the signal processing FPGA utilizes the local fast trigger, CFD trigger, veto and external triggers to determine whether and when to stream waveform data into the Trace DPM and to write event information into the Header DPM. The DSP polls the status of the DPMs through the Status Registers and moves event data into the External FIFO through the DSP bus and the System FPGA.
+信号处理 FPGA 中的控制逻辑利用本地快速触发(local fast trigger)，CFD 触发(CFD trigger)，否决(VETO)和外部触发(external triggers)来确定是否以及何时将波形数据流入 Trace DPM 并将事件信息写入 Header DPM。 DSP 通过状态寄存器监视 DPM 的状态，并通过 DSP 总线和系统 FPGA 将事件数据移入外部FIFO(External FIFO)。
 
 
 
-**Trigger Stretch Lengths**
+**触发展宽长度(Trigger Stretch Lengths)**
 
-- **External trigger stretch** is used to stretch the module validation trigger pulse.
-- **Channel trigger stretch** is used to stretch the channel validation trigger pulse.
-- **Veto stretch** is used to stretch the veto pulse for this channel.
-- **Fast trigger backplane length** is used to stretch the fast trigger pulse to be sent to the System FPGA, where this fast trigger can be sent to the backplane to be shared with other modules, or can be used for making coincidence or multiplicity triggers.
+- **外部触发展宽(External trigger stretch)** 用于展宽模块有效触发(module validation trigger)脉冲。
+- **通道触发展宽(Channel trigger stretch)** 用于展宽通道有效触发(channel validation trigger)脉冲。
+- **Veto展宽(Veto stretch)** 用于展宽该通道的否决脉冲。
+- **快速触发背板长度(Fast trigger backplane length)** 用于展宽要发送到系统 FPGA 的快速触发脉冲，其中此快速触发可以发送到背板以与其它模块共享，或者可以用于进行符合或多重触发。
 
-**FIFO Delays**
 
-- **External delay length** is used to delay the incoming ADC waveform and the local fast trigger in order to compensate for the delayed arrival of the external trigger pulses, e.g., module validation trigger, channel validation trigger, etc.
-- **Fast trigger backplane delay** is used to delay the fast trigger pulse before it is sent to the System FPGA for sharing with other modules through the backplane or making coincidence or multiplicity triggers.
+**FIFO延迟(FIFO Delays)**
+
+- **外部延迟长度(External delay length)** 用于延迟输入 ADC 波形和本地快速触发，以便补偿外部触发脉冲的延迟到达，例如: 模块有效触发，通道有效触发等。
+- **快速触发背板延迟(Fast trigger backplane delay)** 用于在将快速触发脉冲发送到系统 FPGA 之前将其延迟，以便通过背板与其它模块共享或进行符合或多重触发。
 
 ![Range for Trigger Stretch Lengths and FIFO Delays in Pixie-16 Modules](/img/rangefortriggerstretchlengthsandfifodelayinpixie16modules.png)
 
@@ -119,13 +120,13 @@ Channel validation trigger来源有以下选择：
 
 ![System FPGA](/img/SystemFPGA.png)
 
-Multiplicity：对设置的该channel来说，左邻插件、自身插件、右邻插件共48路，可以选择参与多重性选择的路数
+Multiplicity：对设置的该 channel 来说，左邻插件、自身插件、右邻插件共 48 路，可以选择参与多重性选择的路数
 
-Coincidence：对设置的该channel来说，左邻插件、自身插件、右邻插件，每个插件均满足设置的符合条件，才能给出符合
+Coincidence：对设置的该 channel 来说，左邻插件、自身插件、右邻插件，每个插件均满足设置的符合条件，才能给出符合
 
 ![fast trigger stretch/delay](/img/fasttrigger_stretch_delay.png)
 
-其它插件的fast filter通过机箱背板传到该插件需要时间，大约100ns左右。因此通过调节门宽、延迟来保证符合、多重性选择。
+其它插件的 fast filter 通过机箱背板传到该插件需要时间，大约 100 ns 左右。因此通过调节门宽、延迟来保证符合、多重性选择。
 - Fast trigger stretch length 设置 fast filter 门宽，
 - fast trigger delay length 设置 fast filter 延迟。
 
