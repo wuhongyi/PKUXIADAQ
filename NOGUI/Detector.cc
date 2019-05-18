@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:52:00 2016 (+0800)
-// Last-Updated: 三 1月 30 11:02:34 2019 (+0800)
+// Last-Updated: 六 5月 18 15:29:48 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 37
+//     Update #: 39
 // URL: http://wuhongyi.cn 
 
 #include "Detector.hh"
@@ -631,7 +631,7 @@ int Detector::StopLSMRun()
 int Detector::OpenSharedMemory(){
   int flag = 0;
 
-   if((shmsem=sem_open("sempixie16pkuxiadaq",O_CREAT,0666,1)) == SEM_FAILED)
+  if((shmsem=sem_open("sempixie16pkuxiadaq",O_CREAT,0666,1)) == SEM_FAILED)
      {
        std::cout<<"Cannot create seamphore!"<<std::endl;
        flag++;

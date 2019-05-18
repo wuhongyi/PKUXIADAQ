@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 六 5月  4 15:00:33 2019 (+0800)
+// Last-Updated: 六 5月 18 15:39:25 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 217
+//     Update #: 218
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -94,6 +94,8 @@ void Online::Init()
       printf( "open semaphore ok.\n");
     }
 
+  ftruncate(shm_id,(off_t)(SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+PRESET_MAX_MODULES*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL);
+  
   ptr = (unsigned char*)mmap(NULL,SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL,PROT_READ|PROT_WRITE,MAP_SHARED,shm_id,0);/*连接共享内存区*/
 
   if(flag)
