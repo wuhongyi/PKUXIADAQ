@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 11月  3 19:50:39 2018 (+0800)
-;; Last-Updated: 三 1月 30 19:44:21 2019 (+0800)
+;; Last-Updated: 日 5月 19 21:48:33 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 3
+;;     Update #: 4
 ;; URL: http://wuhongyi.cn -->
 
 # Crate
@@ -37,7 +37,7 @@ Type the username "private", and the default password is "private".
 After the chassis is open，the monitoring parameters is shown in the figure above.
 
 
-Wherein, the buttons in the upper right corner **FAN SLOWER* and **FAN FASTER** are used to regulate the speed of the fan.
+Wherein, the buttons in the upper right corner **FAN SLOWER** and **FAN FASTER** are used to regulate the speed of the fan.
 
 
 

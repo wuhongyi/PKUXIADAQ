@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:17:02 2018 (+0800)
-;; Last-Updated: 五 10月 26 09:59:24 2018 (+0800)
+;; Last-Updated: 日 5月 19 21:52:40 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 2
+;;     Update #: 3
 ;; URL: http://wuhongyi.cn -->
 
 # Module Variables
@@ -30,7 +30,7 @@ ModCSRB is a 32-bit parameter with each of 32 bits controlling different operati
 
 
 
-## ## Register definition
+## Register definition
 
 Module Control Register B affecting the module as a whole.
 
