@@ -4,18 +4,18 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 5月 26 09:17:06 2018 (+0800)
-;; Last-Updated: 五 9月 28 13:01:23 2018 (+0800)
+;; Last-Updated: 日 5月 19 21:42:20 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 7
+;;     Update #: 8
 ;; URL: http://wuhongyi.cn -->
 
 # Logic
 
 <!-- toc -->
 
-对于某路信号的每个事件是否有效被记录取决于：
-- Fast trigger select  (一级trigger)
-- Control logic  (二级trigger)
+Whether each event of a certain signal is recorded depends on:
+- Fast trigger select (first trigger)
+- Control logic (second trigger)
 
 Fast trigger select：
 - Local fast filter
@@ -63,55 +63,54 @@ The Control Logic in the signal processing FPGA utilizes the local fast trigger,
 
 ## Module Fast Trigger (for trigger)
 
-Module fast trigger 有以下四种来源可供选择：
-- Ext_FastTrig_In(来源于本插件)
-	- Ext_FastTrig_Sel(前面板 TTL 输入)
-	- Int_FastTrig_Sgl(内部某路 FT)
-	- FTIN_Or(内部 FT 的 OR)
-	- LVDS_ValidTrig_FP(前面板网口输入)
-	- ChanTrig_Sel(内部某路的 valid trigger)(与 module validation trigger 共用一个设置)
-- FT_LocalCrate_BP(本机箱中指定插件送出的 trigger)
-- FT_In_BP(多机箱中指定机箱上指定插件发送的 trigger)
-- FT_WiredOr(本机箱中所有插件发送出 trigger 的 OR)
+Module fast trigger has four options：
+- Ext_FastTrig_In(From this module)
+	- Ext_FastTrig_Sel(Front panel TTL input)
+	- Int_FastTrig_Sgl(Local fast trigger of a specified channel in this module)
+	- FTIN_Or(The OR of local fast trigger of all channel in this module)
+	- LVDS_ValidTrig_FP(Front panel RJ45 port input)
+	- ChanTrig_Sel(The valid trigger of a specified channel of the module)(Share a setting with module validation trigger)
+- FT_LocalCrate_BP(Trigger sent by the specified module in this crate)
+- FT_In_BP(Trigger sent by the specified module on the specified crate in multiple crates)
+- FT_WiredOr(OR of local fast trigger of all modules in this crate)
 
 
 
 ## Module Validation Trigger (for control logic)
 
-Module validation trigger 有以下来源可供选择：
-- Ext_ValidTrig_In(来源于本插件)
-	- Ext_ValidTrig_Sel(前面板 TTL 输入)
-	- Int_ValidTrig_Sgl(内部某路 FT)
-	- FTIN_Or(内部 FT 的 OR)
-	- LVDS_ValidTrig_FP(前面板网口输入)
-	- ChanTrig_Sel(内部某路的 valid trigger) )(与 module fast trigger 共用一个设置)
-- ET_LocalCrate_BP(本机箱中指定插件送出的 trigger)
-- ET_In_BP(多机箱中指定机箱上指定插件发送的 trigger)
-- ET_WiredOr(本机箱中所有插件发送出 trigger 的 OR)
-- 前面板 module GATE 输入 LVDS 信号
+Module validation trigger has five options：
+- Ext_ValidTrig_In(From this module)
+	- Ext_ValidTrig_Sel(Front panel TTL input)
+	- Int_ValidTrig_Sgl(Local fast trigger of a specified channel in this module)
+	- FTIN_Or(The OR of local fast trigger of all channel in this module)
+	- LVDS_ValidTrig_FP(Front panel RJ45 port input)
+	- ChanTrig_Sel(The valid trigger of a specified channel of the module)(Share a setting with  module fast trigger)
+- ET_LocalCrate_BP(Trigger sent by the specified module in this crate)
+- ET_In_BP(Trigger sent by the specified module on the specified crate in multiple crates)
+- ET_WiredOr(OR of local fast trigger of all modules in this crate)
+- Front panel module GATE input LVDS signal
 
 
 
 ## Channel Validation Trigger(for trigger/control logic)
 
-Channel validation trigger来源有以下选择：
-- 每路独立设置，来源于多重性选择
-- 每路独立设置，来源于符合
-- 每4路共用一个设置，来源于左、中、右插件某路的 FT
-- 每4路共用一个设置，来源于自身 FT 与 Ext_FastTrig_In 的符合
-- 每路独立设置，前面板 channel GATE 输入 LVDS 信号(与前面板 Veto 共用一个输入口)
+Channel validation trigger has five options：
+- Independent setting for each channel, from multiplicity
+- Independent setting for each channel, from coincidence
+- One setting for every 4 channels, derived from the left, its own and right modules FT
+- One setting for every 4 channels, from the coincidence between its own FT and Ext_FastTrig_In
+- Independent setting for each channe, the front panel channel GATE inputs the LVDS signal (shares one input port with the front panel Veto)
 
 
 ## Veto
 
-
-来源于 ModuleVeto 与 ChannelVeto 的 OR
-- ModuleVeto 来源有两个选择：
+OR from ModuleVeto and ChannelVeto:
+- ModuleVeto source has two options：
 	- Module Validation Trigger
-	- 前面板 Module Gate
-- ChannelVote 来源有两个选择：
+	- Front panel Module Gate
+- ChannelVote source has two options：
 	- Channel Validtion Trigger
-	- 前面板 Gate input for channel (与前面板 Channel validation trigger 共用一个输入口)
+	- Front panel Gate input for channel (Share one input port with the front panel Channel validation trigger)
 
 
 ## System FPGA （coincidence/multiplicity）
@@ -119,24 +118,21 @@ Channel validation trigger来源有以下选择：
 
 ![System FPGA](/img/SystemFPGA.png)
 
-Multiplicity：对设置的该channel来说，左邻插件、自身插件、右邻插件共48路，可以选择参与多重性选择的路数
+Multiplicity: For the channel set up, the left neighbor module, its own module, and the right-side module have a total of 48 channels, and you can choose the number of channel to participate in multiply trigger.
 
-Coincidence：对设置的该channel来说，左邻插件、自身插件、右邻插件，每个插件均满足设置的符合条件，才能给出符合
+Coincidence: For the channel set, the left neighbor module, its own module, and the right neighbor module, each module match the set criteria to give a coincidence trigger.
 
 ![fast trigger stretch/delay](/img/fasttrigger_stretch_delay.png)
 
-其它插件的fast filter通过机箱背板传到该插件需要时间，大约100ns左右。因此通过调节门宽、延迟来保证符合、多重性选择。
-- Fast trigger stretch length 设置 fast filter 门宽，
-- fast trigger delay length 设置 fast filter 延迟。
+It takes about 100 ns for the fast filter trigger of other modules to pass to the module through the crate backplane. Therefore, by adjusting the gate width and delay, it is guaranteed to coincidence and multiply trigger.
+
+- Fast trigger stretch length: Set fast trigger gate width，
+- fast trigger delay length: Set fast trigger delay。
 
 *Control logic (module/channel validation trigger)*
 
 ![validation trigger](/img/validationtrigger.png)
 
-特别需要注意信号经过背板传输大约需要时间 100 ns。
-
-
-
-
+**Particular attention should be paid to the fact that it takes about 100 ns for the signal to be transmitted through the backplane.**
 
 <!-- Logic.md ends here -->

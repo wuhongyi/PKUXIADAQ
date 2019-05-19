@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 9月 25 13:27:37 2018 (+0800)
-;; Last-Updated: 四 9月 27 12:49:13 2018 (+0800)
+;; Last-Updated: 日 5月 19 20:53:43 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 9
+;;     Update #: 11
 ;; URL: http://wuhongyi.cn -->
 
 # Multiple Modules Synchronously
@@ -18,7 +18,6 @@ When many Pixie-16 modules are operated together as a system, it may be required
 ![JP101](/img/multiplemodulessynchronously.png)
 
 In a multi-module system there will be one clock master and a number of clock slaves or repeaters. The clock function of a module can be selected by setting shunts on Jumper JP101 near the bottom right corner of the board. The 10-pin Jumper JP101 is shown in the picture on the top with those pins labelled in red color. Shunts are provided to connect pins that are appropriate for each chosen clock distribution mode. Four clock distribution modes, individual clock mode, PXI clock mode, daisy-chained clock mode, and multi- crate clock mode, are described below.
-
 
 > **[warning] Please Note**
 >
@@ -37,7 +36,6 @@ In a multi-module system there will be one clock master and a number of clock sl
 
 If only one Pixie-16 module is used in the system, or if clocks between modules do not need to be synchronized, the module(s) should be set into individual clock mode. Connect pin 7 of JP101 (the clock input) with a shunt to pin 8 (loc – IN). This will use the 50 MHz local crystal oscillator of the Pixie-16 module as the clock source.
 
-
 ----
 
 ## PXI Clock Mode
@@ -50,7 +48,6 @@ A Pixie-16 module can be configured to be the PXI clock master in slot 2 by conn
 
 One other advantage of the PXI clock mode over the daisy-chained clock mode, which will be discussed next, is that except for the Pixie-16 master module, which has to be installed in slot 2, other Pixie-16 slave modules can be installed in any other slot of the Pixie-16 crate. In contrast, when the daisy-chained clock mode is used, all Pixie-16 modules have to be installed next to each other, i.e. no gap is allowed between modules.
 
-
 ----
 
 ## Daisy-chained Clock Mode
@@ -58,7 +55,6 @@ One other advantage of the PXI clock mode over the daisy-chained clock mode, whi
 ![daisy-chained clock mode](/img/daisychainedclockmode.png)
 
 A further option for clock distribution is to daisy-chain the clocks from one module to the other, with each module repeating the clock signal and transmitting it to the neighbor on the right. This requires one master module, located in the leftmost slot of the group of Pixie-16 modules. The master module uses its local crystal oscillator as the input and sends its output to the right (loc – IN, out – right). Other Pixie-16 modules in the crate should be configured as clock repeaters by using the signal from the left neighbor as the input and sending its output to the right (left – IN, out – right). However, as mentioned earlier, there must be no slot gap between modules.
-
 
 ----
 
@@ -80,13 +76,11 @@ The Pixie-16 module installed in slot 2 of the Slave crate is called the crate M
 
 ![Module Definitions in a 2-crate System](/img/moduledefinitionsina2cratesystem.png)
 
-
 ### Clock Jumper (JP101) Settings on the Pixie-16 Modules
 
-or all Pixie-16 modules in a 2-crate system to use the same global clock signal, the clock jumper (JP101) in all modules should be set according to Table *Clock Jumper JP101 Settings in a 2-crate System* and Figure *multi-crate clock mode*.
+For all Pixie-16 modules in a 2-crate system to use the same global clock signal, the clock jumper (JP101) in all modules should be set according to Table *Clock Jumper JP101 Settings in a 2-crate System* and Figure *multi-crate clock mode*.
 
 ![Clock Jumper JP101 Settings in a 2-crate System](/img/clockjumperjp101settingsina2cratesystem.png)
-
 
 ### Cable Connections for Pixie-16 Rear I/O Trigger Modules
 
@@ -108,7 +102,6 @@ Please note pin numbering for all jumpers on the trigger module is counted from 
 
 ![Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module](/img/pinnumberingforthejumpersonthepixie16reariotriggermodule.png)
 
-
 Table *Rear I/O Trigger Module #1’s Jumper Settings* shows the jumper settings of the Pixie-16 rear I/O trigger module #1 in a 2-crate system.
 
 ![Rear I/O Trigger Module #1’s Jumper Settings](/img/reariotrigger1sjumpersettings.png)
@@ -119,7 +112,6 @@ Trigger module #2 is installed in the rear slot #2 of crate #2. Table *Rear I/O 
 
 ![Cable connections among four Pixie-16 rear I/O trigger modules](/img/cableconnectionsamongfourpixie16reariotriggermodules.png)
 
-Please note, if there are a total of four crates, the cable connections among those four Pixie-16 rear I/O trigger modules that are installed in those four separate crates should follow the connection methods shown in Figure 1-17. For the jumper settings on the Pixie-16 rear I/O trigger modules, trigger module #1 and #2 should use the same jumper settings as those in the trigger module #1 and #2 of the 2-crate system, respectively, whereas trigger module #3 and #4 should use the same jumper settings as those in trigger module #2.
-
+Please note, if there are a total of four crates, the cable connections among those four Pixie-16 rear I/O trigger modules that are installed in those four separate crates should follow the connection methods shown in Figure. For the jumper settings on the Pixie-16 rear I/O trigger modules, trigger module #1 and #2 should use the same jumper settings as those in the trigger module #1 and #2 of the 2-crate system, respectively, whereas trigger module #3 and #4 should use the same jumper settings as those in trigger module #2.
 
 <!-- MultipleModulesSynchronously.md ends here -->

@@ -4,29 +4,29 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 5月 26 09:17:06 2018 (+0800)
-;; Last-Updated: 六 5月 18 20:30:10 2019 (+0800)
+;; Last-Updated: 日 5月 19 21:43:00 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 8
+;;     Update #: 11
 ;; URL: http://wuhongyi.cn -->
 
 # Logic
 
 <!-- toc -->
 
-对于某路信号的每个事件是否有效被记录取决于：
-- Fast trigger select  (一级trigger)
-- Control logic  (二级trigger)
+对于某路信号的每个事件是否被有效记录取决于：
+- Fast trigger select (一级trigger)
+- Control logic (二级trigger)
 
-Fast trigger select：
-- Local fast filter
-- Channel validation trigger
-- Module fast trigger
+快速触发的选择(Fast trigger select)：
+- 快速滤波器(Local fast filter)
+- 通道有效触发(Channel validation trigger)
+- 模块快速触发(Module fast trigger)
 
-Control logic：
-- Module validation trigger
-- Channel validation trigger
-- Veto
-- Pileup
+控制逻辑(Control logic)：
+- 模块有效触发(Module validation trigger)
+- 通道有效触发(Channel validation trigger)
+- 否决(Veto)
+- 堆积(Pileup)
 - ...
 
 ![illustrates the signal processing in the Pixie-16 modules](/img/illustratesthesignalprocessinginthepixie16modules.png)
@@ -122,19 +122,19 @@ Channel validation trigger来源有以下选择：
 
 Multiplicity：对设置的该 channel 来说，左邻插件、自身插件、右邻插件共 48 路，可以选择参与多重性选择的路数
 
-Coincidence：对设置的该 channel 来说，左邻插件、自身插件、右邻插件，每个插件均满足设置的符合条件，才能给出符合
+Coincidence：对设置的该 channel 来说，左邻插件、自身插件、右邻插件，每个插件均满足设置的符合条件，才能给出符合触发
 
 ![fast trigger stretch/delay](/img/fasttrigger_stretch_delay.png)
 
-其它插件的 fast filter 通过机箱背板传到该插件需要时间，大约 100 ns 左右。因此通过调节门宽、延迟来保证符合、多重性选择。
-- Fast trigger stretch length 设置 fast filter 门宽，
-- fast trigger delay length 设置 fast filter 延迟。
+其它插件的 fast filter trigger 通过机箱背板传到该插件需要大约 100 ns 左右。因此通过调节门宽、延迟来保证符合、多重性选择的合理设置。
+- Fast trigger stretch length: 设置 fast trigger 门宽，
+- fast trigger delay length: 设置 fast trigger 延迟。
 
 *Control logic (module/channel validation trigger)*
 
 ![validation trigger](/img/validationtrigger.png)
 
-特别需要注意信号经过背板传输大约需要时间 100 ns。
+**特别需要注意信号经过背板传输大约需要时间 100 ns。**
 
 
 
