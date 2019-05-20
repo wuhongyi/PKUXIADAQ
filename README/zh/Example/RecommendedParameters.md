@@ -4,14 +4,15 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 五 12月  7 17:28:17 2018 (+0800)
-;; Last-Updated: 六 3月  9 08:22:00 2019 (+0800)
+;; Last-Updated: 一 5月 20 11:59:25 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 2
+;;     Update #: 3
 ;; URL: http://wuhongyi.cn -->
 
 # 推荐参数
 
 <!-- toc -->
+**本页参数仅供参考**
 
 ## HPGe
 
@@ -67,7 +68,14 @@
 
 ## Si
 
-**TODO**
+- fast filter
+	- FL: 0.1
+	- GF: 0.0
+- slow filter
+	- SL: 3.04
+	- SG: 0.24
+	- Range: 2
+	- TAU: Based on actual measurements
 
 ----
 

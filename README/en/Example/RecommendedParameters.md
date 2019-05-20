@@ -4,14 +4,15 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 五 12月  7 19:15:17 2018 (+0800)
-;; Last-Updated: 六 3月  9 08:22:00 2019 (+0800)
+;; Last-Updated: 一 5月 20 11:59:25 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 2
+;;     Update #: 4
 ;; URL: http://wuhongyi.cn -->
 
 # Recommended Parameters
 
 <!-- toc -->
+**The parameters of this page are for reference only.**
 
 ## HPGe
 
@@ -24,10 +25,10 @@
 	- SL: 5.04
 	- SG: 1.2/1.6
 	- Range: 3
-	- TAU: 以实际测量为准
+	- TAU: Based on actual measurements
 - cfd filter
-	- dealy: 0.02
-	- scale: 5
+	- dealy: 0.08
+	- scale: 0
 
 ### 250M
 
@@ -38,7 +39,7 @@
 	- SL: 5.04
 	- SG: 1.2
 	- Range: 3
-	- TAU: 以实际测量为准
+	- TAU: Based on actual measurements
 - cfd filter
 	- dealy: 0.08
 	- scale: 0
@@ -57,7 +58,7 @@
 	- SL: 
 	- SG: 
 	- Range: 1
-	- TAU: 以实际测量为准
+	- TAU: Based on actual measurements
 - cfd filter
 	- dealy: 0.08
 	- scale: 0
@@ -67,7 +68,14 @@
 
 ## Si
 
-**TODO**
+- fast filter
+	- FL: 0.1
+	- GF: 0.0
+- slow filter
+	- SL: 3.04
+	- SG: 0.24
+	- Range: 2
+	- TAU: Based on actual measurements
 
 ----
 
@@ -82,7 +90,7 @@
 	- SL: 0.144/0.128
 	- SG: 0.048
 	- Range: 1
-	- TAU: 以实际测量为准(0.023)
+	- TAU: Based on actual measurements(0.023)
 - cfd filter
 	- dealy: 0.024
 	- scale: 0

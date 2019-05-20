@@ -4,19 +4,19 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:05:37 2018 (+0800)
-;; Last-Updated: 日 10月  7 09:05:48 2018 (+0800)
+;; Last-Updated: 一 5月 20 10:59:57 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 1
+;;     Update #: 2
 ;; URL: http://wuhongyi.cn -->
 
 # Hist & XDT
 
 ![Hist & XDT](/img/HistXDT.png)
 
-The binning factor controls the number of MCA bins in the spectrum. Energies are computed as 16 bit numbers, allowing in principle 64K MCA bins.
+Binning factor 控制能谱中 MCA bin 的数量。能量计算为 16 位数字，原则上允许 64K MCA bin。
 
-However, spectrum memory for each channel is limited to 32K bins, so computed energy values are divided by $2^{binning factor}$$ before building the histogram. Binning Factor is usually set to 1, but for low count rates and wide peaks, it might be useful to set it to a larger value to obtain a spectrum with fewer bins, but more counts per bin.
+但是，每个通道的能谱内存限制在 32K 的 bin 数，因此在构建柱状图之前，计算的能量值除以系数 $$2^{binning factor}$$。Binning factor 通常设置为 1，但对于低计数率和宽峰值，将其设置为较大的值可能会有用，以获得具有较少 bin 数但每个 bin 中更多的计数。
 
-$$E_{min}$$ is reserved for a future function to subtract a constant “minimum energy” from the computed energy value before binning to essentially cut off the lower end of the spectrum.
+$$E min_$$ 是为将来的函数预留的，用于在能谱填充之前从计算的能量值中减去一个常数“最小能量”，从而基本上切断能谱的低道址部分。
 
 <!-- MONITOR_HistXDT.md ends here -->

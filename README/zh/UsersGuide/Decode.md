@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 5月 13 20:23:14 2018 (+0800)
-;; Last-Updated: 一 11月  5 16:30:42 2018 (+0800)
+;; Last-Updated: 一 5月 20 11:55:59 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 12
+;;     Update #: 14
 ;; URL: http://wuhongyi.cn -->
 
 # 数据解码
@@ -16,10 +16,11 @@
 用户首先需要修改 **UesrDefine.hh** 文件中的定义
 
 ```cpp
-#define ROOTFILEPATH "/home/wuhongyi/data/"  //要生成ROOT文件的路径
 #define RAWFILEPATH "/home/wuhongyi/data/"   //原始二进制文件的路径
 #define RAWFILENAME "data"                   //原始文件的文件名
+#define ROOTFILEPATH "/home/wuhongyi/data/"  //要生成ROOT文件的路径
 
+#define TimesHist 3600  // second  直方图参数,设置比该轮运行时间长即可
 
 #define Crate0
 #define Crate0num 5   //该机箱中使用插件数
@@ -104,6 +105,6 @@ make
 - WaveformCount: 记录波形的事件数
 - TotalEvent: 总的输出事件数
 
-
+每轮数据转换结束，本文件夹内均会生成一个 **ROOT** 文件，该文件统计了采集卡每个通道的计数率.
 
 <!-- Decode.md ends here -->
