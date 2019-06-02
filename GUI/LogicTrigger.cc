@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 三 5月 16 17:27:20 2018 (+0800)
+// Last-Updated: 日 6月  2 21:00:03 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 150
+//     Update #: 151
 // URL: http://wuhongyi.cn 
 
 #include "LogicTrigger.hh"
@@ -835,27 +835,27 @@ int LogicTrigger::load_info(Long_t mod)
     {
       retval = Pixie16ReadSglChanPar((char*)"ExtTrigStretch", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/ExtTrigStretch", retval);
-      NumEntry[1][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
+      NumEntry[1][i]->SetText(TString::Format("%1.3f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"ExternDelayLen", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/ExternDelayLen", retval);
-      NumEntry[2][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
+      NumEntry[2][i]->SetText(TString::Format("%1.3f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"FtrigoutDelay", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/FtrigoutDelay", retval);    
-      NumEntry[3][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
+      NumEntry[3][i]->SetText(TString::Format("%1.3f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"VetoStretch", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/VetoStretch", retval);
-      NumEntry[4][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
+      NumEntry[4][i]->SetText(TString::Format("%1.3f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"ChanTrigStretch", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/ChanTrigStretch", retval);
-      NumEntry[5][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
+      NumEntry[5][i]->SetText(TString::Format("%1.3f", ChanParData).Data());
 
       retval = Pixie16ReadSglChanPar((char*)"FASTTRIGBACKLEN", &ChanParData, mod, i);
       if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/FASTTRIGBACKLEN", retval);     
-      NumEntry[6][i]->SetText(TString::Format("%1.2f", ChanParData).Data());
+      NumEntry[6][i]->SetText(TString::Format("%1.3f", ChanParData).Data());
     }
 
   //=============================
