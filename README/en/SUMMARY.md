@@ -44,6 +44,7 @@
 	* [FrontPanel](UsersGuide/FrontPanel.md)
 	* [Logic](UsersGuide/Logic.md)
 	* [MultipleModulesSynchronously](UsersGuide/MultipleModulesSynchronously.md)
+	* [Update CPLD](UsersGuide/UpdateCPLD.md)
 * [Applications](Example/README.md)	
     * [Time Resolution](Example/TimeResolution.md)
     * [Recom. Pars](Example/RecommendedParameters.md)

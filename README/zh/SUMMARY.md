@@ -44,6 +44,7 @@
 	* [插件前面板](UsersGuide/FrontPanel.md)
 	* [逻辑功能](UsersGuide/Logic.md)
 	* [时间同步](UsersGuide/MultipleModulesSynchronously.md)
+	* [升级CPLD](UsersGuide/UpdateCPLD.md)
 * [应用案例](Example/README.md)
     * [时间分辨](Example/TimeResolution.md)
 	* [推荐参数](Example/RecommendedParameters.md)
