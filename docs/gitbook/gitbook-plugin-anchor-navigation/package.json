@@ -9,7 +9,7 @@
         "spec": "0.0.1",
         "type": "version"
       },
-      "/home/wuhongyi/workgithub/DAQ/PKUXIADAQ/README"
+      "/home/wuhongyi/PKUXIADAQ/README"
     ]
   ],
   "_from": "gitbook-plugin-anchor-navigation@0.0.1",
@@ -39,7 +39,7 @@
   "_shasum": "f2c9247f3c013ad5982931a75f4ef57348c6ec99",
   "_shrinkwrap": null,
   "_spec": "gitbook-plugin-anchor-navigation@0.0.1",
-  "_where": "/home/wuhongyi/workgithub/DAQ/PKUXIADAQ/README",
+  "_where": "/home/wuhongyi/PKUXIADAQ/README",
   "author": {
     "email": "xxdawei@gmail.com",
     "name": "yaneryou"

@@ -5,7 +5,7 @@ CrateID 0
 
 ## Register parameters
 
-SettingPars ../parset/ithembanotwave.set
+SettingPars ../parset/DSPpar.set
 
 
 ## -----------------------------------------------------------------------------
@@ -13,7 +13,7 @@ SettingPars ../parset/ithembanotwave.set
 
 # module number and slot number
 # The first number mean how many modules, other number means every module slot number
-ModuleSlot 6 2 3 4 5 6 7
+ModuleSlot 7 2 3 4 5 6 7 8
 
 
 # Only use in NOGUI, unit: second
@@ -24,11 +24,11 @@ AutoRunModeTimes   1800
 
 # module number and samping rate
 # The first number mean how many modules, other number means every module samping rate(100/250/500)
-ModuleSampingRate 6 100 100 100 100 100 100
+ModuleSampingRate 7 100 100 100 250 250 250 250
 
 # module number and bits
 # The first number mean how many modules, other number means every module bits(12/14/16)
-ModuleBits 6 12 12 12 12 12 12
+ModuleBits 7 14 14 14 16 14 14 14
 
 
 ## -----------------------------------------------------------------------------
