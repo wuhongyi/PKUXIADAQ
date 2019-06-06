@@ -175,16 +175,35 @@ bool Detector::BootSystem()
 
   if(OfflineMode != 0)
     {
+      OfflineMode = 1;
       for(unsigned short k = 0; k < NumModules; k++)
 	{
-	  ModuleInformation[k].Module_OfflineVariant = OfflineMode;
+	  if(modulesamplingrate->at(k) == 100 && modulebits->at(k) == 12)
+	    OfflineMode = 1;
+	  else if(modulesamplingrate->at(k) == 100 && modulebits->at(k) == 14)
+	    OfflineMode = 2;
+	  else if(modulesamplingrate->at(k) == 250 && modulebits->at(k) == 12)
+	    OfflineMode = 3;
+	  else if(modulesamplingrate->at(k) == 250 && modulebits->at(k) == 14)
+	    OfflineMode = 4;
+	  else if(modulesamplingrate->at(k) == 500 && modulebits->at(k) == 12)
+	    OfflineMode = 5;
+	  else if(modulesamplingrate->at(k) == 500 && modulebits->at(k) == 14)
+	    OfflineMode = 6;
+	  else if(modulesamplingrate->at(k) == 250 && modulebits->at(k) == 16)
+	    OfflineMode = 7;
+	  
+	  HongyiWuPixie16SetOfflineVariant(k,OfflineMode,modulebits->at(k),modulesamplingrate->at(k));
+	  // ModuleInformation[k].Module_OfflineVariant = OfflineMode;
 	}
+      OfflineMode = 1;
     }
   
   
   for(unsigned short k = 0; k < NumModules; k++)
     {
       retval = Pixie16ReadModuleInfo(k, &ModuleInformation[k].Module_Rev, &ModuleInformation[k].Module_SerNum, &ModuleInformation[k].Module_ADCBits, &ModuleInformation[k].Module_ADCMSPS);
+
       if(retval != 0)
 	{
 	  ErrorInfo("Detector.cc", "BootSystem()", "Pixie16ReadModuleInfo", retval);
@@ -192,11 +211,11 @@ bool Detector::BootSystem()
 	}
       else
 	{
-	  if(OfflineMode != 0)
-	    {
-	      ModuleInformation[k].Module_ADCBits = modulebits->at(k);
-	      ModuleInformation[k].Module_ADCMSPS = modulesamplingrate->at(k);
-	    }
+	  // if(OfflineMode != 0)
+	  //   {
+	  //     ModuleInformation[k].Module_ADCBits = modulebits->at(k);
+	  //     ModuleInformation[k].Module_ADCMSPS = modulesamplingrate->at(k);
+	  //   }
 	  std::cout<<"Rev:"<<ModuleInformation[k].Module_Rev<<"  SerNum:"<<ModuleInformation[k].Module_SerNum<<"  ADCBits:"<<ModuleInformation[k].Module_ADCBits<<"  ADCMSPS:"<<ModuleInformation[k].Module_ADCMSPS<<std::endl;
 	}
     }

@@ -259,7 +259,11 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16ReadModuleInfo (
 			*ModADCBits = 14;
 			*ModADCMSPS = 500;
 		}
-
+		else if(Module_Information[ModNum].Module_OfflineVariant == 7)//wuhongyi
+		{
+			*ModADCBits = 16;
+			*ModADCMSPS = 250;
+		}
 		return(0);
 	}
 
@@ -6527,4 +6531,13 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	
 	return(0);
 	
+}
+
+PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16SetOfflineVariant(unsigned short mod,unsigned short variant,unsigned short bits,unsigned short samplerate)
+{
+  Module_Information[mod].Module_OfflineVariant = variant;
+  Module_Information[mod].Module_ADCBits = bits;
+  Module_Information[mod].Module_ADCMSPS = samplerate;
+  
+  return 0;
 }

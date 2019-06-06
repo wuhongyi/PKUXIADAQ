@@ -353,6 +353,8 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	double         tau,
 	int            sfr,
 	int            pointtobl );
+
+  PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16SetOfflineVariant(unsigned short mod,unsigned short variant,unsigned short bits,unsigned short samplerate);  
   
 #ifdef __cplusplus
 }
