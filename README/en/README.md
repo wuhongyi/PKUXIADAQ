@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 四 6月  6 17:13:11 2019 (+0800)
+;; Last-Updated: 四 6月  6 17:21:31 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 123
+;;     Update #: 124
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -56,7 +56,7 @@ manual version in web page:  [English](http://wuhongyi.cn/PKUXIADAQ/en/)   [简�
 
 **This manual applies only to XIA LLC Pixie-16**
 
-- This program is developed by the **group of experimental nuclear physics, Peking University**.[GitHub](https://github.com/pkuNucExp) 
+- This program is developed by the [Group of Experimental Nuclear Physics, Peking University](https://github.com/pkuNucExp).
 - The earliest graphical interface development of this program is based on [NSCL DDAS Nscope](http://docs.nscl.msu.edu/daq/newsite/ddas-1.1/nscope.html). 
 - Thanks to Hui Tan's(XIA LLC) support for our development.
 

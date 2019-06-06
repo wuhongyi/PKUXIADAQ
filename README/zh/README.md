@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 四 6月  6 17:13:11 2019 (+0800)
+;; Last-Updated: 四 6月  6 17:21:34 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 121
+;;     Update #: 122
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -57,7 +57,7 @@
 
 **This manual applies only to XIA LLC Pixie-16**
 
-- 本程序由**北京大学实验核物理组**开发。[GitHub](https://github.com/pkuNucExp)
+- 本程序由[北京大学实验核物理组](https://github.com/pkuNucExp)开发。
 - 最早的图形界面程序是基于 [NSCL DDAS Nscope](http://docs.nscl.msu.edu/daq/newsite/ddas-1.1/nscope.html) 开发。
 - 特别感谢 *谭辉(XIA LLC)* 对我们开发的支持。
 
