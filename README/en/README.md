@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 四 6月  6 16:55:18 2019 (+0800)
+;; Last-Updated: 四 6月  6 17:13:11 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 122
+;;     Update #: 123
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -56,14 +56,14 @@ manual version in web page:  [English](http://wuhongyi.cn/PKUXIADAQ/en/)   [简�
 
 **This manual applies only to XIA LLC Pixie-16**
 
-- This program is developed by the **group of experimental nuclear physics of Peking University**.  
-- The earliest graphical interface development of this program is based on NSCL DDAS Nscope(http://docs.nscl.msu.edu/daq/newsite/ddas-1.1/nscope.html). 
+- This program is developed by the **group of experimental nuclear physics, Peking University**.[GitHub](https://github.com/pkuNucExp) 
+- The earliest graphical interface development of this program is based on [NSCL DDAS Nscope](http://docs.nscl.msu.edu/daq/newsite/ddas-1.1/nscope.html). 
 - Thanks to Hui Tan's(XIA LLC) support for our development.
 
 
 Technical adviser:
-- Zhihuan Li  李智焕
-- Hui Tan  谭辉(XIA LLC)
+- [Zhihuan Li 李智焕](https://github.com/zhihuanli)
+- Hui Tan 谭辉(XIA LLC)
 - Wolfgang Hennig(XIA LLC)
 
 Software Developer:
@@ -73,9 +73,9 @@ Software Developer:
 	- Hongyi Wu 吴鸿毅(wuhongyi@qq.com) 
 
 Principal author of the instruction:
-- Diwen Luo 罗迪雯
-- Hongyi Wu 吴鸿毅
-- Xiang Wang 王翔
+- [Diwen Luo 罗迪雯](https://github.com/luodiwen)
+- [Hongyi Wu 吴鸿毅](https://github.com/wuhongyi)
+- [Xiang Wang 王翔](https://github.com/wangxianggit)
 
 
 The development of this program is supported by the following：
@@ -122,10 +122,9 @@ The following files/folders are included in the user's use package:
 
 - The main control interface development based on the ROOT GUI is highly complex, which is difficult for users to modify now. It is not easy for users to develop their own version based on this program. 
 - We are also developing acquisition software  for online/offline analysis based on web control:
+	- Django
 	- ZeroMQ
-	- FastCGI
 	- JSROOT
-	- web
 	- ...
 
 

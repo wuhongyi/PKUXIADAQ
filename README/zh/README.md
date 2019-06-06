@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 四 6月  6 16:55:29 2019 (+0800)
+;; Last-Updated: 四 6月  6 17:13:11 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 120
+;;     Update #: 121
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -57,13 +57,13 @@
 
 **This manual applies only to XIA LLC Pixie-16**
 
-- 本程序由**北京大学实验核物理组**开发。
+- 本程序由**北京大学实验核物理组**开发。[GitHub](https://github.com/pkuNucExp)
 - 最早的图形界面程序是基于 [NSCL DDAS Nscope](http://docs.nscl.msu.edu/daq/newsite/ddas-1.1/nscope.html) 开发。
 - 特别感谢 *谭辉(XIA LLC)* 对我们开发的支持。
 
 
 技术指导:
-- Zhihuan Li  李智焕
+- [Zhihuan Li 李智焕](https://github.com/zhihuanli)
 - Hui Tan  谭辉(XIA LLC)
 - Wolfgang Hennig(XIA LLC)
 
@@ -74,9 +74,9 @@
 	- Hongyi Wu 吴鸿毅(wuhongyi@qq.com) 
 
 说明书主要撰写者:
-- Diwen Luo 罗迪雯
-- Hongyi Wu 吴鸿毅
-- Xiang Wang 王翔
+- [Diwen Luo 罗迪雯](https://github.com/luodiwen)
+- [Hongyi Wu 吴鸿毅](https://github.com/wuhongyi)
+- [Xiang Wang 王翔](https://github.com/wangxianggit)
 
 
 本程序的开发得到以下单位的支持：
@@ -122,10 +122,9 @@
 
 - 当前基于 ROOT GUI 开发的主控制界面复杂度高，用户修改难度大。其它用户不容易基于其发展适合自己的版本。
 - 我们也在开发基于网页控制的获取在线/离线分析程序:
+	- Django
 	- ZeroMQ
-	- FastCGI
 	- JSROOT
-	- web
 	- ...
 
 
