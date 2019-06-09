@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 日 10月  7 09:35:24 2018 (+0800)
-;; Last-Updated: 日 2月  3 15:35:37 2019 (+0800)
+;; Last-Updated: 六 6月  8 15:39:25 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 13
+;;     Update #: 17
 ;; URL: http://wuhongyi.cn -->
 
 # Trigger Filter
@@ -26,7 +26,6 @@ When the status below the interface is displaying **green Ready**, it means that
 
 
 General rules of thumb for the following important parameters are:
-
 - A longer trigger filter rise time averages more samples and thus allows setting lower thresholds without triggering on noise.
 - Typically the threshold should be set as low as possible, just above the noise level.
 - A longer trigger filter flat top time makes it easier to detect slow rising pulses.
