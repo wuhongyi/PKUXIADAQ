@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 五 6月  7 21:45:11 2019 (+0800)
+;; Last-Updated: 二 6月 25 16:23:48 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 123
+;;     Update #: 124
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -55,7 +55,7 @@
 
 ## 关于
 
-**This manual applies only to XIA LLC Pixie-16**
+**本说明书仅适用于 XIA LLC 的 Pixie-16 系列采集卡**
 
 - 本程序由[北京大学实验核物理组](https://github.com/pkuNucExp)开发。
 - 最早的图形界面程序是基于 [NSCL DDAS Nscope](http://docs.nscl.msu.edu/daq/newsite/ddas-1.1/nscope.html) 开发。
@@ -91,7 +91,7 @@
 
 本程序适用于 XIA Pixie16 系列采集卡，支持 100/250/500 MHz 采集卡(具体支持型号可查看图形软件中的File->About)，最大支持 8 个机箱同步运行，即 1600+ 路信号同时采集。**本程序包要求使用 CERN ROOT6 版本。要求采用 1920x1080 及以上分辨率显示屏**。
 
-本程序的设计兼容 100/250/500 MHz 采集卡的混合使用，只需在 cfgPixie16.txt 添加相应采样率采集卡的固件位置即可，程序在线能够自动识别采集卡类型并加载相应的固件。当前我们只有100/250 MHz 14 bit 的采集卡，因此默认可运行该类型的采集卡，如要支持其它类型，请联系 XIA LLC 获取对应固件或者联系吴鸿毅(wuhongyi@qq.com)。
+本程序的设计兼容 100/250/500 MHz 采集卡的混合使用，只需在 cfgPixie16.txt 添加相应采样率采集卡的固件位置即可，程序在线能够自动识别采集卡类型并加载相应的固件。当前我们只有 100/250 MHz 14 bit 的采集卡，因此默认可运行该类型的采集卡，如要支持其它类型，请联系 XIA LLC 获取对应固件或者联系吴鸿毅(wuhongyi@qq.com)。
 
 
 ----
