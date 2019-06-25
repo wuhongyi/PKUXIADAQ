@@ -79,12 +79,6 @@ ModuleBits 7 14 14 14 16 14 14 14
 
 # NoNegEnergy && AlwaysCompEnergy
 # Multiplicity result output from RJ45
-# 250M14bit_sys ../firmware/pixie16_revfpku_14b250m_release_02232019/syspixie16_revfpku_adc250mhz_r41088.bin
-# 250M14bit_fip ../firmware/pixie16_revfpku_14b250m_release_02232019/fippixie16_revfgeneral_14b250m_r41843.bin
-# 250M14bit_dsplst ../firmware/pixie16_revfpku_14b250m_release_02232019/Pixie16DSP_revfgeneral_14b250m_r41842.lst
-# 250M14bit_dspldr ../firmware/pixie16_revfpku_14b250m_release_02232019/Pixie16DSP_revfgeneral_14b250m_r41842.ldr
-# 250M14bit_dspvar ../firmware/pixie16_revfpku_14b250m_release_02232019/Pixie16DSP_revfgeneral_14b250m_r41842.var
-
 250M14bit_sys ../firmware/pixie16_revfpku_14b250m_release_06092019/syspixie16_revfpku_adc250mhz_r41088.bin
 250M14bit_fip ../firmware/pixie16_revfpku_14b250m_release_06092019/fippixie16_revfgeneral_14b250m_r42082.bin
 250M14bit_dsplst ../firmware/pixie16_revfpku_14b250m_release_06092019/Pixie16DSP_revfgeneral_14b250m_r41842.lst
@@ -95,12 +89,6 @@ ModuleBits 7 14 14 14 16 14 14 14
 
 # NoNegEnergy && AlwaysCompEnergy
 # Multiplicity result output from RJ45
-# 250M16bit_sys ../firmware/pixie16_revfpku_16b250m_release_02182019/syspixie16_revfpku_adc250mhz_r41088.bin
-# 250M16bit_fip ../firmware/pixie16_revfpku_16b250m_release_02182019/fippixie16_revfgeneral_16b250m_r41807.bin
-# 250M16bit_dsplst ../firmware/pixie16_revfpku_16b250m_release_02182019/Pixie16DSP_revfgeneral_16b250m_r41808.lst
-# 250M16bit_dspldr ../firmware/pixie16_revfpku_16b250m_release_02182019/Pixie16DSP_revfgeneral_16b250m_r41808.ldr
-# 250M16bit_dspvar ../firmware/pixie16_revfpku_16b250m_release_02182019/Pixie16DSP_revfgeneral_16b250m_r41808.var
-
 250M16bit_sys ../firmware/pixie16_revfpku_16b250m_release_06092019/syspixie16_revfpku_adc250mhz_r41088.bin
 250M16bit_fip ../firmware/pixie16_revfpku_16b250m_release_06092019/fippixie16_revfgeneral_16b250m_r42083.bin
 250M16bit_dsplst ../firmware/pixie16_revfpku_16b250m_release_06092019/Pixie16DSP_revfgeneral_16b250m_r41808.lst
