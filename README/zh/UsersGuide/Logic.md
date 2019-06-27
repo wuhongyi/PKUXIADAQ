@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 5月 26 09:17:06 2018 (+0800)
-;; Last-Updated: 日 5月 19 21:43:00 2019 (+0800)
+;; Last-Updated: 四 6月 27 17:57:16 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 11
+;;     Update #: 12
 ;; URL: http://wuhongyi.cn -->
 
 # Logic
@@ -69,7 +69,7 @@ Module fast trigger 有以下四种来源可供选择：
 	- Ext_FastTrig_Sel(前面板 TTL 输入)
 	- Int_FastTrig_Sgl(内部某路 FT)
 	- FTIN_Or(内部 FT 的 OR)
-	- LVDS_ValidTrig_FP(前面板网口输入)
+	- LVDS_FastTrig_FP(前面板网口输入)
 	- ChanTrig_Sel(内部某路的 valid trigger)(与 module validation trigger 共用一个设置)
 - FT_LocalCrate_BP(本机箱中指定插件送出的 trigger)
 - FT_In_BP(多机箱中指定机箱上指定插件发送的 trigger)

@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 5月 26 09:17:06 2018 (+0800)
-;; Last-Updated: 日 5月 19 21:42:20 2019 (+0800)
+;; Last-Updated: 四 6月 27 17:57:16 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 8
+;;     Update #: 9
 ;; URL: http://wuhongyi.cn -->
 
 # Logic
@@ -68,7 +68,7 @@ Module fast trigger has four options：
 	- Ext_FastTrig_Sel(Front panel TTL input)
 	- Int_FastTrig_Sgl(Local fast trigger of a specified channel in this module)
 	- FTIN_Or(The OR of local fast trigger of all channel in this module)
-	- LVDS_ValidTrig_FP(Front panel RJ45 port input)
+	- LVDS_FastTrig_FP(Front panel RJ45 port input)
 	- ChanTrig_Sel(The valid trigger of a specified channel of the module)(Share a setting with module validation trigger)
 - FT_LocalCrate_BP(Trigger sent by the specified module in this crate)
 - FT_In_BP(Trigger sent by the specified module on the specified crate in multiple crates)
