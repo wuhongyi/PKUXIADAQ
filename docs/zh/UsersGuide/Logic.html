@@ -1,1255 +1,385 @@
 
-<!DOCTYPE HTML>
-<html lang="zh" >
-    <head>
-        <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>逻辑功能 · PKU XIA DAQ GUIDE</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.2">
-        <meta name="author" content="Hongyi Wu(吴鸿毅)">
-        
-        
-    
-    <link rel="stylesheet" href="../../gitbook/style.css">
 
-    
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-ad/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-alerts/style.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-atoc/atoc.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-image-captions/image-captions.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-anchors/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-latex-codecogs/latex-codecogs.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-ace/ace.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-sectionx/sectionx.css">
-                
-            
-                
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-mcqx/mcqx.css">
-                
-            
-                
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fbqx/fbqx.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-spoiler/spoiler.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-anchor-navigation/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-youtubex/player.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
-                
-            
-        
-
-    
-
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-        
-    
-    
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="MultipleModulesSynchronously.html" />
-    
-    
-    <link rel="prev" href="FrontPanel.html" />
-    
-
-    </head>
-    <body>
-        
-  <script>
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-  </script>
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
   
-<div class="book">
-    <div class="book-summary">
-        
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>逻辑功能 &mdash; PKUXIADAQ beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="时间同步" href="MultipleModulesSynchronously.html" />
+    <link rel="prev" title="插件前面板" href="FrontPanel.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PKUXIADAQ
+          
+
+          
+          </a>
+
+          
             
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="輸入並搜尋" />
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
 </div>
 
-            
-                <nav role="navigation">
-                
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="../">
-            
-                <a href="../">
-            
-                    
-                    README
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="../INSTALL.html">
-            
-                <a href="../INSTALL.html">
-            
-                    
-                    程序安装
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="./">
-            
-                <a href="./">
-            
-                    
-                    用户指南
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.1" data-path="Crate.html">
-            
-                <a href="Crate.html">
-            
-                    
-                    机箱
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2" data-path="FIRMWARE.html">
-            
-                <a href="FIRMWARE.html">
-            
-                    
-                    固件
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.3" data-path="Decode.html">
-            
-                <a href="Decode.html">
-            
-                    
-                    数据解码
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4" data-path="GUI.html">
-            
-                <a href="GUI.html">
-            
-                    
-                    图形交互界面
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.4.1" data-path="DropDown0.html">
-            
-                <a href="DropDown0.html">
-            
-                    
-                    File
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.4.1.1" data-path="FILE_About.html">
-            
-                <a href="FILE_About.html">
-            
-                    
-                    About
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.2" data-path="DropDown1.html">
-            
-                <a href="DropDown1.html">
-            
-                    
-                    UV_Setup
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.4.2.1" data-path="BASESETUP_BaseSetup.html">
-            
-                <a href="BASESETUP_BaseSetup.html">
-            
-                    
-                    Base Setup
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.2.2" data-path="BASESETUP_TriggerFilter.html">
-            
-                <a href="BASESETUP_TriggerFilter.html">
-            
-                    
-                    Trigger Filter
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.2.3" data-path="BASESETUP_Energy.html">
-            
-                <a href="BASESETUP_Energy.html">
-            
-                    
-                    Energy
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.2.4" data-path="BASESETUP_CFD.html">
-            
-                <a href="BASESETUP_CFD.html">
-            
-                    
-                    CFD
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.2.5" data-path="BASESETUP_QDC.html">
-            
-                <a href="BASESETUP_QDC.html">
-            
-                    
-                    QDC
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.2.6" data-path="BASESETUP_Decimation.html">
-            
-                <a href="BASESETUP_Decimation.html">
-            
-                    
-                    Decimation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.2.7" data-path="BASESETUP_CopyPars.html">
-            
-                <a href="BASESETUP_CopyPars.html">
-            
-                    
-                    Copy Pars
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.2.8" data-path="BASESETUP_Save2File.html">
-            
-                <a href="BASESETUP_Save2File.html">
-            
-                    
-                    Save2File
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.3" data-path="DropDown2.html">
-            
-                <a href="DropDown2.html">
-            
-                    
-                    Expert
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.4.3.1" data-path="EXPERT_MSRB.html">
-            
-                <a href="EXPERT_MSRB.html">
-            
-                    
-                    Module Variables
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.3.2" data-path="EXPERT_CSRA.html">
-            
-                <a href="EXPERT_CSRA.html">
-            
-                    
-                    CSRA
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.3.3" data-path="EXPERT_LogicSet.html">
-            
-                <a href="EXPERT_LogicSet.html">
-            
-                    
-                    Logic Set
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.4" data-path="DropDown3.html">
-            
-                <a href="DropDown3.html">
-            
-                    
-                    Monitor
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.4.4.1" data-path="MONITOR_HistXDT.html">
-            
-                <a href="MONITOR_HistXDT.html">
-            
-                    
-                    Hist & XDT
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.4.2" data-path="MONITOR_TraceBaseline.html">
-            
-                <a href="MONITOR_TraceBaseline.html">
-            
-                    
-                    Trace & Baseline
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5" data-path="DropDown4.html">
-            
-                <a href="DropDown4.html">
-            
-                    
-                    Offline
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.4.5.1" data-path="OFFLINE_AdjustPar.html">
-            
-                <a href="OFFLINE_AdjustPar.html">
-            
-                    
-                    Adjust Par
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.4.5.1.1" data-path="OFFLINE_Wave-16.html">
-            
-                <a href="OFFLINE_Wave-16.html">
-            
-                    
-                    Wave-16
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.2" data-path="OFFLINE_Energy-16.html">
-            
-                <a href="OFFLINE_Energy-16.html">
-            
-                    
-                    Energy-16
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.3" data-path="OFFLINE_OrigEnergy.html">
-            
-                <a href="OFFLINE_OrigEnergy.html">
-            
-                    
-                    Orig Energy
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.4" data-path="OFFLINE_Calc Energy.html">
-            
-                <a href="OFFLINE_Calc Energy.html">
-            
-                    
-                    Calc Energy
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.5" data-path="OFFLINE_FFCFDThre.html">
-            
-                <a href="OFFLINE_FFCFDThre.html">
-            
-                    
-                    FF/CFD Thre
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.6" data-path="OFFLINE_Energy-FF.html">
-            
-                <a href="OFFLINE_Energy-FF.html">
-            
-                    
-                    Energy-FF
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.7" data-path="OFFLINE_Energy-CFD.html">
-            
-                <a href="OFFLINE_Energy-CFD.html">
-            
-                    
-                    Energy-CFD
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.8" data-path="OFFLINE_QDC.html">
-            
-                <a href="OFFLINE_QDC.html">
-            
-                    
-                    QDC
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.9" data-path="OFFLINE_FFT.html">
-            
-                <a href="OFFLINE_FFT.html">
-            
-                    
-                    FFT
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.10" data-path="OFFLINE_TimeDiff.html">
-            
-                <a href="OFFLINE_TimeDiff.html">
-            
-                    
-                    Time Diff
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.2" data-path="OFFLINE_Simulation.html">
-            
-                <a href="OFFLINE_Simulation.html">
-            
-                    
-                    Simulation
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.5" data-path="NOGUI.html">
-            
-                <a href="NOGUI.html">
-            
-                    
-                    非图形交互界面
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.6" data-path="OnlineStattics.html">
-            
-                <a href="OnlineStattics.html">
-            
-                    
-                    在线统计
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.7" data-path="MakeEvent.html">
-            
-                <a href="MakeEvent.html">
-            
-                    
-                    MakeEvent
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.8" data-path="FrontPanel.html">
-            
-                <a href="FrontPanel.html">
-            
-                    
-                    插件前面板
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.3.9" data-path="Logic.html">
-            
-                <a href="Logic.html">
-            
-                    
-                    逻辑功能
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.10" data-path="MultipleModulesSynchronously.html">
-            
-                <a href="MultipleModulesSynchronously.html">
-            
-                    
-                    时间同步
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.11" data-path="UpdateCPLD.html">
-            
-                <a href="UpdateCPLD.html">
-            
-                    
-                    升级CPLD
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="../Example/">
-            
-                <a href="../Example/">
-            
-                    
-                    应用案例
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.1" data-path="../Example/TimeResolution.html">
-            
-                <a href="../Example/TimeResolution.html">
-            
-                    
-                    时间分辨
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.2" data-path="../Example/RecommendedParameters.html">
-            
-                <a href="../Example/RecommendedParameters.html">
-            
-                    
-                    推荐参数
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.3" data-path="../Example/InBeamGammaCIAE.html">
-            
-                <a href="../Example/InBeamGammaCIAE.html">
-            
-                    
-                    在束伽马谱学
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5" data-path="../ProcurementProposal.html">
-            
-                <a href="../ProcurementProposal.html">
-            
-                    
-                    采购建议
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.6" data-path="../ProgrammersGuide/">
-            
-                <a href="../ProgrammersGuide/">
-            
-                    
-                    编程指南
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.6.1" data-path="../ProgrammersGuide/XIAAPI.html">
-            
-                <a href="../ProgrammersGuide/XIAAPI.html">
-            
-                    
-                    XIA API
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.6.2" data-path="../ProgrammersGuide/PKUCode.html">
-            
-                <a href="../ProgrammersGuide/PKUCode.html">
-            
-                    
-                    PKU code
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            本書使用 GitBook 釋出
-        </a>
-    </li>
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../INSTALL.html">程序安装</a></li>
+</ul>
+<p class="caption"><span class="caption-text">用户指南</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">用户指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Crate.html">机箱</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FIRMWARE.html">固件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Decode.html">数据解码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GUI.html">图形交互界面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NOGUI.html">非图形交互界面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OnlineStattics.html">在线统计</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MakeEvent.html">MakeEvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FrontPanel.html">插件前面板</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">逻辑功能</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">逻辑概括</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-fast-trigger-for-trigger">Module Fast Trigger(for trigger)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-validation-trigger-for-control-logic">Module Validation Trigger(for control logic)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#channel-validation-trigger-for-trigger-control-logic">Channel Validation Trigger(for trigger/control logic)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#veto">Veto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#system-fpga-coincidence-multiplicity">System FPGA（coincidence/multiplicity）</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="MultipleModulesSynchronously.html">时间同步</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UpdateCPLD.html">升级CPLD</a></li>
+</ul>
+<p class="caption"><span class="caption-text">应用案例</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Example/README.html">应用案例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/TimeResolution.html">时间分辨</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/RecommendedParameters.html">推荐参数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/InBeamGammaCIAE.html">在束伽马谱学</a></li>
+</ul>
+<p class="caption"><span class="caption-text">采购建议</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ProcurementProposal.html">采购推荐</a></li>
+</ul>
+<p class="caption"><span class="caption-text">编程指南</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/README.html">开发者指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/XIAAPI.html">XIA API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/PKUCode.html">PKU Code</a></li>
 </ul>
 
-
-                </nav>
             
-        
-    </div>
+          
+        </div>
+      </div>
+    </nav>
 
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
-<div class="book-header" role="navigation">
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PKUXIADAQ</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
     
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>逻辑功能</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/UsersGuide/Logic.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
 
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >逻辑功能</a>
-    </h1>
+  
+  <hr/>
 </div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
-                            
-<div id="book-search-results">
-    <div class="search-noresults">
-    
-                                <section class="normal markdown-section">
-                                
-                                <!-- Logic.md --- 
-;; 
-;; Description: 
-;; Author: Hongyi Wu(吴鸿毅)
-;; Email: wuhongyi@qq.com 
-;; Created: 六 5月 26 09:17:06 2018 (+0800)
-;; Last-Updated: 四 6月 27 17:57:16 2019 (+0800)
-;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 12
-;; URL: http://wuhongyi.cn -->
-<h1 id="logic"><a name="logic" class="plugin-anchor" href="#logic"><i class="fa fa-link" aria-hidden="true"></i></a>Logic</h1>
-<!-- toc -->
-<ul>
-<li><a href="#module-fast-trigger-for-trigger">Module Fast Trigger (for trigger)</a></li>
-<li><a href="#module-validation-trigger-for-control-logic">Module Validation Trigger (for control logic)</a></li>
-<li><a href="#channel-validation-triggerfor-triggercontrol-logic">Channel Validation Trigger(for trigger/control logic)</a></li>
-<li><a href="#veto">Veto</a></li>
-<li><a href="#system-fpga-&#xFF08;coincidencemultiplicity&#xFF09;">System FPGA &#xFF08;coincidence/multiplicity&#xFF09;</a></li>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>逻辑功能<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>逻辑概括<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>对于某路信号的每个事件是否被有效记录取决于：</p>
+<ul class="simple">
+<li><p>Fast trigger select (一级trigger)</p></li>
+<li><p>Control logic (二级trigger)</p></li>
 </ul>
-<!-- tocstop -->
-<p>&#x5BF9;&#x4E8E;&#x67D0;&#x8DEF;&#x4FE1;&#x53F7;&#x7684;&#x6BCF;&#x4E2A;&#x4E8B;&#x4EF6;&#x662F;&#x5426;&#x88AB;&#x6709;&#x6548;&#x8BB0;&#x5F55;&#x53D6;&#x51B3;&#x4E8E;&#xFF1A;</p>
-<ul>
-<li>Fast trigger select (&#x4E00;&#x7EA7;trigger)</li>
-<li>Control logic (&#x4E8C;&#x7EA7;trigger)</li>
+<p>快速触发的选择(Fast trigger select)：</p>
+<ul class="simple">
+<li><p>快速滤波器(Local fast filter)</p></li>
+<li><p>通道有效触发(Channel validation trigger)</p></li>
+<li><p>模块快速触发(Module fast trigger)</p></li>
 </ul>
-<p>&#x5FEB;&#x901F;&#x89E6;&#x53D1;&#x7684;&#x9009;&#x62E9;(Fast trigger select)&#xFF1A;</p>
-<ul>
-<li>&#x5FEB;&#x901F;&#x6EE4;&#x6CE2;&#x5668;(Local fast filter)</li>
-<li>&#x901A;&#x9053;&#x6709;&#x6548;&#x89E6;&#x53D1;(Channel validation trigger)</li>
-<li>&#x6A21;&#x5757;&#x5FEB;&#x901F;&#x89E6;&#x53D1;(Module fast trigger)</li>
+<p>控制逻辑(Control logic)：</p>
+<ul class="simple">
+<li><p>模块有效触发(Module validation trigger)</p></li>
+<li><p>通道有效触发(Channel validation trigger)</p></li>
+<li><p>否决(Veto)</p></li>
+<li><p>堆积(Pileup)</p></li>
+<li><p>…</p></li>
 </ul>
-<p>&#x63A7;&#x5236;&#x903B;&#x8F91;(Control logic)&#xFF1A;</p>
-<ul>
-<li>&#x6A21;&#x5757;&#x6709;&#x6548;&#x89E6;&#x53D1;(Module validation trigger)</li>
-<li>&#x901A;&#x9053;&#x6709;&#x6548;&#x89E6;&#x53D1;(Channel validation trigger)</li>
-<li>&#x5426;&#x51B3;(Veto)</li>
-<li>&#x5806;&#x79EF;(Pileup)</li>
-<li>...</li>
+<img alt="../_images/illustratesthesignalprocessinginthepixie16modules.png" src="../_images/illustratesthesignalprocessinginthepixie16modules.png" />
+<p>如图所示，输入模拟脉冲首先由 ADC 数字化，然后进入信号处理 FPGA 中的信号处理电路，每个信号处理电路处理来自 Pixie-16 模块的 4 个通道的 ADC 数据。</p>
+<p>数字化数据流首先被送入两个分支：快速过滤器(fast filter)生成快速触发(fast triggers)以发送到系统 FPGA，延迟 FIFO 可用于补偿快速触发(fast triggers)和外部触发(external triggers)之间的延迟。</p>
+<p>然后，通过延迟 FIFO 的数字化数据流分为四个部分：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>能量滤波器，采集能量滤波器在 PeakSample 时间的能量;</p></li>
+<li><p>触发滤波器，检测脉冲并进行堆积检查;</p></li>
+<li><p>捕获FIFO，当检测到有效脉冲时，ADC 数据在流入跟踪双端口存储器(DPM)之前根据跟踪延迟参数值延迟 ADC 数据;</p></li>
+<li><p>CFD 电路，其中生成 CFD 触发以触发 QDC，锁存时间戳和记录波形的计算。</p></li>
 </ul>
-<figure id="fig1.3.9.1"><img src="../img/illustratesthesignalprocessinginthepixie16modules.png" alt="illustrates the signal processing in the Pixie-16 modules"><figcaption>Figure: illustrates the signal processing in the Pixie-16 modules</figcaption></figure>
-<p>&#x5982;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x8F93;&#x5165;&#x6A21;&#x62DF;&#x8109;&#x51B2;&#x9996;&#x5148;&#x7531; ADC &#x6570;&#x5B57;&#x5316;&#xFF0C;&#x7136;&#x540E;&#x8FDB;&#x5165;&#x4FE1;&#x53F7;&#x5904;&#x7406; FPGA &#x4E2D;&#x7684;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x7535;&#x8DEF;&#xFF0C;&#x6BCF;&#x4E2A;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x7535;&#x8DEF;&#x5904;&#x7406;&#x6765;&#x81EA; Pixie-16 &#x6A21;&#x5757;&#x7684; 4 &#x4E2A;&#x901A;&#x9053;&#x7684; ADC &#x6570;&#x636E;&#x3002;</p>
-<p>&#x6570;&#x5B57;&#x5316;&#x6570;&#x636E;&#x6D41;&#x9996;&#x5148;&#x88AB;&#x9001;&#x5165;&#x4E24;&#x4E2A;&#x5206;&#x652F;&#xFF1A;&#x5FEB;&#x901F;&#x8FC7;&#x6EE4;&#x5668;(fast filter)&#x751F;&#x6210;&#x5FEB;&#x901F;&#x89E6;&#x53D1;(fast triggers)&#x4EE5;&#x53D1;&#x9001;&#x5230;&#x7CFB;&#x7EDF; FPGA&#xFF0C;&#x5EF6;&#x8FDF; FIFO &#x53EF;&#x7528;&#x4E8E;&#x8865;&#x507F;&#x5FEB;&#x901F;&#x89E6;&#x53D1;(fast triggers)&#x548C;&#x5916;&#x90E8;&#x89E6;&#x53D1;(external triggers)&#x4E4B;&#x95F4;&#x7684;&#x5EF6;&#x8FDF;&#x3002;</p>
-<p>&#x7136;&#x540E;&#xFF0C;&#x901A;&#x8FC7;&#x5EF6;&#x8FDF; FIFO &#x7684;&#x6570;&#x5B57;&#x5316;&#x6570;&#x636E;&#x6D41;&#x5206;&#x4E3A;&#x56DB;&#x4E2A;&#x90E8;&#x5206;&#xFF1A;</p>
-<ul>
-<li>&#x80FD;&#x91CF;&#x6EE4;&#x6CE2;&#x5668;&#xFF0C;&#x91C7;&#x96C6;&#x80FD;&#x91CF;&#x6EE4;&#x6CE2;&#x5668;&#x5728; PeakSample &#x65F6;&#x95F4;&#x7684;&#x80FD;&#x91CF;;</li>
-<li>&#x89E6;&#x53D1;&#x6EE4;&#x6CE2;&#x5668;&#xFF0C;&#x68C0;&#x6D4B;&#x8109;&#x51B2;&#x5E76;&#x8FDB;&#x884C;&#x5806;&#x79EF;&#x68C0;&#x67E5;;</li>
-<li>&#x6355;&#x83B7;FIFO&#xFF0C;&#x5F53;&#x68C0;&#x6D4B;&#x5230;&#x6709;&#x6548;&#x8109;&#x51B2;&#x65F6;&#xFF0C;ADC &#x6570;&#x636E;&#x5728;&#x6D41;&#x5165;&#x8DDF;&#x8E2A;&#x53CC;&#x7AEF;&#x53E3;&#x5B58;&#x50A8;&#x5668;(DPM)&#x4E4B;&#x524D;&#x6839;&#x636E;&#x8DDF;&#x8E2A;&#x5EF6;&#x8FDF;&#x53C2;&#x6570;&#x503C;&#x5EF6;&#x8FDF; ADC &#x6570;&#x636E;;</li>
-<li>CFD &#x7535;&#x8DEF;&#xFF0C;&#x5176;&#x4E2D;&#x751F;&#x6210; CFD &#x89E6;&#x53D1;&#x4EE5;&#x89E6;&#x53D1; QDC&#xFF0C;&#x9501;&#x5B58;&#x65F6;&#x95F4;&#x6233;&#x548C;&#x8BB0;&#x5F55;&#x6CE2;&#x5F62;&#x7684;&#x8BA1;&#x7B97;&#x3002;</li>
+</div></blockquote>
+<p>信号处理 FPGA 中的控制逻辑利用本地快速触发(local fast trigger)，CFD 触发(CFD trigger)，否决(VETO)和外部触发(external triggers)来确定是否以及何时将波形数据流入 Trace DPM 并将事件信息写入 Header DPM。 DSP 通过状态寄存器监视 DPM 的状态，并通过 DSP 总线和系统 FPGA 将事件数据移入外部FIFO(External FIFO)。</p>
+<p><strong>触发展宽长度(Trigger Stretch Lengths)</strong></p>
+<ul class="simple">
+<li><p><strong>外部触发展宽(External trigger stretch)</strong> 用于展宽模块有效触发(module validation trigger)脉冲。</p></li>
+<li><p><strong>通道触发展宽(Channel trigger stretch)</strong> 用于展宽通道有效触发(channel validation trigger)脉冲。</p></li>
+<li><p><strong>Veto展宽(Veto stretch)</strong> 用于展宽该通道的否决脉冲。</p></li>
+<li><p><strong>快速触发背板长度(Fast trigger backplane length)</strong> 用于展宽要发送到系统 FPGA 的快速触发脉冲，其中此快速触发可以发送到背板以与其它模块共享，或者可以用于进行符合或多重触发。</p></li>
 </ul>
-<p>&#x4FE1;&#x53F7;&#x5904;&#x7406; FPGA &#x4E2D;&#x7684;&#x63A7;&#x5236;&#x903B;&#x8F91;&#x5229;&#x7528;&#x672C;&#x5730;&#x5FEB;&#x901F;&#x89E6;&#x53D1;(local fast trigger)&#xFF0C;CFD &#x89E6;&#x53D1;(CFD trigger)&#xFF0C;&#x5426;&#x51B3;(VETO)&#x548C;&#x5916;&#x90E8;&#x89E6;&#x53D1;(external triggers)&#x6765;&#x786E;&#x5B9A;&#x662F;&#x5426;&#x4EE5;&#x53CA;&#x4F55;&#x65F6;&#x5C06;&#x6CE2;&#x5F62;&#x6570;&#x636E;&#x6D41;&#x5165; Trace DPM &#x5E76;&#x5C06;&#x4E8B;&#x4EF6;&#x4FE1;&#x606F;&#x5199;&#x5165; Header DPM&#x3002; DSP &#x901A;&#x8FC7;&#x72B6;&#x6001;&#x5BC4;&#x5B58;&#x5668;&#x76D1;&#x89C6; DPM &#x7684;&#x72B6;&#x6001;&#xFF0C;&#x5E76;&#x901A;&#x8FC7; DSP &#x603B;&#x7EBF;&#x548C;&#x7CFB;&#x7EDF; FPGA &#x5C06;&#x4E8B;&#x4EF6;&#x6570;&#x636E;&#x79FB;&#x5165;&#x5916;&#x90E8;FIFO(External FIFO)&#x3002;</p>
-<p><strong>&#x89E6;&#x53D1;&#x5C55;&#x5BBD;&#x957F;&#x5EA6;(Trigger Stretch Lengths)</strong></p>
-<ul>
-<li><strong>&#x5916;&#x90E8;&#x89E6;&#x53D1;&#x5C55;&#x5BBD;(External trigger stretch)</strong> &#x7528;&#x4E8E;&#x5C55;&#x5BBD;&#x6A21;&#x5757;&#x6709;&#x6548;&#x89E6;&#x53D1;(module validation trigger)&#x8109;&#x51B2;&#x3002;</li>
-<li><strong>&#x901A;&#x9053;&#x89E6;&#x53D1;&#x5C55;&#x5BBD;(Channel trigger stretch)</strong> &#x7528;&#x4E8E;&#x5C55;&#x5BBD;&#x901A;&#x9053;&#x6709;&#x6548;&#x89E6;&#x53D1;(channel validation trigger)&#x8109;&#x51B2;&#x3002;</li>
-<li><strong>Veto&#x5C55;&#x5BBD;(Veto stretch)</strong> &#x7528;&#x4E8E;&#x5C55;&#x5BBD;&#x8BE5;&#x901A;&#x9053;&#x7684;&#x5426;&#x51B3;&#x8109;&#x51B2;&#x3002;</li>
-<li><strong>&#x5FEB;&#x901F;&#x89E6;&#x53D1;&#x80CC;&#x677F;&#x957F;&#x5EA6;(Fast trigger backplane length)</strong> &#x7528;&#x4E8E;&#x5C55;&#x5BBD;&#x8981;&#x53D1;&#x9001;&#x5230;&#x7CFB;&#x7EDF; FPGA &#x7684;&#x5FEB;&#x901F;&#x89E6;&#x53D1;&#x8109;&#x51B2;&#xFF0C;&#x5176;&#x4E2D;&#x6B64;&#x5FEB;&#x901F;&#x89E6;&#x53D1;&#x53EF;&#x4EE5;&#x53D1;&#x9001;&#x5230;&#x80CC;&#x677F;&#x4EE5;&#x4E0E;&#x5176;&#x5B83;&#x6A21;&#x5757;&#x5171;&#x4EAB;&#xFF0C;&#x6216;&#x8005;&#x53EF;&#x4EE5;&#x7528;&#x4E8E;&#x8FDB;&#x884C;&#x7B26;&#x5408;&#x6216;&#x591A;&#x91CD;&#x89E6;&#x53D1;&#x3002;</li>
+<p><strong>FIFO延迟(FIFO Delays)</strong></p>
+<ul class="simple">
+<li><p><strong>外部延迟长度(External delay length)</strong> 用于延迟输入 ADC 波形和本地快速触发，以便补偿外部触发脉冲的延迟到达，例如: 模块有效触发，通道有效触发等。</p></li>
+<li><p><strong>快速触发背板延迟(Fast trigger backplane delay)</strong> 用于在将快速触发脉冲发送到系统 FPGA 之前将其延迟，以便通过背板与其它模块共享或进行符合或多重触发。</p></li>
 </ul>
-<p><strong>FIFO&#x5EF6;&#x8FDF;(FIFO Delays)</strong></p>
-<ul>
-<li><strong>&#x5916;&#x90E8;&#x5EF6;&#x8FDF;&#x957F;&#x5EA6;(External delay length)</strong> &#x7528;&#x4E8E;&#x5EF6;&#x8FDF;&#x8F93;&#x5165; ADC &#x6CE2;&#x5F62;&#x548C;&#x672C;&#x5730;&#x5FEB;&#x901F;&#x89E6;&#x53D1;&#xFF0C;&#x4EE5;&#x4FBF;&#x8865;&#x507F;&#x5916;&#x90E8;&#x89E6;&#x53D1;&#x8109;&#x51B2;&#x7684;&#x5EF6;&#x8FDF;&#x5230;&#x8FBE;&#xFF0C;&#x4F8B;&#x5982;: &#x6A21;&#x5757;&#x6709;&#x6548;&#x89E6;&#x53D1;&#xFF0C;&#x901A;&#x9053;&#x6709;&#x6548;&#x89E6;&#x53D1;&#x7B49;&#x3002;</li>
-<li><strong>&#x5FEB;&#x901F;&#x89E6;&#x53D1;&#x80CC;&#x677F;&#x5EF6;&#x8FDF;(Fast trigger backplane delay)</strong> &#x7528;&#x4E8E;&#x5728;&#x5C06;&#x5FEB;&#x901F;&#x89E6;&#x53D1;&#x8109;&#x51B2;&#x53D1;&#x9001;&#x5230;&#x7CFB;&#x7EDF; FPGA &#x4E4B;&#x524D;&#x5C06;&#x5176;&#x5EF6;&#x8FDF;&#xFF0C;&#x4EE5;&#x4FBF;&#x901A;&#x8FC7;&#x80CC;&#x677F;&#x4E0E;&#x5176;&#x5B83;&#x6A21;&#x5757;&#x5171;&#x4EAB;&#x6216;&#x8FDB;&#x884C;&#x7B26;&#x5408;&#x6216;&#x591A;&#x91CD;&#x89E6;&#x53D1;&#x3002;</li>
+<img alt="../_images/rangefortriggerstretchlengthsandfifodelayinpixie16modules.png" src="../_images/rangefortriggerstretchlengthsandfifodelayinpixie16modules.png" />
+</div>
+<div class="section" id="module-fast-trigger-for-trigger">
+<h2>Module Fast Trigger(for trigger)<a class="headerlink" href="#module-fast-trigger-for-trigger" title="永久链接至标题">¶</a></h2>
+<p>Module fast trigger 有以下四种来源可供选择：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Ext_FastTrig_In(来源于本插件)</dt><dd><ul>
+<li><p>Ext_FastTrig_Sel(前面板 TTL 输入)</p></li>
+<li><p>Int_FastTrig_Sgl(内部某路 FT)</p></li>
+<li><p>FTIN_Or(内部 FT 的 OR)</p></li>
+<li><p>LVDS_FastTrig_FP(前面板网口输入)</p></li>
+<li><p>ChanTrig_Sel(内部某路的 valid trigger)(与 module validation trigger 共用一个设置)</p></li>
 </ul>
-<figure id="fig1.3.9.2"><img src="../img/rangefortriggerstretchlengthsandfifodelayinpixie16modules.png" alt="Range for Trigger Stretch Lengths and FIFO Delays in Pixie-16 Modules"><figcaption>Figure: Range for Trigger Stretch Lengths and FIFO Delays in Pixie-16 Modules</figcaption></figure>
-<hr>
-<h2 id="module-fast-trigger-for-trigger"><a name="module-fast-trigger-for-trigger" class="plugin-anchor" href="#module-fast-trigger-for-trigger"><i class="fa fa-link" aria-hidden="true"></i></a>Module Fast Trigger (for trigger)</h2>
-<p>Module fast trigger &#x6709;&#x4EE5;&#x4E0B;&#x56DB;&#x79CD;&#x6765;&#x6E90;&#x53EF;&#x4F9B;&#x9009;&#x62E9;&#xFF1A;</p>
-<ul>
-<li>Ext_FastTrig_In(&#x6765;&#x6E90;&#x4E8E;&#x672C;&#x63D2;&#x4EF6;)<ul>
-<li>Ext_FastTrig_Sel(&#x524D;&#x9762;&#x677F; TTL &#x8F93;&#x5165;)</li>
-<li>Int_FastTrig_Sgl(&#x5185;&#x90E8;&#x67D0;&#x8DEF; FT)</li>
-<li>FTIN_Or(&#x5185;&#x90E8; FT &#x7684; OR)</li>
-<li>LVDS_FastTrig_FP(&#x524D;&#x9762;&#x677F;&#x7F51;&#x53E3;&#x8F93;&#x5165;)</li>
-<li>ChanTrig_Sel(&#x5185;&#x90E8;&#x67D0;&#x8DEF;&#x7684; valid trigger)(&#x4E0E; module validation trigger &#x5171;&#x7528;&#x4E00;&#x4E2A;&#x8BBE;&#x7F6E;)</li>
-</ul>
+</dd>
+</dl>
 </li>
-<li>FT_LocalCrate_BP(&#x672C;&#x673A;&#x7BB1;&#x4E2D;&#x6307;&#x5B9A;&#x63D2;&#x4EF6;&#x9001;&#x51FA;&#x7684; trigger)</li>
-<li>FT_In_BP(&#x591A;&#x673A;&#x7BB1;&#x4E2D;&#x6307;&#x5B9A;&#x673A;&#x7BB1;&#x4E0A;&#x6307;&#x5B9A;&#x63D2;&#x4EF6;&#x53D1;&#x9001;&#x7684; trigger)</li>
-<li>FT_WiredOr(&#x672C;&#x673A;&#x7BB1;&#x4E2D;&#x6240;&#x6709;&#x63D2;&#x4EF6;&#x53D1;&#x9001;&#x51FA; trigger &#x7684; OR)</li>
+<li><p>FT_LocalCrate_BP(本机箱中指定插件送出的 trigger)</p></li>
+<li><p>FT_In_BP(多机箱中指定机箱上指定插件发送的 trigger)</p></li>
+<li><p>FT_WiredOr(本机箱中所有插件发送出 trigger 的 OR)</p></li>
 </ul>
-<h2 id="module-validation-trigger-for-control-logic"><a name="module-validation-trigger-for-control-logic" class="plugin-anchor" href="#module-validation-trigger-for-control-logic"><i class="fa fa-link" aria-hidden="true"></i></a>Module Validation Trigger (for control logic)</h2>
-<p>Module validation trigger &#x6709;&#x4EE5;&#x4E0B;&#x6765;&#x6E90;&#x53EF;&#x4F9B;&#x9009;&#x62E9;&#xFF1A;</p>
-<ul>
-<li>Ext_ValidTrig_In(&#x6765;&#x6E90;&#x4E8E;&#x672C;&#x63D2;&#x4EF6;)<ul>
-<li>Ext_ValidTrig_Sel(&#x524D;&#x9762;&#x677F; TTL &#x8F93;&#x5165;)</li>
-<li>Int_ValidTrig_Sgl(&#x5185;&#x90E8;&#x67D0;&#x8DEF; FT)</li>
-<li>FTIN_Or(&#x5185;&#x90E8; FT &#x7684; OR)</li>
-<li>LVDS_ValidTrig_FP(&#x524D;&#x9762;&#x677F;&#x7F51;&#x53E3;&#x8F93;&#x5165;)</li>
-<li>ChanTrig_Sel(&#x5185;&#x90E8;&#x67D0;&#x8DEF;&#x7684; valid trigger) )(&#x4E0E; module fast trigger &#x5171;&#x7528;&#x4E00;&#x4E2A;&#x8BBE;&#x7F6E;)</li>
+</div>
+<div class="section" id="module-validation-trigger-for-control-logic">
+<h2>Module Validation Trigger(for control logic)<a class="headerlink" href="#module-validation-trigger-for-control-logic" title="永久链接至标题">¶</a></h2>
+<p>Module validation trigger 有以下来源可供选择：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Ext_ValidTrig_In(来源于本插件)</dt><dd><ul>
+<li><p>Ext_ValidTrig_Sel(前面板 TTL 输入)</p></li>
+<li><p>Int_ValidTrig_Sgl(内部某路 FT)</p></li>
+<li><p>FTIN_Or(内部 FT 的 OR)</p></li>
+<li><p>LVDS_ValidTrig_FP(前面板网口输入)</p></li>
+<li><p>ChanTrig_Sel(内部某路的 valid trigger) )(与 module fast trigger 共用一个设置)</p></li>
 </ul>
+</dd>
+</dl>
 </li>
-<li>ET_LocalCrate_BP(&#x672C;&#x673A;&#x7BB1;&#x4E2D;&#x6307;&#x5B9A;&#x63D2;&#x4EF6;&#x9001;&#x51FA;&#x7684; trigger)</li>
-<li>ET_In_BP(&#x591A;&#x673A;&#x7BB1;&#x4E2D;&#x6307;&#x5B9A;&#x673A;&#x7BB1;&#x4E0A;&#x6307;&#x5B9A;&#x63D2;&#x4EF6;&#x53D1;&#x9001;&#x7684; trigger)</li>
-<li>ET_WiredOr(&#x672C;&#x673A;&#x7BB1;&#x4E2D;&#x6240;&#x6709;&#x63D2;&#x4EF6;&#x53D1;&#x9001;&#x51FA; trigger &#x7684; OR)</li>
-<li>&#x524D;&#x9762;&#x677F; module GATE &#x8F93;&#x5165; LVDS &#x4FE1;&#x53F7;</li>
+<li><p>ET_LocalCrate_BP(本机箱中指定插件送出的 trigger)</p></li>
+<li><p>ET_In_BP(多机箱中指定机箱上指定插件发送的 trigger)</p></li>
+<li><p>ET_WiredOr(本机箱中所有插件发送出 trigger 的 OR)</p></li>
+<li><p>前面板 module GATE 输入 LVDS 信号</p></li>
 </ul>
-<h2 id="channel-validation-triggerfor-triggercontrol-logic"><a name="channel-validation-triggerfor-triggercontrol-logic" class="plugin-anchor" href="#channel-validation-triggerfor-triggercontrol-logic"><i class="fa fa-link" aria-hidden="true"></i></a>Channel Validation Trigger(for trigger/control logic)</h2>
-<p>Channel validation trigger&#x6765;&#x6E90;&#x6709;&#x4EE5;&#x4E0B;&#x9009;&#x62E9;&#xFF1A;</p>
-<ul>
-<li>&#x6BCF;&#x8DEF;&#x72EC;&#x7ACB;&#x8BBE;&#x7F6E;&#xFF0C;&#x6765;&#x6E90;&#x4E8E;&#x591A;&#x91CD;&#x6027;&#x9009;&#x62E9;</li>
-<li>&#x6BCF;&#x8DEF;&#x72EC;&#x7ACB;&#x8BBE;&#x7F6E;&#xFF0C;&#x6765;&#x6E90;&#x4E8E;&#x7B26;&#x5408;</li>
-<li>&#x6BCF;4&#x8DEF;&#x5171;&#x7528;&#x4E00;&#x4E2A;&#x8BBE;&#x7F6E;&#xFF0C;&#x6765;&#x6E90;&#x4E8E;&#x5DE6;&#x3001;&#x4E2D;&#x3001;&#x53F3;&#x63D2;&#x4EF6;&#x67D0;&#x8DEF;&#x7684; FT</li>
-<li>&#x6BCF;4&#x8DEF;&#x5171;&#x7528;&#x4E00;&#x4E2A;&#x8BBE;&#x7F6E;&#xFF0C;&#x6765;&#x6E90;&#x4E8E;&#x81EA;&#x8EAB; FT &#x4E0E; Ext_FastTrig_In &#x7684;&#x7B26;&#x5408;</li>
-<li>&#x6BCF;&#x8DEF;&#x72EC;&#x7ACB;&#x8BBE;&#x7F6E;&#xFF0C;&#x524D;&#x9762;&#x677F; channel GATE &#x8F93;&#x5165; LVDS &#x4FE1;&#x53F7;(&#x4E0E;&#x524D;&#x9762;&#x677F; Veto &#x5171;&#x7528;&#x4E00;&#x4E2A;&#x8F93;&#x5165;&#x53E3;)</li>
+</div>
+<div class="section" id="channel-validation-trigger-for-trigger-control-logic">
+<h2>Channel Validation Trigger(for trigger/control logic)<a class="headerlink" href="#channel-validation-trigger-for-trigger-control-logic" title="永久链接至标题">¶</a></h2>
+<p>Channel validation trigger来源有以下选择：</p>
+<ul class="simple">
+<li><p>每路独立设置，来源于多重性选择</p></li>
+<li><p>每路独立设置，来源于符合</p></li>
+<li><p>每4路共用一个设置，来源于左、中、右插件某路的 FT</p></li>
+<li><p>每4路共用一个设置，来源于自身 FT 与 Ext_FastTrig_In 的符合</p></li>
+<li><p>每路独立设置，前面板 channel GATE 输入 LVDS 信号(与前面板 Veto 共用一个输入口)</p></li>
 </ul>
-<h2 id="veto"><a name="veto" class="plugin-anchor" href="#veto"><i class="fa fa-link" aria-hidden="true"></i></a>Veto</h2>
-<p>&#x6765;&#x6E90;&#x4E8E; ModuleVeto &#x4E0E; ChannelVeto &#x7684; OR</p>
-<ul>
-<li>ModuleVeto &#x6765;&#x6E90;&#x6709;&#x4E24;&#x4E2A;&#x9009;&#x62E9;&#xFF1A;<ul>
-<li>Module Validation Trigger</li>
-<li>&#x524D;&#x9762;&#x677F; Module Gate</li>
+</div>
+<div class="section" id="veto">
+<h2>Veto<a class="headerlink" href="#veto" title="永久链接至标题">¶</a></h2>
+<p>来源于 ModuleVeto 与 ChannelVeto 的 OR：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>ModuleVeto 来源有两个选择：</dt><dd><ul>
+<li><p>Module Validation Trigger</p></li>
+<li><p>前面板 Module Gate</p></li>
 </ul>
+</dd>
+</dl>
 </li>
-<li>ChannelVote &#x6765;&#x6E90;&#x6709;&#x4E24;&#x4E2A;&#x9009;&#x62E9;&#xFF1A;<ul>
-<li>Channel Validtion Trigger</li>
-<li>&#x524D;&#x9762;&#x677F; Gate input for channel (&#x4E0E;&#x524D;&#x9762;&#x677F; Channel validation trigger &#x5171;&#x7528;&#x4E00;&#x4E2A;&#x8F93;&#x5165;&#x53E3;)</li>
+<li><dl class="simple">
+<dt>ChannelVote 来源有两个选择：</dt><dd><ul>
+<li><p>Channel Validtion Trigger</p></li>
+<li><p>前面板 Gate input for channel (与前面板 Channel validation trigger 共用一个输入口)</p></li>
 </ul>
+</dd>
+</dl>
 </li>
 </ul>
-<h2 id="system-fpga-&#xFF08;coincidencemultiplicity&#xFF09;"><a name="system-fpga-&#xFF08;coincidencemultiplicity&#xFF09;" class="plugin-anchor" href="#system-fpga-&#xFF08;coincidencemultiplicity&#xFF09;"><i class="fa fa-link" aria-hidden="true"></i></a>System FPGA &#xFF08;coincidence/multiplicity&#xFF09;</h2>
-<figure id="fig1.3.9.3"><img src="../img/SystemFPGA.png" alt="System FPGA"><figcaption>Figure: System FPGA</figcaption></figure>
-<p>Multiplicity&#xFF1A;&#x5BF9;&#x8BBE;&#x7F6E;&#x7684;&#x8BE5; channel &#x6765;&#x8BF4;&#xFF0C;&#x5DE6;&#x90BB;&#x63D2;&#x4EF6;&#x3001;&#x81EA;&#x8EAB;&#x63D2;&#x4EF6;&#x3001;&#x53F3;&#x90BB;&#x63D2;&#x4EF6;&#x5171; 48 &#x8DEF;&#xFF0C;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x53C2;&#x4E0E;&#x591A;&#x91CD;&#x6027;&#x9009;&#x62E9;&#x7684;&#x8DEF;&#x6570;</p>
-<p>Coincidence&#xFF1A;&#x5BF9;&#x8BBE;&#x7F6E;&#x7684;&#x8BE5; channel &#x6765;&#x8BF4;&#xFF0C;&#x5DE6;&#x90BB;&#x63D2;&#x4EF6;&#x3001;&#x81EA;&#x8EAB;&#x63D2;&#x4EF6;&#x3001;&#x53F3;&#x90BB;&#x63D2;&#x4EF6;&#xFF0C;&#x6BCF;&#x4E2A;&#x63D2;&#x4EF6;&#x5747;&#x6EE1;&#x8DB3;&#x8BBE;&#x7F6E;&#x7684;&#x7B26;&#x5408;&#x6761;&#x4EF6;&#xFF0C;&#x624D;&#x80FD;&#x7ED9;&#x51FA;&#x7B26;&#x5408;&#x89E6;&#x53D1;</p>
-<figure id="fig1.3.9.4"><img src="../img/fasttrigger_stretch_delay.png" alt="fast trigger stretch/delay"><figcaption>Figure: fast trigger stretch/delay</figcaption></figure>
-<p>&#x5176;&#x5B83;&#x63D2;&#x4EF6;&#x7684; fast filter trigger &#x901A;&#x8FC7;&#x673A;&#x7BB1;&#x80CC;&#x677F;&#x4F20;&#x5230;&#x8BE5;&#x63D2;&#x4EF6;&#x9700;&#x8981;&#x5927;&#x7EA6; 100 ns &#x5DE6;&#x53F3;&#x3002;&#x56E0;&#x6B64;&#x901A;&#x8FC7;&#x8C03;&#x8282;&#x95E8;&#x5BBD;&#x3001;&#x5EF6;&#x8FDF;&#x6765;&#x4FDD;&#x8BC1;&#x7B26;&#x5408;&#x3001;&#x591A;&#x91CD;&#x6027;&#x9009;&#x62E9;&#x7684;&#x5408;&#x7406;&#x8BBE;&#x7F6E;&#x3002;</p>
-<ul>
-<li>Fast trigger stretch length: &#x8BBE;&#x7F6E; fast trigger &#x95E8;&#x5BBD;&#xFF0C;</li>
-<li>fast trigger delay length: &#x8BBE;&#x7F6E; fast trigger &#x5EF6;&#x8FDF;&#x3002;</li>
+</div>
+<div class="section" id="system-fpga-coincidence-multiplicity">
+<h2>System FPGA（coincidence/multiplicity）<a class="headerlink" href="#system-fpga-coincidence-multiplicity" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/SystemFPGA.png" src="../_images/SystemFPGA.png" />
+<p>Multiplicity：对设置的该 channel 来说，左邻插件、自身插件、右邻插件共 48 路，可以选择参与多重性选择的路数</p>
+<p>Coincidence：对设置的该 channel 来说，左邻插件、自身插件、右邻插件，每个插件均满足设置的符合条件，才能给出符合触发</p>
+<img alt="../_images/fasttrigger_stretch_delay.png" src="../_images/fasttrigger_stretch_delay.png" />
+<p>其它插件的 fast filter trigger 通过机箱背板传到该插件需要大约 100 ns 左右。因此通过调节门宽、延迟来保证符合、多重性选择的合理设置。</p>
+<ul class="simple">
+<li><p>Fast trigger stretch length: 设置 fast trigger 门宽，</p></li>
+<li><p>fast trigger delay length: 设置 fast trigger 延迟。</p></li>
 </ul>
 <p><em>Control logic (module/channel validation trigger)</em></p>
-<figure id="fig1.3.9.5"><img src="../img/validationtrigger.png" alt="validation trigger"><figcaption>Figure: validation trigger</figcaption></figure>
-<p><strong>&#x7279;&#x522B;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x4FE1;&#x53F7;&#x7ECF;&#x8FC7;&#x80CC;&#x677F;&#x4F20;&#x8F93;&#x5927;&#x7EA6;&#x9700;&#x8981;&#x65F6;&#x95F4; 100 ns&#x3002;</strong></p>
-<!-- Logic.md ends here -->
-<script type="text/javascript">var className='atoc';</script>
-
-<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> <a href="http://wuhongyi.cn/" target="_blank">&#xA9; Hongyi Wu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated:</i> 2019-06-27 17:57:16 </span> </footer>
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
-        </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
+<img alt="../_images/validationtrigger.png" src="../_images/validationtrigger.png" />
+<p><strong>特别需要注意信号经过背板传输大约需要时间 100 ns。</strong></p>
 </div>
-
-                        </div>
-                    </div>
-                
-            </div>
-
-            
-                
-                <a href="FrontPanel.html" class="navigation navigation-prev " aria-label="Previous page: 插件前面板">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                
-                
-                <a href="MultipleModulesSynchronously.html" class="navigation navigation-next " aria-label="Next page: 时间同步">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
-        
-    </div>
-
-    <script>
-        var gitbook = gitbook || [];
-        gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"逻辑功能","level":"1.3.9","depth":2,"next":{"title":"时间同步","level":"1.3.10","depth":2,"path":"UsersGuide/MultipleModulesSynchronously.md","ref":"UsersGuide/MultipleModulesSynchronously.md","articles":[]},"previous":{"title":"插件前面板","level":"1.3.8","depth":2,"path":"UsersGuide/FrontPanel.md","ref":"UsersGuide/FrontPanel.md","articles":[]},"dir":"ltr"},"config":{"plugins":["search","sharing","fontsettings","livereload","highlight","github","-prism","ad","alerts","atoc","splitter","sitemap","image-captions","anchors","latex-codecogs","-katex","mermaid","ace","page-footer-ex","sectionx","mcqx","fbqx","spoiler","anchor-navigation","youtubex","redirect","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"latex-codecogs":{"type":"gif"},"spoiler":{},"ad":{"contentBottom":"","contentTop":""},"ace":{},"github":{"url":"https://github.com/wuhongyi"},"fbqx":{},"livereload":{},"page-footer-ex":{"copyright":"[© Hongyi Wu](http://wuhongyi.cn/)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated:</i>"},"atoc":{"addClass":true,"className":"atoc"},"splitter":{},"search":{},"mermaid":{},"anchor-navigation":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"serif","size":2,"theme":"sepia"},"sectionx":{},"highlight":{},"sitemap":{"hostname":"http://wuhongyi.cn/"},"youtubex":{"embedDescription":{"de":"Eingebettetes Video:","default":"Embedded video:"}},"alerts":{},"sharing":{"all":["facebook","google","twitter","weibo","instapaper"],"facebook":true,"google":false,"instapaper":false,"twitter":true,"vk":false,"weibo":false},"redirect":{},"mcqx":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"expandable-chapters":{},"image-captions":{"variable_name":"_pictures"}},"theme":"default","author":"Hongyi Wu(吴鸿毅)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"_pictures":[{"backlink":"index.html#fig1.1.1","level":"1.1","list_caption":"Figure: PKU logo","alt":"PKU logo","nro":1,"url":"pkulogo100.jpg","index":1,"caption_template":"Figure: _CAPTION_","label":"PKU logo","attributes":{},"skip":false,"key":"1.1.1"},{"backlink":"UsersGuide/index.html#fig1.3.1","level":"1.3","list_caption":"Figure: pixie16","alt":"pixie16","nro":2,"url":"/img/pixie16.jpg","index":1,"caption_template":"Figure: _CAPTION_","label":"pixie16","attributes":{},"skip":false,"key":"1.3.1"},{"backlink":"UsersGuide/Crate.html#fig1.3.1.1","level":"1.3.1","list_caption":"Figure: connect and IP","alt":"connect and IP","nro":3,"url":"/img/cratenet0.png","index":1,"caption_template":"Figure: _CAPTION_","label":"connect and IP","attributes":{},"skip":false,"key":"1.3.1.1"},{"backlink":"UsersGuide/Crate.html#fig1.3.1.2","level":"1.3.1","list_caption":"Figure: open control page","alt":"open control page","nro":4,"url":"/img/cratenet1.png","index":2,"caption_template":"Figure: _CAPTION_","label":"open control page","attributes":{},"skip":false,"key":"1.3.1.2"},{"backlink":"UsersGuide/Crate.html#fig1.3.1.3","level":"1.3.1","list_caption":"Figure: Login","alt":"Login","nro":5,"url":"/img/cratenet2.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Login","attributes":{},"skip":false,"key":"1.3.1.3"},{"backlink":"UsersGuide/Crate.html#fig1.3.1.4","level":"1.3.1","list_caption":"Figure: status","alt":"status","nro":6,"url":"/img/cratenet3.png","index":4,"caption_template":"Figure: _CAPTION_","label":"status","attributes":{},"skip":false,"key":"1.3.1.4"},{"backlink":"UsersGuide/GUI.html#fig1.3.4.1","level":"1.3.4","list_caption":"Figure: MainFrame","alt":"MainFrame","nro":7,"url":"/img/mainframe.png","index":1,"caption_template":"Figure: _CAPTION_","label":"MainFrame","attributes":{},"skip":false,"key":"1.3.4.1"},{"backlink":"UsersGuide/FILE_About.html#fig1.3.4.1.1.1","level":"1.3.4.1.1","list_caption":"Figure: About","alt":"About","nro":8,"url":"/img/About.png","index":1,"caption_template":"Figure: _CAPTION_","label":"About","attributes":{},"skip":false,"key":"1.3.4.1.1.1"},{"backlink":"UsersGuide/BASESETUP_BaseSetup.html#fig1.3.4.2.1.1","level":"1.3.4.2.1","list_caption":"Figure: Base Setup","alt":"Base Setup","nro":9,"url":"/img/BaseSetup.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Base Setup","attributes":{},"skip":false,"key":"1.3.4.2.1.1"},{"backlink":"UsersGuide/BASESETUP_TriggerFilter.html#fig1.3.4.2.2.1","level":"1.3.4.2.2","list_caption":"Figure: Trigger Filter","alt":"Trigger Filter","nro":10,"url":"/img/TriggerFilter.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Trigger Filter","attributes":{},"skip":false,"key":"1.3.4.2.2.1"},{"backlink":"UsersGuide/BASESETUP_TriggerFilter.html#fig1.3.4.2.2.2","level":"1.3.4.2.2","list_caption":"Figure: (a) Charge sensitive preamplifier with RC feedback; (b) Output on absorption of a gamma ray","alt":"(a) Charge sensitive preamplifier with RC feedback; (b) Output on absorption of a gamma ray","nro":11,"url":"/img/chargesenitivepreamplifierrcfeedbackoutputonabsorptionofagammaray.png","index":2,"caption_template":"Figure: _CAPTION_","label":"(a) Charge sensitive preamplifier with RC feedback; (b) Output on absorption of a gamma ray","attributes":{},"skip":false,"key":"1.3.4.2.2.2"},{"backlink":"UsersGuide/BASESETUP_TriggerFilter.html#fig1.3.4.2.2.3","level":"1.3.4.2.2","list_caption":"Figure: Digitized version of the data of Figure (b) in the step region","alt":"Digitized version of the data of Figure (b) in the step region","nro":12,"url":"/img/digitizedversionofthedataoffigurebinthestepregion.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Digitized version of the data of Figure (b) in the step region","attributes":{},"skip":false,"key":"1.3.4.2.2.3"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.1","level":"1.3.4.2.3","list_caption":"Figure: Energy","alt":"Energy","nro":13,"url":"/img/Energy.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Energy","attributes":{},"skip":false,"key":"1.3.4.2.3.1"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.2","level":"1.3.4.2.3","list_caption":"Figure: Filter clock decimations and filter time granularity for 100 MHz or 500 MHz","alt":"Filter clock decimations and filter time granularity for 100 MHz or 500 MHz","nro":14,"url":"/img/filterclockdecimationsandfiltertimegranularityfor100mhzor500mhz.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Filter clock decimations and filter time granularity for 100 MHz or 500 MHz","attributes":{},"skip":false,"key":"1.3.4.2.3.2"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.3","level":"1.3.4.2.3","list_caption":"Figure: Filter clock decimations and filter time granularity for 250 MHz","alt":"Filter clock decimations and filter time granularity for 250 MHz","nro":15,"url":"/img/filterclockdecimationsandfiltertimegranularityfor250mhz.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Filter clock decimations and filter time granularity for 250 MHz","attributes":{},"skip":false,"key":"1.3.4.2.3.3"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.4","level":"1.3.4.2.3","list_caption":"Figure: Trapezoidal filtering of a preamplifier step with L=1μs and G=0.4μs","alt":"Trapezoidal filtering of a preamplifier step with L=1μs and G=0.4μs","nro":16,"url":"/img/trapezoidalfilteringofapreamplifierstepwithl1usandg04us.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Trapezoidal filtering of a preamplifier step with L=1μs and G=0.4μs","attributes":{},"skip":false,"key":"1.3.4.2.3.4"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.5","level":"1.3.4.2.3","list_caption":"Figure: A gamma-ray event displayed over a longer time period to show baseline noise and the effect of preamplifier decay time","alt":"A gamma-ray event displayed over a longer time period to show baseline noise and the effect of preamplifier decay time","nro":17,"url":"/img/agammaeventdisplayedoveralongertimeperiodtoshowbaselinenoiseandtheeffectofpreamplifierdecaytime.png","index":5,"caption_template":"Figure: _CAPTION_","label":"A gamma-ray event displayed over a longer time period to show baseline noise and the effect of preamplifier decay time","attributes":{},"skip":false,"key":"1.3.4.2.3.5"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.6","level":"1.3.4.2.3","list_caption":"Figure: Peak detection and sampling","alt":"Peak detection and sampling","nro":18,"url":"/img/peakdetectionandsampling.png","index":6,"caption_template":"Figure: _CAPTION_","label":"Peak detection and sampling","attributes":{},"skip":false,"key":"1.3.4.2.3.6"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.7","level":"1.3.4.2.3","list_caption":"Figure: A sequence of 3 gamma-ray pulses separated by various intervals to show the origin of pileup and demonstrate how it is detected by the Pixie module","alt":"A sequence of 3 gamma-ray pulses separated by various intervals to show the origin of pileup and demonstrate how it is detected by the Pixie module","nro":19,"url":"/img/asequenceof3gammaraypulsesseparatedbyvariousintervalstoshowtheoriginofpileupanddemonstratehowitisdetected.png","index":7,"caption_template":"Figure: _CAPTION_","label":"A sequence of 3 gamma-ray pulses separated by various intervals to show the origin of pileup and demonstrate how it is detected by the Pixie module","attributes":{},"skip":false,"key":"1.3.4.2.3.7"},{"backlink":"UsersGuide/BASESETUP_CFD.html#fig1.3.4.2.4.1","level":"1.3.4.2.4","list_caption":"Figure: CFD","alt":"CFD","nro":20,"url":"/img/CFDPars.png","index":1,"caption_template":"Figure: _CAPTION_","label":"CFD","attributes":{},"skip":false,"key":"1.3.4.2.4.1"},{"backlink":"UsersGuide/BASESETUP_CFD.html#fig1.3.4.2.4.2","level":"1.3.4.2.4","list_caption":"Figure: Corresponding DSP Parameters for the CFD Parameters","alt":"Corresponding DSP Parameters for the CFD Parameters","nro":21,"url":"/img/correspondingdspparametersforthecfdparmeters.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Corresponding DSP Parameters for the CFD Parameters","attributes":{},"skip":false,"key":"1.3.4.2.4.2"},{"backlink":"UsersGuide/BASESETUP_CFD.html#fig1.3.4.2.4.3","level":"1.3.4.2.4","list_caption":"Figure: Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules","alt":"Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules","nro":22,"url":"/img/fixedcfdparametervaluesfor500mhzpixie16modules.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules","attributes":{},"skip":false,"key":"1.3.4.2.4.3"},{"backlink":"UsersGuide/BASESETUP_CFD.html#fig1.3.4.2.4.4","level":"1.3.4.2.4","list_caption":"Figure: Meanings of the CFD Trigger Source for 500 MHz Pixie-16 Modules","alt":"Meanings of the CFD Trigger Source for 500 MHz Pixie-16 Modules","nro":23,"url":"/img/meaningofthecfdtriggersourcefor500mhzpixie16modules.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Meanings of the CFD Trigger Source for 500 MHz Pixie-16 Modules","attributes":{},"skip":false,"key":"1.3.4.2.4.4"},{"backlink":"UsersGuide/BASESETUP_QDC.html#fig1.3.4.2.5.1","level":"1.3.4.2.5","list_caption":"Figure: QDC","alt":"QDC","nro":24,"url":"/img/QDCPars.png","index":1,"caption_template":"Figure: _CAPTION_","label":"QDC","attributes":{},"skip":false,"key":"1.3.4.2.5.1"},{"backlink":"UsersGuide/BASESETUP_QDC.html#fig1.3.4.2.5.2","level":"1.3.4.2.5","list_caption":"Figure: The 8 QDC sums of a triggered event","alt":"The 8 QDC sums of a triggered event","nro":25,"url":"/img/the8qdcsumsofatriggeredevent.png","index":2,"caption_template":"Figure: _CAPTION_","label":"The 8 QDC sums of a triggered event","attributes":{},"skip":false,"key":"1.3.4.2.5.2"},{"backlink":"UsersGuide/BASESETUP_Decimation.html#fig1.3.4.2.6.1","level":"1.3.4.2.6","list_caption":"Figure: Decimation","alt":"Decimation","nro":26,"url":"/img/Decimation.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Decimation","attributes":{},"skip":false,"key":"1.3.4.2.6.1"},{"backlink":"UsersGuide/BASESETUP_CopyPars.html#fig1.3.4.2.7.1","level":"1.3.4.2.7","list_caption":"Figure: Copy Pars","alt":"Copy Pars","nro":27,"url":"/img/CopyPars.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Copy Pars","attributes":{},"skip":false,"key":"1.3.4.2.7.1"},{"backlink":"UsersGuide/BASESETUP_Save2File.html#fig1.3.4.2.8.1","level":"1.3.4.2.8","list_caption":"Figure: Save2File","alt":"Save2File","nro":28,"url":"/img/Save2File.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Save2File","attributes":{},"skip":false,"key":"1.3.4.2.8.1"},{"backlink":"UsersGuide/EXPERT_MSRB.html#fig1.3.4.3.1.1","level":"1.3.4.3.1","list_caption":"Figure: Module Variables","alt":"Module Variables","nro":29,"url":"/img/ModuleVariables.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Module Variables","attributes":{},"skip":false,"key":"1.3.4.3.1.1"},{"backlink":"UsersGuide/EXPERT_CSRA.html#fig1.3.4.3.2.1","level":"1.3.4.3.2","list_caption":"Figure: CSRA","alt":"CSRA","nro":30,"url":"/img/CSRA.png","index":1,"caption_template":"Figure: _CAPTION_","label":"CSRA","attributes":{},"skip":false,"key":"1.3.4.3.2.1"},{"backlink":"UsersGuide/EXPERT_LogicSet.html#fig1.3.4.3.3.1","level":"1.3.4.3.3","list_caption":"Figure: Logic Set","alt":"Logic Set","nro":31,"url":"/img/LogicTrigger.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Logic Set","attributes":{},"skip":false,"key":"1.3.4.3.3.1"},{"backlink":"UsersGuide/EXPERT_LogicSet.html#fig1.3.4.3.3.2","level":"1.3.4.3.3","list_caption":"Figure: stretch length","alt":"stretch length","nro":32,"url":"/img/stretchlength.PNG","index":2,"caption_template":"Figure: _CAPTION_","label":"stretch length","attributes":{},"skip":false,"key":"1.3.4.3.3.2"},{"backlink":"UsersGuide/MONITOR_HistXDT.html#fig1.3.4.4.1.1","level":"1.3.4.4.1","list_caption":"Figure: Hist & XDT","alt":"Hist & XDT","nro":33,"url":"/img/HistXDT.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Hist & XDT","attributes":{},"skip":false,"key":"1.3.4.4.1.1"},{"backlink":"UsersGuide/MONITOR_TraceBaseline.html#fig1.3.4.4.2.1","level":"1.3.4.4.2","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":34,"url":"/img/Trace.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.4.4.2.1"},{"backlink":"UsersGuide/MONITOR_TraceBaseline.html#fig1.3.4.4.2.2","level":"1.3.4.4.2","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":35,"url":"/img/BaselineHist.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.4.4.2.2"},{"backlink":"UsersGuide/MONITOR_TraceBaseline.html#fig1.3.4.4.2.3","level":"1.3.4.4.2","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":36,"url":"/img/BaselineTimestamps.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.4.4.2.3"},{"backlink":"UsersGuide/DropDown4.html#fig1.3.4.5.1","level":"1.3.4.5","list_caption":"Figure: Adjust Par","alt":"Adjust Par","nro":37,"url":"/img/AdjustPar.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Adjust Par","attributes":{},"skip":false,"key":"1.3.4.5.1"},{"backlink":"UsersGuide/OFFLINE_AdjustPar.html#fig1.3.4.5.1.1","level":"1.3.4.5.1","list_caption":"Figure: offlineapi","alt":"offlineapi","nro":38,"url":"/img/OfflineAPI.png","index":1,"caption_template":"Figure: _CAPTION_","label":"offlineapi","attributes":{},"skip":false,"key":"1.3.4.5.1.1"},{"backlink":"UsersGuide/OFFLINE_AdjustPar.html#fig1.3.4.5.1.2","level":"1.3.4.5.1","list_caption":"Figure: Adjustpars3","alt":"Adjustpars3","nro":39,"url":"/img/Adjustpars3.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Adjustpars3","attributes":{},"skip":false,"key":"1.3.4.5.1.2"},{"backlink":"UsersGuide/OFFLINE_AdjustPar.html#fig1.3.4.5.1.3","level":"1.3.4.5.1","list_caption":"Figure: Adjustpars1","alt":"Adjustpars1","nro":40,"url":"/img/Adjustpars1.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Adjustpars1","attributes":{},"skip":false,"key":"1.3.4.5.1.3"},{"backlink":"UsersGuide/OFFLINE_AdjustPar.html#fig1.3.4.5.1.4","level":"1.3.4.5.1","list_caption":"Figure: Adjustpars2","alt":"Adjustpars2","nro":41,"url":"/img/Adjustpars2.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Adjustpars2","attributes":{},"skip":false,"key":"1.3.4.5.1.4"},{"backlink":"UsersGuide/OFFLINE_Wave-16.html#fig1.3.4.5.1.1.1","level":"1.3.4.5.1.1","list_caption":"Figure: Waveform16","alt":"Waveform16","nro":42,"url":"/img/Waveform16.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Waveform16","attributes":{},"skip":false,"key":"1.3.4.5.1.1.1"},{"backlink":"UsersGuide/OFFLINE_Energy-16.html#fig1.3.4.5.1.2.1","level":"1.3.4.5.1.2","list_caption":"Figure: Energy16","alt":"Energy16","nro":43,"url":"/img/Energy16.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Energy16","attributes":{},"skip":false,"key":"1.3.4.5.1.2.1"},{"backlink":"UsersGuide/OFFLINE_OrigEnergy.html#fig1.3.4.5.1.3.1","level":"1.3.4.5.1.3","list_caption":"Figure: OrigEnergy","alt":"OrigEnergy","nro":44,"url":"/img/OrigEnergy.png","index":1,"caption_template":"Figure: _CAPTION_","label":"OrigEnergy","attributes":{},"skip":false,"key":"1.3.4.5.1.3.1"},{"backlink":"UsersGuide/OFFLINE_OrigEnergy.html#fig1.3.4.5.1.3.2","level":"1.3.4.5.1.3","list_caption":"Figure: OrigEnergyFit","alt":"OrigEnergyFit","nro":45,"url":"/img/OrigEnergyFit.png","index":2,"caption_template":"Figure: _CAPTION_","label":"OrigEnergyFit","attributes":{},"skip":false,"key":"1.3.4.5.1.3.2"},{"backlink":"UsersGuide/OFFLINE_Calc Energy.html#fig1.3.4.5.1.4.1","level":"1.3.4.5.1.4","list_caption":"Figure: CalcEnergy","alt":"CalcEnergy","nro":46,"url":"/img/CalcEnergy.png","index":1,"caption_template":"Figure: _CAPTION_","label":"CalcEnergy","attributes":{},"skip":false,"key":"1.3.4.5.1.4.1"},{"backlink":"UsersGuide/OFFLINE_FFCFDThre.html#fig1.3.4.5.1.5.1","level":"1.3.4.5.1.5","list_caption":"Figure: FFCFDThre","alt":"FFCFDThre","nro":47,"url":"/img/FFCFDThre.png","index":1,"caption_template":"Figure: _CAPTION_","label":"FFCFDThre","attributes":{},"skip":false,"key":"1.3.4.5.1.5.1"},{"backlink":"UsersGuide/OFFLINE_FFCFDThre.html#fig1.3.4.5.1.5.2","level":"1.3.4.5.1.5","list_caption":"Figure: FFCFDThreFFProjectY","alt":"FFCFDThreFFProjectY","nro":48,"url":"/img/FFCFDThreFFProjectY.png","index":2,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreFFProjectY","attributes":{},"skip":false,"key":"1.3.4.5.1.5.2"},{"backlink":"UsersGuide/OFFLINE_FFCFDThre.html#fig1.3.4.5.1.5.3","level":"1.3.4.5.1.5","list_caption":"Figure: FFCFDThreCFDProjectY","alt":"FFCFDThreCFDProjectY","nro":49,"url":"/img/FFCFDThreCFDProjectY.png","index":3,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreCFDProjectY","attributes":{},"skip":false,"key":"1.3.4.5.1.5.3"},{"backlink":"UsersGuide/OFFLINE_FFCFDThre.html#fig1.3.4.5.1.5.4","level":"1.3.4.5.1.5","list_caption":"Figure: FFCFDThreCFD","alt":"FFCFDThreCFD","nro":50,"url":"/img/FFCFDThreCFD.png","index":4,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreCFD","attributes":{},"skip":false,"key":"1.3.4.5.1.5.4"},{"backlink":"UsersGuide/OFFLINE_Energy-FF.html#fig1.3.4.5.1.6.1","level":"1.3.4.5.1.6","list_caption":"Figure: EnergyFFGraph","alt":"EnergyFFGraph","nro":51,"url":"/img/EnergyFFGraph.png","index":1,"caption_template":"Figure: _CAPTION_","label":"EnergyFFGraph","attributes":{},"skip":false,"key":"1.3.4.5.1.6.1"},{"backlink":"UsersGuide/OFFLINE_Energy-FF.html#fig1.3.4.5.1.6.2","level":"1.3.4.5.1.6","list_caption":"Figure: EnergyFFHist","alt":"EnergyFFHist","nro":52,"url":"/img/EnergyFFHist.png","index":2,"caption_template":"Figure: _CAPTION_","label":"EnergyFFHist","attributes":{},"skip":false,"key":"1.3.4.5.1.6.2"},{"backlink":"UsersGuide/OFFLINE_Energy-CFD.html#fig1.3.4.5.1.7.1","level":"1.3.4.5.1.7","list_caption":"Figure: Energy-CFD","alt":"Energy-CFD","nro":53,"url":"/img/EnergyCFD.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Energy-CFD","attributes":{},"skip":false,"key":"1.3.4.5.1.7.1"},{"backlink":"UsersGuide/OFFLINE_FFT.html#fig1.3.4.5.1.9.1","level":"1.3.4.5.1.9","list_caption":"Figure: FFT","alt":"FFT","nro":54,"url":"/img/FFT.png","index":1,"caption_template":"Figure: _CAPTION_","label":"FFT","attributes":{},"skip":false,"key":"1.3.4.5.1.9.1"},{"backlink":"UsersGuide/OFFLINE_TimeDiff.html#fig1.3.4.5.1.10.1","level":"1.3.4.5.1.10","list_caption":"Figure: Time Diff","alt":"Time Diff","nro":55,"url":"/img/TimeDiff.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Time Diff","attributes":{},"skip":false,"key":"1.3.4.5.1.10.1"},{"backlink":"UsersGuide/NOGUI.html#fig1.3.5.1","level":"1.3.5","list_caption":"Figure: Main Frame","alt":"Main Frame","nro":56,"url":"/img/noguimainframe.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Main Frame","attributes":{},"skip":false,"key":"1.3.5.1"},{"backlink":"UsersGuide/NOGUI.html#fig1.3.5.2","level":"1.3.5","list_caption":"Figure: run mode","alt":"run mode","nro":57,"url":"/img/noguistartrun.png","index":2,"caption_template":"Figure: _CAPTION_","label":"run mode","attributes":{},"skip":false,"key":"1.3.5.2"},{"backlink":"UsersGuide/OnlineStattics.html#fig1.3.6.1","level":"1.3.6","list_caption":"Figure: OnlineMainFrame","alt":"OnlineMainFrame","nro":58,"url":"/img/OnlineMainFrame.png","index":1,"caption_template":"Figure: _CAPTION_","label":"OnlineMainFrame","attributes":{},"skip":false,"key":"1.3.6.1"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.1","level":"1.3.8","list_caption":"Figure: LVDS I/O Port","alt":"LVDS I/O Port","nro":59,"url":"/img/lvdsioport.png","index":1,"caption_template":"Figure: _CAPTION_","label":"LVDS I/O Port","attributes":{},"skip":false,"key":"1.3.8.1"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.2","level":"1.3.8","list_caption":"Figure: Digital I/O Connectors A, B, C, D and E","alt":"Digital I/O Connectors A, B, C, D and E","nro":60,"url":"/img/digitalioconnectorsabcdande.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Digital I/O Connectors A, B, C, D and E","attributes":{},"skip":false,"key":"1.3.8.2"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.3","level":"1.3.8","list_caption":"Figure: 2mm pitch har-link connector from HARTING","alt":"2mm pitch har-link connector from HARTING","nro":61,"url":"/img/2mmpitchharlinkconnectorfromharting.png","index":3,"caption_template":"Figure: _CAPTION_","label":"2mm pitch har-link connector from HARTING","attributes":{},"skip":false,"key":"1.3.8.3"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.4","level":"1.3.8","list_caption":"Figure: Rev. F Module’s Digital I/O Connectors","alt":"Rev. F Module’s Digital I/O Connectors","nro":62,"url":"/img/revfmoduledigitalioconnectors.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Rev. F Module’s Digital I/O Connectors","attributes":{},"skip":false,"key":"1.3.8.4"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.5","level":"1.3.8","list_caption":"Figure: frontpanel","alt":"frontpanel","nro":63,"url":"/img/frontpanel_pku.png","index":5,"caption_template":"Figure: _CAPTION_","label":"frontpanel","attributes":{},"skip":false,"key":"1.3.8.5"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.6","level":"1.3.8","list_caption":"Figure: Front Panel LEDs for the Pixie-16 Modules","alt":"Front Panel LEDs for the Pixie-16 Modules","nro":64,"url":"/img/frontpanelledsforthepixie16modules.png","index":6,"caption_template":"Figure: _CAPTION_","label":"Front Panel LEDs for the Pixie-16 Modules","attributes":{},"skip":false,"key":"1.3.8.6"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.7","level":"1.3.8","list_caption":"Figure: Rev. D Module’s 3.3V I/O Connector","alt":"Rev. D Module’s 3.3V I/O Connector","nro":65,"url":"/img/revdmodules33vioconnector.png","index":7,"caption_template":"Figure: _CAPTION_","label":"Rev. D Module’s 3.3V I/O Connector","attributes":{},"skip":false,"key":"1.3.8.7"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.8","level":"1.3.8","list_caption":"Figure: Rev. D Module’s GATE Inputs","alt":"Rev. D Module’s GATE Inputs","nro":66,"url":"/img/revdmodulesgateinputs.png","index":8,"caption_template":"Figure: _CAPTION_","label":"Rev. D Module’s GATE Inputs","attributes":{},"skip":false,"key":"1.3.8.8"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.9","level":"1.3.8","list_caption":"Figure: Rev. D Module’s GATE INPUTS Connector","alt":"Rev. D Module’s GATE INPUTS Connector","nro":67,"url":"/img/revdmodulesgateinputsconnector.png","index":9,"caption_template":"Figure: _CAPTION_","label":"Rev. D Module’s GATE INPUTS Connector","attributes":{},"skip":false,"key":"1.3.8.9"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.10","level":"1.3.8","list_caption":"Figure: Rev. B and C Module’s 3.3V I/O Connector","alt":"Rev. B and C Module’s 3.3V I/O Connector","nro":68,"url":"/img/revbandcmodules33vioconnector.png","index":10,"caption_template":"Figure: _CAPTION_","label":"Rev. B and C Module’s 3.3V I/O Connector","attributes":{},"skip":false,"key":"1.3.8.10"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.11","level":"1.3.8","list_caption":"Figure: TTL Digital Input Signals","alt":"TTL Digital Input Signals","nro":69,"url":"/img/ttldigitalinputsignals.png","index":11,"caption_template":"Figure: _CAPTION_","label":"TTL Digital Input Signals","attributes":{},"skip":false,"key":"1.3.8.11"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.12","level":"1.3.8","list_caption":"Figure: Connector J101 LVDS I/O Port Signals","alt":"Connector J101 LVDS I/O Port Signals","nro":70,"url":"/img/connectorj101lvdsioportsignals.png","index":12,"caption_template":"Figure: _CAPTION_","label":"Connector J101 LVDS I/O Port Signals","attributes":{},"skip":false,"key":"1.3.8.12"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.13","level":"1.3.8","list_caption":"Figure: TTL Digital Output Signals","alt":"TTL Digital Output Signals","nro":71,"url":"/img/ttldigitaloutputsignals.png","index":13,"caption_template":"Figure: _CAPTION_","label":"TTL Digital Output Signals","attributes":{},"skip":false,"key":"1.3.8.13"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.14","level":"1.3.8","list_caption":"Figure: Lupo x495","alt":"Lupo x495","nro":72,"url":"/img/lupox495.png","index":14,"caption_template":"Figure: _CAPTION_","label":"Lupo x495","attributes":{},"skip":false,"key":"1.3.8.14"},{"backlink":"UsersGuide/Logic.html#fig1.3.9.1","level":"1.3.9","list_caption":"Figure: illustrates the signal processing in the Pixie-16 modules","alt":"illustrates the signal processing in the Pixie-16 modules","nro":73,"url":"/img/illustratesthesignalprocessinginthepixie16modules.png","index":1,"caption_template":"Figure: _CAPTION_","label":"illustrates the signal processing in the Pixie-16 modules","attributes":{},"skip":false,"key":"1.3.9.1"},{"backlink":"UsersGuide/Logic.html#fig1.3.9.2","level":"1.3.9","list_caption":"Figure: Range for Trigger Stretch Lengths and FIFO Delays in Pixie-16 Modules","alt":"Range for Trigger Stretch Lengths and FIFO Delays in Pixie-16 Modules","nro":74,"url":"/img/rangefortriggerstretchlengthsandfifodelayinpixie16modules.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Range for Trigger Stretch Lengths and FIFO Delays in Pixie-16 Modules","attributes":{},"skip":false,"key":"1.3.9.2"},{"backlink":"UsersGuide/Logic.html#fig1.3.9.3","level":"1.3.9","list_caption":"Figure: System FPGA","alt":"System FPGA","nro":75,"url":"/img/SystemFPGA.png","index":3,"caption_template":"Figure: _CAPTION_","label":"System FPGA","attributes":{},"skip":false,"key":"1.3.9.3"},{"backlink":"UsersGuide/Logic.html#fig1.3.9.4","level":"1.3.9","list_caption":"Figure: fast trigger stretch/delay","alt":"fast trigger stretch/delay","nro":76,"url":"/img/fasttrigger_stretch_delay.png","index":4,"caption_template":"Figure: _CAPTION_","label":"fast trigger stretch/delay","attributes":{},"skip":false,"key":"1.3.9.4"},{"backlink":"UsersGuide/Logic.html#fig1.3.9.5","level":"1.3.9","list_caption":"Figure: validation trigger","alt":"validation trigger","nro":77,"url":"/img/validationtrigger.png","index":5,"caption_template":"Figure: _CAPTION_","label":"validation trigger","attributes":{},"skip":false,"key":"1.3.9.5"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.1","level":"1.3.10","list_caption":"Figure: JP101","alt":"JP101","nro":78,"url":"/img/multiplemodulessynchronously.png","index":1,"caption_template":"Figure: _CAPTION_","label":"JP101","attributes":{},"skip":false,"key":"1.3.10.1"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.2","level":"1.3.10","list_caption":"Figure: individual clock mode","alt":"individual clock mode","nro":79,"url":"/img/individualclockmode.png","index":2,"caption_template":"Figure: _CAPTION_","label":"individual clock mode","attributes":{},"skip":false,"key":"1.3.10.2"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.3","level":"1.3.10","list_caption":"Figure: PXI clock mode","alt":"PXI clock mode","nro":80,"url":"/img/pxiclockmode.png","index":3,"caption_template":"Figure: _CAPTION_","label":"PXI clock mode","attributes":{},"skip":false,"key":"1.3.10.3"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.4","level":"1.3.10","list_caption":"Figure: daisy-chained clock mode","alt":"daisy-chained clock mode","nro":81,"url":"/img/daisychainedclockmode.png","index":4,"caption_template":"Figure: _CAPTION_","label":"daisy-chained clock mode","attributes":{},"skip":false,"key":"1.3.10.4"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.5","level":"1.3.10","list_caption":"Figure: multi-crate clock mode","alt":"multi-crate clock mode","nro":82,"url":"/img/multicrateclockmode.png","index":5,"caption_template":"Figure: _CAPTION_","label":"multi-crate clock mode","attributes":{},"skip":false,"key":"1.3.10.5"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.6","level":"1.3.10","list_caption":"Figure: Module Definitions in a 2-crate System","alt":"Module Definitions in a 2-crate System","nro":83,"url":"/img/moduledefinitionsina2cratesystem.png","index":6,"caption_template":"Figure: _CAPTION_","label":"Module Definitions in a 2-crate System","attributes":{},"skip":false,"key":"1.3.10.6"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.7","level":"1.3.10","list_caption":"Figure: Clock Jumper JP101 Settings in a 2-crate System","alt":"Clock Jumper JP101 Settings in a 2-crate System","nro":84,"url":"/img/clockjumperjp101settingsina2cratesystem.png","index":7,"caption_template":"Figure: _CAPTION_","label":"Clock Jumper JP101 Settings in a 2-crate System","attributes":{},"skip":false,"key":"1.3.10.7"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.8","level":"1.3.10","list_caption":"Figure: rear I/O trigger modules","alt":"rear I/O trigger modules","nro":85,"url":"/img/reariotriggermodules.png","index":8,"caption_template":"Figure: _CAPTION_","label":"rear I/O trigger modules","attributes":{},"skip":false,"key":"1.3.10.8"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.9","level":"1.3.10","list_caption":"Figure: Cable connections between two Pixie-16 rear I/O trigger modules","alt":"Cable connections between two Pixie-16 rear I/O trigger modules","nro":86,"url":"/img/cableconnectionsbetweentwopixie16reariotriggermodules.png","index":9,"caption_template":"Figure: _CAPTION_","label":"Cable connections between two Pixie-16 rear I/O trigger modules","attributes":{},"skip":false,"key":"1.3.10.9"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.10","level":"1.3.10","list_caption":"Figure: Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module","alt":"Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module","nro":87,"url":"/img/pinnumberingforthejumpersonthepixie16reariotriggermodule.png","index":10,"caption_template":"Figure: _CAPTION_","label":"Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module","attributes":{},"skip":false,"key":"1.3.10.10"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.11","level":"1.3.10","list_caption":"Figure: Rear I/O Trigger Module #1’s Jumper Settings","alt":"Rear I/O Trigger Module #1’s Jumper Settings","nro":88,"url":"/img/reariotrigger1sjumpersettings.png","index":11,"caption_template":"Figure: _CAPTION_","label":"Rear I/O Trigger Module #1’s Jumper Settings","attributes":{},"skip":false,"key":"1.3.10.11"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.12","level":"1.3.10","list_caption":"Figure: Rear I/O Trigger Module #2’s Jumper Settings","alt":"Rear I/O Trigger Module #2’s Jumper Settings","nro":89,"url":"/img/reariotriggermodule2sjumpersettings.png","index":12,"caption_template":"Figure: _CAPTION_","label":"Rear I/O Trigger Module #2’s Jumper Settings","attributes":{},"skip":false,"key":"1.3.10.12"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.13","level":"1.3.10","list_caption":"Figure: Cable connections among four Pixie-16 rear I/O trigger modules","alt":"Cable connections among four Pixie-16 rear I/O trigger modules","nro":90,"url":"/img/cableconnectionsamongfourpixie16reariotriggermodules.png","index":13,"caption_template":"Figure: _CAPTION_","label":"Cable connections among four Pixie-16 rear I/O trigger modules","attributes":{},"skip":false,"key":"1.3.10.13"},{"backlink":"UsersGuide/UpdateCPLD.html#fig1.3.11.1","level":"1.3.11","list_caption":"Figure: 6 pin connector","alt":"6 pin connector","nro":91,"url":"/img/6pinJTAGconnector.png","index":1,"caption_template":"Figure: _CAPTION_","label":"6 pin connector","attributes":{},"skip":false,"key":"1.3.11.1"},{"backlink":"Example/TimeResolution.html#fig1.4.1.1","level":"1.4.1","list_caption":"Figure: 2 channel in one module","alt":"2 channel in one module","nro":92,"url":"/img/timeresolution_100m_1module.png","index":1,"caption_template":"Figure: _CAPTION_","label":"2 channel in one module","attributes":{},"skip":false,"key":"1.4.1.1"},{"backlink":"Example/TimeResolution.html#fig1.4.1.2","level":"1.4.1","list_caption":"Figure: 2 channel in different crate","alt":"2 channel in different crate","nro":93,"url":"/img/timeresolution_100m_2crate.png","index":2,"caption_template":"Figure: _CAPTION_","label":"2 channel in different crate","attributes":{},"skip":false,"key":"1.4.1.2"},{"backlink":"Example/InBeamGammaCIAE.html#fig1.4.3.1","level":"1.4.3","list_caption":"Figure: CIAE 2018 online","alt":"CIAE 2018 online","nro":94,"url":"/img/inbeamgamma2018online.png","index":1,"caption_template":"Figure: _CAPTION_","label":"CIAE 2018 online","attributes":{},"skip":false,"key":"1.4.3.1"},{"backlink":"Example/InBeamGammaCIAE.html#fig1.4.3.2","level":"1.4.3","list_caption":"Figure: iThemba 2019 online","alt":"iThemba 2019 online","nro":95,"url":"/img/inbeamgamma2019Thembaonline.png","index":2,"caption_template":"Figure: _CAPTION_","label":"iThemba 2019 online","attributes":{},"skip":false,"key":"1.4.3.2"},{"backlink":"Example/InBeamGammaCIAE.html#fig1.4.3.3","level":"1.4.3","list_caption":"Figure: BGO VETO GATE WIDTH","alt":"BGO VETO GATE WIDTH","nro":96,"url":"/img/bgovetogate2018.png","index":3,"caption_template":"Figure: _CAPTION_","label":"BGO VETO GATE WIDTH","attributes":{},"skip":false,"key":"1.4.3.3"},{"backlink":"Example/InBeamGammaCIAE.html#fig1.4.3.4","level":"1.4.3","list_caption":"Figure: CIAE 2018 peak-to-total","alt":"CIAE 2018 peak-to-total","nro":97,"url":"/img/peaktototal2018CIAE.png","index":4,"caption_template":"Figure: _CAPTION_","label":"CIAE 2018 peak-to-total","attributes":{},"skip":false,"key":"1.4.3.4"},{"backlink":"ProcurementProposal.html#fig1.5.1","level":"1.5","list_caption":"Figure: System","alt":"System","nro":98,"url":"/img/System.jpg","index":1,"caption_template":"Figure: _CAPTION_","label":"System","attributes":{},"skip":false,"key":"1.5.1"},{"backlink":"ProcurementProposal.html#fig1.5.2","level":"1.5","list_caption":"Figure: 机箱背板模块","alt":"机箱背板模块","nro":99,"url":"/img/reariotriggermodules.png","index":2,"caption_template":"Figure: _CAPTION_","label":"机箱背板模块","attributes":{},"skip":false,"key":"1.5.2"},{"backlink":"ProcurementProposal.html#fig1.5.3","level":"1.5","list_caption":"Figure: MZTIO","alt":"MZTIO","nro":100,"url":"/img/MZTIO.jpg","index":3,"caption_template":"Figure: _CAPTION_","label":"MZTIO","attributes":{},"skip":false,"key":"1.5.3"}]},"title":"PKU XIA DAQ GUIDE","language":"zh","gitbook":"*","description":"北京大学实验核物理组数字化获取说明书"},"file":{"path":"UsersGuide/Logic.md","mtime":"2019-06-27T09:57:16.849Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2019-06-27T09:57:30.548Z"},"basePath":"..","book":{"language":"zh"}});
-        });
-    </script>
 </div>
 
 
-        
-    <script src="../../gitbook/gitbook.js"></script>
-    <script src="../../gitbook/theme.js"></script>
-    
-        
-        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-livereload/plugin.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-github/plugin.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-ad/plugin.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-alerts/plugin.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-atoc/atoc.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-ace/ace/ace.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-ace/ace.js"></script>
-        
-    
-        
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-sectionx/sectionx.js"></script>
-        
-    
-        
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-mcqx/js.cookie.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-mcqx/mcqx.js"></script>
-        
-    
-        
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-fbqx/fbqx.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-spoiler/spoiler.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-youtubex/player.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="MultipleModulesSynchronously.html" class="btn btn-neutral float-right" title="时间同步" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="FrontPanel.html" class="btn btn-neutral float-left" title="插件前面板" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
 
-    </body>
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Hongyi Wu(吴鸿毅)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
 </html>
-

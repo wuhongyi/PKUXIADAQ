@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Guide &mdash; PKUXIADAQ beta documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Crate" href="Crate.html" />
+    <link rel="prev" title="Installation of Software" href="../INSTALL.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PKUXIADAQ
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../INSTALL.html">Installation of Software</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Users Guide</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#data-structures">Data Structures</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Crate.html">Crate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FIRMWARE.html">FIRMWARE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Decode.html">Decode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GUI.html">GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NOGUI.html">NOGUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OnlineStattics.html">Online Stattics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MakeEvent.html">MakeEvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FrontPanel.html">Front Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Logic.html">Logic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MultipleModulesSynchronously.html">Multiple Modules Synchronously</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UpdateCPLD.html">Update CPLD</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Applications</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Example/README.html">Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/TimeResolution.html">Time Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/RecommendedParameters.html">Recommended Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/InBeamGammaCIAE.html">In Beam Gamma</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programmers Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/README.html">Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/XIAAPI.html">XIA API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/PKUCode.html">PKU Code</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PKUXIADAQ</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/UsersGuide/README.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="guide">
+<h1>Guide<a class="headerlink" href="#guide" title="Permalink to this headline">¶</a></h1>
+<p><strong>User’s Manual</strong> <em>Digital Gamma Finder (DGF) PIXIE-16</em>  <strong>Version 1.40, October 2009</strong></p>
+<p><strong>Pixie-16 User Manual</strong>  <strong>Version 3.00</strong>  <strong>August 21, 2018</strong></p>
+<hr class="docutils" />
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The Pixie-16 is designed for single exponentially decaying signals.</p>
+<p>Step pulses or short non-exponential pulses can be accommodated with specific parameter settings.</p>
+<p>Staircase type signals from reset preamplifiers generally need to be AC coupled.</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>The amplitude of the detector output signals is not recommended to exceed +/-3.5V if 50Ohm input termination jumper is installed and the 1:4 attenuation is not used.</p>
+<p>Do Not Hot-Swap!</p>
+<p>To avoid personal injury, and/or damage to the DGF-Pixie-16, always turn off crate power before removing the DGF-Pixie-16 from the crate!</p>
+</div>
+<hr class="docutils" />
+<img alt="../_images/pixie16.jpg" src="../_images/pixie16.jpg" />
+<p>The DGF Pixie-16 is a 16-channel all-digital waveform acquisition and spectrometer card based on the CompactPCI/PXI standard for fast data readout to the host. It combines spectroscopy with waveform digitizing and the option of on-line pulse shape analysis. The Pixie-16 accepts signals from virtually any radiation detector. Incoming signals are digitized by 12/14/16-bit 100/250/500 MSPS ADCs. Waveforms of up to 163.8 μs in length for each channel can be stored in a FIFO.</p>
+<p>The waveforms are available for onboard pulse shape analysis, which can be customized by adding user functions to the core processing software. Waveforms, timestamps, and the results of the pulse shape analysis can be read out by the host system for further off-line processing. Pulse heights are calculated to 16-bit precision and can be binned into spectra with up to 32K channels. The Pixie-16 supports coincidence spectroscopy and can recognize complex hit patterns.</p>
+<p>Data readout rates through the CompactPCI/PXI backplane to the host computer can be up to 109 Mbyte/s. The standard PXI backplane, as well as additional custom backplane connections are used to distribute clocks and trigger signals between several Pixie-16 modules for group operation. A complete data acquisition and processing systems can be built by combining Pixie-16 modules with commercially available CompactPCI/PXI processor, controller or I/O modules in the same chassis.</p>
+<p>The Pixie-16 is an instrument for waveform acquisition and MCA histogramming for arrays of gamma ray or other radiation detectors such as</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>100 MSPS</dt><dd><ul>
+<li><p>Segmented HPGe detectors.</p></li>
+<li><p>Scintillator/PMT combinations: NaI, CsI, BGO and many others.</p></li>
+<li><p>Gas detector.</p></li>
+<li><p>Silicon strip detectors.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>250 MSPS</dt><dd><ul>
+<li><p>Scintillator</p></li>
+<li><p>LaBr3</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>500 MSPS</dt><dd><ul>
+<li><p>Scintillator</p></li>
+<li><p>LaBr3</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>The Pixie-16 modules must be operated in a custom 6U CompactPCI/PXI chassis providing high currents at specific voltages not included in the CompactPCI/PXI standard 1 . Currently XIA provides a 14-slot chassis. Put the host computer(or remote PXI controller) in the system slot (slot 1) of your chassis. Put the Pixie-16 modules into any free peripheral slot (slot 2-14) with the chassis still powered down. After modules are installed, power up the chassis (Pixie-16 modules are not hot swappable). If using a remote controller, be sure to boot the host computer after powering up the chassis.</p>
+<hr class="docutils" />
+<div class="section" id="data-structures">
+<h2>Data Structures<a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h2>
+<img alt="../_images/data_100M.PNG" src="../_images/data_100M.PNG" />
+<img alt="../_images/data_250M.PNG" src="../_images/data_250M.PNG" />
+<img alt="../_images/data_500M.PNG" src="../_images/data_500M.PNG" />
+<p>If trace recording is enabled, trace data will immediately follow the last word of the event header. Since raw ADC data points are 12/14/16-bit number, two 12/14/16-bit numbers are packed into one 32-bit word. Since the event header could have variable length(4,6,8,10,12,14 ,16 or 18 words) depending on the selection of various output data options, the header length, event length and trace length that are recorded in the first 4 words of the event header should be used to navigate through the output data stream.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Crate.html" class="btn btn-neutral float-right" title="Crate" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../INSTALL.html" class="btn btn-neutral float-left" title="Installation of Software" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Hongyi Wu(吴鸿毅)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

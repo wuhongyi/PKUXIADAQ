@@ -1,14 +1,20 @@
 #!/bin/bash
 
-rm -rf ../docs/*
+rm -rf ../docs/doctrees/
+rm -rf ../docs/en/*
+rm -rf ../docs/zh/*
 
-gitbook build
+cd en/
+make clean
+make html
+mv build/doctrees/ ../../docs/
+cp -r build/html/* ../../docs/en/
+make clean
+cd ..
 
-cp -r _book/*  ../docs/
-
-rm -r _book
-
-cp en/README.md ..
-cp zh/README.md ../README_zh.md
-
-gitbook pdf . ../README.pdf
+cd zh/
+make clean
+make html
+cp -r build/html/* ../../docs/zh/
+make clean
+cd ../
