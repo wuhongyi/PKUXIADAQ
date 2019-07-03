@@ -1,0 +1,1224 @@
+
+<!DOCTYPE HTML>
+<html lang="zh" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Energy · PKU XIA DAQ GUIDE</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="author" content="Hongyi Wu(吴鸿毅)">
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-ad/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-atoc/atoc.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-image-captions/image-captions.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-latex-codecogs/latex-codecogs.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-ace/ace.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-sectionx/sectionx.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-mcqx/mcqx.css">
+                
+            
+                
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fbqx/fbqx.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-spoiler/spoiler.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-anchor-navigation/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-youtubex/player.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="BASESETUP_CFD.html" />
+    
+    
+    <link rel="prev" href="BASESETUP_TriggerFilter.html" />
+    
+
+    </head>
+    <body>
+        
+  <script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  </script>
+  
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="輸入並搜尋" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    README
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../INSTALL.html">
+            
+                <a href="../INSTALL.html">
+            
+                    
+                    程序安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    用户指南
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="Crate.html">
+            
+                <a href="Crate.html">
+            
+                    
+                    机箱
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="FIRMWARE.html">
+            
+                <a href="FIRMWARE.html">
+            
+                    
+                    固件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="Decode.html">
+            
+                <a href="Decode.html">
+            
+                    
+                    数据解码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="GUI.html">
+            
+                <a href="GUI.html">
+            
+                    
+                    图形交互界面
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.1" data-path="DropDown0.html">
+            
+                <a href="DropDown0.html">
+            
+                    
+                    File
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.1.1" data-path="FILE_About.html">
+            
+                <a href="FILE_About.html">
+            
+                    
+                    About
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.2" data-path="DropDown1.html">
+            
+                <a href="DropDown1.html">
+            
+                    
+                    UV_Setup
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.2.1" data-path="BASESETUP_BaseSetup.html">
+            
+                <a href="BASESETUP_BaseSetup.html">
+            
+                    
+                    Base Setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.2.2" data-path="BASESETUP_TriggerFilter.html">
+            
+                <a href="BASESETUP_TriggerFilter.html">
+            
+                    
+                    Trigger Filter
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.4.2.3" data-path="BASESETUP_Energy.html">
+            
+                <a href="BASESETUP_Energy.html">
+            
+                    
+                    Energy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.2.4" data-path="BASESETUP_CFD.html">
+            
+                <a href="BASESETUP_CFD.html">
+            
+                    
+                    CFD
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.2.5" data-path="BASESETUP_QDC.html">
+            
+                <a href="BASESETUP_QDC.html">
+            
+                    
+                    QDC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.2.6" data-path="BASESETUP_Decimation.html">
+            
+                <a href="BASESETUP_Decimation.html">
+            
+                    
+                    Decimation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.2.7" data-path="BASESETUP_CopyPars.html">
+            
+                <a href="BASESETUP_CopyPars.html">
+            
+                    
+                    Copy Pars
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.2.8" data-path="BASESETUP_Save2File.html">
+            
+                <a href="BASESETUP_Save2File.html">
+            
+                    
+                    Save2File
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.3" data-path="DropDown2.html">
+            
+                <a href="DropDown2.html">
+            
+                    
+                    Expert
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.3.1" data-path="EXPERT_MSRB.html">
+            
+                <a href="EXPERT_MSRB.html">
+            
+                    
+                    Module Variables
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.3.2" data-path="EXPERT_CSRA.html">
+            
+                <a href="EXPERT_CSRA.html">
+            
+                    
+                    CSRA
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.3.3" data-path="EXPERT_LogicSet.html">
+            
+                <a href="EXPERT_LogicSet.html">
+            
+                    
+                    Logic Set
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.4" data-path="DropDown3.html">
+            
+                <a href="DropDown3.html">
+            
+                    
+                    Monitor
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.4.1" data-path="MONITOR_HistXDT.html">
+            
+                <a href="MONITOR_HistXDT.html">
+            
+                    
+                    Hist & XDT
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.4.2" data-path="MONITOR_TraceBaseline.html">
+            
+                <a href="MONITOR_TraceBaseline.html">
+            
+                    
+                    Trace & Baseline
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.5" data-path="DropDown4.html">
+            
+                <a href="DropDown4.html">
+            
+                    
+                    Offline
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.5.1" data-path="OFFLINE_AdjustPar.html">
+            
+                <a href="OFFLINE_AdjustPar.html">
+            
+                    
+                    Adjust Par
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.5.1.1" data-path="OFFLINE_Wave-16.html">
+            
+                <a href="OFFLINE_Wave-16.html">
+            
+                    
+                    Wave-16
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.5.1.2" data-path="OFFLINE_Energy-16.html">
+            
+                <a href="OFFLINE_Energy-16.html">
+            
+                    
+                    Energy-16
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.5.1.3" data-path="OFFLINE_OrigEnergy.html">
+            
+                <a href="OFFLINE_OrigEnergy.html">
+            
+                    
+                    Orig Energy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.5.1.4" data-path="OFFLINE_Calc Energy.html">
+            
+                <a href="OFFLINE_Calc Energy.html">
+            
+                    
+                    Calc Energy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.5.1.5" data-path="OFFLINE_FFCFDThre.html">
+            
+                <a href="OFFLINE_FFCFDThre.html">
+            
+                    
+                    FF/CFD Thre
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.5.1.6" data-path="OFFLINE_Energy-FF.html">
+            
+                <a href="OFFLINE_Energy-FF.html">
+            
+                    
+                    Energy-FF
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.5.1.7" data-path="OFFLINE_Energy-CFD.html">
+            
+                <a href="OFFLINE_Energy-CFD.html">
+            
+                    
+                    Energy-CFD
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.5.1.8" data-path="OFFLINE_QDC.html">
+            
+                <a href="OFFLINE_QDC.html">
+            
+                    
+                    QDC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.5.1.9" data-path="OFFLINE_FFT.html">
+            
+                <a href="OFFLINE_FFT.html">
+            
+                    
+                    FFT
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.5.1.10" data-path="OFFLINE_TimeDiff.html">
+            
+                <a href="OFFLINE_TimeDiff.html">
+            
+                    
+                    Time Diff
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.5.2" data-path="OFFLINE_Simulation.html">
+            
+                <a href="OFFLINE_Simulation.html">
+            
+                    
+                    Simulation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="NOGUI.html">
+            
+                <a href="NOGUI.html">
+            
+                    
+                    非图形交互界面
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="OnlineStattics.html">
+            
+                <a href="OnlineStattics.html">
+            
+                    
+                    在线统计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="MakeEvent.html">
+            
+                <a href="MakeEvent.html">
+            
+                    
+                    MakeEvent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="FrontPanel.html">
+            
+                <a href="FrontPanel.html">
+            
+                    
+                    插件前面板
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="Logic.html">
+            
+                <a href="Logic.html">
+            
+                    
+                    逻辑功能
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="MultipleModulesSynchronously.html">
+            
+                <a href="MultipleModulesSynchronously.html">
+            
+                    
+                    时间同步
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.11" data-path="UpdateCPLD.html">
+            
+                <a href="UpdateCPLD.html">
+            
+                    
+                    升级CPLD
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../Example/">
+            
+                <a href="../Example/">
+            
+                    
+                    应用案例
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../Example/TimeResolution.html">
+            
+                <a href="../Example/TimeResolution.html">
+            
+                    
+                    时间分辨
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../Example/RecommendedParameters.html">
+            
+                <a href="../Example/RecommendedParameters.html">
+            
+                    
+                    推荐参数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../Example/InBeamGammaCIAE.html">
+            
+                <a href="../Example/InBeamGammaCIAE.html">
+            
+                    
+                    在束伽马谱学
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../ProcurementProposal.html">
+            
+                <a href="../ProcurementProposal.html">
+            
+                    
+                    采购建议
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../ProgrammersGuide/">
+            
+                <a href="../ProgrammersGuide/">
+            
+                    
+                    编程指南
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../ProgrammersGuide/XIAAPI.html">
+            
+                <a href="../ProgrammersGuide/XIAAPI.html">
+            
+                    
+                    XIA API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../ProgrammersGuide/PKUCode.html">
+            
+                <a href="../ProgrammersGuide/PKUCode.html">
+            
+                    
+                    PKU code
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本書使用 GitBook 釋出
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Energy</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <!-- BASESETUP_Energy.md --- 
+;; 
+;; Description: 
+;; Author: Hongyi Wu(吴鸿毅)
+;; Email: wuhongyi@qq.com 
+;; Created: 日 10月  7 09:34:45 2018 (+0800)
+;; Last-Updated: 日 2月  3 17:37:17 2019 (+0800)
+;;           By: Hongyi Wu(吴鸿毅)
+;;     Update #: 17
+;; URL: http://wuhongyi.cn -->
+<h1 id="energy"><a name="energy" class="plugin-anchor" href="#energy"><i class="fa fa-link" aria-hidden="true"></i></a>Energy</h1>
+<!-- toc -->
+<ul>
+<li><a href="#&#x56FE;&#x5F62;&#x754C;&#x9762;gui">&#x56FE;&#x5F62;&#x754C;&#x9762;(GUI)</a></li>
+<li><a href="#&#x6EE4;&#x6CE2;&#x6B65;&#x957F;filter-range">&#x6EE4;&#x6CE2;&#x6B65;&#x957F;(Filter Range)</a></li>
+<li><a href="#&#x68AF;&#x5F62;&#x6EE4;&#x6CE2;trapezoidal-filtering">&#x68AF;&#x5F62;&#x6EE4;&#x6CE2;(Trapezoidal Filtering)</a></li>
+<li><a href="#&#x57FA;&#x7EBF;&#x4E0E;&#x524D;&#x653E;&#x8870;&#x51CF;&#x65F6;&#x95F4;baselines-and-preamp-decay-times">&#x57FA;&#x7EBF;&#x4E0E;&#x524D;&#x653E;&#x8870;&#x51CF;&#x65F6;&#x95F4;(Baselines and Preamp. Decay Times)</a></li>
+<li><a href="#&#x5806;&#x79EF;&#x68C0;&#x6D4B;pileup-inspection">&#x5806;&#x79EF;&#x68C0;&#x6D4B;(Pileup Inspection)</a></li>
+</ul>
+<!-- tocstop -->
+<h2 id="&#x56FE;&#x5F62;&#x754C;&#x9762;gui"><a name="&#x56FE;&#x5F62;&#x754C;&#x9762;gui" class="plugin-anchor" href="#&#x56FE;&#x5F62;&#x754C;&#x9762;gui"><i class="fa fa-link" aria-hidden="true"></i></a>&#x56FE;&#x5F62;&#x754C;&#x9762;(GUI)</h2>
+<figure id="fig1.3.4.2.3.1"><img src="../img/Energy.png" alt="Energy"><figcaption>Figure: Energy</figcaption></figure>
+<p>&#x754C;&#x9762;&#x4E0B;&#x65B9;&#x7684; Status &#x663E;&#x793A;&#x4E3A;<strong>&#x7EFF;&#x8272;&#x7684; Ready</strong> &#x65F6;&#x8868;&#x793A;&#x53EF;&#x64CD;&#x4F5C;&#x8BE5;&#x754C;&#x9762;&#xFF0C;&#x5426;&#x5219;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x3002;&#x5E95;&#x4E0B;&#x6309;&#x94AE;&#x7684;&#x64CD;&#x4F5C;&#x540C;&#x4E0A;&#x3002;</p>
+<ul>
+<li>&#x53C2;&#x6570; Rise Time&#xFF0C;&#x8BF7;&#x53C2;&#x8003;<em>Trapezoidal Filtering</em>&#x90E8;&#x5206;</li>
+<li>&#x53C2;&#x6570; Flat Top&#xFF0C;&#x8BF7;&#x53C2;&#x8003;<em>Trapezoidal Filtering</em>&#x90E8;&#x5206;</li>
+<li>&#x53C2;&#x6570; Tau&#xFF0C;&#x8BF7;&#x53C2;&#x8003;<em>Baselines and Preamp. Decay Times</em>&#x90E8;&#x5206;</li>
+<li>&#x53C2;&#x6570; filter range&#xFF0C;&#x8BF7;&#x53C2;&#x8003;<em>Filter Range</em>&#x90E8;&#x5206;</li>
+</ul>
+<p>&#x80FD;&#x91CF;&#x8BA1;&#x7B97;&#x7684;&#x6700;&#x5173;&#x952E;&#x53C2;&#x6570;&#x662F;&#x4FE1;&#x53F7;&#x8870;&#x51CF;&#x65F6;&#x95F4; Tau&#x3002;&#x5728;&#x8BA1;&#x7B97;&#x80FD;&#x91CF;&#x65F6;&#xFF0C;&#x7528;&#x6765;&#x8865;&#x507F;&#x5148;&#x524D;&#x8109;&#x51B2;&#x7684;&#x4E0B;&#x964D;&#x6CBF;&#x3002;&#x60A8;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4E3A;&#x6BCF;&#x4E2A;&#x901A;&#x9053;&#x8F93;&#x5165; Tau&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x5355;&#x51FB;&#x201C;FindTau&#x201D;&#xFF0C;&#x8BA9;&#x8F6F;&#x4EF6;&#x81EA;&#x52A8;&#x786E;&#x5B9A;&#x8870;&#x51CF;&#x65F6;&#x95F4;&#x3002;</p>
+<p>&#x5355;&#x51FB;&#x201C;Accept&#x201D;&#x5C06;&#x627E;&#x5230;&#x7684;&#x503C;&#x5E94;&#x7528;&#x5230;&#x901A;&#x9053;&#x3002;&#xFF08;&#x5982;&#x679C;&#x8FD1;&#x4F3C;&#x503C;&#x4E0D;&#x53D8;&#xFF0C;&#x8F6F;&#x4EF6;&#x627E;&#x4E0D;&#x5230;&#x66F4;&#x597D;&#x7684;&#x503C;&#x3002;&#xFF09;</p>
+<p>&#x5728;&#x9AD8;&#x8BA1;&#x6570;&#x7387;&#x4E0B;&#xFF0C;&#x8109;&#x51B2;&#x4EE5;&#x8F83;&#x9AD8;&#x7684;&#x9891;&#x7387;&#x91CD;&#x53E0;&#x3002;&#x4E3A;&#x4E86;&#x7CBE;&#x786E;&#x5730;&#x8BA1;&#x7B97;&#x8FD9;&#x4E9B;&#x8109;&#x51B2;&#x7684;&#x80FD;&#x91CF;&#x6216;&#x8109;&#x51B2;&#x9AD8;&#x5EA6;&#xFF0C;&#x800C;&#x4E0D;&#x9700;&#x8981;&#x7B49;&#x5230;&#x5B83;&#x4EEC;&#x5B8C;&#x5168;&#x8870;&#x51CF;&#x56DE;&#x57FA;&#x7EBF;&#x6C34;&#x5E73;&#xFF0C;Pixie-16 &#x4E2D;&#x8BA1;&#x7B97;&#x5F53;&#x524D;&#x8109;&#x51B2;&#x7684;&#x8109;&#x51B2;&#x9AD8;&#x5EA6;&#x65F6;&#x91C7;&#x7528;&#x7684;&#x8109;&#x51B2;&#x9AD8;&#x5EA6;&#x8BA1;&#x7B97;&#x7B97;&#x6CD5;&#x4F7F;&#x7528;&#x8870;&#x51CF;&#x65F6;&#x95F4;&#x6765;&#x8BA1;&#x7B97;&#x548C;&#x6D88;&#x9664;&#x4E4B;&#x524D;&#x8109;&#x51B2;&#x91CD;&#x53E0;&#x5F97;&#x6307;&#x6570;&#x8870;&#x51CF;&#x5C3E;&#x7684;&#x8D21;&#x732E;&#x3002;</p>
+<blockquote>
+<p><strong>[danger] &#x5355;&#x6307;&#x6570;&#x8870;&#x51CF;&#x5E38;&#x6570;</strong></p>
+<p>&#x5047;&#x8BBE;&#x8109;&#x51B2;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x6307;&#x6570;&#x8870;&#x51CF;&#x5E38;&#x6570;&#x3002;&#x5982;&#x679C;&#x8109;&#x51B2;&#x5177;&#x6709;&#x591A;&#x4E2A;&#x8870;&#x51CF;&#x5E38;&#x6570;&#xFF0C;&#x5219;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x8D77;&#x4E3B;&#x8981;&#x4F5C;&#x7528;&#x7684;&#x8109;&#x51B2;&#x8870;&#x51CF;&#x7684;&#x8870;&#x51CF;&#x5E38;&#x6570;&#xFF0C;&#x4F46;&#x4F1A;&#x964D;&#x4F4E;&#x8109;&#x51B2;&#x9AD8;&#x5EA6;&#x8BA1;&#x7B97;&#x7684;&#x7CBE;&#x5EA6;&#x3002;</p>
+</blockquote>
+<p>&#x4EE5;&#x4E0B;&#x91CD;&#x8981;&#x53C2;&#x6570;&#x7684;&#x4E00;&#x822C;&#x7ECF;&#x9A8C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ul>
+<li>&#x80FD;&#x91CF;&#x6EE4;&#x6CE2;&#x5E73;&#x9876;&#x65F6;&#x95F4;&#x5E94;&#x5927;&#x4E8E;&#x6700;&#x957F;&#x8109;&#x51B2;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x3002;</li>
+<li>&#x53EF;&#x4EE5;&#x6539;&#x53D8;&#x80FD;&#x91CF;&#x6EE4;&#x6CE2;&#x7684;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#xFF0C;&#x4EE5;&#x5E73;&#x8861;&#x5206;&#x8FA8;&#x7387;&#x548C;&#x541E;&#x5410;&#x91CF;&#x3002;</li>
+<li>&#x4E00;&#x822C;&#x6765;&#x8BF4;&#xFF0C;&#x80FD;&#x91CF;&#x5206;&#x8FA8;&#x7387;&#x968F;&#x7740;&#x80FD;&#x91CF;&#x6EE4;&#x6CE2;&#x7684;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x7684;&#x589E;&#x52A0;&#x800C;&#x63D0;&#x9AD8;&#xFF0C;&#x76F4;&#x5230;&#x5F53;&#x8F83;&#x957F;&#x7684;&#x6EE4;&#x6CE2;&#x53EA;&#x5728;&#x6D4B;&#x91CF;&#x4E2D;&#x589E;&#x52A0;&#x66F4;&#x591A;&#x7684;&#x566A;&#x58F0;&#x65F6;&#x8FBE;&#x5230;&#x6700;&#x4F73;&#x503C;&#x3002;</li>
+<li>&#x80FD;&#x91CF;&#x6EE4;&#x6CE2;&#x533A;&#x65F6;&#x95F4; TD &#x7EA6;&#x4E3A; <img src="https://latex.codecogs.com/gif.latex?2&#xD7;(T_{rise}+T_{flat})" class="latex-codecogs mode-inline">&#xFF0C;&#x6CCA;&#x677E;&#x7EDF;&#x8BA1;&#x7684;&#x6700;&#x5927;&#x541E;&#x5410;&#x91CF;&#x4E3A;1/(TD*e)&#x3002;&#x5BF9;&#x4E8E; HPGe &#x63A2;&#x6D4B;&#x5668;&#xFF0C;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x4E3A; 4-6 us&#xFF0C;&#x5E73;&#x9876; 1 us &#x901A;&#x5E38;&#x662F;&#x5408;&#x9002;&#x7684;&#x3002;</li>
+<li>&#x9009;&#x62E9;&#x5141;&#x8BB8;&#x8BBE;&#x7F6E;&#x6700;&#x4F73;&#x80FD;&#x91CF;&#x6EE4;&#x6CE2;&#x7684;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x7684;&#x6700;&#x5C0F;&#x80FD;&#x91CF;&#x6EE4;&#x6CE2;&#x8865;&#x507F;(Filter Range)&#x3002;&#x8F83;&#x5927;&#x7684;&#x6EE4;&#x6CE2;&#x6B65;&#x957F;&#x5141;&#x8BB8;&#x8F83;&#x957F;&#x7684;&#x6EE4;&#x6CE2;&#x603B;&#x957F;&#x5EA6;&#x4E4B;&#x548C;&#xFF0C;&#x4F46;&#x4F1A;&#x589E;&#x52A0;&#x80FD;&#x91CF;&#x6EE4;&#x6CE2;&#x7684;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x548C;&#x5E73;&#x9876;&#x65F6;&#x95F4;&#x7684;&#x53EF;&#x80FD;&#x503C;&#x7684;&#x68AF;&#x5EA6;&#xFF0C;&#x5E76;&#x589E;&#x52A0;&#x76F8;&#x5BF9;&#x4E8E;&#x8109;&#x51B2;&#x4E0A;&#x5347;&#x6CBF;&#x9501;&#x5B9A;&#x80FD;&#x91CF;&#x6EE4;&#x6CE2;&#x8F93;&#x51FA;&#x7684;&#x6296;&#x52A8;&#x3002;&#x8FD9;&#x901A;&#x5E38;&#x53EA;&#x5BF9;&#x975E;&#x5E38;&#x5FEB;&#x7684;&#x8109;&#x51B2;&#x5F88;&#x91CD;&#x8981;&#x3002;</li>
+</ul>
+<hr>
+<h2 id="&#x6EE4;&#x6CE2;&#x6B65;&#x957F;filter-range"><a name="&#x6EE4;&#x6CE2;&#x6B65;&#x957F;filter-range" class="plugin-anchor" href="#&#x6EE4;&#x6CE2;&#x6B65;&#x957F;filter-range"><i class="fa fa-link" aria-hidden="true"></i></a>&#x6EE4;&#x6CE2;&#x6B65;&#x957F;(Filter Range)</h2>
+<p>&#x4E3A;&#x4E86;&#x9002;&#x5E94;&#x4ECE;&#x6570;&#x5341;&#x7EB3;&#x79D2;&#x5230;&#x6570;&#x5341;&#x5FAE;&#x79D2;&#x5404;&#x79CD;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x7684;&#x80FD;&#x91CF;&#x6EE4;&#x6CE2;&#x5668;&#xFF0C;&#x6EE4;&#x6CE2;&#x5668;&#x5728; FPGA &#x4E2D;&#x5177;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x65F6;&#x949F;&#x62BD;&#x53D6;&#xFF08;&#x6EE4;&#x6CE2;&#x5668;&#x8303;&#x56F4;&#xFF09;&#x3002; ADC &#x91C7;&#x6837;&#x901F;&#x7387;&#x4E3A; 2 ns&#xFF0C;4 ns &#x6216; 10 ns&#xFF0C;&#x5177;&#x4F53;&#x53D6;&#x51B3;&#x4E8E;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x786C;&#x4EF6;&#x7248;&#x672C;&#xFF0C;&#x4F46;&#x5728;&#x66F4;&#x9AD8;&#x7684;&#x65F6;&#x949F;&#x62BD;&#x53D6;&#x4E2D;&#xFF0C;&#x51E0;&#x4E2A; ADC &#x91C7;&#x6837;&#x5728;&#x8FDB;&#x5165;&#x80FD;&#x91CF;&#x6EE4;&#x6CE2;&#x903B;&#x8F91;&#x4E4B;&#x524D;&#x8FDB;&#x884C;&#x5E73;&#x5747;&#x3002; &#x5728;&#x8FC7;&#x6EE4;&#x5668;&#x8303;&#x56F4; 1 &#x4E2D;&#xFF0C;2 &#x4E2A;&#x6837;&#x672C;&#x88AB;&#x5E73;&#x5747;&#xFF0C;&#x5728;&#x8FC7;&#x6EE4;&#x5668;&#x8303;&#x56F4; 2 &#x4E2D; 4 &#x4E2A;&#x6837;&#x672C;&#xFF0C;&#x4F9D;&#x6B64;&#x7C7B;&#x63A8;&#x3002; &#x7531;&#x4E8E;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x548C;&#x5E73;&#x9876;&#x7684;&#x603B;&#x548C;&#x9650;&#x5236;&#x4E3A; 127 &#x4E2A;&#x62BD;&#x53D6;&#x65F6;&#x949F;&#x5468;&#x671F;&#xFF0C;&#x56E0;&#x6B64;&#x6EE4;&#x6CE2;&#x65F6;&#x95F4;&#x7C92;&#x5EA6;&#x548C;&#x6EE4;&#x6CE2;&#x65F6;&#x95F4;&#x4EC5;&#x9650;&#x4E8E;&#x4E0B;&#x8868;&#x4E2D;&#x5217;&#x51FA;&#x7684;&#x503C;&#x3002;</p>
+<figure id="fig1.3.4.2.3.2"><img src="../img/filterclockdecimationsandfiltertimegranularityfor100mhzor500mhz.png" alt="Filter clock decimations and filter time granularity for 100 MHz or 500 MHz"><figcaption>Figure: Filter clock decimations and filter time granularity for 100 MHz or 500 MHz</figcaption></figure>
+<figure id="fig1.3.4.2.3.3"><img src="../img/filterclockdecimationsandfiltertimegranularityfor250mhz.png" alt="Filter clock decimations and filter time granularity for 250 MHz"><figcaption>Figure: Filter clock decimations and filter time granularity for 250 MHz</figcaption></figure>
+<hr>
+<h2 id="&#x68AF;&#x5F62;&#x6EE4;&#x6CE2;trapezoidal-filtering"><a name="&#x68AF;&#x5F62;&#x6EE4;&#x6CE2;trapezoidal-filtering" class="plugin-anchor" href="#&#x68AF;&#x5F62;&#x6EE4;&#x6CE2;trapezoidal-filtering"><i class="fa fa-link" aria-hidden="true"></i></a>&#x68AF;&#x5F62;&#x6EE4;&#x6CE2;(Trapezoidal Filtering)</h2>
+<p>&#x4ECE;&#x8FD9;&#x4E00;&#x70B9;&#x5F00;&#x59CB;&#xFF0C;&#x4EC5;&#x8003;&#x8651;&#x68AF;&#x5F62;&#x6EE4;&#x6CE2;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x662F;&#x6839;&#x636E;&#x516C;&#x5F0F; <img src="https://latex.codecogs.com/gif.latex?LV_{x,k}=-\sum_{i=k-2L-G+1}^{k-L-G}V_{i}+\sum_{i=k-L+1}^{k}V_{i}" class="latex-codecogs mode-inline"> &#x5728; Pixie-16 &#x6A21;&#x5757;&#x4E2D;&#x5B9E;&#x73B0;&#x7684;&#x3002; &#x5C06;&#x957F;&#x5EA6; L = 1 us &#x548C; &#x5E73;&#x9876; G = 0.4 us &#x7684;&#x6EE4;&#x6CE2;&#x5668;&#x5E94;&#x7528;&#x4E8E;&#x4F3D;&#x9A6C;&#x5C04;&#x7EBF;&#x4E8B;&#x4EF6;&#x7684;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#x3002; &#x6EE4;&#x6CE2;&#x5668;&#x8F93;&#x51FA;&#x5F62;&#x72B6;&#x660E;&#x663E;&#x4E3A;&#x68AF;&#x5F62;&#xFF0C;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x7B49;&#x4E8E; L&#xFF0C;&#x5E73;&#x9876;&#x7B49;&#x4E8E; G&#xFF0C;&#x5BF9;&#x79F0;&#x4E0B;&#x964D;&#x65F6;&#x95F4;&#x7B49;&#x4E8E; L&#x3002;&#x57FA;&#x5E26;&#x5BBD;&#x5EA6;&#x662F;&#x6EE4;&#x6CE2;&#x5668;&#x964D;&#x566A;&#x7279;&#x6027;&#x7684;&#x4E00;&#x9636;&#x6D4B;&#x91CF;&#x503C;&#xFF0C;&#x6B64;&#x65F6;&#x4E3A; 2L+G&#x3002;</p>
+<figure id="fig1.3.4.2.3.4"><img src="../img/trapezoidalfilteringofapreamplifierstepwithl1usandg04us.png" alt="Trapezoidal filtering of a preamplifier step with L=1&#x3BC;s and G=0.4&#x3BC;s"><figcaption>Figure: Trapezoidal filtering of a preamplifier step with L=1&#x3BC;s and G=0.4&#x3BC;s</figcaption></figure>
+<p>&#x8FD9;&#x5728;&#x6BD4;&#x8F83;Pixie-16&#x6A21;&#x5757;&#x7684;&#x566A;&#x58F0;&#x6027;&#x80FD;&#x548C;&#x6A21;&#x62DF;&#x6EE4;&#x6CE2;&#x653E;&#x5927;&#x5668;&#x65F6;&#x63D0;&#x51FA;&#x4E86;&#x51E0;&#x4E2A;&#x91CD;&#x70B9;&#xFF1A;</p>
+<ul>
+<li>&#x9996;&#x5148;&#xFF0C;&#x534A;&#x9AD8;&#x65AF;&#x6EE4;&#x6CE2;&#x5668;&#x901A;&#x5E38;&#x7531;&#x6210;&#x5F62;&#x65F6;&#x95F4;&#x6307;&#x5B9A;&#x3002;<ul>
+<li>&#x5B83;&#x4EEC;&#x7684;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x901A;&#x5E38;&#x662F;&#x8FD9;&#x4EE5;&#x65F6;&#x95F4;&#x7684;&#x4E24;&#x500D;&#xFF0C;&#x5E76;&#x4E14;&#x5B83;&#x4EEC;&#x7684;&#x8109;&#x51B2;&#x4E0D;&#x5BF9;&#x79F0;&#xFF0C;&#x56E0;&#x6B64;&#x57FA;&#x5E26;&#x5BBD;&#x5EA6;&#x7EA6;&#x4E3A;&#x6210;&#x5F62;&#x65F6;&#x95F4;&#x7684; 5.6 &#x500D;&#x6216;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x7684; 2.8 &#x500D;&#x3002;</li>
+</ul>
+</li>
+<li>&#x56E0;&#x6B64;&#xFF0C;&#x534A;&#x9AD8;&#x65AF;&#x6EE4;&#x6CE2;&#x5668;&#x901A;&#x5E38;&#x5177;&#x6709;&#x6BD4;&#x5177;&#x6709;&#x76F8;&#x540C;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x7684;&#x4E09;&#x89D2;&#x6EE4;&#x6CE2;&#x5668;&#x7A0D;&#x597D;&#x7684;&#x80FD;&#x91CF;&#x5206;&#x8FA8;&#x7387;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x5177;&#x6709;&#x66F4;&#x957F;&#x7684;&#x6EE4;&#x6CE2;&#x65F6;&#x95F4;&#x3002;<ul>
+<li>&#x8FD9;&#x901A;&#x5E38;&#x9002;&#x7528;&#x4E8E;&#x901A;&#x8FC7;&#x5C06;&#x4E09;&#x89D2;&#x5F62;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x62C9;&#x4F38;&#x4E00;&#x70B9;&#x6765;&#x63D0;&#x4F9B;&#x4E09;&#x89D2;&#x548C;&#x534A;&#x9AD8;&#x65AF;&#x6EE4;&#x6CE2;&#x7684;&#x653E;&#x5927;&#x5668;&#xFF0C;&#x56E0;&#x6B64;&#x771F;&#x6B63;&#x7684;&#x4E09;&#x89D2;&#x5F62;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x901A;&#x5E38;&#x662F;&#x6240;&#x9009;&#x534A;&#x9AD8;&#x65AF;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x7684; 1.2 &#x500D;&#x3002;</li>
+<li>&#x5F53;&#x5176;&#x80FD;&#x91CF;&#x5206;&#x8FA8;&#x7387;&#x4E0E;&#x5177;&#x6709;&#x76F8;&#x540C;&#x6807;&#x79F0;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x7684;&#x6570;&#x5B57;&#x7CFB;&#x7EDF;&#x76F8;&#x6BD4;&#x65F6;&#xFF0C;&#x8FD9;&#x4E5F;&#x4E3A;&#x6A21;&#x62DF;&#x7CFB;&#x7EDF;&#x5E26;&#x6765;&#x660E;&#x663E;&#x7684;&#x4F18;&#x52BF;&#x3002;</li>
+</ul>
+</li>
+</ul>
+<p>&#x6570;&#x5B57;&#x5F62;&#x68AF;&#x5F62;&#x8109;&#x51B2;&#x7684;&#x4E00;&#x4E2A;&#x91CD;&#x8981;&#x7279;&#x5F81;&#x662F;&#x5728;&#x57FA;&#x5E26;&#x5BBD;&#x5EA6; 2L+G &#x65F6;&#x6781;&#x5176;&#x5C16;&#x9510;&#x5730;&#x7EC8;&#x6B62;&#x3002; &#x8FD9;&#x53EF;&#x4EE5;&#x4E0E;&#x6A21;&#x62DF;&#x6EE4;&#x6CE2;&#x8109;&#x51B2;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#xFF0C;&#x6A21;&#x62DF;&#x6EE4;&#x6CE2;&#x8109;&#x51B2;&#x5176;&#x5C3E;&#x90E8;&#x53EF;&#x80FD;&#x6301;&#x7EED;&#x9AD8;&#x8FBE;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x7684;40&#xFF05;&#xFF0C;&#x8FD9;&#x662F;&#x7531;&#x4E8E;&#x6A21;&#x62DF;&#x6EE4;&#x6CE2;&#x5668;&#x7684;&#x6709;&#x9650;&#x5E26;&#x5BBD;&#x5F15;&#x8D77;&#x7684;&#x73B0;&#x8C61;&#x3002; &#x4ECE;&#x4E0B;&#x9762;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x8FD9;&#x79CD;&#x5C16;&#x9510;&#x7684;&#x7EC8;&#x6B62;&#x4F7F;&#x6570;&#x5B57;&#x6EE4;&#x6CE2;&#x5668;&#x5728;&#x65E0;&#x5806;&#x79EF;&#x541E;&#x5410;&#x91CF;&#x65B9;&#x9762;&#x5177;&#x6709;&#x660E;&#x786E;&#x7684;&#x901F;&#x7387;&#x4F18;&#x52BF;&#x3002;</p>
+<hr>
+<h2 id="&#x57FA;&#x7EBF;&#x4E0E;&#x524D;&#x653E;&#x8870;&#x51CF;&#x65F6;&#x95F4;baselines-and-preamp-decay-times"><a name="&#x57FA;&#x7EBF;&#x4E0E;&#x524D;&#x653E;&#x8870;&#x51CF;&#x65F6;&#x95F4;baselines-and-preamp-decay-times" class="plugin-anchor" href="#&#x57FA;&#x7EBF;&#x4E0E;&#x524D;&#x653E;&#x8870;&#x51CF;&#x65F6;&#x95F4;baselines-and-preamp-decay-times"><i class="fa fa-link" aria-hidden="true"></i></a>&#x57FA;&#x7EBF;&#x4E0E;&#x524D;&#x653E;&#x8870;&#x51CF;&#x65F6;&#x95F4;(Baselines and Preamp. Decay Times)</h2>
+<p>&#x56FE;&#x4E2D;&#x663E;&#x793A;&#x4E86;&#x8F83;&#x957F;&#x65F6;&#x95F4;&#x95F4;&#x9694;&#x5185;&#x7684;&#x4E8B;&#x4EF6;&#x4EE5;&#x53CA;&#x5F53;&#x6CA1;&#x6709;&#x4F3D;&#x9A6C;&#x5C04;&#x7EBF;&#x8109;&#x51B2;&#x65F6;&#x6EE4;&#x6CE2;&#x5668;&#x5982;&#x4F55;&#x5904;&#x7406;&#x533A;&#x57DF;&#x4E2D;&#x7684;&#x524D;&#x7F6E;&#x653E;&#x5927;&#x5668;&#x566A;&#x58F0;&#x3002;</p>
+<figure id="fig1.3.4.2.3.5"><img src="../img/agammaeventdisplayedoveralongertimeperiodtoshowbaselinenoiseandtheeffectofpreamplifierdecaytime.png" alt="A gamma-ray event displayed over a longer time period to show baseline noise and the effect of preamplifier decay time"><figcaption>Figure: A gamma-ray event displayed over a longer time period to show baseline noise and the effect of preamplifier decay time</figcaption></figure>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x6EE4;&#x6CE2;&#x5668;&#x7684;&#x6548;&#x679C;&#x662F;&#x51CF;&#x5C0F;&#x6CE2;&#x52A8;&#x7684;&#x5E45;&#x5EA6;&#x5E76;&#x964D;&#x4F4E;&#x5B83;&#x4EEC;&#x7684;&#x9AD8;&#x9891;&#x542B;&#x91CF;&#x3002; &#x8BE5;&#x533A;&#x57DF;&#x79F0;&#x4E3A;&#x57FA;&#x7EBF;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x5EFA;&#x7ACB;&#x4E86;&#x8981;&#x6D4B;&#x91CF;&#x4F3D;&#x9A6C;&#x5C04;&#x7EBF;&#x5CF0;&#x503C;&#x5E45;&#x5EA6; Vx &#x7684;&#x53C2;&#x8003;&#x7535;&#x5E73;&#x3002; &#x57FA;&#x7EBF;&#x7684;&#x6CE2;&#x52A8;&#x5177;&#x6709;&#x6807;&#x51C6;&#x504F;&#x5DEE; $\sigma_e$&#xFF0C;&#x5176;&#x88AB;&#x79F0;&#x4E3A;&#x7CFB;&#x7EDF;&#x7684;&#x7535;&#x5B50;&#x5B66;&#x566A;&#x58F0;&#xFF0C;&#x8BE5;&#x6570;&#x5B57;&#x53D6;&#x51B3;&#x4E8E;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x6EE4;&#x6CE2;&#x5668;&#x7684;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x3002; &#x5728;&#x8FD9;&#x79CD;&#x566A;&#x58F0;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#xFF0C;&#x4F3D;&#x9A6C;&#x5C04;&#x7EBF;&#x5CF0;&#x503C;&#x4F1A;&#x4EA7;&#x751F;&#x989D;&#x5916;&#x7684;&#x566A;&#x58F0;&#x9879;&#xFF0C;&#x5373; Fano &#x566A;&#x58F0;&#xFF0C;&#x8FD9;&#x662F;&#x7531;&#x4E8E;&#x4F3D;&#x9A6C;&#x5C04;&#x7EBF;&#x5728;&#x63A2;&#x6D4B;&#x5668;&#x4E2D;&#x88AB;&#x5438;&#x6536;&#x65F6;&#x4EA7;&#x751F;&#x7684;&#x7535;&#x8377;&#x91CF; Qx &#x7684;&#x7EDF;&#x8BA1;&#x6DA8;&#x843D;&#x5F15;&#x8D77;&#x7684;&#x3002; &#x6B64; Fano &#x566A;&#x58F0; <img src="https://latex.codecogs.com/gif.latex?\sigma_f" class="latex-codecogs mode-inline"> &#x4E0E;&#x7535;&#x5B50;&#x566A;&#x58F0;&#x5076;&#x548C;&#xFF0C;&#x56E0;&#x6B64;&#x6D4B;&#x91CF; Vx &#x65F6;&#x7684;&#x603B;&#x566A;&#x58F0; <img src="https://latex.codecogs.com/gif.latex?\sigma_t" class="latex-codecogs mode-inline"> &#x6765;&#x81EA;&#xFF1A;</p>
+<p><img src="https://latex.codecogs.com/gif.latex?\sigma_t=\sqrt{\sigma_{f}^{2}+\sigma_{e}^{2}}" class="latex-codecogs mode-inline"></p>
+<p>Fano &#x566A;&#x58F0;&#x4EC5;&#x662F;&#x63A2;&#x6D4B;&#x5668;&#x6750;&#x6599;&#x7684;&#x7279;&#x6027;&#x3002; &#x53E6;&#x4E00;&#x65B9;&#x9762;&#xFF0C;&#x7535;&#x5B50;&#x5B66;&#x566A;&#x58F0;&#x53EF;&#x80FD;&#x6765;&#x81EA;&#x524D;&#x7F6E;&#x653E;&#x5927;&#x5668;&#x548C;&#x653E;&#x5927;&#x5668;&#x3002;&#x7136;&#x800C;&#xFF0C;&#x5F53;&#x524D;&#x7F6E;&#x653E;&#x5927;&#x5668;&#x548C;&#x653E;&#x5927;&#x5668;&#x8BBE;&#x8BA1;&#x826F;&#x597D;&#x4E14;&#x5339;&#x914D;&#x826F;&#x597D;&#x65F6;&#xFF0C;&#x653E;&#x5927;&#x5668;&#x7684;&#x566A;&#x58F0;&#x8D21;&#x732E;&#x57FA;&#x672C;&#x4E0A;&#x53EF;&#x4EE5;&#x5FFD;&#x7565;&#x4E0D;&#x8BA1;&#x3002; &#x7136;&#x800C;&#xFF0C;&#x5728;&#x6570;&#x5B57;&#x8109;&#x51B2;&#x5904;&#x7406;&#x5668;&#x7684;&#x6DF7;&#x5408;&#x6A21;&#x62DF;-&#x6570;&#x5B57;&#x73AF;&#x5883;&#x4E2D;&#x5B9E;&#x73B0;&#x8FD9;&#x4E00;&#x70B9;&#x662F;&#x4E00;&#x9879;&#x975E;&#x5E38;&#x91CD;&#x8981;&#x7684;&#x4EFB;&#x52A1;&#x3002;</p>
+<p>&#x4F7F;&#x7528;RC&#x578B;&#x524D;&#x7F6E;&#x653E;&#x5927;&#x5668;&#x65F6;&#xFF0C;&#x524D;&#x7F6E;&#x653E;&#x5927;&#x5668;&#x7684;&#x659C;&#x7387;&#x5F88;&#x5C11;&#x4E3A;&#x96F6;&#x3002; &#x6BCF;&#x4E00;&#x6B65;&#x90FD;&#x4EE5;&#x6307;&#x6570;&#x65B9;&#x5F0F;&#x8870;&#x51CF;&#x56DE;&#x524D;&#x7F6E;&#x653E;&#x5927;&#x5668;&#x7684; DC &#x7535;&#x5E73;&#x3002; &#x5728;&#x8FD9;&#x79CD;&#x8870;&#x51CF;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x57FA;&#x7EBF;&#x663E;&#x7136;&#x4E0D;&#x662F;&#x96F6;&#x3002; &#x8FD9;&#x53EF;&#x4EE5;&#x5728;&#x4E0A;&#x56FE;&#x4E2D;&#x770B;&#x5230;&#xFF0C;&#x5176;&#x4E2D;&#x8109;&#x51B2;&#x4E4B;&#x540E;&#x6307;&#x6570;&#x8870;&#x51CF;&#x671F;&#x95F4;&#x7684;&#x6EE4;&#x6CE2;&#x5668;&#x8F93;&#x51FA;&#x4F4E;&#x4E8E;&#x521D;&#x59CB;&#x6C34;&#x5E73;&#x3002; &#x53E6;&#x5916;&#x8BF7;&#x6CE8;&#x610F;&#x4E00;&#x70B9;&#xFF0C;&#x5E73;&#x9876;&#x533A;&#x57DF;&#x5411;&#x4E0B;&#x503E;&#x659C;&#x3002;</p>
+<p>&#x4F7F;&#x7528;&#x8870;&#x51CF;&#x5E38;&#x6570; <img src="https://latex.codecogs.com/gif.latex?\tau" class="latex-codecogs mode-inline"> &#x53EF;&#x4EE5;&#x5C06;&#x57FA;&#x7EBF;&#x6620;&#x5C04;&#x56DE; DC &#x7EA7;&#x522B;&#x3002;&#x8FD9;&#x5141;&#x8BB8;&#x7CBE;&#x786E;&#x6D4B;&#x5B9A;&#x4F3D;&#x9A6C;&#x5C04;&#x7EBF;&#x80FD;&#x91CF;&#xFF0C;&#x5373;&#x4F7F;&#x8109;&#x51B2;&#x4F4D;&#x4E8E;&#x524D;&#x4E00;&#x4E2A;&#x8109;&#x51B2;&#x7684;&#x4E0B;&#x964D;&#x659C;&#x7387;&#x4E0A;&#x3002;&#x4F5C;&#x4E3A;&#x524D;&#x7F6E;&#x653E;&#x5927;&#x5668;&#x7684;&#x4E00;&#x4E2A;&#x7279;&#x5F81;&#xFF0C;<img src="https://latex.codecogs.com/gif.latex?\tau" class="latex-codecogs mode-inline"> &#x7684;&#x503C;&#x5FC5;&#x987B;&#x7531;&#x7528;&#x6237;&#x548C;&#x83B7;&#x53D6;&#x7A0B;&#x5E8F;&#x786E;&#x5B9A;&#x5E76;&#x8BBE;&#x7F6E;&#x5230;&#x6A21;&#x5757;&#x4E2D;&#x3002;</p>
+<hr>
+<h2 id="&#x5806;&#x79EF;&#x68C0;&#x6D4B;pileup-inspection"><a name="&#x5806;&#x79EF;&#x68C0;&#x6D4B;pileup-inspection" class="plugin-anchor" href="#&#x5806;&#x79EF;&#x68C0;&#x6D4B;pileup-inspection"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5806;&#x79EF;&#x68C0;&#x6D4B;(Pileup Inspection)</h2>
+<p>&#x5982;&#x4E0A;&#x6240;&#x8FF0;&#xFF0C;&#x76EE;&#x6807;&#x662F;&#x4E3A;&#x68C0;&#x6D4B;&#x5230;&#x7684;&#x6BCF;&#x4E00;&#x6761;&#x4F3D;&#x9A6C;&#x5C04;&#x7EBF;&#x6355;&#x83B7; Vx &#x503C;&#xFF0C;&#x5E76;&#x4F7F;&#x7528;&#x8FD9;&#x4E9B;&#x503C;&#x6784;&#x5EFA;&#x4E00;&#x4E2A;&#x80FD;&#x8C31;&#x3002;</p>
+<blockquote>
+<p><strong>[info] info</strong></p>
+<p>&#x6B64;&#x8FC7;&#x7A0B;&#x5728;&#x6570;&#x5B57;&#x548C;&#x6A21;&#x62DF;&#x7CFB;&#x7EDF;&#x4E4B;&#x95F4;&#x4E5F;&#x5B58;&#x5728;&#x663E;&#x7740;&#x5DEE;&#x5F02;&#x3002;
+&#x5728;&#x6A21;&#x62DF;&#x7CFB;&#x7EDF;&#x4E2D;&#xFF0C;&#x5CF0;&#x503C;&#x5FC5;&#x987B;&#x201C;&#x6355;&#x83B7;&#x201D;&#x5230;&#x6A21;&#x62DF;&#x5B58;&#x50A8;&#x8BBE;&#x5907;&#xFF08;&#x901A;&#x5E38;&#x662F;&#x7535;&#x5BB9;&#x5668;&#xFF09;&#x4E2D;&#xFF0C;&#x5E76;&#x201C;&#x4FDD;&#x6301;&#x201D;&#x76F4;&#x5230;&#x6570;&#x5B57;&#x5316;&#x4E3A;&#x6B62;&#x3002;
+&#x7136;&#x540E;&#xFF0C;&#x8BE5;&#x6570;&#x5B57;&#x503C;&#x7528;&#x4E8E;&#x66F4;&#x65B0;&#x5B58;&#x50A8;&#x4F4D;&#x7F6E;&#x4EE5;&#x6784;&#x5EFA;&#x6240;&#x9700;&#x7684;&#x80FD;&#x8C31;&#x3002;
+&#x5728;&#x6B64;&#x6A21;&#x6570;&#x8F6C;&#x6362;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x7CFB;&#x7EDF;&#x5BF9;&#x5176;&#x5B83;&#x4E8B;&#x4EF6;&#x65E0;&#x6548;&#xFF0C;&#x8FD9;&#x4F1A;&#x4E25;&#x91CD;&#x964D;&#x4F4E;&#x7CFB;&#x7EDF;&#x541E;&#x5410;&#x91CF;&#x3002;
+&#x5373;&#x4F7F;&#x662F;&#x5355;&#x901A;&#x9053;&#x5206;&#x6790;&#x4EEA;&#x7CFB;&#x7EDF;&#x4E5F;&#x4F1A;&#x5728;&#x6B64;&#x9636;&#x6BB5;&#x5F15;&#x5165;&#x663E;&#x8457;&#x7684;&#x6B7B;&#x65F6;&#x95F4;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x4EEC;&#x5FC5;&#x987B;&#x7B49;&#x5F85;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#xFF08;&#x901A;&#x5E38;&#x4E3A;&#x51E0;&#x5FAE;&#x79D2;&#xFF09;&#x624D;&#x80FD;&#x786E;&#x5B9A;&#x662F;&#x5426;&#x6EE1;&#x8DB3;&#x7A97;&#x53E3;&#x6761;&#x4EF6;&#x3002;</p>
+<p>&#x6570;&#x5B57;&#x7CFB;&#x7EDF;&#x5728;&#x8FD9;&#x65B9;&#x9762;&#x6548;&#x7387;&#x66F4;&#x9AD8;&#xFF0C;&#x56E0;&#x4E3A;&#x6EE4;&#x6CE2;&#x5668;&#x8F93;&#x51FA;&#x7684;&#x503C;&#x5DF2;&#x7ECF;&#x662F;&#x6570;&#x5B57;&#x503C;&#x3002;
+&#x6240;&#x9700;&#x8981;&#x7684;&#x53EA;&#x662F;&#x83B7;&#x53D6;&#x6EE4;&#x6CE2;&#x5668;&#x52A0;&#x548C;&#x6570;&#x503C;&#xFF0C;&#x91CD;&#x5EFA;&#x80FD;&#x91CF; Vx&#xFF0C;&#x5E76;&#x5C06;&#x5176;&#x6DFB;&#x52A0;&#x5230;&#x80FD;&#x8C31;&#x4E2D;&#x3002;
+&#x5728; Pixie-16 &#x4E2D;&#xFF0C;&#x6EE4;&#x6CE2;&#x5668;&#x52A0;&#x548C;&#x6570;&#x503C;&#x5728; FPGA &#x4E2D;&#x4E0D;&#x65AD;&#x66F4;&#x65B0;&#xFF0C;&#x5E76;&#x88AB;&#x6355;&#x83B7;&#x5230;&#x4E8B;&#x4EF6;&#x7F13;&#x51B2;&#x5668;&#x4E2D;&#x3002;
+&#x91CD;&#x5EFA;&#x80FD;&#x91CF;&#x5E76;&#x589E;&#x52A0;&#x80FD;&#x8C31;&#x7531; DSP &#x5B8C;&#x6210;&#xFF0C;&#x56E0;&#x6B64; FPGA &#x53EF;&#x4EE5;&#x7ACB;&#x5373;&#x91C7;&#x96C6;&#x65B0;&#x6570;&#x636E;&#xFF08;&#x9664;&#x975E;&#x7F13;&#x51B2;&#x533A;&#x5DF2;&#x6EE1;&#xFF09;&#x3002;
+&#x8FD9;&#x662F;&#x6570;&#x5B57;&#x7CFB;&#x7EDF;&#x4E2D;&#x589E;&#x5F3A;&#x541E;&#x5410;&#x91CF;&#x7684;&#x91CD;&#x8981;&#x6765;&#x6E90;&#x3002;</p>
+</blockquote>
+<p>Pixie-16 &#x6A21;&#x5757;&#x4E2D;&#x7684;&#x5CF0;&#x503C;&#x68C0;&#x6D4B;&#x548C;&#x91C7;&#x6837;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x3002; &#x56FE;&#x4E2D;&#x5B9E;&#x73B0;&#x4E86;&#x4E24;&#x4E2A;&#x68AF;&#x5F62;&#x6EE4;&#x6CE2;&#x5668;&#xFF0C;&#x5FEB;&#x901F;&#x6EE4;&#x6CE2;&#x5668;&#x548C;&#x6162;&#x901F;&#x6EE4;&#x6CE2;&#x5668;&#x3002; &#x5FEB;&#x901F;&#x6EE4;&#x6CE2;&#x5668;&#x7528;&#x4E8E;&#x68C0;&#x6D4B;&#x4F3D;&#x9A6C;&#x5C04;&#x7EBF;&#x7684;&#x5230;&#x8FBE;&#xFF0C;&#x6162;&#x901F;&#x6EE4;&#x6CE2;&#x5668;&#x7528;&#x4E8E;&#x6D4B;&#x91CF; Vx&#xFF0C;&#x5728;&#x8F83;&#x957F;&#x7684;&#x6EE4;&#x6CE2;&#x5668;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x5185;&#x964D;&#x4F4E;&#x566A;&#x58F0;&#x3002; &#x5FEB;&#x901F;&#x6EE4;&#x6CE2;&#x5668;&#x7684;&#x6EE4;&#x6CE2;&#x5668;&#x957F;&#x5EA6; Lf = 0.1 us&#xFF0C;&#x95F4;&#x9699; Gf = 0.1 us&#x3002; &#x6162;&#x6EE4;&#x6CE2;&#x5668;&#x7684; Ls = 1.2 us&#xFF0C;Gs = 0.35 us&#x3002;</p>
+<figure id="fig1.3.4.2.3.6"><img src="../img/peakdetectionandsampling.png" alt="Peak detection and sampling"><figcaption>Figure: Peak detection and sampling</figcaption></figure>
+<p>&#x901A;&#x8FC7;&#x5C06;&#x5FEB;&#x901F;&#x6EE4;&#x6CE2;&#x5668;&#x8F93;&#x51FA;&#x4E0E;&#x7528;&#x6237;&#x8BBE;&#x7F6E;&#x7684;&#x6570;&#x5B57;&#x5E38;&#x6570; <strong>THRESHOLD</strong> &#x8FDB;&#x884C;&#x6570;&#x5B57;&#x6BD4;&#x8F83;&#x6765;&#x68C0;&#x6D4B;&#x4F3D;&#x9A6C;&#x5C04;&#x7EBF;&#x6B65;&#x8FDB;&#xFF08;&#x5728;&#x524D;&#x7F6E;&#x653E;&#x5927;&#x5668;&#x8F93;&#x51FA;&#x4E2D;&#xFF09;&#x7684;&#x5230;&#x8FBE;&#x3002; &#x8D8A;&#x8FC7;&#x9608;&#x503C;&#x5219;&#x5F00;&#x59CB;&#x5EF6;&#x8FDF;&#x7EBF;&#x7B49;&#x5F85; <strong>PEAKSAMP</strong> &#x4E2A;&#x65F6;&#x949F;&#x5468;&#x671F;&#xFF0C;&#x5230;&#x8FBE;&#x9002;&#x5F53;&#x7684;&#x65F6;&#x95F4;&#x6765;&#x91C7;&#x6837;&#x6162;&#x901F;&#x6EE4;&#x6CE2;&#x5668;&#x7684;&#x503C;&#x3002; &#x7531;&#x4E8E;&#x6570;&#x5B57;&#x6EE4;&#x6CE2;&#x8FC7;&#x7A0B;&#x662F;&#x786E;&#x5B9A;&#x6027;&#x7684;&#xFF0C;<strong>PEAKSAMP</strong> &#x4EC5;&#x53D6;&#x51B3;&#x4E8E;&#x5FEB;&#x901F;&#x548C;&#x6162;&#x901F;&#x6EE4;&#x6CE2;&#x5668;&#x5E38;&#x6570;&#x7684;&#x503C;&#x3002;</p>
+<p>&#x5728; <strong>PEAKSAMP</strong> &#x4E4B;&#x540E;&#x6355;&#x83B7;&#x7684;&#x6162;&#x6EE4;&#x6CE2;&#x5668;&#x503C;&#x5219;&#x662F;&#x6162;&#x901F;&#x6570;&#x5B57;&#x6EE4;&#x6CE2;&#x5668;&#x5BF9; Vx &#x7684;&#x4F30;&#x8BA1;&#x3002; &#x4F7F;&#x7528;&#x5EF6;&#x8FDF;&#x7EBF;&#x5141;&#x8BB8;&#x751A;&#x81F3;&#x5728; <strong>PEAKSAMP</strong> &#x95F4;&#x9694;&#x5185;&#x5BF9;&#x591A;&#x4E2A;&#x8109;&#x51B2;&#x8FDB;&#x884C;&#x91C7;&#x6837;&#xFF08;&#x5C3D;&#x7BA1;&#x6EE4;&#x6CE2;&#x5668;&#x503C;&#x672C;&#x8EAB;&#x4E0D;&#x662F;&#x5355;&#x4E2A;&#x8109;&#x51B2;&#x9AD8;&#x5EA6;&#x7684;&#x6B63;&#x786E;&#x8868;&#x793A;&#xFF09;&#x3002;</p>
+<p>&#x6355;&#x83B7;&#x7684;&#x503C; Vx &#x5C06;&#x4EC5;&#x662F;&#x76F8;&#x5173;&#x4F3D;&#x9A6C;&#x5C04;&#x7EBF;&#x80FD;&#x91CF;&#x7684;&#x6709;&#x6548;&#x6D4B;&#x91CF;&#xFF0C;&#x6761;&#x4EF6;&#x662F;&#x6EE4;&#x6CE2;&#x540E;&#x7684;&#x8109;&#x51B2;&#x5728;&#x65F6;&#x95F4;&#x4E0A;&#x4E0E;&#x5176;&#x524D;&#x4E00;&#x4E2A;&#x548C;&#x540E;&#x4E00;&#x4E2A;&#x76F8;&#x90BB;&#x8109;&#x51B2;&#x8DB3;&#x591F;&#x597D;&#x5730;&#x5206;&#x5F00;&#xFF0C;&#x4F7F;&#x5F97;&#x5B83;&#x4EEC;&#x7684;&#x5CF0;&#x503C;&#x5E45;&#x5EA6;&#x4E0D;&#x4F1A;&#x56E0;&#x68AF;&#x5F62;&#x6EE4;&#x6CE2;&#x5668;&#x7684;&#x4F5C;&#x7528;&#x800C;&#x5931;&#x771F;&#x3002; &#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF0C;&#x5982;&#x679C;&#x8109;&#x51B2;&#x6CA1;&#x6709;&#x5806;&#x79EF;&#x3002; &#x901A;&#x8FC7;&#x53C2;&#x8003;&#x4E0B;&#x56FE;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x76F8;&#x5173;&#x95EE;&#x9898;&#xFF0C;&#x56FE;&#x4E2D;&#x793A;&#x51FA;&#x4E86;&#x901A;&#x8FC7;&#x5404;&#x79CD;&#x95F4;&#x9694;&#x5206;&#x5F00;&#x7684;3&#x4E2A;&#x4F3D;&#x9A6C;&#x5C04;&#x7EBF;&#x3002; &#x5FEB;&#x901F;&#x6EE4;&#x6CE2;&#x5668;&#x7684;&#x6EE4;&#x6CE2;&#x5668;&#x957F;&#x5EA6; Lf = 0.1 us&#xFF0C;&#x95F4;&#x9699; Gf = 0.1 us&#x3002; &#x6162;&#x6EE4;&#x6CE2;&#x5668;&#x7684; Ls = 1.2 us&#xFF0C;Gs = 0.35 us&#x3002;</p>
+<figure id="fig1.3.4.2.3.7"><img src="../img/asequenceof3gammaraypulsesseparatedbyvariousintervalstoshowtheoriginofpileupanddemonstratehowitisdetected.png" alt="A sequence of 3 gamma-ray pulses separated by various intervals to show the origin of pileup and demonstrate how it is detected by the Pixie module"><figcaption>Figure: A sequence of 3 gamma-ray pulses separated by various intervals to show the origin of pileup and demonstrate how it is detected by the Pixie module</figcaption></figure>
+<p>&#x7531;&#x4E8E;&#x68AF;&#x5F62;&#x6EE4;&#x6CE2;&#x5668;&#x662F;&#x7EBF;&#x6027;&#x6EE4;&#x6CE2;&#x5668;&#xFF0C;&#x56E0;&#x6B64;&#x5176;&#x5BF9;&#x4E00;&#x7CFB;&#x5217;&#x8109;&#x51B2;&#x7684;&#x8F93;&#x51FA;&#x662F;&#x5176;&#x7CFB;&#x5217;&#x4E2D;&#x5404;&#x4E2A;&#x6210;&#x5458;&#x7684;&#x8F93;&#x51FA;&#x7684;&#x7EBF;&#x6027;&#x548C;&#x3002; &#x5F53;&#x4E00;&#x4E2A;&#x8109;&#x51B2;&#x7684;&#x4E0A;&#x5347;&#x6CBF;&#x4F4D;&#x4E8E;&#x5176;&#x90BB;&#x5C45;&#x7684;&#x5CF0;&#x503C;&#xFF08;&#x7279;&#x522B;&#x662F;&#x91C7;&#x6837;&#x70B9;&#xFF09;&#x4E4B;&#x4E0B;&#x65F6;&#xFF0C;&#x53D1;&#x751F;&#x5806;&#x79EF;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x5728;&#x56FE;&#x4E2D;&#xFF0C;&#x5CF0;1&#x548C;2&#x88AB;&#x5145;&#x5206;&#x5206;&#x79BB;&#xFF0C;&#x4F7F;&#x5F97;&#x5CF0;2&#x7684;&#x524D;&#x6CBF;&#x5728;&#x8109;&#x51B2;1&#x7684;&#x5CF0;&#x503C;&#x4E4B;&#x540E;&#x4E0B;&#x964D;&#x3002;&#x56E0;&#x4E3A;&#x68AF;&#x5F62;&#x6EE4;&#x6CE2;&#x5668;&#x51FD;&#x6570;&#x662F;&#x5BF9;&#x79F0;&#x7684;&#xFF0C;&#x8FD9;&#x4E5F;&#x610F;&#x5473;&#x7740;&#x8109;&#x51B2;1&#x7684;&#x540E;&#x6CBF;&#x4E5F;&#x4E0D;&#x4F1A;&#x843D;&#x5728;&#x8109;&#x51B2;2&#x7684;&#x5CF0;&#x4E2D;&#x3002;&#x4E3A;&#x6B64;&#xFF0C;&#x4E24;&#x4E2A;&#x8109;&#x51B2;&#x5FC5;&#x987B;&#x81F3;&#x5C11;&#x95F4;&#x9694; L+G&#x3002; &#x56E0;&#x6B64;&#xFF0C;&#x5728;&#x672C;&#x793A;&#x4F8B;&#x4E2D;&#x770B;&#x5230;&#x5CF0;&#x503C;2&#x548C;3&#xFF0C;&#x5176;&#x95F4;&#x9694;&#x5C0F;&#x4E8E; 1.0 us&#xFF0C;&#x5177;&#x6709;1.2 us &#x7684;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x3002;</p>
+<p>&#x8FD9;&#x5BFC;&#x81F4;&#x4E86;&#x4E00;&#x4E2A;&#x91CD;&#x8981;&#x7684;&#x89C2;&#x70B9;&#xFF1A;&#x8109;&#x51B2;&#x662F;&#x5426;&#x906D;&#x53D7;&#x7F13;&#x6162;&#x7684;&#x5806;&#x79EF;&#x4E3B;&#x8981;&#x53D6;&#x51B3;&#x4E8E;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x8FC7;&#x6EE4;&#x5668;&#x7684;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x3002; &#x5728;&#x7ED9;&#x5B9A;&#x7684;&#x5E73;&#x5747;&#x4FE1;&#x53F7;&#x901F;&#x7387;&#x4E0B;&#x53D1;&#x751F;&#x7684;&#x5806;&#x79EF;&#x91CF;&#x5C06;&#x968F;&#x7740;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x7684;&#x589E;&#x52A0;&#x800C;&#x589E;&#x52A0;&#x3002;</p>
+<p>&#x7531;&#x4E8E;&#x5FEB;&#x901F;&#x6EE4;&#x6CE2;&#x5668;&#x4E0A;&#x5347;&#x65F6;&#x95F4;&#x4EC5;&#x4E3A; 0.1 us&#xFF0C;&#x56E0;&#x6B64;&#x8FD9;&#x4E9B;&#x4F3D;&#x9A6C;&#x5C04;&#x7EBF;&#x8109;&#x51B2;&#x4E0D;&#x4F1A;&#x5728;&#x5FEB;&#x901F;&#x6EE4;&#x6CE2;&#x5668;&#x901A;&#x9053;&#x4E2D;&#x5806;&#x79EF;&#x3002; &#x56E0;&#x6B64;&#xFF0C;Pixie-16 &#x6A21;&#x5757;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5728;&#x8109;&#x51B2;&#x5230;&#x8FBE;&#x65F6;&#x95F4;&#x4E4B;&#x540E;&#x6D4B;&#x91CF;&#x95F4;&#x9694; PEAKSEP &#x7684;&#x5FEB;&#x901F;&#x6EE4;&#x6CE2;&#x5668;&#x6765;&#x6D4B;&#x8BD5;&#x6162;&#x901F;&#x901A;&#x9053;&#x5806;&#x79EF;&#x3002; &#x5982;&#x679C;&#x5728;&#x8BE5;&#x95F4;&#x9694;&#x4E2D;&#x6CA1;&#x6709;&#x68C0;&#x6D4B;&#x5230;&#x7B2C;&#x4E8C;&#x4E2A;&#x8109;&#x51B2;&#xFF0C;&#x5219;&#x6CA1;&#x6709;&#x540E;&#x6CBF;&#x5806;&#x79EF;&#x5E76;&#x4E14;&#x8109;&#x51B2;&#x53EF;&#x4EE5;&#x7528;&#x4E8E;&#x91C7;&#x96C6;&#x3002; <strong>PEAKSEP</strong> &#x901A;&#x5E38;&#x8BBE;&#x7F6E;&#x4E3A;&#x63A5;&#x8FD1; L+G+1 &#x7684;&#x503C;&#x3002; &#x8109;&#x51B2;1&#x901A;&#x8FC7;&#x6B64;&#x6D4B;&#x8BD5;&#xFF0C;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#x3002; &#x7136;&#x800C;&#xFF0C;&#x8109;&#x51B2;2&#x672A;&#x901A;&#x8FC7; <strong>PEAKSEP</strong> &#x6D4B;&#x8BD5;&#xFF0C;&#x56E0;&#x4E3A;&#x8109;&#x51B2;3&#x4F4E;&#x4E8E; 1.0 us&#x3002; &#x6CE8;&#x610F;&#xFF0C;&#x901A;&#x8FC7;&#x68AF;&#x5F62;&#x6EE4;&#x6CE2;&#x5668;&#x7684;&#x5BF9;&#x79F0;&#x6027;&#xFF0C;&#x5982;&#x679C;&#x8109;&#x51B2;2&#x7531;&#x4E8E;&#x8109;&#x51B2;3&#x800C;&#x88AB;&#x62D2;&#x7EDD;&#xFF0C;&#x5219;&#x8109;&#x51B2;3&#x7531;&#x4E8E;&#x8109;&#x51B2;2&#x800C;&#x88AB;&#x7C7B;&#x4F3C;&#x5730;&#x62D2;&#x7EDD;&#x3002;</p>
+<!-- BASESETUP_Energy.md ends here -->
+<script type="text/javascript">var className='atoc';</script>
+
+<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> <a href="http://wuhongyi.cn/" target="_blank">&#xA9; Hongyi Wu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated:</i> 2019-05-04 21:15:11 </span> </footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="BASESETUP_TriggerFilter.html" class="navigation navigation-prev " aria-label="Previous page: Trigger Filter">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="BASESETUP_CFD.html" class="navigation navigation-next " aria-label="Next page: CFD">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Energy","level":"1.3.4.2.3","depth":4,"next":{"title":"CFD","level":"1.3.4.2.4","depth":4,"path":"UsersGuide/BASESETUP_CFD.md","ref":"UsersGuide/BASESETUP_CFD.md","articles":[]},"previous":{"title":"Trigger Filter","level":"1.3.4.2.2","depth":4,"path":"UsersGuide/BASESETUP_TriggerFilter.md","ref":"UsersGuide/BASESETUP_TriggerFilter.md","articles":[]},"dir":"ltr"},"config":{"plugins":["search","sharing","fontsettings","livereload","highlight","github","-prism","ad","alerts","atoc","splitter","sitemap","image-captions","anchors","latex-codecogs","-katex","mermaid","ace","page-footer-ex","sectionx","mcqx","fbqx","spoiler","anchor-navigation","youtubex","redirect","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"latex-codecogs":{"type":"gif"},"spoiler":{},"ad":{"contentBottom":"","contentTop":""},"ace":{},"github":{"url":"https://github.com/wuhongyi"},"fbqx":{},"livereload":{},"page-footer-ex":{"copyright":"[© Hongyi Wu](http://wuhongyi.cn/)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated:</i>"},"atoc":{"addClass":true,"className":"atoc"},"splitter":{},"search":{},"mermaid":{},"anchor-navigation":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"serif","size":2,"theme":"sepia"},"sectionx":{},"highlight":{},"sitemap":{"hostname":"http://wuhongyi.cn/"},"youtubex":{"embedDescription":{"de":"Eingebettetes Video:","default":"Embedded video:"}},"alerts":{},"sharing":{"all":["facebook","google","twitter","weibo","instapaper"],"facebook":true,"google":false,"instapaper":false,"twitter":true,"vk":false,"weibo":false},"redirect":{},"mcqx":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"expandable-chapters":{},"image-captions":{"variable_name":"_pictures"}},"theme":"default","author":"Hongyi Wu(吴鸿毅)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"_pictures":[{"backlink":"index.html#fig1.1.1","level":"1.1","list_caption":"Figure: PKU logo","alt":"PKU logo","nro":1,"url":"pkulogo100.jpg","index":1,"caption_template":"Figure: _CAPTION_","label":"PKU logo","attributes":{},"skip":false,"key":"1.1.1"},{"backlink":"UsersGuide/index.html#fig1.3.1","level":"1.3","list_caption":"Figure: pixie16","alt":"pixie16","nro":2,"url":"/img/pixie16.jpg","index":1,"caption_template":"Figure: _CAPTION_","label":"pixie16","attributes":{},"skip":false,"key":"1.3.1"},{"backlink":"UsersGuide/Crate.html#fig1.3.1.1","level":"1.3.1","list_caption":"Figure: connect and IP","alt":"connect and IP","nro":3,"url":"/img/cratenet0.png","index":1,"caption_template":"Figure: _CAPTION_","label":"connect and IP","attributes":{},"skip":false,"key":"1.3.1.1"},{"backlink":"UsersGuide/Crate.html#fig1.3.1.2","level":"1.3.1","list_caption":"Figure: open control page","alt":"open control page","nro":4,"url":"/img/cratenet1.png","index":2,"caption_template":"Figure: _CAPTION_","label":"open control page","attributes":{},"skip":false,"key":"1.3.1.2"},{"backlink":"UsersGuide/Crate.html#fig1.3.1.3","level":"1.3.1","list_caption":"Figure: Login","alt":"Login","nro":5,"url":"/img/cratenet2.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Login","attributes":{},"skip":false,"key":"1.3.1.3"},{"backlink":"UsersGuide/Crate.html#fig1.3.1.4","level":"1.3.1","list_caption":"Figure: status","alt":"status","nro":6,"url":"/img/cratenet3.png","index":4,"caption_template":"Figure: _CAPTION_","label":"status","attributes":{},"skip":false,"key":"1.3.1.4"},{"backlink":"UsersGuide/GUI.html#fig1.3.4.1","level":"1.3.4","list_caption":"Figure: MainFrame","alt":"MainFrame","nro":7,"url":"/img/mainframe.png","index":1,"caption_template":"Figure: _CAPTION_","label":"MainFrame","attributes":{},"skip":false,"key":"1.3.4.1"},{"backlink":"UsersGuide/FILE_About.html#fig1.3.4.1.1.1","level":"1.3.4.1.1","list_caption":"Figure: About","alt":"About","nro":8,"url":"/img/About.png","index":1,"caption_template":"Figure: _CAPTION_","label":"About","attributes":{},"skip":false,"key":"1.3.4.1.1.1"},{"backlink":"UsersGuide/BASESETUP_BaseSetup.html#fig1.3.4.2.1.1","level":"1.3.4.2.1","list_caption":"Figure: Base Setup","alt":"Base Setup","nro":9,"url":"/img/BaseSetup.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Base Setup","attributes":{},"skip":false,"key":"1.3.4.2.1.1"},{"backlink":"UsersGuide/BASESETUP_TriggerFilter.html#fig1.3.4.2.2.1","level":"1.3.4.2.2","list_caption":"Figure: Trigger Filter","alt":"Trigger Filter","nro":10,"url":"/img/TriggerFilter.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Trigger Filter","attributes":{},"skip":false,"key":"1.3.4.2.2.1"},{"backlink":"UsersGuide/BASESETUP_TriggerFilter.html#fig1.3.4.2.2.2","level":"1.3.4.2.2","list_caption":"Figure: (a) Charge sensitive preamplifier with RC feedback; (b) Output on absorption of a gamma ray","alt":"(a) Charge sensitive preamplifier with RC feedback; (b) Output on absorption of a gamma ray","nro":11,"url":"/img/chargesenitivepreamplifierrcfeedbackoutputonabsorptionofagammaray.png","index":2,"caption_template":"Figure: _CAPTION_","label":"(a) Charge sensitive preamplifier with RC feedback; (b) Output on absorption of a gamma ray","attributes":{},"skip":false,"key":"1.3.4.2.2.2"},{"backlink":"UsersGuide/BASESETUP_TriggerFilter.html#fig1.3.4.2.2.3","level":"1.3.4.2.2","list_caption":"Figure: Digitized version of the data of Figure (b) in the step region","alt":"Digitized version of the data of Figure (b) in the step region","nro":12,"url":"/img/digitizedversionofthedataoffigurebinthestepregion.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Digitized version of the data of Figure (b) in the step region","attributes":{},"skip":false,"key":"1.3.4.2.2.3"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.1","level":"1.3.4.2.3","list_caption":"Figure: Energy","alt":"Energy","nro":13,"url":"/img/Energy.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Energy","attributes":{},"skip":false,"key":"1.3.4.2.3.1"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.2","level":"1.3.4.2.3","list_caption":"Figure: Filter clock decimations and filter time granularity for 100 MHz or 500 MHz","alt":"Filter clock decimations and filter time granularity for 100 MHz or 500 MHz","nro":14,"url":"/img/filterclockdecimationsandfiltertimegranularityfor100mhzor500mhz.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Filter clock decimations and filter time granularity for 100 MHz or 500 MHz","attributes":{},"skip":false,"key":"1.3.4.2.3.2"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.3","level":"1.3.4.2.3","list_caption":"Figure: Filter clock decimations and filter time granularity for 250 MHz","alt":"Filter clock decimations and filter time granularity for 250 MHz","nro":15,"url":"/img/filterclockdecimationsandfiltertimegranularityfor250mhz.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Filter clock decimations and filter time granularity for 250 MHz","attributes":{},"skip":false,"key":"1.3.4.2.3.3"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.4","level":"1.3.4.2.3","list_caption":"Figure: Trapezoidal filtering of a preamplifier step with L=1μs and G=0.4μs","alt":"Trapezoidal filtering of a preamplifier step with L=1μs and G=0.4μs","nro":16,"url":"/img/trapezoidalfilteringofapreamplifierstepwithl1usandg04us.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Trapezoidal filtering of a preamplifier step with L=1μs and G=0.4μs","attributes":{},"skip":false,"key":"1.3.4.2.3.4"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.5","level":"1.3.4.2.3","list_caption":"Figure: A gamma-ray event displayed over a longer time period to show baseline noise and the effect of preamplifier decay time","alt":"A gamma-ray event displayed over a longer time period to show baseline noise and the effect of preamplifier decay time","nro":17,"url":"/img/agammaeventdisplayedoveralongertimeperiodtoshowbaselinenoiseandtheeffectofpreamplifierdecaytime.png","index":5,"caption_template":"Figure: _CAPTION_","label":"A gamma-ray event displayed over a longer time period to show baseline noise and the effect of preamplifier decay time","attributes":{},"skip":false,"key":"1.3.4.2.3.5"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.6","level":"1.3.4.2.3","list_caption":"Figure: Peak detection and sampling","alt":"Peak detection and sampling","nro":18,"url":"/img/peakdetectionandsampling.png","index":6,"caption_template":"Figure: _CAPTION_","label":"Peak detection and sampling","attributes":{},"skip":false,"key":"1.3.4.2.3.6"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.7","level":"1.3.4.2.3","list_caption":"Figure: A sequence of 3 gamma-ray pulses separated by various intervals to show the origin of pileup and demonstrate how it is detected by the Pixie module","alt":"A sequence of 3 gamma-ray pulses separated by various intervals to show the origin of pileup and demonstrate how it is detected by the Pixie module","nro":19,"url":"/img/asequenceof3gammaraypulsesseparatedbyvariousintervalstoshowtheoriginofpileupanddemonstratehowitisdetected.png","index":7,"caption_template":"Figure: _CAPTION_","label":"A sequence of 3 gamma-ray pulses separated by various intervals to show the origin of pileup and demonstrate how it is detected by the Pixie module","attributes":{},"skip":false,"key":"1.3.4.2.3.7"},{"backlink":"UsersGuide/BASESETUP_CFD.html#fig1.3.4.2.4.1","level":"1.3.4.2.4","list_caption":"Figure: CFD","alt":"CFD","nro":20,"url":"/img/CFDPars.png","index":1,"caption_template":"Figure: _CAPTION_","label":"CFD","attributes":{},"skip":false,"key":"1.3.4.2.4.1"},{"backlink":"UsersGuide/BASESETUP_CFD.html#fig1.3.4.2.4.2","level":"1.3.4.2.4","list_caption":"Figure: Corresponding DSP Parameters for the CFD Parameters","alt":"Corresponding DSP Parameters for the CFD Parameters","nro":21,"url":"/img/correspondingdspparametersforthecfdparmeters.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Corresponding DSP Parameters for the CFD Parameters","attributes":{},"skip":false,"key":"1.3.4.2.4.2"},{"backlink":"UsersGuide/BASESETUP_CFD.html#fig1.3.4.2.4.3","level":"1.3.4.2.4","list_caption":"Figure: Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules","alt":"Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules","nro":22,"url":"/img/fixedcfdparametervaluesfor500mhzpixie16modules.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules","attributes":{},"skip":false,"key":"1.3.4.2.4.3"},{"backlink":"UsersGuide/BASESETUP_CFD.html#fig1.3.4.2.4.4","level":"1.3.4.2.4","list_caption":"Figure: Meanings of the CFD Trigger Source for 500 MHz Pixie-16 Modules","alt":"Meanings of the CFD Trigger Source for 500 MHz Pixie-16 Modules","nro":23,"url":"/img/meaningofthecfdtriggersourcefor500mhzpixie16modules.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Meanings of the CFD Trigger Source for 500 MHz Pixie-16 Modules","attributes":{},"skip":false,"key":"1.3.4.2.4.4"},{"backlink":"UsersGuide/BASESETUP_QDC.html#fig1.3.4.2.5.1","level":"1.3.4.2.5","list_caption":"Figure: QDC","alt":"QDC","nro":24,"url":"/img/QDCPars.png","index":1,"caption_template":"Figure: _CAPTION_","label":"QDC","attributes":{},"skip":false,"key":"1.3.4.2.5.1"},{"backlink":"UsersGuide/BASESETUP_QDC.html#fig1.3.4.2.5.2","level":"1.3.4.2.5","list_caption":"Figure: The 8 QDC sums of a triggered event","alt":"The 8 QDC sums of a triggered event","nro":25,"url":"/img/the8qdcsumsofatriggeredevent.png","index":2,"caption_template":"Figure: _CAPTION_","label":"The 8 QDC sums of a triggered event","attributes":{},"skip":false,"key":"1.3.4.2.5.2"},{"backlink":"UsersGuide/BASESETUP_Decimation.html#fig1.3.4.2.6.1","level":"1.3.4.2.6","list_caption":"Figure: Decimation","alt":"Decimation","nro":26,"url":"/img/Decimation.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Decimation","attributes":{},"skip":false,"key":"1.3.4.2.6.1"},{"backlink":"UsersGuide/BASESETUP_CopyPars.html#fig1.3.4.2.7.1","level":"1.3.4.2.7","list_caption":"Figure: Copy Pars","alt":"Copy Pars","nro":27,"url":"/img/CopyPars.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Copy Pars","attributes":{},"skip":false,"key":"1.3.4.2.7.1"},{"backlink":"UsersGuide/BASESETUP_Save2File.html#fig1.3.4.2.8.1","level":"1.3.4.2.8","list_caption":"Figure: Save2File","alt":"Save2File","nro":28,"url":"/img/Save2File.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Save2File","attributes":{},"skip":false,"key":"1.3.4.2.8.1"},{"backlink":"UsersGuide/EXPERT_MSRB.html#fig1.3.4.3.1.1","level":"1.3.4.3.1","list_caption":"Figure: Module Variables","alt":"Module Variables","nro":29,"url":"/img/ModuleVariables.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Module Variables","attributes":{},"skip":false,"key":"1.3.4.3.1.1"},{"backlink":"UsersGuide/EXPERT_CSRA.html#fig1.3.4.3.2.1","level":"1.3.4.3.2","list_caption":"Figure: CSRA","alt":"CSRA","nro":30,"url":"/img/CSRA.png","index":1,"caption_template":"Figure: _CAPTION_","label":"CSRA","attributes":{},"skip":false,"key":"1.3.4.3.2.1"},{"backlink":"UsersGuide/EXPERT_LogicSet.html#fig1.3.4.3.3.1","level":"1.3.4.3.3","list_caption":"Figure: Logic Set","alt":"Logic Set","nro":31,"url":"/img/LogicTrigger.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Logic Set","attributes":{},"skip":false,"key":"1.3.4.3.3.1"},{"backlink":"UsersGuide/EXPERT_LogicSet.html#fig1.3.4.3.3.2","level":"1.3.4.3.3","list_caption":"Figure: stretch length","alt":"stretch length","nro":32,"url":"/img/stretchlength.PNG","index":2,"caption_template":"Figure: _CAPTION_","label":"stretch length","attributes":{},"skip":false,"key":"1.3.4.3.3.2"},{"backlink":"UsersGuide/MONITOR_HistXDT.html#fig1.3.4.4.1.1","level":"1.3.4.4.1","list_caption":"Figure: Hist & XDT","alt":"Hist & XDT","nro":33,"url":"/img/HistXDT.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Hist & XDT","attributes":{},"skip":false,"key":"1.3.4.4.1.1"},{"backlink":"UsersGuide/MONITOR_TraceBaseline.html#fig1.3.4.4.2.1","level":"1.3.4.4.2","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":34,"url":"/img/Trace.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.4.4.2.1"},{"backlink":"UsersGuide/MONITOR_TraceBaseline.html#fig1.3.4.4.2.2","level":"1.3.4.4.2","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":35,"url":"/img/BaselineHist.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.4.4.2.2"},{"backlink":"UsersGuide/MONITOR_TraceBaseline.html#fig1.3.4.4.2.3","level":"1.3.4.4.2","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":36,"url":"/img/BaselineTimestamps.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.4.4.2.3"},{"backlink":"UsersGuide/DropDown4.html#fig1.3.4.5.1","level":"1.3.4.5","list_caption":"Figure: Adjust Par","alt":"Adjust Par","nro":37,"url":"/img/AdjustPar.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Adjust Par","attributes":{},"skip":false,"key":"1.3.4.5.1"},{"backlink":"UsersGuide/OFFLINE_AdjustPar.html#fig1.3.4.5.1.1","level":"1.3.4.5.1","list_caption":"Figure: offlineapi","alt":"offlineapi","nro":38,"url":"/img/OfflineAPI.png","index":1,"caption_template":"Figure: _CAPTION_","label":"offlineapi","attributes":{},"skip":false,"key":"1.3.4.5.1.1"},{"backlink":"UsersGuide/OFFLINE_AdjustPar.html#fig1.3.4.5.1.2","level":"1.3.4.5.1","list_caption":"Figure: Adjustpars3","alt":"Adjustpars3","nro":39,"url":"/img/Adjustpars3.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Adjustpars3","attributes":{},"skip":false,"key":"1.3.4.5.1.2"},{"backlink":"UsersGuide/OFFLINE_AdjustPar.html#fig1.3.4.5.1.3","level":"1.3.4.5.1","list_caption":"Figure: Adjustpars1","alt":"Adjustpars1","nro":40,"url":"/img/Adjustpars1.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Adjustpars1","attributes":{},"skip":false,"key":"1.3.4.5.1.3"},{"backlink":"UsersGuide/OFFLINE_AdjustPar.html#fig1.3.4.5.1.4","level":"1.3.4.5.1","list_caption":"Figure: Adjustpars2","alt":"Adjustpars2","nro":41,"url":"/img/Adjustpars2.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Adjustpars2","attributes":{},"skip":false,"key":"1.3.4.5.1.4"},{"backlink":"UsersGuide/OFFLINE_Wave-16.html#fig1.3.4.5.1.1.1","level":"1.3.4.5.1.1","list_caption":"Figure: Waveform16","alt":"Waveform16","nro":42,"url":"/img/Waveform16.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Waveform16","attributes":{},"skip":false,"key":"1.3.4.5.1.1.1"},{"backlink":"UsersGuide/OFFLINE_Energy-16.html#fig1.3.4.5.1.2.1","level":"1.3.4.5.1.2","list_caption":"Figure: Energy16","alt":"Energy16","nro":43,"url":"/img/Energy16.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Energy16","attributes":{},"skip":false,"key":"1.3.4.5.1.2.1"},{"backlink":"UsersGuide/OFFLINE_OrigEnergy.html#fig1.3.4.5.1.3.1","level":"1.3.4.5.1.3","list_caption":"Figure: OrigEnergy","alt":"OrigEnergy","nro":44,"url":"/img/OrigEnergy.png","index":1,"caption_template":"Figure: _CAPTION_","label":"OrigEnergy","attributes":{},"skip":false,"key":"1.3.4.5.1.3.1"},{"backlink":"UsersGuide/OFFLINE_OrigEnergy.html#fig1.3.4.5.1.3.2","level":"1.3.4.5.1.3","list_caption":"Figure: OrigEnergyFit","alt":"OrigEnergyFit","nro":45,"url":"/img/OrigEnergyFit.png","index":2,"caption_template":"Figure: _CAPTION_","label":"OrigEnergyFit","attributes":{},"skip":false,"key":"1.3.4.5.1.3.2"},{"backlink":"UsersGuide/OFFLINE_Calc Energy.html#fig1.3.4.5.1.4.1","level":"1.3.4.5.1.4","list_caption":"Figure: CalcEnergy","alt":"CalcEnergy","nro":46,"url":"/img/CalcEnergy.png","index":1,"caption_template":"Figure: _CAPTION_","label":"CalcEnergy","attributes":{},"skip":false,"key":"1.3.4.5.1.4.1"},{"backlink":"UsersGuide/OFFLINE_FFCFDThre.html#fig1.3.4.5.1.5.1","level":"1.3.4.5.1.5","list_caption":"Figure: FFCFDThre","alt":"FFCFDThre","nro":47,"url":"/img/FFCFDThre.png","index":1,"caption_template":"Figure: _CAPTION_","label":"FFCFDThre","attributes":{},"skip":false,"key":"1.3.4.5.1.5.1"},{"backlink":"UsersGuide/OFFLINE_FFCFDThre.html#fig1.3.4.5.1.5.2","level":"1.3.4.5.1.5","list_caption":"Figure: FFCFDThreFFProjectY","alt":"FFCFDThreFFProjectY","nro":48,"url":"/img/FFCFDThreFFProjectY.png","index":2,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreFFProjectY","attributes":{},"skip":false,"key":"1.3.4.5.1.5.2"},{"backlink":"UsersGuide/OFFLINE_FFCFDThre.html#fig1.3.4.5.1.5.3","level":"1.3.4.5.1.5","list_caption":"Figure: FFCFDThreCFDProjectY","alt":"FFCFDThreCFDProjectY","nro":49,"url":"/img/FFCFDThreCFDProjectY.png","index":3,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreCFDProjectY","attributes":{},"skip":false,"key":"1.3.4.5.1.5.3"},{"backlink":"UsersGuide/OFFLINE_FFCFDThre.html#fig1.3.4.5.1.5.4","level":"1.3.4.5.1.5","list_caption":"Figure: FFCFDThreCFD","alt":"FFCFDThreCFD","nro":50,"url":"/img/FFCFDThreCFD.png","index":4,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreCFD","attributes":{},"skip":false,"key":"1.3.4.5.1.5.4"},{"backlink":"UsersGuide/OFFLINE_Energy-FF.html#fig1.3.4.5.1.6.1","level":"1.3.4.5.1.6","list_caption":"Figure: EnergyFFGraph","alt":"EnergyFFGraph","nro":51,"url":"/img/EnergyFFGraph.png","index":1,"caption_template":"Figure: _CAPTION_","label":"EnergyFFGraph","attributes":{},"skip":false,"key":"1.3.4.5.1.6.1"},{"backlink":"UsersGuide/OFFLINE_Energy-FF.html#fig1.3.4.5.1.6.2","level":"1.3.4.5.1.6","list_caption":"Figure: EnergyFFHist","alt":"EnergyFFHist","nro":52,"url":"/img/EnergyFFHist.png","index":2,"caption_template":"Figure: _CAPTION_","label":"EnergyFFHist","attributes":{},"skip":false,"key":"1.3.4.5.1.6.2"},{"backlink":"UsersGuide/OFFLINE_Energy-CFD.html#fig1.3.4.5.1.7.1","level":"1.3.4.5.1.7","list_caption":"Figure: Energy-CFD","alt":"Energy-CFD","nro":53,"url":"/img/EnergyCFD.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Energy-CFD","attributes":{},"skip":false,"key":"1.3.4.5.1.7.1"},{"backlink":"UsersGuide/OFFLINE_FFT.html#fig1.3.4.5.1.9.1","level":"1.3.4.5.1.9","list_caption":"Figure: FFT","alt":"FFT","nro":54,"url":"/img/FFT.png","index":1,"caption_template":"Figure: _CAPTION_","label":"FFT","attributes":{},"skip":false,"key":"1.3.4.5.1.9.1"},{"backlink":"UsersGuide/OFFLINE_TimeDiff.html#fig1.3.4.5.1.10.1","level":"1.3.4.5.1.10","list_caption":"Figure: Time Diff","alt":"Time Diff","nro":55,"url":"/img/TimeDiff.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Time Diff","attributes":{},"skip":false,"key":"1.3.4.5.1.10.1"},{"backlink":"UsersGuide/NOGUI.html#fig1.3.5.1","level":"1.3.5","list_caption":"Figure: Main Frame","alt":"Main Frame","nro":56,"url":"/img/noguimainframe.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Main Frame","attributes":{},"skip":false,"key":"1.3.5.1"},{"backlink":"UsersGuide/NOGUI.html#fig1.3.5.2","level":"1.3.5","list_caption":"Figure: run mode","alt":"run mode","nro":57,"url":"/img/noguistartrun.png","index":2,"caption_template":"Figure: _CAPTION_","label":"run mode","attributes":{},"skip":false,"key":"1.3.5.2"},{"backlink":"UsersGuide/OnlineStattics.html#fig1.3.6.1","level":"1.3.6","list_caption":"Figure: OnlineMainFrame","alt":"OnlineMainFrame","nro":58,"url":"/img/OnlineMainFrame.png","index":1,"caption_template":"Figure: _CAPTION_","label":"OnlineMainFrame","attributes":{},"skip":false,"key":"1.3.6.1"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.1","level":"1.3.8","list_caption":"Figure: LVDS I/O Port","alt":"LVDS I/O Port","nro":59,"url":"/img/lvdsioport.png","index":1,"caption_template":"Figure: _CAPTION_","label":"LVDS I/O Port","attributes":{},"skip":false,"key":"1.3.8.1"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.2","level":"1.3.8","list_caption":"Figure: Digital I/O Connectors A, B, C, D and E","alt":"Digital I/O Connectors A, B, C, D and E","nro":60,"url":"/img/digitalioconnectorsabcdande.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Digital I/O Connectors A, B, C, D and E","attributes":{},"skip":false,"key":"1.3.8.2"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.3","level":"1.3.8","list_caption":"Figure: 2mm pitch har-link connector from HARTING","alt":"2mm pitch har-link connector from HARTING","nro":61,"url":"/img/2mmpitchharlinkconnectorfromharting.png","index":3,"caption_template":"Figure: _CAPTION_","label":"2mm pitch har-link connector from HARTING","attributes":{},"skip":false,"key":"1.3.8.3"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.4","level":"1.3.8","list_caption":"Figure: Rev. F Module’s Digital I/O Connectors","alt":"Rev. F Module’s Digital I/O Connectors","nro":62,"url":"/img/revfmoduledigitalioconnectors.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Rev. F Module’s Digital I/O Connectors","attributes":{},"skip":false,"key":"1.3.8.4"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.5","level":"1.3.8","list_caption":"Figure: frontpanel","alt":"frontpanel","nro":63,"url":"/img/frontpanel_pku.png","index":5,"caption_template":"Figure: _CAPTION_","label":"frontpanel","attributes":{},"skip":false,"key":"1.3.8.5"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.6","level":"1.3.8","list_caption":"Figure: Front Panel LEDs for the Pixie-16 Modules","alt":"Front Panel LEDs for the Pixie-16 Modules","nro":64,"url":"/img/frontpanelledsforthepixie16modules.png","index":6,"caption_template":"Figure: _CAPTION_","label":"Front Panel LEDs for the Pixie-16 Modules","attributes":{},"skip":false,"key":"1.3.8.6"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.7","level":"1.3.8","list_caption":"Figure: Rev. D Module’s 3.3V I/O Connector","alt":"Rev. D Module’s 3.3V I/O Connector","nro":65,"url":"/img/revdmodules33vioconnector.png","index":7,"caption_template":"Figure: _CAPTION_","label":"Rev. D Module’s 3.3V I/O Connector","attributes":{},"skip":false,"key":"1.3.8.7"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.8","level":"1.3.8","list_caption":"Figure: Rev. D Module’s GATE Inputs","alt":"Rev. D Module’s GATE Inputs","nro":66,"url":"/img/revdmodulesgateinputs.png","index":8,"caption_template":"Figure: _CAPTION_","label":"Rev. D Module’s GATE Inputs","attributes":{},"skip":false,"key":"1.3.8.8"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.9","level":"1.3.8","list_caption":"Figure: Rev. D Module’s GATE INPUTS Connector","alt":"Rev. D Module’s GATE INPUTS Connector","nro":67,"url":"/img/revdmodulesgateinputsconnector.png","index":9,"caption_template":"Figure: _CAPTION_","label":"Rev. D Module’s GATE INPUTS Connector","attributes":{},"skip":false,"key":"1.3.8.9"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.10","level":"1.3.8","list_caption":"Figure: Rev. B and C Module’s 3.3V I/O Connector","alt":"Rev. B and C Module’s 3.3V I/O Connector","nro":68,"url":"/img/revbandcmodules33vioconnector.png","index":10,"caption_template":"Figure: _CAPTION_","label":"Rev. B and C Module’s 3.3V I/O Connector","attributes":{},"skip":false,"key":"1.3.8.10"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.11","level":"1.3.8","list_caption":"Figure: TTL Digital Input Signals","alt":"TTL Digital Input Signals","nro":69,"url":"/img/ttldigitalinputsignals.png","index":11,"caption_template":"Figure: _CAPTION_","label":"TTL Digital Input Signals","attributes":{},"skip":false,"key":"1.3.8.11"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.12","level":"1.3.8","list_caption":"Figure: Connector J101 LVDS I/O Port Signals","alt":"Connector J101 LVDS I/O Port Signals","nro":70,"url":"/img/connectorj101lvdsioportsignals.png","index":12,"caption_template":"Figure: _CAPTION_","label":"Connector J101 LVDS I/O Port Signals","attributes":{},"skip":false,"key":"1.3.8.12"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.13","level":"1.3.8","list_caption":"Figure: TTL Digital Output Signals","alt":"TTL Digital Output Signals","nro":71,"url":"/img/ttldigitaloutputsignals.png","index":13,"caption_template":"Figure: _CAPTION_","label":"TTL Digital Output Signals","attributes":{},"skip":false,"key":"1.3.8.13"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.14","level":"1.3.8","list_caption":"Figure: Lupo x495","alt":"Lupo x495","nro":72,"url":"/img/lupox495.png","index":14,"caption_template":"Figure: _CAPTION_","label":"Lupo x495","attributes":{},"skip":false,"key":"1.3.8.14"},{"backlink":"UsersGuide/Logic.html#fig1.3.9.1","level":"1.3.9","list_caption":"Figure: illustrates the signal processing in the Pixie-16 modules","alt":"illustrates the signal processing in the Pixie-16 modules","nro":73,"url":"/img/illustratesthesignalprocessinginthepixie16modules.png","index":1,"caption_template":"Figure: _CAPTION_","label":"illustrates the signal processing in the Pixie-16 modules","attributes":{},"skip":false,"key":"1.3.9.1"},{"backlink":"UsersGuide/Logic.html#fig1.3.9.2","level":"1.3.9","list_caption":"Figure: Range for Trigger Stretch Lengths and FIFO Delays in Pixie-16 Modules","alt":"Range for Trigger Stretch Lengths and FIFO Delays in Pixie-16 Modules","nro":74,"url":"/img/rangefortriggerstretchlengthsandfifodelayinpixie16modules.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Range for Trigger Stretch Lengths and FIFO Delays in Pixie-16 Modules","attributes":{},"skip":false,"key":"1.3.9.2"},{"backlink":"UsersGuide/Logic.html#fig1.3.9.3","level":"1.3.9","list_caption":"Figure: System FPGA","alt":"System FPGA","nro":75,"url":"/img/SystemFPGA.png","index":3,"caption_template":"Figure: _CAPTION_","label":"System FPGA","attributes":{},"skip":false,"key":"1.3.9.3"},{"backlink":"UsersGuide/Logic.html#fig1.3.9.4","level":"1.3.9","list_caption":"Figure: fast trigger stretch/delay","alt":"fast trigger stretch/delay","nro":76,"url":"/img/fasttrigger_stretch_delay.png","index":4,"caption_template":"Figure: _CAPTION_","label":"fast trigger stretch/delay","attributes":{},"skip":false,"key":"1.3.9.4"},{"backlink":"UsersGuide/Logic.html#fig1.3.9.5","level":"1.3.9","list_caption":"Figure: validation trigger","alt":"validation trigger","nro":77,"url":"/img/validationtrigger.png","index":5,"caption_template":"Figure: _CAPTION_","label":"validation trigger","attributes":{},"skip":false,"key":"1.3.9.5"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.1","level":"1.3.10","list_caption":"Figure: JP101","alt":"JP101","nro":78,"url":"/img/multiplemodulessynchronously.png","index":1,"caption_template":"Figure: _CAPTION_","label":"JP101","attributes":{},"skip":false,"key":"1.3.10.1"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.2","level":"1.3.10","list_caption":"Figure: individual clock mode","alt":"individual clock mode","nro":79,"url":"/img/individualclockmode.png","index":2,"caption_template":"Figure: _CAPTION_","label":"individual clock mode","attributes":{},"skip":false,"key":"1.3.10.2"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.3","level":"1.3.10","list_caption":"Figure: PXI clock mode","alt":"PXI clock mode","nro":80,"url":"/img/pxiclockmode.png","index":3,"caption_template":"Figure: _CAPTION_","label":"PXI clock mode","attributes":{},"skip":false,"key":"1.3.10.3"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.4","level":"1.3.10","list_caption":"Figure: daisy-chained clock mode","alt":"daisy-chained clock mode","nro":81,"url":"/img/daisychainedclockmode.png","index":4,"caption_template":"Figure: _CAPTION_","label":"daisy-chained clock mode","attributes":{},"skip":false,"key":"1.3.10.4"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.5","level":"1.3.10","list_caption":"Figure: multi-crate clock mode","alt":"multi-crate clock mode","nro":82,"url":"/img/multicrateclockmode.png","index":5,"caption_template":"Figure: _CAPTION_","label":"multi-crate clock mode","attributes":{},"skip":false,"key":"1.3.10.5"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.6","level":"1.3.10","list_caption":"Figure: Module Definitions in a 2-crate System","alt":"Module Definitions in a 2-crate System","nro":83,"url":"/img/moduledefinitionsina2cratesystem.png","index":6,"caption_template":"Figure: _CAPTION_","label":"Module Definitions in a 2-crate System","attributes":{},"skip":false,"key":"1.3.10.6"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.7","level":"1.3.10","list_caption":"Figure: Clock Jumper JP101 Settings in a 2-crate System","alt":"Clock Jumper JP101 Settings in a 2-crate System","nro":84,"url":"/img/clockjumperjp101settingsina2cratesystem.png","index":7,"caption_template":"Figure: _CAPTION_","label":"Clock Jumper JP101 Settings in a 2-crate System","attributes":{},"skip":false,"key":"1.3.10.7"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.8","level":"1.3.10","list_caption":"Figure: rear I/O trigger modules","alt":"rear I/O trigger modules","nro":85,"url":"/img/reariotriggermodules.png","index":8,"caption_template":"Figure: _CAPTION_","label":"rear I/O trigger modules","attributes":{},"skip":false,"key":"1.3.10.8"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.9","level":"1.3.10","list_caption":"Figure: Cable connections between two Pixie-16 rear I/O trigger modules","alt":"Cable connections between two Pixie-16 rear I/O trigger modules","nro":86,"url":"/img/cableconnectionsbetweentwopixie16reariotriggermodules.png","index":9,"caption_template":"Figure: _CAPTION_","label":"Cable connections between two Pixie-16 rear I/O trigger modules","attributes":{},"skip":false,"key":"1.3.10.9"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.10","level":"1.3.10","list_caption":"Figure: Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module","alt":"Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module","nro":87,"url":"/img/pinnumberingforthejumpersonthepixie16reariotriggermodule.png","index":10,"caption_template":"Figure: _CAPTION_","label":"Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module","attributes":{},"skip":false,"key":"1.3.10.10"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.11","level":"1.3.10","list_caption":"Figure: Rear I/O Trigger Module #1’s Jumper Settings","alt":"Rear I/O Trigger Module #1’s Jumper Settings","nro":88,"url":"/img/reariotrigger1sjumpersettings.png","index":11,"caption_template":"Figure: _CAPTION_","label":"Rear I/O Trigger Module #1’s Jumper Settings","attributes":{},"skip":false,"key":"1.3.10.11"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.12","level":"1.3.10","list_caption":"Figure: Rear I/O Trigger Module #2’s Jumper Settings","alt":"Rear I/O Trigger Module #2’s Jumper Settings","nro":89,"url":"/img/reariotriggermodule2sjumpersettings.png","index":12,"caption_template":"Figure: _CAPTION_","label":"Rear I/O Trigger Module #2’s Jumper Settings","attributes":{},"skip":false,"key":"1.3.10.12"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.13","level":"1.3.10","list_caption":"Figure: Cable connections among four Pixie-16 rear I/O trigger modules","alt":"Cable connections among four Pixie-16 rear I/O trigger modules","nro":90,"url":"/img/cableconnectionsamongfourpixie16reariotriggermodules.png","index":13,"caption_template":"Figure: _CAPTION_","label":"Cable connections among four Pixie-16 rear I/O trigger modules","attributes":{},"skip":false,"key":"1.3.10.13"},{"backlink":"UsersGuide/UpdateCPLD.html#fig1.3.11.1","level":"1.3.11","list_caption":"Figure: 6 pin connector","alt":"6 pin connector","nro":91,"url":"/img/6pinJTAGconnector.png","index":1,"caption_template":"Figure: _CAPTION_","label":"6 pin connector","attributes":{},"skip":false,"key":"1.3.11.1"},{"backlink":"Example/TimeResolution.html#fig1.4.1.1","level":"1.4.1","list_caption":"Figure: 2 channel in one module","alt":"2 channel in one module","nro":92,"url":"/img/timeresolution_100m_1module.png","index":1,"caption_template":"Figure: _CAPTION_","label":"2 channel in one module","attributes":{},"skip":false,"key":"1.4.1.1"},{"backlink":"Example/TimeResolution.html#fig1.4.1.2","level":"1.4.1","list_caption":"Figure: 2 channel in different crate","alt":"2 channel in different crate","nro":93,"url":"/img/timeresolution_100m_2crate.png","index":2,"caption_template":"Figure: _CAPTION_","label":"2 channel in different crate","attributes":{},"skip":false,"key":"1.4.1.2"},{"backlink":"Example/InBeamGammaCIAE.html#fig1.4.3.1","level":"1.4.3","list_caption":"Figure: CIAE 2018 online","alt":"CIAE 2018 online","nro":94,"url":"/img/inbeamgamma2018online.png","index":1,"caption_template":"Figure: _CAPTION_","label":"CIAE 2018 online","attributes":{},"skip":false,"key":"1.4.3.1"},{"backlink":"Example/InBeamGammaCIAE.html#fig1.4.3.2","level":"1.4.3","list_caption":"Figure: iThemba 2019 online","alt":"iThemba 2019 online","nro":95,"url":"/img/inbeamgamma2019Thembaonline.png","index":2,"caption_template":"Figure: _CAPTION_","label":"iThemba 2019 online","attributes":{},"skip":false,"key":"1.4.3.2"},{"backlink":"Example/InBeamGammaCIAE.html#fig1.4.3.3","level":"1.4.3","list_caption":"Figure: BGO VETO GATE WIDTH","alt":"BGO VETO GATE WIDTH","nro":96,"url":"/img/bgovetogate2018.png","index":3,"caption_template":"Figure: _CAPTION_","label":"BGO VETO GATE WIDTH","attributes":{},"skip":false,"key":"1.4.3.3"},{"backlink":"Example/InBeamGammaCIAE.html#fig1.4.3.4","level":"1.4.3","list_caption":"Figure: CIAE 2018 peak-to-total","alt":"CIAE 2018 peak-to-total","nro":97,"url":"/img/peaktototal2018CIAE.png","index":4,"caption_template":"Figure: _CAPTION_","label":"CIAE 2018 peak-to-total","attributes":{},"skip":false,"key":"1.4.3.4"},{"backlink":"ProcurementProposal.html#fig1.5.1","level":"1.5","list_caption":"Figure: System","alt":"System","nro":98,"url":"/img/System.jpg","index":1,"caption_template":"Figure: _CAPTION_","label":"System","attributes":{},"skip":false,"key":"1.5.1"},{"backlink":"ProcurementProposal.html#fig1.5.2","level":"1.5","list_caption":"Figure: 机箱背板模块","alt":"机箱背板模块","nro":99,"url":"/img/reariotriggermodules.png","index":2,"caption_template":"Figure: _CAPTION_","label":"机箱背板模块","attributes":{},"skip":false,"key":"1.5.2"},{"backlink":"ProcurementProposal.html#fig1.5.3","level":"1.5","list_caption":"Figure: MZTIO","alt":"MZTIO","nro":100,"url":"/img/MZTIO.jpg","index":3,"caption_template":"Figure: _CAPTION_","label":"MZTIO","attributes":{},"skip":false,"key":"1.5.3"}]},"title":"PKU XIA DAQ GUIDE","language":"zh","gitbook":"*","description":"北京大学实验核物理组数字化获取说明书"},"file":{"path":"UsersGuide/BASESETUP_Energy.md","mtime":"2019-05-04T13:15:11.076Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2019-06-27T09:57:30.548Z"},"basePath":"..","book":{"language":"zh"}});
+        });
+    </script>
+</div>
+
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-ad/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-atoc/atoc.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-ace/ace/ace.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-ace/ace.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sectionx/sectionx.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-mcqx/js.cookie.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-mcqx/mcqx.js"></script>
+        
+    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fbqx/fbqx.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-spoiler/spoiler.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-youtubex/player.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+
+    </body>
+</html>
+
