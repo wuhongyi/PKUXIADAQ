@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:49:52 2019 (+0800)
-.. Last-Updated: 三 7月  3 17:09:02 2019 (+0800)
+.. Last-Updated: 四 7月  4 13:30:56 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 6
+..     Update #: 7
 .. URL: http://wuhongyi.cn 
 
 ---------------------------------
@@ -100,7 +100,7 @@ Interface
     - CVT is the channel validation trigger.
     - MSE select module validation trigger depends on System FPGA or front panel module GATE.
     - CSE selection channel validation trigger depends on System FPGA or front panel channel GATE.
--  The pink NPR, IPR combination is used to select the treatment of the pileup event:
+- The pink NPR, IPR combination is used to select the treatment of the pileup event:
    - All events are logged when both are not selected, and the accumulated event energy value is invalid.
    - NPR selection does not record stacking events when IPR is not selected.
    - When the NPR is not selected, the event record waveform is accumulated, and the waveform is not recorded when it is not stacked.
