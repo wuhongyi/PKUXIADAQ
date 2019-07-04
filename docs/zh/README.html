@@ -1,0 +1,372 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>简介 &mdash; PKUXIADAQ beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="程序安装" href="INSTALL.html" />
+    <link rel="prev" title="简介" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> PKUXIADAQ
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">简介</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">版本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">稳定版本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">准预览版本</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">关于</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">文件目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">升级计划</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="INSTALL.html">程序安装</a></li>
+</ul>
+<p class="caption"><span class="caption-text">用户指南</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/README.html">用户指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/Crate.html">机箱</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/FIRMWARE.html">固件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/Decode.html">数据解码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/GUI.html">图形交互界面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/NOGUI.html">非图形交互界面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/OnlineStattics.html">在线统计</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/MakeEvent.html">MakeEvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/FrontPanel.html">插件前面板</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/Logic.html">逻辑功能</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/MultipleModulesSynchronously.html">时间同步</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/UpdateCPLD.html">升级CPLD</a></li>
+</ul>
+<p class="caption"><span class="caption-text">应用案例</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Example/README.html">应用案例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Example/TimeResolution.html">时间分辨</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Example/RecommendedParameters.html">推荐参数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Example/InBeamGammaCIAE.html">在束伽马谱学</a></li>
+</ul>
+<p class="caption"><span class="caption-text">采购建议</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ProcurementProposal.html">采购推荐</a></li>
+</ul>
+<p class="caption"><span class="caption-text">编程指南</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ProgrammersGuide/README.html">开发者指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ProgrammersGuide/XIAAPI.html">XIA API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ProgrammersGuide/PKUCode.html">PKU Code</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PKUXIADAQ</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>简介</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/README.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>简介<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<img alt="_images/pkulogo100.jpg" src="_images/pkulogo100.jpg" />
+<p><a class="reference external" href="https://github.com/wuhongyi/PKUXIADAQ/blob/master/README.md">English</a> | 简体中文</p>
+<div class="section" id="id2">
+<h2>版本<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p><strong>我们建议用户下载稳定版本</strong></p>
+<div class="section" id="id3">
+<h3>稳定版本<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p><strong>稳定版本 Version:2019.06.06</strong></p>
+<p>下载最新版本，请点击:  <a class="reference external" href="https://github.com/pkuNucExp/PKUXIADAQ">PKUXIADAQ stable</a></p>
+<p>网页版说明书请访问:  <a class="reference external" href="https://pkunucexp.github.io/PKUXIADAQ/en/">English</a>    <a class="reference external" href="https://pkunucexp.github.io/PKUXIADAQ/zh/">简体中文</a></p>
+<ul class="simple">
+<li><p>reStructuredText版说明书: README/</p></li>
+<li><p>离线网页版说明书: docs/</p></li>
+<li><p>pdf版本说明书: README_en.pdf  README_ch.pdf</p></li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h3>准预览版本<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p><strong>准预览版本 Version:2019.06.06</strong></p>
+<p>程序下载请访问:  <a class="reference external" href="https://github.com/wuhongyi/PKUXIADAQ">PKUXIADAQ</a></p>
+<p>网页版说明书请访问:  <a class="reference external" href="http://wuhongyi.cn/PKUXIADAQ/en/">English</a>    <a class="reference external" href="http://wuhongyi.cn/PKUXIADAQ/zh/">简体中文</a></p>
+<ul class="simple">
+<li><p>对本获取程序有任何的意见及建议(功能添加及改进)，欢迎给吴鸿毅(<a class="reference external" href="mailto:wuhongyi&#37;&#52;&#48;qq&#46;com">wuhongyi<span>&#64;</span>qq<span>&#46;</span>com</a>)发邮件。</p></li>
+<li><p>我们将会尽快完善软件的中英文使用说明书，当前主要以操作演示来讲解软件的使用。</p></li>
+</ul>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id9">
+<h2>关于<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<p><strong>本说明书仅适用于 XIA LLC 的 Pixie-16 系列采集卡</strong></p>
+<ul class="simple">
+<li><p>本程序由 <a class="reference external" href="https://github.com/pkuNucExp">北京大学实验核物理组</a> 开发。</p></li>
+<li><p>最早的图形界面程序是基于 <a class="reference external" href="http://docs.nscl.msu.edu/daq/newsite/ddas-1.1/nscope.html">NSCL DDAS Nscope</a> 开发。</p></li>
+<li><p>特别感谢 <em>谭辉(XIA LLC)</em> 对我们开发的支持。</p></li>
+</ul>
+<p>技术指导:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/zhihuanli">Zhihuan Li 李智焕</a></p></li>
+<li><p>Hui Tan  谭辉(XIA LLC)</p></li>
+<li><p>Wolfgang Hennig(XIA LLC)</p></li>
+</ul>
+<p>软件主要开发者:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>2015 - 2016</dt><dd><ul>
+<li><p>Jing Li 李晶(<a class="reference external" href="mailto:lijinger02&#37;&#52;&#48;126&#46;com">lijinger02<span>&#64;</span>126<span>&#46;</span>com</a>)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>2016 - now</dt><dd><ul>
+<li><p>Hongyi Wu 吴鸿毅(<a class="reference external" href="mailto:wuhongyi&#37;&#52;&#48;qq&#46;com">wuhongyi<span>&#64;</span>qq<span>&#46;</span>com</a>)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>说明书主要撰写者:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/luodiwen">Diwen Luo 罗迪雯</a></p></li>
+<li><p><a class="reference external" href="https://github.com/wuhongyi">Hongyi Wu 吴鸿毅</a></p></li>
+<li><p><a class="reference external" href="https://github.com/wangxianggit">Xiang Wang 王翔</a></p></li>
+</ul>
+<p>本程序的开发得到以下单位的支持：</p>
+<ul class="simple">
+<li><p>XIA LLC</p></li>
+<li><p>中国科学院近代物理研究所(IMP)</p></li>
+<li><p>中国原子能科学研究院(CIAE)</p></li>
+<li><p>香港大学(HKU)</p></li>
+<li><p>山东大学(威海)(SDU)</p></li>
+<li><p>…</p></li>
+</ul>
+<hr class="docutils" />
+<p>本程序适用于 XIA Pixie16 系列采集卡，支持 100/250/500 MHz 采集卡(具体支持型号可查看图形软件中的File-&gt;About)，最大支持 8 个机箱同步运行，即 1600+ 路信号同时采集。<strong>本程序包要求使用 CERN ROOT6 版本。要求采用 1920x1080 及以上分辨率显示屏</strong>。</p>
+<p>本程序的设计兼容 100/250/500 MHz 采集卡的混合使用，只需在 cfgPixie16.txt 添加相应采样率采集卡的固件位置即可，程序在线能够自动识别采集卡类型并加载相应的固件。当前我们只有 100/250 MHz 14 bit 的采集卡，因此默认可运行该类型的采集卡，如要支持其它类型，请联系 XIA LLC 获取对应固件或者联系吴鸿毅(<a class="reference external" href="mailto:wuhongyi&#37;&#52;&#48;qq&#46;com">wuhongyi<span>&#64;</span>qq<span>&#46;</span>com</a>)。</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id11">
+<h2>文件目录<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h2>
+<p>用户使用程序包中包含以下文件/文件夹:</p>
+<ul class="simple">
+<li><p>Decode(将原始二进制数据转为 ROOT)</p></li>
+<li><p>docs(使用说明书，网页版)</p></li>
+<li><dl class="simple">
+<dt>firmware(固件)</dt><dd><ul>
+<li><p>firmware/firmware.md(历史各版本固件说明)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>GUI(图形软件)</p></li>
+<li><p>MakeEvent(事件重构程序，可选)</p></li>
+<li><p>NOGUI(非图形软件。新版本升级中，暂时不可用)</p></li>
+<li><p>OnlineStattics(在线监视程序)</p></li>
+<li><p>parset(参数设置文件)</p></li>
+<li><p>PlxSdk.tar.gz(Plx9054 驱动)</p></li>
+<li><p>README(markdown 版本说明书)</p></li>
+<li><p>README.md(主页介绍)</p></li>
+<li><p>README.pdf(pdf 版本说明书)</p></li>
+<li><p>software(非标准驱动，吴鸿毅修改)</p></li>
+<li><p>TestTool(开发者测试工具，用户不需要！！！)</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="id12">
+<h2>升级计划<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>当前基于 ROOT GUI 开发的主控制界面复杂度高，用户修改难度大。其它用户不容易基于其发展适合自己的版本。</p></li>
+<li><dl class="simple">
+<dt>我们也在开发基于网页控制的获取在线/离线分析程序:</dt><dd><ul>
+<li><p>Django</p></li>
+<li><p>ZeroMQ</p></li>
+<li><p>JSROOT</p></li>
+<li><p>…</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="INSTALL.html" class="btn btn-neutral float-right" title="程序安装" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="简介" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Hongyi Wu(吴鸿毅)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

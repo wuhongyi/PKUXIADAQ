@@ -4,6 +4,9 @@ rm -rf ../docs/doctrees/
 rm -rf ../docs/en/*
 rm -rf ../docs/zh/*
 
+cp index.html ../docs/
+touch ../docs/.nojekyll
+
 cd en/
 make clean
 make html

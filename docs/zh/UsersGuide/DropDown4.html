@@ -1,1155 +1,360 @@
 
-<!DOCTYPE HTML>
-<html lang="zh" >
-    <head>
-        <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Offline · PKU XIA DAQ GUIDE</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.2">
-        <meta name="author" content="Hongyi Wu(吴鸿毅)">
-        
-        
-    
-    <link rel="stylesheet" href="../../gitbook/style.css">
 
-    
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-ad/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-alerts/style.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-atoc/atoc.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-image-captions/image-captions.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-anchors/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-latex-codecogs/latex-codecogs.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-ace/ace.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-page-footer-ex/style/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-sectionx/sectionx.css">
-                
-            
-                
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-mcqx/mcqx.css">
-                
-            
-                
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fbqx/fbqx.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-spoiler/spoiler.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-anchor-navigation/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-youtubex/player.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
-                
-            
-        
-
-    
-
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-        
-    
-    
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="OFFLINE_AdjustPar.html" />
-    
-    
-    <link rel="prev" href="MONITOR_TraceBaseline.html" />
-    
-
-    </head>
-    <body>
-        
-  <script>
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-  </script>
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
   
-<div class="book">
-    <div class="book-summary">
-        
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Offiline &mdash; PKUXIADAQ beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PKUXIADAQ
+          
+
+          
+          </a>
+
+          
             
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="輸入並搜尋" />
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
 </div>
 
-            
-                <nav role="navigation">
-                
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="../">
-            
-                <a href="../">
-            
-                    
-                    README
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="../INSTALL.html">
-            
-                <a href="../INSTALL.html">
-            
-                    
-                    程序安装
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="./">
-            
-                <a href="./">
-            
-                    
-                    用户指南
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.1" data-path="Crate.html">
-            
-                <a href="Crate.html">
-            
-                    
-                    机箱
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.2" data-path="FIRMWARE.html">
-            
-                <a href="FIRMWARE.html">
-            
-                    
-                    固件
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.3" data-path="Decode.html">
-            
-                <a href="Decode.html">
-            
-                    
-                    数据解码
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4" data-path="GUI.html">
-            
-                <a href="GUI.html">
-            
-                    
-                    图形交互界面
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.4.1" data-path="DropDown0.html">
-            
-                <a href="DropDown0.html">
-            
-                    
-                    File
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.4.1.1" data-path="FILE_About.html">
-            
-                <a href="FILE_About.html">
-            
-                    
-                    About
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.2" data-path="DropDown1.html">
-            
-                <a href="DropDown1.html">
-            
-                    
-                    UV_Setup
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.4.2.1" data-path="BASESETUP_BaseSetup.html">
-            
-                <a href="BASESETUP_BaseSetup.html">
-            
-                    
-                    Base Setup
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.2.2" data-path="BASESETUP_TriggerFilter.html">
-            
-                <a href="BASESETUP_TriggerFilter.html">
-            
-                    
-                    Trigger Filter
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.2.3" data-path="BASESETUP_Energy.html">
-            
-                <a href="BASESETUP_Energy.html">
-            
-                    
-                    Energy
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.2.4" data-path="BASESETUP_CFD.html">
-            
-                <a href="BASESETUP_CFD.html">
-            
-                    
-                    CFD
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.2.5" data-path="BASESETUP_QDC.html">
-            
-                <a href="BASESETUP_QDC.html">
-            
-                    
-                    QDC
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.2.6" data-path="BASESETUP_Decimation.html">
-            
-                <a href="BASESETUP_Decimation.html">
-            
-                    
-                    Decimation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.2.7" data-path="BASESETUP_CopyPars.html">
-            
-                <a href="BASESETUP_CopyPars.html">
-            
-                    
-                    Copy Pars
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.2.8" data-path="BASESETUP_Save2File.html">
-            
-                <a href="BASESETUP_Save2File.html">
-            
-                    
-                    Save2File
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.3" data-path="DropDown2.html">
-            
-                <a href="DropDown2.html">
-            
-                    
-                    Expert
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.4.3.1" data-path="EXPERT_MSRB.html">
-            
-                <a href="EXPERT_MSRB.html">
-            
-                    
-                    Module Variables
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.3.2" data-path="EXPERT_CSRA.html">
-            
-                <a href="EXPERT_CSRA.html">
-            
-                    
-                    CSRA
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.3.3" data-path="EXPERT_LogicSet.html">
-            
-                <a href="EXPERT_LogicSet.html">
-            
-                    
-                    Logic Set
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.4" data-path="DropDown3.html">
-            
-                <a href="DropDown3.html">
-            
-                    
-                    Monitor
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.4.4.1" data-path="MONITOR_HistXDT.html">
-            
-                <a href="MONITOR_HistXDT.html">
-            
-                    
-                    Hist & XDT
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.4.2" data-path="MONITOR_TraceBaseline.html">
-            
-                <a href="MONITOR_TraceBaseline.html">
-            
-                    
-                    Trace & Baseline
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.3.4.5" data-path="DropDown4.html">
-            
-                <a href="DropDown4.html">
-            
-                    
-                    Offline
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.4.5.1" data-path="OFFLINE_AdjustPar.html">
-            
-                <a href="OFFLINE_AdjustPar.html">
-            
-                    
-                    Adjust Par
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.3.4.5.1.1" data-path="OFFLINE_Wave-16.html">
-            
-                <a href="OFFLINE_Wave-16.html">
-            
-                    
-                    Wave-16
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.2" data-path="OFFLINE_Energy-16.html">
-            
-                <a href="OFFLINE_Energy-16.html">
-            
-                    
-                    Energy-16
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.3" data-path="OFFLINE_OrigEnergy.html">
-            
-                <a href="OFFLINE_OrigEnergy.html">
-            
-                    
-                    Orig Energy
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.4" data-path="OFFLINE_Calc Energy.html">
-            
-                <a href="OFFLINE_Calc Energy.html">
-            
-                    
-                    Calc Energy
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.5" data-path="OFFLINE_FFCFDThre.html">
-            
-                <a href="OFFLINE_FFCFDThre.html">
-            
-                    
-                    FF/CFD Thre
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.6" data-path="OFFLINE_Energy-FF.html">
-            
-                <a href="OFFLINE_Energy-FF.html">
-            
-                    
-                    Energy-FF
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.7" data-path="OFFLINE_Energy-CFD.html">
-            
-                <a href="OFFLINE_Energy-CFD.html">
-            
-                    
-                    Energy-CFD
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.8" data-path="OFFLINE_QDC.html">
-            
-                <a href="OFFLINE_QDC.html">
-            
-                    
-                    QDC
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.9" data-path="OFFLINE_FFT.html">
-            
-                <a href="OFFLINE_FFT.html">
-            
-                    
-                    FFT
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.1.10" data-path="OFFLINE_TimeDiff.html">
-            
-                <a href="OFFLINE_TimeDiff.html">
-            
-                    
-                    Time Diff
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.4.5.2" data-path="OFFLINE_Simulation.html">
-            
-                <a href="OFFLINE_Simulation.html">
-            
-                    
-                    Simulation
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.5" data-path="NOGUI.html">
-            
-                <a href="NOGUI.html">
-            
-                    
-                    非图形交互界面
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.6" data-path="OnlineStattics.html">
-            
-                <a href="OnlineStattics.html">
-            
-                    
-                    在线统计
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.7" data-path="MakeEvent.html">
-            
-                <a href="MakeEvent.html">
-            
-                    
-                    MakeEvent
-            
-                </a>
-            
+          
+        </div>
 
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
             
-        </li>
-    
-        <li class="chapter " data-level="1.3.8" data-path="FrontPanel.html">
             
-                <a href="FrontPanel.html">
+              
             
-                    
-                    插件前面板
             
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.9" data-path="Logic.html">
-            
-                <a href="Logic.html">
-            
-                    
-                    逻辑功能
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.10" data-path="MultipleModulesSynchronously.html">
-            
-                <a href="MultipleModulesSynchronously.html">
-            
-                    
-                    时间同步
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3.11" data-path="UpdateCPLD.html">
-            
-                <a href="UpdateCPLD.html">
-            
-                    
-                    升级CPLD
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="../Example/">
-            
-                <a href="../Example/">
-            
-                    
-                    应用案例
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.4.1" data-path="../Example/TimeResolution.html">
-            
-                <a href="../Example/TimeResolution.html">
-            
-                    
-                    时间分辨
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.2" data-path="../Example/RecommendedParameters.html">
-            
-                <a href="../Example/RecommendedParameters.html">
-            
-                    
-                    推荐参数
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4.3" data-path="../Example/InBeamGammaCIAE.html">
-            
-                <a href="../Example/InBeamGammaCIAE.html">
-            
-                    
-                    在束伽马谱学
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5" data-path="../ProcurementProposal.html">
-            
-                <a href="../ProcurementProposal.html">
-            
-                    
-                    采购建议
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.6" data-path="../ProgrammersGuide/">
-            
-                <a href="../ProgrammersGuide/">
-            
-                    
-                    编程指南
-            
-                </a>
-            
-
-            
-            <ul class="articles">
-                
-    
-        <li class="chapter " data-level="1.6.1" data-path="../ProgrammersGuide/XIAAPI.html">
-            
-                <a href="../ProgrammersGuide/XIAAPI.html">
-            
-                    
-                    XIA API
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.6.2" data-path="../ProgrammersGuide/PKUCode.html">
-            
-                <a href="../ProgrammersGuide/PKUCode.html">
-            
-                    
-                    PKU code
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-            </ul>
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            本書使用 GitBook 釋出
-        </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
-        
-    </div>
-
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
-
-<div class="book-header" role="navigation">
-    
-
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Offline</a>
-    </h1>
-</div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
-                            
-<div id="book-search-results">
-    <div class="search-noresults">
-    
-                                <section class="normal markdown-section">
-                                
-                                <!-- DropDown4.md --- 
-;; 
-;; Description: 
-;; Author: Hongyi Wu(吴鸿毅)
-;; Email: wuhongyi@qq.com 
-;; Created: 日 10月  7 08:50:48 2018 (+0800)
-;; Last-Updated: 一 11月  5 17:00:08 2018 (+0800)
-;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 3
-;; URL: http://wuhongyi.cn -->
-<h1 id="offiline"><a name="offiline" class="plugin-anchor" href="#offiline"><i class="fa fa-link" aria-hidden="true"></i></a>Offiline</h1>
-<p>&#x672C;&#x4E0B;&#x62C9;&#x680F;&#x4E2D;&#x4E3A;&#x79BB;&#x7EBF;&#x53C2;&#x6570;&#x4F18;&#x5316;&#x8C03;&#x8282;&#x3002;</p>
-<h2 id="initdata"><a name="initdata" class="plugin-anchor" href="#initdata"><i class="fa fa-link" aria-hidden="true"></i></a>InitData</h2>
-<figure id="fig1.3.4.5.1"><img src="../img/AdjustPar.png" alt="Adjust Par"><figcaption>Figure: Adjust Par</figcaption></figure>
-<ul>
-<li>Run &#x9009;&#x62E9;&#x8981;&#x8BFB;&#x53D6;&#x7684;&#x6587;&#x4EF6;&#x8FD0;&#x884C;&#x7F16;&#x53F7;&#xFF0C;Mod &#x9009;&#x62E9;&#x8981;&#x8BFB;&#x53D6;&#x7B2C;&#x51E0;&#x4E2A;&#x91C7;&#x96C6;&#x5361;&#xFF0C;&#x6309;&#x94AE; Read &#x5C06;&#x6587;&#x4EF6;&#x4E3B;&#x8981;&#x4FE1;&#x606F;(&#x9053;&#x5740;&#x3001;&#x80FD;&#x91CF;&#x3001;&#x6CE2;&#x5F62;&#x4F4D;&#x7F6E;&#x7B49;)&#x8F7D;&#x5165;&#x5185;&#x5B58;&#x3002;</li>
-<li>Additional analysis: &#x4E09;&#x4E2A;&#x9009;&#x9879;&#x4E2D;&#xFF0C;&#x9009;&#x62E9;&#x8868;&#x793A;&#x8BFB;&#x53D6;&#x8BE5;&#x6587;&#x4EF6;&#x6570;&#x636E;&#x5230;&#x5185;&#x5B58;&#x4E2D;&#x65F6;&#x5305;&#x62EC;&#x8BE5;&#x4FE1;&#x606F;&#x3002;&#x53EA;&#x6709;&#x8BFB;&#x53D6;&#x4E86;&#x8BE5;&#x6570;&#x636E;&#xFF0C;&#x624D;&#x80FD;&#x542F;&#x7528;&#x4E00;&#x4E9B;&#x5206;&#x6790;&#x65B9;&#x6CD5;&#x3002;&#x4F46;&#x662F;&#x524D;&#x63D0;&#x662F;&#x6570;&#x636E;&#x91C7;&#x96C6;&#x65F6;&#x5019;&#x9700;&#x8981;&#x8BB0;&#x5F55;&#x8BE5;&#x4FE1;&#x606F;&#x3002;</li>
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">简介</a></li>
 </ul>
 <ul>
-<li>InitData: This page. Read the binary file.</li>
-<li>Adjust Par:  Waveform/fast filter/energy filter/cfd/threshould of the select channel.</li>
-<li>Wave-16:  Waveform/fast filter/energy filter/cfd filter/threshould of the 16 channels.</li>
-<li>Energy-16:  The original energy spectrum of the 16 channel..</li>
-<li>Orig Energy:  The original energy spectrum of the select channel.</li>
-<li>Calc Energy:  Recalculation of energy spectrum by waveforms.</li>
-<li>FF/CFD Thre:   Accumulation of a large number of fast filter/cfd filter waveforms to determine the threshold.</li>
-<li>Energy-FF:  The two dimensional relationship between energy and fast filter first/second peak height.</li>
-<li>QDC:  It will be finished soon.</li>
-<li>FFT:  Fourier transformation of a single waveform. User can choose XIA/CAEN/FFTW3 functions.</li>
-<li>Time Diff:  Time difference of two signal.</li>
+<li class="toctree-l1"><a class="reference internal" href="../INSTALL.html">程序安装</a></li>
 </ul>
-<!-- DropDown4.md ends here -->
-<script type="text/javascript">var className='atoc';</script>
+<p class="caption"><span class="caption-text">用户指南</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="README.html">用户指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Crate.html">机箱</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FIRMWARE.html">固件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Decode.html">数据解码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GUI.html">图形交互界面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NOGUI.html">非图形交互界面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OnlineStattics.html">在线统计</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MakeEvent.html">MakeEvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FrontPanel.html">插件前面板</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Logic.html">逻辑功能</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MultipleModulesSynchronously.html">时间同步</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UpdateCPLD.html">升级CPLD</a></li>
+</ul>
+<p class="caption"><span class="caption-text">应用案例</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Example/README.html">应用案例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/TimeResolution.html">时间分辨</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/RecommendedParameters.html">推荐参数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/InBeamGammaCIAE.html">在束伽马谱学</a></li>
+</ul>
+<p class="caption"><span class="caption-text">采购建议</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ProcurementProposal.html">采购推荐</a></li>
+</ul>
+<p class="caption"><span class="caption-text">编程指南</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/README.html">开发者指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/XIAAPI.html">XIA API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/PKUCode.html">PKU Code</a></li>
+</ul>
 
-<footer class="page-footer-ex"> <span class="page-footer-ex-copyright"> <a href="http://wuhongyi.cn/" target="_blank">&#xA9; Hongyi Wu</a> </span> &#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0; <span class="page-footer-ex-footer-update"> <i>updated:</i> 2019-05-04 21:15:11 </span> </footer>
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
             
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
+          
         </div>
-        <div class="no-results">
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PKUXIADAQ</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Offiline</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
             
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            <a href="../_sources/UsersGuide/DropDown4.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
-        </div>
-    </div>
+  <div class="section" id="offiline">
+<h1>Offiline<a class="headerlink" href="#offiline" title="永久链接至标题">¶</a></h1>
+<p>本下拉栏中为离线参数优化调节。</p>
+<div class="section" id="initdata">
+<h2>InitData<a class="headerlink" href="#initdata" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/AdjustPar.png" src="../_images/AdjustPar.png" />
+<ul class="simple">
+<li><p>Run 选择要读取的文件运行编号，Mod 选择要读取第几个采集卡，按钮 Read 将文件主要信息(道址、能量、波形位置等)载入内存。</p></li>
+<li><p>Additional analysis: 三个选项中，选择表示读取该文件数据到内存中时包括该信息。只有读取了该数据，才能启用一些分析方法。但是前提是数据采集时候需要记录该信息。</p></li>
+<li><p>InitData: This page. Read the binary file.</p></li>
+<li><p>Adjust Par:  Waveform/fast filter/energy filter/cfd/threshould of the select channel.</p></li>
+<li><p>Wave-16:  Waveform/fast filter/energy filter/cfd filter/threshould of the 16 channels.</p></li>
+<li><p>Energy-16:  The original energy spectrum of the 16 channel..</p></li>
+<li><p>Orig Energy:  The original energy spectrum of the select channel.</p></li>
+<li><p>Calc Energy:  Recalculation of energy spectrum by waveforms.</p></li>
+<li><p>FF/CFD Thre:   Accumulation of a large number of fast filter/cfd filter waveforms to determine the threshold.</p></li>
+<li><p>Energy-FF:  The two dimensional relationship between energy and fast filter first/second peak height.</p></li>
+<li><p>QDC:  It will be finished soon.</p></li>
+<li><p>FFT:  Fourier transformation of a single waveform. User can choose XIA/CAEN/FFTW3 functions.</p></li>
+<li><p>Time Diff:  Time difference of two signal.</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="adjust-par">
+<h2>Adjust Par<a class="headerlink" href="#adjust-par" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/OfflineAPI.png" src="../_images/OfflineAPI.png" />
+<p>要通过采集的波形离线计算fast filter、slow filter cfd 曲线，对采集的波形有以下要求。如上图中，计算的能量是算法的能量与算法的基线的差，要得到正确的梯形，那么前提是前面有足够长的点来计算基线。</p>
+<p>In the figure, EFRT stands for Energy Filter Rise Time and EFFT stands for Energy Filter Flat Top.</p>
+<p>To compute energy filter response offline, the ideal settings are:</p>
+<ul class="simple">
+<li><p>Total trance length &gt; 2 x ( 2 x EFRT + EFFT)</p></li>
+<li><p>Pre-trigger trace (Trace-delay) length &gt; ( 3 x EFRT + EFFT )</p></li>
+</ul>
+<p>当然，这只是计算梯形的一个方法，如果我们记录了每个事件的能量梯形的基线，并且采用pre-trigger部分点的平均值作为波形左侧的无限延伸，那么就不受 Pre-trigger trace length &gt; ( 3 x EFRT + EFFT ) 条件的限制了。下面的页面中，当采用 Old Baseline 方法来计算能量梯形时，有个前提是 pre-trigger trace length 至少需要有 200 个点，因为波形左侧延伸采用前 200 个点来平均。</p>
+<img alt="../_images/Adjustpars3.png" src="../_images/Adjustpars3.png" />
+<p>当采集的波形 pre-trigger trace length &gt; 3 x EFRT + EFFT 时，pre-trigger trace 提供足够多的点来计算基线，SF BL 算法可选择 Calculate，否则需要选择 Old Baseline 算法。选择Old Baseline 算法的前提时记录数据的时候， 选择开启记录 梯形的baseline，并且 InitData 页面的 raw E sums/baseline 选项开启。当选择 Old Baseline 算法时，之后的四个选项参数生效，该四个参数为该数据采集时候所用的能量梯形的参数。</p>
+<p>上图中绿色曲线为典型的不满足 pre-trigger trace length &gt; 3 x EFRT + EFFT 时，采用的 Calculate 算法造成的结果。图中显示 pre-trigger trace length 为 10 us，EFRT 为 5.04 us，EFFT 为 1.60 us。</p>
+<p>此时，应该采用下图所示的  Old Baseline 算法。</p>
+<img alt="../_images/Adjustpars1.png" src="../_images/Adjustpars1.png" />
+<p>用户可选择查看波形的通道，按钮 Load 可读取并显示当前的参数设置情况，当修改以上的参数时候，需要按 Apply 按钮使之生效。按钮 Draw 用来显示下一个该通道的事件波形。</p>
+<p>用户可选择同时显示 Wave / Slow Filter/ Fast filter / Thres / CFD / CFD Thres 中的多个波形。或者选择曲线的绘画样式。</p>
+<img alt="../_images/Adjustpars2.png" src="../_images/Adjustpars2.png" />
+<p>上图展示了显示 fast filter、Thres、CFD、CFD Thres 四个波形，图样采用点显示方式。最低端的水平条两端可以拖动，用户可拉动来控制波形横坐标的显示范围，如图中显示800 - 1300 的点。该情况下，点击 Draw 按钮，将会保持该指定的坐标范围。</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="wave-16">
+<h2>Wave-16<a class="headerlink" href="#wave-16" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/Waveform16.png" src="../_images/Waveform16.png" />
+<p>该页面用于同时查看16通道的原始波形、filter 波形，阈值等。用户可选择同时显示 Wave / Slow Filter/ Fast filter / Thres / CFD / CFD Thres 中的多个波形。</p>
+<p>用户可通过该页面，快速查看该采集卡所有通道的波形是否正常，参数设置是否合理。点击按钮 Draw 一次，则显示所有通道下一个波形。</p>
+<p><em>需要注意的一点，本页面的 Slow Filter 波形需要在采集的波形 pre-trigger trace 长度大于 3 x EFRT + EFFT 时才是正确的。</em></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="energy-16">
+<h2>Energy-16<a class="headerlink" href="#energy-16" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/Energy16.png" src="../_images/Energy16.png" />
+<p>该界面用于同时查看 16 通道的一维能谱。点击右上角的按钮 Draw 即可。</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="orig-energy">
+<h2>Orig Energy<a class="headerlink" href="#orig-energy" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/OrigEnergy.png" src="../_images/OrigEnergy.png" />
+<p>该页面用来快速查看某通道的能谱。用户选择能谱的分 Bin 数，该数值表示将 0 - 65536 道分成多少份。选择查看通道。然后按 Draw 按钮即可。</p>
+<img alt="../_images/OrigEnergyFit.png" src="../_images/OrigEnergyFit.png" />
+<p>左上角的 Open Fit 按钮用来快速高斯拟合看能量分辨。点击按钮，开启拟合模式，再次点击按钮则关闭该功能。将鼠标移动到直方图的蓝线上，鼠标十字将会变成三角箭头。三角箭头的鼠标点击直方图中的两个位置，两点所在区间即为拟合区间，则可查看能量分辨。</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="calc-energy">
+<h2>Calc Energy<a class="headerlink" href="#calc-energy" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/CalcEnergy.png" src="../_images/CalcEnergy.png" />
+<p>该页面利用采集的波形重新计算能量。同 Adjust Par 页面一样，SF BL 算法可选择Calculate算法或者 Old Baseline 算法。</p>
+<p>计算能量采用的fast filter、energy filter参数采用采集卡的设置参数，用户需要选择能量 0-65536 分成多少个 bin，可选择 1024/2048/4096/8192/16384/32768/65536，选择计算的通道，然后按按钮 Draw即开始计算，左上角将会显示计算的进度，也可以按按钮 Stop 提前终止计算。当计算终止时，画板上将显示能谱。</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="ff-cfd-thre">
+<h2>FF/CFD Thre<a class="headerlink" href="#ff-cfd-thre" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/FFCFDThre.png" src="../_images/FFCFDThre.png" />
+<p>该界面用于 fast filter波形、cfd filter波形的累加。用户选择查看通道，然后按 Draw 按钮则开始进入计算，左上角可时时监视进度，也可按 Stop 按钮提前终止计算。计算结束得到如上图所示。</p>
+<p>上方按钮 FFProjectY、CFDProjectY、OriginalCFD、CalculateCFD 分别可弹出子画板。</p>
+<img alt="../_images/FFCFDThreFFProjectY.png" src="../_images/FFCFDThreFFProjectY.png" />
+<p>点击按钮 FFProjectY，则开启查看fast filter投影图，再次点击则关闭该功能。开启功能时，将鼠标放在二维图上，左右移动鼠标， Fast Filter ShowProjectY 子画板则显示鼠标指向的该位置的投影分布。触发前的该分布，也表征噪声的水平。</p>
+<img alt="../_images/FFCFDThreCFDProjectY.png" src="../_images/FFCFDThreCFDProjectY.png" />
+<p>同理，按钮 CFDProjectY 功能如上图所示。</p>
+<img alt="../_images/FFCFDThreCFD.png" src="../_images/FFCFDThreCFD.png" />
+<p>点击按钮 OriginalCFD，则展示左图中原始数据中 CFD 数值的分布。点击按钮 CalculateCFD，则展示右图中通过离线波形计算的结果，计算所用参数为当前的参数。对于一个合适的 CFD 参数设置，该CFD分布该是平均分布的。</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="energy-ff">
+<h2>Energy-FF<a class="headerlink" href="#energy-ff" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/EnergyFFGraph.png" src="../_images/EnergyFFGraph.png" />
+<p>该界面是能量与 fast filter 峰高的二维关联图。用于确定合适的阈值。左图是能量与 fast filter的二维关联，它们应该有个较好的线性关系，右图为能量与 fast filer 中抛除梯形部分剩余中最大值的二维关联，抛除梯形部分剩余分布的最大值表征噪声水平，能量跟该值应该是没有关联的。</p>
+<p>首先 Draw Style 选择 Graph，即二维散点图模式。选择查看通道，然后按 Draw 按钮则开始进入计算，左上角可时时监视进度，也可按 Stop 按钮提前终止计算。计算结束得到如上图所示。</p>
+<img alt="../_images/EnergyFFHist.png" src="../_images/EnergyFFHist.png" />
+<p>二维散点图并不能很直观显示展示数据点的密度分布，因此 Draw Style 选择 Hist 模式，选择 X、Y轴的分 bin 数即范围，然后同样按 Draw 按钮开始计算。结果如上图所示，右图反映了噪声的水平。</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="energy-cfd">
+<h2>Energy-CFD<a class="headerlink" href="#energy-cfd" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/EnergyCFD.png" src="../_images/EnergyCFD.png" />
+<ul class="simple">
+<li><p>左上图为 cfd 无效时的能谱。</p></li>
+<li><p>左下图为 cfd 有效时的能谱。</p></li>
+<li><p>右上图为 CFD 谱。</p></li>
+<li><p>右下图为能量与CFD的二维关联图。</p></li>
+</ul>
+<p>首先选择能量与CFD二维关联图中bin数。其中 CFD 分 bin 可选择 4096，2084，1024；能量可选择bin数与道址范围。
+之后选择查看通道，然后按 Draw 按钮开始进入计算。</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="qdc">
+<h2>QDC<a class="headerlink" href="#qdc" title="永久链接至标题">¶</a></h2>
+<p><strong>to do not completed</strong></p>
+<p><strong>QDC  TODO   功能未完成</strong></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="fft">
+<h2>FFT<a class="headerlink" href="#fft" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/FFT.png" src="../_images/FFT.png" />
+<p>该界面用于快速查看波形的傅立叶变换。用户可以选择不同的算法，例如 XIA、fftw3、CAEN(HANNING)、CAEN(HAMMING)、CAEN(BLACKMAN)、CAEN(RECT)。选择查看通道。然后按 Draw 按钮即可，每点击一次该按钮，则显示下一个结果。</p>
+<p>the ADC trace display also includes the option to view a FFT of the acquired trace. This is useful to diagnose noise contributions.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="time-diff">
+<h2>Time Diff<a class="headerlink" href="#time-diff" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/TimeDiff.png" src="../_images/TimeDiff.png" />
+<p>该界面用于快速查看两路信号的时间分辨。用户可以选择查看 CFD 算法过零点的时间差或者 fast filter 过阈值的时间差。Xbin 表示横坐标分 bin 数，Xmin 表示横坐标的最小值，Xmax 表示横坐标的最大值。通过 Ch A、Ch B 来选择想要查看的两个通道。然后按 Draw 按钮即可。</p>
+<p>选项 Limits 选择则开启能量范围约束。选择该选项后，之后的四个参数 AL、AR、BL、BR 才生效，其分别表示 Ch A/B 能量道址的左右范围，只有能量落在这个区间的事件才填充到直方图中。用户可通过 Orig Energy 页面来选择合适的能量道址区间。</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="simulation">
+<h2>Simulation(暂未实现)<a class="headerlink" href="#simulation" title="永久链接至标题">¶</a></h2>
+<p>通过模型产生不同类型探测、不同信噪比的波形，辅助使用者学习参数优化调节的。</p>
+</div>
 </div>
 
-                        </div>
-                    </div>
-                
-            </div>
 
-            
-                
-                <a href="MONITOR_TraceBaseline.html" class="navigation navigation-prev " aria-label="Previous page: Trace & Baseline">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                
-                
-                <a href="OFFLINE_AdjustPar.html" class="navigation navigation-next " aria-label="Next page: Adjust Par">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
-        
-    </div>
+           </div>
+           
+          </div>
+          <footer>
+  
 
-    <script>
-        var gitbook = gitbook || [];
-        gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Offline","level":"1.3.4.5","depth":3,"next":{"title":"Adjust Par","level":"1.3.4.5.1","depth":4,"path":"UsersGuide/OFFLINE_AdjustPar.md","ref":"UsersGuide/OFFLINE_AdjustPar.md","articles":[{"title":"Wave-16","level":"1.3.4.5.1.1","depth":5,"path":"UsersGuide/OFFLINE_Wave-16.md","ref":"UsersGuide/OFFLINE_Wave-16.md","articles":[]},{"title":"Energy-16","level":"1.3.4.5.1.2","depth":5,"path":"UsersGuide/OFFLINE_Energy-16.md","ref":"UsersGuide/OFFLINE_Energy-16.md","articles":[]},{"title":"Orig Energy","level":"1.3.4.5.1.3","depth":5,"path":"UsersGuide/OFFLINE_OrigEnergy.md","ref":"UsersGuide/OFFLINE_OrigEnergy.md","articles":[]},{"title":"Calc Energy","level":"1.3.4.5.1.4","depth":5,"path":"UsersGuide/OFFLINE_Calc Energy.md","ref":"UsersGuide/OFFLINE_Calc Energy.md","articles":[]},{"title":"FF/CFD Thre","level":"1.3.4.5.1.5","depth":5,"path":"UsersGuide/OFFLINE_FFCFDThre.md","ref":"UsersGuide/OFFLINE_FFCFDThre.md","articles":[]},{"title":"Energy-FF","level":"1.3.4.5.1.6","depth":5,"path":"UsersGuide/OFFLINE_Energy-FF.md","ref":"UsersGuide/OFFLINE_Energy-FF.md","articles":[]},{"title":"Energy-CFD","level":"1.3.4.5.1.7","depth":5,"path":"UsersGuide/OFFLINE_Energy-CFD.md","ref":"UsersGuide/OFFLINE_Energy-CFD.md","articles":[]},{"title":"QDC","level":"1.3.4.5.1.8","depth":5,"path":"UsersGuide/OFFLINE_QDC.md","ref":"UsersGuide/OFFLINE_QDC.md","articles":[]},{"title":"FFT","level":"1.3.4.5.1.9","depth":5,"path":"UsersGuide/OFFLINE_FFT.md","ref":"UsersGuide/OFFLINE_FFT.md","articles":[]},{"title":"Time Diff","level":"1.3.4.5.1.10","depth":5,"path":"UsersGuide/OFFLINE_TimeDiff.md","ref":"UsersGuide/OFFLINE_TimeDiff.md","articles":[]}]},"previous":{"title":"Trace & Baseline","level":"1.3.4.4.2","depth":4,"path":"UsersGuide/MONITOR_TraceBaseline.md","ref":"UsersGuide/MONITOR_TraceBaseline.md","articles":[]},"dir":"ltr"},"config":{"plugins":["search","sharing","fontsettings","livereload","highlight","github","-prism","ad","alerts","atoc","splitter","sitemap","image-captions","anchors","latex-codecogs","-katex","mermaid","ace","page-footer-ex","sectionx","mcqx","fbqx","spoiler","anchor-navigation","youtubex","redirect","expandable-chapters"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"latex-codecogs":{"type":"gif"},"spoiler":{},"ad":{"contentBottom":"","contentTop":""},"ace":{},"github":{"url":"https://github.com/wuhongyi"},"fbqx":{},"livereload":{},"page-footer-ex":{"copyright":"[© Hongyi Wu](http://wuhongyi.cn/)","markdown":true,"update_format":"YYYY-MM-DD HH:mm:ss","update_label":"<i>updated:</i>"},"atoc":{"addClass":true,"className":"atoc"},"splitter":{},"search":{},"mermaid":{},"anchor-navigation":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"serif","size":2,"theme":"sepia"},"sectionx":{},"highlight":{},"sitemap":{"hostname":"http://wuhongyi.cn/"},"youtubex":{"embedDescription":{"de":"Eingebettetes Video:","default":"Embedded video:"}},"alerts":{},"sharing":{"all":["facebook","google","twitter","weibo","instapaper"],"facebook":true,"google":false,"instapaper":false,"twitter":true,"vk":false,"weibo":false},"redirect":{},"mcqx":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"expandable-chapters":{},"image-captions":{"variable_name":"_pictures"}},"theme":"default","author":"Hongyi Wu(吴鸿毅)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"_pictures":[{"backlink":"index.html#fig1.1.1","level":"1.1","list_caption":"Figure: PKU logo","alt":"PKU logo","nro":1,"url":"pkulogo100.jpg","index":1,"caption_template":"Figure: _CAPTION_","label":"PKU logo","attributes":{},"skip":false,"key":"1.1.1"},{"backlink":"UsersGuide/index.html#fig1.3.1","level":"1.3","list_caption":"Figure: pixie16","alt":"pixie16","nro":2,"url":"/img/pixie16.jpg","index":1,"caption_template":"Figure: _CAPTION_","label":"pixie16","attributes":{},"skip":false,"key":"1.3.1"},{"backlink":"UsersGuide/Crate.html#fig1.3.1.1","level":"1.3.1","list_caption":"Figure: connect and IP","alt":"connect and IP","nro":3,"url":"/img/cratenet0.png","index":1,"caption_template":"Figure: _CAPTION_","label":"connect and IP","attributes":{},"skip":false,"key":"1.3.1.1"},{"backlink":"UsersGuide/Crate.html#fig1.3.1.2","level":"1.3.1","list_caption":"Figure: open control page","alt":"open control page","nro":4,"url":"/img/cratenet1.png","index":2,"caption_template":"Figure: _CAPTION_","label":"open control page","attributes":{},"skip":false,"key":"1.3.1.2"},{"backlink":"UsersGuide/Crate.html#fig1.3.1.3","level":"1.3.1","list_caption":"Figure: Login","alt":"Login","nro":5,"url":"/img/cratenet2.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Login","attributes":{},"skip":false,"key":"1.3.1.3"},{"backlink":"UsersGuide/Crate.html#fig1.3.1.4","level":"1.3.1","list_caption":"Figure: status","alt":"status","nro":6,"url":"/img/cratenet3.png","index":4,"caption_template":"Figure: _CAPTION_","label":"status","attributes":{},"skip":false,"key":"1.3.1.4"},{"backlink":"UsersGuide/GUI.html#fig1.3.4.1","level":"1.3.4","list_caption":"Figure: MainFrame","alt":"MainFrame","nro":7,"url":"/img/mainframe.png","index":1,"caption_template":"Figure: _CAPTION_","label":"MainFrame","attributes":{},"skip":false,"key":"1.3.4.1"},{"backlink":"UsersGuide/FILE_About.html#fig1.3.4.1.1.1","level":"1.3.4.1.1","list_caption":"Figure: About","alt":"About","nro":8,"url":"/img/About.png","index":1,"caption_template":"Figure: _CAPTION_","label":"About","attributes":{},"skip":false,"key":"1.3.4.1.1.1"},{"backlink":"UsersGuide/BASESETUP_BaseSetup.html#fig1.3.4.2.1.1","level":"1.3.4.2.1","list_caption":"Figure: Base Setup","alt":"Base Setup","nro":9,"url":"/img/BaseSetup.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Base Setup","attributes":{},"skip":false,"key":"1.3.4.2.1.1"},{"backlink":"UsersGuide/BASESETUP_TriggerFilter.html#fig1.3.4.2.2.1","level":"1.3.4.2.2","list_caption":"Figure: Trigger Filter","alt":"Trigger Filter","nro":10,"url":"/img/TriggerFilter.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Trigger Filter","attributes":{},"skip":false,"key":"1.3.4.2.2.1"},{"backlink":"UsersGuide/BASESETUP_TriggerFilter.html#fig1.3.4.2.2.2","level":"1.3.4.2.2","list_caption":"Figure: (a) Charge sensitive preamplifier with RC feedback; (b) Output on absorption of a gamma ray","alt":"(a) Charge sensitive preamplifier with RC feedback; (b) Output on absorption of a gamma ray","nro":11,"url":"/img/chargesenitivepreamplifierrcfeedbackoutputonabsorptionofagammaray.png","index":2,"caption_template":"Figure: _CAPTION_","label":"(a) Charge sensitive preamplifier with RC feedback; (b) Output on absorption of a gamma ray","attributes":{},"skip":false,"key":"1.3.4.2.2.2"},{"backlink":"UsersGuide/BASESETUP_TriggerFilter.html#fig1.3.4.2.2.3","level":"1.3.4.2.2","list_caption":"Figure: Digitized version of the data of Figure (b) in the step region","alt":"Digitized version of the data of Figure (b) in the step region","nro":12,"url":"/img/digitizedversionofthedataoffigurebinthestepregion.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Digitized version of the data of Figure (b) in the step region","attributes":{},"skip":false,"key":"1.3.4.2.2.3"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.1","level":"1.3.4.2.3","list_caption":"Figure: Energy","alt":"Energy","nro":13,"url":"/img/Energy.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Energy","attributes":{},"skip":false,"key":"1.3.4.2.3.1"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.2","level":"1.3.4.2.3","list_caption":"Figure: Filter clock decimations and filter time granularity for 100 MHz or 500 MHz","alt":"Filter clock decimations and filter time granularity for 100 MHz or 500 MHz","nro":14,"url":"/img/filterclockdecimationsandfiltertimegranularityfor100mhzor500mhz.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Filter clock decimations and filter time granularity for 100 MHz or 500 MHz","attributes":{},"skip":false,"key":"1.3.4.2.3.2"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.3","level":"1.3.4.2.3","list_caption":"Figure: Filter clock decimations and filter time granularity for 250 MHz","alt":"Filter clock decimations and filter time granularity for 250 MHz","nro":15,"url":"/img/filterclockdecimationsandfiltertimegranularityfor250mhz.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Filter clock decimations and filter time granularity for 250 MHz","attributes":{},"skip":false,"key":"1.3.4.2.3.3"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.4","level":"1.3.4.2.3","list_caption":"Figure: Trapezoidal filtering of a preamplifier step with L=1μs and G=0.4μs","alt":"Trapezoidal filtering of a preamplifier step with L=1μs and G=0.4μs","nro":16,"url":"/img/trapezoidalfilteringofapreamplifierstepwithl1usandg04us.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Trapezoidal filtering of a preamplifier step with L=1μs and G=0.4μs","attributes":{},"skip":false,"key":"1.3.4.2.3.4"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.5","level":"1.3.4.2.3","list_caption":"Figure: A gamma-ray event displayed over a longer time period to show baseline noise and the effect of preamplifier decay time","alt":"A gamma-ray event displayed over a longer time period to show baseline noise and the effect of preamplifier decay time","nro":17,"url":"/img/agammaeventdisplayedoveralongertimeperiodtoshowbaselinenoiseandtheeffectofpreamplifierdecaytime.png","index":5,"caption_template":"Figure: _CAPTION_","label":"A gamma-ray event displayed over a longer time period to show baseline noise and the effect of preamplifier decay time","attributes":{},"skip":false,"key":"1.3.4.2.3.5"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.6","level":"1.3.4.2.3","list_caption":"Figure: Peak detection and sampling","alt":"Peak detection and sampling","nro":18,"url":"/img/peakdetectionandsampling.png","index":6,"caption_template":"Figure: _CAPTION_","label":"Peak detection and sampling","attributes":{},"skip":false,"key":"1.3.4.2.3.6"},{"backlink":"UsersGuide/BASESETUP_Energy.html#fig1.3.4.2.3.7","level":"1.3.4.2.3","list_caption":"Figure: A sequence of 3 gamma-ray pulses separated by various intervals to show the origin of pileup and demonstrate how it is detected by the Pixie module","alt":"A sequence of 3 gamma-ray pulses separated by various intervals to show the origin of pileup and demonstrate how it is detected by the Pixie module","nro":19,"url":"/img/asequenceof3gammaraypulsesseparatedbyvariousintervalstoshowtheoriginofpileupanddemonstratehowitisdetected.png","index":7,"caption_template":"Figure: _CAPTION_","label":"A sequence of 3 gamma-ray pulses separated by various intervals to show the origin of pileup and demonstrate how it is detected by the Pixie module","attributes":{},"skip":false,"key":"1.3.4.2.3.7"},{"backlink":"UsersGuide/BASESETUP_CFD.html#fig1.3.4.2.4.1","level":"1.3.4.2.4","list_caption":"Figure: CFD","alt":"CFD","nro":20,"url":"/img/CFDPars.png","index":1,"caption_template":"Figure: _CAPTION_","label":"CFD","attributes":{},"skip":false,"key":"1.3.4.2.4.1"},{"backlink":"UsersGuide/BASESETUP_CFD.html#fig1.3.4.2.4.2","level":"1.3.4.2.4","list_caption":"Figure: Corresponding DSP Parameters for the CFD Parameters","alt":"Corresponding DSP Parameters for the CFD Parameters","nro":21,"url":"/img/correspondingdspparametersforthecfdparmeters.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Corresponding DSP Parameters for the CFD Parameters","attributes":{},"skip":false,"key":"1.3.4.2.4.2"},{"backlink":"UsersGuide/BASESETUP_CFD.html#fig1.3.4.2.4.3","level":"1.3.4.2.4","list_caption":"Figure: Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules","alt":"Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules","nro":22,"url":"/img/fixedcfdparametervaluesfor500mhzpixie16modules.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules","attributes":{},"skip":false,"key":"1.3.4.2.4.3"},{"backlink":"UsersGuide/BASESETUP_CFD.html#fig1.3.4.2.4.4","level":"1.3.4.2.4","list_caption":"Figure: Meanings of the CFD Trigger Source for 500 MHz Pixie-16 Modules","alt":"Meanings of the CFD Trigger Source for 500 MHz Pixie-16 Modules","nro":23,"url":"/img/meaningofthecfdtriggersourcefor500mhzpixie16modules.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Meanings of the CFD Trigger Source for 500 MHz Pixie-16 Modules","attributes":{},"skip":false,"key":"1.3.4.2.4.4"},{"backlink":"UsersGuide/BASESETUP_QDC.html#fig1.3.4.2.5.1","level":"1.3.4.2.5","list_caption":"Figure: QDC","alt":"QDC","nro":24,"url":"/img/QDCPars.png","index":1,"caption_template":"Figure: _CAPTION_","label":"QDC","attributes":{},"skip":false,"key":"1.3.4.2.5.1"},{"backlink":"UsersGuide/BASESETUP_QDC.html#fig1.3.4.2.5.2","level":"1.3.4.2.5","list_caption":"Figure: The 8 QDC sums of a triggered event","alt":"The 8 QDC sums of a triggered event","nro":25,"url":"/img/the8qdcsumsofatriggeredevent.png","index":2,"caption_template":"Figure: _CAPTION_","label":"The 8 QDC sums of a triggered event","attributes":{},"skip":false,"key":"1.3.4.2.5.2"},{"backlink":"UsersGuide/BASESETUP_Decimation.html#fig1.3.4.2.6.1","level":"1.3.4.2.6","list_caption":"Figure: Decimation","alt":"Decimation","nro":26,"url":"/img/Decimation.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Decimation","attributes":{},"skip":false,"key":"1.3.4.2.6.1"},{"backlink":"UsersGuide/BASESETUP_CopyPars.html#fig1.3.4.2.7.1","level":"1.3.4.2.7","list_caption":"Figure: Copy Pars","alt":"Copy Pars","nro":27,"url":"/img/CopyPars.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Copy Pars","attributes":{},"skip":false,"key":"1.3.4.2.7.1"},{"backlink":"UsersGuide/BASESETUP_Save2File.html#fig1.3.4.2.8.1","level":"1.3.4.2.8","list_caption":"Figure: Save2File","alt":"Save2File","nro":28,"url":"/img/Save2File.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Save2File","attributes":{},"skip":false,"key":"1.3.4.2.8.1"},{"backlink":"UsersGuide/EXPERT_MSRB.html#fig1.3.4.3.1.1","level":"1.3.4.3.1","list_caption":"Figure: Module Variables","alt":"Module Variables","nro":29,"url":"/img/ModuleVariables.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Module Variables","attributes":{},"skip":false,"key":"1.3.4.3.1.1"},{"backlink":"UsersGuide/EXPERT_CSRA.html#fig1.3.4.3.2.1","level":"1.3.4.3.2","list_caption":"Figure: CSRA","alt":"CSRA","nro":30,"url":"/img/CSRA.png","index":1,"caption_template":"Figure: _CAPTION_","label":"CSRA","attributes":{},"skip":false,"key":"1.3.4.3.2.1"},{"backlink":"UsersGuide/EXPERT_LogicSet.html#fig1.3.4.3.3.1","level":"1.3.4.3.3","list_caption":"Figure: Logic Set","alt":"Logic Set","nro":31,"url":"/img/LogicTrigger.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Logic Set","attributes":{},"skip":false,"key":"1.3.4.3.3.1"},{"backlink":"UsersGuide/EXPERT_LogicSet.html#fig1.3.4.3.3.2","level":"1.3.4.3.3","list_caption":"Figure: stretch length","alt":"stretch length","nro":32,"url":"/img/stretchlength.PNG","index":2,"caption_template":"Figure: _CAPTION_","label":"stretch length","attributes":{},"skip":false,"key":"1.3.4.3.3.2"},{"backlink":"UsersGuide/MONITOR_HistXDT.html#fig1.3.4.4.1.1","level":"1.3.4.4.1","list_caption":"Figure: Hist & XDT","alt":"Hist & XDT","nro":33,"url":"/img/HistXDT.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Hist & XDT","attributes":{},"skip":false,"key":"1.3.4.4.1.1"},{"backlink":"UsersGuide/MONITOR_TraceBaseline.html#fig1.3.4.4.2.1","level":"1.3.4.4.2","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":34,"url":"/img/Trace.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.4.4.2.1"},{"backlink":"UsersGuide/MONITOR_TraceBaseline.html#fig1.3.4.4.2.2","level":"1.3.4.4.2","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":35,"url":"/img/BaselineHist.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.4.4.2.2"},{"backlink":"UsersGuide/MONITOR_TraceBaseline.html#fig1.3.4.4.2.3","level":"1.3.4.4.2","list_caption":"Figure: Trace & Baseline","alt":"Trace & Baseline","nro":36,"url":"/img/BaselineTimestamps.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Trace & Baseline","attributes":{},"skip":false,"key":"1.3.4.4.2.3"},{"backlink":"UsersGuide/DropDown4.html#fig1.3.4.5.1","level":"1.3.4.5","list_caption":"Figure: Adjust Par","alt":"Adjust Par","nro":37,"url":"/img/AdjustPar.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Adjust Par","attributes":{},"skip":false,"key":"1.3.4.5.1"},{"backlink":"UsersGuide/OFFLINE_AdjustPar.html#fig1.3.4.5.1.1","level":"1.3.4.5.1","list_caption":"Figure: offlineapi","alt":"offlineapi","nro":38,"url":"/img/OfflineAPI.png","index":1,"caption_template":"Figure: _CAPTION_","label":"offlineapi","attributes":{},"skip":false,"key":"1.3.4.5.1.1"},{"backlink":"UsersGuide/OFFLINE_AdjustPar.html#fig1.3.4.5.1.2","level":"1.3.4.5.1","list_caption":"Figure: Adjustpars3","alt":"Adjustpars3","nro":39,"url":"/img/Adjustpars3.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Adjustpars3","attributes":{},"skip":false,"key":"1.3.4.5.1.2"},{"backlink":"UsersGuide/OFFLINE_AdjustPar.html#fig1.3.4.5.1.3","level":"1.3.4.5.1","list_caption":"Figure: Adjustpars1","alt":"Adjustpars1","nro":40,"url":"/img/Adjustpars1.png","index":3,"caption_template":"Figure: _CAPTION_","label":"Adjustpars1","attributes":{},"skip":false,"key":"1.3.4.5.1.3"},{"backlink":"UsersGuide/OFFLINE_AdjustPar.html#fig1.3.4.5.1.4","level":"1.3.4.5.1","list_caption":"Figure: Adjustpars2","alt":"Adjustpars2","nro":41,"url":"/img/Adjustpars2.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Adjustpars2","attributes":{},"skip":false,"key":"1.3.4.5.1.4"},{"backlink":"UsersGuide/OFFLINE_Wave-16.html#fig1.3.4.5.1.1.1","level":"1.3.4.5.1.1","list_caption":"Figure: Waveform16","alt":"Waveform16","nro":42,"url":"/img/Waveform16.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Waveform16","attributes":{},"skip":false,"key":"1.3.4.5.1.1.1"},{"backlink":"UsersGuide/OFFLINE_Energy-16.html#fig1.3.4.5.1.2.1","level":"1.3.4.5.1.2","list_caption":"Figure: Energy16","alt":"Energy16","nro":43,"url":"/img/Energy16.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Energy16","attributes":{},"skip":false,"key":"1.3.4.5.1.2.1"},{"backlink":"UsersGuide/OFFLINE_OrigEnergy.html#fig1.3.4.5.1.3.1","level":"1.3.4.5.1.3","list_caption":"Figure: OrigEnergy","alt":"OrigEnergy","nro":44,"url":"/img/OrigEnergy.png","index":1,"caption_template":"Figure: _CAPTION_","label":"OrigEnergy","attributes":{},"skip":false,"key":"1.3.4.5.1.3.1"},{"backlink":"UsersGuide/OFFLINE_OrigEnergy.html#fig1.3.4.5.1.3.2","level":"1.3.4.5.1.3","list_caption":"Figure: OrigEnergyFit","alt":"OrigEnergyFit","nro":45,"url":"/img/OrigEnergyFit.png","index":2,"caption_template":"Figure: _CAPTION_","label":"OrigEnergyFit","attributes":{},"skip":false,"key":"1.3.4.5.1.3.2"},{"backlink":"UsersGuide/OFFLINE_Calc Energy.html#fig1.3.4.5.1.4.1","level":"1.3.4.5.1.4","list_caption":"Figure: CalcEnergy","alt":"CalcEnergy","nro":46,"url":"/img/CalcEnergy.png","index":1,"caption_template":"Figure: _CAPTION_","label":"CalcEnergy","attributes":{},"skip":false,"key":"1.3.4.5.1.4.1"},{"backlink":"UsersGuide/OFFLINE_FFCFDThre.html#fig1.3.4.5.1.5.1","level":"1.3.4.5.1.5","list_caption":"Figure: FFCFDThre","alt":"FFCFDThre","nro":47,"url":"/img/FFCFDThre.png","index":1,"caption_template":"Figure: _CAPTION_","label":"FFCFDThre","attributes":{},"skip":false,"key":"1.3.4.5.1.5.1"},{"backlink":"UsersGuide/OFFLINE_FFCFDThre.html#fig1.3.4.5.1.5.2","level":"1.3.4.5.1.5","list_caption":"Figure: FFCFDThreFFProjectY","alt":"FFCFDThreFFProjectY","nro":48,"url":"/img/FFCFDThreFFProjectY.png","index":2,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreFFProjectY","attributes":{},"skip":false,"key":"1.3.4.5.1.5.2"},{"backlink":"UsersGuide/OFFLINE_FFCFDThre.html#fig1.3.4.5.1.5.3","level":"1.3.4.5.1.5","list_caption":"Figure: FFCFDThreCFDProjectY","alt":"FFCFDThreCFDProjectY","nro":49,"url":"/img/FFCFDThreCFDProjectY.png","index":3,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreCFDProjectY","attributes":{},"skip":false,"key":"1.3.4.5.1.5.3"},{"backlink":"UsersGuide/OFFLINE_FFCFDThre.html#fig1.3.4.5.1.5.4","level":"1.3.4.5.1.5","list_caption":"Figure: FFCFDThreCFD","alt":"FFCFDThreCFD","nro":50,"url":"/img/FFCFDThreCFD.png","index":4,"caption_template":"Figure: _CAPTION_","label":"FFCFDThreCFD","attributes":{},"skip":false,"key":"1.3.4.5.1.5.4"},{"backlink":"UsersGuide/OFFLINE_Energy-FF.html#fig1.3.4.5.1.6.1","level":"1.3.4.5.1.6","list_caption":"Figure: EnergyFFGraph","alt":"EnergyFFGraph","nro":51,"url":"/img/EnergyFFGraph.png","index":1,"caption_template":"Figure: _CAPTION_","label":"EnergyFFGraph","attributes":{},"skip":false,"key":"1.3.4.5.1.6.1"},{"backlink":"UsersGuide/OFFLINE_Energy-FF.html#fig1.3.4.5.1.6.2","level":"1.3.4.5.1.6","list_caption":"Figure: EnergyFFHist","alt":"EnergyFFHist","nro":52,"url":"/img/EnergyFFHist.png","index":2,"caption_template":"Figure: _CAPTION_","label":"EnergyFFHist","attributes":{},"skip":false,"key":"1.3.4.5.1.6.2"},{"backlink":"UsersGuide/OFFLINE_Energy-CFD.html#fig1.3.4.5.1.7.1","level":"1.3.4.5.1.7","list_caption":"Figure: Energy-CFD","alt":"Energy-CFD","nro":53,"url":"/img/EnergyCFD.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Energy-CFD","attributes":{},"skip":false,"key":"1.3.4.5.1.7.1"},{"backlink":"UsersGuide/OFFLINE_FFT.html#fig1.3.4.5.1.9.1","level":"1.3.4.5.1.9","list_caption":"Figure: FFT","alt":"FFT","nro":54,"url":"/img/FFT.png","index":1,"caption_template":"Figure: _CAPTION_","label":"FFT","attributes":{},"skip":false,"key":"1.3.4.5.1.9.1"},{"backlink":"UsersGuide/OFFLINE_TimeDiff.html#fig1.3.4.5.1.10.1","level":"1.3.4.5.1.10","list_caption":"Figure: Time Diff","alt":"Time Diff","nro":55,"url":"/img/TimeDiff.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Time Diff","attributes":{},"skip":false,"key":"1.3.4.5.1.10.1"},{"backlink":"UsersGuide/NOGUI.html#fig1.3.5.1","level":"1.3.5","list_caption":"Figure: Main Frame","alt":"Main Frame","nro":56,"url":"/img/noguimainframe.png","index":1,"caption_template":"Figure: _CAPTION_","label":"Main Frame","attributes":{},"skip":false,"key":"1.3.5.1"},{"backlink":"UsersGuide/NOGUI.html#fig1.3.5.2","level":"1.3.5","list_caption":"Figure: run mode","alt":"run mode","nro":57,"url":"/img/noguistartrun.png","index":2,"caption_template":"Figure: _CAPTION_","label":"run mode","attributes":{},"skip":false,"key":"1.3.5.2"},{"backlink":"UsersGuide/OnlineStattics.html#fig1.3.6.1","level":"1.3.6","list_caption":"Figure: OnlineMainFrame","alt":"OnlineMainFrame","nro":58,"url":"/img/OnlineMainFrame.png","index":1,"caption_template":"Figure: _CAPTION_","label":"OnlineMainFrame","attributes":{},"skip":false,"key":"1.3.6.1"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.1","level":"1.3.8","list_caption":"Figure: LVDS I/O Port","alt":"LVDS I/O Port","nro":59,"url":"/img/lvdsioport.png","index":1,"caption_template":"Figure: _CAPTION_","label":"LVDS I/O Port","attributes":{},"skip":false,"key":"1.3.8.1"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.2","level":"1.3.8","list_caption":"Figure: Digital I/O Connectors A, B, C, D and E","alt":"Digital I/O Connectors A, B, C, D and E","nro":60,"url":"/img/digitalioconnectorsabcdande.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Digital I/O Connectors A, B, C, D and E","attributes":{},"skip":false,"key":"1.3.8.2"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.3","level":"1.3.8","list_caption":"Figure: 2mm pitch har-link connector from HARTING","alt":"2mm pitch har-link connector from HARTING","nro":61,"url":"/img/2mmpitchharlinkconnectorfromharting.png","index":3,"caption_template":"Figure: _CAPTION_","label":"2mm pitch har-link connector from HARTING","attributes":{},"skip":false,"key":"1.3.8.3"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.4","level":"1.3.8","list_caption":"Figure: Rev. F Module’s Digital I/O Connectors","alt":"Rev. F Module’s Digital I/O Connectors","nro":62,"url":"/img/revfmoduledigitalioconnectors.png","index":4,"caption_template":"Figure: _CAPTION_","label":"Rev. F Module’s Digital I/O Connectors","attributes":{},"skip":false,"key":"1.3.8.4"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.5","level":"1.3.8","list_caption":"Figure: frontpanel","alt":"frontpanel","nro":63,"url":"/img/frontpanel_pku.png","index":5,"caption_template":"Figure: _CAPTION_","label":"frontpanel","attributes":{},"skip":false,"key":"1.3.8.5"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.6","level":"1.3.8","list_caption":"Figure: Front Panel LEDs for the Pixie-16 Modules","alt":"Front Panel LEDs for the Pixie-16 Modules","nro":64,"url":"/img/frontpanelledsforthepixie16modules.png","index":6,"caption_template":"Figure: _CAPTION_","label":"Front Panel LEDs for the Pixie-16 Modules","attributes":{},"skip":false,"key":"1.3.8.6"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.7","level":"1.3.8","list_caption":"Figure: Rev. D Module’s 3.3V I/O Connector","alt":"Rev. D Module’s 3.3V I/O Connector","nro":65,"url":"/img/revdmodules33vioconnector.png","index":7,"caption_template":"Figure: _CAPTION_","label":"Rev. D Module’s 3.3V I/O Connector","attributes":{},"skip":false,"key":"1.3.8.7"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.8","level":"1.3.8","list_caption":"Figure: Rev. D Module’s GATE Inputs","alt":"Rev. D Module’s GATE Inputs","nro":66,"url":"/img/revdmodulesgateinputs.png","index":8,"caption_template":"Figure: _CAPTION_","label":"Rev. D Module’s GATE Inputs","attributes":{},"skip":false,"key":"1.3.8.8"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.9","level":"1.3.8","list_caption":"Figure: Rev. D Module’s GATE INPUTS Connector","alt":"Rev. D Module’s GATE INPUTS Connector","nro":67,"url":"/img/revdmodulesgateinputsconnector.png","index":9,"caption_template":"Figure: _CAPTION_","label":"Rev. D Module’s GATE INPUTS Connector","attributes":{},"skip":false,"key":"1.3.8.9"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.10","level":"1.3.8","list_caption":"Figure: Rev. B and C Module’s 3.3V I/O Connector","alt":"Rev. B and C Module’s 3.3V I/O Connector","nro":68,"url":"/img/revbandcmodules33vioconnector.png","index":10,"caption_template":"Figure: _CAPTION_","label":"Rev. B and C Module’s 3.3V I/O Connector","attributes":{},"skip":false,"key":"1.3.8.10"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.11","level":"1.3.8","list_caption":"Figure: TTL Digital Input Signals","alt":"TTL Digital Input Signals","nro":69,"url":"/img/ttldigitalinputsignals.png","index":11,"caption_template":"Figure: _CAPTION_","label":"TTL Digital Input Signals","attributes":{},"skip":false,"key":"1.3.8.11"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.12","level":"1.3.8","list_caption":"Figure: Connector J101 LVDS I/O Port Signals","alt":"Connector J101 LVDS I/O Port Signals","nro":70,"url":"/img/connectorj101lvdsioportsignals.png","index":12,"caption_template":"Figure: _CAPTION_","label":"Connector J101 LVDS I/O Port Signals","attributes":{},"skip":false,"key":"1.3.8.12"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.13","level":"1.3.8","list_caption":"Figure: TTL Digital Output Signals","alt":"TTL Digital Output Signals","nro":71,"url":"/img/ttldigitaloutputsignals.png","index":13,"caption_template":"Figure: _CAPTION_","label":"TTL Digital Output Signals","attributes":{},"skip":false,"key":"1.3.8.13"},{"backlink":"UsersGuide/FrontPanel.html#fig1.3.8.14","level":"1.3.8","list_caption":"Figure: Lupo x495","alt":"Lupo x495","nro":72,"url":"/img/lupox495.png","index":14,"caption_template":"Figure: _CAPTION_","label":"Lupo x495","attributes":{},"skip":false,"key":"1.3.8.14"},{"backlink":"UsersGuide/Logic.html#fig1.3.9.1","level":"1.3.9","list_caption":"Figure: illustrates the signal processing in the Pixie-16 modules","alt":"illustrates the signal processing in the Pixie-16 modules","nro":73,"url":"/img/illustratesthesignalprocessinginthepixie16modules.png","index":1,"caption_template":"Figure: _CAPTION_","label":"illustrates the signal processing in the Pixie-16 modules","attributes":{},"skip":false,"key":"1.3.9.1"},{"backlink":"UsersGuide/Logic.html#fig1.3.9.2","level":"1.3.9","list_caption":"Figure: Range for Trigger Stretch Lengths and FIFO Delays in Pixie-16 Modules","alt":"Range for Trigger Stretch Lengths and FIFO Delays in Pixie-16 Modules","nro":74,"url":"/img/rangefortriggerstretchlengthsandfifodelayinpixie16modules.png","index":2,"caption_template":"Figure: _CAPTION_","label":"Range for Trigger Stretch Lengths and FIFO Delays in Pixie-16 Modules","attributes":{},"skip":false,"key":"1.3.9.2"},{"backlink":"UsersGuide/Logic.html#fig1.3.9.3","level":"1.3.9","list_caption":"Figure: System FPGA","alt":"System FPGA","nro":75,"url":"/img/SystemFPGA.png","index":3,"caption_template":"Figure: _CAPTION_","label":"System FPGA","attributes":{},"skip":false,"key":"1.3.9.3"},{"backlink":"UsersGuide/Logic.html#fig1.3.9.4","level":"1.3.9","list_caption":"Figure: fast trigger stretch/delay","alt":"fast trigger stretch/delay","nro":76,"url":"/img/fasttrigger_stretch_delay.png","index":4,"caption_template":"Figure: _CAPTION_","label":"fast trigger stretch/delay","attributes":{},"skip":false,"key":"1.3.9.4"},{"backlink":"UsersGuide/Logic.html#fig1.3.9.5","level":"1.3.9","list_caption":"Figure: validation trigger","alt":"validation trigger","nro":77,"url":"/img/validationtrigger.png","index":5,"caption_template":"Figure: _CAPTION_","label":"validation trigger","attributes":{},"skip":false,"key":"1.3.9.5"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.1","level":"1.3.10","list_caption":"Figure: JP101","alt":"JP101","nro":78,"url":"/img/multiplemodulessynchronously.png","index":1,"caption_template":"Figure: _CAPTION_","label":"JP101","attributes":{},"skip":false,"key":"1.3.10.1"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.2","level":"1.3.10","list_caption":"Figure: individual clock mode","alt":"individual clock mode","nro":79,"url":"/img/individualclockmode.png","index":2,"caption_template":"Figure: _CAPTION_","label":"individual clock mode","attributes":{},"skip":false,"key":"1.3.10.2"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.3","level":"1.3.10","list_caption":"Figure: PXI clock mode","alt":"PXI clock mode","nro":80,"url":"/img/pxiclockmode.png","index":3,"caption_template":"Figure: _CAPTION_","label":"PXI clock mode","attributes":{},"skip":false,"key":"1.3.10.3"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.4","level":"1.3.10","list_caption":"Figure: daisy-chained clock mode","alt":"daisy-chained clock mode","nro":81,"url":"/img/daisychainedclockmode.png","index":4,"caption_template":"Figure: _CAPTION_","label":"daisy-chained clock mode","attributes":{},"skip":false,"key":"1.3.10.4"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.5","level":"1.3.10","list_caption":"Figure: multi-crate clock mode","alt":"multi-crate clock mode","nro":82,"url":"/img/multicrateclockmode.png","index":5,"caption_template":"Figure: _CAPTION_","label":"multi-crate clock mode","attributes":{},"skip":false,"key":"1.3.10.5"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.6","level":"1.3.10","list_caption":"Figure: Module Definitions in a 2-crate System","alt":"Module Definitions in a 2-crate System","nro":83,"url":"/img/moduledefinitionsina2cratesystem.png","index":6,"caption_template":"Figure: _CAPTION_","label":"Module Definitions in a 2-crate System","attributes":{},"skip":false,"key":"1.3.10.6"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.7","level":"1.3.10","list_caption":"Figure: Clock Jumper JP101 Settings in a 2-crate System","alt":"Clock Jumper JP101 Settings in a 2-crate System","nro":84,"url":"/img/clockjumperjp101settingsina2cratesystem.png","index":7,"caption_template":"Figure: _CAPTION_","label":"Clock Jumper JP101 Settings in a 2-crate System","attributes":{},"skip":false,"key":"1.3.10.7"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.8","level":"1.3.10","list_caption":"Figure: rear I/O trigger modules","alt":"rear I/O trigger modules","nro":85,"url":"/img/reariotriggermodules.png","index":8,"caption_template":"Figure: _CAPTION_","label":"rear I/O trigger modules","attributes":{},"skip":false,"key":"1.3.10.8"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.9","level":"1.3.10","list_caption":"Figure: Cable connections between two Pixie-16 rear I/O trigger modules","alt":"Cable connections between two Pixie-16 rear I/O trigger modules","nro":86,"url":"/img/cableconnectionsbetweentwopixie16reariotriggermodules.png","index":9,"caption_template":"Figure: _CAPTION_","label":"Cable connections between two Pixie-16 rear I/O trigger modules","attributes":{},"skip":false,"key":"1.3.10.9"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.10","level":"1.3.10","list_caption":"Figure: Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module","alt":"Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module","nro":87,"url":"/img/pinnumberingforthejumpersonthepixie16reariotriggermodule.png","index":10,"caption_template":"Figure: _CAPTION_","label":"Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module","attributes":{},"skip":false,"key":"1.3.10.10"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.11","level":"1.3.10","list_caption":"Figure: Rear I/O Trigger Module #1’s Jumper Settings","alt":"Rear I/O Trigger Module #1’s Jumper Settings","nro":88,"url":"/img/reariotrigger1sjumpersettings.png","index":11,"caption_template":"Figure: _CAPTION_","label":"Rear I/O Trigger Module #1’s Jumper Settings","attributes":{},"skip":false,"key":"1.3.10.11"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.12","level":"1.3.10","list_caption":"Figure: Rear I/O Trigger Module #2’s Jumper Settings","alt":"Rear I/O Trigger Module #2’s Jumper Settings","nro":89,"url":"/img/reariotriggermodule2sjumpersettings.png","index":12,"caption_template":"Figure: _CAPTION_","label":"Rear I/O Trigger Module #2’s Jumper Settings","attributes":{},"skip":false,"key":"1.3.10.12"},{"backlink":"UsersGuide/MultipleModulesSynchronously.html#fig1.3.10.13","level":"1.3.10","list_caption":"Figure: Cable connections among four Pixie-16 rear I/O trigger modules","alt":"Cable connections among four Pixie-16 rear I/O trigger modules","nro":90,"url":"/img/cableconnectionsamongfourpixie16reariotriggermodules.png","index":13,"caption_template":"Figure: _CAPTION_","label":"Cable connections among four Pixie-16 rear I/O trigger modules","attributes":{},"skip":false,"key":"1.3.10.13"},{"backlink":"UsersGuide/UpdateCPLD.html#fig1.3.11.1","level":"1.3.11","list_caption":"Figure: 6 pin connector","alt":"6 pin connector","nro":91,"url":"/img/6pinJTAGconnector.png","index":1,"caption_template":"Figure: _CAPTION_","label":"6 pin connector","attributes":{},"skip":false,"key":"1.3.11.1"},{"backlink":"Example/TimeResolution.html#fig1.4.1.1","level":"1.4.1","list_caption":"Figure: 2 channel in one module","alt":"2 channel in one module","nro":92,"url":"/img/timeresolution_100m_1module.png","index":1,"caption_template":"Figure: _CAPTION_","label":"2 channel in one module","attributes":{},"skip":false,"key":"1.4.1.1"},{"backlink":"Example/TimeResolution.html#fig1.4.1.2","level":"1.4.1","list_caption":"Figure: 2 channel in different crate","alt":"2 channel in different crate","nro":93,"url":"/img/timeresolution_100m_2crate.png","index":2,"caption_template":"Figure: _CAPTION_","label":"2 channel in different crate","attributes":{},"skip":false,"key":"1.4.1.2"},{"backlink":"Example/InBeamGammaCIAE.html#fig1.4.3.1","level":"1.4.3","list_caption":"Figure: CIAE 2018 online","alt":"CIAE 2018 online","nro":94,"url":"/img/inbeamgamma2018online.png","index":1,"caption_template":"Figure: _CAPTION_","label":"CIAE 2018 online","attributes":{},"skip":false,"key":"1.4.3.1"},{"backlink":"Example/InBeamGammaCIAE.html#fig1.4.3.2","level":"1.4.3","list_caption":"Figure: iThemba 2019 online","alt":"iThemba 2019 online","nro":95,"url":"/img/inbeamgamma2019Thembaonline.png","index":2,"caption_template":"Figure: _CAPTION_","label":"iThemba 2019 online","attributes":{},"skip":false,"key":"1.4.3.2"},{"backlink":"Example/InBeamGammaCIAE.html#fig1.4.3.3","level":"1.4.3","list_caption":"Figure: BGO VETO GATE WIDTH","alt":"BGO VETO GATE WIDTH","nro":96,"url":"/img/bgovetogate2018.png","index":3,"caption_template":"Figure: _CAPTION_","label":"BGO VETO GATE WIDTH","attributes":{},"skip":false,"key":"1.4.3.3"},{"backlink":"Example/InBeamGammaCIAE.html#fig1.4.3.4","level":"1.4.3","list_caption":"Figure: CIAE 2018 peak-to-total","alt":"CIAE 2018 peak-to-total","nro":97,"url":"/img/peaktototal2018CIAE.png","index":4,"caption_template":"Figure: _CAPTION_","label":"CIAE 2018 peak-to-total","attributes":{},"skip":false,"key":"1.4.3.4"},{"backlink":"ProcurementProposal.html#fig1.5.1","level":"1.5","list_caption":"Figure: System","alt":"System","nro":98,"url":"/img/System.jpg","index":1,"caption_template":"Figure: _CAPTION_","label":"System","attributes":{},"skip":false,"key":"1.5.1"},{"backlink":"ProcurementProposal.html#fig1.5.2","level":"1.5","list_caption":"Figure: 机箱背板模块","alt":"机箱背板模块","nro":99,"url":"/img/reariotriggermodules.png","index":2,"caption_template":"Figure: _CAPTION_","label":"机箱背板模块","attributes":{},"skip":false,"key":"1.5.2"},{"backlink":"ProcurementProposal.html#fig1.5.3","level":"1.5","list_caption":"Figure: MZTIO","alt":"MZTIO","nro":100,"url":"/img/MZTIO.jpg","index":3,"caption_template":"Figure: _CAPTION_","label":"MZTIO","attributes":{},"skip":false,"key":"1.5.3"}]},"title":"PKU XIA DAQ GUIDE","language":"zh","gitbook":"*","description":"北京大学实验核物理组数字化获取说明书"},"file":{"path":"UsersGuide/DropDown4.md","mtime":"2019-05-04T13:15:11.061Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2019-06-27T09:57:30.548Z"},"basePath":"..","book":{"language":"zh"}});
-        });
-    </script>
-</div>
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Hongyi Wu(吴鸿毅)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
 
 
-        
-    <script src="../../gitbook/gitbook.js"></script>
-    <script src="../../gitbook/theme.js"></script>
-    
-        
-        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-livereload/plugin.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-github/plugin.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-ad/plugin.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-alerts/plugin.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-atoc/atoc.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-ace/ace/ace.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-ace/ace.js"></script>
-        
-    
-        
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-sectionx/sectionx.js"></script>
-        
-    
-        
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-mcqx/js.cookie.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-mcqx/mcqx.js"></script>
-        
-    
-        
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-fbqx/fbqx.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-spoiler/spoiler.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-youtubex/player.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
 
-    </body>
+  
+  
+    
+   
+
+</body>
 </html>
-
