@@ -77,3 +77,30 @@ source_suffix = {
 
 latex_logo = ''
 latex_engine = 'xelatex'
+
+latex_elements = {
+    # The paper size ('letterpaper' or 'a4paper').
+'papersize': 'a4paper',
+
+# The font size ('10pt', '11pt' or '12pt').
+    #'pointsize': '10pt',
+
+# Additional stuff for the LaTeX preamble.
+    #'preamble': '',
+
+# Latex figure (float) alignment
+    #'figure_align': 'htbp',
+
+'preamble' : r'''
+  \usepackage[slantfont,boldfont]{xeCJK} 
+\newCJKfontfamily{\song}{SimSun}
+\newCJKfontfamily{\hei}{SimHei}
+\newCJKfontfamily{\kai}{KaiTi}
+\newCJKfontfamily{\fangsong}{FangSong}
+
+\setmainfont{Times New Roman}%文档正文默认英语字体,设置衬线字体
+\setCJKmainfont[BoldFont={SimSun},ItalicFont={KaiTi}]{SimSun}%设置默认中文字体
+\setCJKsansfont{SimHei}
+\setCJKmonofont{FangSong}% 设置等宽字体
+        ''',
+}

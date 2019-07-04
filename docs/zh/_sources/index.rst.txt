@@ -3,21 +3,22 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-简介
+
 #################################
 
 .. toctree::
    :maxdepth: 2
-
+   :caption: 简介
+      
    README.rst
 
 
-程序安装
+
 #################################
 
 .. toctree::
    :maxdepth: 2
-
+   :caption: 程序安装
    
    INSTALL.rst
 
