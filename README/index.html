@@ -1,13 +1,75 @@
 <!doctype html> <!-- 声明文档类型为HTML -->
 <html>
   <head>
-    <meta charset="utf-8"> <!-- 定义字符的编码 -->
+    <meta http-equiv="Content-Type" content="text/html" />
+    <meta http-equiv="charset" content="utf-8">
+    <!-- <meta http-equiv="refresh" content="5" /> -->
+
+    <meta name="author" content="Hongyi Wu">
+    <meta name="description" content="PKU XIA DAQ USER'S GUIDE">
+    <meta name="keywords" content="XIA, DAQ, Pixie16, PKU">
+    <meta name="generator" content="emacs">
+    <meta name="revised" content="Hongyi Wu, 07/09/19">
+
+    <!-- 
+	 CSS盒子模型
+
+	 外边距  margin:  10px 20 px 30px 40px;  上右下左距离  
+	                 10 px;                 四个值一样
+			 10 px 20px;            上下第一个，左右第二个
+			 10 px 20px 30px;       上右下，左与右相等
+	                 10px auto;             auto居中
+			 10px 20px auto;
+			 10px 20px 30px auto;
+			 10px 20px 30px 40px auto;
+	 边框    border:  12px solid yellow;
+	 填充    padding: 10px 20px 30px 40px;  上右下左距离  
+	                 10 px;                 四个值一样
+			 10 px 20px;            上下第一个，左右第二个
+			 10 px 20px 30px;       上右下，左与右相等
+	 文本    content 设置宽度高度其实是设置这个的参数
+      -->
+
+    <!-- HTML不区分大小写 --推荐使用小写  -->
+    <!-- ID选择器和类选择器：区分大小写 -->
+    
+
+    
+    <style type="text/css">/*这里属于内嵌   优先级: 内联>内嵌>传递 */
+      div {
+	  margin: auto;/*居中设置*/
+	  background-color: #FFFFFF;
+	  /* font-size: 22px; */
+	  /* font-weight: bold; */
+	  /* color: red; */
+      }/*必须设置 width: 100px; height: 100px;*/
+
+      /* div1,div2,div3 {}  多标签选择，一次应用到多种标签 */
+      /* div1 > div2 > div3 {}  多层标签*/
+
+      /* .classname {}  类选择器：不属于同一种标签（部分），需要做相同的设置  
+	 把某一类的标签设置成同一个属性
+	 类选择器可以可以和多标签、多层结合使用
+     */
+      /* #idname {} ID选择器： ID在一个HTML文件中不能重复*/
+      
+    </style>
+    
+    
     <title>  PKU XIA DAQ GUIDE  </title>
   </head>
   
-  <body>
+  <body style="margin: 0px auto; width: 1200px;">
+
+    <!-- header页面头部 -->
+    <header style="margin: auto; height: 100px; text-align: center;">
+      <h1>PKU XIA DAQ GUIDE</h1>
+      <p>Thank you for using our program.</p>
+    </header>
+
+    <div style="height: 200px;"></div> 
     
-    <div >
+    <div style="width: 200px; text-align: center;">
       <h3>Choose a language</h3>
 
       <ul >
@@ -22,6 +84,12 @@
         
       </ul>
     </div>
-    
+
+    <div style="height: 400px;"></div> 
+
+    <!-- footer -->
+    <footer style="text-align: center">
+      <p>Copyright @ Hongyi Wu(吴鸿毅) &nbsp;&nbsp;&nbsp;&nbsp;  Contact information: <a href="mailto:wuhongyi@qq.com"> wuhongyi@qq.com</a></p>
+    </footer>
   </body>
 </html>

@@ -7,7 +7,7 @@
 #################################
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: 简介
       
    README.rst
@@ -17,7 +17,7 @@
 #################################
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: 程序安装
    
    INSTALL.rst
@@ -26,7 +26,7 @@
 #################################
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: 用户指南
 	     
    UsersGuide/README.rst
@@ -45,7 +45,7 @@
 #################################
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: 应用案例
 	     
    Example/README.rst

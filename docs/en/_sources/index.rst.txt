@@ -7,7 +7,7 @@
 #################################
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Introduction
       
    README.rst
@@ -17,7 +17,7 @@
 #################################
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Install
    
    INSTALL.rst
@@ -26,7 +26,7 @@
 #################################
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Users Guide
 	     
    UsersGuide/README.rst
@@ -57,7 +57,7 @@
 #################################
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Programmers Guide
 	     
    ProgrammersGuide/README.rst
