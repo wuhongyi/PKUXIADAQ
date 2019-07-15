@@ -47,7 +47,7 @@ templates_path = ['_templates']
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = 'en'
+language = 'zh_CN'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -91,16 +91,16 @@ latex_elements = {
 # Latex figure (float) alignment
     #'figure_align': 'htbp',
 
-'preamble' : r'''
-  \usepackage[slantfont,boldfont]{xeCJK} 
-\newCJKfontfamily{\song}{SimSun}
-\newCJKfontfamily{\hei}{SimHei}
-\newCJKfontfamily{\kai}{KaiTi}
-\newCJKfontfamily{\fangsong}{FangSong}
+# 'preamble' : r'''
+#   \usepackage[slantfont,boldfont]{xeCJK} 
+# \newCJKfontfamily{\song}{SimSun}
+# \newCJKfontfamily{\hei}{SimHei}
+# \newCJKfontfamily{\kai}{KaiTi}
+# \newCJKfontfamily{\fangsong}{FangSong}
 
-\setmainfont{Times New Roman}%文档正文默认英语字体,设置衬线字体
-\setCJKmainfont[BoldFont={SimSun},ItalicFont={KaiTi}]{SimSun}%设置默认中文字体
-\setCJKsansfont{SimHei}
-\setCJKmonofont{FangSong}% 设置等宽字体
-        ''',
+# \setmainfont{Times New Roman}%文档正文默认英语字体,设置衬线字体
+# \setCJKmainfont[BoldFont={SimSun},ItalicFont={KaiTi}]{SimSun}%设置默认中文字体
+# \setCJKsansfont{SimHei}
+# \setCJKmonofont{FangSong}% 设置等宽字体
+#         ''',
 }

@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Guide &mdash; PKUXIADAQ beta documentation</title>
+  <title>Guide &mdash; PKUXIADAQ beta 文档</title>
   
 
   
@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -35,8 +36,8 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="Crate" href="Crate.html" />
     <link rel="prev" title="Installation of Software" href="../INSTALL.html" /> 
 </head>
@@ -111,6 +112,7 @@
 <p class="caption"><span class="caption-text">Applications</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Example/README.html">Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/TOF2TAC.html">TOF measurement in 100M</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/TimeResolution.html">Time Resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/RecommendedParameters.html">Recommended Parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/InBeamGammaCIAE.html">In Beam Gamma</a></li>
@@ -185,18 +187,18 @@
            <div itemprop="articleBody">
             
   <div class="section" id="guide">
-<h1>Guide<a class="headerlink" href="#guide" title="Permalink to this headline">¶</a></h1>
+<h1>Guide<a class="headerlink" href="#guide" title="永久链接至标题">¶</a></h1>
 <p><strong>User’s Manual</strong> <em>Digital Gamma Finder (DGF) PIXIE-16</em>  <strong>Version 1.40, October 2009</strong></p>
 <p><strong>Pixie-16 User Manual</strong>  <strong>Version 3.00</strong>  <strong>August 21, 2018</strong></p>
 <hr class="docutils" />
 <div class="admonition important">
-<p class="admonition-title">Important</p>
+<p class="admonition-title">重要</p>
 <p>The Pixie-16 is designed for single exponentially decaying signals.</p>
 <p>Step pulses or short non-exponential pulses can be accommodated with specific parameter settings.</p>
 <p>Staircase type signals from reset preamplifiers generally need to be AC coupled.</p>
 </div>
 <div class="admonition danger">
-<p class="admonition-title">Danger</p>
+<p class="admonition-title">危险</p>
 <p>The amplitude of the detector output signals is not recommended to exceed +/-3.5V if 50Ohm input termination jumper is installed and the 1:4 attenuation is not used.</p>
 <p>Do Not Hot-Swap!</p>
 <p>To avoid personal injury, and/or damage to the DGF-Pixie-16, always turn off crate power before removing the DGF-Pixie-16 from the crate!</p>
@@ -238,7 +240,7 @@
 <p>The Pixie-16 modules must be operated in a custom 6U CompactPCI/PXI chassis providing high currents at specific voltages not included in the CompactPCI/PXI standard 1 . Currently XIA provides a 14-slot chassis. Put the host computer(or remote PXI controller) in the system slot (slot 1) of your chassis. Put the Pixie-16 modules into any free peripheral slot (slot 2-14) with the chassis still powered down. After modules are installed, power up the chassis (Pixie-16 modules are not hot swappable). If using a remote controller, be sure to boot the host computer after powering up the chassis.</p>
 <hr class="docutils" />
 <div class="section" id="data-structures">
-<h2>Data Structures<a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h2>
+<h2>Data Structures<a class="headerlink" href="#data-structures" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/data_100M.PNG" src="../_images/data_100M.PNG" />
 <img alt="../_images/data_250M.PNG" src="../_images/data_250M.PNG" />
 <img alt="../_images/data_500M.PNG" src="../_images/data_500M.PNG" />

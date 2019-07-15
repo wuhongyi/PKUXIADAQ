@@ -3,6 +3,14 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+PKUXIADAQ   
+#################################
+
+.. toctree::
+   :maxdepth: 3
+   :caption: content:
+
+Welcome to PKUXIADAQ's guides.
 
 #################################
 
@@ -11,7 +19,6 @@
    :caption: Introduction
       
    README.rst
-
 
 
 #################################
@@ -49,6 +56,7 @@
    :caption: Applications
 	     
    Example/README.rst
+   Example/TOF2TAC.rst
    Example/TimeResolution.rst
    Example/RecommendedParameters.rst
    Example/InBeamGammaCIAE.rst

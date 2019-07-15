@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>UV_Setup &mdash; PKUXIADAQ beta documentation</title>
+  <title>UV_Setup &mdash; PKUXIADAQ beta 文档</title>
   
 
   
@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -35,8 +36,8 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -106,6 +107,7 @@
 <p class="caption"><span class="caption-text">Applications</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Example/README.html">Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/TOF2TAC.html">TOF measurement in 100M</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/TimeResolution.html">Time Resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/RecommendedParameters.html">Recommended Parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/InBeamGammaCIAE.html">In Beam Gamma</a></li>
@@ -180,12 +182,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="uv-setup">
-<h1>UV_Setup<a class="headerlink" href="#uv-setup" title="Permalink to this headline">¶</a></h1>
+<h1>UV_Setup<a class="headerlink" href="#uv-setup" title="永久链接至标题">¶</a></h1>
 <p>The adjustments in this drop-down column are the basics, and anyone using the Pixie16 acquisition system should be familiar with and master the operating techniques.</p>
 <div class="section" id="base-setup">
-<h2>Base Setup<a class="headerlink" href="#base-setup" title="Permalink to this headline">¶</a></h2>
+<h2>Base Setup<a class="headerlink" href="#base-setup" title="永久链接至标题">¶</a></h2>
 <div class="section" id="interface">
-<h3>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h3>
+<h3>Interface<a class="headerlink" href="#interface" title="永久链接至标题">¶</a></h3>
 <img alt="../_images/BaseSetup.png" src="../_images/BaseSetup.png" />
 <p>The status below the interface shows a <strong>green Ready</strong> to indicate that the interface can be operated, otherwise you need to wait.</p>
 <p>In the interface, the parameters behind the <strong>Module</strong> are used to select the adjusted module, <strong>Load</strong> is used to read the parameter value of the modules, and <strong>Apply</strong> is to write the value in the interface to the module.</p>
@@ -197,7 +199,7 @@
 <p>The trace delay cannot be longer than the trace length, and for each Pixie-16 variant, there is also a limit for the maximum value of trace delay and trace length.</p>
 </div>
 <div class="section" id="parameters-introduction">
-<h3>Parameters introduction<a class="headerlink" href="#parameters-introduction" title="Permalink to this headline">¶</a></h3>
+<h3>Parameters introduction<a class="headerlink" href="#parameters-introduction" title="永久链接至标题">¶</a></h3>
 <ul class="simple">
 <li><p>The option <em>Gain</em> indicates the gain adjustment. The user can select the <em>Larger</em> or <em>Small</em>. The gain parameters corresponding to the two files of each module can be tested by the user or be chosen by consulting the manufacturer.</p></li>
 <li><p>The option <em>Sign</em> indicates the polarity of the selected input signal. The positive signal selects “+” and the negative signal selects “-“.</p></li>
@@ -223,14 +225,14 @@
 </ul>
 </div>
 <div class="section" id="important-note">
-<h3>Important note<a class="headerlink" href="#important-note" title="Permalink to this headline">¶</a></h3>
+<h3>Important note<a class="headerlink" href="#important-note" title="永久链接至标题">¶</a></h3>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
+<p class="admonition-title">注解</p>
 <p><strong>trace length in 500 MHz</strong></p>
 <p>For the 500 MHz Pixie-16 modules, the ADCs are running at 500 MHz, but the traces are recorded with 100 MHz clocks in the FPGA with 5 ADC samples captured in each 10 ns interval. In addition, the data packing from the FPGA to the onboard External FIFO is two sets of 5 ADC samples in one transfer. So the trace length should be multiples of 20 ns, i.e., 20 ns, 40 ns, … for instance, a trace length of 500 ns and a trace delay of 200 ns.</p>
 </div>
 <div class="admonition tip">
-<p class="admonition-title">Tip</p>
+<p class="admonition-title">小技巧</p>
 <p><strong>Good channel</strong></p>
 <p>Only channels marked as good will have their events recorded.</p>
 <p>This setting has no bearing on the channel’s capability to issue a trigger.</p>
@@ -239,7 +241,7 @@
 </div>
 </div>
 <div class="section" id="baseline-measurements">
-<h3>Baseline measurements<a class="headerlink" href="#baseline-measurements" title="Permalink to this headline">¶</a></h3>
+<h3>Baseline measurements<a class="headerlink" href="#baseline-measurements" title="永久链接至标题">¶</a></h3>
 <p>The Pixie-16 constantly takes baseline measurements when no pulse is detected and keeps a baseline average to be subtracted from the energy filter output during pulse height reconstruction. Baseline measurements that differ from the average by more than the BaselineCut value will be rejected as they are likely contaminated with small pulses below the trigger threshold.</p>
 <p>A series of baseline measurements for each channel can be viewed in <strong>Trace &amp; Baseline</strong> page, and in the BASELINE panel a histogram of baselines can be built to verify that the Baseline Cut does not reject measurements falling into the main (ideally Gaussian) peak in the baseline distribution.</p>
 <p>Usually, it is sufficient to keep Baseline Cut at its default value.</p>
@@ -259,9 +261,9 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="trigger-filter">
-<h2>Trigger Filter<a class="headerlink" href="#trigger-filter" title="Permalink to this headline">¶</a></h2>
+<h2>Trigger Filter<a class="headerlink" href="#trigger-filter" title="永久链接至标题">¶</a></h2>
 <div class="section" id="id1">
-<h3>Interface<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<h3>Interface<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h3>
 <img alt="../_images/TriggerFilter.png" src="../_images/TriggerFilter.png" />
 <p>When the status below the interface is displaying <strong>green Ready</strong>, it means that the interface can be operated, otherwise you need to wait. The operation of the bottom button is the same as above.</p>
 <ul class="simple">
@@ -277,7 +279,7 @@
 </ul>
 </div>
 <div class="section" id="digital-filters">
-<h3>Digital Filters<a class="headerlink" href="#digital-filters" title="Permalink to this headline">¶</a></h3>
+<h3>Digital Filters<a class="headerlink" href="#digital-filters" title="永久链接至标题">¶</a></h3>
 <p>Energy dispersive detectors, which include such solid state detectors as Si(Li), HPGe, HgI2 , CdTe and CZT detectors, are generally operated with charge sensitive preamplifiers as shown in Figure. Here the detector <strong>D</strong> is biased by voltage source <strong>V</strong> and connected to the input of <strong>preamplifier A</strong> which has feedback capacitor <strong>Cf</strong> and feedback resistor <strong>Rf</strong> .</p>
 <img alt="../_images/chargesenitivepreamplifierrcfeedbackoutputonabsorptionofagammaray.png" src="../_images/chargesenitivepreamplifierrcfeedbackoutputonabsorptionofagammaray.png" />
 <p>Reducing noise in an electrical measurement is accomplished by filtering. Traditional analog filters use combinations of a differentiation stage and multiple integration stages to convert the preamp output steps, such as shown in Figure (b), into either triangular or semi-Gaussian pulses whose amplitudes (with respect to their baselines) are then proportional to <strong>Vx</strong> and thus to the gamma-ray’s energy.</p>
@@ -300,9 +302,9 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="energy">
-<h2>Energy<a class="headerlink" href="#energy" title="Permalink to this headline">¶</a></h2>
+<h2>Energy<a class="headerlink" href="#energy" title="永久链接至标题">¶</a></h2>
 <div class="section" id="id2">
-<h3>Interface<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3>Interface<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
 <img alt="../_images/Energy.png" src="../_images/Energy.png" />
 <p>When the status below the interface is displaying <strong>green Ready</strong>, it means that the interface can be operated, otherwise you need to wait. The operation of the bottom button is the same as above.</p>
 <ul class="simple">
@@ -315,7 +317,7 @@
 <p>Click Accept it to apply the found value to the channel. (If the approximate value is unchanged,the software could not find a better value.)</p>
 <p>At high count rates, pulses overlap with each other at higher frequency. In order to compute the energy or pulse height of those pulses accurately without the need to wait until they decay back to baseline level completely, the pulse height computation algorithm implemented in the Pixie-16 uses the decay time to compute and remove the contribution from the exponentially decaying tail of the overlapping prior pulse when computing the pulse height of the current pulse.</p>
 <div class="admonition danger">
-<p class="admonition-title">Danger</p>
+<p class="admonition-title">危险</p>
 <p><strong>single exponential decay constant</strong></p>
 <p>It is assumed the pulses have only a single exponential decay constant. If pulses have multiple decay constants, it might be possible to use the decay constant that dominates the decay of the pulse, but the accuracy of pulse height computation will be degraded.</p>
 </div>
@@ -329,13 +331,13 @@
 </ul>
 </div>
 <div class="section" id="filter-range">
-<h3>Filter Range<a class="headerlink" href="#filter-range" title="Permalink to this headline">¶</a></h3>
+<h3>Filter Range<a class="headerlink" href="#filter-range" title="永久链接至标题">¶</a></h3>
 <p>To accommodate a wide range of energy filter rise times from tens of nanoseconds to tens of microseconds, the filters are implemented in the FPGA with different clock decimations(filter ranges). The ADC sampling rate is either 2ns, 4ns, or 10ns depending on the ADC variant that is used, but in higher clock decimations, several ADC samples are averaged before entering the energy filtering logic. In filter range 1, <span class="math notranslate nohighlight">\(2^{1}\)</span> samples are averaged, <span class="math notranslate nohighlight">\(2^{2}\)</span> samples in filter range 2, and so on. Since the sum of rise time and flat top is limited to 127 decimated clock cycles, filter time granularity and filter time are limited to the values listed in Table .</p>
 <img alt="../_images/filterclockdecimationsandfiltertimegranularityfor100mhzor500mhz.png" src="../_images/filterclockdecimationsandfiltertimegranularityfor100mhzor500mhz.png" />
 <img alt="../_images/filterclockdecimationsandfiltertimegranularityfor250mhz.png" src="../_images/filterclockdecimationsandfiltertimegranularityfor250mhz.png" />
 </div>
 <div class="section" id="trapezoidal-filtering">
-<h3>Trapezoidal Filtering<a class="headerlink" href="#trapezoidal-filtering" title="Permalink to this headline">¶</a></h3>
+<h3>Trapezoidal Filtering<a class="headerlink" href="#trapezoidal-filtering" title="永久链接至标题">¶</a></h3>
 <p>From this point onward, only trapezoidal filtering will be considered as it is implemented in a Pixie-16 module according to Equation <span class="math notranslate nohighlight">\(LV_{x,k}=-\sum_{i=k-2L-G+1}^{k-L-G}V_{i}+\sum_{i=k-L+1}^{k}V_{i}\)</span>. The result of applying such a filter with Length L=1 us and Gap G=0.4 us to a gamma-ray event is shown in Figure. The filter output is clearly trapezoidal in shape and has a rise time equal to L, a flattop equal to G, and a symmetrical fall time equal to L. The basewidth, which is a first-order measure of the filter’s noise reduction properties, is thus 2L+G.</p>
 <img alt="../_images/trapezoidalfilteringofapreamplifierstepwithl1usandg04us.png" src="../_images/trapezoidalfilteringofapreamplifierstepwithl1usandg04us.png" />
 <p>This raises several important points in comparing the noise performance of the Pixie-16 module to analog filtering amplifiers.</p>
@@ -359,7 +361,7 @@
 <p>One important characteristic of a digitally shaped trapezoidal pulse is its extremely sharp termination on completion of the basewidth 2L+G. This may be compared to analog filtered pulses whose tails may persist up to 40% of the rise time, a phenomenon due to the finite bandwidth of the analog filter. As can be seen below, this sharp termination gives the digital filter a definite rate advantage in pileup free throughput.</p>
 </div>
 <div class="section" id="baselines-and-preamp-decay-times">
-<h3>Baselines and Preamp. Decay Times<a class="headerlink" href="#baselines-and-preamp-decay-times" title="Permalink to this headline">¶</a></h3>
+<h3>Baselines and Preamp. Decay Times<a class="headerlink" href="#baselines-and-preamp-decay-times" title="永久链接至标题">¶</a></h3>
 <p>Figure shows an event over a longer time interval and how the filter treats the preamplifier noise in regions when no gamma-ray pulses are present.</p>
 <img alt="../_images/agammaeventdisplayedoveralongertimeperiodtoshowbaselinenoiseandtheeffectofpreamplifierdecaytime.png" src="../_images/agammaeventdisplayedoveralongertimeperiodtoshowbaselinenoiseandtheeffectofpreamplifierdecaytime.png" />
 <p>As may be seen the effect of the filter is both to reduce the amplitude of the fluctuations and reduce their high frequency content. This region is called the baseline because it establishes the reference level from which the gamma-ray peak amplitude <strong>Vx</strong> is to be measured. The fluctuations in the baseline have a standard deviation <span class="math notranslate nohighlight">\(\sigma_e\)</span> which is referred to as the electronic noise of the system, a number which depends on the rise time of the filter used. Riding on top of this noise, the gamma-ray peaks contribute an additional noise term, the Fano noise, which arises from statistical fluctuations in the amount of charge <strong>Qx</strong> produced when the gamma-ray is absorbed in the detector. This Fano noise <span class="math notranslate nohighlight">\(\sigma_f\)</span> adds in quadrature with the electronic noise, so that the total noise <span class="math notranslate nohighlight">\(\sigma_t\)</span> in measuring <strong>Vx</strong> is found from:</p>
@@ -370,10 +372,10 @@
 <p>Using the decay constant <span class="math notranslate nohighlight">\(\tau\)</span>, the baselines can be mapped back to the DC level. This allows precise determination of gamma-ray energies, even if the pulse sits on the falling slope of a previous pulse. The value of  <span class="math notranslate nohighlight">\(\tau\)</span>, being a characteristic of the preamplifier, has to be determined by the user and host software and downloaded to the module.</p>
 </div>
 <div class="section" id="pileup-inspection">
-<h3>Pileup Inspection<a class="headerlink" href="#pileup-inspection" title="Permalink to this headline">¶</a></h3>
+<h3>Pileup Inspection<a class="headerlink" href="#pileup-inspection" title="永久链接至标题">¶</a></h3>
 <p>As noted above, the goal is to capture a value of <strong>Vx</strong> for each gamma-ray detected and use these values to construct a spectrum.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
+<p class="admonition-title">注解</p>
 <p>This process is also significantly different between digital and analog systems.
 In the analog system the peak value must be “captured” into an analog storage device, usually a capacitor, and “held” until it is digitized.
 Then the digital value is used to update a memory location to build the desired spectrum.
@@ -398,14 +400,14 @@ This is a significant source of the enhanced throughput found in digital systems
 </div>
 <hr class="docutils" />
 <div class="section" id="cfd">
-<h2>CFD<a class="headerlink" href="#cfd" title="Permalink to this headline">¶</a></h2>
+<h2>CFD<a class="headerlink" href="#cfd" title="永久链接至标题">¶</a></h2>
 <div class="section" id="id3">
-<h3>Interface<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3>Interface<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
 <img alt="../_images/CFDPars.png" src="../_images/CFDPars.png" />
 <p><strong>TODO</strong></p>
 </div>
 <div class="section" id="mhz-and-250-mhz-modules">
-<h3>100 MHz and 250 MHz modules<a class="headerlink" href="#mhz-and-250-mhz-modules" title="Permalink to this headline">¶</a></h3>
+<h3>100 MHz and 250 MHz modules<a class="headerlink" href="#mhz-and-250-mhz-modules" title="永久链接至标题">¶</a></h3>
 <p>The following CFD algorithm is implemented in the signal processing FPGA of the 100 MHz(Rev. B, C, D and F) and 250 MHz(Rev. F) Pixie-16 modules.</p>
 <p>Assume the digitized waveform can be represented by data series Trace[i], i = 0, 1, 2, … First the fast filter response(FF) of the digitized waveform is computed as follows:</p>
 <div class="math notranslate nohighlight">
@@ -430,7 +432,7 @@ This is a significant source of the enhanced throughput found in digital systems
 <p>However, the event will still have a valid timestamp which is latched by the fast filter trigger when fast filter crosses over the trigger threshold. The aforementioned CFD parameters correspond to the following DSP parameters.</p>
 <img alt="../_images/correspondingdspparametersforthecfdparmeters.png" src="../_images/correspondingdspparametersforthecfdparmeters.png" />
 <div class="admonition note">
-<p class="admonition-title">Note</p>
+<p class="admonition-title">注解</p>
 <p><strong>250 MHz</strong></p>
 <p>In the 250 MHz Pixie-16 modules, the event timestamp is counted with 125 MHz clock ticks, i.e., 8 ns intervals, and two consecutive 250 MHz ADC samples are captured in one 8 ns interval as well.</p>
 <p>The CFD trigger also runs at 125 MHz, but the CFD zero crossing point is still reported as a fractional time between two neighboring 250 MHz ADC samples, which are processed by the FPGA in one 125 MHz clock cycle.</p>
@@ -438,13 +440,13 @@ This is a significant source of the enhanced throughput found in digital systems
 <p>Therefore, the firmware outputs a “CFD trigger source” bit in the output data stream to indicate whether the CFD zero crossing point is in the odd or even clock cycle of the captured 250 MHz ADC waveforms.</p>
 </div>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
+<p class="admonition-title">注解</p>
 <p><strong>100 MHz</strong></p>
 <p>In the 100 MHz Pixie-16 modules, event timestamp, CFD trigger, and ADC waveform capture are all carried out with the same 100 MHz clock. So there is no need to report “CFD trigger source” for the 100 MHz Pixie-16 modules.</p>
 </div>
 </div>
 <div class="section" id="mhz-modules">
-<h3>500 MHz modules<a class="headerlink" href="#mhz-modules" title="Permalink to this headline">¶</a></h3>
+<h3>500 MHz modules<a class="headerlink" href="#mhz-modules" title="永久链接至标题">¶</a></h3>
 <p>The CFD algorithm discussed in the previous section for the 100 MHz and 250 MHz Pixie-16 modules can also be written in the following format:</p>
 <div class="math notranslate nohighlight">
 \[CFD(k)=w\cdot\left(\sum_{i=k}^{k+L}a(i)-\sum_{i=k-B}^{k-B+L}a(i)\right)-\left(\sum_{i=k-D}^{k-D+L}a(i)-\sum_{i=k-D-B}^{k-D-B+L}a(i)\right)\]</div>
@@ -461,9 +463,9 @@ This is a significant source of the enhanced throughput found in digital systems
 </div>
 <hr class="docutils" />
 <div class="section" id="qdc">
-<h2>QDC<a class="headerlink" href="#qdc" title="Permalink to this headline">¶</a></h2>
+<h2>QDC<a class="headerlink" href="#qdc" title="永久链接至标题">¶</a></h2>
 <div class="section" id="id4">
-<h3>Interface<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3>Interface<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
 <img alt="../_images/QDCPars.png" src="../_images/QDCPars.png" />
 <p>Eight QDC sums, each of which can have different lengths, are computed in the Signal Processing FPGA of a Pixie-16 module for each channel and the sums are written to the list mode output data stream if the user requests so.</p>
 <p>The recording of QDC sums starts at the waveform point which is <em>Pre-trigger Trace Length</em> or <em>Trace Delay</em> earlier than the trigger point, which is either the CFD trigger or channel fast trigger depending on whether or not CFD trigger mode is enabled.</p>
@@ -473,27 +475,27 @@ This is a significant source of the enhanced throughput found in digital systems
 </div>
 <hr class="docutils" />
 <div class="section" id="decimation">
-<h2>Decimation<a class="headerlink" href="#decimation" title="Permalink to this headline">¶</a></h2>
+<h2>Decimation<a class="headerlink" href="#decimation" title="永久链接至标题">¶</a></h2>
 <div class="section" id="id5">
-<h3>Interface<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3>Interface<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
 <img alt="../_images/Decimation.png" src="../_images/Decimation.png" />
 <p><strong>。。TODO。。</strong></p>
 </div>
 </div>
 <hr class="docutils" />
 <div class="section" id="copy-pars">
-<h2>Copy Pars<a class="headerlink" href="#copy-pars" title="Permalink to this headline">¶</a></h2>
+<h2>Copy Pars<a class="headerlink" href="#copy-pars" title="永久链接至标题">¶</a></h2>
 <div class="section" id="id6">
-<h3>Interface<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3>Interface<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
 <img alt="../_images/CopyPars.png" src="../_images/CopyPars.png" />
 <p><strong>。。TODO。。</strong></p>
 </div>
 </div>
 <hr class="docutils" />
 <div class="section" id="save2file">
-<h2>Save2File<a class="headerlink" href="#save2file" title="Permalink to this headline">¶</a></h2>
+<h2>Save2File<a class="headerlink" href="#save2file" title="永久链接至标题">¶</a></h2>
 <div class="section" id="id7">
-<h3>Interface<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<h3>Interface<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
 <img alt="../_images/Save2File.png" src="../_images/Save2File.png" />
 <p><strong>。。TODO。。</strong></p>
 </div>

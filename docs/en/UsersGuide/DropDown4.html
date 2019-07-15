@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Offiline &mdash; PKUXIADAQ beta documentation</title>
+  <title>Offiline &mdash; PKUXIADAQ beta 文档</title>
   
 
   
@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -35,8 +36,8 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -106,6 +107,7 @@
 <p class="caption"><span class="caption-text">Applications</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Example/README.html">Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/TOF2TAC.html">TOF measurement in 100M</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/TimeResolution.html">Time Resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/RecommendedParameters.html">Recommended Parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/InBeamGammaCIAE.html">In Beam Gamma</a></li>
@@ -180,10 +182,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="offiline">
-<h1>Offiline<a class="headerlink" href="#offiline" title="Permalink to this headline">¶</a></h1>
+<h1>Offiline<a class="headerlink" href="#offiline" title="永久链接至标题">¶</a></h1>
 <p>The contents in this drop-down column are the offline parameter optimization adjustment.</p>
 <div class="section" id="initdata">
-<h2>InitData<a class="headerlink" href="#initdata" title="Permalink to this headline">¶</a></h2>
+<h2>InitData<a class="headerlink" href="#initdata" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/AdjustPar.png" src="../_images/AdjustPar.png" />
 <ul class="simple">
 <li><p><em>Run</em>: Select the file run number to be read, <em>Mod</em>: selects to read which module, and the button <em>Read</em> loads the file main information (channel address, energy, waveform position, etc.) into the memory.</p></li>
@@ -203,7 +205,7 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="adjust-par">
-<h2>Adjust Par<a class="headerlink" href="#adjust-par" title="Permalink to this headline">¶</a></h2>
+<h2>Adjust Par<a class="headerlink" href="#adjust-par" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/OfflineAPI.png" src="../_images/OfflineAPI.png" />
 <p>To calculate the fast filter and slow filter cfd curves offline from the acquired waveform, the following requirements are imposed on the acquired waveform. In the above figure, the calculated energy is the difference between the energy of the algorithm and the baseline of the algorithm. To get the correct trapezoid, the premise is that there is a long enough point in front to calculate the baseline.</p>
 <p>In the figure, EFRT stands for Energy Filter Rise Time and EFFT stands for Energy Filter Flat Top.</p>
@@ -225,7 +227,7 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="wave-16">
-<h2>Wave-16<a class="headerlink" href="#wave-16" title="Permalink to this headline">¶</a></h2>
+<h2>Wave-16<a class="headerlink" href="#wave-16" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/Waveform16.png" src="../_images/Waveform16.png" />
 <p>This page is used to view 16 channels of raw waveforms, filter waveforms, thresholds, and so on. Users can choose to display multiple waveforms in <strong>Wave/Slow Filter/Fast filter/Thres/CFD/CFD Thres</strong> simultaneously.</p>
 <p>Through this page, the user can quickly check whether the waveforms of all channels of the module are normal and whether the parameter settings are reasonable. Click the button <strong>Draw</strong> once to display the next waveform for all channels.</p>
@@ -233,13 +235,13 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="energy-16">
-<h2>Energy-16<a class="headerlink" href="#energy-16" title="Permalink to this headline">¶</a></h2>
+<h2>Energy-16<a class="headerlink" href="#energy-16" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/Energy16.png" src="../_images/Energy16.png" />
 <p>This interface is used to view the 1D spectrum of 16 channels simultaneously. Click the button <em>Draw</em> in the top right corner.</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="orig-energy">
-<h2>Orig Energy<a class="headerlink" href="#orig-energy" title="Permalink to this headline">¶</a></h2>
+<h2>Orig Energy<a class="headerlink" href="#orig-energy" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/OrigEnergy.png" src="../_images/OrigEnergy.png" />
 <p>This page is used to quickly view the energy spectrum of a channel. The user selects the number of bins of the spectrum, which represents how many points we can didide 0-65536 into. Select to view the channel and then press the <em>Draw</em> button.</p>
 <img alt="../_images/OrigEnergyFit.png" src="../_images/OrigEnergyFit.png" />
@@ -247,14 +249,14 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="calc-energy">
-<h2>Calc Energy<a class="headerlink" href="#calc-energy" title="Permalink to this headline">¶</a></h2>
+<h2>Calc Energy<a class="headerlink" href="#calc-energy" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/CalcEnergy.png" src="../_images/CalcEnergy.png" />
 <p>This page recalculates the energy using the acquired waveform. Like the <strong>Adjust Par</strong> page, the SF BL algorithm can choose either the Calculate algorithm or the Old Baseline algorithm.</p>
 <p>The fast filter and energy filter parameters used to calculate the energy adopt the setting parameters of the module. The user needs to select the number of bins that the energy about 65536 channels are divided into. You can select 1024/2048/4096/8192/16384/32768/65536. Select the calculated channel and then press the button <em>Draw</em> to start the calculation, the upper left corner will display the progress of the calculation, or press the button <em>Stop</em> to terminate the calculation early. When the calculation is terminated, the spectrum will be displayed on the artboard.</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="ff-cfd-thre">
-<h2>FF/CFD Thre<a class="headerlink" href="#ff-cfd-thre" title="Permalink to this headline">¶</a></h2>
+<h2>FF/CFD Thre<a class="headerlink" href="#ff-cfd-thre" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/FFCFDThre.png" src="../_images/FFCFDThre.png" />
 <p>This interface is used for the accumulation of fast filter waveforms and cfd filter waveforms. The user selects the channel to view and presses the <em>Draw</em> button to start the calculation. The top left corner of the page can monitor the progress from time to time, or press the <em>Stop</em> button to terminate the calculation early. The calculation ends as shown in the figure above.</p>
 <p>The upper buttons <em>FFProjectY</em>, <em>CFDProjectY</em>, <em>OriginalCFD</em>, and <em>CalculateCFD</em> respectively pop up the sub-painters.</p>
@@ -267,7 +269,7 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="energy-ff">
-<h2>Energy-FF<a class="headerlink" href="#energy-ff" title="Permalink to this headline">¶</a></h2>
+<h2>Energy-FF<a class="headerlink" href="#energy-ff" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/EnergyFFGraph.png" src="../_images/EnergyFFGraph.png" />
 <p>This interface is a two-dimensional map of the energy and fast filter peak heights used to determine the appropriate threshold. The left picture is a two-dimensional correlation between energy and fast filter, which should have a good linear relationship. The right picture shows the two-dimensional correlation between the energy and the remaining maximum value of the part of the fast filer where the trapezoid is thrown away, which characterizes the noise level. And the energy should be uncorrelated with this value.</p>
 <p>Firstly, for <strong>Draw Style</strong> we choose <strong>Graph</strong>, which is the 2D scatter plot mode. Select the channel you want to view, then press the <em>Draw</em> button to start the calculation, in the top left corner the progress from time to time can be monitored, or you can press the <em>Stop</em> button to terminate the calculation early. The calculation ends as shown in the figure above.</p>
@@ -276,7 +278,7 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="energy-cfd">
-<h2>Energy-CFD<a class="headerlink" href="#energy-cfd" title="Permalink to this headline">¶</a></h2>
+<h2>Energy-CFD<a class="headerlink" href="#energy-cfd" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/EnergyCFD.png" src="../_images/EnergyCFD.png" />
 <ul class="simple">
 <li><p>The upper left picture shows the energy spectrum when cfd is invalid.</p></li>
@@ -289,27 +291,27 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="qdc">
-<h2>QDC<a class="headerlink" href="#qdc" title="Permalink to this headline">¶</a></h2>
+<h2>QDC<a class="headerlink" href="#qdc" title="永久链接至标题">¶</a></h2>
 <p><strong>to do not completed</strong></p>
 <p><strong>QDC  TODO</strong></p>
 </div>
 <hr class="docutils" />
 <div class="section" id="fft">
-<h2>FFT<a class="headerlink" href="#fft" title="Permalink to this headline">¶</a></h2>
+<h2>FFT<a class="headerlink" href="#fft" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/FFT.png" src="../_images/FFT.png" />
 <p>This interface is used to quickly view the Fourier transform of the waveform. Users can choose different algorithms, such as <strong>XIA, fftw3, CAEN(HANNING), CAEN(HAMMING), CAEN(BLACKMAN), CAEN(RECT)</strong>. Select the channel you want to view. Then press the <em>Draw</em> button, and each time the button is clicked, the next result is displayed.</p>
 <p>the ADC trace display also includes the option to view a FFT of the acquired trace. This is useful to diagnose noise contributions.</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="time-diff">
-<h2>Time Diff<a class="headerlink" href="#time-diff" title="Permalink to this headline">¶</a></h2>
+<h2>Time Diff<a class="headerlink" href="#time-diff" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/TimeDiff.png" src="../_images/TimeDiff.png" />
 <p>This interface is used to quickly view the time resolution of the two signals. The user can choose to view the time difference between the two signals of the zero crossing of the CFD algorithm or the time difference between two signals of the fast filter over threshold. <strong>Xbin</strong> represents the bin number of the abscissa, <strong>Xmin</strong> represents the minimum value of the abscissa, and <strong>Xmax</strong> represents the maximum value of the abscissa. With Ch A, Ch B we can select the two channels we want to view. Then press the <em>Draw</em> button.</p>
 <p>The option <strong>Limits</strong> selection turns on the energy range constraint. After selecting this option, the following four parameters, AL, AR, BL, and BR, take effect, which respectively represent the left and right ranges of the Ch A/B energy address, and only events with energy falling in this interval are filled into the histogram. The <strong>Orig Energy</strong> page allows the user to select the appropriate energy channel interval.</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="simulation">
-<h2>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h2>
+<h2>Simulation<a class="headerlink" href="#simulation" title="永久链接至标题">¶</a></h2>
 <p>Different types of detection and different signal-to-noise ratio waveforms are generated by the model to assist the user in learning parameter optimization adjustment.</p>
 </div>
 </div>

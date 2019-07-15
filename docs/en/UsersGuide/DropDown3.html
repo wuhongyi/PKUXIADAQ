@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Monitor &mdash; PKUXIADAQ beta documentation</title>
+  <title>Monitor &mdash; PKUXIADAQ beta 文档</title>
   
 
   
@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -35,8 +36,8 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -106,6 +107,7 @@
 <p class="caption"><span class="caption-text">Applications</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Example/README.html">Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/TOF2TAC.html">TOF measurement in 100M</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/TimeResolution.html">Time Resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/RecommendedParameters.html">Recommended Parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/InBeamGammaCIAE.html">In Beam Gamma</a></li>
@@ -180,12 +182,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="monitor">
-<h1>Monitor<a class="headerlink" href="#monitor" title="Permalink to this headline">¶</a></h1>
+<h1>Monitor<a class="headerlink" href="#monitor" title="永久链接至标题">¶</a></h1>
 <p>The adjustment in this drop-down column is to monitor the waveform noise level, baseline distribution, and so on.</p>
 <div class="section" id="hist-xdt">
-<h2>Hist &amp; XDT<a class="headerlink" href="#hist-xdt" title="Permalink to this headline">¶</a></h2>
+<h2>Hist &amp; XDT<a class="headerlink" href="#hist-xdt" title="永久链接至标题">¶</a></h2>
 <div class="section" id="interface">
-<h3>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h3>
+<h3>Interface<a class="headerlink" href="#interface" title="永久链接至标题">¶</a></h3>
 <img alt="../_images/HistXDT.png" src="../_images/HistXDT.png" />
 <p>The binning factor controls the number of MCA bins in the spectrum. Energies are computed as 16 bit numbers, allowing in principle 64K MCA bins.</p>
 <p>However, spectrum memory for each channel is limited to 32K bins, so computed energy values are divided by <span class="math notranslate nohighlight">\(2^{binning factor}\)</span> before building the histogram. Binning Factor is usually set to 1, but for low count rates and wide peaks, it might be useful to set it to a larger value to obtain a spectrum with fewer bins, but more counts per bin.</p>
@@ -194,9 +196,9 @@
 </div>
 <hr class="docutils" />
 <div class="section" id="trace-baseline">
-<h2>Trace &amp; Baseline<a class="headerlink" href="#trace-baseline" title="Permalink to this headline">¶</a></h2>
+<h2>Trace &amp; Baseline<a class="headerlink" href="#trace-baseline" title="永久链接至标题">¶</a></h2>
 <div class="section" id="id1">
-<h3>Interface<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<h3>Interface<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h3>
 <img alt="../_images/Trace.png" src="../_images/Trace.png" />
 <img alt="../_images/BaselineHist.png" src="../_images/BaselineHist.png" />
 <img alt="../_images/BaselineTimestamps.png" src="../_images/BaselineTimestamps.png" />

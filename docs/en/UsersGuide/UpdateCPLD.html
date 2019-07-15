@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Update CPLD &mdash; PKUXIADAQ beta documentation</title>
+  <title>Update CPLD &mdash; PKUXIADAQ beta 文档</title>
   
 
   
@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -35,8 +36,8 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="Applications" href="../Example/README.html" />
     <link rel="prev" title="Multiple Modules Synchronously" href="MultipleModulesSynchronously.html" /> 
 </head>
@@ -112,6 +113,7 @@
 <p class="caption"><span class="caption-text">Applications</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Example/README.html">Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/TOF2TAC.html">TOF measurement in 100M</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/TimeResolution.html">Time Resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/RecommendedParameters.html">Recommended Parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/InBeamGammaCIAE.html">In Beam Gamma</a></li>
@@ -186,20 +188,20 @@
            <div itemprop="articleBody">
             
   <div class="section" id="update-cpld">
-<h1>Update CPLD<a class="headerlink" href="#update-cpld" title="Permalink to this headline">¶</a></h1>
+<h1>Update CPLD<a class="headerlink" href="#update-cpld" title="永久链接至标题">¶</a></h1>
 <p>If you encountered issues with booting the Pixie-16 modules when you were using a newer and more powerful computer.</p>
 <p>The root cause is that XIA API software replies on delays in the software to ensure proper delays when downloading the firmware bitstream to the Pixie-16 modules.</p>
 <p>However, as the computer gets faster and faster with multi-cores, such delays can no longer be guaranteed in the software. So you had to update XIA CPLD firmware to ensure such delay is met using hardware methods.</p>
 <p><strong>Please note this CPLD code should be used to update all of your Pixie-16 modules, 100 MHz, 250 MHz or 500 MHz.</strong></p>
 <div class="section" id="pin-jtag-connector">
-<h2>6 pin JTAG connector<a class="headerlink" href="#pin-jtag-connector" title="Permalink to this headline">¶</a></h2>
+<h2>6 pin JTAG connector<a class="headerlink" href="#pin-jtag-connector" title="永久链接至标题">¶</a></h2>
 <p>You should now try to locate the 6-pin vertical Pixie-16 CPLD JTAG header J8 (circled in red in the screenshot below).</p>
 <img alt="../_images/6pinJTAGconnector.png" src="../_images/6pinJTAGconnector.png" />
 <p>The next step is to identify each of the 6 pins of the Pixie-16 CPLD JTAG header J8. When facing the top side of the Pixie-16 board, the 6 pins of the J8 connector can be identified as follows from top to bottom:  <strong>TDO</strong>, <strong>TDI</strong>, <strong>TMS</strong>, <strong>TCK</strong>, <strong>GND</strong>, and <strong>VCC</strong>. It is very important to match these pins with the colored cables from the green PCB connector that is plugged into the Xilinx Platform USB programmer.</p>
 <p>One issue here is that the Pixie-16 CPLD JTAG header J8 has 2 mm pin spacing, and the colored cables from the green PCB connector of the Xilinx programmer might have too large header to be plugged into the J8 pins directly. In that case, an adapter might be needed to convert those colored cable headers to 2 mm pin spacing first.</p>
 </div>
 <div class="section" id="update-the-cpld">
-<h2>update the CPLD<a class="headerlink" href="#update-the-cpld" title="Permalink to this headline">¶</a></h2>
+<h2>update the CPLD<a class="headerlink" href="#update-the-cpld" title="永久链接至标题">¶</a></h2>
 <p>Turn on your Pixie16 crate and the LED on the Xilinx Platform Cable USB should turn green.  If the LED does not turn green check you cable connection.  The grey INIT cable is purposely left unconnected.  Your start menu should now include the folder Xilinx ISE Design Suite 14.7. Run the 32 bit or 64 bit version of “iMPACT”.  Click on <strong>File-&gt;Initialize Chain</strong> and the program should find the <strong>xc2c256 CPLD</strong>.  Click on <strong>“No”</strong> in the window <strong>“Auto Assign Configuration Files Query”</strong>, then click on <strong>“Cancel”</strong>.   Left click on the Xilinx part in the window once, then right click and select <strong>“Assign New Configuration Files”</strong> and <strong>select the new “jed” file</strong>.  Left click on the the Xilinx part, right click and then click on <strong>“Program”</strong>.  A device programming properties window appears.  Ensure that only <strong>“Verify”</strong> and <strong>“Erase before Programming”</strong> are checked, then click on “OK”.   The program should now say <strong>“program succeeded”</strong> in blue at the bottom of the window.  The CPLD is now reprogrammed and the Pixie16 is ready to be tested.</p>
 <p>I would suggest testing out your first board before reprogramming the CPLDs on all of your boards.  Once you are in the batch mode of reprogramming and you have the cable connected (the USB programmer LED is green), you only need to click on “Program” to reprogram CPLD on your next Pixie16.</p>
 </div>

@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Logic &mdash; PKUXIADAQ beta documentation</title>
+  <title>Logic &mdash; PKUXIADAQ beta 文档</title>
   
 
   
@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -35,8 +36,8 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="Multiple Modules Synchronously" href="MultipleModulesSynchronously.html" />
     <link rel="prev" title="Front Panel" href="FrontPanel.html" /> 
 </head>
@@ -116,6 +117,7 @@
 <p class="caption"><span class="caption-text">Applications</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Example/README.html">Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/TOF2TAC.html">TOF measurement in 100M</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/TimeResolution.html">Time Resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/RecommendedParameters.html">Recommended Parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/InBeamGammaCIAE.html">In Beam Gamma</a></li>
@@ -190,9 +192,9 @@
            <div itemprop="articleBody">
             
   <div class="section" id="logic">
-<h1>Logic<a class="headerlink" href="#logic" title="Permalink to this headline">¶</a></h1>
+<h1>Logic<a class="headerlink" href="#logic" title="永久链接至标题">¶</a></h1>
 <div class="section" id="logic-function">
-<h2>Logic function<a class="headerlink" href="#logic-function" title="Permalink to this headline">¶</a></h2>
+<h2>Logic function<a class="headerlink" href="#logic-function" title="永久链接至标题">¶</a></h2>
 <p>Whether each event of a certain signal is recorded depends on:</p>
 <ul class="simple">
 <li><p>Fast trigger select (first trigger)</p></li>
@@ -238,7 +240,7 @@
 <img alt="../_images/rangefortriggerstretchlengthsandfifodelayinpixie16modules.png" src="../_images/rangefortriggerstretchlengthsandfifodelayinpixie16modules.png" />
 </div>
 <div class="section" id="module-fast-trigger-for-trigger">
-<h2>Module Fast Trigger(for trigger)<a class="headerlink" href="#module-fast-trigger-for-trigger" title="Permalink to this headline">¶</a></h2>
+<h2>Module Fast Trigger(for trigger)<a class="headerlink" href="#module-fast-trigger-for-trigger" title="永久链接至标题">¶</a></h2>
 <p>Module fast trigger has four options：</p>
 <ul class="simple">
 <li><dl class="simple">
@@ -258,7 +260,7 @@
 </ul>
 </div>
 <div class="section" id="module-validation-trigger-for-control-logic">
-<h2>Module Validation Trigger(for control logic)<a class="headerlink" href="#module-validation-trigger-for-control-logic" title="Permalink to this headline">¶</a></h2>
+<h2>Module Validation Trigger(for control logic)<a class="headerlink" href="#module-validation-trigger-for-control-logic" title="永久链接至标题">¶</a></h2>
 <p>Module validation trigger has five options：</p>
 <ul class="simple">
 <li><dl class="simple">
@@ -279,7 +281,7 @@
 </ul>
 </div>
 <div class="section" id="channel-validation-trigger-for-trigger-control-logic">
-<h2>Channel Validation Trigger(for trigger/control logic)<a class="headerlink" href="#channel-validation-trigger-for-trigger-control-logic" title="Permalink to this headline">¶</a></h2>
+<h2>Channel Validation Trigger(for trigger/control logic)<a class="headerlink" href="#channel-validation-trigger-for-trigger-control-logic" title="永久链接至标题">¶</a></h2>
 <p>Channel validation trigger has five options：</p>
 <ul class="simple">
 <li><p>Independent setting for each channel, from multiplicity</p></li>
@@ -290,7 +292,7 @@
 </ul>
 </div>
 <div class="section" id="veto">
-<h2>Veto<a class="headerlink" href="#veto" title="Permalink to this headline">¶</a></h2>
+<h2>Veto<a class="headerlink" href="#veto" title="永久链接至标题">¶</a></h2>
 <p>OR from ModuleVeto and ChannelVeto:</p>
 <ul class="simple">
 <li><dl class="simple">
@@ -312,7 +314,7 @@
 </ul>
 </div>
 <div class="section" id="system-fpga-coincidence-multiplicity">
-<h2>System FPGA（coincidence/multiplicity）<a class="headerlink" href="#system-fpga-coincidence-multiplicity" title="Permalink to this headline">¶</a></h2>
+<h2>System FPGA（coincidence/multiplicity）<a class="headerlink" href="#system-fpga-coincidence-multiplicity" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/SystemFPGA.png" src="../_images/SystemFPGA.png" />
 <p>Multiplicity: For the channel set up, the left neighbor module, its own module, and the right-side module have a total of 48 channels, and you can choose the number of channel to participate in multiply trigger.</p>
 <p>Coincidence: For the channel set, the left neighbor module, its own module, and the right neighbor module, each module match the set criteria to give a coincidence trigger.</p>

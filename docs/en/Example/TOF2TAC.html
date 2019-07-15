@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TOF measurement in 100M &mdash; PKUXIADAQ beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Time Resolution" href="TimeResolution.html" />
+    <link rel="prev" title="Applications" href="README.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PKUXIADAQ
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Install</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../INSTALL.html">Installation of Software</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Users Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/README.html">Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/Crate.html">Crate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/FIRMWARE.html">FIRMWARE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/Decode.html">Decode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/GUI.html">GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/NOGUI.html">NOGUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/OnlineStattics.html">Online Stattics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/MakeEvent.html">MakeEvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/FrontPanel.html">Front Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/Logic.html">Logic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/MultipleModulesSynchronously.html">Multiple Modules Synchronously</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/UpdateCPLD.html">Update CPLD</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Applications</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">Applications</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TOF measurement in 100M</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tac-signal-characteristics">TAC signal characteristics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#experimental-results-2017-ribll">Experimental results(2017 RIBLL)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="TimeResolution.html">Time Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RecommendedParameters.html">Recommended Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="InBeamGammaCIAE.html">In Beam Gamma</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programmers Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/README.html">Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/XIAAPI.html">XIA API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/PKUCode.html">PKU Code</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PKUXIADAQ</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>TOF measurement in 100M</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/Example/TOF2TAC.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tof-measurement-in-100m">
+<h1>TOF measurement in 100M<a class="headerlink" href="#tof-measurement-in-100m" title="永久链接至标题">¶</a></h1>
+<p>The time-of-flight measurements is a basic requirement in nuclear physics experiments. In the digital acquisition system, the intrinsic time resolution of the 100M module is about 100-200 ps, the 250M module is about 40ps, and the 500M module is about 20ps. When the sampling rate is not enough to directly measure the time-of-flight, the TOF information needs to be converted to the TAC signal first, and the time information is expressed by the amplitude of the TAC. The following shows how to achieve high-precision time-of-flight measurements with the 100M module.</p>
+<div class="section" id="tac-signal-characteristics">
+<h2>TAC signal characteristics<a class="headerlink" href="#tac-signal-characteristics" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>The TOF signal is converted to a wave with a width of 2 us as shown in the figure below, and its height indicates the time-of-flight.</p></li>
+<li><p>XIA slow filter calculation energy is suitable for single exponential falling waveform, the TAC signal cannot give accurate height value by energy filter algorithm</p></li>
+<li><dl class="simple">
+<dt>Therefore, the QDC method is used here. Trigger point before 2 us is the starting point of QDC integration, and each 500 ns is an integration time window, for a total of 8 integration time windows.</dt><dd><ul>
+<li><p>pre-trigger 2 us, all QDCs gate width 0.5 us</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Using the integral value difference of the two integral windows indicated by the blue arrow as the time-of-flight</dt><dd><ul>
+<li><p>TOF = QDC[6]-QDC[1] (QDC[0], QDC[1],…,QDC[7])</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>The above parameters are a set of parameters we measured, which gives a time resolution comparable to CAEN V1290. This set of parameters avoids the rising portion of the waveform and the reflection peak near the sampling point 150.</p></li>
+</ul>
+<img alt="../_images/tac_one_wave.png" src="../_images/tac_one_wave.png" />
+</div>
+<div class="section" id="experimental-results-2017-ribll">
+<h2>Experimental results(2017 RIBLL)<a class="headerlink" href="#experimental-results-2017-ribll" title="永久链接至标题">¶</a></h2>
+<p>The following figure shows the time difference between the TAC signal and the silicon detector (10 ns/channel). We can find that there is a delay in the TAC signal output, and this delay is related to the TAC range we selected. Please pay attention to the time difference when reconstructing the event.</p>
+<img alt="../_images/TACDELAY_RIBLL.png" src="../_images/TACDELAY_RIBLL.png" />
+<p>The figure below shows the experimentally measured TOF-DeltaE spectrum. The time-of-flight is derived from two thin plastic scintillation detectors, and DeltaE is from a silicon detector.</p>
+<img alt="../_images/TOFDELTAE_RIBLL.png" src="../_images/TOFDELTAE_RIBLL.png" />
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="TimeResolution.html" class="btn btn-neutral float-right" title="Time Resolution" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="README.html" class="btn btn-neutral float-left" title="Applications" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Hongyi Wu(吴鸿毅)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

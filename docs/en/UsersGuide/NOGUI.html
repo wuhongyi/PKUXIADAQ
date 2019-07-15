@@ -1,14 +1,14 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>NOGUI &mdash; PKUXIADAQ beta documentation</title>
+  <title>NOGUI &mdash; PKUXIADAQ beta 文档</title>
   
 
   
@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -35,8 +36,8 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="Online Stattics" href="OnlineStattics.html" />
     <link rel="prev" title="GUI" href="GUI.html" /> 
 </head>
@@ -112,6 +113,7 @@
 <p class="caption"><span class="caption-text">Applications</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Example/README.html">Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/TOF2TAC.html">TOF measurement in 100M</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/TimeResolution.html">Time Resolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/RecommendedParameters.html">Recommended Parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/InBeamGammaCIAE.html">In Beam Gamma</a></li>
@@ -186,9 +188,9 @@
            <div itemprop="articleBody">
             
   <div class="section" id="nogui">
-<h1>NOGUI<a class="headerlink" href="#nogui" title="Permalink to this headline">¶</a></h1>
+<h1>NOGUI<a class="headerlink" href="#nogui" title="永久链接至标题">¶</a></h1>
 <div class="section" id="interface">
-<h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<h2>Interface<a class="headerlink" href="#interface" title="永久链接至标题">¶</a></h2>
 <p>When the program is started, the firmware will be automatically loaded for initialization. After the initialization is completed, the following interface appears</p>
 <img alt="../_images/noguimainframe.png" src="../_images/noguimainframe.png" />
 <p>The following are the functions of all commands.</p>
@@ -206,7 +208,7 @@
 <img alt="../_images/noguistartrun.png" src="../_images/noguistartrun.png" />
 </div>
 <div class="section" id="auto-run">
-<h2>auto run<a class="headerlink" href="#auto-run" title="Permalink to this headline">¶</a></h2>
+<h2>auto run<a class="headerlink" href="#auto-run" title="永久链接至标题">¶</a></h2>
 <p>When the automatic operation mode is turned on, it will automatically switch to the next round according to the time set by the user.</p>
 <p>The time parameter is set in the file parset/cfgPixie16.txt</p>
 <div class="highlight-md notranslate"><div class="highlight"><pre><span></span><span class="gh">#</span> Only use in NOGUI, unit: second

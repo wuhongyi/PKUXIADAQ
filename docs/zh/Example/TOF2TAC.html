@@ -1,0 +1,278 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>100M 模块测量飞行时间 &mdash; PKUXIADAQ beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="时间分辨" href="TimeResolution.html" />
+    <link rel="prev" title="应用案例" href="README.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PKUXIADAQ
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">简介</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">简介</a></li>
+</ul>
+<p class="caption"><span class="caption-text">程序安装</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../INSTALL.html">程序安装</a></li>
+</ul>
+<p class="caption"><span class="caption-text">用户指南</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/README.html">用户指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/Crate.html">机箱</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/FIRMWARE.html">固件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/Decode.html">数据解码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/GUI.html">图形交互界面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/NOGUI.html">非图形交互界面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/OnlineStattics.html">在线统计</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/MakeEvent.html">MakeEvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/FrontPanel.html">插件前面板</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/Logic.html">逻辑功能</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/MultipleModulesSynchronously.html">时间同步</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/UpdateCPLD.html">升级CPLD</a></li>
+</ul>
+<p class="caption"><span class="caption-text">应用案例</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">应用案例</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">100M 模块测量飞行时间</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tac">TAC 信号特点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ribll">实验测量结果(2017 RIBLL)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="TimeResolution.html">时间分辨</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RecommendedParameters.html">推荐参数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="InBeamGammaCIAE.html">在束伽马谱学</a></li>
+</ul>
+<p class="caption"><span class="caption-text">采购建议</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ProcurementProposal.html">采购推荐</a></li>
+</ul>
+<p class="caption"><span class="caption-text">编程指南</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/README.html">开发者指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/XIAAPI.html">XIA API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/PKUCode.html">PKU Code</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PKUXIADAQ</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>100M 模块测量飞行时间</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/Example/TOF2TAC.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="m">
+<h1>100M 模块测量飞行时间<a class="headerlink" href="#m" title="永久链接至标题">¶</a></h1>
+<p>飞行时间的测量是核物理实验中的基本需求，在数字化获取系统中，100M模块的本征分辨约为 100-200 ps，250M 模块本征分辨约为 40ps，500M 模块本真分辨约为 20ps。当采样率不足以直接测量飞行时间时，需要先将 TOF 信息转为 TAC 信号，通过 TAC 的幅度来表示时间。下面将展示如何通过 100M 模块来实现高精度的飞行时间测量。</p>
+<div class="section" id="tac">
+<h2>TAC 信号特点<a class="headerlink" href="#tac" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>TOF 信号经过 TAC 转为下图所示宽度 2us 的方波，其高度表示时间</p></li>
+<li><p>XIA slow filter 计算能量适用于单指数下降波形，该 TAC 信号无法通过梯形算法给出准确的高度值</p></li>
+<li><dl class="simple">
+<dt>因此这里采用 QDC 方法，trigger 前 2us 为 QDC 积分起点，每 500 ns 为一个积分时间窗，共 8 个积分时间窗</dt><dd><ul>
+<li><p>pre-trigger 2 us, all QDCs gate width 0.5 us</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>采用蓝色箭头所示两个积分窗的积分数值差作为飞行时间</dt><dd><ul>
+<li><p>TOF = QDC[6]-QDC[1] (QDC[0],QDC[1],…,QDC[7])</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>以上参数为我们测量的一组参数，该参数能够得到与 CAEN V1290 相当的时间分辨。该组参数避开了波形的上升段以及采样点150附近的反射峰</p></li>
+</ul>
+<img alt="../_images/tac_one_wave.png" src="../_images/tac_one_wave.png" />
+</div>
+<div class="section" id="ribll">
+<h2>实验测量结果(2017 RIBLL)<a class="headerlink" href="#ribll" title="永久链接至标题">¶</a></h2>
+<p>下图为 TAC 信号与硅探测器的时间差（10 ns/channel），我们可以发现 TAC 信号输出存在一个延迟，而这个延迟与我们选择的 TAC 量程有关，在事件重构时需要注意该时间差</p>
+<img alt="../_images/TACDELAY_RIBLL.png" src="../_images/TACDELAY_RIBLL.png" />
+<p>下图为实验测量的 TOF-DeltaE 谱，飞行时间来源于两个薄塑料闪烁体探测器，DeltaE 来于硅探测器。</p>
+<img alt="../_images/TOFDELTAE_RIBLL.png" src="../_images/TOFDELTAE_RIBLL.png" />
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="TimeResolution.html" class="btn btn-neutral float-right" title="时间分辨" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="README.html" class="btn btn-neutral float-left" title="应用案例" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Hongyi Wu(吴鸿毅)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
