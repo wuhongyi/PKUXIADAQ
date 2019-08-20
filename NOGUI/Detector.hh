@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:51:04 2016 (+0800)
-// Last-Updated: 三 1月 30 10:47:39 2019 (+0800)
+// Last-Updated: 二 8月 20 13:29:55 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 10
+//     Update #: 11
 // URL: http://wuhongyi.cn 
 
 #ifndef _DETECTOR_H_
@@ -34,7 +34,7 @@
 #define FIRMWARE250M14BIT
 #define FIRMWARE250M16BIT
 // #define FIRMWARE500M12BIT
-// #define FIRMWARE500M14BIT
+#define FIRMWARE500M14BIT
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

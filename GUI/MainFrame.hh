@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:17 2018 (+0800)
-// Last-Updated: 四 6月  6 16:54:11 2019 (+0800)
+// Last-Updated: 六 7月 27 21:37:48 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 22
+//     Update #: 25
 // URL: http://wuhongyi.cn 
 
 #ifndef MAINFRAME_HH_
@@ -28,9 +28,10 @@ Program Developer:\n\
   Hongyi Wu (wuhongyi@qq.com   Peking University)\n\
   Jing Li (lijinger02@163.com   Peking University)\n\
 \n\
-Other Contributor:\n\
+Technical Support:\n\
   Zhihuan Li (Peking University)\n\
   Hui Tan (XIA LLC)\n\
+  Wolfgang Hennig(XIA LLC)\n\
 \n\
 ";
 
@@ -113,7 +114,7 @@ public:
 
   void SetLSFileName();
   void ConfigFileInfo();
-  void StartLSRun();
+  void StartRun();
   void SetLSonlinedataf();
   void SetRecordDataFlag();
   void SetOnlineMode();
@@ -197,7 +198,7 @@ private:
   TGTextEntry* lastruntextinfor;
 
   
-  void LSRunReadData();
+  void RunReadData();
   bool IsDirectoryExists(const char *path);//判断文件夹是否存在
   bool CreateDirectory(const char *path);//创建文件夹
   

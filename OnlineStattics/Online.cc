@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 一 5月 27 17:04:18 2019 (+0800)
+// Last-Updated: 六 7月 27 21:41:43 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 219
+//     Update #: 220
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -35,7 +35,7 @@ Online::Online(const TGWindow * p)
   
   CreateMenuBar();
   
-  SetWindowName("PKU XIA Pixie16 DAQ Online");
+  SetWindowName("GDDAQ Online");
   MapSubwindows();
   MapWindow();
   Resize(INITIAL_WIDTH, INITIAL_HIGHT);

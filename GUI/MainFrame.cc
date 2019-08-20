@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 一 5月  6 20:53:27 2019 (+0800)
+// Last-Updated: 六 7月 27 21:33:02 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 40
+//     Update #: 44
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -36,7 +36,7 @@ MainFrame::MainFrame(const TGWindow * p)
 
   CreateMenuBar();
 
-  SetWindowName("PKU XIA Pixie-16 DAQ");
+  SetWindowName("GDDAQ");
   MapSubwindows();
   MapWindow();
   Resize(INITIAL_WIDTH, INITIAL_HIGHT);
@@ -77,12 +77,12 @@ void MainFrame::CreateMenuBar()
   MenuSetup->AddSeparator();
   MenuSetup->AddEntry("Save2File", FILE_SAVE,0,gClient->GetPicture("save.xpm"));
   MenuSetup->Associate(this);
-  MenuBar->AddPopup("&UV_Setup", MenuSetup, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  MenuBar->AddPopup("&Base", MenuSetup, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
   MenuExpert = new TGPopupMenu(fClient->GetRoot());
   MenuExpert->AddEntry("Module Variables", MODVAR);
   MenuExpert->AddEntry("&CSRA", CSRA);
-  MenuExpert->AddEntry("Logic Set", LOGIC);
+  MenuExpert->AddEntry("&Logic Set", LOGIC);
   MenuExpert->Associate(this);
   MenuBar->AddPopup("&Expert", MenuExpert, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
@@ -91,7 +91,7 @@ void MainFrame::CreateMenuBar()
   MenuMonitor->AddEntry("&Hist & XDT", HISTXDT);
   MenuMonitor->AddEntry("&Trace & Baseline", READCHANSTATUS);
   MenuMonitor->Associate(this);
-  MenuBar->AddPopup("&Monitor", MenuMonitor, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  MenuBar->AddPopup("&Debug", MenuMonitor, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
 
   MenuOffline = new TGPopupMenu(fClient->GetRoot());
@@ -106,7 +106,7 @@ void MainFrame::CreateMenuBar()
   TGTab *TabPanel = new TGTab(this);
   this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
 
-  TGCompositeFrame *Tab2 = TabPanel->AddTab("List Mode Run");
+  TGCompositeFrame *Tab2 = TabPanel->AddTab("List Mode");
   MakeFold2Panel(Tab2);
 }
 
@@ -148,7 +148,7 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 
 	    case ABOUT:
-	     about =  new TRootHelpDialog(this, "About PKU XIA Pixie-16 DAQ", 550, 250);
+	     about =  new TRootHelpDialog(this, "About GDDAQ", 550, 250);
 	     about->SetText(gAbout);
 	     about->Popup();
 	      break;
@@ -398,11 +398,11 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel)
   TGHorizontalFrame *cgrouphframe1 = new TGHorizontalFrame(controlgroup);
   controlgroup->AddFrame(cgrouphframe1,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
   // start/stop LSM run button
-  startdaq = new TGTextButton(cgrouphframe1,"LSRunStart");
+  startdaq = new TGTextButton(cgrouphframe1,"RunStart");
   fClient->GetColorByName("red", color);
   startdaq->SetTextColor(color, false);
   startdaq->SetFont("-adobe-helvetica-medium-r-*-*-20-*-*-*-*-*-iso8859-1", false);
-  startdaq->Connect("Pressed()","MainFrame",this,"StartLSRun()");
+  startdaq->Connect("Pressed()","MainFrame",this,"StartRun()");
   startdaq->SetEnabled(0);
   startdaq->Resize(110,110);
   startdaq->ChangeOptions(startdaq->GetOptions() | kFixedSize);
@@ -415,7 +415,7 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel)
   fClient->GetColorByName("red", color);
   updateenergyonline->SetTextColor(color);
   updateenergyonline->SetOn(kFALSE);
-  cgrouphframe2->AddFrame(updateenergyonline,new TGLayoutHints(kLHintsRight|kLHintsTop,10,4,10,3));
+  cgrouphframe2->AddFrame(updateenergyonline,new TGLayoutHints(kLHintsLeft|kLHintsTop,10,4,10,3));
 
 
   
@@ -548,7 +548,7 @@ void MainFrame::SetLSFileName()
     }
 }
 
-void MainFrame::StartLSRun()
+void MainFrame::StartRun()
 {
   if(fstartdaq == 0)
     {
@@ -604,13 +604,13 @@ void MainFrame::StartLSRun()
       // start a new run, not resume
       fstartdaq = 1;
       fstopdaq = 0;
-      startdaq->SetText("LSRunStop");
-      LSRunReadData();
+      startdaq->SetText("RunStop");
+      RunReadData();
     }
   else
     {
       fstartdaq = 0;
-      startdaq->SetText("LSRunStart");
+      startdaq->SetText("RunStart");
       filerunnum->SetIntNumber((++runnum));
 
       ofstream outrunnumber("../parset/RunNumber");
@@ -640,7 +640,7 @@ void MainFrame::StartLSRun()
     }
 }
 
-void MainFrame::LSRunReadData()
+void MainFrame::RunReadData()
 {
   std::cout<<"MainFrame:: read loop.."<<std::endl;
   while(fstartdaq)

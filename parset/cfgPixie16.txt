@@ -96,6 +96,14 @@ ModuleBits 7 14 14 14 16 14 14 14
 250M16bit_dspvar ../firmware/pixie16_revfpku_16b250m_release_06092019/Pixie16DSP_revfgeneral_16b250m_r41808.var
 
 
+# Standard firmware
+500M14bit_sys ../firmware/pixie16_revf_14b500m_firmware_release/syspixie16_revfgeneral_adc500mhz_r33341.bin
+500M14bit_fip ../firmware/pixie16_revf_14b500m_firmware_release/fippixie16_revfgeneral_14b500m_r34687.bin
+500M14bit_dsplst ../firmware/pixie16_revf_14b500m_firmware_release/Pixie16DSP_revfgeneral_14b500m_r35207.lst
+500M14bit_dspldr ../firmware/pixie16_revf_14b500m_firmware_release/Pixie16DSP_revfgeneral_14b500m_r35207.ldr
+500M14bit_dspvar ../firmware/pixie16_revf_14b500m_firmware_release/Pixie16DSP_revfgeneral_14b500m_r35207.var
+
+
 ## TODO
 #After adding the following firmware, you need to modify the definition in the file Detector.hh.
 
@@ -110,9 +118,3 @@ ModuleBits 7 14 14 14 16 14 14 14
 500M12bit_dsplst ../firmware/
 500M12bit_dspldr ../firmware/
 500M12bit_dspvar ../firmware/
-
-500M14bit_sys ../firmware/
-500M14bit_fip ../firmware/
-500M14bit_dsplst ../firmware/
-500M14bit_dspldr ../firmware/
-500M14bit_dspvar ../firmware/
