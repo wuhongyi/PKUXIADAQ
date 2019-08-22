@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'PKUXIADAQ'
+project = 'GDDAQ'
 copyright = '2019, Hongyi Wu(吴鸿毅)'
 author = 'Hongyi Wu(吴鸿毅)'
 

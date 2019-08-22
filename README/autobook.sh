@@ -15,7 +15,7 @@ make html
 make latexpdf
 mv build/doctrees/ ../../docs/
 cp -r build/html/* ../../docs/en/
-cp build/latex/pkuxiadaq.pdf ../../README_en.pdf
+cp build/latex/gddaq.pdf ../../README_en.pdf
 make clean
 cd ..
 
@@ -24,6 +24,6 @@ make clean
 make html
 make latexpdf
 cp -r build/html/* ../../docs/zh/
-cp build/latex/pkuxiadaq.pdf ../../README_zh.pdf
+cp build/latex/gddaq.pdf ../../README_zh.pdf
 make clean
 cd ../

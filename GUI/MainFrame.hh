@@ -4,22 +4,22 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:17 2018 (+0800)
-// Last-Updated: 六 7月 27 21:37:48 2019 (+0800)
+// Last-Updated: 四 8月 22 13:36:06 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 25
+//     Update #: 26
 // URL: http://wuhongyi.cn 
 
 #ifndef MAINFRAME_HH_
 #define MAINFRAME_HH_
 
-const char gVERSION[] = "Version: 2019.06.06";
+const char gVERSION[] = "Version: 2019.08.22";
 
 const char gAbout[] = "\
 Version: Beta ---> Developer version\n\
 \n\
 The program developed by Peking University.\n\
 The program applies to XIA Pixie-16. \n\
-Support 100 MHz(RevD 12bit,RevF 14-bit), \n\
+Support 100 MHz(RevD 12-bit,RevF 14-bit), \n\
         250 MHz(RevF 12/14/16-bit), \n\
         500 MHz(RevF 12/14-bit)\n\
 \n\
@@ -199,8 +199,8 @@ private:
 
   
   void RunReadData();
-  bool IsDirectoryExists(const char *path);//判断文件夹是否存在
-  bool CreateDirectory(const char *path);//创建文件夹
+  bool IsDirectoryExists(const char *path);//Determine if the folder exists
+  bool CreateDirectory(const char *path);//Create folder
   
   ClassDef(MainFrame,1)
 };

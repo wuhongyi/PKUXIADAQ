@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:39:34 2019 (+0800)
-.. Last-Updated: 三 7月  3 16:30:26 2019 (+0800)
+.. Last-Updated: 四 8月 22 13:38:50 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 4
+..     Update #: 5
 .. URL: http://wuhongyi.cn 
 
 =================================
@@ -30,7 +30,7 @@ At the top of the main interface are five drop-down columns: File, UV_Setup, Exp
 - File
 	- Exit
 	- About
-- UV_Setup
+- Base
 	- Base Setup
 	- Trigger Filter
 	- Energy
@@ -43,7 +43,7 @@ At the top of the main interface are five drop-down columns: File, UV_Setup, Exp
 	- Module Variables
 	- CSRA
 	- Logic Set
-- Monitor
+- Debug
 	- Hist & XDT
 	- Trace & Baseline
 - Offiline
@@ -56,7 +56,7 @@ After selecting or not selecting the **Online Mode** option, press the **Boot** 
 
 After the system is successfully initialized, confirm the file storage path, file name, and file number in the *Setup* column. If there is any problem, modify it directly. After confirming, press **Complete**.
 
-After confirming the information in the *Setup* column, the main button **LSRunStart** in the *Control* column is open. Click this button to get data acquisition open, the button status changes to **LSRunStop**, click the button again, the data acquisition completed, and the *Run Num* number is automatically added.  Click **LSRunStart** again to open the next run.
+After confirming the information in the *Setup* column, the main button **RunStart** in the *Control* column is open. Click this button to get data acquisition open, the button status changes to **RunStop**, click the button again, the data acquisition completed, and the *Run Num* number is automatically added.  Click **RunStart** again to open the next run.
 
 Currently, you can adjust and modify the parameters through the submenu in the top drop-down bar before you acquire data. Do not manipulate all options except the *Control* bar when acquiring data.
 

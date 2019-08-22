@@ -4,13 +4,13 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:47:44 2019 (+0800)
-.. Last-Updated: 三 7月  3 16:59:33 2019 (+0800)
+.. Last-Updated: 四 8月 22 13:39:56 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 33
+..     Update #: 34
 .. URL: http://wuhongyi.cn 
 
 ---------------------------------
-UV_Setup
+Base
 ---------------------------------
 
 本下拉栏中调节内容为基础内容，任何使用Pixie16获取系统的人员都应该熟悉并掌握其调节技巧。

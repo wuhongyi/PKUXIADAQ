@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 22:13:09 2019 (+0800)
-.. Last-Updated: 二 7月  2 22:14:12 2019 (+0800)
+.. Last-Updated: 四 8月 22 13:22:21 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 1
+..     Update #: 3
 .. URL: http://wuhongyi.cn 
 
 =================================
@@ -19,7 +19,6 @@
 
 - 100MHz 12 bit(pixie16_revd_12b100m_firmware_release)
 	- 标准固件
-
 
 - 100MHz 14 bit(pixie16_revfpku_14b100m_firmware_release_09272018)
 	- MultiplicityMaskHigh[31]=0和1 时候RJ45口与前面板A均能输出 multiplicity 结果。
@@ -37,18 +36,22 @@
 	- 在记录波形模式下，waveform 的buffer满了的时候，插件不busy，header继续记录，该情况下，输出的数据没有波形。
 	- 在采集波形时候，增加了降频输出的功能，采取的策略为可选择1，1/2，1/4，1/8，1/16，1/32，1/64，1/128频率的输出，即多少个点保留一个点。保留的点是平均后的值。
 	
-	
-	
-- 250MHz 14bit(pixie16_revfpku_14b250m_release_02232019)
+- 250MHz 12bit(pixie16_revf_12b250m_firmware_release)	
+	- 标准固件
+  
+- 250MHz 14bit(pixie16_revfpku_14b250m_release_06092019)
 	- MultiplicityMaskHigh[31]=0和1 时候RJ45口与前面板均能输出 multiplicity 结果。
 	- 当计算的能量为负数时，该值设置为 0。
 	- pileup 事件能量保留，不设置为 0。
 
 
-- 250MHz 16bit(pixie16_revfpku_16b250m_release_02182019)
+- 250MHz 16bit(pixie16_revfpku_16b250m_release_06092019)
 	- MultiplicityMaskHigh[31]=0和1 时候RJ45口与前面板均能输出 multiplicity 结果。
 	- 当计算的能量为负数时，该值设置为 0。
 	- pileup 事件能量保留，不设置为 0。
 
+- 500MHz 14bit(pixie16_revf_14b500m_firmware_release)	  
+	- 标准固件
+	  
 .. 
 .. FIRMWARE.rst ends here

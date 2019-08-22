@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:39:34 2019 (+0800)
-.. Last-Updated: 三 7月  3 10:49:06 2019 (+0800)
+.. Last-Updated: 四 8月 22 13:38:50 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 3
+..     Update #: 4
 .. URL: http://wuhongyi.cn 
 
 =================================
@@ -32,7 +32,7 @@
 - File
 	- Exit
 	- About
-- UV_Setup
+- Base
 	- Base Setup
 	- Trigger Filter
 	- Energy
@@ -45,7 +45,7 @@
 	- Module Variables
 	- CSRA
 	- Logic Set
-- Monitor
+- Debug
 	- Hist & XDT
 	- Trace & Baseline
 - Offiline
@@ -58,7 +58,7 @@
 
 系统初始化成功后，再次确认 *Setup* 栏中的获取文件存放路径、文件名、文件编号是否有问题，如果有问题则直接修改，确认之后按 **Complete**。
 
-确认 *Setup* 栏中的信息之后， *Control* 栏中的主按钮 **LSRunStart** 则开启，此时点击该按钮，获取则开启，按钮状态更改为 **LSRunStop**，再次点击该按钮，获取结束，运行的 *Run Num* 号码自动加一。再次点击 **LSRunStart** 开启下轮获取。
+确认 *Setup* 栏中的信息之后， *Control* 栏中的主按钮 **RunStart** 则开启，此时点击该按钮，获取则开启，按钮状态更改为 **RunStop**，再次点击该按钮，获取结束，运行的 *Run Num* 号码自动加一。再次点击 **RunStart** 开启下轮获取。
 
 当前，获取之前可通过最上方的下拉栏里面的子菜单来调节、修改参数。获取数据时请勿操作 *Control* 栏之外的所有选项。
 

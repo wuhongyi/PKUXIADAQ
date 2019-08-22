@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 12月 13 09:41:49 2016 (+0800)
-;; Last-Updated: 日 6月  9 16:02:46 2019 (+0800)
+;; Last-Updated: 四 8月 22 13:15:39 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 30
+;;     Update #: 32
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
@@ -48,13 +48,17 @@
 ## testing firmware
 
 
-- pixie16_revd_12b100m_firmware_release  standord firmware
+- pixie16_revd_12b100m_firmware_release  standard firmware
+
+- pixie16_revf_12b250m_firmware_release  standard firmware
 
 - pixie16_revfpku_14b250m_release_06092019   PKU firmware
 	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
 
 - pixie16_revfpku_16b250m_release_06092019   PKU firmware
 	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
+	
+- pixie16_revf_14b500m_firmware_release  standard firmware	
 	
 ----
 
@@ -163,12 +167,14 @@
 	<!-- - The value is set to 0 when the calculated energy is negative. -->
 	<!-- - The pileup event energy is not set to 0, output calculated values directly. -->
 
+- pixie16_revf_12b250m_firmware_release_05182019  standard firmware
+
 - pixie16_revfpku_14b250m_release_06092019   PKU firmware
 	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
-
 
 - pixie16_revfpku_16b250m_release_06092019   PKU firmware
 	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
 	
+- pixie16_revf_14b500m_firmware_release  standard firmware	
 
 <!-- firmware.md ends here -->

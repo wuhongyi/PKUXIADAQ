@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>图形交互界面 &mdash; PKUXIADAQ beta 文档</title>
+  <title>图形交互界面 &mdash; GDDAQ beta 文档</title>
   
 
   
@@ -53,7 +53,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> PKUXIADAQ
+            <a href="../index.html" class="icon icon-home"> GDDAQ
           
 
           
@@ -103,7 +103,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#about">About</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#uv-setup">UV_Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#base">Base</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#base-setup">Base Setup</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id3">控制界面</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id4">参数介绍</a></li>
@@ -165,7 +165,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#monitor">Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#debug">Debug</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#hist-xdt">Hist &amp; XDT</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id25">控制界面</a></li>
 </ul>
@@ -233,7 +233,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">PKUXIADAQ</a>
+          <a href="../index.html">GDDAQ</a>
         
       </nav>
 
@@ -304,7 +304,7 @@
 </dl>
 </li>
 <li><dl class="simple">
-<dt>UV_Setup</dt><dd><ul>
+<dt>Base</dt><dd><ul>
 <li><p>Base Setup</p></li>
 <li><p>Trigger Filter</p></li>
 <li><p>Energy</p></li>
@@ -327,7 +327,7 @@
 </dl>
 </li>
 <li><dl class="simple">
-<dt>Monitor</dt><dd><ul>
+<dt>Debug</dt><dd><ul>
 <li><p>Hist &amp; XDT</p></li>
 <li><p>Trace &amp; Baseline</p></li>
 </ul>
@@ -346,7 +346,7 @@
 <p>开启获取主界面之后，选择 <strong>Online Mode</strong> 选项表示在线模式，需要连接机箱，该模式下可使用所有的功能（包括离线分析功能）。不选择**Online Mode** 选项则表示开启离线模式，可设置、修改获取参数，分析已采集波形。</p>
 <p>选择、或者不选择 <strong>Online Mode</strong> 选项之后，按 <strong>Boot</strong> 按钮开启初始化过程，可看到最下方 <em>Information</em> 栏目中的状态变化。</p>
 <p>系统初始化成功后，再次确认 <em>Setup</em> 栏中的获取文件存放路径、文件名、文件编号是否有问题，如果有问题则直接修改，确认之后按 <strong>Complete</strong>。</p>
-<p>确认 <em>Setup</em> 栏中的信息之后， <em>Control</em> 栏中的主按钮 <strong>LSRunStart</strong> 则开启，此时点击该按钮，获取则开启，按钮状态更改为 <strong>LSRunStop</strong>，再次点击该按钮，获取结束，运行的 <em>Run Num</em> 号码自动加一。再次点击 <strong>LSRunStart</strong> 开启下轮获取。</p>
+<p>确认 <em>Setup</em> 栏中的信息之后， <em>Control</em> 栏中的主按钮 <strong>RunStart</strong> 则开启，此时点击该按钮，获取则开启，按钮状态更改为 <strong>RunStop</strong>，再次点击该按钮，获取结束，运行的 <em>Run Num</em> 号码自动加一。再次点击 <strong>RunStart</strong> 开启下轮获取。</p>
 <p>当前，获取之前可通过最上方的下拉栏里面的子菜单来调节、修改参数。获取数据时请勿操作 <em>Control</em> 栏之外的所有选项。</p>
 <p><em>Control</em> 栏内的 <strong>Online Statistics</strong> 选项开启则获取每 <strong>3 s</strong> 向 <em>OnineStatistics</em> 程序发送时时每路信号的输入率、输出率信息。</p>
 <p><strong>点击 Update Energy Monitor 选项一次，则将所有采集卡内部寄存器中每路的一维能谱发送到 Online Statistics 程序，发送该信息会导致一定的死时间，请不要频繁点击该选项。</strong></p>
@@ -362,8 +362,8 @@
 <hr class="docutils" />
 </div>
 </div>
-<div class="section" id="uv-setup">
-<h2>UV_Setup<a class="headerlink" href="#uv-setup" title="永久链接至标题">¶</a></h2>
+<div class="section" id="base">
+<h2>Base<a class="headerlink" href="#base" title="永久链接至标题">¶</a></h2>
 <p>本下拉栏中调节内容为基础内容，任何使用Pixie16获取系统的人员都应该熟悉并掌握其调节技巧。</p>
 <div class="section" id="base-setup">
 <h3>Base Setup<a class="headerlink" href="#base-setup" title="永久链接至标题">¶</a></h3>
@@ -1013,8 +1013,8 @@
 </div>
 </div>
 </div>
-<div class="section" id="monitor">
-<h2>Monitor<a class="headerlink" href="#monitor" title="永久链接至标题">¶</a></h2>
+<div class="section" id="debug">
+<h2>Debug<a class="headerlink" href="#debug" title="永久链接至标题">¶</a></h2>
 <p>本下拉栏中调节内容为监视波形噪声水平、基线分布等。</p>
 <div class="section" id="hist-xdt">
 <h3>Hist &amp; XDT<a class="headerlink" href="#hist-xdt" title="永久链接至标题">¶</a></h3>

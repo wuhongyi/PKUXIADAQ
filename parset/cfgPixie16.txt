@@ -77,6 +77,14 @@ ModuleBits 7 14 14 14 16 14 14 14
 100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.var
 
 
+# Standard firmware
+250M12bit_sys ../firmware/pixie16_revf_12b250m_firmware_release/syspixie16_revfgeneral_adc250mhz_r33339.bin
+250M12bit_fip ../firmware/pixie16_revf_12b250m_firmware_release/fippixie16_revfgeneral_12b250m_r42081.bin
+250M12bit_dsplst ../firmware/pixie16_revf_12b250m_firmware_release/Pixie16DSP_revfgeneral_12b250m_r41847.lst
+250M12bit_dspldr ../firmware/pixie16_revf_12b250m_firmware_release/Pixie16DSP_revfgeneral_12b250m_r41847.ldr
+250M12bit_dspvar ../firmware/pixie16_revf_12b250m_firmware_release/Pixie16DSP_revfgeneral_12b250m_r41847.var
+
+
 # NoNegEnergy && AlwaysCompEnergy
 # Multiplicity result output from RJ45
 250M14bit_sys ../firmware/pixie16_revfpku_14b250m_release_06092019/syspixie16_revfpku_adc250mhz_r41088.bin
@@ -104,14 +112,10 @@ ModuleBits 7 14 14 14 16 14 14 14
 500M14bit_dspvar ../firmware/pixie16_revf_14b500m_firmware_release/Pixie16DSP_revfgeneral_14b500m_r35207.var
 
 
+
+
 ## TODO
 #After adding the following firmware, you need to modify the definition in the file Detector.hh.
-
-250M12bit_sys ../firmware/
-250M12bit_fip ../firmware/
-250M12bit_dsplst ../firmware/
-250M12bit_dspldr ../firmware/
-250M12bit_dspvar ../firmware/
 
 500M12bit_sys ../firmware/
 500M12bit_fip ../firmware/

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>GUI &mdash; PKUXIADAQ beta 文档</title>
+  <title>GUI &mdash; GDDAQ beta 文档</title>
   
 
   
@@ -53,7 +53,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> PKUXIADAQ
+            <a href="../index.html" class="icon icon-home"> GDDAQ
           
 
           
@@ -103,7 +103,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#about">About</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#uv-setup">UV_Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#base">Base</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#base-setup">Base Setup</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#interface">Interface</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#parameters-introduction">Parameters introduction</a></li>
@@ -165,7 +165,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#monitor">Monitor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#debug">Debug</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#hist-xdt">Hist &amp; XDT</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id12">Interface</a></li>
 </ul>
@@ -229,7 +229,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">PKUXIADAQ</a>
+          <a href="../index.html">GDDAQ</a>
         
       </nav>
 
@@ -299,7 +299,7 @@
 </dl>
 </li>
 <li><dl class="simple">
-<dt>UV_Setup</dt><dd><ul>
+<dt>Base</dt><dd><ul>
 <li><p>Base Setup</p></li>
 <li><p>Trigger Filter</p></li>
 <li><p>Energy</p></li>
@@ -322,7 +322,7 @@
 </dl>
 </li>
 <li><dl class="simple">
-<dt>Monitor</dt><dd><ul>
+<dt>Debug</dt><dd><ul>
 <li><p>Hist &amp; XDT</p></li>
 <li><p>Trace &amp; Baseline</p></li>
 </ul>
@@ -341,7 +341,7 @@
 <p>After the main interface is open, select the <strong>Online Mode</strong> option. You need to connect to the chassis. All functions (including offline analysis) can be used in this mode. If the <strong>Online Mode</strong> option is not selected, it means that the offline mode is enabled, and the acquired parameters can be set and modified or analyze the acquired waveform.</p>
 <p>After selecting or not selecting the <strong>Online Mode</strong> option, press the <strong>Boot</strong> button to start the initialization process and see the status changes in the <em>Information</em> section at the bottom.</p>
 <p>After the system is successfully initialized, confirm the file storage path, file name, and file number in the <em>Setup</em> column. If there is any problem, modify it directly. After confirming, press <strong>Complete</strong>.</p>
-<p>After confirming the information in the <em>Setup</em> column, the main button <strong>LSRunStart</strong> in the <em>Control</em> column is open. Click this button to get data acquisition open, the button status changes to <strong>LSRunStop</strong>, click the button again, the data acquisition completed, and the <em>Run Num</em> number is automatically added.  Click <strong>LSRunStart</strong> again to open the next run.</p>
+<p>After confirming the information in the <em>Setup</em> column, the main button <strong>RunStart</strong> in the <em>Control</em> column is open. Click this button to get data acquisition open, the button status changes to <strong>RunStop</strong>, click the button again, the data acquisition completed, and the <em>Run Num</em> number is automatically added.  Click <strong>RunStart</strong> again to open the next run.</p>
 <p>Currently, you can adjust and modify the parameters through the submenu in the top drop-down bar before you acquire data. Do not manipulate all options except the <em>Control</em> bar when acquiring data.</p>
 <p>The <strong>Online Statistics</strong> option in the <em>Control</em> column is turned on to get the input rate and output rate information for each signal sent to the <em>OnineStatistics</em> program every <strong>3 s</strong>.</p>
 <p><strong>Clicking the Update Energy Monitor option once will send the one-dimensional spectrum of each channel in all the internal registers of the modules to the Online Statistics program. Sending this information will cause a certain dead time. Please do not click this option frequently.</strong></p>
@@ -357,8 +357,8 @@
 <hr class="docutils" />
 </div>
 </div>
-<div class="section" id="uv-setup">
-<h2>UV_Setup<a class="headerlink" href="#uv-setup" title="永久链接至标题">¶</a></h2>
+<div class="section" id="base">
+<h2>Base<a class="headerlink" href="#base" title="永久链接至标题">¶</a></h2>
 <p>The adjustments in this drop-down column are the basics, and anyone using the Pixie16 acquisition system should be familiar with and master the operating techniques.</p>
 <div class="section" id="base-setup">
 <h3>Base Setup<a class="headerlink" href="#base-setup" title="永久链接至标题">¶</a></h3>
@@ -1032,8 +1032,8 @@ This is a significant source of the enhanced throughput found in digital systems
 </div>
 </div>
 </div>
-<div class="section" id="monitor">
-<h2>Monitor<a class="headerlink" href="#monitor" title="永久链接至标题">¶</a></h2>
+<div class="section" id="debug">
+<h2>Debug<a class="headerlink" href="#debug" title="永久链接至标题">¶</a></h2>
 <p>The adjustment in this drop-down column is to monitor the waveform noise level, baseline distribution, and so on.</p>
 <div class="section" id="hist-xdt">
 <h3>Hist &amp; XDT<a class="headerlink" href="#hist-xdt" title="永久链接至标题">¶</a></h3>

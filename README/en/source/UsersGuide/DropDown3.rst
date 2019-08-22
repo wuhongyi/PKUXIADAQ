@@ -4,13 +4,13 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:50:29 2019 (+0800)
-.. Last-Updated: 三 7月  3 17:10:33 2019 (+0800)
+.. Last-Updated: 四 8月 22 13:40:25 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 4
+..     Update #: 5
 .. URL: http://wuhongyi.cn 
 
 ---------------------------------
-Monitor
+Debug
 ---------------------------------
 
 The adjustment in this drop-down column is to monitor the waveform noise level, baseline distribution, and so on.

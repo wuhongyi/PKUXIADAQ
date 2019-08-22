@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 五 6月  7 21:45:11 2019 (+0800)
+;; Last-Updated: 四 8月 22 14:04:21 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 125
+;;     Update #: 126
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -25,7 +25,7 @@ English | [简体中文](https://github.com/wuhongyi/PKUXIADAQ/blob/master/READM
 
 ### Stable Version
 
-**Stable Version Version:2019.06.06**  
+**Stable Version Version:2019.08.22**  
 
 Download the latest version, please click:  [PKUXIADAQ stable](https://github.com/pkuNucExp/PKUXIADAQ)
 
@@ -38,7 +38,7 @@ For web page manual, please click:  [English](https://pkunucexp.github.io/PKUXIA
 
 ### Pre-alpha
 
-**Pre-alpha Version:2019.06.06**  
+**Pre-alpha Version:2019.08.22**  
 
 Download the latest version:  [PKUXIADAQ](https://github.com/wuhongyi/PKUXIADAQ)
 
@@ -90,9 +90,9 @@ The development of this program is supported by the following：
 
 This program is applicable to XIA Pixie16 module, which supports the 100/250/500 MHz sampling rates(specifically, information about the module can be found in File->About in the graphics software) and supports up to 8-chassis synchronous operation, that maeans, at least 1600-channel signals are simultaneously collected. **This package requires the CERN ROOT6 version and the resolution display above 1920x1080**.
 
+The program is designed to be compatible with the 100/250/500 MHz modules. Simply add the firmware location of the corresponding sample rate modules to cfgPixie16.txt. The program can automatically identify the module's type and load the corresponding firmware.
 
-
-The program is designed to be compatible with the 100/250/500 MHz modules. Simply add the firmware location of the corresponding sample rate modules to cfgPixie16.txt. The program can automatically identify the module's type and load the corresponding firmware. Currently we only have 14-bit 100/250 MHz modules, so this type of modules can be run by default. To support other types, please contact XIA LLC to obtain the corresponding firmware or contact Hongyi Wu(wuhongyi@qq.com).
+Currently we have tested most types of modules, so you can run the type of modules of our tested by default. To support other types, please contact XIA LLC to obtain the corresponding firmware or contact Hongyi Wu(wuhongyi@qq.com).
 
 ----
 
@@ -106,7 +106,7 @@ The following files/folders are included in the user's use package:
 	- firmware/firmware.md(History of firmware)
 - GUI
 - MakeEvent(event builder，optional)
-- NOGUI(Non-graphics software. New version is upgrading, temporarily unavailable)
+- NOGUI(Non-graphics software)
 - OnlineStattics(Online monitoring program)
 - parset(parameter setting file)
 - PlxSdk.tar.gz(Plx9054 driver)

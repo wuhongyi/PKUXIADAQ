@@ -4,13 +4,13 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:50:29 2019 (+0800)
-.. Last-Updated: 三 7月  3 13:27:16 2019 (+0800)
+.. Last-Updated: 四 8月 22 13:40:25 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 3
+..     Update #: 4
 .. URL: http://wuhongyi.cn 
 
 ---------------------------------
-Monitor
+Debug
 ---------------------------------
 
 本下拉栏中调节内容为监视波形噪声水平、基线分布等。

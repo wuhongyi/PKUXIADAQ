@@ -3,14 +3,14 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-PKUXIADAQ   
+GDDAQ   
 #################################
 
 .. toctree::
    :maxdepth: 3
    :caption: content:
 
-Welcome to PKUXIADAQ's guides.
+Welcome to GDDAQ's guides.
 
 #################################
 

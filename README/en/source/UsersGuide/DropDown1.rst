@@ -4,13 +4,13 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:47:44 2019 (+0800)
-.. Last-Updated: 三 7月  3 17:05:36 2019 (+0800)
+.. Last-Updated: 四 8月 22 13:39:56 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 42
+..     Update #: 43
 .. URL: http://wuhongyi.cn 
 
 ---------------------------------
-UV_Setup
+Base
 ---------------------------------
 
 The adjustments in this drop-down column are the basics, and anyone using the Pixie16 acquisition system should be familiar with and master the operating techniques.
