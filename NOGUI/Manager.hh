@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 22:17:54 2016 (+0800)
-// Last-Updated: 三 1月 30 10:49:03 2019 (+0800)
+// Last-Updated: 四 8月 29 16:18:24 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 17
+//     Update #: 18
 // URL: http://wuhongyi.cn 
 
 #ifndef _MANAGER_H_
@@ -38,12 +38,12 @@ public:
   
 protected:
   void CheckKeyboard();
-  void SetLSFileName();
-  // void LSRunReadData();
-  void SetLSonlinedataf();
-
-  bool IsDirectoryExists(const char *path);//判断文件夹是否存在
-  bool CreateDirectory(const char *path);//创建文件夹
+  void SetFileName();
+  // void RunReadData();
+  void SetOnlineDataFlag();
+  
+  bool IsDirectoryExists(const char *path);//Determine if the folder exists
+  bool CreateDirectory(const char *path);//Create folder
   
   void PrintRunStatus();
 
@@ -80,7 +80,3 @@ private:
 #endif /* _MANAGER_H_ */
 // 
 // Manager.hh ends here
-
-
-
-

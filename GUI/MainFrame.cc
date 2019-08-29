@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 六 7月 27 21:33:02 2019 (+0800)
+// Last-Updated: 四 8月 29 18:35:05 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 44
+//     Update #: 51
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -382,7 +382,7 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel)
   onlinechk->SetTextColor(color);
   onlinechk->SetState(kButtonDown);
   fonlinedata = 1;
-  onlinechk->Connect("Clicked()","MainFrame",this,"SetLSonlinedataf()");
+  onlinechk->Connect("Clicked()","MainFrame",this,"SetOnlineDataFlag()");
   cgrouphframe0->AddFrame(onlinechk,new TGLayoutHints(kLHintsExpandX|kLHintsTop,4,4,5,10));
   // record/not record raw data
   recordchk = new TGCheckButton(cgrouphframe0,"&Record");
@@ -499,6 +499,13 @@ void MainFrame::ConfigFileInfo()
       
       startdaq->SetEnabled(1);
       fstartdaq = 0;
+
+      if(flagonlinemode == 0)
+      	{
+      	  const char *path = filepathtext->GetText();
+      	  const char *filen = filenametext->GetText();
+      	  detector->UpdateFilePathAndNameInSharedMemory(path,filen);
+      	}
     }
   else
     {
@@ -507,7 +514,7 @@ void MainFrame::ConfigFileInfo()
     }
 }
 
-void MainFrame::SetLSFileName()
+void MainFrame::SetFileName()
 {
   if(detector == NULL)
     {
@@ -558,8 +565,8 @@ void MainFrame::StartRun()
       
       SetMenuStatus(false,flagonlinemode);
       
-      SetLSFileName();
-      detector->SetOnlineF(fonlinedata);
+      SetFileName();
+      detector->SetOnlineFlag(fonlinedata);
 
       for(int i = 0;i < detector->NumModules;i++)
 	{
@@ -585,7 +592,7 @@ void MainFrame::StartRun()
       writelog<<tmp<<endl;
       writelog.close();    
       
-      if(detector->StartLSMRun(0))
+      if(detector->StartRun(0))
 	{
 	  std::cout<<"CANNOT start the LSM Run!"<<std::endl;
 
@@ -655,7 +662,7 @@ void MainFrame::RunReadData()
     }
   std::cout<<"done!!!!!!"<<std::endl;
   int counter = 0;
-  while(detector->StopLSMRun())
+  while(detector->StopRun())
     {
       // failed to stop run 
       sleep(1); // wait 1s then try again
@@ -694,18 +701,18 @@ void MainFrame::SetOnlineMode()
   startdaq->SetEnabled(0);
 }
 
-void MainFrame::SetLSonlinedataf()
+void MainFrame::SetOnlineDataFlag()
 {
   if(onlinechk->IsOn())
     {
       fonlinedata = 1;
-      detector->SetOnlineF(1);
+      detector->SetOnlineFlag(1);
       std::cout<<"DAQ will send online data!"<<std::endl;
     }
   else
     {
       fonlinedata = 0;
-      detector->SetOnlineF(0);
+      detector->SetOnlineFlag(0);
       std::cout<<"DAQ wont send online data!"<<std::endl;
     }
 }

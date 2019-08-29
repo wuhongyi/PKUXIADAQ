@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 六 7月 27 21:41:43 2019 (+0800)
+// Last-Updated: 四 8月 29 19:48:03 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 220
+//     Update #: 228
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -41,6 +41,9 @@ Online::Online(const TGWindow * p)
   Resize(INITIAL_WIDTH, INITIAL_HIGHT);
 
   gStyle->SetOptStat(0);//不显示统计框
+
+
+  Init();
 }
 
 Online::~Online()
@@ -62,15 +65,15 @@ void Online::Init()
   bool flag = true;
 
   // 检查文件目录是否存在
-  if(!IsDirectoryExists(filepathtext->GetText()))
-    {
-      printf("The data file directory does not exist.\n");
-      flag = false;
-    }
-  else
-    {
-      printf("The data file directory exist.\n");
-    }
+  // if(!IsDirectoryExists(filepathtext->GetText()))
+  //   {
+  //     printf("The data file directory does not exist.\n");
+  //     flag = false;
+  //   }
+  // else
+  //   {
+  //     printf("The data file directory exist.\n");
+  //   }
   
   shm_id=shm_open("shmpixie16pkuxiadaq",O_RDWR,0);/*第一步：打开共享内存区*/
   if (shm_id == -1)
@@ -100,11 +103,15 @@ void Online::Init()
 
   if(flag)
     {
+      OnlineDrawButton3->SetEnabled(1);
+	
       startloop->SetEnabled(1);
       fstartloop = false;
     }
   else
     {
+      OnlineDrawButton3->SetEnabled(0);
+	
       startloop->SetEnabled(0);
       fstartloop = true;
     }
@@ -342,24 +349,19 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
   TGLabel *filepathlabel = new TGLabel(filepath,"File Path: ");
   filepath->AddFrame(filepathlabel,new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 3, 4, 0));
   filepathtext = new TGTextEntry(filepath,new TGTextBuffer(20));
+  filepathtext->SetEnabled(kFALSE);
   filepath->AddFrame(filepathtext,new TGLayoutHints(kLHintsExpandX|kLHintsTop, 10 ,3,4,0));
-
+  
   TGLabel *filenamelabel = new TGLabel(filepath,"File Name: ");
   filepath->AddFrame(filenamelabel,new TGLayoutHints(kLHintsLeft | kLHintsTop, 10 ,3,4,0));
   filenametext = new TGTextEntry(filepath, new TGTextBuffer(20));
+  filenametext->SetEnabled(kFALSE);
   filepath->AddFrame(filenametext,new TGLayoutHints(kLHintsLeft| kLHintsTop,10,3,4,0));
   
   setgroup->AddFrame(filepath,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
 
-  
-  filesetdone = new TGTextButton(filepath,"Complete");
-  filesetdone->Connect("Pressed()","Online",this,"Init()");
-  filepath->AddFrame(filesetdone,new TGLayoutHints(kLHintsLeft|kLHintsTop,10,3,4,4));
 
-  startloop = new TGTextButton(filepath,"RunStart");
-  startloop->Connect("Pressed()","Online",this,"StartStop()");
-  startloop->SetEnabled(0);
-  filepath->AddFrame(startloop,new TGLayoutHints(kLHintsLeft|kLHintsTop,10,3,4,0));
+
 
   StateMsg = new TGTextEntry(filepath,new TGTextBuffer(20));
   StateMsg->SetFont("-adobe-helvetica-bold-r-*-*-11-*-*-*-*-*-iso8859-1", false);
@@ -368,11 +370,17 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
   StateMsg->SetText("Rxxxx     Mxx");
   StateMsg->SetEnabled(kFALSE);
   StateMsg->SetFrameDrawn(kFALSE);
-
   filepath->AddFrame(StateMsg,new TGLayoutHints(kLHintsLeft|kLHintsTop,10,3,4,0));
-  
   TabPanel->AddFrame(setgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
 
+
+  startloop = new TGTextButton(filepath,"RunStart");
+  startloop->Connect("Pressed()","Online",this,"StartStop()");
+  startloop->SetEnabled(0);
+  filepath->AddFrame(startloop,new TGLayoutHints(kLHintsRight|kLHintsTop,10,3,4,0));
+
+
+  
   // =================
   TGTextEntry **cl0 = new TGTextEntry *[14];
   TGTextEntry **LabelsI = new TGTextEntry *[14];
@@ -516,14 +524,14 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
-  std::ifstream in("PixieOnline.config");
-  if(!in.is_open()) return;
-  char tmp[200];
-  in.getline(tmp,200);
-  filepathtext->Insert(tmp);
-  in.getline(tmp,200);
-  filenametext->Insert(tmp);
-  in.close();
+  // std::ifstream in("PixieOnline.config");
+  // if(!in.is_open()) return;
+  // char tmp[200];
+  // in.getline(tmp,200);
+  // filepathtext->Insert(tmp);
+  // in.getline(tmp,200);
+  // filenametext->Insert(tmp);
+  // in.close();
 
 }
 
@@ -843,7 +851,7 @@ void Online::LoopRun()
   std::string tempstring;
   int OldRunNUmber = -1;
   std::stringstream ss;//sstream cstring
-  ss.clear();//重复使用前一定要清空
+  ss.clear();//
 
   PrevProtectionTime = get_time();
   
@@ -858,7 +866,7 @@ void Online::LoopRun()
 	  if(ModNum > 0 && number != UINT_MAX)
 	    {
 	      for(int i = 0;i < ModNum;i++)
-		{
+		{		  
 		  sprintf(Filename[i],"%s%04d/%s_R%04d_M%02d.bin",filepathtext->GetText(),RunNumber,filenametext->GetText(),RunNumber,i);
 		  if(IsFileExists(Filename[i]))
 		    {
@@ -898,7 +906,7 @@ void Online::LoopRun()
 	    {
 	      PrevProtectionTime = get_time();
 	      // std::cout<<"get time 1"<<std::endl;
-	      
+		  
 	      memcpy(buf_new,ptr,(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*2+SHAREDMEMORYDATAOFFSET);
 	      if(number == UINT_MAX) 
 		{
@@ -907,7 +915,14 @@ void Online::LoopRun()
 		  continue;
 		}
 	      number = tempN;
-	      
+
+	      char filepath[1024];
+	      char filename[128];
+	      memcpy(filename,buf_new+14,128);
+	      memcpy(filepath,buf_new+142,1024);
+	      filepathtext->SetText(filepath);
+	      filenametext->SetText(filename);
+
 	      // =======
 	      memcpy(&ModNum,buf_new+4,2);
 	      memcpy(&RunNumber,buf_new+6,4);

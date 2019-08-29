@@ -29,15 +29,20 @@
 #define BLEN (500*2516) // size of 1 buffer
 #define BUFFLENGTH (500*2516) // 4.8MB Buffer *2 (DBUFF)
 
-#define SHAREDMEMORYDATAOFFSET 10 //BYTE
-// 1st 4 bytes IDcode for event shared memory
-// 2nd 2 bytes number of valid Num Modules in shared memory
-// 3rd 4 bytes Run Number
+#define SHAREDMEMORYDATAOFFSET 1170 //BYTE
+// 1st 4    bytes IDcode for event shared memory
+// 2nd 2    bytes number of valid Num Modules in shared memory
+// 3rd 4    bytes Run Number
+// 4   4    bytes ID for update spectrum
+// 5   128  bytes name of data file
+// 6   1024 bytes path of data file
+// 7   2    bytes software id
+// 8   2    bytes software version
 #define SHAREDMEMORYDATASTATISTICS 448
 #define SHAREDMEMORYDATAENERGYLENGTH 32768
 #define SHAREDMEMORYDATAMAXCHANNEL 16
 
-// 共享内存数据定义 10bytes header + 插件采样率 + 数据统计 + 能谱
+// 共享内存数据定义 header + 插件采样率 + 数据统计 + 能谱
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class Detector
@@ -48,23 +53,23 @@ public:
   
   int Syncronise();
   int ExitSystem();
-  int StartLSMRun(int continue_run);
+  int StartRun(int continue_run);
   int OpenSaveFile(int n,const char *FileN);
   int SavetoFile(int nFile);
   int RunStatus();
   int ReadDataFromModules(int thres = 0,unsigned short endofrun = 0);
-  int StopLSMRun();
+  int StopRun();
   int CloseFile();
-  int SetOnlineF(bool flag);
+  int SetOnlineFlag(bool flag);
   void SetRecordFlag(bool flag);
   int SaveHistogram(char *fileN,int mod);
   int SaveDSPPars(char *file);
   int OpenSharedMemory();
   int UpdateSharedMemory();
   void SetRunNumber(int r);
+  void UpdateFilePathAndNameInSharedMemory(const char *path,const char *filen);
   unsigned int GetFileSize(int n); // in MB
-  // bool SetEvtl();
-  //  	int Write2FileLSM(char *name);
+
   int AcquireADCTrace(unsigned short *trace, unsigned long size, unsigned short module, unsigned short ChanNum);
 
   bool BootSystem();
@@ -162,6 +167,9 @@ private:
   sem_t *shmsem; // shared memory semaphore
   int    shmfd;  // shared memory id
   unsigned char *shmptr;// pointer to shm
+
+  unsigned int shmid1,shmid2;
+  
   bool   fonline;
   bool   frecord;
   int runnumber;

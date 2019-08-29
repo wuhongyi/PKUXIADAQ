@@ -29,6 +29,10 @@ Detector::Detector(int mode)
   moduleslot = new std::vector<unsigned short>;
   modulesamplingrate = new std::vector<unsigned short>;
   modulebits = new std::vector<unsigned short>;
+
+  if(shmfd < 0) OpenSharedMemory();
+  shmid1 = 0;
+  shmid2 = 0;
 }
 
 Detector::~Detector()
@@ -418,18 +422,16 @@ int Detector::Syncronise()
   return retval;
 }
 
-int Detector::StartLSMRun(int continue_run)
+int Detector::StartRun(int continue_run)
 {
   std::cout<<"RUN START"<<std::endl;
-  // if(fonline&&shmfd<0) OpenSharedMemory();
-  if(shmfd < 0) OpenSharedMemory();//避免启动获取时候没开启，中途开启造成的bug问题。
-  // if(!SetEvtl()) return 1;
+
   int retval = 0;
   // All modules start acuqire and Stop acquire simultaneously
   retval = Pixie16WriteSglModPar((char*)"SYNCH_WAIT", 1, 0);
   if (retval < 0)
     {
-      ErrorInfo("Detector.cc", "StartLSMRun(...)", "Pixie16WriteSglModPar/SYNCH_WAIT", retval);
+      ErrorInfo("Detector.cc", "StartRun(...)", "Pixie16WriteSglModPar/SYNCH_WAIT", retval);
       fprintf(stderr, "Failed to write SYNCH_WAIT\n");
       return retval;
     }
@@ -440,7 +442,7 @@ int Detector::StartLSMRun(int continue_run)
       retval = Pixie16WriteSglModPar((char*)"IN_SYNCH", 0, 0);
       if (retval < 0)
 	{
-	  ErrorInfo("Detector.cc", "StartLSMRun(...)", "Pixie16WriteSglModPar/IN_SYNCH", retval);
+	  ErrorInfo("Detector.cc", "StartRun(...)", "Pixie16WriteSglModPar/IN_SYNCH", retval);
 	  fprintf(stderr, "In Sync problem\n");
 	  return retval;
 	}
@@ -455,13 +457,10 @@ int Detector::StartLSMRun(int continue_run)
     retval = Pixie16StartListModeRun(NumModules, 0x100,RESUME_RUN);
   if (retval < 0)
     {
-      ErrorInfo("Detector.cc", "StartLSMRun(...)", "Pixie16StartListModeRun", retval);
+      ErrorInfo("Detector.cc", "StartRun(...)", "Pixie16StartListModeRun", retval);
       fprintf(stderr, "Failed to start ListMode run in module");
       return retval;
     }
-
-  // for(int i = 0; i < NumModules; i++)
-  //   if(evtlen[i] <= 0) return 1; // confirm the evtlengt
 
   return 0;
 }
@@ -478,10 +477,6 @@ int Detector::ReadDataFromModules(int thres,unsigned short  endofrun)
     {
       thres = 2;
     }
-  // if(fsave==NULL) {
-  //   cout<<"No date file has been specified "<<endl;
-  //   return 0;
-  // }
 
   if(fonline) StatisticsForModule();
   
@@ -551,24 +546,6 @@ int Detector::RunStatus()
   return sum;
 }
 
-/*
-int
-Detector::Write2FileLSM (char *name)
-{
-  int *ret=new int[NumModules];
-  int sum =0 ;
-  for(int i=0;i<NumModules;i++)
-    {    
-      ret[i]=0;
-//      ret[i]=Pixie16SaveListModeDataToFile (name, i);
-      if (ret[i] < 0)
-	std::cout << "failed to save to file block from mod "<<i<<" !\n";
-      sum=sum+ret[i];
-    }
-
-  return sum;
-}
-*/
 
 int Detector::AcquireADCTrace(unsigned short *trace, unsigned long size, unsigned short module, unsigned short ChanNum)
 { 
@@ -664,14 +641,14 @@ unsigned int Detector::GetFileSize(int n)
   return (unsigned int)FILESIZE[n]/1024/1024*4;
 }
 
-int Detector::StopLSMRun()
+int Detector::StopRun()
 {
   std::cout<<"STOP RUN!"<<std::endl;
   unsigned short ModNum = 0;
   StopTime = get_time();
   int retval = Pixie16EndRun(ModNum);
   if(retval < 0) {
-    ErrorInfo("Detector.cc", "StopLSMRun(...)", "Pixie16EndRun", retval);
+    ErrorInfo("Detector.cc", "StopRun(...)", "Pixie16EndRun", retval);
     std::cout<<"FAILED TO END THE RUN!!!"<<std::endl;
     return 1;
   }
@@ -744,9 +721,8 @@ int Detector::UpdateSharedMemory()
     }
   else if(rc == -1) return 1; // this indicates the shm is under use
   
-  static unsigned int tmp = 0;
-  tmp++;
-  memcpy(shmptr,&tmp,sizeof(unsigned int));
+  shmid1++;
+  memcpy(shmptr,&shmid1,sizeof(unsigned int));
   memcpy(shmptr+4,&NumModules,sizeof(unsigned short));
   memcpy(shmptr+6,&runnumber,sizeof(unsigned int));
   
@@ -777,21 +753,10 @@ int Detector::UpdateSharedMemory()
 void Detector::UpdateEnergySpectrumForModule()
 {
   int retval = 0;
+
+  shmid2++;
+  memcpy(shmptr+10,&shmid2,sizeof(unsigned int));
   
-  // unsigned int Statistics[SHAREDMEMORYDATAENERGYLENGTH];
-  // for(unsigned short i = 0; i < NumModules; i++)
-  //   for(unsigned short j = 0; j < SHAREDMEMORYDATAMAXCHANNEL; j++)
-  //     {
-  // 	retval = Pixie16ReadHistogramFromModule(Statistics,SHAREDMEMORYDATAENERGYLENGTH,i,j);//channel by channel
-  // 	if(retval < 0)
-  // 	  {
-  // 	    ErrorInfo("Detector.cc", "UpdateEnergySpectrumForModule()", "Pixie16ReadHistogramFromModule", retval);
-  // 	    cout<<"Invalid Pixie module/channel number OR Failed to get the histogram data"<<endl;
-  // 	  }
-  // 	memcpy(shmptr+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+i*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL+j*4*SHAREDMEMORYDATAENERGYLENGTH,Statistics,sizeof(unsigned int)*SHAREDMEMORYDATAENERGYLENGTH);
-  //     }
-
-
   unsigned int Statistics[SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL];
   for(unsigned short i = 0; i < NumModules; i++)
       {
@@ -808,8 +773,14 @@ void Detector::UpdateEnergySpectrumForModule()
   std::cout<<"Please don't update it too often. Frequent updates will affect DAQ efficiency."<<std::endl;
 }
 
+void Detector::UpdateFilePathAndNameInSharedMemory(const char *path,const char *filen)
+{
+  memcpy(shmptr+14,filen,sizeof(unsigned int)*128);
+  memcpy(shmptr+142,path,sizeof(unsigned int)*1024);
+  return;
+}
 
-int Detector::SetOnlineF(bool flag)
+int Detector::SetOnlineFlag(bool flag)
 {
   fonline = flag;
   return 1;

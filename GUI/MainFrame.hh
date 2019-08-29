@@ -4,40 +4,18 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:17 2018 (+0800)
-// Last-Updated: 四 8月 22 13:36:06 2019 (+0800)
+// Last-Updated: 四 8月 29 19:34:40 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 26
+//     Update #: 29
 // URL: http://wuhongyi.cn 
 
 #ifndef MAINFRAME_HH_
 #define MAINFRAME_HH_
 
-const char gVERSION[] = "Version: 2019.08.22";
-
-const char gAbout[] = "\
-Version: Beta ---> Developer version\n\
-\n\
-The program developed by Peking University.\n\
-The program applies to XIA Pixie-16. \n\
-Support 100 MHz(RevD 12-bit,RevF 14-bit), \n\
-        250 MHz(RevF 12/14/16-bit), \n\
-        500 MHz(RevF 12/14-bit)\n\
-\n\
-\n\
-Program Developer:\n\
-  Hongyi Wu (wuhongyi@qq.com   Peking University)\n\
-  Jing Li (lijinger02@163.com   Peking University)\n\
-\n\
-Technical Support:\n\
-  Zhihuan Li (Peking University)\n\
-  Hui Tan (XIA LLC)\n\
-  Wolfgang Hennig(XIA LLC)\n\
-\n\
-";
-
 #define INITIAL_HIGHT 1000
 #define INITIAL_WIDTH 300
 
+#include "Global.hh"
 #include "Base.hh"
 #include "Cfd.hh"
 #include "Csra.hh"
@@ -112,10 +90,10 @@ public:
   MainFrame(const TGWindow * p);
   virtual ~MainFrame();
 
-  void SetLSFileName();
+  void SetFileName();
   void ConfigFileInfo();
   void StartRun();
-  void SetLSonlinedataf();
+  void SetOnlineDataFlag();
   void SetRecordDataFlag();
   void SetOnlineMode();
 

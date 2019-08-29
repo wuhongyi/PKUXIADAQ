@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:53:40 2016 (+0800)
-// Last-Updated: 一 9月  5 10:54:10 2016 (+0800)
+// Last-Updated: 四 8月 29 20:01:59 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 12
+//     Update #: 13
 // URL: http://wuhongyi.cn 
 
 #include "Manager.hh"
@@ -19,11 +19,8 @@
 
 int main(int argc, char *argv[])
 {
-
   Manager *manager = new Manager();
-
-  manager->BootSystem();
-  manager->RunManager();
+  if(manager->BootSystem()) manager->RunManager();
 
   delete manager;
   return 0;

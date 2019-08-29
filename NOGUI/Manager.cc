@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 22:19:02 2016 (+0800)
-// Last-Updated: 三 1月 30 11:06:10 2019 (+0800)
+// Last-Updated: 四 8月 29 19:58:39 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 55
+//     Update #: 58
 // URL: http://wuhongyi.cn 
 
 #include "Manager.hh"
@@ -83,7 +83,7 @@ bool Manager::BootSystem()
 
 }
 
-void Manager::SetLSFileName()
+void Manager::SetFileName()
 {
   if(detector == 0)
     {
@@ -117,26 +117,26 @@ void Manager::SetLSFileName()
   fstartdaq = 0;
 }
 
-void Manager::SetLSonlinedataf()
+void Manager::SetOnlineDataFlag()
 {
   if(!fonlinedata)
     {
       fonlinedata = 1;
-      detector->SetOnlineF(1);
+      detector->SetOnlineFlag(1);
       std::cout<<"DAQ will send online data!"<<std::endl;
     }
   else
     {
       fonlinedata = 0;
-      detector->SetOnlineF(0);
+      detector->SetOnlineFlag(0);
       std::cout<<"DAQ wont send online data!"<<std::endl;
     }
 }
 
 void Manager::PreStartRun()
 {
-  SetLSFileName();
-  detector->SetOnlineF(fonlinedata);
+  SetFileName();
+  detector->SetOnlineFlag(fonlinedata);
 
   for(int i = 0;i < detector->NumModules;i++)
     {
@@ -162,7 +162,7 @@ void Manager::PreStartRun()
   writelog.close();    
 
 		
-  if(detector->StartLSMRun(0))
+  if(detector->StartRun(0))
     {
       std::cout<<"CANNOT start the LSM Run!"<<std::endl;
       return;
@@ -180,7 +180,7 @@ void Manager::PostStopRun()
 {
   std::cout<<"done!!!!!!"<<std::endl;
   int counter = 0;
-  while(detector->StopLSMRun())
+  while(detector->StopRun())
     {
       // failed to stop run 
       sleep(1); // wait 1s then try again
@@ -279,8 +279,7 @@ void Manager::CheckKeyboard()
 
 	case 'o' :
 	  {
-	    SetLSonlinedataf();
-	    
+	    SetOnlineDataFlag();	    
 	    break;
 	  }
 
