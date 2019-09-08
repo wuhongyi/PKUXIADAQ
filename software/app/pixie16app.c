@@ -6181,8 +6181,14 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16ComputeFastFiltersOffline (
 		// Compute CFD
 		for(x=CFD_Delay; x<RcdTraceLength; x++)
 		{
-			cfd[x] = -fastfilter[x-CFD_Delay] + fastfilter[x] * cfdscale;
-
+		  // cfd[x] = (-fastfilter[x-CFD_Delay] + fastfilter[x] * cfdscale);
+		  //wuhongyi
+		  if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
+		    cfd[x] = (-fastfilter[x-CFD_Delay] + fastfilter[x] * cfdscale)*(double)FastLen;
+		  else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
+		    cfd[x] = (-fastfilter[x-CFD_Delay] + fastfilter[x] * cfdscale)*(double)FastLen*2;
+		  else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)
+		    cfd[x] = (-fastfilter[x-CFD_Delay] + fastfilter[x] * cfdscale)*(double)FastLen*5;
 		}
 
 		// Extend the value of cfd[CFD_Delay] to all non-computed ones from index 0 to CFD_Delay-1

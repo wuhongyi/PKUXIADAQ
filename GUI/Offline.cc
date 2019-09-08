@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 一 5月  6 20:53:27 2019 (+0800)
+// Last-Updated: 日 9月  8 20:26:08 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 883
+//     Update #: 884
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -3280,7 +3280,7 @@ void Offline::Panel5Draw()
       doublecfd5 = new double[inttracelength];
 
       offlineth2d5_0 = new TH2D("offlineth2d5_0","",inttracelength,0,inttracelength,1000,-100,900);
-      offlineth2d5_1 = new TH2D("offlineth2d5_1","",inttracelength,0,inttracelength,1000,-100,900);
+      offlineth2d5_1 = new TH2D("offlineth2d5_1","",inttracelength,0,inttracelength,1000,-1000,9000);
 
       switch(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()))
 	{

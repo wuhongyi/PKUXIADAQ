@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 三 7月  3 10:37:17 2019 (+0800)
+.. Last-Updated: 日 9月  8 20:31:48 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 27
+..     Update #: 28
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -141,10 +141,7 @@
    
   cd ~
   cd PKUXIADAQ/OnlineStattics/
-   
-  #修改 PixieOnline.config 文件中的参数
-  #第一行为获取数据文件存放路径
-  #第二行为获取文件名
+
    
   make clean
   make
@@ -235,7 +232,6 @@
    
    
   #将会弹出图形化界面
-  #查看上面的原始数据文件夹路径、文件名是否正确。按 Complete 确认。
   #按 RunStart开始启动监视，每3秒更新一次每路的输入率、输出率。(开启机箱后第一次启用该程序需要在获取开启之后)
   #监视界面右下角有对写入硬盘使用量的监视。
    

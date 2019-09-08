@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 五 11月 30 20:59:18 2018 (+0800)
-;; Last-Updated: 日 5月 19 16:48:54 2019 (+0800)
+;; Last-Updated: 六 9月  7 17:26:46 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 3
+;;     Update #: 4
 ;; URL: http://wuhongyi.cn -->
 
 # TODO
@@ -59,7 +59,47 @@
 
 
 
+## err info
 
+```bash
+Build: Plx9054
+
+- PLA: CentOS Linux release 7.6.1810 (Core) 
+- KER: 3.10.0-957.12.2.el7.x86_64
+- INC: /lib/modules/3.10.0-957.12.2.el7.x86_64/build/include
+- CPU: x86_64 (64-bit Little Endian)
+- CMP: Gcc
+- TYP: Driver
+- PLX: 9054
+- CFG: Release
+
+make[1]: 进入目录“/usr/src/kernels/3.10.0-957.12.2.el7.x86_64”
+arch/x86/Makefile:166: *** CONFIG_RETPOLINE=y, but not supported by the compiler. Compiler update recommended.。 停止。
+make[1]: 离开目录“/usr/src/kernels/3.10.0-957.12.2.el7.x86_64”
+make: *** [BuildDriver] 错误 2
+[wuhongyi@pkudaq Driver]$ su
+密码：
+[root@pkudaq Driver]# emacs /usr/src/kernels/3.10.0-957.12.2.el7.x86_64/
+arch/           firmware/       Kconfig         mm/             security/       virt/
+block/          fs/             kernel/         Module.symvers  sound/          vmlinux.id
+.config         include/        lib/            net/            System.map      
+crypto/         init/           Makefile        samples/        tools/          
+drivers/        ipc/            Makefile.qlock  scripts/        usr/            
+[root@pkudaq Driver]# emacs /usr/src/kernels/3.10.0-957.12.2.el7.x86_64/arch/x86/Makefile
+[root@pkudaq Driver]# exit
+exit
+[wuhongyi@pkudaq Driver]$ ./builddriver 9054
+```
+
+注释掉
+
+```bash
+    ifneq ($(RETPOLINE_CFLAGS),)
+        KBUILD_CFLAGS += $(RETPOLINE_CFLAGS) -DRETPOLINE
+    else
+        $(error CONFIG_RETPOLINE=y, but not supported by the compiler. Compiler update recommended.)
+    endif
+```
 
 
 

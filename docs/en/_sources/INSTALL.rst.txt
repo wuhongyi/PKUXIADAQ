@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 三 7月  3 16:15:04 2019 (+0800)
+.. Last-Updated: 日 9月  8 20:31:48 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 28
+..     Update #: 29
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -152,10 +152,6 @@ The steps for Installation
   cd ~
   cd PKUXIADAQ/OnlineStattics/
    
-  # modify the parameters in the PixieOnline.config file
-  # the content of the first line is the storage path of acquired data files.
-  # the content of the second line is the names of acquired data files.
-   
   make clean
   make 
 
@@ -248,7 +244,6 @@ Instruction for use
   ./online
    
   # The graphical interface will pop up.
-  # Check the path to the original data folder above and the file name is correct. Confirm by pressing Complete.
   # Press RunStart to start monitoring and update the input rate and output rate of each channel every 3 seconds. (The first time you enable the program after opening the chassis, you need to enable it after the acquisition is turned on)
   # In the lower right corner of the monitoring interface, there is monitoring of the amount of hard disk usage for writing data.
    
