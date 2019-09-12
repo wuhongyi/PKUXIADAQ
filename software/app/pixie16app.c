@@ -6181,14 +6181,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16ComputeFastFiltersOffline (
 		// Compute CFD
 		for(x=CFD_Delay; x<RcdTraceLength; x++)
 		{
-		  // cfd[x] = (-fastfilter[x-CFD_Delay] + fastfilter[x] * cfdscale);
-		  //wuhongyi
-		  if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
-		    cfd[x] = (-fastfilter[x-CFD_Delay] + fastfilter[x] * cfdscale)*(double)FastLen;
-		  else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
-		    cfd[x] = (-fastfilter[x-CFD_Delay] + fastfilter[x] * cfdscale)*(double)FastLen*2;
-		  else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)
-		    cfd[x] = (-fastfilter[x-CFD_Delay] + fastfilter[x] * cfdscale)*(double)FastLen*5;
+		  cfd[x] = (-fastfilter[x-CFD_Delay] + fastfilter[x] * cfdscale);
 		}
 
 		// Extend the value of cfd[CFD_Delay] to all non-computed ones from index 0 to CFD_Delay-1
@@ -6354,6 +6347,143 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16ComputeSlowFiltersOffline (
 		sprintf(ErrMSG, "*ERROR* (Pixie16ComputeSlowFiltersOffline): can't open list mode file %s", FileName);
 		Pixie_Print_MSG(ErrMSG);
 		return(-5);
+	}
+	
+	return(0);
+	
+}
+
+
+PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeFastFiltersOffline (
+	char           *FileName,          // the list mode data file name (with complete path)
+	unsigned short ModuleNumber,       // the module whose events are to be analyzed
+	unsigned short ChannelNumber,      // the channel whose events are to be analyzed
+	unsigned int   FileLocation,       // the location of the trace in the file
+	unsigned short RcdTraceLength,     // recorded trace length
+	unsigned short *RcdTrace,          // recorded trace
+	double         *fastfilter,        // fast filter response
+	double         *cfd,               // cfd response
+	double         *cfds )             // cfd response
+{
+	
+	char ErrMSG[MAX_ERRMSG_LENGTH];
+	FILE *ListModeFile = NULL;
+	unsigned int FastLen, FastGap, FastFilterRange, CFD_Delay, CFD_W;
+	unsigned int fsum0[32768], fsum1[32768];
+	unsigned int offset, x, y;
+	double cfdscale;
+
+
+	// Check if RcdTrace is valid
+	if(RcdTrace == NULL)
+	{
+		sprintf(ErrMSG, "*Error* (Pixie16ComputeFastFiltersOffline): Null pointer *RcdTrace");
+		Pixie_Print_MSG(ErrMSG);
+		return(-1);
+	}
+	
+	// Check if fastfilter is valid
+	if(fastfilter == NULL)
+	{
+		sprintf(ErrMSG, "*Error* (Pixie16ComputeFastFiltersOffline): Null pointer *fastfilter");
+		Pixie_Print_MSG(ErrMSG);
+		return(-2);
+	}
+	
+	// Check if cfd is valid
+	if(cfd == NULL)
+	{
+		sprintf(ErrMSG, "*Error* (Pixie16ComputeFastFiltersOffline): Null pointer *cfd");
+		Pixie_Print_MSG(ErrMSG);
+		return(-3);
+	}
+
+	if(ModuleNumber >= PRESET_MAX_MODULES)
+	{
+		sprintf(ErrMSG, "*ERROR* (Pixie16ComputeFastFiltersOffline): Target module number is invalid %d", ModuleNumber);
+		Pixie_Print_MSG(ErrMSG);
+		return(-4);
+	}
+
+	// Retrieve channel parameters
+	FastFilterRange = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastFilterRange_Address[ModuleNumber] - DATA_MEMORY_ADDRESS];
+	FastLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange);
+	FastGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange);
+	CFD_Delay = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[CFDDelay_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS];
+	CFD_W = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[CFDScale_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS];
+
+	// Check if trace length is sufficiently long
+	if(RcdTraceLength < ((2*FastLen + FastGap)*2))
+	{
+		sprintf(ErrMSG, "*Error* (Pixie16ComputeFastFiltersOffline): the length of recorded trace is too short");
+		Pixie_Print_MSG(ErrMSG);
+		return(-5);
+	}
+
+	// Open the list mode file
+	ListModeFile = fopen(FileName, "rb");
+	if(ListModeFile != NULL)
+	{
+		// Position ListModeFile to the requested trace location
+		fseek(ListModeFile, FileLocation*4, SEEK_SET);
+				
+		// Read trace
+		fread(RcdTrace, 2, RcdTraceLength, ListModeFile);
+		
+		// Close file
+		fclose(ListModeFile);
+
+		// Compute fast filter response
+		offset = 2*FastLen + FastGap - 1;
+		for(x=offset; x<RcdTraceLength; x++)
+		{
+			fsum0[x] = 0;
+			for(y=(x-offset); y<(x-offset+FastLen); y++)
+			{
+				fsum0[x] += RcdTrace[y];
+			}
+			fsum1[x] = 0;
+			for(y=(x-offset+FastLen+FastGap); y<(x-offset+2*FastLen+FastGap); y++)
+			{
+				fsum1[x] += RcdTrace[y];
+			}
+			fastfilter[x] = ((double)fsum1[x] - (double)fsum0[x])/(double)FastLen;
+		}
+
+		// Extend the value of fastfilter[offset] to all non-computed ones from index 0 to offset-1
+		for(x=0; x<offset; x++)
+		{
+			fastfilter[x] = fastfilter[offset];
+		}
+
+		// Decide CFD Scale value
+		cfdscale = 1.0 - (double)CFD_W * 0.125;
+
+		// Compute CFD
+		for(x=CFD_Delay; x<RcdTraceLength; x++)
+		{
+		  cfds[x] = (-fastfilter[x-CFD_Delay] + fastfilter[x] * cfdscale);
+		  
+		  if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
+		    cfd[x] = cfds[x]*(double)FastLen;
+		  else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
+		    cfd[x] = cfds[x]*(double)FastLen*2;
+		  else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)
+		    cfd[x] = cfds[x]*(double)FastLen*5;
+		}
+
+		// Extend the value of cfd[CFD_Delay] to all non-computed ones from index 0 to CFD_Delay-1
+		for(x=0; x<CFD_Delay; x++)
+		{
+		  cfd[x] = cfd[CFD_Delay];
+		  cfds[x] = cfds[CFD_Delay];
+		}
+	}
+	else
+	{
+		sprintf(ErrMSG, "*ERROR* (Pixie16ComputeFastFiltersOffline): can't open list mode file %s", FileName);
+		Pixie_Print_MSG(ErrMSG);
+		return(-6);
 	}
 	
 	return(0);

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 日 9月  8 20:26:08 2019 (+0800)
+// Last-Updated: 四 9月 12 12:49:42 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 884
+//     Update #: 889
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -105,6 +105,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   threshdata = NULL;
   cfdthreshdata = NULL;
   cfddata = NULL;
+  cfdsdata = NULL;
   sfilterdata = NULL;
   ffilterdata = NULL;
   RcdTrace = NULL;
@@ -114,6 +115,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   doublercdtrace = NULL;
   doublefastfilter = NULL;
   doublecfd = NULL;
+  doublecfds = NULL;
   doubleslowfilter = NULL;
   offlinemultigraph = NULL;
   offlinemultigraph = new TMultiGraph();
@@ -135,6 +137,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
       doublercdtrace2[i] = NULL;
       doublefastfilter2[i] = NULL;
       doublecfd2[i] = NULL;
+      doublecfds2[i] = NULL;
       doubleslowfilter2[i] = NULL;
     }
 
@@ -160,11 +163,13 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   RcdTrace5 = NULL;
   doublefastfilter5 = NULL;
   doublecfd5 = NULL;
+  doublecfds5 = NULL;
   
   offlineth1d6 = NULL;
   RcdTrace6 = NULL;
   doublefastfilter6 = NULL;
   doublecfd6 = NULL;
+  doublecfds6 = NULL;
   doubleslowfilter6 = NULL;
   falggausfit6 = false;
   
@@ -284,6 +289,7 @@ Offline::~Offline()
   if(rawdata != NULL) delete rawdata;
   if(threshdata != NULL) delete threshdata;
   if(cfddata != NULL) delete cfddata;
+  if(cfdsdata != NULL) delete cfdsdata;
   if(cfdthreshdata != NULL) delete cfdthreshdata;
   if(sfilterdata != NULL) delete sfilterdata;
   if(ffilterdata != NULL) delete ffilterdata;
@@ -299,10 +305,12 @@ Offline::~Offline()
   if(RcdTrace5 != NULL) delete []RcdTrace5;
   if(doublefastfilter5 != NULL) delete []doublefastfilter5;
   if(doublecfd5 != NULL) delete []doublecfd5;
+  if(doublecfds5 != NULL) delete []doublecfds5;
   
   if(RcdTrace6 != NULL) delete []RcdTrace6;
   if(doublefastfilter6 != NULL) delete []doublefastfilter6;
   if(doublecfd6 != NULL) delete []doublecfd6;
+  if(doublecfds6 != NULL) delete []doublecfds6;
   if(doubleslowfilter6 != NULL) delete []doubleslowfilter6;
 
   if(RcdTrace8 != NULL) delete []RcdTrace8;
@@ -340,6 +348,7 @@ Offline::~Offline()
       if(doublercdtrace2[i] != NULL) delete []doublercdtrace2[i];
       if(doublefastfilter2[i] != NULL) delete []doublefastfilter2[i];
       if(doublecfd2[i] != NULL) delete []doublecfd2[i];
+      if(doublecfds2[i] != NULL) delete []doublecfds2[i];
       if(doubleslowfilter2[i] != NULL) delete []doubleslowfilter2[i];
     }
 
@@ -631,7 +640,12 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   offlinedrawoption1[5]->SetTextColor(color, false);
   parFrame->AddFrame(offlinedrawoption1[5], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
 
-
+  offlinedrawoption1[6] = new TGCheckButton(parFrame, "CFDScale");
+  offlinedrawoption1[6]->SetOn(kFALSE);
+  offlinedrawoption1[6]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel1(Bool_t)");
+  fClient->GetColorByName("hot pink", color);
+  offlinedrawoption1[6]->SetTextColor(color, false);
+  parFrame->AddFrame(offlinedrawoption1[6], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
 
   // current count
   OfflineCurrentCountText = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
@@ -775,7 +789,7 @@ void Offline::SelectDrawOptionPanel1(Bool_t on)
 {
   if(tracelength == 0) return;
   
-  if(rawdata != NULL || threshdata != NULL || cfddata != NULL || cfdthreshdata != NULL || sfilterdata != NULL || ffilterdata != NULL)
+  if(rawdata != NULL || threshdata != NULL || cfddata != NULL || cfdsdata != NULL || cfdthreshdata != NULL || sfilterdata != NULL || ffilterdata != NULL)
     {
       if(rawdata != NULL)
 	{
@@ -798,6 +812,14 @@ void Offline::SelectDrawOptionPanel1(Bool_t on)
 	  cfddata->SetLineColor(2);
 	  cfddata->SetMarkerStyle(7);
 	  cfddata->SetMarkerColor(2);
+	}
+      if(cfdsdata != NULL)
+	{
+	  delete cfdsdata;
+	  cfdsdata = new TGraph(tracelength,doublesample,doublecfds);
+	  cfdsdata->SetLineColor(6);
+	  cfdsdata->SetMarkerStyle(7);
+	  cfdsdata->SetMarkerColor(6);
 	}
       if(cfdthreshdata != NULL)
 	{
@@ -836,12 +858,15 @@ void Offline::SelectDrawOptionPanel1(Bool_t on)
 	offlinemultigraph->Add(sfilterdata);
       if(offlinedrawoption1[2]->IsOn())
 	offlinemultigraph->Add(ffilterdata);
-
+      if(offlinedrawoption1[6]->IsOn())
+	offlinemultigraph->Add(cfdsdata);
+      
       if(choosedrawmarkerstyle->GetSelected() == 0 || choosedrawmarkerstyle->GetSelected() == 3)
 	{
 	  rawdata->SetLineWidth(1);
 	  threshdata->SetLineWidth(1);
 	  cfddata->SetLineWidth(1);
+	  cfdsdata->SetLineWidth(1);
 	  cfdthreshdata->SetLineWidth(1);
 	  sfilterdata->SetLineWidth(1);
 	  ffilterdata->SetLineWidth(1);
@@ -851,6 +876,7 @@ void Offline::SelectDrawOptionPanel1(Bool_t on)
 	  rawdata->SetLineWidth(2);
 	  threshdata->SetLineWidth(2);
 	  cfddata->SetLineWidth(2);
+	  cfdsdata->SetLineWidth(2);
 	  cfdthreshdata->SetLineWidth(2);
 	  sfilterdata->SetLineWidth(2);
 	  ffilterdata->SetLineWidth(2);
@@ -864,7 +890,7 @@ void Offline::SelectDrawOptionPanel1(Bool_t on)
       if(choosedrawmarkerstyle->GetSelected() == 2) offlinemultigraph->Draw("AP");
       if(choosedrawmarkerstyle->GetSelected() == 1 || choosedrawmarkerstyle->GetSelected() == 4) offlinemultigraph->Draw("ALP");
       
-      if(offlinedrawoption1[0]->IsOn() || offlinedrawoption1[1]->IsOn() || offlinedrawoption1[2]->IsOn() || offlinedrawoption1[3]->IsOn() || offlinedrawoption1[4]->IsOn() || offlinedrawoption1[5]->IsOn())
+      if(offlinedrawoption1[0]->IsOn() || offlinedrawoption1[1]->IsOn() || offlinedrawoption1[2]->IsOn() || offlinedrawoption1[3]->IsOn() || offlinedrawoption1[4]->IsOn() || offlinedrawoption1[5]->IsOn() || offlinedrawoption1[6]->IsOn())
 	offlinemultigraph->GetXaxis()->SetRangeUser(double(dslider->GetMinPosition()),double(dslider->GetMaxPosition()));
       adjustCanvas->Modified();
       adjustCanvas->Update();
@@ -2541,6 +2567,11 @@ void Offline::Panel1Draw()
       delete cfddata;
       cfddata = NULL;
     }
+  if(cfdsdata != NULL)
+    {
+      delete cfdsdata;
+      cfdsdata = NULL;
+    }
   if(cfdthreshdata != NULL)
     {
       delete cfdthreshdata;
@@ -2590,6 +2621,11 @@ void Offline::Panel1Draw()
     {
       delete []doublecfd;
       doublecfd = NULL;
+    }
+  if(doublecfds != NULL)
+    {
+      delete []doublecfds;
+      doublecfds = NULL;
     }
   if(doubleslowfilter != NULL)
     {
@@ -2751,11 +2787,12 @@ void Offline::Panel1Draw()
   doublercdtrace = new double[tracelength];
   doublefastfilter = new double[tracelength];
   doublecfd = new double[tracelength];
+  doublecfds = new double[tracelength];
   doubleslowfilter = new double[tracelength];
 
   int retval;
-  retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), offlinedata->GetEventWaveLocation(OfflineCurrentCount),tracelength, RcdTrace, doublefastfilter, doublecfd );//trace length/trace location
-  if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "Pixie16ComputeFastFiltersOffline", retval);
+  retval = HongyiWuPixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), offlinedata->GetEventWaveLocation(OfflineCurrentCount),tracelength, RcdTrace, doublefastfilter, doublecfd, doublecfds);//trace length/trace location
+  if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "HongyiWuPixie16ComputeFastFiltersOffline", retval);
 
   if(chooseslowfilterbaseline->GetSelected() == 0)
     {
@@ -2788,6 +2825,7 @@ void Offline::Panel1Draw()
   rawdata = new TGraph(tracelength,doublesample,doublercdtrace);
   threshdata = new TGraph(tracelength,doublesample,doublethresh);
   cfddata = new TGraph(tracelength,doublesample,doublecfd);
+  cfdsdata = new TGraph(tracelength,doublesample,doublecfds);
   cfdthreshdata = new TGraph(tracelength,doublesample,doublecfdthresh);
   sfilterdata = new TGraph(tracelength,doublesample,doubleslowfilter);
   ffilterdata  = new TGraph(tracelength,doublesample,doublefastfilter);
@@ -2799,7 +2837,8 @@ void Offline::Panel1Draw()
   sfilterdata->SetLineColor(3);
   ffilterdata->SetLineColor(4);
   threshdata->SetLineColor(4);
-
+  cfdsdata->SetLineColor(6);
+  
   rawdata->SetMarkerStyle(7);
   threshdata->SetMarkerStyle(7);
   threshdata->SetMarkerColor(4);
@@ -2811,12 +2850,15 @@ void Offline::Panel1Draw()
   sfilterdata->SetMarkerColor(3);
   ffilterdata->SetMarkerStyle(7);
   ffilterdata->SetMarkerColor(4);
+  cfdsdata->SetMarkerStyle(7);
+  cfdsdata->SetMarkerColor(6);
 
   if(choosedrawmarkerstyle->GetSelected() == 0 || choosedrawmarkerstyle->GetSelected() == 3)
     {
       rawdata->SetLineWidth(1);
       threshdata->SetLineWidth(1);
       cfddata->SetLineWidth(1);
+      cfdsdata->SetLineWidth(1);
       cfdthreshdata->SetLineWidth(1);
       sfilterdata->SetLineWidth(1);
       ffilterdata->SetLineWidth(1);
@@ -2826,6 +2868,7 @@ void Offline::Panel1Draw()
       rawdata->SetLineWidth(2);
       threshdata->SetLineWidth(2);
       cfddata->SetLineWidth(2);
+      cfdsdata->SetLineWidth(2);
       cfdthreshdata->SetLineWidth(2);
       sfilterdata->SetLineWidth(2);
       ffilterdata->SetLineWidth(2);
@@ -2843,14 +2886,16 @@ void Offline::Panel1Draw()
     offlinemultigraph->Add(sfilterdata);
   if(offlinedrawoption1[2]->IsOn())
     offlinemultigraph->Add(ffilterdata);
-
+  if(offlinedrawoption1[6]->IsOn())
+    offlinemultigraph->Add(cfdsdata);
+  
   offlinemultigraph->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld   %s",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount),offlinedata->GetEventCfdForcedTriggerBit(OfflineCurrentCount)?"cfd: invalid":"cfd: valid").Data());
   
   if(choosedrawmarkerstyle->GetSelected() == 0 || choosedrawmarkerstyle->GetSelected() == 3) offlinemultigraph->Draw("AL");
   if(choosedrawmarkerstyle->GetSelected() == 2) offlinemultigraph->Draw("AP");
   if(choosedrawmarkerstyle->GetSelected() == 1 || choosedrawmarkerstyle->GetSelected() == 4) offlinemultigraph->Draw("ALP");
 
-  if(offlinedrawoption1[0]->IsOn() || offlinedrawoption1[1]->IsOn() || offlinedrawoption1[2]->IsOn() || offlinedrawoption1[3]->IsOn() || offlinedrawoption1[4]->IsOn() || offlinedrawoption1[5]->IsOn())
+  if(offlinedrawoption1[0]->IsOn() || offlinedrawoption1[1]->IsOn() || offlinedrawoption1[2]->IsOn() || offlinedrawoption1[3]->IsOn() || offlinedrawoption1[4]->IsOn() || offlinedrawoption1[5]->IsOn() || offlinedrawoption1[6]->IsOn())
     offlinemultigraph->GetXaxis()->SetRangeUser(double(dslider->GetMinPosition()),double(dslider->GetMaxPosition()));
   adjustCanvas->Modified();
   adjustCanvas->Update();
@@ -2924,6 +2969,11 @@ void Offline::Panel2Draw()
 	  delete []doublecfd2[i];
 	  doublecfd2[i] = NULL;
 	}
+      if(doublecfds2[i] != NULL)
+	{
+	  delete []doublecfds2[i];
+	  doublecfds2[i] = NULL;
+	}
       if(doubleslowfilter2[i] != NULL)
 	{
 	  delete []doubleslowfilter2[i];
@@ -2980,10 +3030,11 @@ void Offline::Panel2Draw()
 	  doublercdtrace2[i] = new double[tracelength2[i]];
 	  doublefastfilter2[i] = new double[tracelength2[i]];
 	  doublecfd2[i] = new double[tracelength2[i]];
+	  doublecfds2[i] = new double[tracelength2[i]];
 	  doubleslowfilter2[i] = new double[tracelength2[i]];
 
-	  retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)i, offlinedata->GetEventWaveLocation(OfflineCurrentCount2[i]), tracelength2[i], RcdTrace2[i], doublefastfilter2[i], doublecfd2[i]);//trace location
-	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "Pixie16ComputeFastFiltersOffline", retval);
+	  retval = HongyiWuPixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)i, offlinedata->GetEventWaveLocation(OfflineCurrentCount2[i]), tracelength2[i], RcdTrace2[i], doublefastfilter2[i], doublecfd2[i], doublecfds2[i]);//trace location
+	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "HongyiWuPixie16ComputeFastFiltersOffline", retval);
 	  retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)i, offlinedata->GetEventWaveLocation(OfflineCurrentCount2[i]), tracelength2[i], RcdTrace2[i],doubleslowfilter2[i]);//trace localtion
 	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
 	  
@@ -3200,6 +3251,11 @@ void Offline::Panel5Draw()
       delete []doublecfd5;
       doublecfd5 = NULL;
     }
+  if(doublecfds5 != NULL)
+    {
+      delete []doublecfds5;
+      doublecfds5 = NULL;
+    }
   if(fitoriginalcfdth1d5 != NULL)
     {
       delete fitoriginalcfdth1d5;
@@ -3278,7 +3334,8 @@ void Offline::Panel5Draw()
       RcdTrace5 = new unsigned short[inttracelength];
       doublefastfilter5 = new double[inttracelength];
       doublecfd5 = new double[inttracelength];
-
+      doublecfds5 = new double[inttracelength];
+      
       offlineth2d5_0 = new TH2D("offlineth2d5_0","",inttracelength,0,inttracelength,1000,-100,900);
       offlineth2d5_1 = new TH2D("offlineth2d5_1","",inttracelength,0,inttracelength,1000,-1000,9000);
 
@@ -3331,8 +3388,8 @@ void Offline::Panel5Draw()
 	      cfdevenycount5++;
 	      if(offlinedata->GetEventCfdForcedTriggerBit(i) == 0) originalcfdvalidcount5++;////cfd forced trigger bit
 	      
-	      retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum5->GetIntNumber(), offlinedata->GetEventWaveLocation(i), offlinedata->GetEventTraceLength(i), RcdTrace5, doublefastfilter5, doublecfd5);//trace location/trace length
-	      if(retval < 0) ErrorInfo("Offline.cc", "Panel5Draw()", "Pixie16ComputeFastFiltersOffline", retval);
+	      retval = HongyiWuPixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum5->GetIntNumber(), offlinedata->GetEventWaveLocation(i), offlinedata->GetEventTraceLength(i), RcdTrace5, doublefastfilter5, doublecfd5, doublecfds5);//trace location/trace length
+	      if(retval < 0) ErrorInfo("Offline.cc", "Panel5Draw()", "HongyiWuPixie16ComputeFastFiltersOffline", retval);
 	      int intmaxcfd = -1;
 	      double doublemaxcfd = -1;
 	      for (int j = 0; j < inttracelength; ++j)
@@ -3452,6 +3509,11 @@ void Offline::Panel6Draw()
       delete []doublecfd6;
       doublecfd6 = NULL;
     }
+  if(doublecfds6 != NULL)
+    {
+      delete []doublecfds6;
+      doublecfds6 = NULL;
+    }
   if(doubleslowfilter6 != NULL)
     {
       delete []doubleslowfilter6;
@@ -3508,6 +3570,7 @@ void Offline::Panel6Draw()
       RcdTrace6 = new unsigned short[inttracelength];
       doublefastfilter6 = new double[inttracelength];
       doublecfd6 = new double[inttracelength];
+      doublecfds6 = new double[inttracelength];
       doubleslowfilter6 = new double[inttracelength];
       
       int retval;
@@ -3597,8 +3660,8 @@ void Offline::Panel6Draw()
 		}
 
 	      
-	      retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum6->GetIntNumber(), offlinedata->GetEventWaveLocation(i), offlinedata->GetEventTraceLength(i), RcdTrace6, doublefastfilter6, doublecfd6);//trace location/trace length
-	      if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ComputeFastFiltersOffline", retval);
+	      retval = HongyiWuPixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum6->GetIntNumber(), offlinedata->GetEventWaveLocation(i), offlinedata->GetEventTraceLength(i), RcdTrace6, doublefastfilter6, doublecfd6, doublecfds6);//trace location/trace length
+	      if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "HongyiWuPixie16ComputeFastFiltersOffline", retval);
 
 	      if(chooseslowfilterbaselinep6->GetSelected() == 0)
 		{
