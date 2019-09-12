@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 四 9月 12 12:49:42 2019 (+0800)
+// Last-Updated: 四 9月 12 15:42:21 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 889
+//     Update #: 900
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -96,6 +96,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   chanNumberA10 = 0;
   chanNumberB10 = 0;
   chanNumber11 = 0;
+  chanNumber12 = 0;
   fileRunNum = 0;
 
   adjustdslider = false;
@@ -194,7 +195,10 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   offlineth1icfd11 = NULL;      
   offlineth2i11 = NULL;         
 
-  
+  offlineth1ipileupevent12 = NULL;    
+  offlineth1igoogevent12 = NULL;    
+  offlineth1itraceevent12 = NULL;    
+  offlineth1iwithoutteaceevent12 = NULL;    
 
   
   
@@ -255,6 +259,12 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   fClient->GetColorByName("pink", color);
   TabPanel->GetTabTab("Energy-CFD")->ChangeBackground(color);
   MakeFold11Panel(Tab11);
+
+  TGCompositeFrame *Tab12 = TabPanel->AddTab("Event Flag");
+  // fClient->GetColorByName("azure", color);
+  fClient->GetColorByName("pink", color);
+  TabPanel->GetTabTab("Event Flag")->ChangeBackground(color);
+  MakeFold12Panel(Tab12);
   
   TGCompositeFrame *Tab7 = TabPanel->AddTab("QDC");
   // fClient->GetColorByName("teal", color);
@@ -332,7 +342,11 @@ Offline::~Offline()
   if(offlineth1icfdvalid11 != NULL) delete offlineth1icfdvalid11;
   if(offlineth1icfd11 != NULL) delete offlineth1icfd11;
   if(offlineth2i11 != NULL) delete offlineth2i11;
-  
+
+  if(offlineth1ipileupevent12 != NULL) delete offlineth1ipileupevent12;
+  if(offlineth1igoogevent12 != NULL) delete offlineth1igoogevent12;
+  if(offlineth1itraceevent12 != NULL) delete offlineth1itraceevent12;
+  if(offlineth1iwithoutteaceevent12 != NULL) delete offlineth1iwithoutteaceevent12;
   
   for (int i = 0; i < 16; ++i)
     {
@@ -1888,7 +1902,50 @@ void Offline::MakeFold11Panel(TGCompositeFrame *TabPanel)
 }
 
 
+void Offline::MakeFold12Panel(TGCompositeFrame *TabPanel)
+{
+  TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
 
+  // text
+  printtextinfor12 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  printtextinfor12->SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
+  fClient->GetColorByName("blue", color);
+  printtextinfor12->SetTextColor(color, false);
+  printtextinfor12->SetText("Choose 'Ch' then enter button 'Draw'.");
+  printtextinfor12->Resize(450, 12);
+  printtextinfor12->SetEnabled(kFALSE);
+  printtextinfor12->SetFrameDrawn(kFALSE);
+  parFrame->AddFrame(printtextinfor12, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+
+  
+  // draw
+  OfflineDrawButton12 = new TGTextButton(parFrame, "&Draw", OFFLINEDRAW12);
+  parFrame->AddFrame(OfflineDrawButton12, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));   
+  OfflineDrawButton12->SetEnabled(0);
+  OfflineDrawButton12->Associate(this);
+
+  // ch
+  offlinechnum12 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM12, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  parFrame->AddFrame(offlinechnum12, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
+  offlinechnum12->SetButtonToNum(0);
+  offlinechnum12->Associate(this);
+  TGLabel *ch = new TGLabel(parFrame, "Ch:"); 
+  parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+   
+
+  
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
+  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
+
+  TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas12", adCanvasFrame, 100, 100);
+
+  canvas12 = adjCanvas->GetCanvas();
+  adCanvasFrame->AddFrame(adjCanvas, Hint);
+  TabPanel->AddFrame(adCanvasFrame, Hint);
+}
 
 
 
@@ -1980,6 +2037,9 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 	    case OFFLINEDRAW11:
 	      Panel11Draw();
+	      break;
+	    case OFFLINEDRAW12:
+	      Panel12Draw();
 	      break;
 	      
 	    case OFFLINEGAUSFIT4:
@@ -2262,8 +2322,27 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		      offlinechnum11->SetIntNumber(chanNumber11);
 		    }
 		}
-	      break;	      
-	      
+	      break;	      	      
+	    case OFFLINECHNUM12:
+	      if (parm2 == 0)
+		{
+		  if (chanNumber12 != 15)
+		    {
+		      ++chanNumber12;
+		      offlinechnum12->SetIntNumber(chanNumber12);
+		    }
+		}
+	      else
+		{
+		  if (chanNumber12 != 0)
+		    {
+		      if (--chanNumber12 == 0)
+			chanNumber12 = 0;
+		      offlinechnum12->SetIntNumber(chanNumber12);
+		    }
+		}
+	      break;
+
 	      
 	    default:
 	      break;
@@ -2407,6 +2486,20 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 	    }
 	  break;	  
+	case OFFLINECHNUM12:
+	  switch (GET_SUBMSG(msg))
+	    {
+	    case kTE_ENTER:
+	      chanNumber12 = offlinechnum12->GetIntNumber();
+	      if(chanNumber12 > 15) chanNumber12 = 15;
+	      if(chanNumber12 < 0) chanNumber12 = 0;
+	      offlinechnum12->SetIntNumber(chanNumber12);
+	      break;
+	    default:
+	      break;
+	    }
+	  break;	  
+
 	  
 	  
 	case OFFLINEFILTERRANGE:
@@ -4564,6 +4657,92 @@ void Offline::Panel11Draw()
   gSystem->ProcessEvents();  
 }
 
+void Offline::Panel12Draw()
+{
+  OfflineReadFileButton->SetEnabled(0);
+  OfflineDrawButton12->SetEnabled(0);
+
+  printtextinfor12->SetText("Drawing...please wait a moment.");
+  canvas12->cd();
+  canvas12->Clear();
+  canvas12->Divide(2,2);
+  canvas12->Modified();
+  canvas12->Update();
+  gSystem->ProcessEvents();
+
+  if(offlineth1ipileupevent12 != NULL)
+    {
+      delete offlineth1ipileupevent12;
+      offlineth1ipileupevent12 = NULL;
+    }
+  if(offlineth1igoogevent12 != NULL)
+    {
+      delete offlineth1igoogevent12;
+      offlineth1igoogevent12 = NULL;
+    }
+  if(offlineth1itraceevent12 != NULL)
+    {
+      delete offlineth1itraceevent12;
+      offlineth1itraceevent12 = NULL;
+    }
+  if(offlineth1iwithoutteaceevent12 != NULL)
+    {
+      delete offlineth1iwithoutteaceevent12;
+      offlineth1iwithoutteaceevent12 = NULL;
+    }
+
+  
+  offlineth1ipileupevent12 = new TH1I("energy_pileupevent12","energy(pileup event)",65536,0,65536);
+  offlineth1ipileupevent12->GetXaxis()->SetTitle("ch");
+  offlineth1igoogevent12 = new TH1I("energy_googevent12","energy(good event)",65536,0,65536);
+  offlineth1igoogevent12->GetXaxis()->SetTitle("ch");
+  offlineth1itraceevent12 = new TH1I("energy_traceevent12","energy(trace length > 0)",65536,0,65536);
+  offlineth1itraceevent12->GetXaxis()->SetTitle("ch");
+  offlineth1iwithoutteaceevent12 = new TH1I("energy_withoutteaceevent12","energy(trace length == 0)",65536,0,65536);
+  offlineth1iwithoutteaceevent12->GetXaxis()->SetTitle("ch");
+
+
+  for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
+    {
+      if(offlinechnum12->GetIntNumber() == offlinedata->GetEventChannel(i))//ch
+	{
+	  if(offlinedata->GetEventFinishCode(i))
+	    {
+	      offlineth1ipileupevent12->Fill(offlinedata->GetEventEnergy(i));
+	    }
+	  else
+	    {
+	      offlineth1igoogevent12->Fill(offlinedata->GetEventEnergy(i));
+	    }
+
+	  if(offlinedata->GetEventTraceLength(i) > 0)
+	    {
+	      offlineth1itraceevent12->Fill(offlinedata->GetEventEnergy(i));
+	    }
+	  else
+	    {
+	      offlineth1iwithoutteaceevent12->Fill(offlinedata->GetEventEnergy(i));
+	    }
+	}
+    }
+
+  canvas12->cd(1);
+  offlineth1ipileupevent12->Draw();
+  canvas12->cd(2);
+  offlineth1itraceevent12->Draw();
+  canvas12->cd(3);
+  offlineth1igoogevent12->Draw();
+  canvas12->cd(4);
+  offlineth1iwithoutteaceevent12->Draw();
+  canvas12->Modified();
+  canvas12->Update();
+  
+  printtextinfor12->SetText("Draw Done!");
+  OfflineDrawButton12->SetEnabled(1);
+  OfflineReadFileButton->SetEnabled(1);
+  gSystem->ProcessEvents();  
+}
+
 
 
 void Offline::Panel0ReadFile()
@@ -4764,6 +4943,7 @@ void Offline::DrawButtonStatus(bool flag)
   OfflineDrawButton9->SetEnabled(flag);
   OfflineDrawButton10->SetEnabled(flag);
   OfflineDrawButton11->SetEnabled(flag);
+  OfflineDrawButton12->SetEnabled(flag);
 }
 
 

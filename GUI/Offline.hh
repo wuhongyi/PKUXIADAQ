@@ -4,16 +4,16 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 四 9月 12 12:42:45 2019 (+0800)
+// Last-Updated: 四 9月 12 15:25:32 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 172
+//     Update #: 180
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
 #define _OFFLINE_HH_
 
 
-#define PANELNUMBER 12
+#define PANELNUMBER 13
 const char gOfflineGuides[PANELNUMBER][128] =
   {
     "InitData: This page. Read the binary file.",
@@ -24,7 +24,8 @@ const char gOfflineGuides[PANELNUMBER][128] =
     "Calc Energy:  Recalculation of energy spectrum by waveforms.",
     "FF/CFD Thre:   Accumulation of a large number of fast filter/cfd filter waveforms to determine the threshold.",
     "Energy-FF:  The two dimensional relationship between energy and fast filter first/second peak height.",
-    "Energy-CFD:   The two dimensional relationship between energy and cfd vaule",
+    "Energy-CFD:   The two dimensional relationship between energy and cfd vaule.",
+    "Event Flag:   Energy spectrum under different event flags.",
     "QDC:  It will be finished soon.",
     "FFT:  Fourier transformation of a single waveform. User can choose XIA/CAEN/FFTW3 functions.",
     "Time Diff:  Time difference of two signal."
@@ -78,7 +79,7 @@ public:
   void MakeFold9Panel(TGCompositeFrame *TabPanel);//FFT
   void MakeFold10Panel(TGCompositeFrame *TabPanel);//Time Diff
   void MakeFold11Panel(TGCompositeFrame *TabPanel);//Energy-CFD
-
+  void MakeFold12Panel(TGCompositeFrame *TabPanel);//Event Flag
   
   void SelectRawEnergySumsBaseline(Bool_t on);
   void SelectQDCSums(Bool_t on);
@@ -140,6 +141,7 @@ private:
       OFFLINECHNUMA10,
       OFFLINECHNUMB10,
       OFFLINECHNUM11,
+      OFFLINECHNUM12,
       OFFLINEREAD,
       OFFLINELOAD,
       OFFLINEAPPLY,
@@ -154,6 +156,7 @@ private:
       OFFLINEDRAW9,
       OFFLINEDRAW10,
       OFFLINEDRAW11,
+      OFFLINEDRAW12,
       OFFLINEFASTLENGTH,
       OFFLINEFASTGAP,
       OFFLINESLOWLENGTH,
@@ -385,6 +388,18 @@ private:
   TGComboBox *choosedcfdbin11;
   TGTextEntry* printtextinfor11;
   
+  // Fold12
+  TCanvas *canvas12;
+  TGTextButton* OfflineDrawButton12;//
+  TGNumberEntry	*offlinechnum12;//int
+  int chanNumber12;
+  TGTextEntry* printtextinfor12;//
+  TH1I *offlineth1ipileupevent12;
+  TH1I *offlineth1igoogevent12;
+  TH1I *offlineth1itraceevent12;
+  TH1I *offlineth1iwithoutteaceevent12;
+
+
   
   void DrawButtonStatus(bool flag);
   
@@ -400,6 +415,7 @@ private:
   void Panel9Draw();
   void Panel10Draw();
   void Panel11Draw();
+  void Panel12Draw();
   
   void Panel0ReadFile();
 
