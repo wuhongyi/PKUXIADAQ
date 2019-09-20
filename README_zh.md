@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 日 9月  8 20:34:12 2019 (+0800)
+;; Last-Updated: 五 9月 20 18:32:58 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 126
+;;     Update #: 127
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -39,7 +39,7 @@
 
 ### 准预览版本
 
-**准预览版本 Version:2019.09.08**  
+**准预览版本 Version:2019.09.12**  
 
 程序下载请访问:  [PKUXIADAQ](https://github.com/wuhongyi/PKUXIADAQ)
 
