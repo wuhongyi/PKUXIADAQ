@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 五 9月 20 18:32:49 2019 (+0800)
+;; Last-Updated: 六 9月 21 20:25:07 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 128
+;;     Update #: 129
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -25,7 +25,7 @@ English | [简体中文](https://github.com/wuhongyi/PKUXIADAQ/blob/master/READM
 
 ### Stable Version
 
-**Stable Version Version:2019.09.08**  
+**Stable Version Version:2019.09.12**  
 
 Download the latest version, please click:  [PKUXIADAQ stable](https://github.com/pkuNucExp/PKUXIADAQ)
 
@@ -126,6 +126,11 @@ The following files/folders are included in the user's use package:
 	- ZeroMQ
 	- JSROOT
 	- ...
+
+## License
+
+
+
 
 
 <!-- README.md ends here -->

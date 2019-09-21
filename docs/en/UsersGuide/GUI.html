@@ -592,7 +592,7 @@ This is a significant source of the enhanced throughput found in digital systems
 <div class="math notranslate nohighlight">
 \[CFD[i+D]=FF[i+D]\times(1-w/8)-FF[i]\]</div>
 <p>Where D is called the CFD delay length and w is called the CFD scaling factor(w=0, 1,…, 7).</p>
-<p>The CFD zero crossing point(ZCP) is then determined when <span class="math notranslate nohighlight">\(CFD[i]\leq0\)</span> and <span class="math notranslate nohighlight">\(CFD[i+1]&lt;0\)</span>. The timestamp is latched at Trace point <span class="math notranslate nohighlight">\(i\)</span>, and the fraction time <span class="math notranslate nohighlight">\(f\)</span> is given by the ratio of the two CFD response amplitudes right before and after the ZCP.</p>
+<p>The CFD zero crossing point(ZCP) is then determined when <span class="math notranslate nohighlight">\(CFD[i]\geq 0\)</span> and <span class="math notranslate nohighlight">\(CFD[i+1]&lt;0\)</span>. The timestamp is latched at Trace point <span class="math notranslate nohighlight">\(i\)</span>, and the fraction time <span class="math notranslate nohighlight">\(f\)</span> is given by the ratio of the two CFD response amplitudes right before and after the ZCP.</p>
 <div class="math notranslate nohighlight">
 \[f=\frac{CFDout1}{CFDout1-CFDout2}\]</div>
 <p>Where CFDout1 is the CFD response amplitude right before the ZCP, and CFDout2 is the CFD response amplitude right after the ZCP(subtraction is used in the denominator since CFDout2 is negative). The Pixie-16 DSP computes the CFD final value as follows and stores it in the output data stream for online or offline analysis.</p>
@@ -655,7 +655,8 @@ This is a significant source of the enhanced throughput found in digital systems
 <div class="section" id="id5">
 <h4>Interface<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h4>
 <img alt="../_images/Decimation.png" src="../_images/Decimation.png" />
-<p><strong>。。TODO。。</strong></p>
+<p>Waveform down frequency outputs are customized for the 100 MHz module in the PKU firmware.</p>
+<p>The record waveform mode with down frequency output. The strategy adopted is to select the output of 1, 1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128 frequency, ie how many points retain one point. The points retained are the averaged values.</p>
 </div>
 </div>
 <hr class="docutils" />
@@ -664,7 +665,7 @@ This is a significant source of the enhanced throughput found in digital systems
 <div class="section" id="id6">
 <h4>Interface<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h4>
 <img alt="../_images/CopyPars.png" src="../_images/CopyPars.png" />
-<p><strong>。。TODO。。</strong></p>
+<p>This window is used to quickly copy parameters between channels.</p>
 </div>
 </div>
 <hr class="docutils" />
@@ -673,7 +674,7 @@ This is a significant source of the enhanced throughput found in digital systems
 <div class="section" id="id7">
 <h4>Interface<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h4>
 <img alt="../_images/Save2File.png" src="../_images/Save2File.png" />
-<p><strong>。。TODO。。</strong></p>
+<p>As you know, the DSP parameters are stored in a file with the suffix “set”. Once you have configured the parameters, you should save them for later use.</p>
 <hr class="docutils" />
 </div>
 </div>
@@ -1026,7 +1027,6 @@ This is a significant source of the enhanced throughput found in digital systems
 <div class="section" id="id11">
 <h4>Interface<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h4>
 <img alt="../_images/LogicTrigger.png" src="../_images/LogicTrigger.png" />
-<p><strong>TODO</strong></p>
 <img alt="../_images/stretchlength.PNG" src="../_images/stretchlength.PNG" />
 <hr class="docutils" />
 </div>

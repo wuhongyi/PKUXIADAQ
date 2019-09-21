@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:39:34 2019 (+0800)
-.. Last-Updated: 四 8月 22 13:38:50 2019 (+0800)
+.. Last-Updated: 六 9月 21 15:33:40 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 4
+..     Update #: 5
 .. URL: http://wuhongyi.cn 
 
 =================================
@@ -27,7 +27,7 @@
 
 .. image:: /_static/img/mainframe.png
 
-主界面最上方是File、UV_Setup、Expert、Monitor、Offiline五个下拉栏。里面的子菜单如下所示：
+主界面最上方是 File、Base、Expert、Monitor、Offiline 五个下拉栏。里面的子菜单如下所示：
 
 - File
 	- Exit

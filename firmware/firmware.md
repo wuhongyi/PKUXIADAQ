@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 12月 13 09:41:49 2016 (+0800)
-;; Last-Updated: 四 8月 22 13:15:39 2019 (+0800)
+;; Last-Updated: 六 9月 21 20:28:17 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 32
+;;     Update #: 33
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
@@ -44,9 +44,9 @@
 		- (2) removed "no traces for large pulses" feature.
 
 
-
 ## testing firmware
 
+- pixie16_revf_general_14b100m_firmware_release   standard firmware
 
 - pixie16_revd_12b100m_firmware_release  standard firmware
 

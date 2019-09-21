@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:47:44 2019 (+0800)
-.. Last-Updated: 四 8月 22 13:39:56 2019 (+0800)
+.. Last-Updated: 六 9月 21 18:41:28 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 43
+..     Update #: 48
 .. URL: http://wuhongyi.cn 
 
 ---------------------------------
@@ -338,7 +338,7 @@ Where FL is called the fast length and FG is called the fast gap of the digital 
 
 Where D is called the CFD delay length and w is called the CFD scaling factor(w=0, 1,..., 7).
 
-The CFD zero crossing point(ZCP) is then determined when :math:`CFD[i]\leq0` and :math:`CFD[i+1]<0`. The timestamp is latched at Trace point :math:`i`, and the fraction time :math:`f` is given by the ratio of the two CFD response amplitudes right before and after the ZCP.
+The CFD zero crossing point(ZCP) is then determined when :math:`CFD[i]\geq 0` and :math:`CFD[i+1]<0`. The timestamp is latched at Trace point :math:`i`, and the fraction time :math:`f` is given by the ratio of the two CFD response amplitudes right before and after the ZCP.
 
 .. math::
    f=\frac{CFDout1}{CFDout1-CFDout2}
@@ -439,7 +439,9 @@ Interface
 
 .. image:: /_static/img/Decimation.png
 
-**。。TODO。。**
+Waveform down frequency outputs are customized for the 100 MHz module in the PKU firmware.
+
+The record waveform mode with down frequency output. The strategy adopted is to select the output of 1, 1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128 frequency, ie how many points retain one point. The points retained are the averaged values.
 
 ----
 
@@ -454,7 +456,7 @@ Interface
 .. image:: /_static/img/CopyPars.png
 
 
-**。。TODO。。**
+This window is used to quickly copy parameters between channels.
 
 
 ----
@@ -469,8 +471,7 @@ Interface
 
 .. image:: /_static/img/Save2File.png
 
-
-**。。TODO。。**
+As you know, the DSP parameters are stored in a file with the suffix "set". Once you have configured the parameters, you should save them for later use.
 
 
 

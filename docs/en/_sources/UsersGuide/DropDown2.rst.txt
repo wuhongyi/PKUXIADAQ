@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:49:52 2019 (+0800)
-.. Last-Updated: 四 7月  4 13:30:56 2019 (+0800)
+.. Last-Updated: 六 9月 21 19:51:29 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 7
+..     Update #: 8
 .. URL: http://wuhongyi.cn 
 
 ---------------------------------
@@ -195,7 +195,7 @@ Interface
 
 .. image:: /_static/img/LogicTrigger.png
 
-**TODO**
+
 
 .. image:: /_static/img/stretchlength.PNG
 

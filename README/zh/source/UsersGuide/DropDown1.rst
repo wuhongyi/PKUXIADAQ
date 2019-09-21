@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:47:44 2019 (+0800)
-.. Last-Updated: 四 8月 22 13:39:56 2019 (+0800)
+.. Last-Updated: 六 9月 21 18:41:28 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 34
+..     Update #: 46
 .. URL: http://wuhongyi.cn 
 
 ---------------------------------
@@ -314,59 +314,60 @@ CFD
 100 / 250 MHz 模块
 """""""""""""""""""""""""""""""""
 
-The following CFD algorithm is implemented in the signal processing FPGA of the 100 MHz(Rev. B, C, D and F) and 250 MHz(Rev. F) Pixie-16 modules. 
+以下 CFD 算法在 100 MHz（版本 B，C，D 和 F）和 250 MHz（版本 F）Pixie-16 模块的信号处理 FPGA 中实现。
 
-Assume the digitized waveform can be represented by data series Trace[i], i = 0, 1, 2, ... First the fast filter response(FF) of the digitized waveform is computed as follows:
+假设数字化波形可以用数据序列 Trace[i] 表示，i = 0、1、2，...。首先，数字化波形的快速滤波器响应（FF）计算如下：
 
 .. math::
    FF[i]=\sum_{j=i-(FL-1)}^{i}Trace[j]-\sum_{j=i-(2\times FL+FG-1)}^{i-(FL+FG)}Trace[j]
 
-Where FL is called the fast length and FG is called the fast gap of the digital trapezoidal filter. Then the CFD is computed as follows:
+这里，FL 称为快速长度，FG 称为数字梯形滤波器的快速间隙。CFD 计算如下：
 
 .. math::
    CFD[i+D]=FF[i+D]\times(1-w/8)-FF[i]
 
-Where D is called the CFD delay length and w is called the CFD scaling factor(w=0, 1,..., 7).
+其中 D 称为 CFD 延迟长度，而 w 称为 CFD 缩放因子（w = 0、1，...，7）。
 
-The CFD zero crossing point(ZCP) is then determined when :math:`CFD[i]\leq0` and :math:`CFD[i+1]<0`. The timestamp is latched at Trace point :math:`i`, and the fraction time :math:`f` is given by the ratio of the two CFD response amplitudes right before and after the ZCP.
+CFD 过零点由 :math:`CFD[i]\geq 0` 和 :math:`CFD[i+1]<0` 来确定。时间戳被标记在跟踪点 :math:`i` ，分数时间 :math:`f` 由过零点前后两个 CFD 响应幅度之比得出。
 
 .. math::
    f=\frac{CFDout1}{CFDout1-CFDout2}
 
-Where CFDout1 is the CFD response amplitude right before the ZCP, and CFDout2 is the CFD response amplitude right after the ZCP(subtraction is used in the denominator since CFDout2 is negative). The Pixie-16 DSP computes the CFD final value as follows and stores it in the output data stream for online or offline analysis.
+其中 CFDout1 是过零点之前的 CFD 响应幅度，CFDout2 是过零点之后的 CFD 响应幅度（分母中使用减法，因为 CFDout2 为负数）。 Pixie-16 DSP 按以下方式计算 CFD 最终值，并将其存储在输出数据流中以进行在线或离线分析。
+
 
 .. math::
    CFD=\frac{CFDout1}{CFDout1-CFDout2} \times N
 
-Where N is scaling factor, which equals to 32768 for 100 MHz modules and 16384 for 250 MHz modules, respectively.
+其中 N 是比例因子，分别对应于 100 MHz 模块的 32768 和对应于 250 MHz 模块的 16384。
 
 .. image:: /_static/img/adcsamples_cfd.png
 .. image:: /_static/img/fastfilter_cfd.png	   
 .. image:: /_static/img/cfdfilter_cfd.png
 
-Figure shows a sample ADC trace, its fast filter response and its CFD response, respectively. 
+上图分别显示了原始采集波形，其快速滤波器响应和 CFD 响应。
 
-The top figure shows a raw ADC trace. After computing the fast filter response on the raw ADC trace using Equation :math:`FF[i]`, the fast filter response is compared against the fast filter threshold as shown in the middle figure. The ADC sample where the fast filter response crosses the fast filter threshold is called the fast trigger point, which also starts the search for the CFD zero crossing point. 
+最上图显示了原始 ADC 采集波形。 在使用公式 :math:`FF[i]` 计算原始 ADC 采集波形上的快速滤波器响应之后，将快速滤波器响应与快速滤波器阈值进行比较，如中间图所示。 快速滤波器响应超过快速滤波器阈值的 ADC 采样称为快速触发点，它也开始搜索 CFD 过零点。
 
-The CFD response is computed using Equation :math:`CFD[i+D]` and is shown in the bottom figure(for actual implementation in the firmware, the fast filter response FF is delayed slightly before being used for computing the CFD response so that there are sufficient number of CFD response points to look for the zero crossing point after the fast trigger). To prevent premature CFD trigger as a result of the noise in the CFD response before the actual trigger, a DSP parameter called CFDThresh is used to suppress those noise-caused zero crossing. However, if a zero crossing point cannot be found within a certain period after the fast trigger (typically 32 clock cycles), e.g., due to unnecessarily high CFDThresh, a forced CFD Trigger will be issued and a flag will be set in an event header word to indicate that the recorded CFD time for this event is invalid.
+CFD 响应是使用公式 :math:`CFD[i+D]` 计算的，并显示在上面最后一张图中（对于固件中的实际实现，快速滤波器响应 FF 在用于计算 CFD 响应之前会稍有延迟。 在快速触发后有足够数量的 CFD 响应点来寻找过零点）。 为了防止实际触发之前 CFD 响应中的噪声导致 CFD 触发过早，使用称为 CFD 阈值的 DSP 参数来抑制那些由噪声引起的过零点。 但是，如果在快速触发后的某个时间段内（通常为32个时钟周期）找不到过零点（例如，由于不必要的高阈值），则会发出强制 CFD 触发，并在事件标头中设置标志来表示此事件记录的 CFD 时间是无效的。
 
-However, the event will still have a valid timestamp which is latched by the fast filter trigger when fast filter crosses over the trigger threshold. The aforementioned CFD parameters correspond to the following DSP parameters.
+但是，事件将仍然具有有效的时间戳记，当快速过滤器超过触发阈值时，该时间戳将由快速过滤器触发器锁存。 前述的 CFD 参数对应于以下 DSP 参数。
 
 .. image:: /_static/img/correspondingdspparametersforthecfdparmeters.png
 
 .. NOTE:: **250 MHz**
 
-  In the 250 MHz Pixie-16 modules, the event timestamp is counted with 125 MHz clock ticks, i.e., 8 ns intervals, and two consecutive 250 MHz ADC samples are captured in one 8 ns interval as well. 
+  在 250 MHz Pixie-16 模块中，事件时间戳以 125 MHz 时钟滴答计数，即 8 ns 间隔进行计数，并且也以 8 ns 间隔捕获两个连续的 250 MHz ADC 样本。
  
-  The CFD trigger also runs at 125 MHz, but the CFD zero crossing point is still reported as a fractional time between two neighboring 250 MHz ADC samples, which are processed by the FPGA in one 125 MHz clock cycle. 
+  CFD 触发也以 125 MHz 的频率运行，但是 CFD 过零点仍报告为两个相邻的 250 MHz ADC 采样之间的分数时间，由 FPGA 在一个 125 MHz 时钟周期内对其进行处理。
  
-  However, the CFD zero crossing point could be in either the odd or even clock cycle of the captured 250 MHz ADC waveforms. 
+  但是，CFD 过零点可能处于捕获的 250 MHz ADC 波形的奇数或偶数时钟周期中。
  
-  Therefore, the firmware outputs a "CFD trigger source" bit in the output data stream to indicate whether the CFD zero crossing point is in the odd or even clock cycle of the captured 250 MHz ADC waveforms.
+  因此，固件在输出数据流中输出“CFD trigger source”位，以指示 CFD 过零点是处于捕获的 250 MHz ADC 波形的奇数还是偶数时钟周期中。
 
 .. NOTE:: **100 MHz**
 
-  In the 100 MHz Pixie-16 modules, event timestamp, CFD trigger, and ADC waveform capture are all carried out with the same 100 MHz clock. So there is no need to report "CFD trigger source" for the 100 MHz Pixie-16 modules.
+  在100 MHz Pixie-16模块中，事件时间戳，CFD 触发和 ADC 波形捕获都使用相同的 100 MHz 时钟执行。 因此，无需报告 100 MHz Pixie-16 模块的“CFD trigger source”。
 
 	  
 	  
@@ -374,20 +375,20 @@ However, the event will still have a valid timestamp which is latched by the fas
 500 MHz 模块
 """""""""""""""""""""""""""""""""
 
-The CFD algorithm discussed in the previous section for the 100 MHz and 250 MHz Pixie-16 modules can also be written in the following format:
+上一节中讨论的针对 100 MHz 和 250 MHz Pixie-16 模块的 CFD 算法也可以采用以下格式编写：
 
 .. math::
    CFD(k)=w\cdot\left(\sum_{i=k}^{k+L}a(i)-\sum_{i=k-B}^{k-B+L}a(i)\right)-\left(\sum_{i=k-D}^{k-D+L}a(i)-\sum_{i=k-D-B}^{k-D-B+L}a(i)\right)
 
-Where a(i) is the ADC trace data, k is the index, and w, B, D, and L are CFD parameters.
+其中 a(i) 是 ADC 跟踪数据，k 是索引，w，B，D 和 L 是 CFD 参数。
 
-The CFD algorithm implemented in the 500 MHz Pixie-16 modules is special when compared to the one implemented in the 100 MHz and 250 MHz Pixie-16 modules in terms of the ability to adjust parameters w, B, D, and L. 
+在调整参数 w、B、D 和 L 的能力方面，在500 MHz Pixie-16 模块中实现的 CFD 算法与在 100 MHz 和 250 MHz Pixie-16 模块中实现的 CFD 算法相比是特殊的。
 
-The reason for this is that in the 500 MHz Pixie-16 modules, ADC data that come into the FPGA at the speed of 500 MHz is first slowed down with a ratio of 1:5, in other words, the FPGA captures 5 ADC samples at the rate of 100 MHz, i.e., every 10 ns. The FPGA then tries to find the CFD trigger point between any two adjacent 2-ns ADC samples within that 10 ns by first building sums of ADC samples and then calculating differences between delayed and non-delayed sums until the zero crossing point is found. However, in the 500 MHz Pixie-16 modules, the FPGA does not have enough resources to build sums for 5 ADC samples in parallel with variable delays. Therefore, the CFD algorithm for the 500 MHz modules was implemented using a set of fixed CFD parameters as shown in Table *Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules*. Tests show these fixed parameters give best performance for LaBr3(Ce) detectors.
+其原因是在 500 MHz 的 Pixie-16 模块中，以 500 MHz 的速度进入 FPGA 的 ADC 数据首先以 1:5 的比率减慢，换言之，FPGA 以 100 MHz 的速率，即每 10 ns 捕获 5 个 ADC 采样。然后，FPGA 通过首先建立 ADC 样本的和，然后计算延迟和非延迟和之间的差异，直到找到过零点，试图在该 10 ns 内找到任意两个相邻 2 ns ADC 样本之间的 CFD 触发点。然而，在 500 MHz 的 Pixie-16 模块中，FPGA 没有足够的资源来为 5 个 ADC 采样并行地构建可变延迟的和。因此，500 MHz 模块的 CFD 算法是使用一组固定 CFD 参数来实现的，如表 *Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules* 。实验表明，这些固定参数对 LaBr3(Ce) 探测器的性能最好。
 
 .. image:: /_static/img/fixedcfdparametervaluesfor500mhzpixie16modules.png
 
-The CFD time given by the 500 MHz Pixie-16 modules consists of two parts: a shift within the 5 ADC samples and a fractional time between two ADC samples where the CFD zero crossing occurred. The shift within the 5 ADC samples is reported as the 3-bit CFD trigger source[2:0] is defined as follows.
+500 MHz Pixie-16 模块给出的 CFD 时间由两部分组成：在 5 个 ADC 样本内进行移位，以及在两个 ADC 样本之间发生 CFD 过零点的时间。 由于以下定义了 3-bit CFD trigger source[2:0]，因此报告了 5 个 ADC 采样中的移位。
 	   
 .. image:: /_static/img/meaningofthecfdtriggersourcefor500mhzpixie16modules.png
 	   
@@ -409,11 +410,11 @@ QDC
 
 .. image:: /_static/img/QDCPars.png
 
-Eight QDC sums, each of which can have different lengths, are computed in the Signal Processing FPGA of a Pixie-16 module for each channel and the sums are written to the list mode output data stream if the user requests so. 
+在 Pixie-16 模块的信号处理 FPGA 中为每个通道计算八个 QDC 积分，每个长度可以具有不同的长度，如果用户要求，则将这些积分写入列表模式输出数据流。
 
-The recording of QDC sums starts at the waveform point which is *Pre-trigger Trace Length* or *Trace Delay* earlier than the trigger point, which is either the CFD trigger or channel fast trigger depending on whether or not CFD trigger mode is enabled. 
+QDC 的积分起点从记录波形的点开始，该波形点比触发点早 *Pre-trigger Trace Length* 或 *Trace Delay* ，触发模式是 CFD 触发还是通道快速触发取决于 CFD 触发模式是否开启。
 
-The eight QDC sums are computed one by one continuously, but they are not overlapping. The recording of QDC sums ends when the eight intervals have all passed.
+连续一个接一个地计算八个 QDC 积分，但它们并不重叠。八个间隔全部过去后，QDC 积分的记录结束。
 
 .. image:: /_static/img/the8qdcsumsofatriggeredevent.png	   
 
@@ -429,7 +430,10 @@ Decimation
 
 .. image:: /_static/img/Decimation.png
 
-**。。TODO。。**
+在 PKU 固件中，对于 100 MHz 模块定制了波形降频输出。
+
+在采集波形时候，增加了降频输出的功能，采取的策略为可选择 1，1/2，1/4，1/8，1/16，1/32，1/64，1/128（分别对应参数0-7）频率的输出，即多少个点保留一个点。保留的点是平均后的值。
+
 
 ----
 
@@ -444,7 +448,7 @@ Copy Pars
 .. image:: /_static/img/CopyPars.png
 
 
-**。。TODO。。**
+该窗口用来快速进行通道之间的参数拷贝。
 
 
 ----
@@ -459,8 +463,7 @@ Save2File
 
 .. image:: /_static/img/Save2File.png
 
-
-**。。TODO。。**
+正如你所知道的一样，DSP参数被保存在一个后缀为“set”的文件中，当你配置好参数之后，应该保存它以便于之后使用。
 
 
 

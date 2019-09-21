@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 五 9月 20 18:32:58 2019 (+0800)
+;; Last-Updated: 六 9月 21 20:24:22 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 127
+;;     Update #: 128
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -25,7 +25,7 @@
 
 ### 稳定版本
 
-**稳定版本 Version:2019.09.08**  
+**稳定版本 Version:2019.09.12**  
 
 下载最新版本，请点击:  [PKUXIADAQ stable](https://github.com/pkuNucExp/PKUXIADAQ)
 
@@ -126,6 +126,9 @@
 	- ZeroMQ
 	- JSROOT
 	- ...
+
+## 版权声明
+
 
 
 <!-- README.md ends here -->

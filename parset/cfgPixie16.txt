@@ -36,12 +36,18 @@ ModuleBits 7 14 14 14 16 14 14 14
 
 ## The user does not modify the following parts
 
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+
 # standard firmware
 100M12bit_sys ../firmware/pixie16_revd_12b100m_firmware_release/syspixie16_revdgeneral_r33157.bin
 100M12bit_fip ../firmware/pixie16_revd_12b100m_firmware_release/fippixie16_revdgeneral_r32495.bin
 100M12bit_dsplst ../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.lst
 100M12bit_dspldr ../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.ldr
 100M12bit_dspvar ../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.var
+
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 
 # Multiplicity result output from front panel A
 # NoNegEnergy && AlwaysCompEnergy
@@ -64,7 +70,6 @@ ModuleBits 7 14 14 14 16 14 14 14
 # 100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_firmware_release_08232018/Pixie16DSP_revfpku_14b100m_r40391.ldr
 # 100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_08232018/Pixie16DSP_revfpku_14b100m_r40391.var
 
-
 # Multiplicity result output from RJ45 and front panel A
 # NoNegEnergy && AlwaysCompEnergy
 # waveform buffer is full,record header
@@ -76,6 +81,15 @@ ModuleBits 7 14 14 14 16 14 14 14
 100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.ldr
 100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.var
 
+# Standard firmware
+# 100M14bit_sys ../firmware/pixie16_revf_general_14b100m_firmware_release/syspixie16_revfgeneral_adc100mhz_r33338.bin
+# 100M14bit_fip ../firmware/pixie16_revf_general_14b100m_firmware_release/fippixie16_revfgeneral_14b100m_r36263.bin
+# 100M14bit_dsplst ../firmware/pixie16_revf_general_14b100m_firmware_release/Pixie16DSP_revfgeneral_14b100m_r37640.lst
+# 100M14bit_dspldr ../firmware/pixie16_revf_general_14b100m_firmware_release/Pixie16DSP_revfgeneral_14b100m_r37640.ldr
+# 100M14bit_dspvar ../firmware/pixie16_revf_general_14b100m_firmware_release/Pixie16DSP_revfgeneral_14b100m_r37640.var
+
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 
 # Standard firmware
 250M12bit_sys ../firmware/pixie16_revf_12b250m_firmware_release/syspixie16_revfgeneral_adc250mhz_r33339.bin
@@ -84,6 +98,8 @@ ModuleBits 7 14 14 14 16 14 14 14
 250M12bit_dspldr ../firmware/pixie16_revf_12b250m_firmware_release/Pixie16DSP_revfgeneral_12b250m_r41847.ldr
 250M12bit_dspvar ../firmware/pixie16_revf_12b250m_firmware_release/Pixie16DSP_revfgeneral_12b250m_r41847.var
 
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 
 # NoNegEnergy && AlwaysCompEnergy
 # Multiplicity result output from RJ45
@@ -93,7 +109,8 @@ ModuleBits 7 14 14 14 16 14 14 14
 250M14bit_dspldr ../firmware/pixie16_revfpku_14b250m_release_06092019/Pixie16DSP_revfgeneral_14b250m_r41842.ldr
 250M14bit_dspvar ../firmware/pixie16_revfpku_14b250m_release_06092019/Pixie16DSP_revfgeneral_14b250m_r41842.var
 
-
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 
 # NoNegEnergy && AlwaysCompEnergy
 # Multiplicity result output from RJ45
@@ -103,6 +120,8 @@ ModuleBits 7 14 14 14 16 14 14 14
 250M16bit_dspldr ../firmware/pixie16_revfpku_16b250m_release_06092019/Pixie16DSP_revfgeneral_16b250m_r41808.ldr
 250M16bit_dspvar ../firmware/pixie16_revfpku_16b250m_release_06092019/Pixie16DSP_revfgeneral_16b250m_r41808.var
 
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 
 # Standard firmware
 500M14bit_sys ../firmware/pixie16_revf_14b500m_firmware_release/syspixie16_revfgeneral_adc500mhz_r33341.bin
@@ -111,7 +130,8 @@ ModuleBits 7 14 14 14 16 14 14 14
 500M14bit_dspldr ../firmware/pixie16_revf_14b500m_firmware_release/Pixie16DSP_revfgeneral_14b500m_r35207.ldr
 500M14bit_dspvar ../firmware/pixie16_revf_14b500m_firmware_release/Pixie16DSP_revfgeneral_14b500m_r35207.var
 
-
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 
 
 ## TODO

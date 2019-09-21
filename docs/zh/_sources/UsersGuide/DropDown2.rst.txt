@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:49:52 2019 (+0800)
-.. Last-Updated: 四 7月  4 15:51:35 2019 (+0800)
+.. Last-Updated: 六 9月 21 19:51:29 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 9
+..     Update #: 13
 .. URL: http://wuhongyi.cn 
 
 ---------------------------------
@@ -26,59 +26,58 @@ Module Variables
 
 .. image:: /_static/img/ModuleVariables.png
 
-In addition to distributing the global clock signal, the Pixie-16 rear I/O trigger module can also share global triggers and run synchronization signals. The global trigger signals include the global validation trigger and global fast trigger, plus the Pixie-16 FPGA data storage buffers’ full flag signal. The run synchronization signals include synchronous run start and stop signals that can be shared among multiple crates.
+除了分配全局时钟信号(global clock signal)外，Pixie-16 后方 I/O 触发模块还可以共享全局触发并运行同步信号。 全局触发信号包括全局验证触发(global validation trigger)和全局快速触发(global fast trigger)，以及 Pixie-16 FPGA 数据存储缓冲器的满标志信号。 运行同步信号包括可以在多个机箱之间共享的同步运行开始和停止信号。
 
-In order to enable the distribution of such global triggers and run synchronization signals, certain Pixie-16 parameters have to be set properly. The parameter that controls the trigger distribution and run synchronization is the Module Control Register B (ModCSRB).
+为了能够分配此类全局触发器和运行同步信号，必须正确设置某些 Pixie-16 参数。 控制触发器分配和运行同步的参数是模块控制寄存器B（ModCSRB）。
 
-ModCSRB is a 32-bit parameter with each of 32 bits controlling different operation modes of the Pixie-16 module.
+ModCSRB 是一个 32 位参数，其中 32 位中的每个位控制 Pixie-16 模块的不同操作模式。
 
+.. NOTE:: **触发分配和运行同步**
 
-.. NOTE:: **Trigger Distribution and Run Synchronization**
-
-  For the System Director module that is installed in the Master crate, bits 0, 4, 6 and 11 of ModCSRB should be set to 1 (checked & enabled).
+  对于安装在主机箱中的 System Director 模块，ModCSRB 的位 0、4、6 和 11 应该设置为1（选中并启用）。
  
-  For the Crate Master module that is installed in the Slave crate, bits 0, 6 and 11 of ModCSRB should be set to 1 (checked & enabled).
+  对于从机箱中安装的 master 模块，应将 ModCSRB 的位 0、6 和 11 设置为1（选中并启用）。
  
-  For the General modules that are installed in both the Slave crate and Master crate, bit 11 of ModCSRB should be set to 1 (checked & enabled).
+  对于安装在从机箱和主机箱中的常规模块，ModCSRB 的第 11 位应设置为1（选中并启用）。
 
   
 """""""""""""""""""""""""""""""""
 寄存器定义
 """""""""""""""""""""""""""""""""
 
-Module Control Register B affecting the module as a whole.
+模块控制寄存器B 作用于整个模块。
 
 - bit 0 - MODCSRB_CPLDPULLUP
-	- Enable pullups for PXI trigger lines on the backplane through an onboard CPLD. 
-	- With the pullups, those PXI trigger lines default to logic high state. 
-	- Only when one module actively pulls a line to logic low state will such a line be in the low state. 
-	- Therefore signals transmitted over those PXI trigger lines are actively low signals.
-	- **Note: enable this bit only for one module per crate (e.g. the crate master module)**
+	- 通过板载 CPLD 为背板上的 PXI 触发线启用上拉（pullups）。
+	- 使用上拉时（pullups），这些PXI触发线默认为逻辑高电平状态。
+	- 仅当一个模块主动将线拉至逻辑低状态时，该线才会处于低状态。
+	- 因此，通过这些 PXI 触发线传输的信号为低电平有效信号。
+	- **注意：每个机箱仅对一个模块启用此位（例如机箱主模块）**
 - bit 4 - MODCSRB_DIRMOD
-	- Set this module as the Director module so that it can send triggers, trace and header DPM full signal and run synchronization signal to all crates through the rear I/O trigger modules. 
-	- Here triggers include fast trigger and validation trigger
-	- **Note: enable this bit only for one module among all crates (e.g. the system director module in multi-crate configuration)**
+	- 将此模块设置为 Director 模块，以便它可以通过后 I/O 触发模块向所有机箱发送触发，波形和事件头 DPM 满信号并运行同步信号。
+	- 这里的触发包括快速触发和验证触发
+	- **注意：仅对所有机箱中的一个模块启用此位（例如，多机箱配置中的 System Director 模块）**
 - bit 6 - MODCSRB_CHASSISMASTER
-	- Set this module as the chassis master module so that it can send triggers, trace and header DPM full signal and run synchronization signal to the backplane of the local crate. 
-	- Here triggers include fast trigger and validation trigger
-	- **Note: enable this bit only for one module per crate(e.g. the crate master module)**
+	- 将此模块设置为机箱主模块，以便它可以将触发，波形和事件头 DPM 满信号发送并运行同步信号到本机箱的背板。
+	- 这里的触发包括快速触发和验证触发
+	- **注意：每个机箱仅对一个模块启用此位（例如机箱主模块）**
 - bit 7 - MODCSRB_GFTSEL
-	- Select external fast trigger source(=1: external validation trigger, =0: external fast trigger, in case these two signals are swapped at the Pixie-16 front panel input connectors)
+	- 选择外部快速触发源（=1：外部验证触发，=0：外部快速触发。用来在 Pixie-16 前面板输入连接器上交换这两个信号）
 - bit 8 - MODCSRB_ETSEL
-	- Select external validation trigger source(=1: external fast trigger, =0: external validation trigger, in case these two signals are swapped at the Pixie-16 front panel input connectors)
+	- 选择外部验证触发源（=1：外部快速触发，=0：外部验证触发，用来在 Pixie-16 前面板输入连接器上交换这两个信号）
 - bit 10 - MODCSRB_INHIBITENA
-	- Enable(=1) or disable(=0) the use of external INHIBIT signal.
-	- When enabled, the external INHIBIT signal in the logic high state will prevent the run from starting until this external INHIBIT signal goes to logic low state.
+	- 启用（=1）或禁用（=0）使用外部 INHIBIT 信号。
+	- 器用该功能后，处于逻辑高电平状态的外部 INHIBIT 信号将阻止运行开始，直到该外部 INHIBIT 信号变为逻辑低电平状态。
 - bit 11 - MODCSRB_MULTCRATES
-	- Set this module to run in the multi-crate mode(=1) or in the local-crate mode(=0). 
-	- If the module is running in multi-crate mode, it will use the trace and header DPM full signal and run synchronization signal that are generated and distributed among multiple crates. 
-	- If the module is running in local-crate mode, it will use the trace and header DPM full signal and run synchronization signal generated in the local crate.
+	- 将此模块设置为以多机箱模式（=1）或以本地机箱模式（=0）运行。
+	- 如果模块以多机箱模式运行，它将使用波形和事件头 DPM 满信号以及运行同步信号，这些信号是在多个机箱中生成和分配的。
+	- 如果模块以本地机箱模式运行，它将使用波形和事件头 DPM 满信号并运行在本地机箱中生成的同步信号。
 - bit 12 - MODCSRB_SORTEVENTS
-	- Sort(=1) or do not sort(=0) events from all 16 channels of a Pixie-16 module based on the timestamps of the events, before storing the events in the external FIFO.
-	- Note: all 16 channels must have the same DAQ parameters setting to use this feature
+	- 在将事件存储在外部 FIFO 中之前，根据事件的时间戳对来自 Pixie-16 模块的所有 16 个通道的事件进行排序（=1）或不对事件进行排序（=0）。
+	- **注意：所有 16 个通道必须具有相同的 DAQ 参数设置才能使用此功能**
 - bit 13 - MODCSRB_BKPLFASTTRIG
-	- Enable(=1) or disable(=0) the sending of 16 local fast triggers to the 16 lines on the backplane of the crate.
-	- **Note: only one module can enable this option in each PCI bus segment of a crate(not limited to the crate master module, e.g. any module in each PCI bus segment)**
+	- 启用（=1）或禁用（=0），将 16 个本地快速触发发送到机箱背板上的 16 条线路。
+	- **注意：机箱的每个 PCI 总线段（bus segment）中只有一个模块可以启用此选项（不限于机箱主模块，例如，每个 PCI 总线段中的任何模块）**
 
 ----
 
@@ -121,68 +120,68 @@ CSRA
 寄存器定义
 """""""""""""""""""""""""""""""""
 
-Channel Control Register A affecting each channel individually 
+通道控制寄存器A分别用于每个通道
 
 - bit 0 - CCSRA_FTRIGSEL
-	- Channel fast trigger selection(=1: module fast trigger from the System FPGA; =0: the selection depends on the value of another bit CCSRA_GROUPTRIGSEL – if CCSRA_GROUPTRIGSEL = 1, select the channel validation trigger from the System FPGA, and if CCSRA_GROUPTRIGSEL = 0, select this channel’s local fast trigger)
+	- 通道快速触发选择（=1：系统 FPGA 的模块快速触发； =0：选择取决于另一位的值 CCSRA_GROUPTRIGSEL：如果CCSRA_GROUPTRIGSEL=1，则选择系统 FPGA 的通道验证触发，如果 CCSRA_GROUPTRIGSEL=0 ，选择此通道的本地快速触发）
 - bit 1 - CCSRA_EXTTRIGSEL
-	- Module validation trigger selection(=1: module gate input from the Pixie-16 front panel Module Gate LVDS connector; =0: module validation trigger from the System FPGA)
+	- 模块验证触发选择（=1：来自 Pixie-16 前面板模块门 LVDS 连接器的模块门输入； =0：来自系统 FPGA 的模块验证触发）
 - bit 2 - CCSRA_GOOD
-	- Set this channel as a Good channel(=1) or a not Good channel(=0).
-	- **When a channel is set to be a not Good channel, it still generates local fast triggers, which could be used in multiplicity computation, etc., but this channel will not record list mode data or MCA data, and will not update its baseline value**
+	- 将此通道设置为 “好” 通道（=1）或 “不好” 通道（=0）。
+	- **当某个通道设置为 “不好” 通道时，它仍会生成本地快速触发，可用于多重性计算等，但是此通道不会记录列表模式数据或 MCA 数据，并且不会更新其基线数值。
 - bit 3 - CCSRA_CHANTRIGSEL
-	- Channel validation signal selection(=1: channel gate input from the Pixie-16 front panel Channel Gate LVDS connector; =0:channel validation trigger from the System FPGA)
+	- 通道验证信号选择（=1：来自 Pixie-16 前面板通道门 LVDS 连接器的通道门输入； =0：来自系统 FPGA 的通道验证触发）
 - bit 4 - CCSRA_SYNCDATAACQ
-	- Choose the level of synchronous data acquisition for this channel(=1: stops taking data when the trace or header DPM for any channel of any Pixie-16 module in the system is full; =0: stops taking data only when the trace or header DPM for this channel of this Pixie-16 module is full)
+	- 选择此通道的同步数据采集级别（=1：系统中任何 Pixie-16 模块的任何通道的波形或事件头 DPM 满时，停止采集数据； = 0：仅当此 Pixie-16 模块的此通道的波形或事件头 DPM 已满时停止采集数据）
 - bit 5 - CCSRA_POLARITY
-	- Choose this channel’s input signal polarity(=1: invert input signal’s polarity; =0: do not invert input signal’s polarity).
-	- **Please note in Pixie-16, signal processing requires positive rising input signal. So if input signal has a negative falling edge, it should be inverted by setting this CCSRA_POLARITY bit to 1**
+	- 选择此通道的输入信号极性（=1：反转输入信号的极性； =0：不反转输入信号的极性）
+	- **请注意，在 Pixie-16 中，信号处理需要正上升输入信号。 因此，如果输入信号具有负下降沿，则应通过将此 CCSRA_POLARITY 位设置为 1 将其反相**
 - bit 6 - CCSRA_VETOENA
-	- Enable(=1) or disable(=0) this channel’s veto. 
-	- If veto is enabled, this channel’s fast trigger will be vetoed by either the module veto signal(see bit 20 CCSRA_MODVETOSEL below) or channel veto signal(see bit 19 CCSRA_CHANVETOSEL below). 
-	- But if veto is disabled, this channel’s fast trigger will not be vetoed by either veto signal, even if either veto signal is present
+	- 启用（=1）或禁用（=0）此通道的否决（veto）。
+	- 如果启用否决，则该模块的否决信号（请参见下面的位 20 CCSRA_MODVETOSEL）或通道否决信号（请参见下面的位 19 CCSRA_CHANVETOSEL）将否决该通道的快速触发
+	- 但是，如果否决被禁用，则即使存在任何一个否决信号，该通道的快速触发也不会被任何一个否决信号否决
 - bit 7 - CCSRA_HISTOE
-	- Enable(=1) or disable(=0) the histogramming of pulse energy values in the onboard MCA memory. 
-	- However, the current Pixie-16 firmware always histograms pulse energy values in the onboard MCA memory. 
-	- So this CCSRA_HISTOE is essentially not in use at the moment
+	- 启用（=1）或禁用（=0）板载 MCA 存储器中脉冲能量值的直方图。
+	- 但是，当前的 Pixie-16 固件始终会对板载 MCA 存储器中的脉冲能量值进行直方图绘制。
+	- 因此，此 CCSRA_HISTOE 目前基本上未使用
 - bit 8 - CCSRA_TRACEENA
-	- Enable(=1) or disable(=0) trace capture in the list mode run for this channel
+	- 在列表模式下为此通道运行启用（=1）或禁用（=0）波形记录
 - bit 9 - CCSRA_QDCENA
-	- Enable(=1) or disable(=0) QDC sums recording in the list mode run for this channel. 
-	- There are a total of 8 QDC sums for each event
+	- 启用（=1）或禁用（=0）列表模式下为此通道运行 QDC 积分记录
+	- 每个事件共有 8 个 QDC 积分
 - bit 10 - CCSRA_CFDMODE
-	- Enable(=1) or disable(=0) CFD trigger in the list mode run for this channel. 
-	- CFD trigger is used to latch sub-sample timing for the event time of arrival or timestamp
+	- 在列表模式下为此通道运行启用（=1）或禁用（=0）CFD 触发
+	- CFD 触发用于锁存事件到达时间或时间戳的亚采样时间
 - bit 11 - CCSRA_GLOBTRIG
-	- Enable(=1) or disable(=0) the requirement of module validation trigger for this channel. 
-	- If enabled, only when module validation trigger overlaps the channel fast trigger will the events be recorded for this channel
+	- 启用（=1）或禁用（=0）此通道的模块验证触发的要求
+	- 如果启用，则仅当模块验证触发与通道快速触发重叠时，才会记录该通道的事件
 - bit 12 - CCSRA_ESUMSENA
-	- Enable(=1) or disable(=0) the recording of raw energy sums and baseline values in the list mode run for this channel. 
-	- There are a total of three raw energy sums and one baseline value for each event. 
-	- **Please note the baseline value is stored in the format of 32-bit IEEE float point(IEEE 754)**
+	- 启用（=1）或禁用（=0）以列表模式为此通道运行原始能量总和及基线值的记录
+	- 每个事件共有三个原始能量总和及一个基线值。
+	- **请注意，基线值以 32 位 IEEE 浮点数（IEEE 754）的格式存储**
 - bit 13 - CCSRA_CHANTRIG
-	- Enable(=1) or disable(=0) the requirement of channel validation trigger for this channel. 
-	- If enabled, only when channel validation trigger overlaps the channel fast trigger will the events be recorded for this channel
+	- 启用（=1）或禁用（=0）此通道的通道验证触发的要求
+	- 如果启用，则仅当通道验证触发与通道快速触发重叠时，才会记录该通道的事件
 - bit 14 - CCSRA_ENARELAY
-	- Switch between two attenuations or gains for the input signal in this channel through an input relay(=1: close the input relay resulting in no input signal attenuation; =0: open the input relay resulting in a 1⁄4 input signal attenuation)
+	- 通过输入继电器在此通道中的输入信号的两个衰减或增益之间切换（=1：关闭输入继电器，不会导致输入信号衰减; =0：打开输入继电器，会导致输入信号衰减为1⁄4）
 - bit 15/16 - CCSRA_PILEUPCTRL/CCSRA_INVERSEPILEUP
-	- Control normal pileup rejection(bit 15) and inverse pileup rejection(bit 16) for list mode runs:
-	- 1) Bits [16:15] = 00, record all events
-	- 2) Bits [16:15] = 01, only record single events, i.e., reject piled up events
-	- 3) Bits [16:15] = 10, record everything for piled up events, but will not record trace for single events even if trace recording is enabled, i.e., only record event header
-	- 4) Bits [16:15] = 11, only record piled up events, i.e., reject single events
-	- In all cases, if the event is piled up, no energy will be computed for such event
+	- 控制列表模式运行的正常堆积拒绝（位15）和反向堆积拒绝（位16）：
+	- 1) 位 [16:15] = 00，记录所有事件
+	- 2) 位 [16:15] = 01，仅记录非堆积事件，即拒绝堆积事件
+	- 3) 位 [16:15] = 10，记录堆积事件的所有内容，但即使启用了波形记录，也不会记录非堆积事件的波形，即仅记录事件头
+	- 4) 位 [16:15] = 11，仅记录堆积事件，即拒绝非堆积事件
+	- 在所有情况下，如果事件堆积，则不会为该事件计算能量
 - bit 17 - CCSRA_ENAENERGYCUT
-	- Enable(=1) or disable(=0) the “no traces for large pulses” feature. 
-	- If enabled, trace will be not be recorded if the event energy is larger than the value set in DSP parameter EnergyLow
+	- 启用（= 1）或禁用（= 0）“no traces for large pulses”功能
+	- 启用后，如果事件能量大于 DSP 参数 EnergyLow 中设置的值，则不会记录跟踪
 - bit 18 - CCSRA_GROUPTRIGSEL
-	- Select channel fast trigger – this bit works together with the CCSRA_FTRIGSEL bit(bit 0): if CCSRA_FTRIGSEL=1, this CCSRA_GROUPTRIGSEL bit has no effect; if CCSRA_FTRIGSEL=0, then if CCSRA_GROUPTRIGSEL=1, select the channel validation trigger from the System FPGA, and if CCSRA_GROUPTRIGSEL=0, select this channel’s local fast trigger
+	- 选择通道快速触发，此位与 CCSRA_FTRIGSEL 位（位0）一起使用：如果 CCSRA_FTRIGSEL=1，则此 CCSRA_GROUPTRIGSEL 位无效；否则，该位无效。 如果 CCSRA_FTRIGSEL=0，则如果 CCSRA_GROUPTRIGSEL=1，则从系统 FPGA 中选择通道验证触发，如果 CCSRA_GROUPTRIGSEL=0，则选择该通道的本地快速触发
 - bit 19 - CCSRA_CHANVETOSEL
-	- Channel veto signal selection(=1: channel validation trigger from the System FPGA; =0: channel gate input from the Pixie-16 front panel Channel Gate LVDS connector)
+	- 通道否决信号选择（=1：来自系统 FPGA 的通道验证触发; =0：来自 Pixie-16 前面板通道门 LVDS 连接器的通道门输入）
 - bit 20 - CCSRA_MODVETOSEL
-	- Module veto signal selection(=1: module validation trigger from the System FPGA; =0: module gate input from the Pixie-16 front panel Module Gate LVDS connector)
+	- 模块否决信号选择（=1：来自系统 FPGA 的模块验证触发；=0：来自 Pixie-16 前面板模块门 LVDS 连接器的模块门输入）
 - bit 21 - CCSRA_EXTTSENA
-	- Enable(=1) or disable(=0) the recording of the 48-bit external clock timestamp in the event header during list mode run for this channel
+	- 在此通道的列表模式运行期间，启用（=1）或禁用（=0）事件头中的 48 位外部时钟时间戳的记录
 
 ----
 
@@ -197,7 +196,7 @@ Logic Set
 .. image:: /_static/img/LogicTrigger.png
 
 	   
-**TODO**
+
 
 .. image:: /_static/img/stretchlength.PNG
 

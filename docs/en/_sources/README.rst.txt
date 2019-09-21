@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 20:19:34 2019 (+0800)
-.. Last-Updated: 五 9月 20 18:34:46 2019 (+0800)
+.. Last-Updated: 六 9月 21 20:19:36 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 18
+..     Update #: 19
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -142,8 +142,13 @@ Update plan
 	- JSROOT
 	- ...
 
+---------------------------------  
+License
+---------------------------------
 
-
+..
+   This project is licensed under the MIT License - see the LICENSE.md file for details
+	  
 
 .. 
 .. README.rst ends here

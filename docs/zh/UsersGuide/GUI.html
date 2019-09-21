@@ -160,18 +160,18 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#logic-set">Logic Set</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id24">控制界面</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id26">控制界面</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#debug">Debug</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#hist-xdt">Hist &amp; XDT</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id25">控制界面</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id27">控制界面</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#trace-baseline">Trace &amp; Baseline</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id26">控制界面</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id28">控制界面</a></li>
 </ul>
 </li>
 </ul>
@@ -186,7 +186,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#ff-cfd-thre">FF/CFD Thre</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#energy-ff">Energy-FF</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#energy-cfd">Energy-CFD</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id27">QDC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id29">QDC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fft">FFT</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#time-diff">Time Diff</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#simulation">Simulation(暂未实现)</a></li>
@@ -293,7 +293,7 @@
 <div class="section" id="id2">
 <h2>主控制界面<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/mainframe.png" src="../_images/mainframe.png" />
-<p>主界面最上方是File、UV_Setup、Expert、Monitor、Offiline五个下拉栏。里面的子菜单如下所示：</p>
+<p>主界面最上方是 File、Base、Expert、Monitor、Offiline 五个下拉栏。里面的子菜单如下所示：</p>
 <ul class="simple">
 <li><dl class="simple">
 <dt>File</dt><dd><ul>
@@ -565,53 +565,53 @@
 </div>
 <div class="section" id="mhz">
 <h4>100 / 250 MHz 模块<a class="headerlink" href="#mhz" title="永久链接至标题">¶</a></h4>
-<p>The following CFD algorithm is implemented in the signal processing FPGA of the 100 MHz(Rev. B, C, D and F) and 250 MHz(Rev. F) Pixie-16 modules.</p>
-<p>Assume the digitized waveform can be represented by data series Trace[i], i = 0, 1, 2, … First the fast filter response(FF) of the digitized waveform is computed as follows:</p>
+<p>以下 CFD 算法在 100 MHz（版本 B，C，D 和 F）和 250 MHz（版本 F）Pixie-16 模块的信号处理 FPGA 中实现。</p>
+<p>假设数字化波形可以用数据序列 Trace[i] 表示，i = 0、1、2，…。首先，数字化波形的快速滤波器响应（FF）计算如下：</p>
 <div class="math notranslate nohighlight">
 \[FF[i]=\sum_{j=i-(FL-1)}^{i}Trace[j]-\sum_{j=i-(2\times FL+FG-1)}^{i-(FL+FG)}Trace[j]\]</div>
-<p>Where FL is called the fast length and FG is called the fast gap of the digital trapezoidal filter. Then the CFD is computed as follows:</p>
+<p>这里，FL 称为快速长度，FG 称为数字梯形滤波器的快速间隙。CFD 计算如下：</p>
 <div class="math notranslate nohighlight">
 \[CFD[i+D]=FF[i+D]\times(1-w/8)-FF[i]\]</div>
-<p>Where D is called the CFD delay length and w is called the CFD scaling factor(w=0, 1,…, 7).</p>
-<p>The CFD zero crossing point(ZCP) is then determined when <span class="math notranslate nohighlight">\(CFD[i]\leq0\)</span> and <span class="math notranslate nohighlight">\(CFD[i+1]&lt;0\)</span>. The timestamp is latched at Trace point <span class="math notranslate nohighlight">\(i\)</span>, and the fraction time <span class="math notranslate nohighlight">\(f\)</span> is given by the ratio of the two CFD response amplitudes right before and after the ZCP.</p>
+<p>其中 D 称为 CFD 延迟长度，而 w 称为 CFD 缩放因子（w = 0、1，…，7）。</p>
+<p>CFD 过零点由 <span class="math notranslate nohighlight">\(CFD[i]\geq 0\)</span> 和 <span class="math notranslate nohighlight">\(CFD[i+1]&lt;0\)</span> 来确定。时间戳被标记在跟踪点 <span class="math notranslate nohighlight">\(i\)</span> ，分数时间 <span class="math notranslate nohighlight">\(f\)</span> 由过零点前后两个 CFD 响应幅度之比得出。</p>
 <div class="math notranslate nohighlight">
 \[f=\frac{CFDout1}{CFDout1-CFDout2}\]</div>
-<p>Where CFDout1 is the CFD response amplitude right before the ZCP, and CFDout2 is the CFD response amplitude right after the ZCP(subtraction is used in the denominator since CFDout2 is negative). The Pixie-16 DSP computes the CFD final value as follows and stores it in the output data stream for online or offline analysis.</p>
+<p>其中 CFDout1 是过零点之前的 CFD 响应幅度，CFDout2 是过零点之后的 CFD 响应幅度（分母中使用减法，因为 CFDout2 为负数）。 Pixie-16 DSP 按以下方式计算 CFD 最终值，并将其存储在输出数据流中以进行在线或离线分析。</p>
 <div class="math notranslate nohighlight">
 \[CFD=\frac{CFDout1}{CFDout1-CFDout2} \times N\]</div>
-<p>Where N is scaling factor, which equals to 32768 for 100 MHz modules and 16384 for 250 MHz modules, respectively.</p>
+<p>其中 N 是比例因子，分别对应于 100 MHz 模块的 32768 和对应于 250 MHz 模块的 16384。</p>
 <img alt="../_images/adcsamples_cfd.png" src="../_images/adcsamples_cfd.png" />
 <img alt="../_images/fastfilter_cfd.png" src="../_images/fastfilter_cfd.png" />
 <img alt="../_images/cfdfilter_cfd.png" src="../_images/cfdfilter_cfd.png" />
-<p>Figure shows a sample ADC trace, its fast filter response and its CFD response, respectively.</p>
-<p>The top figure shows a raw ADC trace. After computing the fast filter response on the raw ADC trace using Equation <span class="math notranslate nohighlight">\(FF[i]\)</span>, the fast filter response is compared against the fast filter threshold as shown in the middle figure. The ADC sample where the fast filter response crosses the fast filter threshold is called the fast trigger point, which also starts the search for the CFD zero crossing point.</p>
-<p>The CFD response is computed using Equation <span class="math notranslate nohighlight">\(CFD[i+D]\)</span> and is shown in the bottom figure(for actual implementation in the firmware, the fast filter response FF is delayed slightly before being used for computing the CFD response so that there are sufficient number of CFD response points to look for the zero crossing point after the fast trigger). To prevent premature CFD trigger as a result of the noise in the CFD response before the actual trigger, a DSP parameter called CFDThresh is used to suppress those noise-caused zero crossing. However, if a zero crossing point cannot be found within a certain period after the fast trigger (typically 32 clock cycles), e.g., due to unnecessarily high CFDThresh, a forced CFD Trigger will be issued and a flag will be set in an event header word to indicate that the recorded CFD time for this event is invalid.</p>
-<p>However, the event will still have a valid timestamp which is latched by the fast filter trigger when fast filter crosses over the trigger threshold. The aforementioned CFD parameters correspond to the following DSP parameters.</p>
+<p>上图分别显示了原始采集波形，其快速滤波器响应和 CFD 响应。</p>
+<p>最上图显示了原始 ADC 采集波形。 在使用公式 <span class="math notranslate nohighlight">\(FF[i]\)</span> 计算原始 ADC 采集波形上的快速滤波器响应之后，将快速滤波器响应与快速滤波器阈值进行比较，如中间图所示。 快速滤波器响应超过快速滤波器阈值的 ADC 采样称为快速触发点，它也开始搜索 CFD 过零点。</p>
+<p>CFD 响应是使用公式 <span class="math notranslate nohighlight">\(CFD[i+D]\)</span> 计算的，并显示在上面最后一张图中（对于固件中的实际实现，快速滤波器响应 FF 在用于计算 CFD 响应之前会稍有延迟。 在快速触发后有足够数量的 CFD 响应点来寻找过零点）。 为了防止实际触发之前 CFD 响应中的噪声导致 CFD 触发过早，使用称为 CFD 阈值的 DSP 参数来抑制那些由噪声引起的过零点。 但是，如果在快速触发后的某个时间段内（通常为32个时钟周期）找不到过零点（例如，由于不必要的高阈值），则会发出强制 CFD 触发，并在事件标头中设置标志来表示此事件记录的 CFD 时间是无效的。</p>
+<p>但是，事件将仍然具有有效的时间戳记，当快速过滤器超过触发阈值时，该时间戳将由快速过滤器触发器锁存。 前述的 CFD 参数对应于以下 DSP 参数。</p>
 <img alt="../_images/correspondingdspparametersforthecfdparmeters.png" src="../_images/correspondingdspparametersforthecfdparmeters.png" />
 <div class="admonition note">
 <p class="admonition-title">注解</p>
 <p><strong>250 MHz</strong></p>
-<p>In the 250 MHz Pixie-16 modules, the event timestamp is counted with 125 MHz clock ticks, i.e., 8 ns intervals, and two consecutive 250 MHz ADC samples are captured in one 8 ns interval as well.</p>
-<p>The CFD trigger also runs at 125 MHz, but the CFD zero crossing point is still reported as a fractional time between two neighboring 250 MHz ADC samples, which are processed by the FPGA in one 125 MHz clock cycle.</p>
-<p>However, the CFD zero crossing point could be in either the odd or even clock cycle of the captured 250 MHz ADC waveforms.</p>
-<p>Therefore, the firmware outputs a “CFD trigger source” bit in the output data stream to indicate whether the CFD zero crossing point is in the odd or even clock cycle of the captured 250 MHz ADC waveforms.</p>
+<p>在 250 MHz Pixie-16 模块中，事件时间戳以 125 MHz 时钟滴答计数，即 8 ns 间隔进行计数，并且也以 8 ns 间隔捕获两个连续的 250 MHz ADC 样本。</p>
+<p>CFD 触发也以 125 MHz 的频率运行，但是 CFD 过零点仍报告为两个相邻的 250 MHz ADC 采样之间的分数时间，由 FPGA 在一个 125 MHz 时钟周期内对其进行处理。</p>
+<p>但是，CFD 过零点可能处于捕获的 250 MHz ADC 波形的奇数或偶数时钟周期中。</p>
+<p>因此，固件在输出数据流中输出“CFD trigger source”位，以指示 CFD 过零点是处于捕获的 250 MHz ADC 波形的奇数还是偶数时钟周期中。</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注解</p>
 <p><strong>100 MHz</strong></p>
-<p>In the 100 MHz Pixie-16 modules, event timestamp, CFD trigger, and ADC waveform capture are all carried out with the same 100 MHz clock. So there is no need to report “CFD trigger source” for the 100 MHz Pixie-16 modules.</p>
+<p>在100 MHz Pixie-16模块中，事件时间戳，CFD 触发和 ADC 波形捕获都使用相同的 100 MHz 时钟执行。 因此，无需报告 100 MHz Pixie-16 模块的“CFD trigger source”。</p>
 </div>
 </div>
 <div class="section" id="id15">
 <h4>500 MHz 模块<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h4>
-<p>The CFD algorithm discussed in the previous section for the 100 MHz and 250 MHz Pixie-16 modules can also be written in the following format:</p>
+<p>上一节中讨论的针对 100 MHz 和 250 MHz Pixie-16 模块的 CFD 算法也可以采用以下格式编写：</p>
 <div class="math notranslate nohighlight">
 \[CFD(k)=w\cdot\left(\sum_{i=k}^{k+L}a(i)-\sum_{i=k-B}^{k-B+L}a(i)\right)-\left(\sum_{i=k-D}^{k-D+L}a(i)-\sum_{i=k-D-B}^{k-D-B+L}a(i)\right)\]</div>
-<p>Where a(i) is the ADC trace data, k is the index, and w, B, D, and L are CFD parameters.</p>
-<p>The CFD algorithm implemented in the 500 MHz Pixie-16 modules is special when compared to the one implemented in the 100 MHz and 250 MHz Pixie-16 modules in terms of the ability to adjust parameters w, B, D, and L.</p>
-<p>The reason for this is that in the 500 MHz Pixie-16 modules, ADC data that come into the FPGA at the speed of 500 MHz is first slowed down with a ratio of 1:5, in other words, the FPGA captures 5 ADC samples at the rate of 100 MHz, i.e., every 10 ns. The FPGA then tries to find the CFD trigger point between any two adjacent 2-ns ADC samples within that 10 ns by first building sums of ADC samples and then calculating differences between delayed and non-delayed sums until the zero crossing point is found. However, in the 500 MHz Pixie-16 modules, the FPGA does not have enough resources to build sums for 5 ADC samples in parallel with variable delays. Therefore, the CFD algorithm for the 500 MHz modules was implemented using a set of fixed CFD parameters as shown in Table <em>Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules</em>. Tests show these fixed parameters give best performance for LaBr3(Ce) detectors.</p>
+<p>其中 a(i) 是 ADC 跟踪数据，k 是索引，w，B，D 和 L 是 CFD 参数。</p>
+<p>在调整参数 w、B、D 和 L 的能力方面，在500 MHz Pixie-16 模块中实现的 CFD 算法与在 100 MHz 和 250 MHz Pixie-16 模块中实现的 CFD 算法相比是特殊的。</p>
+<p>其原因是在 500 MHz 的 Pixie-16 模块中，以 500 MHz 的速度进入 FPGA 的 ADC 数据首先以 1:5 的比率减慢，换言之，FPGA 以 100 MHz 的速率，即每 10 ns 捕获 5 个 ADC 采样。然后，FPGA 通过首先建立 ADC 样本的和，然后计算延迟和非延迟和之间的差异，直到找到过零点，试图在该 10 ns 内找到任意两个相邻 2 ns ADC 样本之间的 CFD 触发点。然而，在 500 MHz 的 Pixie-16 模块中，FPGA 没有足够的资源来为 5 个 ADC 采样并行地构建可变延迟的和。因此，500 MHz 模块的 CFD 算法是使用一组固定 CFD 参数来实现的，如表 <em>Fixed CFD Parameter Values for 500 MHz Pixie-16 Modules</em> 。实验表明，这些固定参数对 LaBr3(Ce) 探测器的性能最好。</p>
 <img alt="../_images/fixedcfdparametervaluesfor500mhzpixie16modules.png" src="../_images/fixedcfdparametervaluesfor500mhzpixie16modules.png" />
-<p>The CFD time given by the 500 MHz Pixie-16 modules consists of two parts: a shift within the 5 ADC samples and a fractional time between two ADC samples where the CFD zero crossing occurred. The shift within the 5 ADC samples is reported as the 3-bit CFD trigger source[2:0] is defined as follows.</p>
+<p>500 MHz Pixie-16 模块给出的 CFD 时间由两部分组成：在 5 个 ADC 样本内进行移位，以及在两个 ADC 样本之间发生 CFD 过零点的时间。 由于以下定义了 3-bit CFD trigger source[2:0]，因此报告了 5 个 ADC 采样中的移位。</p>
 <img alt="../_images/meaningofthecfdtriggersourcefor500mhzpixie16modules.png" src="../_images/meaningofthecfdtriggersourcefor500mhzpixie16modules.png" />
 <p>CFD 分数时间如下：</p>
 <div class="math notranslate nohighlight">
@@ -624,9 +624,9 @@
 <div class="section" id="id16">
 <h4>控制界面<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h4>
 <img alt="../_images/QDCPars.png" src="../_images/QDCPars.png" />
-<p>Eight QDC sums, each of which can have different lengths, are computed in the Signal Processing FPGA of a Pixie-16 module for each channel and the sums are written to the list mode output data stream if the user requests so.</p>
-<p>The recording of QDC sums starts at the waveform point which is <em>Pre-trigger Trace Length</em> or <em>Trace Delay</em> earlier than the trigger point, which is either the CFD trigger or channel fast trigger depending on whether or not CFD trigger mode is enabled.</p>
-<p>The eight QDC sums are computed one by one continuously, but they are not overlapping. The recording of QDC sums ends when the eight intervals have all passed.</p>
+<p>在 Pixie-16 模块的信号处理 FPGA 中为每个通道计算八个 QDC 积分，每个长度可以具有不同的长度，如果用户要求，则将这些积分写入列表模式输出数据流。</p>
+<p>QDC 的积分起点从记录波形的点开始，该波形点比触发点早 <em>Pre-trigger Trace Length</em> 或 <em>Trace Delay</em> ，触发模式是 CFD 触发还是通道快速触发取决于 CFD 触发模式是否开启。</p>
+<p>连续一个接一个地计算八个 QDC 积分，但它们并不重叠。八个间隔全部过去后，QDC 积分的记录结束。</p>
 <img alt="../_images/the8qdcsumsofatriggeredevent.png" src="../_images/the8qdcsumsofatriggeredevent.png" />
 </div>
 </div>
@@ -636,7 +636,8 @@
 <div class="section" id="id17">
 <h4>控制界面<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h4>
 <img alt="../_images/Decimation.png" src="../_images/Decimation.png" />
-<p><strong>。。TODO。。</strong></p>
+<p>在 PKU 固件中，对于 100 MHz 模块定制了波形降频输出。</p>
+<p>在采集波形时候，增加了降频输出的功能，采取的策略为可选择 1，1/2，1/4，1/8，1/16，1/32，1/64，1/128（分别对应参数0-7）频率的输出，即多少个点保留一个点。保留的点是平均后的值。</p>
 </div>
 </div>
 <hr class="docutils" />
@@ -645,7 +646,7 @@
 <div class="section" id="id18">
 <h4>控制界面<a class="headerlink" href="#id18" title="永久链接至标题">¶</a></h4>
 <img alt="../_images/CopyPars.png" src="../_images/CopyPars.png" />
-<p><strong>。。TODO。。</strong></p>
+<p>该窗口用来快速进行通道之间的参数拷贝。</p>
 </div>
 </div>
 <hr class="docutils" />
@@ -654,7 +655,7 @@
 <div class="section" id="id19">
 <h4>控制界面<a class="headerlink" href="#id19" title="永久链接至标题">¶</a></h4>
 <img alt="../_images/Save2File.png" src="../_images/Save2File.png" />
-<p><strong>。。TODO。。</strong></p>
+<p>正如你所知道的一样，DSP参数被保存在一个后缀为“set”的文件中，当你配置好参数之后，应该保存它以便于之后使用。</p>
 <hr class="docutils" />
 </div>
 </div>
@@ -667,93 +668,93 @@
 <div class="section" id="id20">
 <h4>控制界面<a class="headerlink" href="#id20" title="永久链接至标题">¶</a></h4>
 <img alt="../_images/ModuleVariables.png" src="../_images/ModuleVariables.png" />
-<p>In addition to distributing the global clock signal, the Pixie-16 rear I/O trigger module can also share global triggers and run synchronization signals. The global trigger signals include the global validation trigger and global fast trigger, plus the Pixie-16 FPGA data storage buffers’ full flag signal. The run synchronization signals include synchronous run start and stop signals that can be shared among multiple crates.</p>
-<p>In order to enable the distribution of such global triggers and run synchronization signals, certain Pixie-16 parameters have to be set properly. The parameter that controls the trigger distribution and run synchronization is the Module Control Register B (ModCSRB).</p>
-<p>ModCSRB is a 32-bit parameter with each of 32 bits controlling different operation modes of the Pixie-16 module.</p>
+<p>除了分配全局时钟信号(global clock signal)外，Pixie-16 后方 I/O 触发模块还可以共享全局触发并运行同步信号。 全局触发信号包括全局验证触发(global validation trigger)和全局快速触发(global fast trigger)，以及 Pixie-16 FPGA 数据存储缓冲器的满标志信号。 运行同步信号包括可以在多个机箱之间共享的同步运行开始和停止信号。</p>
+<p>为了能够分配此类全局触发器和运行同步信号，必须正确设置某些 Pixie-16 参数。 控制触发器分配和运行同步的参数是模块控制寄存器B（ModCSRB）。</p>
+<p>ModCSRB 是一个 32 位参数，其中 32 位中的每个位控制 Pixie-16 模块的不同操作模式。</p>
 <div class="admonition note">
 <p class="admonition-title">注解</p>
-<p><strong>Trigger Distribution and Run Synchronization</strong></p>
-<p>For the System Director module that is installed in the Master crate, bits 0, 4, 6 and 11 of ModCSRB should be set to 1 (checked &amp; enabled).</p>
-<p>For the Crate Master module that is installed in the Slave crate, bits 0, 6 and 11 of ModCSRB should be set to 1 (checked &amp; enabled).</p>
-<p>For the General modules that are installed in both the Slave crate and Master crate, bit 11 of ModCSRB should be set to 1 (checked &amp; enabled).</p>
+<p><strong>触发分配和运行同步</strong></p>
+<p>对于安装在主机箱中的 System Director 模块，ModCSRB 的位 0、4、6 和 11 应该设置为1（选中并启用）。</p>
+<p>对于从机箱中安装的 master 模块，应将 ModCSRB 的位 0、6 和 11 设置为1（选中并启用）。</p>
+<p>对于安装在从机箱和主机箱中的常规模块，ModCSRB 的第 11 位应设置为1（选中并启用）。</p>
 </div>
 </div>
 <div class="section" id="id21">
 <h4>寄存器定义<a class="headerlink" href="#id21" title="永久链接至标题">¶</a></h4>
-<p>Module Control Register B affecting the module as a whole.</p>
+<p>模块控制寄存器B 作用于整个模块。</p>
 <ul class="simple">
 <li><dl class="simple">
 <dt>bit 0 - MODCSRB_CPLDPULLUP</dt><dd><ul>
-<li><p>Enable pullups for PXI trigger lines on the backplane through an onboard CPLD.</p></li>
-<li><p>With the pullups, those PXI trigger lines default to logic high state.</p></li>
-<li><p>Only when one module actively pulls a line to logic low state will such a line be in the low state.</p></li>
-<li><p>Therefore signals transmitted over those PXI trigger lines are actively low signals.</p></li>
-<li><p><strong>Note: enable this bit only for one module per crate (e.g. the crate master module)</strong></p></li>
+<li><p>通过板载 CPLD 为背板上的 PXI 触发线启用上拉（pullups）。</p></li>
+<li><p>使用上拉时（pullups），这些PXI触发线默认为逻辑高电平状态。</p></li>
+<li><p>仅当一个模块主动将线拉至逻辑低状态时，该线才会处于低状态。</p></li>
+<li><p>因此，通过这些 PXI 触发线传输的信号为低电平有效信号。</p></li>
+<li><p><strong>注意：每个机箱仅对一个模块启用此位（例如机箱主模块）</strong></p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 4 - MODCSRB_DIRMOD</dt><dd><ul>
-<li><p>Set this module as the Director module so that it can send triggers, trace and header DPM full signal and run synchronization signal to all crates through the rear I/O trigger modules.</p></li>
-<li><p>Here triggers include fast trigger and validation trigger</p></li>
-<li><p><strong>Note: enable this bit only for one module among all crates (e.g. the system director module in multi-crate configuration)</strong></p></li>
+<li><p>将此模块设置为 Director 模块，以便它可以通过后 I/O 触发模块向所有机箱发送触发，波形和事件头 DPM 满信号并运行同步信号。</p></li>
+<li><p>这里的触发包括快速触发和验证触发</p></li>
+<li><p><strong>注意：仅对所有机箱中的一个模块启用此位（例如，多机箱配置中的 System Director 模块）</strong></p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 6 - MODCSRB_CHASSISMASTER</dt><dd><ul>
-<li><p>Set this module as the chassis master module so that it can send triggers, trace and header DPM full signal and run synchronization signal to the backplane of the local crate.</p></li>
-<li><p>Here triggers include fast trigger and validation trigger</p></li>
-<li><p><strong>Note: enable this bit only for one module per crate(e.g. the crate master module)</strong></p></li>
+<li><p>将此模块设置为机箱主模块，以便它可以将触发，波形和事件头 DPM 满信号发送并运行同步信号到本机箱的背板。</p></li>
+<li><p>这里的触发包括快速触发和验证触发</p></li>
+<li><p><strong>注意：每个机箱仅对一个模块启用此位（例如机箱主模块）</strong></p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 7 - MODCSRB_GFTSEL</dt><dd><ul>
-<li><p>Select external fast trigger source(=1: external validation trigger, =0: external fast trigger, in case these two signals are swapped at the Pixie-16 front panel input connectors)</p></li>
+<li><p>选择外部快速触发源（=1：外部验证触发，=0：外部快速触发。用来在 Pixie-16 前面板输入连接器上交换这两个信号）</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 8 - MODCSRB_ETSEL</dt><dd><ul>
-<li><p>Select external validation trigger source(=1: external fast trigger, =0: external validation trigger, in case these two signals are swapped at the Pixie-16 front panel input connectors)</p></li>
+<li><p>选择外部验证触发源（=1：外部快速触发，=0：外部验证触发，用来在 Pixie-16 前面板输入连接器上交换这两个信号）</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 10 - MODCSRB_INHIBITENA</dt><dd><ul>
-<li><p>Enable(=1) or disable(=0) the use of external INHIBIT signal.</p></li>
-<li><p>When enabled, the external INHIBIT signal in the logic high state will prevent the run from starting until this external INHIBIT signal goes to logic low state.</p></li>
+<li><p>启用（=1）或禁用（=0）使用外部 INHIBIT 信号。</p></li>
+<li><p>器用该功能后，处于逻辑高电平状态的外部 INHIBIT 信号将阻止运行开始，直到该外部 INHIBIT 信号变为逻辑低电平状态。</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 11 - MODCSRB_MULTCRATES</dt><dd><ul>
-<li><p>Set this module to run in the multi-crate mode(=1) or in the local-crate mode(=0).</p></li>
-<li><p>If the module is running in multi-crate mode, it will use the trace and header DPM full signal and run synchronization signal that are generated and distributed among multiple crates.</p></li>
-<li><p>If the module is running in local-crate mode, it will use the trace and header DPM full signal and run synchronization signal generated in the local crate.</p></li>
+<li><p>将此模块设置为以多机箱模式（=1）或以本地机箱模式（=0）运行。</p></li>
+<li><p>如果模块以多机箱模式运行，它将使用波形和事件头 DPM 满信号以及运行同步信号，这些信号是在多个机箱中生成和分配的。</p></li>
+<li><p>如果模块以本地机箱模式运行，它将使用波形和事件头 DPM 满信号并运行在本地机箱中生成的同步信号。</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 12 - MODCSRB_SORTEVENTS</dt><dd><ul>
-<li><p>Sort(=1) or do not sort(=0) events from all 16 channels of a Pixie-16 module based on the timestamps of the events, before storing the events in the external FIFO.</p></li>
-<li><p>Note: all 16 channels must have the same DAQ parameters setting to use this feature</p></li>
+<li><p>在将事件存储在外部 FIFO 中之前，根据事件的时间戳对来自 Pixie-16 模块的所有 16 个通道的事件进行排序（=1）或不对事件进行排序（=0）。</p></li>
+<li><p><strong>注意：所有 16 个通道必须具有相同的 DAQ 参数设置才能使用此功能</strong></p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 13 - MODCSRB_BKPLFASTTRIG</dt><dd><ul>
-<li><p>Enable(=1) or disable(=0) the sending of 16 local fast triggers to the 16 lines on the backplane of the crate.</p></li>
-<li><p><strong>Note: only one module can enable this option in each PCI bus segment of a crate(not limited to the crate master module, e.g. any module in each PCI bus segment)</strong></p></li>
+<li><p>启用（=1）或禁用（=0），将 16 个本地快速触发发送到机箱背板上的 16 条线路。</p></li>
+<li><p><strong>注意：机箱的每个 PCI 总线段（bus segment）中只有一个模块可以启用此选项（不限于机箱主模块，例如，每个 PCI 总线段中的任何模块）</strong></p></li>
 </ul>
 </dd>
 </dl>
@@ -819,181 +820,181 @@
 </div>
 <div class="section" id="id23">
 <h4>寄存器定义<a class="headerlink" href="#id23" title="永久链接至标题">¶</a></h4>
-<p>Channel Control Register A affecting each channel individually</p>
+<p>通道控制寄存器A分别用于每个通道</p>
 <ul class="simple">
 <li><dl class="simple">
 <dt>bit 0 - CCSRA_FTRIGSEL</dt><dd><ul>
-<li><p>Channel fast trigger selection(=1: module fast trigger from the System FPGA; =0: the selection depends on the value of another bit CCSRA_GROUPTRIGSEL – if CCSRA_GROUPTRIGSEL = 1, select the channel validation trigger from the System FPGA, and if CCSRA_GROUPTRIGSEL = 0, select this channel’s local fast trigger)</p></li>
+<li><p>通道快速触发选择（=1：系统 FPGA 的模块快速触发； =0：选择取决于另一位的值 CCSRA_GROUPTRIGSEL：如果CCSRA_GROUPTRIGSEL=1，则选择系统 FPGA 的通道验证触发，如果 CCSRA_GROUPTRIGSEL=0 ，选择此通道的本地快速触发）</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 1 - CCSRA_EXTTRIGSEL</dt><dd><ul>
-<li><p>Module validation trigger selection(=1: module gate input from the Pixie-16 front panel Module Gate LVDS connector; =0: module validation trigger from the System FPGA)</p></li>
+<li><p>模块验证触发选择（=1：来自 Pixie-16 前面板模块门 LVDS 连接器的模块门输入； =0：来自系统 FPGA 的模块验证触发）</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 2 - CCSRA_GOOD</dt><dd><ul>
-<li><p>Set this channel as a Good channel(=1) or a not Good channel(=0).</p></li>
-<li><p><strong>When a channel is set to be a not Good channel, it still generates local fast triggers, which could be used in multiplicity computation, etc., but this channel will not record list mode data or MCA data, and will not update its baseline value</strong></p></li>
+<li><p>将此通道设置为 “好” 通道（=1）或 “不好” 通道（=0）。</p></li>
+<li><p><a href="#id24"><span class="problematic" id="id25">**</span></a>当某个通道设置为 “不好” 通道时，它仍会生成本地快速触发，可用于多重性计算等，但是此通道不会记录列表模式数据或 MCA 数据，并且不会更新其基线数值。</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 3 - CCSRA_CHANTRIGSEL</dt><dd><ul>
-<li><p>Channel validation signal selection(=1: channel gate input from the Pixie-16 front panel Channel Gate LVDS connector; =0:channel validation trigger from the System FPGA)</p></li>
+<li><p>通道验证信号选择（=1：来自 Pixie-16 前面板通道门 LVDS 连接器的通道门输入； =0：来自系统 FPGA 的通道验证触发）</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 4 - CCSRA_SYNCDATAACQ</dt><dd><ul>
-<li><p>Choose the level of synchronous data acquisition for this channel(=1: stops taking data when the trace or header DPM for any channel of any Pixie-16 module in the system is full; =0: stops taking data only when the trace or header DPM for this channel of this Pixie-16 module is full)</p></li>
+<li><p>选择此通道的同步数据采集级别（=1：系统中任何 Pixie-16 模块的任何通道的波形或事件头 DPM 满时，停止采集数据； = 0：仅当此 Pixie-16 模块的此通道的波形或事件头 DPM 已满时停止采集数据）</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 5 - CCSRA_POLARITY</dt><dd><ul>
-<li><p>Choose this channel’s input signal polarity(=1: invert input signal’s polarity; =0: do not invert input signal’s polarity).</p></li>
-<li><p><strong>Please note in Pixie-16, signal processing requires positive rising input signal. So if input signal has a negative falling edge, it should be inverted by setting this CCSRA_POLARITY bit to 1</strong></p></li>
+<li><p>选择此通道的输入信号极性（=1：反转输入信号的极性； =0：不反转输入信号的极性）</p></li>
+<li><p><strong>请注意，在 Pixie-16 中，信号处理需要正上升输入信号。 因此，如果输入信号具有负下降沿，则应通过将此 CCSRA_POLARITY 位设置为 1 将其反相</strong></p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 6 - CCSRA_VETOENA</dt><dd><ul>
-<li><p>Enable(=1) or disable(=0) this channel’s veto.</p></li>
-<li><p>If veto is enabled, this channel’s fast trigger will be vetoed by either the module veto signal(see bit 20 CCSRA_MODVETOSEL below) or channel veto signal(see bit 19 CCSRA_CHANVETOSEL below).</p></li>
-<li><p>But if veto is disabled, this channel’s fast trigger will not be vetoed by either veto signal, even if either veto signal is present</p></li>
+<li><p>启用（=1）或禁用（=0）此通道的否决（veto）。</p></li>
+<li><p>如果启用否决，则该模块的否决信号（请参见下面的位 20 CCSRA_MODVETOSEL）或通道否决信号（请参见下面的位 19 CCSRA_CHANVETOSEL）将否决该通道的快速触发</p></li>
+<li><p>但是，如果否决被禁用，则即使存在任何一个否决信号，该通道的快速触发也不会被任何一个否决信号否决</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 7 - CCSRA_HISTOE</dt><dd><ul>
-<li><p>Enable(=1) or disable(=0) the histogramming of pulse energy values in the onboard MCA memory.</p></li>
-<li><p>However, the current Pixie-16 firmware always histograms pulse energy values in the onboard MCA memory.</p></li>
-<li><p>So this CCSRA_HISTOE is essentially not in use at the moment</p></li>
+<li><p>启用（=1）或禁用（=0）板载 MCA 存储器中脉冲能量值的直方图。</p></li>
+<li><p>但是，当前的 Pixie-16 固件始终会对板载 MCA 存储器中的脉冲能量值进行直方图绘制。</p></li>
+<li><p>因此，此 CCSRA_HISTOE 目前基本上未使用</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 8 - CCSRA_TRACEENA</dt><dd><ul>
-<li><p>Enable(=1) or disable(=0) trace capture in the list mode run for this channel</p></li>
+<li><p>在列表模式下为此通道运行启用（=1）或禁用（=0）波形记录</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 9 - CCSRA_QDCENA</dt><dd><ul>
-<li><p>Enable(=1) or disable(=0) QDC sums recording in the list mode run for this channel.</p></li>
-<li><p>There are a total of 8 QDC sums for each event</p></li>
+<li><p>启用（=1）或禁用（=0）列表模式下为此通道运行 QDC 积分记录</p></li>
+<li><p>每个事件共有 8 个 QDC 积分</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 10 - CCSRA_CFDMODE</dt><dd><ul>
-<li><p>Enable(=1) or disable(=0) CFD trigger in the list mode run for this channel.</p></li>
-<li><p>CFD trigger is used to latch sub-sample timing for the event time of arrival or timestamp</p></li>
+<li><p>在列表模式下为此通道运行启用（=1）或禁用（=0）CFD 触发</p></li>
+<li><p>CFD 触发用于锁存事件到达时间或时间戳的亚采样时间</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 11 - CCSRA_GLOBTRIG</dt><dd><ul>
-<li><p>Enable(=1) or disable(=0) the requirement of module validation trigger for this channel.</p></li>
-<li><p>If enabled, only when module validation trigger overlaps the channel fast trigger will the events be recorded for this channel</p></li>
+<li><p>启用（=1）或禁用（=0）此通道的模块验证触发的要求</p></li>
+<li><p>如果启用，则仅当模块验证触发与通道快速触发重叠时，才会记录该通道的事件</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 12 - CCSRA_ESUMSENA</dt><dd><ul>
-<li><p>Enable(=1) or disable(=0) the recording of raw energy sums and baseline values in the list mode run for this channel.</p></li>
-<li><p>There are a total of three raw energy sums and one baseline value for each event.</p></li>
-<li><p><strong>Please note the baseline value is stored in the format of 32-bit IEEE float point(IEEE 754)</strong></p></li>
+<li><p>启用（=1）或禁用（=0）以列表模式为此通道运行原始能量总和及基线值的记录</p></li>
+<li><p>每个事件共有三个原始能量总和及一个基线值。</p></li>
+<li><p><strong>请注意，基线值以 32 位 IEEE 浮点数（IEEE 754）的格式存储</strong></p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 13 - CCSRA_CHANTRIG</dt><dd><ul>
-<li><p>Enable(=1) or disable(=0) the requirement of channel validation trigger for this channel.</p></li>
-<li><p>If enabled, only when channel validation trigger overlaps the channel fast trigger will the events be recorded for this channel</p></li>
+<li><p>启用（=1）或禁用（=0）此通道的通道验证触发的要求</p></li>
+<li><p>如果启用，则仅当通道验证触发与通道快速触发重叠时，才会记录该通道的事件</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 14 - CCSRA_ENARELAY</dt><dd><ul>
-<li><p>Switch between two attenuations or gains for the input signal in this channel through an input relay(=1: close the input relay resulting in no input signal attenuation; =0: open the input relay resulting in a 1⁄4 input signal attenuation)</p></li>
+<li><p>通过输入继电器在此通道中的输入信号的两个衰减或增益之间切换（=1：关闭输入继电器，不会导致输入信号衰减; =0：打开输入继电器，会导致输入信号衰减为1⁄4）</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 15/16 - CCSRA_PILEUPCTRL/CCSRA_INVERSEPILEUP</dt><dd><ul>
-<li><p>Control normal pileup rejection(bit 15) and inverse pileup rejection(bit 16) for list mode runs:</p></li>
+<li><p>控制列表模式运行的正常堆积拒绝（位15）和反向堆积拒绝（位16）：</p></li>
 <li><ol class="arabic simple">
-<li><p>Bits [16:15] = 00, record all events</p></li>
+<li><p>位 [16:15] = 00，记录所有事件</p></li>
 </ol>
 </li>
 <li><ol class="arabic simple" start="2">
-<li><p>Bits [16:15] = 01, only record single events, i.e., reject piled up events</p></li>
+<li><p>位 [16:15] = 01，仅记录非堆积事件，即拒绝堆积事件</p></li>
 </ol>
 </li>
 <li><ol class="arabic simple" start="3">
-<li><p>Bits [16:15] = 10, record everything for piled up events, but will not record trace for single events even if trace recording is enabled, i.e., only record event header</p></li>
+<li><p>位 [16:15] = 10，记录堆积事件的所有内容，但即使启用了波形记录，也不会记录非堆积事件的波形，即仅记录事件头</p></li>
 </ol>
 </li>
 <li><ol class="arabic simple" start="4">
-<li><p>Bits [16:15] = 11, only record piled up events, i.e., reject single events</p></li>
+<li><p>位 [16:15] = 11，仅记录堆积事件，即拒绝非堆积事件</p></li>
 </ol>
 </li>
-<li><p>In all cases, if the event is piled up, no energy will be computed for such event</p></li>
+<li><p>在所有情况下，如果事件堆积，则不会为该事件计算能量</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 17 - CCSRA_ENAENERGYCUT</dt><dd><ul>
-<li><p>Enable(=1) or disable(=0) the “no traces for large pulses” feature.</p></li>
-<li><p>If enabled, trace will be not be recorded if the event energy is larger than the value set in DSP parameter EnergyLow</p></li>
+<li><p>启用（= 1）或禁用（= 0）“no traces for large pulses”功能</p></li>
+<li><p>启用后，如果事件能量大于 DSP 参数 EnergyLow 中设置的值，则不会记录跟踪</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 18 - CCSRA_GROUPTRIGSEL</dt><dd><ul>
-<li><p>Select channel fast trigger – this bit works together with the CCSRA_FTRIGSEL bit(bit 0): if CCSRA_FTRIGSEL=1, this CCSRA_GROUPTRIGSEL bit has no effect; if CCSRA_FTRIGSEL=0, then if CCSRA_GROUPTRIGSEL=1, select the channel validation trigger from the System FPGA, and if CCSRA_GROUPTRIGSEL=0, select this channel’s local fast trigger</p></li>
+<li><p>选择通道快速触发，此位与 CCSRA_FTRIGSEL 位（位0）一起使用：如果 CCSRA_FTRIGSEL=1，则此 CCSRA_GROUPTRIGSEL 位无效；否则，该位无效。 如果 CCSRA_FTRIGSEL=0，则如果 CCSRA_GROUPTRIGSEL=1，则从系统 FPGA 中选择通道验证触发，如果 CCSRA_GROUPTRIGSEL=0，则选择该通道的本地快速触发</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 19 - CCSRA_CHANVETOSEL</dt><dd><ul>
-<li><p>Channel veto signal selection(=1: channel validation trigger from the System FPGA; =0: channel gate input from the Pixie-16 front panel Channel Gate LVDS connector)</p></li>
+<li><p>通道否决信号选择（=1：来自系统 FPGA 的通道验证触发; =0：来自 Pixie-16 前面板通道门 LVDS 连接器的通道门输入）</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 20 - CCSRA_MODVETOSEL</dt><dd><ul>
-<li><p>Module veto signal selection(=1: module validation trigger from the System FPGA; =0: module gate input from the Pixie-16 front panel Module Gate LVDS connector)</p></li>
+<li><p>模块否决信号选择（=1：来自系统 FPGA 的模块验证触发；=0：来自 Pixie-16 前面板模块门 LVDS 连接器的模块门输入）</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt>bit 21 - CCSRA_EXTTSENA</dt><dd><ul>
-<li><p>Enable(=1) or disable(=0) the recording of the 48-bit external clock timestamp in the event header during list mode run for this channel</p></li>
+<li><p>在此通道的列表模式运行期间，启用（=1）或禁用（=0）事件头中的 48 位外部时钟时间戳的记录</p></li>
 </ul>
 </dd>
 </dl>
@@ -1004,10 +1005,9 @@
 <hr class="docutils" />
 <div class="section" id="logic-set">
 <h3>Logic Set<a class="headerlink" href="#logic-set" title="永久链接至标题">¶</a></h3>
-<div class="section" id="id24">
-<h4>控制界面<a class="headerlink" href="#id24" title="永久链接至标题">¶</a></h4>
+<div class="section" id="id26">
+<h4>控制界面<a class="headerlink" href="#id26" title="永久链接至标题">¶</a></h4>
 <img alt="../_images/LogicTrigger.png" src="../_images/LogicTrigger.png" />
-<p><strong>TODO</strong></p>
 <img alt="../_images/stretchlength.PNG" src="../_images/stretchlength.PNG" />
 <hr class="docutils" />
 </div>
@@ -1018,8 +1018,8 @@
 <p>本下拉栏中调节内容为监视波形噪声水平、基线分布等。</p>
 <div class="section" id="hist-xdt">
 <h3>Hist &amp; XDT<a class="headerlink" href="#hist-xdt" title="永久链接至标题">¶</a></h3>
-<div class="section" id="id25">
-<h4>控制界面<a class="headerlink" href="#id25" title="永久链接至标题">¶</a></h4>
+<div class="section" id="id27">
+<h4>控制界面<a class="headerlink" href="#id27" title="永久链接至标题">¶</a></h4>
 <img alt="../_images/HistXDT.png" src="../_images/HistXDT.png" />
 <p>Binning factor 控制能谱中 MCA bin 的数量。能量计算为 16 位数字，原则上允许 64K MCA bin。</p>
 <p>但是，每个通道的能谱内存限制在 32K 的 bin 数，因此在构建柱状图之前，计算的能量值除以系数 <span class="math notranslate nohighlight">\(2^{binning factor}\)</span> 。Binning factor 通常设置为 1，但对于低计数率和宽峰值，将其设置为较大的值可能会有用，以获得具有较少 bin 数但每个 bin 中更多的计数。</p>
@@ -1029,8 +1029,8 @@
 <hr class="docutils" />
 <div class="section" id="trace-baseline">
 <h3>Trace &amp; Baseline<a class="headerlink" href="#trace-baseline" title="永久链接至标题">¶</a></h3>
-<div class="section" id="id26">
-<h4>控制界面<a class="headerlink" href="#id26" title="永久链接至标题">¶</a></h4>
+<div class="section" id="id28">
+<h4>控制界面<a class="headerlink" href="#id28" title="永久链接至标题">¶</a></h4>
 <img alt="../_images/Trace.png" src="../_images/Trace.png" />
 <img alt="../_images/BaselineHist.png" src="../_images/BaselineHist.png" />
 <img alt="../_images/BaselineTimestamps.png" src="../_images/BaselineTimestamps.png" />
@@ -1148,8 +1148,8 @@
 之后选择查看通道，然后按 Draw 按钮开始进入计算。</p>
 </div>
 <hr class="docutils" />
-<div class="section" id="id27">
-<h3>QDC<a class="headerlink" href="#id27" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id29">
+<h3>QDC<a class="headerlink" href="#id29" title="永久链接至标题">¶</a></h3>
 <p><strong>to do not completed</strong></p>
 <p><strong>QDC  TODO   功能未完成</strong></p>
 </div>

@@ -102,14 +102,14 @@
 <li class="toctree-l1"><a class="reference internal" href="OnlineStattics.html">在线统计</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MakeEvent.html">MakeEvent</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">插件前面板</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#analog-signal-input-connectors-all-revisions">Analog Signal Input Connectors(all revisions)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#lvds-i-o-port-all-revisions">LVDS I/O Port (all revisions)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#digital-i-o-connectors-rev-f-only">Digital I/O Connectors(Rev. F only)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#front-panel-leds-all-revisions">Front Panel LEDs (all revisions)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#v-i-o-connector-rev-d-only">3.3V I/O Connector(Rev. D only)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#all-revisions">模拟信号输入连接器(all revisions)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lvds-i-o-all-revisions">LVDS I/O 端口 (all revisions)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#i-o-rev-f-only">数字 I/O 连接器(Rev. F only)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#leds-all-revisions">前面板 LEDs (all revisions)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v-i-o-rev-d-only">3.3V I/O 连接器(Rev. D only)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#gate-inputs-rev-d-only">GATE Inputs(Rev. D only)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#v-i-o-connector-rev-b-and-c-only">3.3V I/O Connector(Rev. B and C only)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#digital-signals-in-standard-firmware-all-revisions">Digital Signals in Standard Firmware(all revisions)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v-i-o-rev-b-and-c-only">3.3V I/O 连接器(Rev. B and C only)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">标准固件中的数字信号(all revisions)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Logic.html">逻辑功能</a></li>
@@ -199,87 +199,86 @@
             
   <div class="section" id="id1">
 <h1>插件前面板<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<p>On the front panel of each Pixie-16 module, there are 16 analog signal input connectors, one LVDS I/O port, five digital I/O connectors as well as three LEDs near the bottom of the front panel. In addition, a sticker showing Pixie-16 model number (e.g., P16L-250-14, meaning the 14-bit, 250 MHz variant of the Pixie-16) is affixed to the top handle of the front panel, and another sticker indicating the serial number of the Pixie-16 module (e.g., S/N 1100) is placed at the bottom handle of the front panel.</p>
-<div class="section" id="analog-signal-input-connectors-all-revisions">
-<h2>Analog Signal Input Connectors(all revisions)<a class="headerlink" href="#analog-signal-input-connectors-all-revisions" title="永久链接至标题">¶</a></h2>
+<p>每个 Pixie-16 模块的前面板上都有 16 个模拟信号输入连接器，一个 LVDS I/O 端口，五个数字 I/O 连接器以及前面板底部附近的三个 LED。 另外，在前面板的顶部手柄上贴有显示 Pixie-16 型号的标签（例如P16L-250-14，表示 Pixie-16 250 MHz 14bit 模块）。 Pixie-16 模块的序列号（例如，S/N 1100）位于前面板的底部手柄处。</p>
+<div class="section" id="all-revisions">
+<h2>模拟信号输入连接器(all revisions)<a class="headerlink" href="#all-revisions" title="永久链接至标题">¶</a></h2>
 <ul class="simple">
 <li><dl class="simple">
-<dt>Connector Labels</dt><dd><ul>
-<li><p>0 to 15 for 16 channels</p></li>
+<dt>连接器标签</dt><dd><ul>
+<li><p>16 通道：0 至 15</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>Connector Type</dt><dd><ul>
+<dt>连接器类型</dt><dd><ul>
 <li><p>SMB Jack</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<p>Each Pixie-16 module accepts 16 analog input signals, and each input connector is a SMB Jack (male contact) connector.</p>
+<p>每个 Pixie-16 模块均接受 16 个模拟输入信号，每个输入连接器均为 SMB插孔（插头触点）连接器。</p>
 </div>
-<div class="section" id="lvds-i-o-port-all-revisions">
-<h2>LVDS I/O Port (all revisions)<a class="headerlink" href="#lvds-i-o-port-all-revisions" title="永久链接至标题">¶</a></h2>
+<div class="section" id="lvds-i-o-all-revisions">
+<h2>LVDS I/O 端口 (all revisions)<a class="headerlink" href="#lvds-i-o-all-revisions" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/lvdsioport.png" src="../_images/lvdsioport.png" />
-<p>Each Pixie-16 module is equipped with one LVDS I/O port on its front panel. LVDS stands for low voltage differential signaling. The LVDS I/O connector is a RJ45 connector, which implies that the same Cat 5 or Cat 6 Ethernet cables can be used to connect signals to or from this I/O port. However, no Ethernet connectivity is available through this Pixie-16 I/O port.</p>
-<p>Four differential signal pairs, i.e., between pin-pairs <span class="math notranslate nohighlight">\(Fo_{1p}\)</span> / <span class="math notranslate nohighlight">\(Fo_{1n}\)</span>, <span class="math notranslate nohighlight">\(Fi_{1p}\)</span> / <span class="math notranslate nohighlight">\(Fi_{1n}\)</span>, <span class="math notranslate nohighlight">\(Fi_{5p}\)</span> / <span class="math notranslate nohighlight">\(Fi_{5n}\)</span>, and <span class="math notranslate nohighlight">\(Fo_{5p}\)</span> / <span class="math notranslate nohighlight">\(Fo_{5n}\)</span>, are available from this I/O port. Each pair can be configured as either an input or output signal.</p>
+<p>每个 Pixie-16 模块在其前面板上均配有一个 LVDS I/O 端口。 LVDS 代表低压差分信号。 LVDS I/O 连接器是 RJ45 连接器，这意味着可以使用相同的 Cat 5 或 Cat 6 以太网电缆将信号连接到该 I/O 端口或从该 I/O 端口连接信号。但是，此 Pixie-16 I/O 端口没有以太网连接。</p>
+<p>可从此 I/O 端口获得四个差分信号对，即引脚对 <span class="math notranslate nohighlight">\(Fo_{1p}\)</span> / <span class="math notranslate nohighlight">\(Fo_{1n}\)</span>, <span class="math notranslate nohighlight">\(Fi_{1p}\)</span> / <span class="math notranslate nohighlight">\(Fi_{1n}\)</span>, <span class="math notranslate nohighlight">\(Fi_{5p}\)</span> / <span class="math notranslate nohighlight">\(Fi_{5n}\)</span>, and <span class="math notranslate nohighlight">\(Fo_{5p}\)</span> / <span class="math notranslate nohighlight">\(Fo_{5n}\)</span>。每对都可以配置为输入或输出信号。</p>
 </div>
-<div class="section" id="digital-i-o-connectors-rev-f-only">
-<h2>Digital I/O Connectors(Rev. F only)<a class="headerlink" href="#digital-i-o-connectors-rev-f-only" title="永久链接至标题">¶</a></h2>
+<div class="section" id="i-o-rev-f-only">
+<h2>数字 I/O 连接器(Rev. F only)<a class="headerlink" href="#i-o-rev-f-only" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/digitalioconnectorsabcdande.png" src="../_images/digitalioconnectorsabcdande.png" />
-<p>The Pixie-16 Rev. F modules are equipped with five har-link connectors on its front panel which act as digital I/O connectors. The 2mm pitch har-link connector from HARTING is designed for high speed data transfer with rates up to 2 Gbit/s. Its EMI shielding, shown in Figure <em>2mm pitch har-link connector from HARTING</em>, guarantees excellent performance in EM-polluted environment.</p>
+<p>Pixie-16 Rev. F 模块的前面板上装有五个 har-link 连接器，用作数字 I/O 连接器。 HARTING 的 2mm 间距 har-link 连接器专为高速数据传输而设计，速率高达 2 Gbit/s。 其电磁干扰屏蔽如图 <em>2mm pitch har-link connector from HARTING</em> 所示，可确保在电磁污染环境下的出色性能。</p>
 <img alt="../_images/2mmpitchharlinkconnectorfromharting.png" src="../_images/2mmpitchharlinkconnectorfromharting.png" />
-<p>Each har-link connector has 2 rows with 5 pins on each row, and is labelled using one of the five letters in red color font, from A to E. The signals connected to each pin of these five connectors are shown in Table <em>Rev. F Module’s Digital I/O Connectors</em>.</p>
+<p>每个 har-link 连接器有 2 行，每行有 5 个引脚，并使用从 A 到 E 的五个红色字母之一标记。表 <em>Rev. F Module’s Digital I/O Connectors</em> 中定义了连接到这五个连接器的每个引脚的信号。</p>
 <img alt="../_images/revfmoduledigitalioconnectors.png" src="../_images/revfmoduledigitalioconnectors.png" />
-<p>Among them, FI0, FI2, FI3, FI4, FI6, FI7 are six TTL digital input signals. They can be signals like global fast trigger, global validation trigger,external clock, run inhibit, etc. The specific usage of each input pin is determined by the specific firmware that is downloaded to the Pixie-16 module (see Table 1-9 for input signals supported by the standard firmware). The six digital output signals, FO0, FO2, FO3, FO4, FO6, FO7, which are connected to six test output pins on the System FPGA of the Pixie-16, can be used to assist a user in the process of system setup. These test pins are connected to various internal signals of the Pixie-16 to provide insight of the current status of the system.</p>
-<p>The Channel Gate Inputs (0-15 for 16 channels) are LVDS format input signals which independently gate the data acquisition of each of the 16 channels of a Pixie-16 module.</p>
-<p>The Channel Gate signal is level sensitive signal, i.e., when the level of the Channel Gate Signal is logic high(1), the gate signal is effective; when the level of the Channel Gate Signal is logic low(0), the gate signal is not in use. In normal cases, the Channel Gate Signal is set up to veto the data acquisition in a given channel, i.e., at the time of the arrival of fast trigger in that channel, if the Channel Gate Signal is logic high(1), that fast trigger is discarded since it is vetoed. However, this type of logic can be reversed through setting corresponding registers in the FPGA via software. In such cases, the Channel Gate Signal is set up to validate the data acquisition in a given channel, i.e., at the time of fast trigger in that channel, only if the Channel Gate Signal is logic high(1) will that fast trigger be accepted to have the event recorded.</p>
-<p>The Module Gate Input is a LVDS format signal that gates the data acquisition in all 16 channels of a Pixie-16 module. It is also a level sensitive signal, i.e., when the level of the Module Gate Signal is logic high(1), the gate signal is effective; when the level of the Module Gate Signal is logic low(0), the gate signal is not in use. In normal cases, the Module Gate Signal is set up to veto the data acquisition in all 16 channels, i.e., at the time of the arrival of fast trigger in any of the 16 channels, if the Module Gate Signal is logic high(1), that fast trigger of that channel is discarded since it is vetoed. However, this type of logic can be reversed through setting corresponding registers in the FPGA via software.</p>
-<p>In such cases, the Module Gate Signal is set up to validate the data acquisition in all 16 channels, i.e., at the time of fast trigger in any of the 16 channel, only if the Module Gate Signal is logic high(1) will that fast trigger of that channel be accepted to have the event recorded.</p>
-<p>The Spare Gate Input is a LVDS format signal that is reserved for special applications.</p>
-<p>Such applications typically require development of custom firmware to support special functionalities of the Pixie-16 system.</p>
+<p>其中，FI0，FI2，FI3，FI4，FI6，FI7 是六个 TTL 数字输入信号。 它们可以是诸如全局快速触发（global validation trigger），全局验证触发（global validation trigger），外部时钟（external clock），运行禁止（run inhibit）等信号。每个输入引脚的具体用法取决于下载到 Pixie-16 模块的特定固件（标准固件支持的输入信号请参见上表）。 六个数字输出信号 FO0，FO2，FO3，FO4，FO6，FO7 连接到 Pixie-16 的系统 FPGA 上的六个测试输出引脚，可用于帮助用户进行系统设置。 这些测试引脚连接到 Pixie-16 的各种内部信号，以洞悉系统的当前状态。</p>
+<p>通道门输入（16 通道为 0-15）是 LVDS 格式的输入信号，可独立控制 Pixie-16 模块 16 个通道中每个通道的数据采集。</p>
+<p>通道门信号是电平敏感信号，即当通道门信号的电平为逻辑高电平（1）时，该门信号有效; 当通道门信号的电平为逻辑低电平（0）时，未使用门信号。 在正常情况下，将通道门信号设置为否决（veto）给定通道中的数据采集，即，在该通道中快速触发到达时，如果通道门信号为逻辑高（1），则该快速触发（fast filter）被否决，因此将其丢弃。 但是，可以通过软件在 FPGA 中设置相应的寄存器来反转这种逻辑。 在这种情况下，将通道门信号设置为验证给定通道中的数据采集，即在该通道中的快速触发时，仅当通道门信号为逻辑高电平（1）时，该触发才会被触发并记录事件。</p>
+<p>模块门控输入是 LVDS 格式信号，用于门控 Pixie-16 模块所有 16 个通道中的数据采集。 它也是一个对电平敏感的信号，即当模块门信号的电平为逻辑高电平（1）时，门信号有效; 当模块的电平为逻辑低电平（0）时，未使用门信号。 在正常情况下，如果模块门信号为逻辑高（1），则将模块门信号设置为否决（veto）所有 16 个通道中的数据采集，即在 16 个通道中的任何一个通道中快速触发到达时，则该通道的快速触发已被否决，因此将被丢弃。 但是，可以通过软件在 FPGA 中设置相应的寄存器来反转这种逻辑。在这种情况下，将模块门信号设置为验证所有 16 个通道中的数据采集，即，在 16 个通道中的任何一个快速触发时，仅当模块门信号为逻辑高电平（1）时， 该通道的快速触发被接受以记录事件。</p>
+<p>备用门输入是LVDS格式的信号，保留给特殊应用。</p>
+<p>此类应用程序通常需要开发定制固件以支持 Pixie-16 系统的特殊功能。</p>
 <img alt="../_images/frontpanel_pku.png" src="../_images/frontpanel_pku.png" />
 </div>
-<div class="section" id="front-panel-leds-all-revisions">
-<h2>Front Panel LEDs (all revisions)<a class="headerlink" href="#front-panel-leds-all-revisions" title="永久链接至标题">¶</a></h2>
-<p>Near the bottom of the Pixie-16 front panel, there are three LEDs. They are labelled as RUN, I/O, and ERR, respectively, from left to right. They correspond to three different colors, <strong>green, yellow, and red</strong>, respectively.</p>
+<div class="section" id="leds-all-revisions">
+<h2>前面板 LEDs (all revisions)<a class="headerlink" href="#leds-all-revisions" title="永久链接至标题">¶</a></h2>
+<p>在 Pixie-16 前面板底部附近，有三个LED。 它们从左到右分别标记为 RUN，I/O 和 ERR。 它们分别对应三种不同的颜色，分别为**绿色，黄色和红色**。</p>
 <img alt="../_images/frontpanelledsforthepixie16modules.png" src="../_images/frontpanelledsforthepixie16modules.png" />
-<p>The <strong>RUN LED</strong> will be turned on when a run in the Pixie-16 module is in progress, and will be turned off when the run is stopped or not started yet.</p>
-<p>The <strong>I/O LED</strong> will blink when there is I/O activity on the PCI bus between the Pixie-16 module and host computer.</p>
-<p>The <strong>ERR LED</strong> is, in fact, not to signal any error condition in the Pixie-16 module. Instead, it is used to indicate whether or not the External FIFO of the Pixie-16 module is full. It will be ON when there is no more space in the External FIFO for storage of list mode event data, and OFF when there is sufficient space to store at least one more list mode event data. When the External FIFO is full, no more list mode event data can be written into it until the host software reads out part of the data in the External FIFO through the PCI bus.</p>
+<p>当 Pixie-16 模块中的运行正在进行时，<strong>RUN LED</strong> 将亮起，而当运行停止或尚未开始时，则熄灭。</p>
+<p>当 Pixie-16 模块和主机之间的 PCI 总线上有 I/O 活动时，<strong>I/O LED</strong> 将闪烁。</p>
+<p>实际上，<strong>ERR LED</strong> 并不表示 Pixie-16 模块中的任何错误情况。 相反，它用于指示 Pixie-16 模块的外部 FIFO 是否已满。 当外部 FIFO 中没有足够的空间来存储列表模式事件数据时，该指示灯将亮起；如果有足够的空间来存储至少一个列表模式事件数据，则该指示灯将熄灭。当外部 FIFO 已满时，无法再将列表模式事件数据写入其中，直到主机软件通过 PCI 总线读出外部 FIFO 中的部分数据为止。</p>
 </div>
-<div class="section" id="v-i-o-connector-rev-d-only">
-<h2>3.3V I/O Connector(Rev. D only)<a class="headerlink" href="#v-i-o-connector-rev-d-only" title="永久链接至标题">¶</a></h2>
+<div class="section" id="v-i-o-rev-d-only">
+<h2>3.3V I/O 连接器(Rev. D only)<a class="headerlink" href="#v-i-o-rev-d-only" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/revdmodules33vioconnector.png" src="../_images/revdmodules33vioconnector.png" />
-<p>On Rev. D Pixie-16 modules, between analog input SMB connectors for channel 7 and channel 8, respectively, is the 3.3V I/O Connector(J200). It has 10 single-ended pins with 2mm spacing. Pins #1, 3, 4, 5, 6, and 8 are connected to six digital output signals from the System FPGA of the Pixie-16 module, i.e. FO0, FO2, FO3, FO4, FO6, FO7, mainly for the purpose of testing and debugging. Pins #2 and 7 are ground pins, and pins #9 and 10 are not in use.</p>
+<p>在版本 D Pixie-16 模块上，通道 7 和通道 8 的模拟输入 SMB 连接器之间是 3.3V I/O 连接器（J200）。 它具有 10 个 2mm 间距的单端引脚。引脚＃1、3、4、5、6 和 8 连接到来自 Pixie-16 模块的系统 FPGA 的六个数字输出信号，即 FO0，FO2，FO3，FO4，FO6，FO7，主要用于测试和调试。＃2 和 7 引脚为接地引脚，而 ＃9 和 10 引脚未使用。</p>
 </div>
 <div class="section" id="gate-inputs-rev-d-only">
 <h2>GATE Inputs(Rev. D only)<a class="headerlink" href="#gate-inputs-rev-d-only" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/revdmodulesgateinputs.png" src="../_images/revdmodulesgateinputs.png" />
-<p>On Rev. D Pixie-16 modules, between analog input SMB connectors for channel 11 and channel 12, respectively, is the GATE INPUTS connector. This connector is an Amphenol FCI 55 Position Header with 2mm pin spacing. The layout of these 55 pins is shown in Figure <em>Rev. D Module’s GATE INPUTS Connector</em>. The 11 pins from the middle pin column (J150C) are all tied to the Ground. Among the first 8 rows of the GATE INPUTS connector, each differential pair of pins from the A/B columns(J150A/J150B) or the D/E columns (J150D/J150E) corresponds to one channel’s GATE INPUT, which has the LVDS format, e.g. Gxin+/Gxin-(x=0-15). Differential pair of pins at J150A3/J150B3 is the Module Gate Input signal, MGin+/MGin-. Channel Gate Input signal can be used to veto or validate that given channel’s own trigger. Module Gate Input signal works on the whole module level, i.e. it can be used to veto or validate all 16 channels’ own trigger of that given module. Differential pair of pins at J150D3/J150E3 is the Spare Gate Input signal, SGin+/SGin-. Spare Gate Input signal can be used for special applications which require a custom firmware.</p>
+<p>在版本 D Pixie-16 模块上，通道 11 和通道 12 的模拟输入SMB连接器之间是门输入连接器。此连接器是 2mm 针间距的 Amphenol FCI 55 Position Header。这 55 个引脚的布局如图 <em>Rev. D Module’s GATE INPUTS Connector</em> 所示。中间引脚列（J150C）的11个引脚均接地。在门输入连接器的前 8 行中，来自 A/B 列（J150A/J150B）或 D/E列（J150D/J150E）的每对差分引脚对应于一个通道的输入门，其格式为LVDS ，例如 Gxin+/Gxin-(x=0-15)。 J150A3/J150B3 上的差分引脚对是模块栅极输入信号 MGin+/MGin-。通道门输入信号可用于否决或验证给定通道自己的触发信号。模块门输入信号在整个模块级别上起作用，即，它可以用于否决或验证给定模块的所有 16 个通道自己的触发信号。 J150D3/J150E3 上的差分引脚对是备用输入信号 SGin+/SGin-。备用门输入信号可用于需要定制固件的特殊应用。</p>
 <img alt="../_images/revdmodulesgateinputsconnector.png" src="../_images/revdmodulesgateinputsconnector.png" />
-<p>On Rev. D Pixie-16 modules, the TTL digital input signals (max. 5V), i.e. FI0, FI2, FI3, FI4, FI6, FI7, are distributed among the bottom two rows of the GATE INPUTS Connector, as illustrated in Figure <em>Rev. D Module’s GATE INPUTS Connector</em>.</p>
+<p>在 Rev. D Pixie-16 模块上，TTL 数字输入信号（最大5V），即 FI0，FI2，FI3，FI4，FI6，FI7，分布在门输入连接器的底部两行中，如图 <em>Rev. D Module’s GATE INPUTS Connector</em> 所示。</p>
 </div>
-<div class="section" id="v-i-o-connector-rev-b-and-c-only">
-<h2>3.3V I/O Connector(Rev. B and C only)<a class="headerlink" href="#v-i-o-connector-rev-b-and-c-only" title="永久链接至标题">¶</a></h2>
+<div class="section" id="v-i-o-rev-b-and-c-only">
+<h2>3.3V I/O 连接器(Rev. B and C only)<a class="headerlink" href="#v-i-o-rev-b-and-c-only" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/revbandcmodules33vioconnector.png" src="../_images/revbandcmodules33vioconnector.png" />
-<p>On Rev. B and C Pixie-16 modules, between analog input SMB connectors for channel 11 and channel 12, respectively, is the 3.3V I/O Connector(J100). It has 16 single-ended pins with 2mm spacing. Pins #1, 3, 4, 5, 6, and 8 are connected to six digital output signals from the System FPGA of the Pixie-16 module, i.e. FO0, FO2, FO3, FO4, FO6, FO7, mainly for the purpose of testing and debugging. Pins #2, 7, 10 and 15 are ground pins. Pins #9, 11, 12, 13, 14 and 16 are connected to the six TTL digital input signals (max. 5V), i.e. FI0, FI2, FI3, FI4, FI6, FI7.</p>
+<p>在 B 和 C 版本的 Pixie-16 模块上，在通道 11 和通道 12 的模拟输入 SMB 连接器之间是 3.3V I/O连接器（J100）。 它具有 16 个单端引脚，间距为 2mm。 引脚 ＃1、3、4、5、6 和 8 连接到来自 Pixie-16 模块的系统 FPGA 的六个数字输出信号，即 FO0，FO2，FO3，FO4，FO6，FO7，主要用于测试和调试。 引脚 ＃2、7、10 和 15 是接地引脚。 引脚 ＃9、11、12、13、14 和 16 连接到六个 TTL 数字输入信号（最大5V），即 FI0，FI2，FI3，FI4，FI6，FI7。</p>
 </div>
-<div class="section" id="digital-signals-in-standard-firmware-all-revisions">
-<h2>Digital Signals in Standard Firmware(all revisions)<a class="headerlink" href="#digital-signals-in-standard-firmware-all-revisions" title="永久链接至标题">¶</a></h2>
-<p>The standard firmware of the Pixie-16 supports input and output of digital signals through its front panel I/O connectors, which were discussed earlier.</p>
+<div class="section" id="id2">
+<h2>标准固件中的数字信号(all revisions)<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>Pixie-16 的标准固件通过其前面板 I/O 连接器支持数字信号的输入和输出，这已在前面进行了讨论。</p>
 <img alt="../_images/ttldigitalinputsignals.png" src="../_images/ttldigitalinputsignals.png" />
-<p>Table <em>TTL Digital Input Signals</em> shows the five TTL digital input signals supported by the Pixie-16 standard firmware.</p>
-<p>Among them, the signals <strong>EXT_TS_CLK</strong> and <strong>EXT_TS_CLR</strong> are used for external timestamping in the Pixie-16, i.e. the Pixie-16 accepting an external clock signal(the frequency of this external clock is not recommended to exceed about 20 MHz in order to avoid the clock signal integrity issue), counting such clock signal with a 48-bit counter, and outputting such counter value to the list mode data stream when an event trigger occurs.</p>
-<p>The external timestamping is useful for synchronizing the Pixie-16 data acquisition system with another data acquisition system through correlating the external timestamps of the events recorded by both systems.</p>
-<p>The <strong>INHIBIT</strong> signal is used by an external system to inhibit the data acquisition run in a Pixie-16 system when synchronization requirement is enabled in the Pixie-16 modules. It is a level sensitive signal, i.e. when the <strong>INHIBIT</strong> signal is at the logic high level, the run in the Pixie-16 won’t start. Only when the <strong>INHIBIT</strong> signal goes to the logic low level will the run start in the Pixie-16. During the run, if the <strong>INHIBIT</strong> signal returns to the logic high level, the run will be aborted.</p>
-<p>The <strong>EXT_FASTTRIG</strong> signal is the external fast trigger signal, which can be used to replace the local fast trigger for recording events in the Pixie-16 modules. The <strong>EXT_VALIDTRIG</strong> signal is the external validation signal, which can be used to validate events in the Pixie-16 modules.</p>
+<p>表 <em>TTL Digital Input Signals</em> 显示了 Pixie-16 标准固件支持的五个 TTL 数字输入信号。</p>
+<p>其中，信号 <strong>EXT_TS_CLK</strong> 和 <strong>EXT_TS_CLR</strong> 用于 Pixie-16 中的外部时间戳记，即 Pixie-16 接受外部时钟信号（为了避免出现时钟信号完整性问题，不建议该外部时钟的频率超过 20 MHz），使用 48位 计数器对此类时钟信号进行计数，并在发生事件触发时将此类计数器值输出到列表模式数据流。</p>
+<p>通过将两个系统记录的事件的外部时间戳相关联，外部时间戳可用于将 Pixie-16 数据获取系统与另一个数据获取系统同步。</p>
+<p>当在 Pixie-16 模块中启用了同步要求时，外部系统会使用 <strong>INHIBIT</strong> 信号来禁止在 Pixie-16 系统中运行数据采集。 这是一个对电平敏感的信号，即当 <strong>INHIBIT</strong> 信号为逻辑高电平时，Pixie-16 的运行将不会开始。 只有当 <strong>INHIBIT</strong> 信号变为逻辑低电平时，Pixie-16 才会开始运行。 在运行期间，如果 <strong>INHIBIT</strong> 信号返回逻辑高电平，则运行将中止。</p>
+<p><strong>EXT_FASTTRIG</strong> 信号是外部快速触发信号，可用于代替本地快速触发来在 Pixie-16 模块中记录事件。 <strong>EXT_VALIDTRIG</strong> 信号是外部验证信号，可用于验证 Pixie-16 模块中的事件。</p>
 <img alt="../_images/connectorj101lvdsioportsignals.png" src="../_images/connectorj101lvdsioportsignals.png" />
-<p>Table <em>Connector J101 LVDS I/O Port Signals</em> shows the Pixie-16 connector J101 LVDS I/O port signals. This J101 LVDS I/O port can use the regular Ethernet cable for connection but it does not have Ethernet connectivity. Among the four LVDS pairs available from this J101 port, one pair is currently not in use, two pairs are used for input and one pair is used for output. The <strong>LVDS_VALIDTRIG</strong> is the external validation trigger signal in LVDS format, and the <strong>LVDS_FASTTRIG</strong> is the external fast trigger signal in LVDS format. The <strong>SYNC_LVDS_FP</strong> is an output signal from the Pixie-16 module to indicate to external data acquisition systems the synchronization status of the Pixie-16 system so that both data acquisition systems can be synchronized.</p>
+<p>表 <em>Connector J101 LVDS I/O Port Signals</em> 显示了 Pixie-16 连接器 J101 LVDS I/O 端口信号。 此 J101 LVDS I/O 端口可以使用常规以太网电缆进行连接，但没有以太网连接。 该 J101 端口可提供的四对 LVDS 对中，当前未使用一对，输入使用两对，输出使用一对。 <strong>LVDS_VALIDTRIG</strong> 是 LVDS 格式的外部验证触发信号， <strong>LVDS_FASTTRIG</strong> 是 LVDS 格式的外部快速触发信号。 <strong>SYNC_LVDS_FP</strong> 是来自Pixie-16模块的输出信号，用于向外部数据采集系统指示 Pixie-16 系统的同步状态，以便可以同步两个数据采集系统。</p>
 <img alt="../_images/ttldigitaloutputsignals.png" src="../_images/ttldigitaloutputsignals.png" />
-<p>Table <em>TTL Digital Output Signals</em> lists the six Pixie-16 TTL digital output signals. Two groups of six output signals can be chosen through software settings (see bits [14:12] and [19:16] of TrigConfig0). The last output signal TEST_SEL can be further selected through software settings. More details about these signals will be provided in later sections of this manual.</p>
+<p>表 <em>TTL Digital Output Signals</em> 列出了六个 Pixie-16 TTL 数字输出信号。 可以通过软件设置选择两组六个输出信号（请参见 TrigConfig0 的位[14:12]和[19:16]）。可以通过软件设置进一步选择最后的输出信号 TEST_SEL。 有关这些信号的更多详细信息将在本手册的后续部分中提供。</p>
 <hr class="docutils" />
 </div>
 </div>
