@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 20:19:34 2019 (+0800)
-.. Last-Updated: 六 9月 21 20:23:21 2019 (+0800)
+.. Last-Updated: 一 9月 23 15:52:11 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 20
+..     Update #: 22
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -14,9 +14,6 @@
 =================================
 
 .. image:: /_static/img/pkulogo100.jpg
-
-`English <https://github.com/wuhongyi/PKUXIADAQ/blob/master/README.md>`_ | 简体中文
-
 
 ---------------------------------
 版本
@@ -32,7 +29,7 @@
 
 下载最新版本，请点击:  `PKUXIADAQ stable <https://github.com/pkuNucExp/PKUXIADAQ>`_ 
 
-网页版说明书请访问:  `English <https://pkunucexp.github.io/PKUXIADAQ/en/>`_    `简体中文 <https://pkunucexp.github.io/PKUXIADAQ/zh/>`_
+网页版说明书请访问:  `English/简体中文 <https://pkunucexp.github.io/PKUXIADAQ/>`_  
 
 - reStructuredText版说明书: README/  
 - 离线网页版说明书: docs/  
@@ -42,11 +39,11 @@
 准预览版本
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**准预览版本 Version:2019.09.12**  
+**准预览版本 Version:2019.09.23**  
 
 程序下载请访问:  `PKUXIADAQ <https://github.com/wuhongyi/PKUXIADAQ>`_ 
 
-网页版说明书请访问:  `English <http://wuhongyi.cn/PKUXIADAQ/en/>`_    `简体中文 <http://wuhongyi.cn/PKUXIADAQ/zh/>`_
+网页版说明书请访问:  `简体中文/English <http://wuhongyi.cn/PKUXIADAQ/>`_ 
 
 - 对本获取程序有任何的意见及建议(功能添加及改进)，欢迎给吴鸿毅(wuhongyi@qq.com)发邮件。
 - 我们将会尽快完善软件的中英文使用说明书，当前主要以操作演示来讲解软件的使用。

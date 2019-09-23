@@ -259,7 +259,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16ReadModuleInfo (
 			*ModADCBits = 14;
 			*ModADCMSPS = 500;
 		}
-		else if(Module_Information[ModNum].Module_OfflineVariant == 7)//wuhongyi
+		else if(Module_Information[ModNum].Module_OfflineVariant == 7)//HongyiWu
 		{
 			*ModADCBits = 16;
 			*ModADCMSPS = 250;
@@ -6491,8 +6491,147 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeFastFiltersOffline (
 }
 
 
-
 PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
+	char           *FileName,          // the list mode data file name (with complete path)
+	unsigned short ModuleNumber,       // the module whose events are to be analyzed
+	unsigned short ChannelNumber,      // the channel whose events are to be analyzed
+	unsigned int   FileLocation,       // the location of the trace in the file
+	unsigned short RcdTraceLength,     // recorded trace length
+	unsigned short *RcdTrace,          // recorded trace
+	double         *slowfilter )       // slow filter response
+{
+	char ErrMSG[MAX_ERRMSG_LENGTH];
+	FILE *ListModeFile = NULL;
+	unsigned int SlowLen, SlowGap, SlowFilterRange, PreampTau_IEEE;
+	unsigned int esum0[32768], esum1[32768], esum2[32768];
+	unsigned int offset, x, y;
+	double preamptau, deltaT;
+	double b1, c0, c1, c2;
+	unsigned int bsum0, bsum1, bsum2;
+	double baseline;
+
+	// Check if RcdTrace is valid
+	if(RcdTrace == NULL)
+	{
+		sprintf(ErrMSG, "*Error* (Pixie16ComputeSlowFiltersOffline): Null pointer *RcdTrace");
+		Pixie_Print_MSG(ErrMSG);
+		return(-1);
+	}
+	
+	// Check if slowfilter is valid
+	if(slowfilter == NULL)
+	{
+		sprintf(ErrMSG, "*Error* (Pixie16ComputeSlowFiltersOffline): Null pointer *slowfilter");
+		Pixie_Print_MSG(ErrMSG);
+		return(-2);
+	}
+	
+	if(ModuleNumber >= PRESET_MAX_MODULES)
+	{
+		sprintf(ErrMSG, "*ERROR* (Pixie16ComputeSlowFiltersOffline): Target module number is invalid %d", ModuleNumber);
+		Pixie_Print_MSG(ErrMSG);
+		return(-3);
+	}
+
+	// Retrieve channel parameters
+
+	SlowFilterRange = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowFilterRange_Address[ModuleNumber] - DATA_MEMORY_ADDRESS];
+	SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
+	SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
+	PreampTau_IEEE = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[PreampTau_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS];
+	preamptau = IEEEFloating2Decimal(PreampTau_IEEE);
+
+	// Check if trace length is sufficiently long
+	if(RcdTraceLength < ((2*SlowLen + SlowGap)*2))
+	{
+		sprintf(ErrMSG, "*Error* (Pixie16ComputeSlowFiltersOffline): the length of recorded trace is too short");
+		Pixie_Print_MSG(ErrMSG);
+		return(-4);
+	}
+
+	// Open the list mode file
+	ListModeFile = fopen(FileName, "rb");
+	if(ListModeFile != NULL)
+	{
+		// Position ListModeFile to the requested trace location
+		fseek(ListModeFile, FileLocation*4, SEEK_SET);
+				
+		// Read trace
+		fread(RcdTrace, 2, RcdTraceLength, ListModeFile);
+		
+		// Close file
+		fclose(ListModeFile);
+		
+		// Compute slow filter coefficients
+		deltaT = 1.0/((double)Module_Information[ModuleNumber].Module_ADCMSPS);
+		b1 = exp(-1.0 * deltaT / preamptau);
+		c0 = -(1.0 - b1) * pow(b1, (double)SlowLen) * 4.0 / (1.0 - pow(b1, (double)SlowLen));
+		c1 = (1.0 - b1) * 4.0;
+		c2 = (1.0 - b1) * 4.0 / (1.0 - pow(b1, (double)SlowLen));
+
+		// Compute baseline
+		bsum0 = 0;
+		for(y=0; y<SlowLen; y++)
+		{
+			bsum0 += RcdTrace[y];
+		}
+		bsum1 = 0;
+		for(y=SlowLen; y<SlowLen+SlowGap; y++)
+		{
+			bsum1 += RcdTrace[y];
+		}
+		bsum2 = 0;
+		for(y=(SlowLen+SlowGap); y<(2*SlowLen+SlowGap); y++)
+		{
+			bsum2 += RcdTrace[y];
+		}
+		baseline = c0 * (double)bsum0 + c1 * (double)bsum1 + c2 * (double)bsum2;
+
+		// Compute slow filter response
+		offset = 2*SlowLen + SlowGap - 1;
+		for(x=offset; x<RcdTraceLength; x++)
+		{
+			esum0[x] = 0;
+			for(y=(x-offset); y<(x-offset+SlowLen); y++)
+			{
+				esum0[x] += RcdTrace[y];
+			}
+			esum1[x] = 0;
+			for(y=(x-offset+SlowLen); y<(x-offset+SlowLen+SlowGap); y++)
+			{
+				esum1[x] += RcdTrace[y];
+			}
+			esum2[x] = 0;
+			for(y=(x-offset+SlowLen+SlowGap); y<(x-offset+2*SlowLen+SlowGap); y++)
+			{
+				esum2[x] += RcdTrace[y];
+			}
+
+			if(Module_Information[ModuleNumber].Module_ADCBits == 16)//HongyiWu
+			  slowfilter[x] = (c0 * (double)esum0[x] + c1 * (double)esum1[x] + c2 * (double)esum2[x] - baseline)/4.0;
+			else
+			  slowfilter[x] = c0 * (double)esum0[x] + c1 * (double)esum1[x] + c2 * (double)esum2[x] - baseline;
+		}
+
+		// Extend the value of slowfilter[offset] to all non-computed ones from index 0 to offset-1
+		for(x=0; x<offset; x++)
+		{
+			slowfilter[x] = slowfilter[offset];
+		}
+	}
+	else
+	{
+		sprintf(ErrMSG, "*ERROR* (Pixie16ComputeSlowFiltersOffline): can't open list mode file %s", FileName);
+		Pixie_Print_MSG(ErrMSG);
+		return(-5);
+	}
+	
+	return(0);
+	
+}
+
+
+PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOfflineExtendBaseline (
 	char           *FileName,          // the list mode data file name (with complete path)
 	unsigned short ModuleNumber,       // the module whose events are to be analyzed
 	unsigned short ChannelNumber,      // the channel whose events are to be analyzed
@@ -6555,7 +6694,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 
 	int AverageRcdTrace = 0;
 	int i;
-	for (i = 0; i < pointtobl; ++i)//TODO wuhongyi
+	for (i = 0; i < pointtobl; ++i)//TODO HongyiWu
 	  {
 	    AverageRcdTrace += RcdTrace[i];
 	  }

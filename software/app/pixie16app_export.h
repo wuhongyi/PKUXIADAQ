@@ -338,6 +338,8 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16ComputeSlowFiltersOffline (
 	unsigned short *RcdTrace,          // recorded trace
 	double         *slowfilter );      // slow filter response
 
+
+
 PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeFastFiltersOffline (
 	char           *FileName,          // the list mode data file name (with complete path)
 	unsigned short ModuleNumber,       // the module whose events are to be analyzed
@@ -347,9 +349,18 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeFastFiltersOffline (
 	unsigned short *RcdTrace,          // recorded trace
 	double         *fastfilter,        // fast filter response
 	double         *cfd,               // cfd response
-	double         *cfds );            // cfd response
+	double         *cfds );            // scalse cfd response
   
 PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
+	char           *FileName,          // the list mode data file name (with complete path)
+	unsigned short ModuleNumber,       // the module whose events are to be analyzed
+	unsigned short ChannelNumber,      // the channel whose events are to be analyzed
+	unsigned int   FileLocation,       // the location of the trace in the file
+	unsigned short RcdTraceLength,     // recorded trace length
+	unsigned short *RcdTrace,          // recorded trace
+	double         *slowfilter );      // slow filter response
+
+PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOfflineExtendBaseline (
 	char           *FileName,          // the list mode data file name (with complete path)
 	unsigned short ModuleNumber,       // the module whose events are to be analyzed
 	unsigned short ChannelNumber,      // the channel whose events are to be analyzed
@@ -364,7 +375,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	int            sfr,
 	int            pointtobl );
 
-  PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16SetOfflineVariant(unsigned short mod,unsigned short variant,unsigned short bits,unsigned short samplerate);  
+PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16SetOfflineVariant(unsigned short mod,unsigned short variant,unsigned short bits,unsigned short samplerate);  
   
 #ifdef __cplusplus
 }

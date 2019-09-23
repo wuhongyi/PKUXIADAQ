@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 四 9月 12 15:42:21 2019 (+0800)
+// Last-Updated: 一 9月 23 15:33:58 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 900
+//     Update #: 902
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -2889,13 +2889,13 @@ void Offline::Panel1Draw()
 
   if(chooseslowfilterbaseline->GetSelected() == 0)
     {
-      retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), offlinedata->GetEventWaveLocation(OfflineCurrentCount), tracelength, RcdTrace,doubleslowfilter );//trace length/trace location
-      if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
+      retval = HongyiWuPixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), offlinedata->GetEventWaveLocation(OfflineCurrentCount), tracelength, RcdTrace,doubleslowfilter );//trace length/trace location
+      if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "HongyiWuPixie16ComputeSlowFiltersOffline", retval);
     }
   else
     {
-      retval = HongyiWuPixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), offlinedata->GetEventWaveLocation(OfflineCurrentCount), tracelength, RcdTrace,doubleslowfilter ,offlinedata->GetEventSUMS4(OfflineCurrentCount,3),oldslowfilterparameter[0]->GetNumber(),oldslowfilterparameter[1]->GetNumber(),oldslowfilterparameter[2]->GetNumber(),oldofflinefilterrange->GetIntNumber(),200);//trace length/trace location
-      if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "HongyiWuPixie16ComputeSlowFiltersOffline", retval);
+      retval = HongyiWuPixie16ComputeSlowFiltersOfflineExtendBaseline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), offlinedata->GetEventWaveLocation(OfflineCurrentCount), tracelength, RcdTrace,doubleslowfilter ,offlinedata->GetEventSUMS4(OfflineCurrentCount,3),oldslowfilterparameter[0]->GetNumber(),oldslowfilterparameter[1]->GetNumber(),oldslowfilterparameter[2]->GetNumber(),oldofflinefilterrange->GetIntNumber(),200);//trace length/trace location
+      if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "HongyiWuPixie16ComputeSlowFiltersOfflineExtendBaseline", retval);
     }
   
 
@@ -3128,8 +3128,8 @@ void Offline::Panel2Draw()
 
 	  retval = HongyiWuPixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)i, offlinedata->GetEventWaveLocation(OfflineCurrentCount2[i]), tracelength2[i], RcdTrace2[i], doublefastfilter2[i], doublecfd2[i], doublecfds2[i]);//trace location
 	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "HongyiWuPixie16ComputeFastFiltersOffline", retval);
-	  retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)i, offlinedata->GetEventWaveLocation(OfflineCurrentCount2[i]), tracelength2[i], RcdTrace2[i],doubleslowfilter2[i]);//trace localtion
-	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
+	  retval = HongyiWuPixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)i, offlinedata->GetEventWaveLocation(OfflineCurrentCount2[i]), tracelength2[i], RcdTrace2[i],doubleslowfilter2[i]);//trace localtion
+	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "HongyiWuPixie16ComputeSlowFiltersOffline", retval);
 	  
 	  double ChanParData;
 	  retval = Pixie16ReadSglChanPar((char*)"TRIGGER_THRESHOLD", &ChanParData, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)i);
@@ -3758,13 +3758,13 @@ void Offline::Panel6Draw()
 
 	      if(chooseslowfilterbaselinep6->GetSelected() == 0)
 		{
-		  retval = Pixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum6->GetIntNumber(), offlinedata->GetEventWaveLocation(i), offlinedata->GetEventTraceLength(i), RcdTrace6,doubleslowfilter6);//trace location/trace length
-		  if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "Pixie16ComputeSlowFiltersOffline", retval);
+		  retval = HongyiWuPixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum6->GetIntNumber(), offlinedata->GetEventWaveLocation(i), offlinedata->GetEventTraceLength(i), RcdTrace6,doubleslowfilter6);//trace location/trace length
+		  if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "HongyiWuPixie16ComputeSlowFiltersOffline", retval);
 		}
 	      else
 		{
-		  retval = HongyiWuPixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum6->GetIntNumber(), offlinedata->GetEventWaveLocation(i), offlinedata->GetEventTraceLength(i), RcdTrace6,doubleslowfilter6, offlinedata->GetEventSUMS4(i,3),oldslowfilterparameterp6[0]->GetNumber(),oldslowfilterparameterp6[1]->GetNumber(),oldslowfilterparameterp6[2]->GetNumber(),oldofflinefilterrangep6->GetIntNumber(),200);//trace location/trace length
-		  if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "HongyiWuPixie16ComputeSlowFiltersOffline", retval);
+		  retval = HongyiWuPixie16ComputeSlowFiltersOfflineExtendBaseline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum6->GetIntNumber(), offlinedata->GetEventWaveLocation(i), offlinedata->GetEventTraceLength(i), RcdTrace6,doubleslowfilter6, offlinedata->GetEventSUMS4(i,3),oldslowfilterparameterp6[0]->GetNumber(),oldslowfilterparameterp6[1]->GetNumber(),oldslowfilterparameterp6[2]->GetNumber(),oldofflinefilterrangep6->GetIntNumber(),200);//trace location/trace length
+		  if(retval < 0) ErrorInfo("Offline.cc", "Panel6Draw()", "HongyiWuPixie16ComputeSlowFiltersOfflineExtendBaseline", retval);
 		}
 	      
 	      int intflagtrigger = -1;
