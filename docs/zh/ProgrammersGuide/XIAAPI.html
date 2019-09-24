@@ -175,6 +175,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#pku-api">PKU API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#hongyiwupixie16computefastfiltersoffline">HongyiWuPixie16ComputeFastFiltersOffline</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#hongyiwupixie16computeslowfiltersoffline">HongyiWuPixie16ComputeSlowFiltersOffline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hongyiwupixie16computeslowfiltersofflineaveragebaseline">HongyiWuPixie16ComputeSlowFiltersOfflineAverageBaseline</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#hongyiwupixie16computeslowfiltersofflineextendbaseline">HongyiWuPixie16ComputeSlowFiltersOfflineExtendBaseline</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#hongyiwupixie16setofflinevariant">HongyiWuPixie16SetOfflineVariant</a></li>
 </ul>
@@ -3208,9 +3209,9 @@
       <span class="kt">unsigned</span> <span class="kt">int</span>   <span class="n">FileLocation</span><span class="p">,</span>       <span class="c1">// the location of the trace in the file</span>
       <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">RcdTraceLength</span><span class="p">,</span>     <span class="c1">// recorded trace length</span>
       <span class="kt">unsigned</span> <span class="kt">short</span> <span class="o">*</span><span class="n">RcdTrace</span><span class="p">,</span>          <span class="c1">// recorded trace</span>
-      <span class="kt">double</span>         <span class="o">*</span><span class="n">fastfilter</span><span class="p">,</span>        <span class="c1">// fast filter response</span>
-      <span class="kt">double</span>         <span class="o">*</span><span class="n">cfd</span><span class="p">,</span>               <span class="c1">// cfd response</span>
-      <span class="kt">double</span>         <span class="o">*</span><span class="n">cfds</span> <span class="p">);</span>            <span class="c1">// cfd response</span>
+      <span class="kt">double</span>         <span class="o">*</span><span class="n">fastfilter</span><span class="p">,</span>        <span class="c1">// fast filter response, the same scale as the trigger threshold</span>
+      <span class="kt">double</span>         <span class="o">*</span><span class="n">cfd</span><span class="p">,</span>               <span class="c1">// cfd response, the same scale as the CFD threshold</span>
+      <span class="kt">double</span>         <span class="o">*</span><span class="n">cfds</span> <span class="p">);</span>            <span class="c1">// cfd response, the same scale as the fast filter</span>
 </pre></div>
 </div>
 </div>
@@ -3227,6 +3228,20 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="hongyiwupixie16computeslowfiltersofflineaveragebaseline">
+<h3>HongyiWuPixie16ComputeSlowFiltersOfflineAverageBaseline<a class="headerlink" href="#hongyiwupixie16computeslowfiltersofflineaveragebaseline" title="永久链接至标题">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span>  <span class="nf">HongyiWuPixie16ComputeSlowFiltersOfflineAverageBaseline</span> <span class="p">(</span>
+      <span class="kt">char</span>           <span class="o">*</span><span class="n">FileName</span><span class="p">,</span>          <span class="o">//</span> <span class="n">the</span> <span class="n">list</span> <span class="n">mode</span> <span class="n">data</span> <span class="n">file</span> <span class="n">name</span> <span class="p">(</span><span class="n">with</span> <span class="n">complete</span> <span class="n">path</span><span class="p">)</span>
+      <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">ModuleNumber</span><span class="p">,</span>       <span class="c1">// the module whose events are to be analyzed</span>
+      <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">ChannelNumber</span><span class="p">,</span>      <span class="c1">// the channel whose events are to be analyzed</span>
+      <span class="kt">unsigned</span> <span class="kt">int</span>   <span class="n">FileLocation</span><span class="p">,</span>       <span class="c1">// the location of the trace in the file</span>
+      <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">RcdTraceLength</span><span class="p">,</span>     <span class="c1">// recorded trace length</span>
+      <span class="kt">unsigned</span> <span class="kt">short</span> <span class="o">*</span><span class="n">RcdTrace</span><span class="p">,</span>          <span class="c1">// recorded trace</span>
+      <span class="kt">double</span>         <span class="o">*</span><span class="n">slowfilter</span><span class="p">,</span>        <span class="c1">// slow filter response</span>
+      <span class="kt">int</span>            <span class="n">pointtobl</span> <span class="p">);</span>        <span class="c1">// Average number of estimated waveform baselines</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="hongyiwupixie16computeslowfiltersofflineextendbaseline">
 <h3>HongyiWuPixie16ComputeSlowFiltersOfflineExtendBaseline<a class="headerlink" href="#hongyiwupixie16computeslowfiltersofflineextendbaseline" title="永久链接至标题">¶</a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">HongyiWuPixie16ComputeSlowFiltersOfflineExtendBaseline</span> <span class="p">(</span>
@@ -3237,12 +3252,12 @@
       <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">RcdTraceLength</span><span class="p">,</span>     <span class="c1">// recorded trace length</span>
       <span class="kt">unsigned</span> <span class="kt">short</span> <span class="o">*</span><span class="n">RcdTrace</span><span class="p">,</span>          <span class="c1">// recorded trace</span>
       <span class="kt">double</span>         <span class="o">*</span><span class="n">slowfilter</span><span class="p">,</span>        <span class="c1">// slow filter response</span>
-      <span class="kt">unsigned</span> <span class="kt">int</span>   <span class="n">bl</span><span class="p">,</span>
-      <span class="kt">double</span>         <span class="n">sl</span><span class="p">,</span>
-      <span class="kt">double</span>         <span class="n">sg</span><span class="p">,</span>
-      <span class="kt">double</span>         <span class="n">tau</span><span class="p">,</span>
-      <span class="kt">int</span>            <span class="n">sfr</span><span class="p">,</span>
-      <span class="kt">int</span>            <span class="n">pointtobl</span> <span class="p">);</span>
+      <span class="kt">unsigned</span> <span class="kt">int</span>   <span class="n">bl</span><span class="p">,</span>                 <span class="c1">// The baseline calculated in the firmware</span>
+      <span class="kt">double</span>         <span class="n">sl</span><span class="p">,</span>                 <span class="c1">// SL used to calculate the baseline in the firmware</span>
+      <span class="kt">double</span>         <span class="n">sg</span><span class="p">,</span>                 <span class="c1">// SG used to calculate the baseline in the firmware</span>
+      <span class="kt">double</span>         <span class="n">tau</span><span class="p">,</span>                <span class="c1">// TAU used to calculate the baseline in the firmware</span>
+      <span class="kt">int</span>            <span class="n">sfr</span><span class="p">,</span>                <span class="c1">// SlowFilterRange used to calculate the baseline in the firmware</span>
+      <span class="kt">int</span>            <span class="n">pointtobl</span> <span class="p">);</span>        <span class="c1">// Average number of estimated waveform baselines</span>
 </pre></div>
 </div>
 </div>

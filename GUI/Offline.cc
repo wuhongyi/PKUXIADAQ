@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 一 9月 23 15:33:58 2019 (+0800)
+// Last-Updated: 二 9月 24 10:01:52 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 902
+//     Update #: 905
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -744,14 +744,14 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   oldparFrame->AddFrame(LabelOldSlowFilterSL, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
   fClient->GetColorByName("green", color);
   LabelOldSlowFilterSL->SetTextColor(color, false);
-  oldslowfilterparameter[0] = new TGNumberEntryField(oldparFrame, -1, 3.04, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.04,81.28);
+  oldslowfilterparameter[0] = new TGNumberEntryField(oldparFrame, -1, 3.040, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.032,81.280);
   oldparFrame->AddFrame(oldslowfilterparameter[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   oldslowfilterparameter[0]->Resize(40, 20);
   TGLabel *LabelOldSlowFilterSG = new TGLabel(oldparFrame,"SGap:");
   oldparFrame->AddFrame(LabelOldSlowFilterSG, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
   fClient->GetColorByName("green", color);
   LabelOldSlowFilterSG->SetTextColor(color, false);
-  oldslowfilterparameter[1] = new TGNumberEntryField(oldparFrame, -1, 0.64, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.06,81.28);
+  oldslowfilterparameter[1] = new TGNumberEntryField(oldparFrame, -1, 0.640, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.048,81.280);
   oldparFrame->AddFrame(oldslowfilterparameter[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   oldslowfilterparameter[1]->Resize(40, 20);
   TGLabel *LabelOldSlowFilterTAU = new TGLabel(oldparFrame,"Tau:");
@@ -1422,14 +1422,14 @@ void Offline::MakeFold6Panel(TGCompositeFrame *TabPanel)
   slowfilterparFrame->AddFrame(LabelOldSlowFilterSL, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
   fClient->GetColorByName("green", color);
   LabelOldSlowFilterSL->SetTextColor(color, false);
-  oldslowfilterparameterp6[0] = new TGNumberEntryField(slowfilterparFrame, -1, 3.04, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.04,81.28);
+  oldslowfilterparameterp6[0] = new TGNumberEntryField(slowfilterparFrame, -1, 3.040, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.032,81.280);
   slowfilterparFrame->AddFrame(oldslowfilterparameterp6[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   oldslowfilterparameterp6[0]->Resize(40, 20);
   TGLabel *LabelOldSlowFilterSG = new TGLabel(slowfilterparFrame,"SG:");
   slowfilterparFrame->AddFrame(LabelOldSlowFilterSG, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
   fClient->GetColorByName("green", color);
   LabelOldSlowFilterSG->SetTextColor(color, false);
-  oldslowfilterparameterp6[1] = new TGNumberEntryField(slowfilterparFrame, -1, 0.64, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.06,81.28);
+  oldslowfilterparameterp6[1] = new TGNumberEntryField(slowfilterparFrame, -1, 0.640, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.048,81.280);
   slowfilterparFrame->AddFrame(oldslowfilterparameterp6[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   oldslowfilterparameterp6[1]->Resize(40, 20);
   TGLabel *LabelOldSlowFilterTAU = new TGLabel(slowfilterparFrame,"Tau:");
@@ -3713,30 +3713,31 @@ void Offline::Panel6Draw()
 	}
 
       int intflagenergy;
-      switch(SlowFilterRange)
-	{
-	case 1:
-	  intflagenergy = SlowLen+SlowGap-3;
-	  break;
-	case 2:
-	  intflagenergy = SlowLen+SlowGap-2;
-	  break;
-	case 3:
-	  intflagenergy = SlowLen+SlowGap-2;
-	  break;
-	case 4:
-	  intflagenergy = SlowLen+SlowGap-1;
-	  break;
-	case 5:
-	  intflagenergy = SlowLen+SlowGap;
-	  break;
-	case 6:
-	  intflagenergy = SlowLen+SlowGap+1;
-	  break;
-	default:
-	  intflagenergy = SlowLen+SlowGap-2;
-	  break;
-	}
+      intflagenergy = SlowLen+SlowGap-1;
+      // switch(SlowFilterRange)
+      // 	{
+      // 	case 1:
+      // 	  intflagenergy = SlowLen+SlowGap-3;
+      // 	  break;
+      // 	case 2:
+      // 	  intflagenergy = SlowLen+SlowGap-2;
+      // 	  break;
+      // 	case 3:
+      // 	  intflagenergy = SlowLen+SlowGap-2;
+      // 	  break;
+      // 	case 4:
+      // 	  intflagenergy = SlowLen+SlowGap-1;
+      // 	  break;
+      // 	case 5:
+      // 	  intflagenergy = SlowLen+SlowGap;
+      // 	  break;
+      // 	case 6:
+      // 	  intflagenergy = SlowLen+SlowGap+1;
+      // 	  break;
+      // 	default:
+      // 	  intflagenergy = SlowLen+SlowGap-2;
+      // 	  break;
+      // 	}
 
       
       for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)

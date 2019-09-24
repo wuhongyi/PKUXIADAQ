@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 14:59:18 2019 (+0800)
-.. Last-Updated: 一 9月 23 15:44:22 2019 (+0800)
+.. Last-Updated: 二 9月 24 16:55:43 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 29
+..     Update #: 30
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -2271,9 +2271,9 @@ HongyiWuPixie16ComputeFastFiltersOffline
 	unsigned int   FileLocation,       // the location of the trace in the file
 	unsigned short RcdTraceLength,     // recorded trace length
 	unsigned short *RcdTrace,          // recorded trace
-	double         *fastfilter,        // fast filter response
-	double         *cfd,               // cfd response
-	double         *cfds );            // cfd response
+	double         *fastfilter,        // fast filter response, the same scale as the trigger threshold
+	double         *cfd,               // cfd response, the same scale as the CFD threshold
+	double         *cfds );            // cfd response, the same scale as the fast filter
 
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -2291,7 +2291,22 @@ HongyiWuPixie16ComputeSlowFiltersOffline
 	unsigned short *RcdTrace,          // recorded trace
 	double         *slowfilter );      // slow filter response
 
-
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+HongyiWuPixie16ComputeSlowFiltersOfflineAverageBaseline
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	
+.. code:: cpp
+	  
+  int  HongyiWuPixie16ComputeSlowFiltersOfflineAverageBaseline (
+	char           *FileName,          // the list mode data file name (with complete path)
+	unsigned short ModuleNumber,       // the module whose events are to be analyzed
+	unsigned short ChannelNumber,      // the channel whose events are to be analyzed
+	unsigned int   FileLocation,       // the location of the trace in the file
+	unsigned short RcdTraceLength,     // recorded trace length
+	unsigned short *RcdTrace,          // recorded trace
+	double         *slowfilter,        // slow filter response
+	int            pointtobl );        // Average number of estimated waveform baselines
+	
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 HongyiWuPixie16ComputeSlowFiltersOfflineExtendBaseline
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -2299,19 +2314,19 @@ HongyiWuPixie16ComputeSlowFiltersOfflineExtendBaseline
 .. code:: cpp
 	    
   int HongyiWuPixie16ComputeSlowFiltersOfflineExtendBaseline (
-   	char           *FileName,          // the list mode data file name (with complete path)
-   	unsigned short ModuleNumber,       // the module whose events are to be analyzed
-   	unsigned short ChannelNumber,      // the channel whose events are to be analyzed
-   	unsigned int   FileLocation,       // the location of the trace in the file
-   	unsigned short RcdTraceLength,     // recorded trace length
-   	unsigned short *RcdTrace,          // recorded trace
-   	double         *slowfilter,        // slow filter response
-   	unsigned int   bl,
-   	double         sl,
-   	double         sg,
-   	double         tau,
-   	int            sfr,
-   	int            pointtobl );
+	char           *FileName,          // the list mode data file name (with complete path)
+	unsigned short ModuleNumber,       // the module whose events are to be analyzed
+	unsigned short ChannelNumber,      // the channel whose events are to be analyzed
+	unsigned int   FileLocation,       // the location of the trace in the file
+	unsigned short RcdTraceLength,     // recorded trace length
+	unsigned short *RcdTrace,          // recorded trace
+	double         *slowfilter,        // slow filter response
+	unsigned int   bl,                 // The baseline calculated in the firmware
+	double         sl,                 // SL used to calculate the baseline in the firmware
+	double         sg,                 // SG used to calculate the baseline in the firmware 
+	double         tau,                // TAU used to calculate the baseline in the firmware
+	int            sfr,                // SlowFilterRange used to calculate the baseline in the firmware
+	int            pointtobl );        // Average number of estimated waveform baselines
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 HongyiWuPixie16SetOfflineVariant

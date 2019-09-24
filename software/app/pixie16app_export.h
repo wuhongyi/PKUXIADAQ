@@ -347,10 +347,11 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeFastFiltersOffline (
 	unsigned int   FileLocation,       // the location of the trace in the file
 	unsigned short RcdTraceLength,     // recorded trace length
 	unsigned short *RcdTrace,          // recorded trace
-	double         *fastfilter,        // fast filter response
-	double         *cfd,               // cfd response
-	double         *cfds );            // scalse cfd response
-  
+	double         *fastfilter,        // fast filter response, the same scale as the trigger threshold
+	double         *cfd,               // cfd response, the same scale as the CFD threshold
+	double         *cfds );            // scale cfd response, the same scale as the fast filter
+
+// Upgrade to support 16bit. Use the same range as the firmware  
 PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	char           *FileName,          // the list mode data file name (with complete path)
 	unsigned short ModuleNumber,       // the module whose events are to be analyzed
@@ -360,6 +361,17 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	unsigned short *RcdTrace,          // recorded trace
 	double         *slowfilter );      // slow filter response
 
+PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOfflineAverageBaseline (
+	char           *FileName,          // the list mode data file name (with complete path)
+	unsigned short ModuleNumber,       // the module whose events are to be analyzed
+	unsigned short ChannelNumber,      // the channel whose events are to be analyzed
+	unsigned int   FileLocation,       // the location of the trace in the file
+	unsigned short RcdTraceLength,     // recorded trace length
+	unsigned short *RcdTrace,          // recorded trace
+	double         *slowfilter,        // slow filter response
+	int            pointtobl );        // Average number of estimated waveform baselines
+
+// Only suitable for use under certain conditions   
 PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOfflineExtendBaseline (
 	char           *FileName,          // the list mode data file name (with complete path)
 	unsigned short ModuleNumber,       // the module whose events are to be analyzed
@@ -368,12 +380,12 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOfflineExt
 	unsigned short RcdTraceLength,     // recorded trace length
 	unsigned short *RcdTrace,          // recorded trace
 	double         *slowfilter,        // slow filter response
-	unsigned int   bl,
-	double         sl,
-	double         sg,
-	double         tau,
-	int            sfr,
-	int            pointtobl );
+	unsigned int   bl,                 // The baseline calculated in the firmware
+	double         sl,                 // SL used to calculate the baseline in the firmware
+	double         sg,                 // SG used to calculate the baseline in the firmware 
+	double         tau,                // TAU used to calculate the baseline in the firmware
+	int            sfr,                // SlowFilterRange used to calculate the baseline in the firmware
+	int            pointtobl );        // Average number of estimated waveform baselines
 
 PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16SetOfflineVariant(unsigned short mod,unsigned short variant,unsigned short bits,unsigned short samplerate);  
   
