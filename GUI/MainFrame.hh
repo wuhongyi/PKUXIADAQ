@@ -4,15 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:17 2018 (+0800)
-// Last-Updated: 四 8月 29 19:34:40 2019 (+0800)
+// Last-Updated: 六 9月 28 15:35:24 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 29
+//     Update #: 31
 // URL: http://wuhongyi.cn 
 
 #ifndef MAINFRAME_HH_
 #define MAINFRAME_HH_
 
-#define INITIAL_HIGHT 1000
+#define INITIAL_HIGHT 850
 #define INITIAL_WIDTH 300
 
 #include "Global.hh"
@@ -122,7 +122,7 @@ private:
   Simulation *simulation;
 
   Pixel_t color;
-
+  Pixel_t colorwhite;
   Detector *detector;
 
   virtual Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t);//process message queue

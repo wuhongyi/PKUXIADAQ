@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:41 2016 (+0800)
-// Last-Updated: 四 8月 29 20:03:52 2019 (+0800)
+// Last-Updated: 六 9月 28 15:34:25 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 64
+//     Update #: 71
 // URL: http://wuhongyi.cn 
 
 #ifndef _ONLINE_H_
@@ -63,8 +63,8 @@ using namespace std;
 #define SYSTEM_CLOCK_MHZ 100// System FPGA clock frequency in MHz (used for real time counting)
 
 
-#define INITIAL_HIGHT 1000
-#define INITIAL_WIDTH 1200
+#define INITIAL_HIGHT 850
+#define INITIAL_WIDTH 1500
 
 enum OnlineCommands
   {
@@ -129,6 +129,7 @@ private:
   TGTextEntry *StateMsg;
 
   Pixel_t color;
+  Pixel_t colorwhite;
   bool flagrunnumber;
   char charrunstate[16];
 

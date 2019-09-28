@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 四 8月 29 19:48:03 2019 (+0800)
+// Last-Updated: 六 9月 28 16:13:56 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 228
+//     Update #: 251
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -24,6 +24,9 @@ Online::Online(const TGWindow * p)
   ModNum = 0;
   number = UINT_MAX;
   flagrunnumber = false;
+
+  fClient->GetColorByName("white", colorwhite);
+  SetBackgroundColor(colorwhite);
   
   buf = new unsigned char[(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*2+SHAREDMEMORYDATAOFFSET];
   buf_new = new unsigned char[(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*2+SHAREDMEMORYDATAOFFSET];
@@ -174,6 +177,9 @@ void Online::AlertDefault()
 void Online::CreateMenuBar()
 {
   TGMenuBar *MenuBar = new TGMenuBar(this, 1, 1, kHorizontalFrame);
+  fClient->GetColorByName("pink", color);
+  MenuBar->ChangeBackground(color);
+  
   TGPopupMenu *MenuFile = new TGPopupMenu(fClient->GetRoot());
   MenuFile->AddEntry("E&xit", FILE_EXIT);
   MenuFile->AddSeparator();
@@ -184,13 +190,22 @@ void Online::CreateMenuBar()
 
   TGTab *TabPanel = new TGTab(this);
   this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
+  TabPanel->SetBackgroundColor(colorwhite);
   TGCompositeFrame *Tab1 = TabPanel->AddTab("CountRate");
   MakeFold1Panel(Tab1);
+  Tab1->SetBackgroundColor(colorwhite);
+  fClient->GetColorByName("red", color);
+  TabPanel->GetTabTab("CountRate")->ChangeBackground(color);
   TGCompositeFrame *Tab2 = TabPanel->AddTab("Alert");
   MakeFold2Panel(Tab2);
+  Tab2->SetBackgroundColor(colorwhite);
+  fClient->GetColorByName("yellow", color);
+  TabPanel->GetTabTab("Alert")->ChangeBackground(color);
   TGCompositeFrame *Tab3 = TabPanel->AddTab("EnergyMonitor");
   MakeFold3Panel(Tab3);
-  
+  Tab3->SetBackgroundColor(colorwhite);
+  fClient->GetColorByName("blue", color);
+  TabPanel->GetTabTab("EnergyMonitor")->ChangeBackground(color);
 }
 
 void Online::CloseWindow()
@@ -344,35 +359,39 @@ Bool_t Online::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
 {
   TGGroupFrame *setgroup = new TGGroupFrame(TabPanel,"Setup");
+  TabPanel->AddFrame(setgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  setgroup->SetBackgroundColor(colorwhite);
   
   TGHorizontalFrame *filepath = new TGHorizontalFrame(setgroup);
+  setgroup->AddFrame(filepath,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  filepath->SetBackgroundColor(colorwhite);
   TGLabel *filepathlabel = new TGLabel(filepath,"File Path: ");
   filepath->AddFrame(filepathlabel,new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 3, 4, 0));
+  filepathlabel->SetBackgroundColor(colorwhite);
   filepathtext = new TGTextEntry(filepath,new TGTextBuffer(20));
-  filepathtext->SetEnabled(kFALSE);
   filepath->AddFrame(filepathtext,new TGLayoutHints(kLHintsExpandX|kLHintsTop, 10 ,3,4,0));
+  filepathtext->SetEnabled(kFALSE);
+  filepathtext->SetBackgroundColor(colorwhite);
   
   TGLabel *filenamelabel = new TGLabel(filepath,"File Name: ");
   filepath->AddFrame(filenamelabel,new TGLayoutHints(kLHintsLeft | kLHintsTop, 10 ,3,4,0));
+  filenamelabel->SetBackgroundColor(colorwhite);
   filenametext = new TGTextEntry(filepath, new TGTextBuffer(20));
-  filenametext->SetEnabled(kFALSE);
   filepath->AddFrame(filenametext,new TGLayoutHints(kLHintsLeft| kLHintsTop,10,3,4,0));
+  filenametext->SetEnabled(kFALSE);
+  filenametext->SetBackgroundColor(colorwhite);
   
-  setgroup->AddFrame(filepath,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
-
-
-
 
   StateMsg = new TGTextEntry(filepath,new TGTextBuffer(20));
+  filepath->AddFrame(StateMsg,new TGLayoutHints(kLHintsLeft|kLHintsTop,10,3,4,0));
   StateMsg->SetFont("-adobe-helvetica-bold-r-*-*-11-*-*-*-*-*-iso8859-1", false);
   fClient->GetColorByName("green", color);
   StateMsg->SetTextColor(color, false);
   StateMsg->SetText("Rxxxx     Mxx");
   StateMsg->SetEnabled(kFALSE);
   StateMsg->SetFrameDrawn(kFALSE);
-  filepath->AddFrame(StateMsg,new TGLayoutHints(kLHintsLeft|kLHintsTop,10,3,4,0));
-  TabPanel->AddFrame(setgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
-
+  StateMsg->SetBackgroundColor(colorwhite);
+  
 
   startloop = new TGTextButton(filepath,"RunStart");
   startloop->Connect("Pressed()","Online",this,"StartStop()");
@@ -390,11 +409,15 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
   OCR = new TGTextEntry *[224];//[0-207] Output rate  >=208 not used
 
   TGGroupFrame *monitorgroup = new TGGroupFrame(TabPanel,"Monitor");
-
+  TabPanel->AddFrame(monitorgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  monitorgroup->SetBackgroundColor(colorwhite);
+  
   TGHorizontalFrame *horizontal1 = new TGHorizontalFrame(monitorgroup);
   monitorgroup->AddFrame(horizontal1,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  horizontal1->SetBackgroundColor(colorwhite);
   TGHorizontalFrame *horizontal2 = new TGHorizontalFrame(monitorgroup);
   monitorgroup->AddFrame(horizontal2,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  horizontal2->SetBackgroundColor(colorwhite);
   
   TGVerticalFrame **Column1 = new TGVerticalFrame *[42];
   for (int i = 0; i < 14; i++)
@@ -403,19 +426,25 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
 	{
 	  Column1[3*i] = new TGVerticalFrame(horizontal1, 200, 300);
 	  horizontal1->AddFrame(Column1[3*i], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
+	  Column1[3*i]->SetBackgroundColor(colorwhite);
 	  Column1[3*i+1] = new TGVerticalFrame(horizontal1, 200, 300);
 	  horizontal1->AddFrame(Column1[3*i+1], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
+	  Column1[3*i+1]->SetBackgroundColor(colorwhite);
 	  Column1[3*i+2] = new TGVerticalFrame(horizontal1, 200, 300);
 	  horizontal1->AddFrame(Column1[3*i+2], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
+	  Column1[3*i+2]->SetBackgroundColor(colorwhite);
 	}
       else
 	{
 	  Column1[3*i] = new TGVerticalFrame(horizontal2, 200, 300);
 	  horizontal2->AddFrame(Column1[3*i], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
+	  Column1[3*i]->SetBackgroundColor(colorwhite);
 	  Column1[3*i+1] = new TGVerticalFrame(horizontal2, 200, 300);
 	  horizontal2->AddFrame(Column1[3*i+1], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
+	  Column1[3*i+1]->SetBackgroundColor(colorwhite);
 	  Column1[3*i+2] = new TGVerticalFrame(horizontal2, 200, 300);
 	  horizontal2->AddFrame(Column1[3*i+2], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
+	  Column1[3*i+2]->SetBackgroundColor(colorwhite);
 	}
       
       cl0[i] = new TGTextEntry(Column1[3*i], new TGTextBuffer(100), 10000,
@@ -520,7 +549,6 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
   ICR[222]->SetText("Available");
   ICR[223]->SetText("Use%");
   
-  TabPanel->AddFrame(monitorgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
@@ -539,7 +567,8 @@ void Online::MakeFold2Panel(TGCompositeFrame *TabPanel)
 {
   TGGroupFrame *setgroup = new TGGroupFrame(TabPanel,"Setup");
   TabPanel->AddFrame(setgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
-
+  setgroup->SetBackgroundColor(colorwhite);
+  
   TGHorizontalFrame *filepath = new TGHorizontalFrame(setgroup);
   setgroup->AddFrame(filepath,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
     
@@ -577,7 +606,8 @@ void Online::MakeFold2Panel(TGCompositeFrame *TabPanel)
   
   TGGroupFrame *limitgroup = new TGGroupFrame(TabPanel,"Count rate limit");
   TabPanel->AddFrame(limitgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
-
+  limitgroup->SetBackgroundColor(colorwhite);
+  
   TGHorizontalFrame *horizontal1 = new TGHorizontalFrame(limitgroup);
   limitgroup->AddFrame(horizontal1,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
   TGHorizontalFrame *horizontal2 = new TGHorizontalFrame(limitgroup);
@@ -706,6 +736,7 @@ void Online::MakeFold3Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
   TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  parFrame->SetBackgroundColor(colorwhite);
   
   // draw
   OnlineDrawButton3 = new TGTextButton(parFrame, "&Draw", ONLINEDRAW3);
