@@ -350,6 +350,16 @@ bool Detector::BootSystem()
   	  return false;
   	}
 
+      // close debug mode   TrigConfig3 [0]
+      unsigned int ModParData;
+      retval = Pixie16ReadSglModPar((char*)"TrigConfig3", &ModParData, k);
+      if(retval < 0) ErrorInfo("Detector.cc", "BootSystem()", "Pixie16ReadSglModPar/TrigConfig3", retval);
+      if(APP32_TstBit(0, ModParData))
+	{
+	  ModParData = APP32_ClrBit(0, ModParData);
+	  retval = Pixie16WriteSglModPar((char*)"TrigConfig3", ModParData, k);
+	  if(retval < 0) ErrorInfo("Detector.cc", "BootSystem()", "Pixie16WriteSglModPar/TrigConfig3", retval);
+	}
     }
 
   for(unsigned short k = 0; k < NumModules; k++)

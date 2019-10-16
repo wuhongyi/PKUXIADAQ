@@ -4,15 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 8月  9 09:24:46 2016 (+0800)
-// Last-Updated: 六 9月 28 16:19:52 2019 (+0800)
+// Last-Updated: 三 10月 16 21:44:05 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 13
+//     Update #: 26
 // URL: http://wuhongyi.cn 
 
 #ifndef _GLOBAL_HH_
 #define _GLOBAL_HH_
 
-const char gVERSION[] = "Version: 2019.09.28";
+const char gVERSION[] = "Version: 2019.10.16";
 
 const char gAbout[] = "\
 Version: Beta ---> Developer version\n\
@@ -34,6 +34,42 @@ Technical Support:\n\
   Wolfgang Hennig(XIA LLC)\n\
 \n\
 ";
+
+// #define FRAME_BG_R  62
+// #define FRAME_BG_G  62
+// #define FRAME_BG_B  62
+
+#define FRAME_BG_R  255
+#define FRAME_BG_G  255
+#define FRAME_BG_B  255
+
+#define TOPBAR_BG_R  255
+#define TOPBAR_BG_G  192
+#define TOPBAR_BG_B  203
+
+#define TOPBAR_TEXT_R  255
+#define TOPBAR_TEXT_G  192
+#define TOPBAR_TEXT_B  203
+
+#define TEXTBUTTON_BG_R  34
+#define TEXTBUTTON_BG_G  151
+#define TEXTBUTTON_BG_B  159
+
+// #define TEXTBUTTON_TEXT_R  255
+// #define TEXTBUTTON_TEXT_G  255
+// #define TEXTBUTTON_TEXT_B  255
+
+// #define CHECKBUTTON_TEXT_R  255
+// #define CHECKBUTTON_TEXT_G  255
+// #define CHECKBUTTON_TEXT_B  255
+
+#define TEXTBUTTON_TEXT_R  0
+#define TEXTBUTTON_TEXT_G  0
+#define TEXTBUTTON_TEXT_B  0
+
+#define CHECKBUTTON_TEXT_R  0
+#define CHECKBUTTON_TEXT_G  0
+#define CHECKBUTTON_TEXT_B  0
 
 
 void ErrorInfo(const char *filename,const char *funcname,const char *detial,int ErrorN);

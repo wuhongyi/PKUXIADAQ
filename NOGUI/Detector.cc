@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:52:00 2016 (+0800)
-// Last-Updated: 四 8月 29 20:15:58 2019 (+0800)
+// Last-Updated: 三 10月 16 21:57:11 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 43
+//     Update #: 44
 // URL: http://wuhongyi.cn 
 
 #include "Detector.hh"
@@ -318,6 +318,16 @@ bool Detector::BootSystem()
   	  return false;
   	}
 
+      // close debug mode   TrigConfig3 [0]
+      unsigned int ModParData;
+      retval = Pixie16ReadSglModPar((char*)"TrigConfig3", &ModParData, k);
+      if(retval < 0) ErrorInfo("Detector.cc", "BootSystem()", "Pixie16ReadSglModPar/TrigConfig3", retval);
+      if(APP32_TstBit(0, ModParData))
+	{
+	  ModParData = APP32_ClrBit(0, ModParData);
+	  retval = Pixie16WriteSglModPar((char*)"TrigConfig3", ModParData, k);
+	  if(retval < 0) ErrorInfo("Detector.cc", "BootSystem()", "Pixie16WriteSglModPar/TrigConfig3", retval);
+	}
     }
 
   

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:17 2018 (+0800)
-// Last-Updated: 六 9月 28 15:35:24 2019 (+0800)
+// Last-Updated: 六 10月 12 22:11:32 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 31
+//     Update #: 32
 // URL: http://wuhongyi.cn 
 
 #ifndef MAINFRAME_HH_
@@ -122,7 +122,6 @@ private:
   Simulation *simulation;
 
   Pixel_t color;
-  Pixel_t colorwhite;
   Detector *detector;
 
   virtual Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t);//process message queue

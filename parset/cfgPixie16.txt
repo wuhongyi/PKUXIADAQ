@@ -75,11 +75,24 @@ ModuleBits 7 14 14 14 16 14 14 14
 # waveform buffer is full,record header
 # down frequency output
 # speed up the event processing & removed a few unnecessary processing routines
-100M14bit_sys ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/syspixie16_revf_PKU_09272018.bin
-100M14bit_fip ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/fippixie16_revfpku_14b100m_r39574.bin
-100M14bit_dsplst ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.lst
-100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.ldr
-100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.var
+# 100M14bit_sys ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/syspixie16_revf_PKU_09272018.bin
+# 100M14bit_fip ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/fippixie16_revfpku_14b100m_r39574.bin
+# 100M14bit_dsplst ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.lst
+# 100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.ldr
+# 100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_09272018/Pixie16DSP_revfpku_14b100m_r40391.var
+
+# 4-ch debug signals of the front panel A to the chassis backplane, TrigConfig3[0] control
+# Multiplicity result output from RJ45 and front panel A
+# NoNegEnergy && AlwaysCompEnergy
+# waveform buffer is full,record header
+# down frequency output
+# speed up the event processing & removed a few unnecessary processing routines
+100M14bit_sys ../firmware/pixie16_revfpku_14b100m_firmware_release_10142019/syspixie16_revfpku_adc100mhz_r43228.bin
+100M14bit_fip ../firmware/pixie16_revfpku_14b100m_firmware_release_10142019/fippixie16_revfpku_14b100m_r39574.bin
+100M14bit_dsplst ../firmware/pixie16_revfpku_14b100m_firmware_release_10142019/Pixie16DSP_revfpku_14b100m_r40391.lst
+100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_firmware_release_10142019/Pixie16DSP_revfpku_14b100m_r40391.ldr
+100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_10142019/Pixie16DSP_revfpku_14b100m_r40391.var
+
 
 # Standard firmware
 # 100M14bit_sys ../firmware/pixie16_revf_general_14b100m_firmware_release/syspixie16_revfgeneral_adc100mhz_r33338.bin

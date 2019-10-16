@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:36 2016 (+0800)
-// Last-Updated: 日 8月 27 10:14:43 2017 (+0800)
+// Last-Updated: 三 10月 16 21:10:11 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 27
+//     Update #: 28
 // URL: http://wuhongyi.cn 
 
 #ifndef _LOGICTRIGGER_HH_
@@ -99,7 +99,7 @@ protected:
   TGComboBox *GroupOfTestSignals;
   TGComboBox *ChannelOfTestSignals;
   TGComboBox *TestSignals;
-
+  TGComboBox *DebugSignalsOfBackplane;
   
 private:
   Pixel_t color;

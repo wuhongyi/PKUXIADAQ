@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 日 6月  2 21:00:03 2019 (+0800)
+// Last-Updated: 三 10月 16 21:24:02 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 151
+//     Update #: 167
 // URL: http://wuhongyi.cn 
 
 #include "LogicTrigger.hh"
@@ -175,17 +175,15 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   Backplane->AddFrame(frontpaneloutputframe, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
   TGTextEntry *LabelFrontPanelOutput = new TGTextEntry(frontpaneloutputframe,new TGTextBuffer(100));
-  LabelFrontPanelOutput->SetText("Front Panel Monitor");
+  LabelFrontPanelOutput->SetText("Debug Monitor");
   LabelFrontPanelOutput->SetEnabled(kFALSE);
   LabelFrontPanelOutput->SetAlignment(kTextCenterX);
   fClient->GetColorByName("yellow", color);
   LabelFrontPanelOutput->SetBackgroundColor(color);
   // LabelFrontPanelOutput->SetToolTipText("", 0);
-  LabelFrontPanelOutput->Resize(200, 20);
+  LabelFrontPanelOutput->Resize(120, 20);
   frontpaneloutputframe->AddFrame(LabelFrontPanelOutput, new TGLayoutHints(kLHintsCenterX, 20, 0, 0, 0));
 
-
-  
   EnableDisableOfTestSignals = new TGComboBox(frontpaneloutputframe);
   frontpaneloutputframe->AddFrame(EnableDisableOfTestSignals, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
   EnableDisableOfTestSignals->Resize(100, 20);
@@ -218,6 +216,23 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
     }
   TestSignals->Select(1);
   
+  TGTextEntry *LabelBackplaneOutput = new TGTextEntry(frontpaneloutputframe,new TGTextBuffer(100));
+  LabelBackplaneOutput->SetText("Backplane");
+  LabelBackplaneOutput->SetEnabled(kFALSE);
+  LabelBackplaneOutput->SetAlignment(kTextCenterX);
+  fClient->GetColorByName("yellow", color);
+  LabelBackplaneOutput->SetBackgroundColor(color);
+  // LabelBackplaneOutput->SetToolTipText("", 0);
+  LabelBackplaneOutput->Resize(80, 20);
+  frontpaneloutputframe->AddFrame(LabelBackplaneOutput, new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
+
+  
+  DebugSignalsOfBackplane = new TGComboBox(frontpaneloutputframe);
+  frontpaneloutputframe->AddFrame(DebugSignalsOfBackplane, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  DebugSignalsOfBackplane->Resize(100, 20);
+  DebugSignalsOfBackplane->AddEntry("Disable", 1);
+  DebugSignalsOfBackplane->AddEntry("Enable", 2);
+  DebugSignalsOfBackplane->Select(1);
   
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -860,6 +875,12 @@ int LogicTrigger::load_info(Long_t mod)
 
   //=============================
 
+  retval = Pixie16ReadSglModPar((char*)"TrigConfig3", &ModParData, mod);
+  if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/TrigConfig3", retval);
+  gt = APP32_TstBit(0, ModParData);
+  DebugSignalsOfBackplane->Select(gt+1);
+
+  
   retval = Pixie16ReadSglModPar((char*)"TrigConfig0", &ModParData, mod);
   if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/TrigConfig0", retval);
   gt = APP32_TstBit(15, ModParData);
@@ -1170,7 +1191,6 @@ int LogicTrigger::change_values(Long_t mod)
   else
     ModParData = APP32_SetBit(15, ModParData);
 
-  
   if((GroupOfTestSignals->GetSelected()-1) >> 2)
     ModParData = APP32_SetBit(14, ModParData);
   else
@@ -1231,6 +1251,35 @@ int LogicTrigger::change_values(Long_t mod)
   retval = Pixie16WriteSglModPar((char*)"TrigConfig0", ModParData, mod);
   if(retval < 0) ErrorInfo("LogicTrigger.cc", "change_values(...)", "Pixie16WriteSglModPar/TrigConfig0", retval);
 
+
+  retval = Pixie16ReadSglModPar((char*)"TrigConfig3", &ModParData, mod);
+  if(retval < 0) ErrorInfo("LogicTrigger.cc", "change_values(...)", "Pixie16ReadSglModPar/TrigConfig3", retval);
+  if(DebugSignalsOfBackplane->GetSelected() == 1)
+    {
+      ModParData = APP32_ClrBit(0, ModParData);
+    }
+  else
+    {
+      ModParData = APP32_SetBit(0, ModParData);
+      for (int i = 0; i < numModules; ++i)
+	{
+	  if(i == mod) continue;
+	  unsigned int ModDebugData;
+	  retval = Pixie16ReadSglModPar((char*)"TrigConfig3", &ModDebugData, i);
+	  if(retval < 0) ErrorInfo("LogicTrigger.cc", "change_values(...)", "Pixie16ReadSglModPar/TrigConfig3", retval);
+	  if(APP32_TstBit(0, ModDebugData))
+	    {
+	      ModDebugData = APP32_ClrBit(0, ModDebugData);
+	      retval = Pixie16WriteSglModPar((char*)"TrigConfig3", ModDebugData, i);
+	      if(retval < 0) ErrorInfo("LogicTrigger.cc", "change_values(...)", "Pixie16WriteSglModPar/TrigConfig3", retval);
+	    }
+	}
+    }
+
+  retval = Pixie16WriteSglModPar((char*)"TrigConfig3", ModParData, mod);
+  if(retval < 0) ErrorInfo("LogicTrigger.cc", "change_values(...)", "Pixie16WriteSglModPar/TrigConfig3", retval);
+
+  
   load_info(mod);
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

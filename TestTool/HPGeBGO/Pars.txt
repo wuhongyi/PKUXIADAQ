@@ -1,0 +1,16 @@
+
+HPGeModule  1
+HPGeChannel 4
+
+BGOModule   0
+BGOChannel  11
+
+# unit: s
+RunTimesPerThreshold   30
+
+BGOThreshold 10 2 5 8 10 15 30 50 100 150 200
+
+#############################################
+
+Cali_k  0.0741604
+Cali_b  1.85821
