@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:18 2016 (+0800)
-// Last-Updated: 日 5月 27 03:59:07 2018 (+0800)
+// Last-Updated: 六 10月 19 17:00:17 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 33
+//     Update #: 35
 // URL: http://wuhongyi.cn 
 
 #include "decoder.hh"
@@ -138,6 +138,7 @@ bool decoder::decode()
       cfd = ( buff & kMaskcfd500 ) >> kShiftcfd500;
       cfds = ( buff & kMaskcfds500 ) >> kShiftcfds500;
       if(cfds == 7) cfdft = true;
+      else cfdft = false;// fix bug 20191019
       break;
     default:
       printf("error! Set Sample Rate: %d\n",samplerate);
