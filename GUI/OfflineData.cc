@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 2月 22 09:13:30 2018 (+0800)
-// Last-Updated: 四 2月 22 15:37:50 2018 (+0800)
+// Last-Updated: 六 10月 19 16:54:55 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 14
+//     Update #: 15
 // URL: http://wuhongyi.cn 
 
 #include "OfflineData.hh"
@@ -427,6 +427,7 @@ unsigned int OfflineData::GetEventCfdForcedTriggerBit(unsigned int event)
     case 500:
       temp = (OfflineEventInformation[event].Header[2] & kMaskcfds500) >> kShiftcfds500;
       if(temp == 7) temp = 1;
+      else temp = 0;
       break;
     default:
       std::cout<<"ERROR Sample Rate."<<std::endl;
