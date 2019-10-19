@@ -6353,6 +6353,85 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16ComputeSlowFiltersOffline (
 	
 }
 
+PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeCFDFiltersOffline (
+	unsigned short RcdTraceLength,     // recorded trace length
+	double w,
+	unsigned short B,
+	unsigned short D,
+	unsigned short L,
+	unsigned short *RcdTrace,          // recorded trace
+	double         *cfd )             // cfd response
+{
+  char ErrMSG[MAX_ERRMSG_LENGTH];
+  
+  // Check if RcdTrace is valid
+  if(RcdTrace == NULL)
+    {
+      sprintf(ErrMSG, "*Error* (HongyiWuPixie16ComputeCFDFiltersOffline): Null pointer *RcdTrace");
+      Pixie_Print_MSG(ErrMSG);
+      return(-1);
+    }
+
+  // Check if cfd is valid
+  if(cfd == NULL)
+    {
+      sprintf(ErrMSG, "*Error* (HongyiWuPixie16ComputeCFDFiltersOffline): Null pointer *cfd");
+      Pixie_Print_MSG(ErrMSG);
+      return(-2);
+    }
+
+  // Check if trace length is sufficiently long
+  if(RcdTraceLength < D+B+L)
+    {
+      sprintf(ErrMSG, "*Error* (HongyiWuPixie16ComputeCFDFiltersOffline): the length of recorded trace is too short");
+      Pixie_Print_MSG(ErrMSG);
+      return(-3);
+    }
+
+  int offset = D+B;
+  int i,j;
+  int fsum0,fsum1,fsum2,fsum3;
+  for (i = offset; i < RcdTraceLength-L; ++i)
+    {
+      fsum0 = 0;
+      for (j = i; j <= i+L; ++j)
+	{
+	  fsum0 += RcdTrace[j]; 
+	}
+
+      fsum1 = 0;
+      for (j = i-B; j <= i-B+L; ++j)
+	{
+	  fsum1 += RcdTrace[j]; 
+	}
+
+      fsum2 = 0;
+      for (j = i-D; j <= i-D+L; ++j)
+	{
+	  fsum2 += RcdTrace[j]; 
+	}
+
+      fsum3 = 0;
+      for (j = i-D-B; j <= i-D-B+L; ++j)
+	{
+	  fsum3 += RcdTrace[j]; 
+	}
+
+      cfd[i] = w*(fsum0-fsum1)-(fsum2-fsum3);
+    }
+
+  for (i = 0; i < offset; ++i)
+    {
+      cfd[i] = cfd[offset];
+    }
+  for (i = RcdTraceLength-L; i < RcdTraceLength; ++i)
+    {
+      cfd[i] = cfd[RcdTraceLength-L-1];
+    }
+
+  return(0);
+}
+
 
 PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeFastFiltersOffline (
 	char           *FileName,          // the list mode data file name (with complete path)

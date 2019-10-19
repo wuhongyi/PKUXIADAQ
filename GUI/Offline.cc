@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 二 9月 24 10:01:52 2019 (+0800)
+// Last-Updated: 六 10月 19 21:30:56 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 905
+//     Update #: 914
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -770,6 +770,47 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   oldofflinefilterrange->SetIntNumber(3);
 
 
+  TGLabel *Label500MCFD = new TGLabel(oldparFrame,"500M CFD  ");
+  oldparFrame->AddFrame(Label500MCFD, new TGLayoutHints(kLHintsLeft | kLHintsTop, 20, 2, 5, 0));
+  fClient->GetColorByName("red", color);
+  Label500MCFD->SetTextColor(color, false);
+
+  TGLabel *Label500MCFDw = new TGLabel(oldparFrame,"w:");
+  oldparFrame->AddFrame(Label500MCFDw, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("red", color);
+  Label500MCFDw->SetTextColor(color, false);
+  cfdfilter500Mparameter[0] = new TGNumberEntryField(oldparFrame, -1, 1, TGNumberFormat::kNESReal);
+  oldparFrame->AddFrame(cfdfilter500Mparameter[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  cfdfilter500Mparameter[0]->Resize(40, 20);
+
+  TGLabel *Label500MCFDB = new TGLabel(oldparFrame,"B:");
+  oldparFrame->AddFrame(Label500MCFDB, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("red", color);
+  Label500MCFDB->SetTextColor(color, false);
+  cfdfilter500Mparameter[1] = new TGNumberEntryField(oldparFrame, -1, 5, TGNumberFormat::kNESReal);
+  oldparFrame->AddFrame(cfdfilter500Mparameter[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  cfdfilter500Mparameter[1]->Resize(40, 20);
+
+  TGLabel *Label500MCFDD = new TGLabel(oldparFrame,"D:");
+  oldparFrame->AddFrame(Label500MCFDD, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("red", color);
+  Label500MCFDD->SetTextColor(color, false);
+  cfdfilter500Mparameter[2] = new TGNumberEntryField(oldparFrame, -1, 5, TGNumberFormat::kNESReal);
+  oldparFrame->AddFrame(cfdfilter500Mparameter[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  cfdfilter500Mparameter[2]->Resize(40, 20);
+
+  TGLabel *Label500MCFDL = new TGLabel(oldparFrame,"L:");
+  oldparFrame->AddFrame(Label500MCFDL, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  fClient->GetColorByName("red", color);
+  Label500MCFDL->SetTextColor(color, false);
+  cfdfilter500Mparameter[3] = new TGNumberEntryField(oldparFrame, -1, 1, TGNumberFormat::kNESReal);
+  oldparFrame->AddFrame(cfdfilter500Mparameter[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  cfdfilter500Mparameter[3]->Resize(40, 20);
+
+
+
+  
+  
   offlineonlywaveformevent = new TGCheckButton(oldparFrame, "Only Waveform Event");
   offlineonlywaveformevent->SetOn(kTRUE);
   oldparFrame->AddFrame(offlineonlywaveformevent, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 0, 3, 0));
@@ -2887,6 +2928,12 @@ void Offline::Panel1Draw()
   retval = HongyiWuPixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), offlinedata->GetEventWaveLocation(OfflineCurrentCount),tracelength, RcdTrace, doublefastfilter, doublecfd, doublecfds);//trace length/trace location
   if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "HongyiWuPixie16ComputeFastFiltersOffline", retval);
 
+  if(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()) == 500)
+    {
+      retval = HongyiWuPixie16ComputeCFDFiltersOffline(tracelength,(double)cfdfilter500Mparameter[0]->GetNumber(),(unsigned short)cfdfilter500Mparameter[1]->GetNumber(),(unsigned short)cfdfilter500Mparameter[2]->GetNumber(),(unsigned short)cfdfilter500Mparameter[3]->GetNumber(),RcdTrace,doublecfd);
+      if(retval < 0) ErrorInfo("Offline.cc", "Panel1Draw()", "HongyiWuPixie16ComputeCFDFiltersOffline", retval);
+    }
+  
   if(chooseslowfilterbaseline->GetSelected() == 0)
     {
       retval = HongyiWuPixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum->GetIntNumber(), offlinedata->GetEventWaveLocation(OfflineCurrentCount), tracelength, RcdTrace,doubleslowfilter );//trace length/trace location
@@ -3127,7 +3174,12 @@ void Offline::Panel2Draw()
 	  doubleslowfilter2[i] = new double[tracelength2[i]];
 
 	  retval = HongyiWuPixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)i, offlinedata->GetEventWaveLocation(OfflineCurrentCount2[i]), tracelength2[i], RcdTrace2[i], doublefastfilter2[i], doublecfd2[i], doublecfds2[i]);//trace location
-	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "HongyiWuPixie16ComputeFastFiltersOffline", retval);
+	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "HongyiWuPixie16ComputeFastFiltersOffline", retval);	  
+	  if(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()) == 500)
+	    {
+	      retval = HongyiWuPixie16ComputeCFDFiltersOffline(tracelength2[i],1,5,5,1,RcdTrace2[i],doublecfd2[i]);
+	      if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "HongyiWuPixie16ComputeCFDFiltersOffline", retval);
+	    }	
 	  retval = HongyiWuPixie16ComputeSlowFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)i, offlinedata->GetEventWaveLocation(OfflineCurrentCount2[i]), tracelength2[i], RcdTrace2[i],doubleslowfilter2[i]);//trace localtion
 	  if(retval < 0) ErrorInfo("Offline.cc", "Panel2Draw()", "HongyiWuPixie16ComputeSlowFiltersOffline", retval);
 	  
@@ -3483,6 +3535,13 @@ void Offline::Panel5Draw()
 	      
 	      retval = HongyiWuPixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short) offlinechnum5->GetIntNumber(), offlinedata->GetEventWaveLocation(i), offlinedata->GetEventTraceLength(i), RcdTrace5, doublefastfilter5, doublecfd5, doublecfds5);//trace location/trace length
 	      if(retval < 0) ErrorInfo("Offline.cc", "Panel5Draw()", "HongyiWuPixie16ComputeFastFiltersOffline", retval);
+	      if(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()) == 500)
+		{
+		  retval = HongyiWuPixie16ComputeCFDFiltersOffline(offlinedata->GetEventTraceLength(i),1,5,5,1,RcdTrace,doublecfd5);
+		  if(retval < 0) ErrorInfo("Offline.cc", "Panel5Draw()", "HongyiWuPixie16ComputeCFDFiltersOffline", retval);
+		}
+
+	      
 	      int intmaxcfd = -1;
 	      double doublemaxcfd = -1;
 	      for (int j = 0; j < inttracelength; ++j)

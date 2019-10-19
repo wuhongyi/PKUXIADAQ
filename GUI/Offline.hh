@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 四 9月 12 15:25:32 2019 (+0800)
+// Last-Updated: 六 10月 19 21:20:45 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 180
+//     Update #: 181
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -214,6 +214,7 @@ private:
   TGComboBox *choosedrawmarkerstyle;
   TGNumberEntryField *oldslowfilterparameter[3];
   TGNumberEntry* oldofflinefilterrange;
+  TGNumberEntryField *cfdfilter500Mparameter[4];
   
   int tracelength;
   TMultiGraph *offlinemultigraph;

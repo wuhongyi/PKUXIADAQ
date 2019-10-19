@@ -338,7 +338,15 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16ComputeSlowFiltersOffline (
 	unsigned short *RcdTrace,          // recorded trace
 	double         *slowfilter );      // slow filter response
 
-
+PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeCFDFiltersOffline (
+	unsigned short RcdTraceLength,     // recorded trace length
+	double w,
+	unsigned short B,
+	unsigned short D,
+	unsigned short L,
+	unsigned short *RcdTrace,          // recorded trace
+	double         *cfd );             // cfd response
+  
 
 PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeFastFiltersOffline (
 	char           *FileName,          // the list mode data file name (with complete path)

@@ -159,7 +159,7 @@ private:
   unsigned int buff[PRESET_MAX_MODULES][BUFFLENGTH];
   int buffid[PRESET_MAX_MODULES];
   unsigned long FILESIZE[PRESET_MAX_MODULES];
-  // unsigned int  *evtlen;// TODO  in dan't fixed length
+
 
   struct Module_Info ModuleInformation[PRESET_MAX_MODULES];
   
