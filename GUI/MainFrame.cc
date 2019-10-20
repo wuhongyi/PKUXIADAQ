@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 六 10月 12 22:11:32 2019 (+0800)
+// Last-Updated: 日 10月 20 22:38:15 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 107
+//     Update #: 207
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -35,10 +35,13 @@ MainFrame::MainFrame(const TGWindow * p)
   runnum = 0;
 
   SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
-
+  // gClient->GetHilite(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  // gClient->GetShadow(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   CreateMenuBar();
+  ControlPanel(this);
 
+  
   SetWindowName("GDDAQ");
   MapSubwindows();
   MapWindow();
@@ -106,13 +109,6 @@ void MainFrame::CreateMenuBar()
   MenuBar->AddPopup("&Offline", MenuOffline, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
 
   SetMenuStatus(false,flagonlinemode);
-
-
-  TGTab *TabPanel = new TGTab(this);
-  this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
-  TabPanel->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
-  TGCompositeFrame *Tab2 = TabPanel->AddTab("List Mode");
-  MakeFold2Panel(Tab2);
 
 }
 
@@ -289,31 +285,59 @@ void MainFrame::save_setup(char *name)
   std::cout << "saving setup to file: " << name << std::endl;
 }
 
-void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel)
+void MainFrame::ControlPanel(TGCompositeFrame *TabPanel)
 {
   TabPanel->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
-  
-  TGCompositeFrame *LogoFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-  TabPanel->AddFrame(LogoFrame, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  LogoFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
-  
-  TGImageMap* fImagePKU = new TGImageMap(LogoFrame, "../icons/logo1.jpg");
-  fImagePKU->Resize(100,100);
-  fImagePKU->ChangeOptions(fImagePKU->GetOptions() | kFixedSize);
-  LogoFrame->AddFrame(fImagePKU,new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 0, 0));
-
-  TGImageMap* fImageWHY = new TGImageMap(LogoFrame, "../icons/logo2.jpg");
-  fImageWHY->Resize(100,100);
-  fImageWHY->ChangeOptions(fImageWHY->GetOptions() | kFixedSize);
-  LogoFrame->AddFrame(fImageWHY,new TGLayoutHints(kLHintsTop | kLHintsRight, 100, 0, 0, 0));
-
-  
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
+  TGCompositeFrame *TitleFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+  TabPanel->AddFrame(TitleFrame, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  TitleFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
+
+  TGTextEntry *titleinfor = new TGTextEntry(TitleFrame,new TGTextBuffer(300), 10000);
+  TitleFrame->AddFrame(titleinfor, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 0, 0));
+  titleinfor->SetAlignment(kTextCenterX);
+  titleinfor->SetFont(TITLE_FONT, false);
+  titleinfor->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  titleinfor->SetText("List Mode");
+  titleinfor->Resize(INITIAL_WIDTH, TITLE_LISTMODE_HIGHT);
+  titleinfor->SetEnabled(kFALSE);
+  titleinfor->SetFrameDrawn(kFALSE);
+  titleinfor->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  TGGroupFrame *bootframe = new TGGroupFrame(TabPanel,"");
+  TabPanel->AddFrame(bootframe,new TGLayoutHints(kLHintsExpandX|kLHintsTop,INITIAL_SIDE_WIDTH,INITIAL_SIDE_WIDTH,0,0));
+  bootframe->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  // bootframe->SetTextColor(TColor::RGB2Pixel(0,0,0));
+  // bootframe->DrawBorder();
+
+
+
+  TGCompositeFrame *LogoFrame = new TGCompositeFrame(bootframe, 0, 0, kHorizontalFrame);
+  bootframe->AddFrame(LogoFrame, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 10, 10));
+  LogoFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
+  TGImageMap* fImagePKU = new TGImageMap(LogoFrame, "../icons/logo1.png");
+  LogoFrame->AddFrame(fImagePKU,new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 0, 0));
+  fImagePKU->Resize(100,100);
+  fImagePKU->ChangeOptions(fImagePKU->GetOptions() | kFixedSize);
+  fImagePKU->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
+  TGImageMap* fImageWHY = new TGImageMap(LogoFrame, "../icons/logo2.png");
+  LogoFrame->AddFrame(fImageWHY,new TGLayoutHints(kLHintsTop | kLHintsRight, 70, 0, 0, 0));
+  fImageWHY->Resize(100,100);
+  fImageWHY->ChangeOptions(fImageWHY->GetOptions() | kFixedSize);
+  fImageWHY->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
+
+  
   //make the buttons frame        
-  TGCompositeFrame *ButtonFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-  TabPanel->AddFrame(ButtonFrame, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));  
+  TGCompositeFrame *ButtonFrame = new TGCompositeFrame(bootframe, 0, 0, kHorizontalFrame);
+  bootframe->AddFrame(ButtonFrame, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 7, 7));  
   ButtonFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   // Online mode
@@ -322,26 +346,48 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel)
   onlinemode->SetTextColor(TColor::RGB2Pixel(CHECKBUTTON_TEXT_R,CHECKBUTTON_TEXT_G,CHECKBUTTON_TEXT_B));
   onlinemode->SetState(kButtonDown);
   onlinemode->Connect("Clicked()","MainFrame",this,"SetOnlineMode()");
-  ButtonFrame->AddFrame(onlinemode,new TGLayoutHints(kLHintsLeft|kLHintsTop,5,10,15,0));
+  ButtonFrame->AddFrame(onlinemode,new TGLayoutHints(kLHintsLeft|kLHintsTop,5,10,0,0));
   
   // BOOT button//////////////////////////////////////////////////////////////    
   bootB = new TGTextButton(ButtonFrame, "  Boot  ", BOOT_BUTTON);
-  ButtonFrame->AddFrame(bootB, new TGLayoutHints(kLHintsLeft | kLHintsTop, 105, 10,10, 0));
-  bootB->SetFont("-adobe-helvetica-medium-r-*-*-12-*-*-*-*-*-iso8859-1", false);
+  ButtonFrame->AddFrame(bootB, new TGLayoutHints(kLHintsLeft | kLHintsTop | kLHintsExpandX, 80, 0,0, 0));
+  bootB->SetFont("-*-*-bold-r-*-*-18-*-*-*-*-*-iso8859-1", false);//adobe  helvetica
+  bootB->Resize(75,24);
   bootB->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
   bootB->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
   bootB->Associate(this);
   
 
-
-
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+  // TGHorizontalFrame *splitline1 = new TGHorizontalFrame(TabPanel,INITIAL_WIDTH, 30,kFixedHeight);
+  // TabPanel->AddFrame(splitline1, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 20, 20));
+  // splitline1->SetBackgroundColor(TColor::RGB2Pixel(0,0,0));
+  TGHSplitter *hsplitter1 = new TGHSplitter(TabPanel,INITIAL_WIDTH,2);
+  // hsplitter->SetFrame(bootframe, kTRUE);
+  TabPanel->AddFrame(hsplitter1, new TGLayoutHints(kLHintsTop | kLHintsExpandX,0,0,10,10));
+  hsplitter1->SetBackgroundColor(TColor::RGB2Pixel(0,0,0));
+  
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
   
   // Set up for file store parametrs
-  TGGroupFrame *filesetgroup = new TGGroupFrame(TabPanel,"Setup");// TODO 字体字样设置
-  TabPanel->AddFrame(filesetgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  TGCompositeFrame *filesetgroup = new TGCompositeFrame(TabPanel,0,0);
+ TabPanel->AddFrame(filesetgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop,INITIAL_SIDE_WIDTH,INITIAL_SIDE_WIDTH,0,0));
   filesetgroup->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
-  filesetgroup->SetTextColor(TColor::RGB2Pixel(255,255,255));
+
+  TGTextEntry *labelsetup = new TGTextEntry(filesetgroup,new TGTextBuffer(300), 10000);
+  filesetgroup->AddFrame(labelsetup, new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, TITLE_TOP_HIGHT, TITLE_BOTTON_HIGHT));
+  labelsetup->SetFont(TITLE_FONT, false);
+  labelsetup->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  labelsetup->SetText("Setup");
+  labelsetup->SetEnabled(kFALSE);
+  labelsetup->SetFrameDrawn(kFALSE);
+  labelsetup->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
+
+
+  
   
   // FILE path frame
   TGHorizontalFrame *filepath = new TGHorizontalFrame(filesetgroup);
@@ -386,12 +432,31 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel)
   filesetdone->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+  TGHSplitter *hsplitter2 = new TGHSplitter(TabPanel,INITIAL_WIDTH,2);
+  TabPanel->AddFrame(hsplitter2, new TGLayoutHints(kLHintsTop | kLHintsExpandX,0,0,10,10));
+  hsplitter2->SetBackgroundColor(TColor::RGB2Pixel(0,0,0));
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
   
   // Control of list mode run
-  TGGroupFrame *controlgroup = new TGGroupFrame(TabPanel,"Control");
-  TabPanel->AddFrame(controlgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  TGCompositeFrame *controlgroup = new TGCompositeFrame(TabPanel,0,0);
+  TabPanel->AddFrame(controlgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop,INITIAL_SIDE_WIDTH,INITIAL_SIDE_WIDTH,0,0));
   controlgroup->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
-  controlgroup->SetTextColor(TColor::RGB2Pixel(255,255,255));
+
+  TGTextEntry *labelcontrol = new TGTextEntry(controlgroup,new TGTextBuffer(300), 10000);
+  controlgroup->AddFrame(labelcontrol, new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, TITLE_TOP_HIGHT, TITLE_BOTTON_HIGHT));
+  labelcontrol->SetFont(TITLE_FONT, false);
+  labelcontrol->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  labelcontrol->SetText("Control");
+  labelcontrol->SetEnabled(kFALSE);
+  labelcontrol->SetFrameDrawn(kFALSE);
+  labelcontrol->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
+
+
+
   
   TGHorizontalFrame *cgrouphframe0 = new TGHorizontalFrame(controlgroup);
   controlgroup->AddFrame(cgrouphframe0,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
@@ -420,13 +485,13 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel)
   controlgroup->AddFrame(cgrouphframe1,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
   cgrouphframe1->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   // start/stop LSM run button
-  startdaq = new TGTextButton(cgrouphframe1,"RunStart");
+  startdaq = new TGTextButton(cgrouphframe1,"Run Start");
   startdaq->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
   startdaq->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
   startdaq->SetFont("-adobe-helvetica-medium-r-*-*-20-*-*-*-*-*-iso8859-1", false);
   startdaq->Connect("Pressed()","MainFrame",this,"StartRun()");
   startdaq->SetEnabled(0);
-  startdaq->Resize(110,110);
+  startdaq->Resize(INITIAL_CONTANT_WIDTH,46);
   startdaq->ChangeOptions(startdaq->GetOptions() | kFixedSize);
   cgrouphframe1->AddFrame(startdaq,new TGLayoutHints(kLHintsCenterX|kLHintsTop));
 
@@ -458,12 +523,32 @@ void MainFrame::MakeFold2Panel(TGCompositeFrame *TabPanel)
   filerunnum->SetText(tmp);
   inrunnumber.close();
 
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+  TGHSplitter *hsplitter3 = new TGHSplitter(TabPanel,INITIAL_WIDTH,2);
+  TabPanel->AddFrame(hsplitter3, new TGLayoutHints(kLHintsTop | kLHintsExpandX,0,0,10,10));
+  hsplitter3->SetBackgroundColor(TColor::RGB2Pixel(0,0,0));
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   // run information
-  TGGroupFrame *informationgroup = new TGGroupFrame(TabPanel,"Information");
-  TabPanel->AddFrame(informationgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  TGCompositeFrame *informationgroup = new TGCompositeFrame(TabPanel,0,0);
+  TabPanel->AddFrame(informationgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop,INITIAL_SIDE_WIDTH,INITIAL_SIDE_WIDTH,0,0));
   informationgroup->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
-  informationgroup->SetTextColor(TColor::RGB2Pixel(255,255,255));
+
+
+  TGTextEntry *labelinformation = new TGTextEntry(informationgroup,new TGTextBuffer(300), 10000);
+  informationgroup->AddFrame(labelinformation, new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, TITLE_TOP_HIGHT, TITLE_BOTTON_HIGHT));
+  labelinformation->SetFont(TITLE_FONT, false);
+  labelinformation->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  labelinformation->SetText("Information");
+  labelinformation->SetEnabled(kFALSE);
+  labelinformation->SetFrameDrawn(kFALSE);
+  labelinformation->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
+
+
+
   
   TGHorizontalFrame *versionstatusframe = new TGHorizontalFrame(informationgroup);
   informationgroup->AddFrame(versionstatusframe,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
@@ -638,13 +723,13 @@ void MainFrame::StartRun()
       // start a new run, not resume
       fstartdaq = 1;
       fstopdaq = 0;
-      startdaq->SetText("RunStop");
+      startdaq->SetText("Run Stop");
       RunReadData();
     }
   else
     {
       fstartdaq = 0;
-      startdaq->SetText("RunStart");
+      startdaq->SetText("Run Start");
       filerunnum->SetIntNumber((++runnum));
 
       ofstream outrunnumber("../parset/RunNumber");

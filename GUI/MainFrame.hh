@@ -4,16 +4,23 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:17 2018 (+0800)
-// Last-Updated: 六 10月 12 22:11:32 2019 (+0800)
+// Last-Updated: 日 10月 20 22:29:35 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 32
+//     Update #: 42
 // URL: http://wuhongyi.cn 
 
 #ifndef MAINFRAME_HH_
 #define MAINFRAME_HH_
 
 #define INITIAL_HIGHT 850
-#define INITIAL_WIDTH 300
+#define INITIAL_CONTANT_WIDTH 300
+#define INITIAL_SIDE_WIDTH 20
+#define INITIAL_WIDTH (INITIAL_CONTANT_WIDTH+2*INITIAL_SIDE_WIDTH)
+#define TITLE_LISTMODE_HIGHT  30
+#define TITLE_TOP_HIGHT 10
+#define TITLE_BOTTON_HIGHT 13
+#define TITLE_FONT "-*-*-bold-r-*-*-20-*-*-*-*-*-iso8859-1"
+
 
 #include "Global.hh"
 #include "Base.hh"
@@ -43,6 +50,7 @@
 #include "TGNumberEntry.h"
 #include "TGLabel.h"
 #include "TGraph.h"
+#include "TGSplitter.h"
 #include "TGStatusBar.h"
 #include "TGTab.h"
 #include "TGTextEntry.h"
@@ -128,7 +136,7 @@ private:
   void CloseWindow(); //close main window
   void CreateMenuBar(void); //creates menu bar of the main window
 
-  void MakeFold2Panel(TGCompositeFrame *TabPanel);
+  void ControlPanel(TGCompositeFrame *TabPanel);
 
   void save_setup(char *name);
 

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 8月  9 09:24:46 2016 (+0800)
-// Last-Updated: 六 10月 19 21:54:31 2019 (+0800)
+// Last-Updated: 日 10月 20 19:51:04 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 28
+//     Update #: 30
 // URL: http://wuhongyi.cn 
 
 #ifndef _GLOBAL_HH_
@@ -35,13 +35,13 @@ Technical Support:\n\
 \n\
 ";
 
-// #define FRAME_BG_R  62
-// #define FRAME_BG_G  62
-// #define FRAME_BG_B  62
+#define FRAME_BG_R  62
+#define FRAME_BG_G  62
+#define FRAME_BG_B  62
 
-#define FRAME_BG_R  255
-#define FRAME_BG_G  255
-#define FRAME_BG_B  255
+// #define FRAME_BG_R  255
+// #define FRAME_BG_G  255
+// #define FRAME_BG_B  255
 
 #define TOPBAR_BG_R  255
 #define TOPBAR_BG_G  192
@@ -51,25 +51,30 @@ Technical Support:\n\
 #define TOPBAR_TEXT_G  192
 #define TOPBAR_TEXT_B  203
 
+#define TITLE_TEXT_R  255
+#define TITLE_TEXT_G  255
+#define TITLE_TEXT_B  255
+
+
 #define TEXTBUTTON_BG_R  34
 #define TEXTBUTTON_BG_G  151
 #define TEXTBUTTON_BG_B  159
 
-// #define TEXTBUTTON_TEXT_R  255
-// #define TEXTBUTTON_TEXT_G  255
-// #define TEXTBUTTON_TEXT_B  255
+#define TEXTBUTTON_TEXT_R  255
+#define TEXTBUTTON_TEXT_G  255
+#define TEXTBUTTON_TEXT_B  255
 
-// #define CHECKBUTTON_TEXT_R  255
-// #define CHECKBUTTON_TEXT_G  255
-// #define CHECKBUTTON_TEXT_B  255
+#define CHECKBUTTON_TEXT_R  255
+#define CHECKBUTTON_TEXT_G  255
+#define CHECKBUTTON_TEXT_B  255
 
-#define TEXTBUTTON_TEXT_R  0
-#define TEXTBUTTON_TEXT_G  0
-#define TEXTBUTTON_TEXT_B  0
+// #define TEXTBUTTON_TEXT_R  0
+// #define TEXTBUTTON_TEXT_G  0
+// #define TEXTBUTTON_TEXT_B  0
 
-#define CHECKBUTTON_TEXT_R  0
-#define CHECKBUTTON_TEXT_G  0
-#define CHECKBUTTON_TEXT_B  0
+// #define CHECKBUTTON_TEXT_R  0
+// #define CHECKBUTTON_TEXT_G  0
+// #define CHECKBUTTON_TEXT_B  0
 
 
 void ErrorInfo(const char *filename,const char *funcname,const char *detial,int ErrorN);
