@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 8月  9 09:24:46 2016 (+0800)
-// Last-Updated: 一 10月 21 20:59:29 2019 (+0800)
+// Last-Updated: 一 10月 21 22:14:42 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 45
+//     Update #: 47
 // URL: http://wuhongyi.cn 
 
 #ifndef _GLOBAL_HH_
@@ -80,12 +80,33 @@ Art Director:\n\
 #define COLOR_RED_B  0
 
 #define COLOR_GREEN_R  0
-#define COLOR_GREEN_G  128
+#define COLOR_GREEN_G  255
 #define COLOR_GREEN_B  0
 
 #define COLOR_BLUE_R  0
 #define COLOR_BLUE_G  0
 #define COLOR_BLUE_B  255
+
+
+#define INITIAL_HIGHT 850
+#define INITIAL_CONTANT_WIDTH 300
+#define INITIAL_SIDE_WIDTH 20
+#define INITIAL_WIDTH (INITIAL_CONTANT_WIDTH+2*INITIAL_SIDE_WIDTH)
+#define TITLE_LISTMODE_HIGHT  30
+#define TITLE_TOP_HIGHT 10
+#define TITLE_BOTTON_HIGHT 13
+#define TITLE_FONT "-*-*-bold-r-*-*-20-*-*-*-*-*-iso8859-1"
+#define INFORMATION_FONT "-*-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1"
+#define CHECKBUTTON_FONT "-*-*-bold-r-*-*-14-*-*-*-*-*-iso8859-1"
+#define LABEL_FONT "-*-arial-*-r-*-*-14-*-*-*-*-*-iso8859-1"
+#define TEXTENTRY_FONT "-*-*-*-r-*-*-18-*-*-*-*-*-iso8859-1"
+#define TEXTBUTTON_FONT "-*-*-bold-r-*-*-18-*-*-*-*-*-iso8859-1"
+#define STARTSTOP_TEXTBUTTON_FONT "-adobe-helvetica-medium-r-*-*-20-*-*-*-*-*-iso8859-1"
+// Normal Medium Bold Light DemiboldBlack
+// Roman Italic Oblique
+
+
+
 
 
 void ErrorInfo(const char *filename,const char *funcname,const char *detial,int ErrorN);

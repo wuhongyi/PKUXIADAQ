@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 六 10月 19 21:30:56 2019 (+0800)
+// Last-Updated: 一 10月 21 21:34:05 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 914
+//     Update #: 915
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -394,12 +394,12 @@ void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *LogoFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
 
-  TGImageMap* fImagePKU = new TGImageMap(LogoFrame, "../icons/logo1.jpg");
+  TGImageMap* fImagePKU = new TGImageMap(LogoFrame, "../icons/logo1.png");
   fImagePKU->Resize(100,100);
   fImagePKU->ChangeOptions(fImagePKU->GetOptions() | kFixedSize);
   LogoFrame->AddFrame(fImagePKU,new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 0, 0));
 
-  TGImageMap* fImageWHY = new TGImageMap(LogoFrame, "../icons/logo2.jpg");
+  TGImageMap* fImageWHY = new TGImageMap(LogoFrame, "../icons/logo2.png");
   fImageWHY->Resize(100,100);
   fImageWHY->ChangeOptions(fImageWHY->GetOptions() | kFixedSize);
   LogoFrame->AddFrame(fImageWHY,new TGLayoutHints(kLHintsTop | kLHintsRight, 100, 0, 0, 0));

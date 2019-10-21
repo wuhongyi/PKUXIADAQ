@@ -53,7 +53,6 @@ protected:
       COPYBUTTON,
       FINDTAU
     };
-
 };
 
 #endif /*TABLE_HH_*/
