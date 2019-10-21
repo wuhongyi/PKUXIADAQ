@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:17 2018 (+0800)
-// Last-Updated: 日 10月 20 22:29:35 2019 (+0800)
+// Last-Updated: 一 10月 21 21:04:40 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 42
+//     Update #: 55
 // URL: http://wuhongyi.cn 
 
 #ifndef MAINFRAME_HH_
@@ -20,6 +20,15 @@
 #define TITLE_TOP_HIGHT 10
 #define TITLE_BOTTON_HIGHT 13
 #define TITLE_FONT "-*-*-bold-r-*-*-20-*-*-*-*-*-iso8859-1"
+#define INFORMATION_FONT "-*-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1"
+#define CHECKBUTTON_FONT "-*-*-bold-r-*-*-14-*-*-*-*-*-iso8859-1"
+#define LABEL_FONT "-*-arial-*-r-*-*-14-*-*-*-*-*-iso8859-1"
+#define TEXTENTRY_FONT "-*-*-*-r-*-*-18-*-*-*-*-*-iso8859-1"
+#define TEXTBUTTON_FONT "-*-*-bold-r-*-*-18-*-*-*-*-*-iso8859-1"
+#define STARTSTOP_TEXTBUTTON_FONT "-adobe-helvetica-medium-r-*-*-20-*-*-*-*-*-iso8859-1"
+// Normal Medium Bold Light DemiboldBlack
+// Roman Italic Oblique
+
 
 
 #include "Global.hh"
@@ -129,7 +138,6 @@ private:
   Offline *popupoffline;
   Simulation *simulation;
 
-  Pixel_t color;
   Detector *detector;
 
   virtual Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t);//process message queue
