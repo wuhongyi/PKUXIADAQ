@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 3月  8 14:18:45 2018 (+0800)
-// Last-Updated: 五 3月  9 16:44:09 2018 (+0800)
+// Last-Updated: 二 10月 22 12:11:11 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 12
+//     Update #: 13
 // URL: http://wuhongyi.cn 
 
 #ifndef _COPYPARS_H_
@@ -59,7 +59,6 @@ protected:
   void  checkbutton(Long_t parm1);
   
 private:
-  Pixel_t color;
   Detector *detector;
 
   TGVerticalFrame *columnlabel;

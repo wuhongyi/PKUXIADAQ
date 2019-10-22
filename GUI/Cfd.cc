@@ -2,6 +2,7 @@
 #include "Global.hh"
 
 #include "pixie16app_export.h"
+#include "TColor.h"
 #include <iostream>
 using namespace std;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -16,37 +17,46 @@ Cfd::Cfd(const TGWindow *p, const TGWindow * main, char *name, int columns, int 
       Labels[i]->SetText(TString::Format("%2d",i).Data());
     }
   CLabel[0]->SetText("CFD Delay[us]");
-  CLabel[0]->SetAlignment(kTextCenterX);
   CLabel[1]->SetText("CFD Frac[0-7]");
-  CLabel[1]->SetAlignment(kTextCenterX);
-  CLabel[2]->SetText("CFD Thre");
-  CLabel[2]->SetAlignment(kTextCenterX);
-  
+  CLabel[2]->SetText("CFD Thre");  
    
-  // ***** COPY BUTTON *********
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
   TGHorizontal3DLine *ln2 = new TGHorizontal3DLine(mn_vert, 200, 2);
   mn_vert->AddFrame(ln2, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
+  
   TGHorizontalFrame *CopyButton = new TGHorizontalFrame(mn_vert, 400, 300);
   mn_vert->AddFrame(CopyButton, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-
+  CopyButton->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGLabel *Copy = new TGLabel(CopyButton, "Select channel #");
-
+  CopyButton->AddFrame(Copy, new TGLayoutHints(kLHintsCenterX, 5, 10, 5, 0));
+  Copy->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  Copy->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  
   chanCopy = new TGNumberEntry(CopyButton, 0, 4, MODNUMBER+1000, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3/*kNELLimitMinMax*/,0, 3);
+  CopyButton->AddFrame(chanCopy, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 3, 0));
   chanCopy->SetButtonToNum(0);
   chanCopy->IsEditable();
   chanCopy->SetIntNumber(0);
-  CopyButton->AddFrame(Copy, new TGLayoutHints(kLHintsCenterX, 5, 10, 3, 0));
-  CopyButton->AddFrame(chanCopy, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 0, 0));
-
   chanCopy->Associate(this);
+  chanCopy->GetNumberEntry()->ChangeOptions(chanCopy->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  chanCopy->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  chanCopy->GetButtonUp()->ChangeOptions(chanCopy->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  chanCopy->GetButtonDown()->ChangeOptions(chanCopy->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  chanCopy->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
 
-  ////////////////////Copy button per se///////////////////
   TGTextButton *copyB = new TGTextButton(CopyButton, "C&opy", COPYBUTTON+1000);
+  CopyButton->AddFrame(copyB, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 0, 0));
   copyB->Associate(this);
   copyB->SetToolTipText("Copy the setup of the selected channel to all channels of the module", 0);
-  CopyButton->AddFrame(copyB, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 0, 0));
+  copyB->ChangeOptions(copyB->GetOptions() ^ kRaisedFrame);
+  copyB->SetFont(TEXTBUTTON_FONT, false);
+  copyB->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  copyB->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
 
-
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
   chanNumber = 0;
   MapSubwindows();
   Resize();// resize to default size

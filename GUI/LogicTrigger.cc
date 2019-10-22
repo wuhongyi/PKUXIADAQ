@@ -4,16 +4,16 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 三 10月 16 21:24:02 2019 (+0800)
+// Last-Updated: 二 10月 22 18:29:14 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 167
+//     Update #: 215
 // URL: http://wuhongyi.cn 
 
 #include "LogicTrigger.hh"
 #include "Global.hh"
 
 #include "pixie16app_export.h"
-
+#include "TColor.h"
 #include <iostream>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 #define MULTIPLICITYOFFSET 6
@@ -27,29 +27,17 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
       Labels[i]->SetText(TString::Format("%2d",i).Data());
     }
   CLabel[0]->SetText("ExtTrigStr[us]");
-  CLabel[0]->SetAlignment(kTextCenterX);
-  fClient->GetColorByName("blue", color);
-  CLabel[0]->SetTextColor(color, false);
+  CLabel[0]->SetTextColor(TColor::RGB2Pixel(COLOR_BLUE_R,COLOR_BLUE_G,COLOR_BLUE_B), false);
   CLabel[1]->SetText("ExtDelLen[us]");
-  CLabel[1]->SetAlignment(kTextCenterX);
-  fClient->GetColorByName("green", color);
-  CLabel[1]->SetTextColor(color, false);
+  CLabel[1]->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
   CLabel[2]->SetText("FtrigoutDel[us]");
-  CLabel[2]->SetAlignment(kTextCenterX);
-  fClient->GetColorByName("red", color);
-  CLabel[2]->SetTextColor(color, false);
+  CLabel[2]->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
   CLabel[3]->SetText("VetoStr[us]");
-  CLabel[3]->SetAlignment(kTextCenterX);
-  fClient->GetColorByName("purple", color);
-  CLabel[3]->SetTextColor(color, false);
+  CLabel[3]->SetTextColor(TColor::RGB2Pixel(COLOR_PURPLE_R,COLOR_PURPLE_G,COLOR_PURPLE_B), false);
   CLabel[4]->SetText("ChaTrigStr[us]");
-  CLabel[4]->SetAlignment(kTextCenterX);
-  fClient->GetColorByName("blue", color);
-  CLabel[4]->SetTextColor(color, false);
+  CLabel[4]->SetTextColor(TColor::RGB2Pixel(COLOR_BLUE_R,COLOR_BLUE_G,COLOR_BLUE_B), false);
   CLabel[5]->SetText("FastTriBaLen[us]");
-  CLabel[5]->SetAlignment(kTextCenterX);
-  fClient->GetColorByName("red", color);
-  CLabel[5]->SetTextColor(color, false);
+  CLabel[5]->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
   CLabel[0]->SetToolTipText("External trigger stretch length", 0);
   CLabel[1]->SetToolTipText("Extern delay", 0);
   CLabel[2]->SetToolTipText("Fast trigger delay length", 0);
@@ -61,32 +49,35 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
 
   CLabel[MULTIPLICITYOFFSET+0]->SetText("Left[0-FFFF]");
   CLabel[MULTIPLICITYOFFSET+0]->SetAlignment(kTextCenterX);
-  fClient->GetColorByName("orange", color);
-  CLabel[MULTIPLICITYOFFSET+0]->SetTextColor(color, false);
+  CLabel[MULTIPLICITYOFFSET+0]->SetTextColor(TColor::RGB2Pixel(COLOR_ORANGE_R,COLOR_ORANGE_G,COLOR_ORANGE_B), false);
+  
   CLabel[MULTIPLICITYOFFSET+1]->SetText("Itself[0-FFFF]");
   CLabel[MULTIPLICITYOFFSET+1]->SetAlignment(kTextCenterX);
-  fClient->GetColorByName("orange", color);
-  CLabel[MULTIPLICITYOFFSET+1]->SetTextColor(color, false);
+  CLabel[MULTIPLICITYOFFSET+1]->SetTextColor(TColor::RGB2Pixel(COLOR_ORANGE_R,COLOR_ORANGE_G,COLOR_ORANGE_B), false);
+  
   CLabel[MULTIPLICITYOFFSET+2]->SetText("Right[0-FFFF]");
   CLabel[MULTIPLICITYOFFSET+2]->SetAlignment(kTextCenterX);
-  fClient->GetColorByName("orange", color);
-  CLabel[MULTIPLICITYOFFSET+2]->SetTextColor(color, false);
+  CLabel[MULTIPLICITYOFFSET+2]->SetTextColor(TColor::RGB2Pixel(COLOR_ORANGE_R,COLOR_ORANGE_G,COLOR_ORANGE_B), false);
+  
   CLabel[MULTIPLICITYOFFSET+3]->SetText("ItselfCoin[0-7]");//1st
-  CLabel[MULTIPLICITYOFFSET+3]->SetTextColor(color, false);
+  CLabel[MULTIPLICITYOFFSET+3]->SetTextColor(TColor::RGB2Pixel(COLOR_YELLOW_R,COLOR_YELLOW_G,COLOR_YELLOW_B), false);
+  
   CLabel[MULTIPLICITYOFFSET+4]->SetText("RightCoin[0-7]");//2nd
-  CLabel[MULTIPLICITYOFFSET+4]->SetTextColor(color, false);
+  CLabel[MULTIPLICITYOFFSET+4]->SetTextColor(TColor::RGB2Pixel(COLOR_YELLOW_R,COLOR_YELLOW_G,COLOR_YELLOW_B), false);
+  
   CLabel[MULTIPLICITYOFFSET+5]->SetText("LeftCoin[0-7]");//3rd
-  CLabel[MULTIPLICITYOFFSET+5]->SetTextColor(color, false);
+  CLabel[MULTIPLICITYOFFSET+5]->SetTextColor(TColor::RGB2Pixel(COLOR_YELLOW_R,COLOR_YELLOW_G,COLOR_YELLOW_B), false);
+  
   CLabel[MULTIPLICITYOFFSET+6]->SetText("MultiThre[0-31]");
   CLabel[MULTIPLICITYOFFSET+6]->SetAlignment(kTextCenterX);
 
   CLabel[MULTIPLICITYOFFSET+7]->SetText("Sel Coin/Multi");
-  CLabel[MULTIPLICITYOFFSET+7]->SetAlignment(kTextCenterX);  
+  CLabel[MULTIPLICITYOFFSET+7]->SetAlignment(kTextCenterX);
+  CLabel[MULTIPLICITYOFFSET+7]->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  
   CLabel[MULTIPLICITYOFFSET+8]->SetText("Sel ChValidTrig");
   CLabel[MULTIPLICITYOFFSET+8]->SetAlignment(kTextCenterX);
-  fClient->GetColorByName("red", color);
-  CLabel[MULTIPLICITYOFFSET+7]->SetTextColor(color, false);
-  CLabel[MULTIPLICITYOFFSET+8]->SetTextColor(color, false);
+  CLabel[MULTIPLICITYOFFSET+8]->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
   
   CLabel[MULTIPLICITYOFFSET+0]->SetToolTipText("masking fast triggers from the module's left neighbor", 0);
   CLabel[MULTIPLICITYOFFSET+1]->SetToolTipText("masking fast triggers from the module itself", 0);
@@ -105,33 +96,42 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
 	NumEntry[MULTIPLICITYOFFSET+i][j]->SetLimits(TGNumberFormat::kNELLimitMinMax,0, 65535);
       }
   
-
-
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
-  ////////////////////////Copy button//////////////////////////
+
   TGHorizontal3DLine *ln2 = new TGHorizontal3DLine(mn_vert, 200, 2);
   mn_vert->AddFrame(ln2, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
 
   
   TGHorizontalFrame *CopyButton = new TGHorizontalFrame(mn_vert, 400, 300);
   mn_vert->AddFrame(CopyButton, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-
+  CopyButton->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGLabel *Copy = new TGLabel(CopyButton, "Select channel #");
-
+  CopyButton->AddFrame(Copy, new TGLayoutHints(kLHintsCenterX, 5, 10, 5, 0));
+  Copy->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  Copy->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  
   chanCopy = new TGNumberEntry(CopyButton, 0, 4, MODNUMBER+1000, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3/*kNELLimitMinMax*/, 0, 3);
+  CopyButton->AddFrame(chanCopy, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 3, 0));
   chanCopy->SetButtonToNum(0);
   chanCopy->IsEditable();
   chanCopy->SetIntNumber(0);
-  CopyButton->AddFrame(Copy, new TGLayoutHints(kLHintsCenterX, 5, 10, 3, 0));
-  CopyButton->AddFrame(chanCopy, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 0, 0));
-
   chanCopy->Associate(this);
+  chanCopy->GetNumberEntry()->ChangeOptions(chanCopy->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  chanCopy->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  chanCopy->GetButtonUp()->ChangeOptions(chanCopy->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  chanCopy->GetButtonDown()->ChangeOptions(chanCopy->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  chanCopy->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
 
-  ////////////////////Copy button per se///////////////////
   TGTextButton *copyB = new TGTextButton(CopyButton, "C&opy", COPYBUTTON+1000);
+  CopyButton->AddFrame(copyB, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 0, 0));
   copyB->Associate(this);
   copyB->SetToolTipText("Copy the setup of the selected channel to all channels of the module", 0);
-  CopyButton->AddFrame(copyB, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 0, 0));
+  copyB->ChangeOptions(copyB->GetOptions() ^ kRaisedFrame);
+  copyB->SetFont(TEXTBUTTON_FONT, false);
+  copyB->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  copyB->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
 
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -143,46 +143,66 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   
   TGHorizontalFrame *Backplane = new TGHorizontalFrame(mn_vert, 400, 300);
   mn_vert->AddFrame(Backplane, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 10));
+  Backplane->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
+  
   TGHorizontalFrame *fVV1_ = new TGHorizontalFrame(Backplane, 10, 10);
   Backplane->AddFrame(fVV1_, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  fVV1_->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *LabelFastTriggerBackplaneLeft = new TGTextEntry(fVV1_,new TGTextBuffer(100));
-  LabelFastTriggerBackplaneLeft->SetText("FastTrigBackplaneLeft[0-FFFF]");
+  fVV1_->AddFrame(LabelFastTriggerBackplaneLeft, new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
+  LabelFastTriggerBackplaneLeft->SetText("FastTrigBackplaneLeft[0-FFFF]:");
   LabelFastTriggerBackplaneLeft->SetEnabled(kFALSE);
+  LabelFastTriggerBackplaneLeft->SetFrameDrawn(kFALSE);
   LabelFastTriggerBackplaneLeft->SetAlignment(kTextCenterX);
   // LabelFastTriggerBackplaneLeft->SetToolTipText("", 0);
   LabelFastTriggerBackplaneLeft->Resize(200, 20);
-  fVV1_->AddFrame(LabelFastTriggerBackplaneLeft, new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
+  // LabelFastTriggerBackplaneLeft->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelFastTriggerBackplaneLeft->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelFastTriggerBackplaneLeft->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   fasttriggerbackplaneena[0] = new TGNumberEntryField(fVV1_, 0, 0, TGNumberFormat::kNESHex);
-  fasttriggerbackplaneena[0]->SetLimits(TGNumberFormat::kNELLimitMinMax,0, 65535);
   fVV1_->AddFrame(fasttriggerbackplaneena[0], new TGLayoutHints( kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  fasttriggerbackplaneena[0]->SetLimits(TGNumberFormat::kNELLimitMinMax,0, 65535);
+
   
   TGHorizontalFrame *fVV2_ = new TGHorizontalFrame(Backplane, 10, 10);
   Backplane->AddFrame(fVV2_, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  fVV2_->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *LabelFastTriggerBackplaneRight = new TGTextEntry(fVV2_,new TGTextBuffer(100));
-  LabelFastTriggerBackplaneRight->SetText("FastTrigBackplaneRight[0-FFFF]");
+  fVV2_->AddFrame(LabelFastTriggerBackplaneRight, new TGLayoutHints(kLHintsCenterX, 20, 0, 0, 0));
+  LabelFastTriggerBackplaneRight->SetText("FastTrigBackplaneRight[0-FFFF]:");
   LabelFastTriggerBackplaneRight->SetEnabled(kFALSE);
+  LabelFastTriggerBackplaneRight->SetFrameDrawn(kFALSE);
   LabelFastTriggerBackplaneRight->SetAlignment(kTextCenterX);
   // LabelFastTriggerBackplaneRight->SetToolTipText("", 0);
   LabelFastTriggerBackplaneRight->Resize(200, 20);
-  fVV2_->AddFrame(LabelFastTriggerBackplaneRight, new TGLayoutHints(kLHintsCenterX, 20, 0, 0, 0));
+  // LabelFastTriggerBackplaneRight->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelFastTriggerBackplaneRight->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelFastTriggerBackplaneRight->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   fasttriggerbackplaneena[1] = new TGNumberEntryField(fVV2_, 1, 0, TGNumberFormat::kNESHex);
-  fasttriggerbackplaneena[1]->SetLimits(TGNumberFormat::kNELLimitMinMax,0, 65535);
   fVV2_->AddFrame(fasttriggerbackplaneena[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  fasttriggerbackplaneena[1]->SetLimits(TGNumberFormat::kNELLimitMinMax,0, 65535);
+  
 
 
   TGHorizontalFrame *frontpaneloutputframe = new TGHorizontalFrame(Backplane, 10, 10);
   Backplane->AddFrame(frontpaneloutputframe, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  frontpaneloutputframe->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   TGTextEntry *LabelFrontPanelOutput = new TGTextEntry(frontpaneloutputframe,new TGTextBuffer(100));
+  frontpaneloutputframe->AddFrame(LabelFrontPanelOutput, new TGLayoutHints(kLHintsCenterX, 20, 0, 0, 0));
   LabelFrontPanelOutput->SetText("Debug Monitor");
   LabelFrontPanelOutput->SetEnabled(kFALSE);
+  LabelFrontPanelOutput->SetFrameDrawn(kFALSE);
   LabelFrontPanelOutput->SetAlignment(kTextCenterX);
-  fClient->GetColorByName("yellow", color);
-  LabelFrontPanelOutput->SetBackgroundColor(color);
+  LabelFrontPanelOutput->SetBackgroundColor(TColor::RGB2Pixel(COLOR_YELLOW_R,COLOR_YELLOW_G,COLOR_YELLOW_B));
   // LabelFrontPanelOutput->SetToolTipText("", 0);
   LabelFrontPanelOutput->Resize(120, 20);
-  frontpaneloutputframe->AddFrame(LabelFrontPanelOutput, new TGLayoutHints(kLHintsCenterX, 20, 0, 0, 0));
+  
 
   EnableDisableOfTestSignals = new TGComboBox(frontpaneloutputframe);
   frontpaneloutputframe->AddFrame(EnableDisableOfTestSignals, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
@@ -190,7 +210,7 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   EnableDisableOfTestSignals->AddEntry("Disable", 1);
   EnableDisableOfTestSignals->AddEntry("Enable", 2);
   EnableDisableOfTestSignals->Select(1);
-
+  
   GroupOfTestSignals = new TGComboBox(frontpaneloutputframe);
   frontpaneloutputframe->AddFrame(GroupOfTestSignals, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
   GroupOfTestSignals->Resize(100, 20);
@@ -219,9 +239,9 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   TGTextEntry *LabelBackplaneOutput = new TGTextEntry(frontpaneloutputframe,new TGTextBuffer(100));
   LabelBackplaneOutput->SetText("Backplane");
   LabelBackplaneOutput->SetEnabled(kFALSE);
+  LabelBackplaneOutput->SetFrameDrawn(kFALSE);
   LabelBackplaneOutput->SetAlignment(kTextCenterX);
-  fClient->GetColorByName("yellow", color);
-  LabelBackplaneOutput->SetBackgroundColor(color);
+  LabelBackplaneOutput->SetBackgroundColor(TColor::RGB2Pixel(COLOR_YELLOW_R,COLOR_YELLOW_G,COLOR_YELLOW_B));
   // LabelBackplaneOutput->SetToolTipText("", 0);
   LabelBackplaneOutput->Resize(80, 20);
   frontpaneloutputframe->AddFrame(LabelBackplaneOutput, new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
@@ -239,51 +259,63 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   
   TGHorizontalFrame *fVV00000 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fVV00000, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-
+  fVV00000->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *textchannelvalidationtrigger = new TGTextEntry(fVV00000,new TGTextBuffer(30));
-  fClient->GetColorByName("red", color);
-  textchannelvalidationtrigger->SetTextColor(color, false);
+  fVV00000->AddFrame(textchannelvalidationtrigger, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
   textchannelvalidationtrigger->SetText("Channel Validation Trigger(System FPGA group trigger):  (ExtFastTriGate => 'FT' AND 'Ext_Fast_Trig_In(module fast trigger)') [Choose 'System FPGA' or 'front panel channel GATE' in CSRA]");
   textchannelvalidationtrigger->Resize(1300, 12);
   textchannelvalidationtrigger->SetEnabled(kFALSE);
   textchannelvalidationtrigger->SetFrameDrawn(kFALSE);
-  fVV00000->AddFrame(textchannelvalidationtrigger, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+  textchannelvalidationtrigger->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  textchannelvalidationtrigger->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  textchannelvalidationtrigger->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
 
 
   
-  // TGHorizontalFrame *TrigConfig = new TGHorizontalFrame(mn_vert, 400, 300);
-  // mn_vert->AddFrame(TrigConfig, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  // TGVerticalFrame *fV1 = new TGVerticalFrame(TrigConfig, 10, 10);
-  // TGVerticalFrame *fV2 = new TGVerticalFrame(TrigConfig, 10, 10);
-  // TGVerticalFrame *fV3 = new TGVerticalFrame(TrigConfig, 10, 10);
-  // TGVerticalFrame *fV4 = new TGVerticalFrame(TrigConfig, 10, 10);
-  // TrigConfig->AddFrame(fV1, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  // TrigConfig->AddFrame(fV2, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  // TrigConfig->AddFrame(fV3, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  // TrigConfig->AddFrame(fV4, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   TGHorizontalFrame *fV1 = new TGHorizontalFrame(mn_vert, 10, 10);
-  TGHorizontalFrame *fV2 = new TGHorizontalFrame(mn_vert, 10, 10);
-  TGHorizontalFrame *fV3 = new TGHorizontalFrame(mn_vert, 10, 10);
-  TGHorizontalFrame *fV4 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fV1, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  fV1->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
+  TGHorizontalFrame *fV2 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fV2, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  fV2->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
+  TGHorizontalFrame *fV3 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fV3, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  fV3->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
+  TGHorizontalFrame *fV4 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fV4, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  fV4->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
+
+  
   
   // 0 - 3
   TGTextEntry *ch_0_3 = new TGTextEntry(fV1,new TGTextBuffer(100));
-  TGTextEntryAddStyle(ch_0_3,(char *)"Ch 0-3:",(char *)"Select group trigger 0 or external fast trigger gated local fast trigger for channels 0 - 3");
   fV1->AddFrame(ch_0_3, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(ch_0_3,(char *)"Ch 0-3:",(char *)"Select group trigger 0 or external fast trigger gated local fast trigger for channels 0 - 3");
+  ch_0_3->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  ch_0_3->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  ch_0_3->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   ChTri_ch0_3 = new TGComboBox(fV1);
   fV1->AddFrame(ChTri_ch0_3, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   ChTri_ch0_3->Resize(100, 20);
   ChTri_ch0_3->AddEntry("ExtFastTriGate", 1);
   ChTri_ch0_3->AddEntry("GroupTri 0", 2);
   ChTri_ch0_3->Select(1);
+
   
   TGTextEntry *LabelGroupTri0 = new TGTextEntry(fV1,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGroupTri0,(char *)"GroupTri 0:",(char *)"Select group trigger 0 from group trigger 0_0,group trigger 0_1,and group trigger 0_2");
   fV1->AddFrame(LabelGroupTri0, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(LabelGroupTri0,(char *)"GroupTri 0:",(char *)"Select group trigger 0 from group trigger 0_0,group trigger 0_1,and group trigger 0_2");
+  LabelGroupTri0->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGroupTri0->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGroupTri0->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   GroupTri0 = new TGComboBox(fV1);
   fV1->AddFrame(GroupTri0, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   GroupTri0->Resize(100, 20);
@@ -291,21 +323,38 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   GroupTri0->AddEntry("GroupTri 0_1", 2);
   GroupTri0->AddEntry("GroupTri 0_2", 3);
   GroupTri0->Select(1);
+
+  
   TGTextEntry *LabelGroupTri0_0 = new TGTextEntry(fV1,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGroupTri0_0,(char *)"LocalModule Ch",(char *)"Select source channel from local module for group trigger 0_0");
   fV1->AddFrame(LabelGroupTri0_0, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(LabelGroupTri0_0,(char *)"LocalModule Ch",(char *)"Select source channel from local module for group trigger 0_0");
+  LabelGroupTri0_0->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGroupTri0_0->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGroupTri0_0->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   GroupTri0_0 = new TGComboBox(fV1);
   fV1->AddFrame(GroupTri0_0, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
+
   TGTextEntry *LabelGroupTri0_1 = new TGTextEntry(fV1,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGroupTri0_1,(char *)"RightModule Ch",(char *)"Select source channel from right neighbor module for group trigger 0_1");
   fV1->AddFrame(LabelGroupTri0_1, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(LabelGroupTri0_1,(char *)"RightModule Ch",(char *)"Select source channel from right neighbor module for group trigger 0_1");
+  LabelGroupTri0_1->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGroupTri0_1->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGroupTri0_1->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   GroupTri0_1 = new TGComboBox(fV1);
   fV1->AddFrame(GroupTri0_1, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
+  
   TGTextEntry *LabelGroupTri0_2 = new TGTextEntry(fV1,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGroupTri0_2,(char *)"LeftModule Ch",(char *)"Select source channel from left neighbor module for group trigger 0_2");
   fV1->AddFrame(LabelGroupTri0_2, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(LabelGroupTri0_2,(char *)"LeftModule Ch",(char *)"Select source channel from left neighbor module for group trigger 0_2");
+  LabelGroupTri0_2->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGroupTri0_2->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGroupTri0_2->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));  
+
   GroupTri0_2 = new TGComboBox(fV1);
   fV1->AddFrame(GroupTri0_2, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
+  
   GroupTri0_0->Resize(100, 20);
   GroupTri0_1->Resize(100, 20);
   GroupTri0_2->Resize(100, 20);
@@ -321,17 +370,26 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   
   // 4 - 7
   TGTextEntry *ch_4_7 = new TGTextEntry(fV2,new TGTextBuffer(100));
-  TGTextEntryAddStyle(ch_4_7,(char *)"Ch 4-7:",(char *)"Select group trigger 1 or external fast trigger gated local fast trigger for channels 4 - 7");
   fV2->AddFrame(ch_4_7, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(ch_4_7,(char *)"Ch 4-7:",(char *)"Select group trigger 1 or external fast trigger gated local fast trigger for channels 4 - 7");
+  ch_4_7->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  ch_4_7->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  ch_4_7->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+
   ChTri_ch4_7 = new TGComboBox(fV2);
   fV2->AddFrame(ChTri_ch4_7, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   ChTri_ch4_7->Resize(100, 20);
   ChTri_ch4_7->AddEntry("ExtFastTriGate", 1);
   ChTri_ch4_7->AddEntry("GroupTri 1", 2);
   ChTri_ch4_7->Select(1);
+  
   TGTextEntry *LabelGroupTri1 = new TGTextEntry(fV2,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGroupTri1,(char *)"GroupTri 1:",(char *)"Select group trigger 1 from group trigger 1_0,group trigger 1_1,and group trigger 1_2");
   fV2->AddFrame(LabelGroupTri1, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(LabelGroupTri1,(char *)"GroupTri 1:",(char *)"Select group trigger 1 from group trigger 1_0,group trigger 1_1,and group trigger 1_2");
+  LabelGroupTri1->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGroupTri1->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGroupTri1->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   GroupTri1 = new TGComboBox(fV2);
   fV2->AddFrame(GroupTri1, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   GroupTri1->Resize(100, 20);
@@ -339,21 +397,37 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   GroupTri1->AddEntry("GroupTri 1_1", 2);
   GroupTri1->AddEntry("GroupTri 1_2", 3);
   GroupTri1->Select(1);
+  
   TGTextEntry *LabelGroupTri1_0 = new TGTextEntry(fV2,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGroupTri1_0,(char *)"LocalModule Ch",(char *)"Select source channel from local module for group trigger 1_0");
   fV2->AddFrame(LabelGroupTri1_0, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(LabelGroupTri1_0,(char *)"LocalModule Ch",(char *)"Select source channel from local module for group trigger 1_0");
+  LabelGroupTri1_0->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGroupTri1_0->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGroupTri1_0->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));  
+  
   GroupTri1_0 = new TGComboBox(fV2);
   fV2->AddFrame(GroupTri1_0, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
+  
   TGTextEntry *LabelGroupTri1_1 = new TGTextEntry(fV2,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGroupTri1_1,(char *)"RightModule Ch",(char *)"Select source channel from right neighbor module for group trigger 1_1");
   fV2->AddFrame(LabelGroupTri1_1, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(LabelGroupTri1_1,(char *)"RightModule Ch",(char *)"Select source channel from right neighbor module for group trigger 1_1");
+  LabelGroupTri1_1->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGroupTri1_1->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGroupTri1_1->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));  
+  
   GroupTri1_1 = new TGComboBox(fV2);
   fV2->AddFrame(GroupTri1_1, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
+  
   TGTextEntry *LabelGroupTri1_2 = new TGTextEntry(fV2,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGroupTri1_2,(char *)"LeftModule Ch",(char *)"Select source channel from left neighbor module for group trigger 1_2");
   fV2->AddFrame(LabelGroupTri1_2, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(LabelGroupTri1_2,(char *)"LeftModule Ch",(char *)"Select source channel from left neighbor module for group trigger 1_2");
+  LabelGroupTri1_2->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGroupTri1_2->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGroupTri1_2->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   GroupTri1_2 = new TGComboBox(fV2);
   fV2->AddFrame(GroupTri1_2, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
+  
   GroupTri1_0->Resize(100, 20);
   GroupTri1_1->Resize(100, 20);
   GroupTri1_2->Resize(100, 20);
@@ -370,17 +444,26 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
 
   // 8 - 11
   TGTextEntry *ch_8_11 = new TGTextEntry(fV3,new TGTextBuffer(100));
-  TGTextEntryAddStyle(ch_8_11,(char *)"Ch 8-11:",(char *)"Select group trigger 2 or external fast trigger gated local fast trigger for channels 8 - 11");
   fV3->AddFrame(ch_8_11, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(ch_8_11,(char *)"Ch 8-11:",(char *)"Select group trigger 2 or external fast trigger gated local fast trigger for channels 8 - 11");
+  ch_8_11->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  ch_8_11->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  ch_8_11->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   ChTri_ch8_11 = new TGComboBox(fV3);
   fV3->AddFrame(ChTri_ch8_11, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   ChTri_ch8_11->Resize(100, 20);
   ChTri_ch8_11->AddEntry("ExtFastTriGate", 1);
   ChTri_ch8_11->AddEntry("GroupTri 2", 2);
-  ChTri_ch8_11->Select(1);  
+  ChTri_ch8_11->Select(1);
+  
   TGTextEntry *LabelGroupTri2 = new TGTextEntry(fV3,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGroupTri2,(char *)"GroupTri 2:",(char *)"Select group trigger 2 from group trigger 2_0,group trigger 2_1,and group trigger 2_2");
   fV3->AddFrame(LabelGroupTri2, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(LabelGroupTri2,(char *)"GroupTri 2:",(char *)"Select group trigger 2 from group trigger 2_0,group trigger 2_1,and group trigger 2_2");
+  LabelGroupTri2->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGroupTri2->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGroupTri2->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   GroupTri2 = new TGComboBox(fV3);
   fV3->AddFrame(GroupTri2, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   GroupTri2->Resize(100, 20);
@@ -388,21 +471,37 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   GroupTri2->AddEntry("GroupTri 2_1", 2);
   GroupTri2->AddEntry("GroupTri 2_2", 3);
   GroupTri2->Select(1);
+  
   TGTextEntry *LabelGroupTri2_0 = new TGTextEntry(fV3,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGroupTri2_0,(char *)"LocalModule Ch",(char *)"Select source channel from local module for group trigger 2_0");
   fV3->AddFrame(LabelGroupTri2_0, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(LabelGroupTri2_0,(char *)"LocalModule Ch",(char *)"Select source channel from local module for group trigger 2_0");
+  LabelGroupTri2_0->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGroupTri2_0->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGroupTri2_0->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   GroupTri2_0 = new TGComboBox(fV3);
   fV3->AddFrame(GroupTri2_0, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
+  
   TGTextEntry *LabelGroupTri2_1 = new TGTextEntry(fV3,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGroupTri2_1,(char *)"RightModule Ch",(char *)"Select source channel from right neighbor module for group trigger 2_1");
   fV3->AddFrame(LabelGroupTri2_1, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(LabelGroupTri2_1,(char *)"RightModule Ch",(char *)"Select source channel from right neighbor module for group trigger 2_1");
+  LabelGroupTri2_1->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGroupTri2_1->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGroupTri2_1->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   GroupTri2_1 = new TGComboBox(fV3);
   fV3->AddFrame(GroupTri2_1, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
+  
   TGTextEntry *LabelGroupTri2_2 = new TGTextEntry(fV3,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGroupTri2_2,(char *)"LeftModule Ch",(char *)"Select source channel from left neighbor module for group trigger 2_2");
   fV3->AddFrame(LabelGroupTri2_2, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(LabelGroupTri2_2,(char *)"LeftModule Ch",(char *)"Select source channel from left neighbor module for group trigger 2_2");
+  LabelGroupTri2_2->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGroupTri2_2->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGroupTri2_2->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   GroupTri2_2 = new TGComboBox(fV3);
   fV3->AddFrame(GroupTri2_2, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
+  
   GroupTri2_0->Resize(100, 20);
   GroupTri2_1->Resize(100, 20);
   GroupTri2_2->Resize(100, 20);
@@ -419,17 +518,26 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   
   // 12 -15
   TGTextEntry *ch_12_15 = new TGTextEntry(fV4,new TGTextBuffer(100));
-  TGTextEntryAddStyle(ch_12_15,(char *)"Ch 12-15:",(char *)"Select group trigger 3 or external fast trigger gated local fast trigger for channels 12 - 15");
   fV4->AddFrame(ch_12_15, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(ch_12_15,(char *)"Ch 12-15:",(char *)"Select group trigger 3 or external fast trigger gated local fast trigger for channels 12 - 15");
+  ch_12_15->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  ch_12_15->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  ch_12_15->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   ChTri_ch12_15 = new TGComboBox(fV4);
   fV4->AddFrame(ChTri_ch12_15, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   ChTri_ch12_15->Resize(100, 20);
   ChTri_ch12_15->AddEntry("ExtFastTriGate", 1);
   ChTri_ch12_15->AddEntry("GroupTri 3", 2);
-  ChTri_ch12_15->Select(1);  
+  ChTri_ch12_15->Select(1);
+  
   TGTextEntry *LabelGroupTri3 = new TGTextEntry(fV4,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGroupTri3,(char *)"GroupTri 3:",(char *)"Select group trigger 3 from group trigger 3_0,group trigger 3_1,and group trigger 3_2");
   fV4->AddFrame(LabelGroupTri3, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(LabelGroupTri3,(char *)"GroupTri 3:",(char *)"Select group trigger 3 from group trigger 3_0,group trigger 3_1,and group trigger 3_2");
+  LabelGroupTri3->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGroupTri3->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGroupTri3->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   GroupTri3 = new TGComboBox(fV4);
   fV4->AddFrame(GroupTri3, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   GroupTri3->Resize(100, 20);
@@ -437,21 +545,37 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   GroupTri3->AddEntry("GroupTri 3_1", 2);
   GroupTri3->AddEntry("GroupTri 3_2", 3);
   GroupTri3->Select(1);
+  
   TGTextEntry *LabelGroupTri3_0 = new TGTextEntry(fV4,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGroupTri3_0,(char *)"LocalModule Ch",(char *)"Select source channel from local module for group trigger 3_0");
   fV4->AddFrame(LabelGroupTri3_0, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(LabelGroupTri3_0,(char *)"LocalModule Ch",(char *)"Select source channel from local module for group trigger 3_0");
+  LabelGroupTri3_0->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGroupTri3_0->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGroupTri3_0->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   GroupTri3_0 = new TGComboBox(fV4);
   fV4->AddFrame(GroupTri3_0, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
+  
   TGTextEntry *LabelGroupTri3_1 = new TGTextEntry(fV4,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGroupTri3_1,(char *)"RightModule Ch",(char *)"Select source channel from right neighbor module for group trigger 3_1");
   fV4->AddFrame(LabelGroupTri3_1, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(LabelGroupTri3_1,(char *)"RightModule Ch",(char *)"Select source channel from right neighbor module for group trigger 3_1");
+  LabelGroupTri3_1->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGroupTri3_1->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGroupTri3_1->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   GroupTri3_1 = new TGComboBox(fV4);
   fV4->AddFrame(GroupTri3_1, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
+  
   TGTextEntry *LabelGroupTri3_2 = new TGTextEntry(fV4,new TGTextBuffer(100));
-  TGTextEntryAddStyle(LabelGroupTri3_2,(char *)"LeftModule Ch",(char *)"Select source channel from left neighbor module for group trigger 3_2");
   fV4->AddFrame(LabelGroupTri3_2, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  TGTextEntryAddStyle(LabelGroupTri3_2,(char *)"LeftModule Ch",(char *)"Select source channel from left neighbor module for group trigger 3_2");
+  LabelGroupTri3_2->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGroupTri3_2->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGroupTri3_2->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   GroupTri3_2 = new TGComboBox(fV4);
   fV4->AddFrame(GroupTri3_2, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
+  
   GroupTri3_0->Resize(100, 20);
   GroupTri3_1->Resize(100, 20);
   GroupTri3_2->Resize(100, 20);
@@ -476,22 +600,32 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   
   TGHorizontalFrame *fVV00 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fVV00, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-
+  fVV00->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *textmodulefasttrigger = new TGTextEntry(fVV00,new TGTextBuffer(30));
-  fClient->GetColorByName("blue", color);
-  textmodulefasttrigger->SetTextColor(color, false);
+  fVV00->AddFrame(textmodulefasttrigger, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
   textmodulefasttrigger->SetText("Module Fast Trigger:");
-  textmodulefasttrigger->Resize(200, 12);
+  textmodulefasttrigger->Resize(200, 15);
   textmodulefasttrigger->SetEnabled(kFALSE);
   textmodulefasttrigger->SetFrameDrawn(kFALSE);
-  fVV00->AddFrame(textmodulefasttrigger, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+  textmodulefasttrigger->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  textmodulefasttrigger->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  textmodulefasttrigger->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
+  
   TGHorizontalFrame *fVV4 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fVV4, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  fVV4->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *LabelGlobalFastTrigger = new TGTextEntry(fVV4,new TGTextBuffer(100));
+  fVV4->AddFrame(LabelGlobalFastTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
   TGTextEntryAddStyle(LabelGlobalFastTrigger,(char *)"Source",(char *)"Select source for global fast trigger");
   LabelGlobalFastTrigger->Resize(intlengthlabelmoduletrigger, 20);
-  fVV4->AddFrame(LabelGlobalFastTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  LabelGlobalFastTrigger->SetFrameDrawn(kFALSE);
+  LabelGlobalFastTrigger->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGlobalFastTrigger->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGlobalFastTrigger->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   GlobalFastTrigger = new TGComboBox(fVV4);
   fVV4->AddFrame(GlobalFastTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   GlobalFastTrigger->Resize(500, 20);
@@ -503,10 +637,17 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
 
   TGHorizontalFrame *fVV2 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fVV2, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  fVV2->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *LabelExternalFastTrigger = new TGTextEntry(fVV2,new TGTextBuffer(100));
+  fVV2->AddFrame(LabelExternalFastTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
   TGTextEntryAddStyle(LabelExternalFastTrigger,(char *)"Current Module",(char *)"Select source for external fast trigger");
   LabelExternalFastTrigger->Resize(intlengthlabelmoduletrigger, 20);
-  fVV2->AddFrame(LabelExternalFastTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  LabelExternalFastTrigger->SetFrameDrawn(kFALSE);
+  LabelExternalFastTrigger->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelExternalFastTrigger->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelExternalFastTrigger->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+
   ExternalFastTrigger = new TGComboBox(fVV2);
   fVV2->AddFrame(ExternalFastTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   ExternalFastTrigger->Resize(320, 20);
@@ -523,14 +664,23 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   LabelExternalFastTriggerNotes->SetText("FT_LocalCrate_BP from MODCSRB[6]=1 module / FT_In_BP from MODCSRB[4]=1 module");
   LabelExternalFastTriggerNotes->SetEnabled(kFALSE);
   LabelExternalFastTriggerNotes->SetFrameDrawn(kFALSE);
-
+  LabelExternalFastTriggerNotes->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelExternalFastTriggerNotes->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   TGHorizontalFrame *fVV1 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fVV1, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  fVV1->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *LabelInternalFastTrigger = new TGTextEntry(fVV1,new TGTextBuffer(100));
+  fVV1->AddFrame(LabelInternalFastTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
   TGTextEntryAddStyle(LabelInternalFastTrigger,(char *)"Int_FastTrig_Sgl",(char *)"Select source channel for the internal fast trigger from one of the 16 local channels(0-15)");
   LabelInternalFastTrigger->Resize(intlengthlabelmoduletrigger, 20);
-  fVV1->AddFrame(LabelInternalFastTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  LabelInternalFastTrigger->SetFrameDrawn(kFALSE);
+  LabelInternalFastTrigger->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelInternalFastTrigger->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelInternalFastTrigger->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+
+  
   InternalFastTrigger = new TGComboBox(fVV1);
   fVV1->AddFrame(InternalFastTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   InternalFastTrigger->Resize(100, 20);
@@ -540,31 +690,35 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
     }
   InternalFastTrigger->Select(1);
 
-
-  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-  TGHorizontal3DLine *ln333 = new TGHorizontal3DLine(mn_vert, 200, 2);
-  mn_vert->AddFrame(ln333, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
-
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
   TGHorizontalFrame *fVV000 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fVV000, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  fVV000->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *textmodulevalidationtrigger = new TGTextEntry(fVV000,new TGTextBuffer(30));
-  fClient->GetColorByName("blue", color);
-  textmodulevalidationtrigger->SetTextColor(color, false);
+  fVV000->AddFrame(textmodulevalidationtrigger, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
   textmodulevalidationtrigger->SetText("Module Validation Trigger(System FPGA):  [Choose 'System FPGA' or 'front panel module GATE' in CSRA]");
-  textmodulevalidationtrigger->Resize(1000, 12);
+  textmodulevalidationtrigger->Resize(1000, 15);
   textmodulevalidationtrigger->SetEnabled(kFALSE);
   textmodulevalidationtrigger->SetFrameDrawn(kFALSE);
-  fVV000->AddFrame(textmodulevalidationtrigger, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+  textmodulevalidationtrigger->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  textmodulevalidationtrigger->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  textmodulevalidationtrigger->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   TGHorizontalFrame *fVV5 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fVV5, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  fVV5->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *LabelGlobalValidationTrigger = new TGTextEntry(fVV5,new TGTextBuffer(100));
+  fVV5->AddFrame(LabelGlobalValidationTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
   TGTextEntryAddStyle(LabelGlobalValidationTrigger,(char *)"source",(char *)"Select source for global validation trigger");
   LabelGlobalValidationTrigger->Resize(intlengthlabelmoduletrigger, 20);
-  fVV5->AddFrame(LabelGlobalValidationTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  LabelGlobalValidationTrigger->SetFrameDrawn(kFALSE);
+  LabelGlobalValidationTrigger->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelGlobalValidationTrigger->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelGlobalValidationTrigger->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   GlobalValidationTrigger = new TGComboBox(fVV5);
   fVV5->AddFrame(GlobalValidationTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   GlobalValidationTrigger->Resize(500, 20);
@@ -576,10 +730,17 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
 
   TGHorizontalFrame *fVV6 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fVV6, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  fVV6->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *LabelExternalValidationTrigger = new TGTextEntry(fVV6,new TGTextBuffer(100));
+  fVV6->AddFrame(LabelExternalValidationTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
   TGTextEntryAddStyle(LabelExternalValidationTrigger,(char *)"Current Module",(char *)"Select source for external validation trigger");
   LabelExternalValidationTrigger->Resize(intlengthlabelmoduletrigger, 20);
-  fVV6->AddFrame(LabelExternalValidationTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  LabelExternalValidationTrigger->SetFrameDrawn(kFALSE);
+  LabelExternalValidationTrigger->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelExternalValidationTrigger->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelExternalValidationTrigger->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   ExternalValidationTrigger = new TGComboBox(fVV6);
   fVV6->AddFrame(ExternalValidationTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   ExternalValidationTrigger->Resize(320, 20);
@@ -591,20 +752,28 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   ExternalValidationTrigger->Select(1);
 
   TGTextEntry *LabelExternalValidationTriggerNotes = new TGTextEntry(fVV6,new TGTextBuffer(100));
+  fVV6->AddFrame(LabelExternalValidationTriggerNotes, new TGLayoutHints(kLHintsLeft, 10, 0, 3, 0));
   LabelExternalValidationTriggerNotes->Resize(600, 20);
-  fVV6->AddFrame(LabelExternalValidationTriggerNotes, new TGLayoutHints(kLHintsLeft, 10, 0, 3, 0));  
   LabelExternalValidationTriggerNotes->SetText("ET_LocalCrate_BP from MODCSRB[6]=1 module / ET_In_BP from MODCSRB[4]=1 module");
   LabelExternalValidationTriggerNotes->SetEnabled(kFALSE);
   LabelExternalValidationTriggerNotes->SetFrameDrawn(kFALSE);
-
+  LabelExternalValidationTriggerNotes->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelExternalValidationTriggerNotes->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   
   TGHorizontalFrame *fVV3 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fVV3, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  fVV3->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *LabelInternalValidationTrigger = new TGTextEntry(fVV3,new TGTextBuffer(100));
+  fVV3->AddFrame(LabelInternalValidationTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
   TGTextEntryAddStyle(LabelInternalValidationTrigger,(char *)"Int_ValidTrig_Sgl",(char *)"Select source channel for the internal validation trigger from one of the 16 local channels(0-15)");
   LabelInternalValidationTrigger->Resize(intlengthlabelmoduletrigger, 20);
-  fVV3->AddFrame(LabelInternalValidationTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  LabelInternalValidationTrigger->SetFrameDrawn(kFALSE);
+  LabelInternalValidationTrigger->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelInternalValidationTrigger->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelInternalValidationTrigger->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   InternalValidationTrigger = new TGComboBox(fVV3);
   fVV3->AddFrame(InternalValidationTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   InternalValidationTrigger->Resize(100, 20);
@@ -614,31 +783,35 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
     }
   InternalValidationTrigger->Select(1);
   
-
-  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-  TGHorizontal3DLine *ln444 = new TGHorizontal3DLine(mn_vert, 200, 2);
-  mn_vert->AddFrame(ln444, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
-
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   TGHorizontalFrame *fVV0000 = new TGHorizontalFrame(mn_vert, 10, 10);
-  mn_vert->AddFrame(fVV0000, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  mn_vert->AddFrame(fVV0000, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 3, 0));
+  fVV0000->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *textmoduletriggerchantrigsel = new TGTextEntry(fVV0000,new TGTextBuffer(30));
-  fClient->GetColorByName("blue", color);
-  textmoduletriggerchantrigsel->SetTextColor(color, false);
+  fVV0000->AddFrame(textmoduletriggerchantrigsel, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
   textmoduletriggerchantrigsel->SetText("Module Fast/Validation Trigger ChanTrig_Sel:");
-  textmoduletriggerchantrigsel->Resize(300, 12);
+  textmoduletriggerchantrigsel->Resize(400, 15);
   textmoduletriggerchantrigsel->SetEnabled(kFALSE);
   textmoduletriggerchantrigsel->SetFrameDrawn(kFALSE);
-  fVV0000->AddFrame(textmoduletriggerchantrigsel, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+  textmoduletriggerchantrigsel->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  textmoduletriggerchantrigsel->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  textmoduletriggerchantrigsel->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   TGHorizontalFrame *fVV0 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fVV0, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  fVV0->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *LabelChannelTrigger = new TGTextEntry(fVV0,new TGTextBuffer(100));
+  fVV0->AddFrame(LabelChannelTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
   TGTextEntryAddStyle(LabelChannelTrigger,(char *)"Channel Trigger:",(char *)"Select source channel for the channel trigger from one of 16 channel triggers");
   LabelChannelTrigger->Resize(intlengthlabelmoduletrigger, 20);
-  fVV0->AddFrame(LabelChannelTrigger, new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 0));
+  LabelChannelTrigger->SetFrameDrawn(kFALSE);
+  LabelChannelTrigger->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  LabelChannelTrigger->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  LabelChannelTrigger->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  
   ChannelTrigger = new TGComboBox(fVV0);
   fVV0->AddFrame(ChannelTrigger, new TGLayoutHints(kLHintsLeft, 5, 5, 2, 2));
   ChannelTrigger->Resize(100, 20);
@@ -658,14 +831,17 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   
   TGHorizontalFrame *fVV000000 = new TGHorizontalFrame(mn_vert, 10, 10);
   mn_vert->AddFrame(fVV000000, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  fVV000000->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *textaboutveto = new TGTextEntry(fVV000000,new TGTextBuffer(30));
-  fClient->GetColorByName("purple", color);
-  textaboutveto->SetTextColor(color, false);
+  fVV000000->AddFrame(textaboutveto, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+  textaboutveto->SetTextColor(TColor::RGB2Pixel(COLOR_PINK_R,COLOR_PINK_G,COLOR_PINK_B), false);
   textaboutveto->SetText("Module/Channel Veto: [Choose 'front panel module/channel GATE' or 'module/channel vilidation trigger' in CSRA, channel veto need choose enable/disable]");
-  textaboutveto->Resize(1300, 12);
+  textaboutveto->SetFont(TABLE_LABEL_LOGIC_FONT, false);
+  textaboutveto->Resize(1300, 15);
   textaboutveto->SetEnabled(kFALSE);
   textaboutveto->SetFrameDrawn(kFALSE);
-  fVV000000->AddFrame(textaboutveto, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+  textaboutveto->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
 
 
@@ -1295,9 +1471,9 @@ int LogicTrigger::change_values(Long_t mod)
 void LogicTrigger::TGTextEntryAddStyle(TGTextEntry *tgtextentry,char *title, char *tooltip)
 {
   tgtextentry->SetText(title);
-  tgtextentry->Resize(100, 15);
+  tgtextentry->Resize(100, 20);
   tgtextentry->SetEnabled(kFALSE);
-  // ch_0_3->SetFrameDrawn(kTRUE);
+  tgtextentry->SetFrameDrawn(kFALSE);
   tgtextentry->SetAlignment(kTextCenterX);
   tgtextentry->SetToolTipText(tooltip, 0);
 }

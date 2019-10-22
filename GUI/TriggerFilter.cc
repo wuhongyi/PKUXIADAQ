@@ -20,7 +20,7 @@ TriggerFilter::TriggerFilter(const TGWindow * p, const TGWindow * main, char *na
   modNumber = 0;
   Load_Once = false;
 
-  /////////////////Copy Button////////////////////////////////
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   TGHorizontal3DLine *ln2 = new TGHorizontal3DLine(mn_vert, 200, 2);
   mn_vert->AddFrame(ln2, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
@@ -32,6 +32,7 @@ TriggerFilter::TriggerFilter(const TGWindow * p, const TGWindow * main, char *na
   TGLabel *Copy = new TGLabel(CopyButton, "Select channel #");
   CopyButton->AddFrame(Copy, new TGLayoutHints (kLHintsCenterX, 5, 10, 5, 0));
   Copy->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  Copy->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
   
   chanCopy = new TGNumberEntry(CopyButton, 0, 4, MODNUMBER+1000, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3/*kNELLimitMinMax*/, 0, 3);
   CopyButton->AddFrame(chanCopy, new TGLayoutHints (kLHintsTop | kLHintsLeft, 0, 20, 3, 0));
@@ -39,7 +40,6 @@ TriggerFilter::TriggerFilter(const TGWindow * p, const TGWindow * main, char *na
   chanCopy->SetButtonToNum(0);
   chanCopy->IsEditable();
   chanCopy->SetIntNumber(0);
-
   chanCopy->GetNumberEntry()->ChangeOptions(chanCopy->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
   chanCopy->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
   chanCopy->GetButtonUp()->ChangeOptions(chanCopy->GetButtonUp()->GetOptions() ^ kRaisedFrame);
@@ -57,7 +57,7 @@ TriggerFilter::TriggerFilter(const TGWindow * p, const TGWindow * main, char *na
   copyB->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
   copyB->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
   
-
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
   Load_Once = true;
   chanNumber = 0;

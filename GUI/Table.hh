@@ -37,7 +37,6 @@ protected:
 
   TGHorizontalFrame *StatusFrame;
   TGTextEntry *userstatus;
-  Pixel_t color;
   
   int numModules;
   TGNumberEntry *numericMod;

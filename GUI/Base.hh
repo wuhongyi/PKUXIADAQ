@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 11月 18 19:23:48 2016 (+0800)
-// Last-Updated: 日 4月 29 12:51:51 2018 (+0800)
+// Last-Updated: 二 10月 22 10:04:36 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 8
+//     Update #: 9
 // URL: http://wuhongyi.cn 
 
 #ifndef _BASE_H_
@@ -32,12 +32,10 @@ protected:
   TGNumberEntry* chanCopy;
   bool Load_Once;
   
-  Pixel_t color;
   TGVerticalFrame *ColumnSign, *ColumnGain;
   TGVerticalFrame *ColumnGC, *ColumnTC,*ColumnEQS,*ColumnECT,*ColumnERB;
   TGComboBox *lstBox[16], *lstBoxGain[16];
   TGCheckButton *ckGC[16],*ckTC[16],*ckEQS[16],*ckECT[16],*ckERB[16];
-
 };
 
 #endif /* _BASE_H_ */

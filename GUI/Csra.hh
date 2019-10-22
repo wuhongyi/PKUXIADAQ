@@ -15,7 +15,7 @@
 #include "TGTextEntry.h"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#define CCSRAUSEDBITBUMBER 22 // <32
+#define CCSRAUSEDBITBUMBER 22 // <32  根据使用bit数增加
 class Csra : public TGTransientFrame
 {
 public:
@@ -28,12 +28,8 @@ private:
   int numModules;
   TGHorizontalFrame * mn, *buttons;
   TGVerticalFrame *mn_vert;
-  TGVerticalFrame *column1, *column2, *column3, *column4, *column5,
-    *column6, *column7, *column8,*column9,*column10,*column11,*column12,
-    *column13,*column14,*column15,*column16,*column17,*column18,*column19,
-    *column20,*column21,*column22,*column23;//根据使用bit数增加
+  TGVerticalFrame *column[CCSRAUSEDBITBUMBER], *ccolumn;
 
-  Pixel_t color;
     
   //////////////////////////////second column/////////////////////
   TGCheckButton *ckBtn[17], *ckBtn_1[17], *ckBtn_2[17], *ckBtn_3[17],
@@ -48,8 +44,7 @@ private:
   TGCheckButton **tmpckBtn[CCSRAUSEDBITBUMBER];//
 
   ///////////////buttons//////////////////
-  TGTextButton *LoadButton, *CancelButton;
-  TGButton *ApplyButton, *ExitButton;
+  TGTextButton *LoadButton, *CancelButton, *ApplyButton, *ExitButton;
   TGNumberEntry *numericMod;
   int change_values(Long_t);
   bool Load_Once;

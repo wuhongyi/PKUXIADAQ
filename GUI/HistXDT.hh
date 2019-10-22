@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 3月  8 13:32:50 2018 (+0800)
-// Last-Updated: 四 3月  8 14:06:20 2018 (+0800)
+// Last-Updated: 二 10月 22 11:55:01 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 2
+//     Update #: 3
 // URL: http://wuhongyi.cn 
 
 #ifndef _HISTXDT_H_
@@ -29,7 +29,6 @@ protected:
 
   
 protected:
-  Pixel_t color;
   TGNumberEntry *chanCopy;
   
   short int modNumber;
@@ -39,7 +38,6 @@ protected:
   
   float emin, bin;
   float decay;
-  
 };
 
 

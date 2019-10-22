@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:36 2016 (+0800)
-// Last-Updated: 三 10月 16 21:10:11 2019 (+0800)
+// Last-Updated: 二 10月 22 15:05:38 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 28
+//     Update #: 29
 // URL: http://wuhongyi.cn 
 
 #ifndef _LOGICTRIGGER_HH_
@@ -94,15 +94,11 @@ protected:
   bool SelCoinMulti;
   bool SelChValidTrig;
 
-
   TGComboBox *EnableDisableOfTestSignals;
   TGComboBox *GroupOfTestSignals;
   TGComboBox *ChannelOfTestSignals;
   TGComboBox *TestSignals;
   TGComboBox *DebugSignalsOfBackplane;
-  
-private:
-  Pixel_t color;
 };
 
 #endif /* _LOGICTRIGGER_HH_ */

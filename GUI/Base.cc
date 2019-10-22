@@ -4,15 +4,17 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 11月 18 19:24:01 2016 (+0800)
-// Last-Updated: 三 5月 16 17:22:11 2018 (+0800)
+// Last-Updated: 二 10月 22 13:46:28 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 35
+//     Update #: 59
 // URL: http://wuhongyi.cn 
 
 #include "Base.hh"
 #include "Global.hh"
 
 #include "pixie16app_export.h"
+
+#include "TColor.h"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 Base::Base(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, int NumModules)
@@ -24,45 +26,37 @@ Base::Base(const TGWindow * p, const TGWindow * main, char *name, int columns, i
       Labels[i]->SetText(TString::Format("%2d", i).Data());
     }
   CLabel[0]->SetText("DCOffset");
-  CLabel[0]->SetAlignment(kTextCenterX);
-  fClient->GetColorByName("purple", color);
-  CLabel[0]->SetTextColor(color, false);
+  CLabel[0]->SetTextColor(TColor::RGB2Pixel(COLOR_PURPLE_R,COLOR_PURPLE_G,COLOR_PURPLE_B), false);
   CLabel[1]->SetText("BLcut");
-  CLabel[1]->SetAlignment(kTextCenterX);
-  fClient->GetColorByName("purple", color);
-  CLabel[1]->SetTextColor(color, false);
+  CLabel[1]->SetTextColor(TColor::RGB2Pixel(COLOR_PURPLE_R,COLOR_PURPLE_G,COLOR_PURPLE_B), false);
   CLabel[2]->SetText("Baseline[%]");
-  CLabel[2]->SetAlignment(kTextCenterX);
-  fClient->GetColorByName("blue", color);
-  CLabel[2]->SetTextColor(color, false);
+  CLabel[2]->SetTextColor(TColor::RGB2Pixel(COLOR_BLUE_R,COLOR_BLUE_G,COLOR_BLUE_B), false);
   CLabel[3]->SetText("TraceDelay[us]");
-  CLabel[3]->SetAlignment(kTextCenterX);
-  fClient->GetColorByName("green", color);
-  CLabel[3]->SetTextColor(color, false);  
+  CLabel[3]->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);  
   CLabel[4]->SetText("TraceLength[us]");
-  CLabel[4]->SetAlignment(kTextCenterX);
-  fClient->GetColorByName("green", color);
-  CLabel[4]->SetTextColor(color, false);
+  CLabel[4]->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
 
-  
-
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+ 
   ColumnGain = new TGVerticalFrame(mn, 200, 300);
   mn->AddFrame(ColumnGain, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-
+  ColumnGain->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *LabelGain =
-    new TGTextEntry(ColumnGain, new TGTextBuffer(100), 10000,
+    new TGTextEntry(ColumnGain, new TGTextBuffer(100), 10000/*,
 		    LabelGain->GetDefaultGC()(),
 		    LabelGain->GetDefaultFontStruct(),
-		    kRaisedFrame | kDoubleBorder, GetWhitePixel());
-  LabelGain->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
-
+		    kRaisedFrame | kDoubleBorder, GetWhitePixel()*/);
+  ColumnGain->AddFrame(LabelGain, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  LabelGain->SetFont(TABLE_LABEL_TITLE_FONT, false);
   LabelGain->Resize(80, 20);
   LabelGain->SetEnabled(kFALSE);
-  LabelGain->SetFrameDrawn(kTRUE);
-  ColumnGain->AddFrame(LabelGain, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  LabelGain->SetFrameDrawn(kFALSE);
   LabelGain->SetText("Gain");
   LabelGain->SetAlignment(kTextCenterX);
   LabelGain->SetToolTipText((char*)"Control input relay: => Gain Smaller/Larger", 400);
+  LabelGain->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  LabelGain->SetTextColor(TColor::RGB2Pixel(TABLE_LABELTITLE_TEXT_R,TABLE_LABELTITLE_TEXT_G,TABLE_LABELTITLE_TEXT_B), false);
   for (int i = 0; i < 16; i++)
     {
       ColumnGain->AddFrame(lstBoxGain[i] = new TGComboBox(ColumnGain, 2755 + i), new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
@@ -72,186 +66,243 @@ Base::Base(const TGWindow * p, const TGWindow * main, char *name, int columns, i
       lstBoxGain[i]->Resize(80, 20);
     }
 
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......  
+  
   ColumnSign = new TGVerticalFrame(mn, 200, 300);
   mn->AddFrame(ColumnSign, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-
+  ColumnSign->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *LabelSign =
     new TGTextEntry(ColumnSign, new TGTextBuffer(100), 10000,
 		    LabelSign->GetDefaultGC()(),
 		    LabelSign->GetDefaultFontStruct(),
 		    kRaisedFrame | kDoubleBorder, GetWhitePixel());
-  LabelSign->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
-
+  ColumnSign->AddFrame(LabelSign, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  LabelSign->SetFont(TABLE_LABEL_TITLE_FONT, false);
   LabelSign->Resize(40, 20);
   LabelSign->SetEnabled(kFALSE);
-  LabelSign->SetFrameDrawn(kTRUE);
-  ColumnSign->AddFrame(LabelSign, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  LabelSign->SetFrameDrawn(kFALSE);
   LabelSign->SetText("Sign");
   LabelSign->SetAlignment(kTextCenterX);
   LabelSign->SetToolTipText((char*)"Input signal polarity control", 400);
+  LabelSign->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  LabelSign->SetTextColor(TColor::RGB2Pixel(TABLE_LABELTITLE_TEXT_R,TABLE_LABELTITLE_TEXT_G,TABLE_LABELTITLE_TEXT_B), false);
   for (int i = 0; i < 16; i++)
     {
       ColumnSign->AddFrame(lstBox[i] = new TGComboBox(ColumnSign, 2555 + i), new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
       lstBox[i]->Associate(this);
-
       lstBox[i]->AddEntry("+", 0);
       lstBox[i]->AddEntry("-", 1);
       lstBox[i]->Resize(40, 20);
+      lstBox[i]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
     }
 
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......  
+  
   ColumnGC = new TGVerticalFrame(mn, 200, 300);
   mn->AddFrame(ColumnGC, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  ColumnGC->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *LabelGC =
     new TGTextEntry(ColumnGC, new TGTextBuffer(100), 10000,
 		    LabelGC->GetDefaultGC()(),
 		    LabelGC->GetDefaultFontStruct(),
 		    kRaisedFrame | kDoubleBorder, GetWhitePixel());
-  LabelGC->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
+  ColumnGC->AddFrame(LabelGC, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  LabelGC->SetFont(TABLE_LABEL_TITLE_FONT, false);
   LabelGC->Resize(40, 20);
   LabelGC->SetEnabled(kFALSE);
-  LabelGC->SetFrameDrawn(kTRUE);
-  ColumnGC->AddFrame(LabelGC, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  LabelGC->SetFrameDrawn(kFALSE);
   LabelGC->SetText("GC");
-  fClient->GetColorByName("pink", color);
-  LabelGC->SetTextColor(color, false);
   LabelGC->SetAlignment(kTextCenterX);
   LabelGC->SetToolTipText((char*)"Good channel", 400);
+  LabelGC->SetTextColor(TColor::RGB2Pixel(COLOR_PINK_R,COLOR_PINK_G,COLOR_PINK_B), false);
+  LabelGC->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
   for (int i = 0; i < 16; i++)
     {
       ColumnGC->AddFrame(ckGC[i] = new TGCheckButton(ColumnGC,"", -1), new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 2));
       ckGC[i]->Associate(this);
     }
 
-
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
   ColumnTC = new TGVerticalFrame(mn, 200, 300);
   mn->AddFrame(ColumnTC, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  ColumnTC->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *LabelTC =
     new TGTextEntry(ColumnTC, new TGTextBuffer(100), 10000,
 		    LabelTC->GetDefaultGC()(),
 		    LabelTC->GetDefaultFontStruct(),
 		    kRaisedFrame | kDoubleBorder, GetWhitePixel());
-  LabelTC->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
+  ColumnTC->AddFrame(LabelTC, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  LabelTC->SetFont(TABLE_LABEL_TITLE_FONT, false);
   LabelTC->Resize(40, 20);
   LabelTC->SetEnabled(kFALSE);
-  LabelTC->SetFrameDrawn(kTRUE);
-  ColumnTC->AddFrame(LabelTC, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  LabelTC->SetFrameDrawn(kFALSE);
   LabelTC->SetText("TC");
-  fClient->GetColorByName("red", color);
-  LabelTC->SetTextColor(color, false);
   LabelTC->SetAlignment(kTextCenterX);
   LabelTC->SetToolTipText((char*)"Trace capture and associated header data", 400);
+  LabelTC->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  LabelTC->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
   for (int i = 0; i < 16; i++)
     {
       ColumnTC->AddFrame(ckTC[i] = new TGCheckButton(ColumnTC,"", -1), new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 2));
       ckTC[i]->Associate(this);
     }
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......  
   
   ColumnEQS = new TGVerticalFrame(mn, 200, 300);
   mn->AddFrame(ColumnEQS, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  ColumnEQS->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *LabelEQS =
     new TGTextEntry(ColumnEQS, new TGTextBuffer(100), 10000,
 		    LabelEQS->GetDefaultGC()(),
 		    LabelEQS->GetDefaultFontStruct(),
 		    kRaisedFrame | kDoubleBorder, GetWhitePixel());
-  LabelEQS->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
+  ColumnEQS->AddFrame(LabelEQS, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  LabelEQS->SetFont(TABLE_LABEL_TITLE_FONT, false);
   LabelEQS->Resize(40, 20);
   LabelEQS->SetEnabled(kFALSE);
-  LabelEQS->SetFrameDrawn(kTRUE);
-  ColumnEQS->AddFrame(LabelEQS, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
-  LabelEQS->SetText("EQS");
-  fClient->GetColorByName("red", color);
-  LabelEQS->SetTextColor(color, false);
+  LabelEQS->SetFrameDrawn(kFALSE);
   LabelEQS->SetAlignment(kTextCenterX);
   LabelEQS->SetToolTipText((char*)"QDC summing and associated header data", 400);
+  LabelEQS->SetText("EQS");
+  LabelEQS->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  LabelEQS->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
   for (int i = 0; i < 16; i++)
     {
       ColumnEQS->AddFrame(ckEQS[i] = new TGCheckButton(ColumnEQS,"", -1), new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 2));
       ckEQS[i]->Associate(this);
     }
 
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
   ColumnECT = new TGVerticalFrame(mn, 200, 300);
-  mn->AddFrame(ColumnECT, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));  
+  mn->AddFrame(ColumnECT, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  ColumnECT->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *LabelECT =
     new TGTextEntry(ColumnECT, new TGTextBuffer(100), 10000,
 		    LabelECT->GetDefaultGC()(),
 		    LabelECT->GetDefaultFontStruct(),
 		    kRaisedFrame | kDoubleBorder, GetWhitePixel());
-  LabelECT->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
+  ColumnECT->AddFrame(LabelECT, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  LabelECT->SetFont(TABLE_LABEL_TITLE_FONT, false);
   LabelECT->Resize(40, 20);
   LabelECT->SetEnabled(kFALSE);
-  LabelECT->SetFrameDrawn(kTRUE);
-  ColumnECT->AddFrame(LabelECT, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  LabelECT->SetFrameDrawn(kFALSE);
   LabelECT->SetText("ECT");
   LabelECT->SetAlignment(kTextCenterX);
   LabelECT->SetToolTipText((char*)"CFD for real time, trace capture and QDC capture", 400);
+  LabelECT->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+  LabelECT->SetTextColor(TColor::RGB2Pixel(TABLE_LABELTITLE_TEXT_R,TABLE_LABELTITLE_TEXT_G,TABLE_LABELTITLE_TEXT_B), false);
   for (int i = 0; i < 16; i++)
     {
       ColumnECT->AddFrame(ckECT[i] = new TGCheckButton(ColumnECT,"", -1), new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 2));
       ckECT[i]->Associate(this);
     }
 
-  ColumnERB = new TGVerticalFrame(mn, 200, 300);
-  mn->AddFrame(ColumnERB, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......  
+  
+  ColumnERB = new TGVerticalFrame(mn, 0, 0);
+  mn->AddFrame(ColumnERB, new TGLayoutHints(kLHintsTop | kLHintsExpandY, 0, 0, 0, 0));
+  ColumnERB->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGTextEntry *LabelERB =
-    new TGTextEntry(ColumnERB, new TGTextBuffer(100), 10000,
+    new TGTextEntry(ColumnERB, new TGTextBuffer(100), 10000/*,
 		    LabelERB->GetDefaultGC()(),
 		    LabelERB->GetDefaultFontStruct(),
-		    kRaisedFrame | kDoubleBorder, GetWhitePixel());
-  LabelERB->SetFont("-adobe-helvetica-bold-r-*-*-10-*-*-*-*-*-iso8859-1", false);
+		    kRaisedFrame | kDoubleBorder, GetWhitePixel()*/);
+  ColumnERB->AddFrame(LabelERB, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
+  LabelERB->SetFont(TABLE_LABEL_TITLE_FONT, false);
   LabelERB->Resize(40, 20);
   LabelERB->SetEnabled(kFALSE);
-  LabelERB->SetFrameDrawn(kTRUE);
-  ColumnERB->AddFrame(LabelERB, new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
-  LabelERB->SetText("ERB");
-  fClient->GetColorByName("red", color);
-  LabelERB->SetTextColor(color, false);
+  LabelERB->SetFrameDrawn(kFALSE);
   LabelERB->SetAlignment(kTextCenterX);
   LabelERB->SetToolTipText((char*)"Record raw energy sums and baseline in event header", 400);
+  LabelERB->SetText("ERB");
+  LabelERB->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  LabelERB->ChangeBackground(TColor::RGB2Pixel(TABLE_LABELTITLE_BG_R,TABLE_LABELTITLE_BG_G,TABLE_LABELTITLE_BG_B));
+
   for (int i = 0; i < 16; i++)
     {
+      // TGHorizontalFrame *rb = new TGHorizontalFrame(ColumnERB, 0, 0);
+      // ColumnERB->AddFrame(rb, new TGLayoutHints(kLHintsTop | kLHintsCenterX | kLHintsCenterY | kLHintsExpandY, 0, 0, 0, 0));
+      // // rb->Resize(40, 10);
+      // // rb->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+      // rb->SetBackgroundColor(TColor::RGB2Pixel(255,0,0));
+      
+      // ckERB[i] = new TGCheckButton(rb,"", -1);
+      // // rb->AddFrame(ckERB[i], new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
+      // ckERB[i]->Associate(this);
+      
       ColumnERB->AddFrame(ckERB[i] = new TGCheckButton(ColumnERB,"", -1), new TGLayoutHints(kLHintsCenterX, 0, 0, 3, 2));
       ckERB[i]->Associate(this);
     }
   
   
-  ////////////////Copy Button//////////////////////////////////////////////
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
   TGHorizontal3DLine *ln2 = new TGHorizontal3DLine(mn_vert, 200, 2);
   mn_vert->AddFrame(ln2, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
+
+  
   TGHorizontalFrame *CopyButton = new TGHorizontalFrame(mn_vert, 400, 300);
   mn_vert->AddFrame(CopyButton, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-
+  CopyButton->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGLabel *Copy = new TGLabel(CopyButton, "Select channel #");
-
+  CopyButton->AddFrame(Copy, new TGLayoutHints(kLHintsCenterX, 5, 10, 3, 0));
+  Copy->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  Copy->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
+  
   chanCopy = new TGNumberEntry(CopyButton, 0, 4, MODNUMBER+1000, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3/*kNELLimitMinMax*/, 0, 3);
+  CopyButton->AddFrame(chanCopy, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 0, 0));
   chanCopy->SetButtonToNum(0);
   chanCopy->IsEditable();
   chanCopy->SetIntNumber(0);
-  CopyButton->AddFrame(Copy, new TGLayoutHints(kLHintsCenterX, 5, 10, 3, 0));
-  CopyButton->AddFrame(chanCopy, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 0, 0));
-
   chanCopy->Associate(this);
+  chanCopy->GetNumberEntry()->ChangeOptions(chanCopy->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  chanCopy->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  chanCopy->GetButtonUp()->ChangeOptions(chanCopy->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  chanCopy->GetButtonDown()->ChangeOptions(chanCopy->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  chanCopy->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
 
-  ////////////////////Copy button per se///////////////////
+
   TGTextButton *copyB = new TGTextButton(CopyButton, "C&opy", COPYBUTTON+1000);
+  CopyButton->AddFrame(copyB, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 0, 0));
   copyB->Associate(this);
   copyB->SetToolTipText("Copy the setup of the selected channel to all channels of the module", 0);
-  CopyButton->AddFrame(copyB, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 0, 0));
-
-
+  copyB->ChangeOptions(copyB->GetOptions() ^ kRaisedFrame);
+  copyB->SetFont(TEXTBUTTON_FONT, false);
+  copyB->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  copyB->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+  
   chanNumber = 0;
 
   TGTextButton *adjustB = new TGTextButton(CopyButton, "&AdjustOffset",COPYBUTTON+2000);
+  CopyButton->AddFrame(adjustB,new TGLayoutHints(kLHintsTop|kLHintsLeft,0,20,0,0));
   adjustB->Associate(this);
   adjustB->SetToolTipText("Adjust the DC offset of this module automatically by module!");
-  CopyButton->AddFrame(adjustB,new TGLayoutHints(kLHintsTop|kLHintsLeft,0,20,0,0));
-
-
+  adjustB->ChangeOptions(adjustB->GetOptions() ^ kRaisedFrame);
+  adjustB->SetFont(TEXTBUTTON_FONT, false);
+  adjustB->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  adjustB->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+  
   TGTextButton *blcutfinder = new TGTextButton(CopyButton, "&BLcutFinder",COPYBUTTON+3000);
+  CopyButton->AddFrame(blcutfinder,new TGLayoutHints(kLHintsTop|kLHintsLeft,0,20,0,0));
   blcutfinder->Associate(this);
   blcutfinder->SetToolTipText("Update BLcut values.");
-  CopyButton->AddFrame(blcutfinder,new TGLayoutHints(kLHintsTop|kLHintsLeft,0,20,0,0));
-    
-  ///////////////////////////////////////////////////////////////////////
+  blcutfinder->ChangeOptions(blcutfinder->GetOptions() ^ kRaisedFrame);
+  blcutfinder->SetFont(TEXTBUTTON_FONT, false);
+  blcutfinder->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  blcutfinder->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+  
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
   MapSubwindows();
   Resize();			// resize to default size
 

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 六 10月 19 21:20:45 2019 (+0800)
+// Last-Updated: 二 10月 22 22:40:09 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 181
+//     Update #: 182
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -116,7 +116,6 @@ protected:
 
   
 private:
-  Pixel_t color;
   Detector *detector;
   TObject *selected;
   TGTextEntry *filepathtext;

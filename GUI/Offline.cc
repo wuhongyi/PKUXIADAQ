@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 一 10月 21 21:34:05 2019 (+0800)
+// Last-Updated: 二 10月 22 22:42:44 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 915
+//     Update #: 989
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -60,7 +60,7 @@
 #include "TString.h"
 #include "TFitResultPtr.h"
 #include "TMath.h"
-
+#include "TColor.h"
 #include <cmath>
 #include <cstring>
 #include <iostream>
@@ -86,6 +86,8 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   filepathtext = filepath;
   filenametext = filename;
 
+  SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   modNumber = 0;
   chanNumber = 0;
   chanNumber4 = 0;
@@ -201,97 +203,84 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   offlineth1iwithoutteaceevent12 = NULL;    
 
   
-  
-  fClient->GetColorByName("pink", color);
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   TGTab *TabPanel = new TGTab(this);
   this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
+  
   TGCompositeFrame *Tab0 = TabPanel->AddTab("InitData");
-  // fClient->GetColorByName("red", color);
-  fClient->GetColorByName("pink", color);
-  TabPanel->GetTabTab("InitData")->ChangeBackground(color);
+  TabPanel->GetTabTab("InitData")->ChangeBackground(TColor::RGB2Pixel(TAB_BG_R,TAB_BG_G,TAB_BG_B));
   MakeFold0Panel(Tab0);
+  Tab0->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   TGCompositeFrame *Tab1 = TabPanel->AddTab("Adjust Par");
-  // fClient->GetColorByName("orange", color);
-  fClient->GetColorByName("pink", color);
-  TabPanel->GetTabTab("Adjust Par")->ChangeBackground(color);
+  TabPanel->GetTabTab("Adjust Par")->ChangeBackground(TColor::RGB2Pixel(TAB_BG_R,TAB_BG_G,TAB_BG_B));
   MakeFold1Panel(Tab1);
+  Tab1->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   TGCompositeFrame *Tab2 = TabPanel->AddTab("Wave-16");
-  // fClient->GetColorByName("yellow", color);
-  fClient->GetColorByName("pink", color);
-  TabPanel->GetTabTab("Wave-16")->ChangeBackground(color);
+  TabPanel->GetTabTab("Wave-16")->ChangeBackground(TColor::RGB2Pixel(TAB_BG_R,TAB_BG_G,TAB_BG_B));
   MakeFold2Panel(Tab2);
+  Tab2->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   TGCompositeFrame *Tab3 = TabPanel->AddTab("Energy-16");
-  // fClient->GetColorByName("green", color);
-  fClient->GetColorByName("pink", color);
-  TabPanel->GetTabTab("Energy-16")->ChangeBackground(color);
+  TabPanel->GetTabTab("Energy-16")->ChangeBackground(TColor::RGB2Pixel(TAB_BG_R,TAB_BG_G,TAB_BG_B));
   MakeFold3Panel(Tab3);
+  Tab3->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   TGCompositeFrame *Tab4 = TabPanel->AddTab("Orig Energy");
-  // fClient->GetColorByName("blue", color);
-  fClient->GetColorByName("pink", color);
-  TabPanel->GetTabTab("Orig Energy")->ChangeBackground(color);
+  TabPanel->GetTabTab("Orig Energy")->ChangeBackground(TColor::RGB2Pixel(TAB_BG_R,TAB_BG_G,TAB_BG_B));
   MakeFold4Panel(Tab4);
+  Tab4->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   TGCompositeFrame *Tab6 = TabPanel->AddTab("Calc Energy");
-  // fClient->GetColorByName("pink", color);
-  fClient->GetColorByName("pink", color);
-  TabPanel->GetTabTab("Calc Energy")->ChangeBackground(color);
+  TabPanel->GetTabTab("Calc Energy")->ChangeBackground(TColor::RGB2Pixel(TAB_BG_R,TAB_BG_G,TAB_BG_B));
   MakeFold6Panel(Tab6);
+  Tab6->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   TGCompositeFrame *Tab5 = TabPanel->AddTab("FF/CFD Thre");
-  // fClient->GetColorByName("purple", color);
-  fClient->GetColorByName("pink", color);
-  TabPanel->GetTabTab("FF/CFD Thre")->ChangeBackground(color);
+  TabPanel->GetTabTab("FF/CFD Thre")->ChangeBackground(TColor::RGB2Pixel(TAB_BG_R,TAB_BG_G,TAB_BG_B));
   MakeFold5Panel(Tab5);
+  Tab5->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   TGCompositeFrame *Tab8 = TabPanel->AddTab("Energy-FF");
-  // fClient->GetColorByName("violet", color);
-  fClient->GetColorByName("pink", color);
-  TabPanel->GetTabTab("Energy-FF")->ChangeBackground(color);
+  TabPanel->GetTabTab("Energy-FF")->ChangeBackground(TColor::RGB2Pixel(TAB_BG_R,TAB_BG_G,TAB_BG_B));
   MakeFold8Panel(Tab8);
+  Tab8->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   TGCompositeFrame *Tab11 = TabPanel->AddTab("Energy-CFD");
-  // fClient->GetColorByName("azure", color);
-  fClient->GetColorByName("pink", color);
-  TabPanel->GetTabTab("Energy-CFD")->ChangeBackground(color);
+  TabPanel->GetTabTab("Energy-CFD")->ChangeBackground(TColor::RGB2Pixel(TAB_BG_R,TAB_BG_G,TAB_BG_B));
   MakeFold11Panel(Tab11);
+  Tab11->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   TGCompositeFrame *Tab12 = TabPanel->AddTab("Event Flag");
-  // fClient->GetColorByName("azure", color);
-  fClient->GetColorByName("pink", color);
-  TabPanel->GetTabTab("Event Flag")->ChangeBackground(color);
+  TabPanel->GetTabTab("Event Flag")->ChangeBackground(TColor::RGB2Pixel(TAB_BG_R,TAB_BG_G,TAB_BG_B));
   MakeFold12Panel(Tab12);
+  Tab12->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   TGCompositeFrame *Tab7 = TabPanel->AddTab("QDC");
-  // fClient->GetColorByName("teal", color);
-  fClient->GetColorByName("pink", color);
-  TabPanel->GetTabTab("QDC")->ChangeBackground(color);
+  TabPanel->GetTabTab("QDC")->ChangeBackground(TColor::RGB2Pixel(TAB_BG_R,TAB_BG_G,TAB_BG_B));
   MakeFold7Panel(Tab7);
+  Tab7->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   TGCompositeFrame *Tab9 = TabPanel->AddTab("FFT");
-  // fClient->GetColorByName("azure", color);
-  fClient->GetColorByName("pink", color);
-  TabPanel->GetTabTab("FFT")->ChangeBackground(color);
+  TabPanel->GetTabTab("FFT")->ChangeBackground(TColor::RGB2Pixel(TAB_BG_R,TAB_BG_G,TAB_BG_B));
   MakeFold9Panel(Tab9);
+  Tab9->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   TGCompositeFrame *Tab10 = TabPanel->AddTab("Time Diff");
-  // fClient->GetColorByName("azure", color);
-  fClient->GetColorByName("pink", color);
-  TabPanel->GetTabTab("Time Diff")->ChangeBackground(color);
+  TabPanel->GetTabTab("Time Diff")->ChangeBackground(TColor::RGB2Pixel(TAB_BG_R,TAB_BG_G,TAB_BG_B));
   MakeFold10Panel(Tab10);
+  Tab10->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
-
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   SetWindowName("Review & Adjust Par");
   MapSubwindows();
   MapWindow();
-  Resize(1200,1000);
+  Resize(1500,1000);
 
-  gStyle->SetOptStat(0);//不显示统计框
+  gStyle->SetOptStat(0);
 }
 
 Offline::~Offline()
@@ -393,96 +382,123 @@ Offline::~Offline()
 void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *LogoFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-
+  TabPanel->AddFrame(LogoFrame, new TGLayoutHints(kLHintsTop | kLHintsLeft, 10,0,10, 0));
+  LogoFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGImageMap* fImagePKU = new TGImageMap(LogoFrame, "../icons/logo1.png");
+  LogoFrame->AddFrame(fImagePKU,new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 0, 0));
   fImagePKU->Resize(100,100);
   fImagePKU->ChangeOptions(fImagePKU->GetOptions() | kFixedSize);
-  LogoFrame->AddFrame(fImagePKU,new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 0, 0));
+  fImagePKU->ChangeOptions(fImagePKU->GetOptions() ^ kRaisedFrame);
+  fImagePKU->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   TGImageMap* fImageWHY = new TGImageMap(LogoFrame, "../icons/logo2.png");
+  LogoFrame->AddFrame(fImageWHY,new TGLayoutHints(kLHintsTop | kLHintsRight, 100, 0, 0, 0));
   fImageWHY->Resize(100,100);
   fImageWHY->ChangeOptions(fImageWHY->GetOptions() | kFixedSize);
-  LogoFrame->AddFrame(fImageWHY,new TGLayoutHints(kLHintsTop | kLHintsRight, 100, 0, 0, 0));
-
-  TabPanel->AddFrame(LogoFrame, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  fImageWHY->ChangeOptions(fImageWHY->GetOptions() ^ kRaisedFrame);
+  fImageWHY->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
   TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 20, 1));
-
+  parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   // choose header length
-  TGLabel *additionalanalysis = new TGLabel(parFrame, "Additional analysis:");
+  TGLabel *additionalanalysis = new TGLabel(parFrame, "Additional analysis:  ");
   parFrame->AddFrame(additionalanalysis, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
-  fClient->GetColorByName("orange", color);
-  additionalanalysis->SetTextColor(color, false);
+  additionalanalysis->SetTextColor(TColor::RGB2Pixel(COLOR_ORANGE_R,COLOR_ORANGE_G,COLOR_ORANGE_B), false);
+  additionalanalysis->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   headerrawenergysumsandbaseline = new TGCheckButton(parFrame, "raw E sums/baseline");
+  parFrame->AddFrame(headerrawenergysumsandbaseline, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
   headerrawenergysumsandbaseline->SetOn(kFALSE);
   headerrawenergysumsandbaseline->Connect("Toggled(Bool_t)", "Offline", this, "SelectRawEnergySumsBaseline(Bool_t)");
-  fClient->GetColorByName("orange", color);
-  headerrawenergysumsandbaseline->SetTextColor(color, false);
-  parFrame->AddFrame(headerrawenergysumsandbaseline, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+  headerrawenergysumsandbaseline->SetTextColor(TColor::RGB2Pixel(COLOR_ORANGE_R,COLOR_ORANGE_G,COLOR_ORANGE_B), false);
+  headerrawenergysumsandbaseline->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   headerqdcsums = new TGCheckButton(parFrame, "QDC sums");
+  parFrame->AddFrame(headerqdcsums, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
   headerqdcsums->SetOn(kFALSE);
   headerqdcsums->Connect("Toggled(Bool_t)", "Offline", this, "SelectQDCSums(Bool_t)");
-  fClient->GetColorByName("orange", color);
-  headerqdcsums->SetTextColor(color, false);
-  parFrame->AddFrame(headerqdcsums, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+  headerqdcsums->SetTextColor(TColor::RGB2Pixel(COLOR_ORANGE_R,COLOR_ORANGE_G,COLOR_ORANGE_B), false);
+  headerqdcsums->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
 
   headerexternaltimestamp = new TGCheckButton(parFrame, "external timestamp");
+  parFrame->AddFrame(headerexternaltimestamp, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 3, 0));
   headerexternaltimestamp->SetOn(kFALSE);
   headerexternaltimestamp->Connect("Toggled(Bool_t)", "Offline", this, "SelectExternalTimestamp(Bool_t)");
-  fClient->GetColorByName("orange", color);
-  headerexternaltimestamp->SetTextColor(color, false);
-  parFrame->AddFrame(headerexternaltimestamp, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 3, 0));
+  headerexternaltimestamp->SetTextColor(TColor::RGB2Pixel(COLOR_ORANGE_R,COLOR_ORANGE_G,COLOR_ORANGE_B), false);
+  headerexternaltimestamp->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   
    
    
   
   // run
   TGLabel *run = new TGLabel( parFrame, "Run:");
-  parFrame->AddFrame(run, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
-  fClient->GetColorByName("red", color);
-  run->SetTextColor(color, false);
+  parFrame->AddFrame(run, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  run->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  run->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   offlinefilerunnum = new TGNumberEntry(parFrame, 0, 4, OFFLINERUNNUM, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 9999);
+  parFrame->AddFrame(offlinefilerunnum, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
   offlinefilerunnum->SetButtonToNum(0);
   offlinefilerunnum->Associate(this);
-  parFrame->AddFrame(offlinefilerunnum, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
+  offlinefilerunnum->GetNumberEntry()->ChangeOptions(offlinefilerunnum->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  offlinefilerunnum->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  offlinefilerunnum->GetButtonUp()->ChangeOptions(offlinefilerunnum->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  offlinefilerunnum->GetButtonDown()->ChangeOptions(offlinefilerunnum->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  offlinefilerunnum->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
+  
 
   // mod
   TGLabel *mod = new TGLabel( parFrame, "Mod:"); 
-  parFrame->AddFrame(mod, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
-  fClient->GetColorByName("red", color);
-  mod->SetTextColor(color, false);
+  parFrame->AddFrame(mod, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  mod->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  mod->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
-  offlinemodnum = new TGNumberEntry (parFrame, 0, 2, OFFLINEMODNUM, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, PRESET_MAX_MODULES-1);
+  offlinemodnum = new TGNumberEntry(parFrame, 0, 2, OFFLINEMODNUM, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, PRESET_MAX_MODULES-1);
+  parFrame->AddFrame(offlinemodnum, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
   offlinemodnum->SetButtonToNum(0);
   offlinemodnum->Associate(this);
-  parFrame->AddFrame(offlinemodnum, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
+  offlinemodnum->GetNumberEntry()->ChangeOptions(offlinemodnum->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  offlinemodnum->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  offlinemodnum->GetButtonUp()->ChangeOptions(offlinemodnum->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  offlinemodnum->GetButtonDown()->ChangeOptions(offlinemodnum->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  offlinemodnum->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));  
 
   // read
-  OfflineReadFileButton = new TGTextButton( parFrame, "&Read", OFFLINEREAD);
-  OfflineReadFileButton->Associate(this);
+  OfflineReadFileButton = new TGTextButton( parFrame, " &Read ", OFFLINEREAD);
   parFrame->AddFrame(OfflineReadFileButton, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
+  OfflineReadFileButton->Associate(this);
+  OfflineReadFileButton->ChangeOptions(OfflineReadFileButton->GetOptions() ^ kRaisedFrame);
+  OfflineReadFileButton->SetFont(TEXTBUTTON_FONT, false);
+  OfflineReadFileButton->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineReadFileButton->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+  
 
   // status
   OfflineFileStatus = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  parFrame->AddFrame(OfflineFileStatus, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 6, 0)); 
   OfflineFileStatus-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
-  fClient->GetColorByName("blue", color);
-  OfflineFileStatus->SetTextColor(color, false);
+  OfflineFileStatus->SetTextColor(TColor::RGB2Pixel(COLOR_BLUE_R,COLOR_BLUE_G,COLOR_BLUE_B), false);
   OfflineFileStatus->SetText("NOT READ");
-  OfflineFileStatus->Resize(200, 12);
+  OfflineFileStatus->Resize(200, 16);
   OfflineFileStatus->SetEnabled(kFALSE);
   OfflineFileStatus->SetFrameDrawn(kFALSE);
-  parFrame->AddFrame(OfflineFileStatus, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 6, 0));// 
+  OfflineFileStatus->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   TGGroupFrame *informationgroup = new TGGroupFrame(TabPanel,"Information");
-  TabPanel->AddFrame(informationgroup,new TGLayoutHints(kLHintsExpandX | kLHintsTop,0,0,100,0));
-
+  TabPanel->AddFrame(informationgroup,new TGLayoutHints(kLHintsExpandX | kLHintsTop,10,10,100,0));
+  informationgroup->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  informationgroup->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
+  
   TGHorizontalFrame *guideframe[10];
   TGTextEntry *guidetextinfor[10];
   
@@ -490,14 +506,18 @@ void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
     {
       guideframe[i] = new TGHorizontalFrame(informationgroup);
       informationgroup->AddFrame(guideframe[i],new TGLayoutHints(kLHintsExpandX | kLHintsTop,0,0,5,0));
+      guideframe[i]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+      
       guidetextinfor[i] = new TGTextEntry(guideframe[i],new TGTextBuffer(30), 10000);
       guideframe[i]->AddFrame(guidetextinfor[i], new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 0, 0));
       guidetextinfor[i]-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
 
       guidetextinfor[i]->SetText(gOfflineGuides[i]);
-      guidetextinfor[i]->Resize(1000, 16);
+      guidetextinfor[i]->Resize(1000, 18);
       guidetextinfor[i]->SetEnabled(kFALSE);
       guidetextinfor[i]->SetFrameDrawn(kFALSE);
+      guidetextinfor[i]->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+      guidetextinfor[i]->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
     }
   
 }
@@ -506,184 +526,208 @@ void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
 void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
-  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
+  TabPanel->AddFrame(adCanvasFrame, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 4, 4, 4, 4));
+  adCanvasFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
 
   TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("offlineadcanvas", adCanvasFrame, 100, 100);
-
+  adCanvasFrame->AddFrame(adjCanvas, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
   adjustCanvas = adjCanvas->GetCanvas();
-  adCanvasFrame->AddFrame(adjCanvas, Hint);
-  TabPanel->AddFrame(adCanvasFrame, Hint);
-
-  // ===
+  
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+ 
   TGCompositeFrame *filterFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-
+  TabPanel->AddFrame(filterFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  filterFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   // fastlength
-  TGLabel *fastlength = new TGLabel( filterFrame, "FLen:");
-  fClient->GetColorByName("blue", color);
-  fastlength->SetTextColor(color, false);
-  filterFrame->AddFrame(fastlength, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  TGLabel *fastlength = new TGLabel( filterFrame, "FastLen:");
+  filterFrame->AddFrame(fastlength, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 3, 0));
+  fastlength->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
+  fastlength->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   offlinefilters[0] = new TGNumberEntryField(filterFrame, OFFLINEFASTLENGTH, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[0], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
   // fastgap
-  TGLabel *fastgap = new TGLabel( filterFrame, "FGap:");
-  fClient->GetColorByName("blue", color);
-  fastgap->SetTextColor(color, false);
-  filterFrame->AddFrame(fastgap, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  TGLabel *fastgap = new TGLabel( filterFrame, "FastGap:");
+  filterFrame->AddFrame(fastgap, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 3, 0));
+  fastgap->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
+  fastgap->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   offlinefilters[1] = new TGNumberEntryField(filterFrame, OFFLINEFASTGAP, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[1], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
   // fast filter thresh
   TGLabel *thresh = new TGLabel( filterFrame, "FFThr:");
-  fClient->GetColorByName("blue", color);
-  thresh->SetTextColor(color, false);
-  filterFrame->AddFrame(thresh, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  filterFrame->AddFrame(thresh, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 3, 0));
+  thresh->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
+  thresh->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   offlinefilters[7] = new TGNumberEntryField(filterFrame, OFFLINETHRESH, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[7], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
 
   // cfddelay
-  TGLabel *cfddelay = new TGLabel( filterFrame, "CFDDe:");
-  fClient->GetColorByName("red", color);
-  cfddelay->SetTextColor(color, false);
-  filterFrame->AddFrame(cfddelay, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  TGLabel *cfddelay = new TGLabel( filterFrame, "CFDDelay:");
+  filterFrame->AddFrame(cfddelay, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 3, 0));
+  cfddelay->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  cfddelay->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   offlinefilters[5] = new TGNumberEntryField(filterFrame, OFFLINECFDDELAY, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[5], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
   // cfdscale
-  TGLabel *cfdscale = new TGLabel( filterFrame, "CFDSc:");
-  fClient->GetColorByName("red", color);
-  cfdscale->SetTextColor(color, false);
-  filterFrame->AddFrame(cfdscale, new TGLayoutHints (kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  TGLabel *cfdscale = new TGLabel( filterFrame, "CFDScale:");
+  filterFrame->AddFrame(cfdscale, new TGLayoutHints (kLHintsLeft | kLHintsTop, 3, 2, 3, 0));
+  cfdscale->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  cfdscale->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   offlinefilters[6] = new TGNumberEntryField(filterFrame, OFFLINECFDSCALE, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[6], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
   // cfd thresh
   TGLabel *cfdthresh = new TGLabel( filterFrame, "CFDThr:");
-  fClient->GetColorByName("red", color);
-  cfdthresh->SetTextColor(color, false);
-  filterFrame->AddFrame(cfdthresh, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  filterFrame->AddFrame(cfdthresh, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 3, 0));
+  cfdthresh->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  cfdthresh->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   offlinefilters[8] = new TGNumberEntryField(filterFrame, OFFLINECFDTHRESH, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[8], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
   
   // slowlength
-  TGLabel *lowlength = new TGLabel( filterFrame, "SLen:");
-  fClient->GetColorByName("green", color);
-  lowlength->SetTextColor(color, false);
-  filterFrame->AddFrame(lowlength, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  TGLabel *lowlength = new TGLabel( filterFrame, "SlowLen:");
+  filterFrame->AddFrame(lowlength, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 3, 0));
+  lowlength->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  lowlength->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   offlinefilters[2] = new TGNumberEntryField(filterFrame, OFFLINESLOWLENGTH, 0, TGNumberFormat::kNESReal);
-  filterFrame->AddFrame(offlinefilters[2], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
+  filterFrame->AddFrame(offlinefilters[2], new TGLayoutHints(kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
   // slowgap
-  TGLabel *lowgap = new TGLabel( filterFrame, "SGap:");
-  fClient->GetColorByName("green", color);
-  lowgap->SetTextColor(color, false);
-  filterFrame->AddFrame(lowgap, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  TGLabel *lowgap = new TGLabel( filterFrame, "SlowGap:");
+  filterFrame->AddFrame(lowgap, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 3, 0));
+  lowgap->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  lowgap->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   offlinefilters[3] = new TGNumberEntryField(filterFrame, OFFLINESLOWGAP, 0, TGNumberFormat::kNESReal);
-  filterFrame->AddFrame(offlinefilters[3], new TGLayoutHints( kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
+  filterFrame->AddFrame(offlinefilters[3], new TGLayoutHints(kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
   // preamptau
   TGLabel *preamptau = new TGLabel(filterFrame, "Tau:");
-  fClient->GetColorByName("green", color);
-  preamptau->SetTextColor(color, false);
-  filterFrame->AddFrame(preamptau, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  filterFrame->AddFrame(preamptau, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 3, 0));
+  preamptau->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  preamptau->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   offlinefilters[4] = new TGNumberEntryField(filterFrame, OFFLINEPREAMPTAU, 0, TGNumberFormat::kNESReal);
   filterFrame->AddFrame(offlinefilters[4], new TGLayoutHints(kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
 
 
   // slowfilterrange
-  TGLabel *slowfilterrange = new TGLabel(filterFrame, "FilRan:");
-  fClient->GetColorByName("purple", color);
-  slowfilterrange->SetTextColor(color, false);
-  filterFrame->AddFrame(slowfilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  TGLabel *slowfilterrange = new TGLabel(filterFrame, "FilterRan:");
+  filterFrame->AddFrame(slowfilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 3, 0));
+  slowfilterrange->SetTextColor(TColor::RGB2Pixel(COLOR_PINK_R,COLOR_PINK_G,COLOR_PINK_B), false);
+  slowfilterrange->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   offlinefilterrange = new TGNumberEntry(filterFrame, 0, 2, OFFLINEFILTERRANGE, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 1, 6);
   filterFrame->AddFrame(offlinefilterrange, new TGLayoutHints(kLHintsExpandX | kLHintsTop, 1, 0, 0, 0));
   offlinefilterrange->SetButtonToNum(0);
   offlinefilterrange->Associate(this);
+  offlinefilterrange->GetNumberEntry()->ChangeOptions(offlinefilterrange->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  offlinefilterrange->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  offlinefilterrange->GetButtonUp()->ChangeOptions(offlinefilterrange->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  offlinefilterrange->GetButtonDown()->ChangeOptions(offlinefilterrange->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  offlinefilterrange->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
 
   
-  TabPanel->AddFrame(filterFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
-
-  // ===
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......  
 
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   // Draw option
   TGLabel *drawoptionlabel = new TGLabel(parFrame, "Draw option:");
   parFrame->AddFrame(drawoptionlabel, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
-  // fClient->GetColorByName("red", color);
-  // drawoptionlabel->SetTextColor(color, false);
-
+  drawoptionlabel->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  drawoptionlabel->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
+  
   offlinedrawoption1[0] = new TGCheckButton(parFrame, "Wave");
+  parFrame->AddFrame(offlinedrawoption1[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
   offlinedrawoption1[0]->SetOn(kTRUE);
   offlinedrawoption1[0]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel1(Bool_t)");
-  parFrame->AddFrame(offlinedrawoption1[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+  offlinedrawoption1[0]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  offlinedrawoption1[0]->SetTextColor(TColor::RGB2Pixel(CHECKBUTTON_TEXT_R,CHECKBUTTON_TEXT_G,CHECKBUTTON_TEXT_B));
 
   offlinedrawoption1[1] = new TGCheckButton(parFrame, "Slow Filter");
+  parFrame->AddFrame(offlinedrawoption1[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
   offlinedrawoption1[1]->SetOn(kTRUE);
   offlinedrawoption1[1]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel1(Bool_t)");
-  fClient->GetColorByName("green", color);
-  offlinedrawoption1[1]->SetTextColor(color, false);
-  parFrame->AddFrame(offlinedrawoption1[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+  offlinedrawoption1[1]->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  offlinedrawoption1[1]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   offlinedrawoption1[2] = new TGCheckButton(parFrame, "Fast Filter");
+  parFrame->AddFrame(offlinedrawoption1[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
   offlinedrawoption1[2]->SetOn(kTRUE);
   offlinedrawoption1[2]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel1(Bool_t)");
-  fClient->GetColorByName("blue", color);
-  offlinedrawoption1[2]->SetTextColor(color, false);
-  parFrame->AddFrame(offlinedrawoption1[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+  offlinedrawoption1[2]->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
+  offlinedrawoption1[2]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   offlinedrawoption1[3] = new TGCheckButton(parFrame, "Thres");
+  parFrame->AddFrame(offlinedrawoption1[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));  
   offlinedrawoption1[3]->SetOn(kTRUE);
   offlinedrawoption1[3]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel1(Bool_t)");
-  fClient->GetColorByName("blue", color);
-  offlinedrawoption1[3]->SetTextColor(color, false);
-  parFrame->AddFrame(offlinedrawoption1[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));  
+  offlinedrawoption1[3]->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
+  offlinedrawoption1[3]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   offlinedrawoption1[4] = new TGCheckButton(parFrame, "CFD");
+  parFrame->AddFrame(offlinedrawoption1[4], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
   offlinedrawoption1[4]->SetOn(kTRUE);
   offlinedrawoption1[4]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel1(Bool_t)");
-  fClient->GetColorByName("red", color);
-  offlinedrawoption1[4]->SetTextColor(color, false);
-  parFrame->AddFrame(offlinedrawoption1[4], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+  offlinedrawoption1[4]->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  offlinedrawoption1[4]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   offlinedrawoption1[5] = new TGCheckButton(parFrame, "CFD Thres");
+  parFrame->AddFrame(offlinedrawoption1[5], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
   offlinedrawoption1[5]->SetOn(kTRUE);
   offlinedrawoption1[5]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel1(Bool_t)");
-  fClient->GetColorByName("red", color);
-  offlinedrawoption1[5]->SetTextColor(color, false);
-  parFrame->AddFrame(offlinedrawoption1[5], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+  offlinedrawoption1[5]->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  offlinedrawoption1[5]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   offlinedrawoption1[6] = new TGCheckButton(parFrame, "CFDScale");
+  parFrame->AddFrame(offlinedrawoption1[6], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
   offlinedrawoption1[6]->SetOn(kFALSE);
   offlinedrawoption1[6]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel1(Bool_t)");
-  fClient->GetColorByName("hot pink", color);
-  offlinedrawoption1[6]->SetTextColor(color, false);
-  parFrame->AddFrame(offlinedrawoption1[6], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+  offlinedrawoption1[6]->SetTextColor(TColor::RGB2Pixel(COLOR_PINK_R,COLOR_PINK_G,COLOR_PINK_B), false);
+  offlinedrawoption1[6]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
+  
   // current count
   OfflineCurrentCountText = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  parFrame->AddFrame(OfflineCurrentCountText, new TGLayoutHints(kLHintsRight | kLHintsTop, 0, 0, 6, 0));
   OfflineCurrentCountText-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
-  fClient->GetColorByName("blue", color);
-  OfflineCurrentCountText->SetTextColor(color, false);
-  // OfflineCurrentCountText->SetAlignment(kTextCenterX);
+  OfflineCurrentCountText->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
   OfflineCurrentCountText->SetText("/-1");
   OfflineCurrentCountText->Resize(150, 12);
   OfflineCurrentCountText->SetEnabled(kFALSE);
   OfflineCurrentCountText->SetFrameDrawn(kFALSE);
-  parFrame->AddFrame(OfflineCurrentCountText, new TGLayoutHints(kLHintsRight | kLHintsTop, 0, 0, 6, 0));
+  OfflineCurrentCountText->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
 
   // CurrentCount
   offlinecurrentcountentry = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESInteger,TGNumberFormat::kNEANonNegative);
-  parFrame->AddFrame(offlinecurrentcountentry, new TGLayoutHints(kLHintsRight | kLHintsTop, 20, 0, 0, 0));
+  parFrame->AddFrame(offlinecurrentcountentry, new TGLayoutHints(kLHintsRight | kLHintsTop, 20, 0, 3, 0));
 
   // draw
-  OfflineDrawButton = new TGTextButton(parFrame, "&Draw", OFFLINEDRAW);
+  OfflineDrawButton = new TGTextButton(parFrame, " &Draw ", OFFLINEDRAW);
+  parFrame->AddFrame(OfflineDrawButton, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 1, 0));
   OfflineDrawButton->SetEnabled(0);
   OfflineDrawButton->Associate(this);
-  parFrame->AddFrame(OfflineDrawButton, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
+  OfflineDrawButton->ChangeOptions(OfflineDrawButton->GetOptions() ^ kRaisedFrame);
+  OfflineDrawButton->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineDrawButton->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineDrawButton->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
 
+  
   // draw style
   choosedrawmarkerstyle = new TGComboBox(parFrame);
   parFrame->AddFrame(choosedrawmarkerstyle, new TGLayoutHints(kLHintsRight, 0, 5, 2, 2));
@@ -694,45 +738,62 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
   choosedrawmarkerstyle->AddEntry("Line1-Point", 3);
   choosedrawmarkerstyle->AddEntry("Line2-Point", 4);
   choosedrawmarkerstyle->Select(0);
+  
   TGLabel *LabelDrawStyle = new TGLabel(parFrame, "Style:"); 
-  parFrame->AddFrame(LabelDrawStyle, new TGLayoutHints(kLHintsRight | kLHintsTop, 5, 2, 5, 0));
-
+  parFrame->AddFrame(LabelDrawStyle, new TGLayoutHints(kLHintsRight | kLHintsTop, 5, 2, 7, 0));
+  LabelDrawStyle->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  LabelDrawStyle->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
 
   
   // apply
   OfflineApplyButton = new TGTextButton( parFrame, "&Apply", OFFLINEAPPLY);
   OfflineApplyButton->Associate(this);
-  parFrame->AddFrame(OfflineApplyButton , new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 5, 0, 0));
+  parFrame->AddFrame(OfflineApplyButton , new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 5, 1, 0));
+  OfflineApplyButton->ChangeOptions(OfflineApplyButton->GetOptions() ^ kRaisedFrame);
+  OfflineApplyButton->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineApplyButton->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineApplyButton->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
 
   // load
-  OfflineLoadButton = new TGTextButton( parFrame, "&Load", OFFLINELOAD);
+  OfflineLoadButton = new TGTextButton( parFrame, " &Load ", OFFLINELOAD);
   OfflineLoadButton->Associate(this);
-  parFrame->AddFrame(OfflineLoadButton, new TGLayoutHints(kLHintsRight | kLHintsTop, 20, 5, 0, 0));
+  parFrame->AddFrame(OfflineLoadButton, new TGLayoutHints(kLHintsRight | kLHintsTop, 20, 5, 1, 0));
+  OfflineLoadButton->ChangeOptions(OfflineLoadButton->GetOptions() ^ kRaisedFrame);
+  OfflineLoadButton->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineLoadButton->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineLoadButton->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
 
   // ch
-  offlinechnum = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
-  parFrame->AddFrame(offlinechnum, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 0, 0, 0));
+  offlinechnum = new TGNumberEntry(parFrame, 0, 2, OFFLINECHNUM, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  parFrame->AddFrame(offlinechnum, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 0, 2, 0));
   offlinechnum->SetButtonToNum(0);
   offlinechnum->Associate(this);
-  TGLabel *ch = new TGLabel( parFrame, "Ch:"); 
-  parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-
-
+  offlinechnum->GetNumberEntry()->ChangeOptions(offlinechnum->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  offlinechnum->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  offlinechnum->GetButtonUp()->ChangeOptions(offlinechnum->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  offlinechnum->GetButtonDown()->ChangeOptions(offlinechnum->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  offlinechnum->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
 
   
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  TGLabel *ch = new TGLabel( parFrame, "Ch:"); 
+  parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 7, 0));
+  ch->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  ch->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
 
 
-  // ===
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
 
   TGCompositeFrame *oldparFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
   TabPanel->AddFrame(oldparFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  oldparFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   //slow filter baseline
   TGLabel *LabelChooseSlowFIlterBaseline = new TGLabel(oldparFrame, "Slow Filter Baseline:"); 
   oldparFrame->AddFrame(LabelChooseSlowFIlterBaseline, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelChooseSlowFIlterBaseline->SetTextColor(color, false);
+  LabelChooseSlowFIlterBaseline->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelChooseSlowFIlterBaseline->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   chooseslowfilterbaseline = new TGComboBox(oldparFrame);
   oldparFrame->AddFrame(chooseslowfilterbaseline, new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
   chooseslowfilterbaseline->Resize(100, 20);
@@ -742,102 +803,117 @@ void Offline::MakeFold1Panel(TGCompositeFrame *TabPanel)
 
   TGLabel *LabelOldSlowFilterSL = new TGLabel(oldparFrame," 'Old Baseline Pars' choose -> SLen:");
   oldparFrame->AddFrame(LabelOldSlowFilterSL, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelOldSlowFilterSL->SetTextColor(color, false);
+  LabelOldSlowFilterSL->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelOldSlowFilterSL->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   oldslowfilterparameter[0] = new TGNumberEntryField(oldparFrame, -1, 3.040, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.032,81.280);
   oldparFrame->AddFrame(oldslowfilterparameter[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   oldslowfilterparameter[0]->Resize(40, 20);
+  
   TGLabel *LabelOldSlowFilterSG = new TGLabel(oldparFrame,"SGap:");
   oldparFrame->AddFrame(LabelOldSlowFilterSG, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelOldSlowFilterSG->SetTextColor(color, false);
+  LabelOldSlowFilterSG->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelOldSlowFilterSG->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   oldslowfilterparameter[1] = new TGNumberEntryField(oldparFrame, -1, 0.640, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.048,81.280);
   oldparFrame->AddFrame(oldslowfilterparameter[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   oldslowfilterparameter[1]->Resize(40, 20);
+  
   TGLabel *LabelOldSlowFilterTAU = new TGLabel(oldparFrame,"Tau:");
   oldparFrame->AddFrame(LabelOldSlowFilterTAU, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelOldSlowFilterTAU->SetTextColor(color, false);
+  LabelOldSlowFilterTAU->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelOldSlowFilterTAU->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   oldslowfilterparameter[2] = new TGNumberEntryField(oldparFrame, -1, 0, TGNumberFormat::kNESReal);
   oldparFrame->AddFrame(oldslowfilterparameter[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   oldslowfilterparameter[2]->Resize(40, 20);
+  
   TGLabel *oldslowfilterrange = new TGLabel(oldparFrame, "FilRan:");
-  fClient->GetColorByName("purple", color);
-  oldslowfilterrange->SetTextColor(color, false);
-  oldparFrame->AddFrame(oldslowfilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  oldparFrame->AddFrame(oldslowfilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
+  oldslowfilterrange->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  oldslowfilterrange->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
+  
   oldofflinefilterrange = new TGNumberEntry(oldparFrame, 0, 2, -1, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 1, 6);
-  oldparFrame->AddFrame(oldofflinefilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-  oldofflinefilterrange->SetIntNumber(3);
-
+  oldparFrame->AddFrame(oldofflinefilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  oldofflinefilterrange->SetIntNumber(2);
+  oldofflinefilterrange->GetNumberEntry()->ChangeOptions(oldofflinefilterrange->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  oldofflinefilterrange->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  oldofflinefilterrange->GetButtonUp()->ChangeOptions(oldofflinefilterrange->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  oldofflinefilterrange->GetButtonDown()->ChangeOptions(oldofflinefilterrange->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  oldofflinefilterrange->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
+  
 
   TGLabel *Label500MCFD = new TGLabel(oldparFrame,"500M CFD  ");
   oldparFrame->AddFrame(Label500MCFD, new TGLayoutHints(kLHintsLeft | kLHintsTop, 20, 2, 5, 0));
-  fClient->GetColorByName("red", color);
-  Label500MCFD->SetTextColor(color, false);
+  Label500MCFD->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  Label500MCFD->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
 
   TGLabel *Label500MCFDw = new TGLabel(oldparFrame,"w:");
-  oldparFrame->AddFrame(Label500MCFDw, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("red", color);
-  Label500MCFDw->SetTextColor(color, false);
+  oldparFrame->AddFrame(Label500MCFDw, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  Label500MCFDw->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  Label500MCFDw->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  
   cfdfilter500Mparameter[0] = new TGNumberEntryField(oldparFrame, -1, 1, TGNumberFormat::kNESReal);
   oldparFrame->AddFrame(cfdfilter500Mparameter[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   cfdfilter500Mparameter[0]->Resize(40, 20);
 
   TGLabel *Label500MCFDB = new TGLabel(oldparFrame,"B:");
-  oldparFrame->AddFrame(Label500MCFDB, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("red", color);
-  Label500MCFDB->SetTextColor(color, false);
+  oldparFrame->AddFrame(Label500MCFDB, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  Label500MCFDB->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  Label500MCFDB->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  
   cfdfilter500Mparameter[1] = new TGNumberEntryField(oldparFrame, -1, 5, TGNumberFormat::kNESReal);
   oldparFrame->AddFrame(cfdfilter500Mparameter[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   cfdfilter500Mparameter[1]->Resize(40, 20);
 
   TGLabel *Label500MCFDD = new TGLabel(oldparFrame,"D:");
-  oldparFrame->AddFrame(Label500MCFDD, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("red", color);
-  Label500MCFDD->SetTextColor(color, false);
+  oldparFrame->AddFrame(Label500MCFDD, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  Label500MCFDD->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  Label500MCFDD->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  
   cfdfilter500Mparameter[2] = new TGNumberEntryField(oldparFrame, -1, 5, TGNumberFormat::kNESReal);
   oldparFrame->AddFrame(cfdfilter500Mparameter[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   cfdfilter500Mparameter[2]->Resize(40, 20);
 
   TGLabel *Label500MCFDL = new TGLabel(oldparFrame,"L:");
-  oldparFrame->AddFrame(Label500MCFDL, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("red", color);
-  Label500MCFDL->SetTextColor(color, false);
+  oldparFrame->AddFrame(Label500MCFDL, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  Label500MCFDL->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  Label500MCFDL->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  
   cfdfilter500Mparameter[3] = new TGNumberEntryField(oldparFrame, -1, 1, TGNumberFormat::kNESReal);
   oldparFrame->AddFrame(cfdfilter500Mparameter[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   cfdfilter500Mparameter[3]->Resize(40, 20);
 
-
-
-  
   
   offlineonlywaveformevent = new TGCheckButton(oldparFrame, "Only Waveform Event");
-  offlineonlywaveformevent->SetOn(kTRUE);
   oldparFrame->AddFrame(offlineonlywaveformevent, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 0, 3, 0));
-
+  offlineonlywaveformevent->SetOn(kTRUE);
+  offlineonlywaveformevent->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  offlineonlywaveformevent->SetTextColor(TColor::RGB2Pixel(CHECKBUTTON_TEXT_R,CHECKBUTTON_TEXT_G,CHECKBUTTON_TEXT_B));
   
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
-  // ===
   dslider = new TGDoubleHSlider(TabPanel,4, kDoubleScaleBoth,ADJUSTPARSLIDER);
+  TabPanel->AddFrame(dslider, new TGLayoutHints(kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
   dslider->Associate(this);
   dslider->SetRange(0,5000);
   dslider->SetPosition(0,5000);
-  TabPanel->AddFrame(dslider, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
-  // TODO
-  // connect to picture
+  dslider->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
-
-  // ===
-  sbfold3 = new TGStatusBar(TabPanel,10,10);
-  int temp[4];
-  temp[0] = 33;
-  temp[1] = 10;
-  temp[2] = 10;
-  temp[3] = 47;
-  sbfold3->SetParts(temp,4);
-  //TODO
-  // connect to canvas
-  TabPanel->AddFrame(sbfold3, new TGLayoutHints(kLHintsBottom | kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  // sbfold3 = new TGStatusBar(TabPanel,10,10);
+  // TabPanel->AddFrame(sbfold3, new TGLayoutHints(kLHintsBottom | kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  // int temp[4];
+  // temp[0] = 33;
+  // temp[1] = 10;
+  // temp[2] = 10;
+  // temp[3] = 47;
+  // sbfold3->SetParts(temp,4);
+  // //TODO
+  // // connect to canvas
+  
 }
 
 void Offline::SelectDrawOptionPanel1(Bool_t on)
@@ -959,73 +1035,79 @@ void Offline::SelectDrawOptionPanel1(Bool_t on)
 void Offline::MakeFold2Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 4, 4, 4, 4));
+  parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   // Draw option
   TGLabel *drawoptionlabel = new TGLabel(parFrame, "Draw option:");
   parFrame->AddFrame(drawoptionlabel, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
-  // fClient->GetColorByName("red", color);
-  // drawoptionlabel->SetTextColor(color, false);
+  drawoptionlabel->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  drawoptionlabel->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
+
 
   offlinedrawoption2[0] = new TGCheckButton(parFrame, "Wave");
+  parFrame->AddFrame(offlinedrawoption2[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
   offlinedrawoption2[0]->SetOn(kTRUE);
   offlinedrawoption2[0]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel2(Bool_t)");
-  parFrame->AddFrame(offlinedrawoption2[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+  offlinedrawoption2[0]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  offlinedrawoption2[0]->SetTextColor(TColor::RGB2Pixel(CHECKBUTTON_TEXT_R,CHECKBUTTON_TEXT_G,CHECKBUTTON_TEXT_B));
 
   offlinedrawoption2[1] = new TGCheckButton(parFrame, "Slow Filter");
+  parFrame->AddFrame(offlinedrawoption2[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
   offlinedrawoption2[1]->SetOn(kTRUE);
   offlinedrawoption2[1]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel2(Bool_t)");
-  fClient->GetColorByName("green", color);
-  offlinedrawoption2[1]->SetTextColor(color, false);
-  parFrame->AddFrame(offlinedrawoption2[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
-
+  offlinedrawoption2[1]->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  offlinedrawoption2[1]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+ 
   offlinedrawoption2[2] = new TGCheckButton(parFrame, "Fast Filter");
+  parFrame->AddFrame(offlinedrawoption2[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
   offlinedrawoption2[2]->SetOn(kTRUE);
   offlinedrawoption2[2]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel2(Bool_t)");
-  fClient->GetColorByName("blue", color);
-  offlinedrawoption2[2]->SetTextColor(color, false);
-  parFrame->AddFrame(offlinedrawoption2[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
-
+  offlinedrawoption2[2]->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
+  offlinedrawoption2[2]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   offlinedrawoption2[3] = new TGCheckButton(parFrame, "Thres");
+  parFrame->AddFrame(offlinedrawoption2[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));  
   offlinedrawoption2[3]->SetOn(kTRUE);
   offlinedrawoption2[3]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel2(Bool_t)");
-  fClient->GetColorByName("blue", color);
-  offlinedrawoption2[3]->SetTextColor(color, false);
-  parFrame->AddFrame(offlinedrawoption2[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));  
-
+  offlinedrawoption2[3]->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
+  offlinedrawoption2[3]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   offlinedrawoption2[4] = new TGCheckButton(parFrame, "CFD");
+  parFrame->AddFrame(offlinedrawoption2[4], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
   offlinedrawoption2[4]->SetOn(kTRUE);
   offlinedrawoption2[4]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel2(Bool_t)");
-  fClient->GetColorByName("red", color);
-  offlinedrawoption2[4]->SetTextColor(color, false);
-  parFrame->AddFrame(offlinedrawoption2[4], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
-
+  offlinedrawoption2[4]->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  offlinedrawoption2[4]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   offlinedrawoption2[5] = new TGCheckButton(parFrame, "CFD Thres");
+  parFrame->AddFrame(offlinedrawoption2[5], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
   offlinedrawoption2[5]->SetOn(kTRUE);
   offlinedrawoption2[5]->Connect("Toggled(Bool_t)", "Offline", this, "SelectDrawOptionPanel2(Bool_t)");
-  fClient->GetColorByName("red", color);
-  offlinedrawoption2[5]->SetTextColor(color, false);
-  parFrame->AddFrame(offlinedrawoption2[5], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 3, 0));
+  offlinedrawoption2[5]->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  offlinedrawoption2[5]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   
   // draw
   OfflineDrawButton2 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW2);
+  parFrame->AddFrame(OfflineDrawButton2, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
   OfflineDrawButton2->SetEnabled(0);
   OfflineDrawButton2->Associate(this);
-  parFrame->AddFrame(OfflineDrawButton2, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
-
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  OfflineDrawButton2->ChangeOptions(OfflineDrawButton2->GetOptions() ^ kRaisedFrame);
+  OfflineDrawButton2->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineDrawButton2->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineDrawButton2->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
-  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
+  TabPanel->AddFrame(adCanvasFrame, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 4, 4, 0, 4));
 
   TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas2", adCanvasFrame, 100, 100);
-
+  adCanvasFrame->AddFrame(adjCanvas, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
   canvas2 = adjCanvas->GetCanvas();
   canvas2->Divide(4,4);
-  adCanvasFrame->AddFrame(adjCanvas, Hint);
-  TabPanel->AddFrame(adCanvasFrame, Hint);
+
 }
 
 void Offline::SelectDrawOptionPanel2(Bool_t on)
@@ -1112,56 +1194,76 @@ void Offline::SelectDrawOptionPanel2(Bool_t on)
 void Offline::MakeFold3Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 4, 4, 4, 4));
+  parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   // draw
   OfflineDrawButton3 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW3);
+  parFrame->AddFrame(OfflineDrawButton3, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
   OfflineDrawButton3->SetEnabled(0);
   OfflineDrawButton3->Associate(this);
-  parFrame->AddFrame(OfflineDrawButton3, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
-
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
-
+  OfflineDrawButton3->ChangeOptions(OfflineDrawButton3->GetOptions() ^ kRaisedFrame);
+  OfflineDrawButton3->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineDrawButton3->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineDrawButton3->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+  
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
-  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
-
+  TabPanel->AddFrame(adCanvasFrame, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 4, 4, 0, 4));
+  adCanvasFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas3", adCanvasFrame, 100, 100);
-
+  adCanvasFrame->AddFrame(adjCanvas, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
   canvas3 = adjCanvas->GetCanvas();
-  adCanvasFrame->AddFrame(adjCanvas, Hint);
-  TabPanel->AddFrame(adCanvasFrame, Hint);
-
 }
 
 void Offline::MakeFold4Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-
+  TabPanel->AddFrame(parFrame, new TGLayoutHints(kLHintsLeft | kLHintsExpandX, 4, 4, 4, 4));
+  parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   // Fit
   GausFitButton4 = new TGTextButton(parFrame, "Open  Fit", OFFLINEGAUSFIT4);
+  parFrame->AddFrame(GausFitButton4, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 0, 0));
   GausFitButton4->SetEnabled(0);
   GausFitButton4->Associate(this);
-  parFrame->AddFrame(GausFitButton4, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 0, 0));
-  
+  GausFitButton4->ChangeOptions(GausFitButton4->GetOptions() ^ kRaisedFrame);
+  GausFitButton4->SetFont(TEXTBUTTONSMALL_FONT, false);
+  GausFitButton4->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  GausFitButton4->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
   
   // draw
   OfflineDrawButton4 = new TGTextButton(parFrame, "&Draw", OFFLINEDRAW4);
+  parFrame->AddFrame(OfflineDrawButton4, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
   OfflineDrawButton4->SetEnabled(0);
   OfflineDrawButton4->Associate(this);
-  parFrame->AddFrame(OfflineDrawButton4, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
-
+  OfflineDrawButton4->ChangeOptions(OfflineDrawButton4->GetOptions() ^ kRaisedFrame);
+  OfflineDrawButton4->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineDrawButton4->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineDrawButton4->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+  
+  
   // ch
-  offlinechnum4 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM4, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  offlinechnum4 = new TGNumberEntry(parFrame, 0, 2, OFFLINECHNUM4, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
   parFrame->AddFrame(offlinechnum4, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
   offlinechnum4->SetButtonToNum(0);
   offlinechnum4->Associate(this);
+  offlinechnum4->GetNumberEntry()->ChangeOptions(offlinechnum4->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  offlinechnum4->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  offlinechnum4->GetButtonUp()->ChangeOptions(offlinechnum4->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  offlinechnum4->GetButtonDown()->ChangeOptions(offlinechnum4->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  offlinechnum4->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));  
+
   TGLabel *ch = new TGLabel(parFrame, "Ch:"); 
   parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-   
+  ch->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
+  ch->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   // bin
   chooseth1dbin4 = new TGComboBox(parFrame);
-  parFrame->AddFrame(chooseth1dbin4, new TGLayoutHints(kLHintsRight, 5, 25, 2, 2));
+  parFrame->AddFrame(chooseth1dbin4, new TGLayoutHints(kLHintsRight, 5, 25, 0, 0));
   chooseth1dbin4->Resize(80, 20);
   chooseth1dbin4->AddEntry("65536", 1);
   chooseth1dbin4->AddEntry("32768", 2);
@@ -1171,28 +1273,28 @@ void Offline::MakeFold4Panel(TGCompositeFrame *TabPanel)
   chooseth1dbin4->AddEntry("2048", 6);
   chooseth1dbin4->AddEntry("1024", 7);
   chooseth1dbin4->Select(1);
+  
   TGTextEntry *LabelBinNumber = new TGTextEntry(parFrame,new TGTextBuffer(30));
-  LabelBinNumber->SetText("Bin:");
-  LabelBinNumber->Resize(30,15);
+  parFrame->AddFrame(LabelBinNumber, new TGLayoutHints(kLHintsRight | kLHintsExpandY, 0, 0, 3, 0));
+  LabelBinNumber->SetText("Bin Number:");
+  LabelBinNumber->Resize(65,15);
   LabelBinNumber->SetEnabled(kFALSE);
   LabelBinNumber->SetToolTipText("Choose TH1D bin number.");
-  parFrame->AddFrame(LabelBinNumber, new TGLayoutHints(kLHintsRight | kLHintsExpandY, 0, 0, 3, 0));
-
-
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
-
+  LabelBinNumber->SetFrameDrawn(kFALSE);
+  LabelBinNumber->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
+  LabelBinNumber->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   
   TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
-  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
-
+  TabPanel->AddFrame(adCanvasFrame, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 4, 4, 0, 4));
+  adCanvasFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas4", adCanvasFrame, 100, 100);
-
+  adCanvasFrame->AddFrame(adjCanvas, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
   canvas4 = adjCanvas->GetCanvas();
-  adCanvasFrame->AddFrame(adjCanvas, Hint);
-  TabPanel->AddFrame(adCanvasFrame, Hint);
+  
 }
 
 void Offline::GausFit4()
@@ -1276,24 +1378,30 @@ void PanelGausFit()
 void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 4, 4, 4, 4));
+  parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   // stop
   OfflineStopButton5 = new TGTextButton(parFrame, "&Stop", OFFLINESTOPDRAW5);
+  parFrame->AddFrame(OfflineStopButton5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
   OfflineStopButton5->SetEnabled(0);
   OfflineStopButton5->Associate(this);
-  parFrame->AddFrame(OfflineStopButton5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
+  OfflineStopButton5->ChangeOptions(OfflineStopButton5->GetOptions() ^ kRaisedFrame);
+  OfflineStopButton5->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineStopButton5->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineStopButton5->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+
   
   // text
   printtextinfor5 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  parFrame->AddFrame(printtextinfor5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 3, 0));
   printtextinfor5->SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
-  fClient->GetColorByName("blue", color);
-  printtextinfor5->SetTextColor(color, false);
+  printtextinfor5->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
   printtextinfor5->SetText("Choose 'Ch' then enter button 'Draw'.");
   printtextinfor5->Resize(500, 12);
   printtextinfor5->SetEnabled(kFALSE);
   printtextinfor5->SetFrameDrawn(kFALSE);
-  parFrame->AddFrame(printtextinfor5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
-
+  printtextinfor5->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));  
 
   
   // TODO
@@ -1317,61 +1425,80 @@ void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
   
   // FFProjectY
   showprojectyFF5 = new TGTextButton(parFrame, "&FFProjectY", OFFLINEPROJECTYFF5);
+  parFrame->AddFrame(showprojectyFF5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
   showprojectyFF5->SetEnabled(0);
   showprojectyFF5->Associate(this);
-  parFrame->AddFrame(showprojectyFF5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
-
+  showprojectyFF5->ChangeOptions(showprojectyFF5->GetOptions() ^ kRaisedFrame);
+  showprojectyFF5->SetFont(TEXTBUTTONSMALL_FONT, false);
+  showprojectyFF5->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  showprojectyFF5->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+  
   // CFDProjectY
   showprojectyCFD5 = new TGTextButton(parFrame, "&CFDProjectY", OFFLINEPROJECTYCFD5);
+  parFrame->AddFrame(showprojectyCFD5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 0, 0));
   showprojectyCFD5->SetEnabled(0);
   showprojectyCFD5->Associate(this);
-  parFrame->AddFrame(showprojectyCFD5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 0, 0));
-
-
+  showprojectyCFD5->ChangeOptions(showprojectyCFD5->GetOptions() ^ kRaisedFrame);
+  showprojectyCFD5->SetFont(TEXTBUTTONSMALL_FONT, false);
+  showprojectyCFD5->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  showprojectyCFD5->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+  
   // OriginalCFD
   originalcfd5 = new TGTextButton(parFrame, "&OriginalCFD", OFFLINEORIGINALCFD5);
+  parFrame->AddFrame(originalcfd5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
   originalcfd5->SetEnabled(0);
   originalcfd5->Associate(this);
-  parFrame->AddFrame(originalcfd5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
-
+  originalcfd5->ChangeOptions(originalcfd5->GetOptions() ^ kRaisedFrame);
+  originalcfd5->SetFont(TEXTBUTTONSMALL_FONT, false);
+  originalcfd5->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  originalcfd5->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+  
   // CalculateCFD
   calculatecfd5 = new TGTextButton(parFrame, "&CalculateCFD", OFFLINECALCULATECFD5);
+  parFrame->AddFrame(calculatecfd5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 0, 0));
   calculatecfd5->SetEnabled(0);
   calculatecfd5->Associate(this);
-  parFrame->AddFrame(calculatecfd5, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 0, 0));
-
-
-
-  
+  calculatecfd5->ChangeOptions(calculatecfd5->GetOptions() ^ kRaisedFrame);
+  calculatecfd5->SetFont(TEXTBUTTONSMALL_FONT, false);
+  calculatecfd5->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  calculatecfd5->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
   
   // draw
   OfflineDrawButton5 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW5);
+  parFrame->AddFrame(OfflineDrawButton5, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
   OfflineDrawButton5->SetEnabled(0);
   OfflineDrawButton5->Associate(this);
-  parFrame->AddFrame(OfflineDrawButton5, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
+  OfflineDrawButton5->ChangeOptions(OfflineDrawButton5->GetOptions() ^ kRaisedFrame);
+  OfflineDrawButton5->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineDrawButton5->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineDrawButton5->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
 
+  
   // ch
   offlinechnum5 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM5, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
   parFrame->AddFrame(offlinechnum5, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
   offlinechnum5->SetButtonToNum(0);
   offlinechnum5->Associate(this);
+  offlinechnum5->GetNumberEntry()->ChangeOptions(offlinechnum5->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  offlinechnum5->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  offlinechnum5->GetButtonUp()->ChangeOptions(offlinechnum5->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  offlinechnum5->GetButtonDown()->ChangeOptions(offlinechnum5->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  offlinechnum5->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
+  
   TGLabel *ch = new TGLabel( parFrame, "Ch:"); 
   parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+  ch->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  ch->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));  
   
-  
-
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
-
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
-  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
-
+  TabPanel->AddFrame(adCanvasFrame, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 4, 4, 0, 4));
+  adCanvasFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas5", adCanvasFrame, 100, 100);
-
+  adCanvasFrame->AddFrame(adjCanvas, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
   canvas5 = adjCanvas->GetCanvas();
-  adCanvasFrame->AddFrame(adjCanvas, Hint);
-  TabPanel->AddFrame(adCanvasFrame, Hint);
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
@@ -1382,49 +1509,73 @@ void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
 void Offline::MakeFold6Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 4, 4, 4, 2));
+  parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   // stop
-  OfflineStopButton6 = new TGTextButton( parFrame, "&Stop", OFFLINESTOPDRAW6);
+  OfflineStopButton6 = new TGTextButton(parFrame, "&Stop", OFFLINESTOPDRAW6);
+  parFrame->AddFrame(OfflineStopButton6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
   OfflineStopButton6->SetEnabled(0);
   OfflineStopButton6->Associate(this);
-  parFrame->AddFrame(OfflineStopButton6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
+  OfflineStopButton6->ChangeOptions(OfflineStopButton6->GetOptions() ^ kRaisedFrame);
+  OfflineStopButton6->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineStopButton6->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineStopButton6->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+  
   
   // text
   printtextinfor6 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  parFrame->AddFrame(printtextinfor6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 3, 0));
   printtextinfor6-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
-  fClient->GetColorByName("blue", color);
-  printtextinfor6->SetTextColor(color, false);
+  printtextinfor6->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
   printtextinfor6->SetText("Choose 'Bin' and 'Ch' then enter button 'Draw'.");
   printtextinfor6->Resize(500, 12);
   printtextinfor6->SetEnabled(kFALSE);
   printtextinfor6->SetFrameDrawn(kFALSE);
-  parFrame->AddFrame(printtextinfor6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+  printtextinfor6->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
 
   // Fit
   GausFitButton6 = new TGTextButton(parFrame, "Open  Fit", OFFLINEGAUSFIT6);
+  parFrame->AddFrame(GausFitButton6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 10, 0, 0));
   GausFitButton6->SetEnabled(0);
   GausFitButton6->Associate(this);
-  parFrame->AddFrame(GausFitButton6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 30, 0, 0));
+  GausFitButton6->ChangeOptions(GausFitButton6->GetOptions() ^ kRaisedFrame);
+  GausFitButton6->SetFont(TEXTBUTTONSMALL_FONT, false);
+  GausFitButton6->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  GausFitButton6->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+    
 
   // draw
-  OfflineDrawButton6 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW6);
+  OfflineDrawButton6 = new TGTextButton(parFrame, "&Draw", OFFLINEDRAW6);
+  parFrame->AddFrame(OfflineDrawButton6, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
   OfflineDrawButton6->SetEnabled(0);
   OfflineDrawButton6->Associate(this);
-  parFrame->AddFrame(OfflineDrawButton6, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
-
+  OfflineDrawButton6->ChangeOptions(OfflineDrawButton6->GetOptions() ^ kRaisedFrame);
+  OfflineDrawButton6->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineDrawButton6->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineDrawButton6->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+    
   // ch
-  offlinechnum6 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM6, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  offlinechnum6 = new TGNumberEntry(parFrame, 0, 2, OFFLINECHNUM6, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
   parFrame->AddFrame(offlinechnum6, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
   offlinechnum6->SetButtonToNum(0);
   offlinechnum6->Associate(this);
+  offlinechnum6->GetNumberEntry()->ChangeOptions(offlinechnum6->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  offlinechnum6->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  offlinechnum6->GetButtonUp()->ChangeOptions(offlinechnum6->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  offlinechnum6->GetButtonDown()->ChangeOptions(offlinechnum6->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  offlinechnum6->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
+
+  
   TGLabel *ch = new TGLabel( parFrame, "Ch:"); 
   parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-
+  ch->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  ch->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
+  
   // bin
   chooseth1dbin6 = new TGComboBox(parFrame);
-  parFrame->AddFrame(chooseth1dbin6, new TGLayoutHints(kLHintsRight, 5, 25, 2, 2));
+  parFrame->AddFrame(chooseth1dbin6, new TGLayoutHints(kLHintsRight, 5, 25, 0, 0));
   chooseth1dbin6->Resize(80, 20);
   chooseth1dbin6->AddEntry("65536", 1);
   chooseth1dbin6->AddEntry("32768", 2);
@@ -1434,77 +1585,90 @@ void Offline::MakeFold6Panel(TGCompositeFrame *TabPanel)
   chooseth1dbin6->AddEntry("2048", 6);
   chooseth1dbin6->AddEntry("1024", 7);
   chooseth1dbin6->Select(1);
+  
   TGTextEntry *LabelBinNumber = new TGTextEntry(parFrame,new TGTextBuffer(30));
-  LabelBinNumber->SetText("Bin:");
-  LabelBinNumber->Resize(30,15);
+  parFrame->AddFrame(LabelBinNumber, new TGLayoutHints(kLHintsRight | kLHintsExpandY, 0, 0, 3, 0));
+  LabelBinNumber->SetText("Bin Number:");
+  LabelBinNumber->Resize(65,15);
   LabelBinNumber->SetEnabled(kFALSE);
   LabelBinNumber->SetToolTipText("Choose TH1D bin number.");
-  parFrame->AddFrame(LabelBinNumber, new TGLayoutHints(kLHintsRight | kLHintsExpandY, 0, 0, 3, 0));
-
-
+  LabelBinNumber->SetFrameDrawn(kFALSE);
+  LabelBinNumber->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
+  LabelBinNumber->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
-
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
   TGCompositeFrame *slowfilterparFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-  TabPanel->AddFrame(slowfilterparFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  TabPanel->AddFrame(slowfilterparFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 4, 4, 2, 4));
+  slowfilterparFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   //slow filter baseline
   TGLabel *LabelChooseSlowFIlterBaseline = new TGLabel(slowfilterparFrame, "SF BL:"); 
   slowfilterparFrame->AddFrame(LabelChooseSlowFIlterBaseline, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelChooseSlowFIlterBaseline->SetTextColor(color, false);
+  LabelChooseSlowFIlterBaseline->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelChooseSlowFIlterBaseline->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   chooseslowfilterbaselinep6 = new TGComboBox(slowfilterparFrame);
-  slowfilterparFrame->AddFrame(chooseslowfilterbaselinep6, new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
+  slowfilterparFrame->AddFrame(chooseslowfilterbaselinep6, new TGLayoutHints(kLHintsLeft, 0, 0, 0, 0));
   chooseslowfilterbaselinep6->Resize(80, 20);
   chooseslowfilterbaselinep6->AddEntry("Calculate", 0);
   chooseslowfilterbaselinep6->AddEntry("Old Baseline", 1);
   chooseslowfilterbaselinep6->Select(0);
 
   TGLabel *LabelOldSlowFilterSL = new TGLabel(slowfilterparFrame," 'Old BL' choose -> SL:");
-  slowfilterparFrame->AddFrame(LabelOldSlowFilterSL, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelOldSlowFilterSL->SetTextColor(color, false);
+  slowfilterparFrame->AddFrame(LabelOldSlowFilterSL, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 2, 5, 0));
+  LabelOldSlowFilterSL->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelOldSlowFilterSL->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   oldslowfilterparameterp6[0] = new TGNumberEntryField(slowfilterparFrame, -1, 3.040, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.032,81.280);
   slowfilterparFrame->AddFrame(oldslowfilterparameterp6[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   oldslowfilterparameterp6[0]->Resize(40, 20);
+  
   TGLabel *LabelOldSlowFilterSG = new TGLabel(slowfilterparFrame,"SG:");
-  slowfilterparFrame->AddFrame(LabelOldSlowFilterSG, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelOldSlowFilterSG->SetTextColor(color, false);
+  slowfilterparFrame->AddFrame(LabelOldSlowFilterSG, new TGLayoutHints(kLHintsLeft | kLHintsTop, 4, 2, 5, 0));
+  LabelOldSlowFilterSG->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelOldSlowFilterSG->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   oldslowfilterparameterp6[1] = new TGNumberEntryField(slowfilterparFrame, -1, 0.640, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0.048,81.280);
   slowfilterparFrame->AddFrame(oldslowfilterparameterp6[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   oldslowfilterparameterp6[1]->Resize(40, 20);
+  
   TGLabel *LabelOldSlowFilterTAU = new TGLabel(slowfilterparFrame,"Tau:");
-  slowfilterparFrame->AddFrame(LabelOldSlowFilterTAU, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelOldSlowFilterTAU->SetTextColor(color, false);
+  slowfilterparFrame->AddFrame(LabelOldSlowFilterTAU, new TGLayoutHints(kLHintsLeft | kLHintsTop, 4, 2, 5, 0));
+  LabelOldSlowFilterTAU->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelOldSlowFilterTAU->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   oldslowfilterparameterp6[2] = new TGNumberEntryField(slowfilterparFrame, -1, 0, TGNumberFormat::kNESReal);
   slowfilterparFrame->AddFrame(oldslowfilterparameterp6[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   oldslowfilterparameterp6[2]->Resize(40, 20);
+  
   TGLabel *oldslowfilterrange = new TGLabel(slowfilterparFrame, "FilRan:");
-  fClient->GetColorByName("purple", color);
-  oldslowfilterrange->SetTextColor(color, false);
-  slowfilterparFrame->AddFrame(oldslowfilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 3, 0));
+  slowfilterparFrame->AddFrame(oldslowfilterrange, new TGLayoutHints(kLHintsLeft | kLHintsTop, 4, 2, 5, 0));
+  oldslowfilterrange->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  oldslowfilterrange->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   oldofflinefilterrangep6 = new TGNumberEntry(slowfilterparFrame, 0, 2, -1, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 1, 6);
-  slowfilterparFrame->AddFrame(oldofflinefilterrangep6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-  oldofflinefilterrangep6->SetIntNumber(3);
+  slowfilterparFrame->AddFrame(oldofflinefilterrangep6, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
+  oldofflinefilterrangep6->SetIntNumber(2);
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
-  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
-
+  TabPanel->AddFrame(adCanvasFrame, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 4, 4, 0, 4));
+  adCanvasFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas6", adCanvasFrame, 100, 100);
-
+  adCanvasFrame->AddFrame(adjCanvas, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
   canvas6 = adjCanvas->GetCanvas();
-  adCanvasFrame->AddFrame(adjCanvas, Hint);
-  TabPanel->AddFrame(adCanvasFrame, Hint);
 }
 
 
 void Offline::MakeFold7Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 4, 4, 4, 4));
+  parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   // // draw
   // OfflineDrawButton6 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW6);
   // OfflineDrawButton6->SetEnabled(0);
@@ -1520,82 +1684,99 @@ void Offline::MakeFold7Panel(TGCompositeFrame *TabPanel)
   // parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
   
 
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
-  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
+  TabPanel->AddFrame(adCanvasFrame, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 4, 4, 0, 4));
 
   TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas7", adCanvasFrame, 100, 100);
-
+  adCanvasFrame->AddFrame(adjCanvas, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1));
   canvas7 = adjCanvas->GetCanvas();
-  adCanvasFrame->AddFrame(adjCanvas, Hint);
-  TabPanel->AddFrame(adCanvasFrame, Hint);
 }
 
 
 void Offline::MakeFold8Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 4, 4, 4, 2));
+  parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   // stop
   OfflineStopButton8 = new TGTextButton(parFrame, "&Stop", OFFLINESTOPDRAW8);
+  parFrame->AddFrame(OfflineStopButton8, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
   OfflineStopButton8->SetEnabled(0);
   OfflineStopButton8->Associate(this);
-  parFrame->AddFrame(OfflineStopButton8, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
+  OfflineStopButton8->ChangeOptions(OfflineStopButton8->GetOptions() ^ kRaisedFrame);
+  OfflineStopButton8->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineStopButton8->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineStopButton8->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+
   
   // text
   printtextinfor8 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  parFrame->AddFrame(printtextinfor8, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 3, 0));
   printtextinfor8->SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
-  fClient->GetColorByName("blue", color);
-  printtextinfor8->SetTextColor(color, false);
+  printtextinfor8->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
   printtextinfor8->SetText("Choose 'Ch' then enter button 'Draw'.");
   printtextinfor8->Resize(450, 12);
   printtextinfor8->SetEnabled(kFALSE);
   printtextinfor8->SetFrameDrawn(kFALSE);
-  parFrame->AddFrame(printtextinfor8, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+  printtextinfor8->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
 
   // draw
   OfflineDrawButton8 = new TGTextButton( parFrame, "&Draw", OFFLINEDRAW8);
+  parFrame->AddFrame(OfflineDrawButton8, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
   OfflineDrawButton8->SetEnabled(0);
   OfflineDrawButton8->Associate(this);
-  parFrame->AddFrame(OfflineDrawButton8, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
+  OfflineDrawButton8->ChangeOptions(OfflineDrawButton8->GetOptions() ^ kRaisedFrame);
+  OfflineDrawButton8->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineDrawButton8->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineDrawButton8->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
 
   // ch
   offlinechnum8 = new TGNumberEntry(parFrame, 0, 2, OFFLINECHNUM8, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
   parFrame->AddFrame(offlinechnum8, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
   offlinechnum8->SetButtonToNum(0);
   offlinechnum8->Associate(this);
+  offlinechnum8->GetNumberEntry()->ChangeOptions(offlinechnum8->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  offlinechnum8->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  offlinechnum8->GetButtonUp()->ChangeOptions(offlinechnum8->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  offlinechnum8->GetButtonDown()->ChangeOptions(offlinechnum8->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  offlinechnum8->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
+  
   TGLabel *ch = new TGLabel(parFrame, "Ch:"); 
   parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-  
+  ch->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  ch->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));  
 
-  
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
   // Draw Style
   TGCompositeFrame *drawstyleparFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-  TabPanel->AddFrame(drawstyleparFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
-  
+  TabPanel->AddFrame(drawstyleparFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 4, 4, 2, 4));
+  drawstyleparFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   TGLabel *LabelChooseDrawStyle = new TGLabel(drawstyleparFrame, "Draw Style:"); 
   drawstyleparFrame->AddFrame(LabelChooseDrawStyle, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("red", color);
-  LabelChooseDrawStyle->SetTextColor(color, false);
+  LabelChooseDrawStyle->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  LabelChooseDrawStyle->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   choosedrawstyle8 = new TGComboBox(drawstyleparFrame);
-  drawstyleparFrame->AddFrame(choosedrawstyle8, new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
+  drawstyleparFrame->AddFrame(choosedrawstyle8, new TGLayoutHints(kLHintsLeft, 0, 0, 2, 0));
   choosedrawstyle8->Resize(55, 20);
   choosedrawstyle8->AddEntry("Graph", 0);
   choosedrawstyle8->AddEntry("Hist", 1);
   choosedrawstyle8->Select(0);
 
   TGLabel *LabelChooseHistBinX = new TGLabel(drawstyleparFrame,"  'Hist' mode choose -> BinX:");
-  drawstyleparFrame->AddFrame(LabelChooseHistBinX, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelChooseHistBinX->SetTextColor(color, false);
+  drawstyleparFrame->AddFrame(LabelChooseHistBinX, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelChooseHistBinX->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelChooseHistBinX->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   choosehistbinxy[0] = new TGComboBox(drawstyleparFrame);
-  drawstyleparFrame->AddFrame(choosehistbinxy[0], new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
+  drawstyleparFrame->AddFrame(choosehistbinxy[0], new TGLayoutHints(kLHintsLeft, 0, 0, 2, 0));
   choosehistbinxy[0]->Resize(50, 20);
   choosehistbinxy[0]->AddEntry("100", 100);
   choosehistbinxy[0]->AddEntry("200", 200);
@@ -1606,27 +1787,30 @@ void Offline::MakeFold8Panel(TGCompositeFrame *TabPanel)
   choosehistbinxy[0]->Select(1000);
 
   TGLabel *LabelChooseHistXmin = new TGLabel(drawstyleparFrame,"Xmin:");
-  drawstyleparFrame->AddFrame(LabelChooseHistXmin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelChooseHistXmin->SetTextColor(color, false);
+  drawstyleparFrame->AddFrame(LabelChooseHistXmin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelChooseHistXmin->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelChooseHistXmin->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   histxyminmax8[0] = new TGNumberEntryField(drawstyleparFrame, -1, 0, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
   drawstyleparFrame->AddFrame(histxyminmax8[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   histxyminmax8[0]->Resize(40, 20);
   
   TGLabel *LabelChooseHistXmax = new TGLabel(drawstyleparFrame,"Xmax:");
-  drawstyleparFrame->AddFrame(LabelChooseHistXmax, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelChooseHistXmax->SetTextColor(color, false);
+  drawstyleparFrame->AddFrame(LabelChooseHistXmax, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelChooseHistXmax->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelChooseHistXmax->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   histxyminmax8[1] = new TGNumberEntryField(drawstyleparFrame, -1, 1000, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
   drawstyleparFrame->AddFrame(histxyminmax8[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   histxyminmax8[1]->Resize(40, 20);  
 
   TGLabel *LabelChooseHistBinY = new TGLabel(drawstyleparFrame,"BinY:");
-  drawstyleparFrame->AddFrame(LabelChooseHistBinY, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelChooseHistBinY->SetTextColor(color, false);
+  drawstyleparFrame->AddFrame(LabelChooseHistBinY, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelChooseHistBinY->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelChooseHistBinY->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   choosehistbinxy[1] = new TGComboBox(drawstyleparFrame);
-  drawstyleparFrame->AddFrame(choosehistbinxy[1], new TGLayoutHints(kLHintsLeft, 0, 0, 2, 2));
+  drawstyleparFrame->AddFrame(choosehistbinxy[1], new TGLayoutHints(kLHintsLeft, 0, 0, 0, 0));
   choosehistbinxy[1]->Resize(50, 20);
   choosehistbinxy[1]->AddEntry("512", 512);
   choosehistbinxy[1]->AddEntry("1024", 1024);
@@ -1634,17 +1818,19 @@ void Offline::MakeFold8Panel(TGCompositeFrame *TabPanel)
   choosehistbinxy[1]->Select(1024);
 
   TGLabel *LabelChooseHistYmin = new TGLabel(drawstyleparFrame,"Ymin:");
-  drawstyleparFrame->AddFrame(LabelChooseHistYmin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelChooseHistYmin->SetTextColor(color, false);
+  drawstyleparFrame->AddFrame(LabelChooseHistYmin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelChooseHistYmin->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelChooseHistYmin->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   histxyminmax8[2] = new TGNumberEntryField(drawstyleparFrame, -1, 0, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
   drawstyleparFrame->AddFrame(histxyminmax8[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   histxyminmax8[2]->Resize(40, 20);
 
   TGLabel *LabelChooseHistYmax = new TGLabel(drawstyleparFrame,"Ymax:");
-  drawstyleparFrame->AddFrame(LabelChooseHistYmax, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelChooseHistYmax->SetTextColor(color, false);
+  drawstyleparFrame->AddFrame(LabelChooseHistYmax, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelChooseHistYmax->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelChooseHistYmax->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   histxyminmax8[3] = new TGNumberEntryField(drawstyleparFrame, -1, 65536, TGNumberFormat::kNESReal,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
   drawstyleparFrame->AddFrame(histxyminmax8[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 2, 0));
   histxyminmax8[3]->Resize(40, 20);
@@ -1664,40 +1850,50 @@ void Offline::MakeFold8Panel(TGCompositeFrame *TabPanel)
 void Offline::MakeFold9Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
-
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 4, 4, 4, 4));
+  parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   // current count
   OfflineCurrentCountText9 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  parFrame->AddFrame(OfflineCurrentCountText9, new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 6, 0));
   OfflineCurrentCountText9-> SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
-  fClient->GetColorByName("blue", color);
-  OfflineCurrentCountText9->SetTextColor(color, false);
+  OfflineCurrentCountText9->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
   OfflineCurrentCountText9->SetText("");
   OfflineCurrentCountText9->Resize(200, 12);
   OfflineCurrentCountText9->SetEnabled(kFALSE);
   OfflineCurrentCountText9->SetFrameDrawn(kFALSE);
-  parFrame->AddFrame(OfflineCurrentCountText9, new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 6, 0));
+  OfflineCurrentCountText9->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));  
   
 
-  
   // draw
   OfflineDrawButton9 = new TGTextButton(parFrame, "&Draw", OFFLINEDRAW9);
+  parFrame->AddFrame(OfflineDrawButton9, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
   OfflineDrawButton9->SetEnabled(0);
   OfflineDrawButton9->Associate(this);
-  parFrame->AddFrame(OfflineDrawButton9, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
-
+  OfflineDrawButton9->ChangeOptions(OfflineDrawButton9->GetOptions() ^ kRaisedFrame);
+  OfflineDrawButton9->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineDrawButton9->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineDrawButton9->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+  
   // ch
   offlinechnum9 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM9, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
   parFrame->AddFrame(offlinechnum9, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
   offlinechnum9->SetButtonToNum(0);
   offlinechnum9->Associate(this);
+  offlinechnum9->GetNumberEntry()->ChangeOptions(offlinechnum9->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  offlinechnum9->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  offlinechnum9->GetButtonUp()->ChangeOptions(offlinechnum9->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  offlinechnum9->GetButtonDown()->ChangeOptions(offlinechnum9->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  offlinechnum9->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
+  
   TGLabel *ch = new TGLabel( parFrame, "Ch:"); 
   parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-  
+  ch->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  ch->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));    
 
   // Draw Style
   choosedrawstyle9 = new TGComboBox(parFrame);
-  parFrame->AddFrame(choosedrawstyle9, new TGLayoutHints(kLHintsRight, 0, 20, 2, 2));
+  parFrame->AddFrame(choosedrawstyle9, new TGLayoutHints(kLHintsRight, 0, 20, 0, 0));
   choosedrawstyle9->Resize(100, 20);
   choosedrawstyle9->AddEntry("XIA", 0);
   choosedrawstyle9->AddEntry("fftw3", 1);
@@ -1706,23 +1902,21 @@ void Offline::MakeFold9Panel(TGCompositeFrame *TabPanel)
   choosedrawstyle9->AddEntry("CAEN(BLACKMAN)", 12);
   choosedrawstyle9->AddEntry("CAEN(RECT)", 13);
   choosedrawstyle9->Select(0);
+  
   TGLabel *LabelChooseDrawStyle = new TGLabel(parFrame, "Algorithm:"); 
   parFrame->AddFrame(LabelChooseDrawStyle, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("red", color);
-  LabelChooseDrawStyle->SetTextColor(color, false);
-
+  LabelChooseDrawStyle->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  LabelChooseDrawStyle->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
-  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
+  TabPanel->AddFrame(adCanvasFrame, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 4, 4, 0, 4));
 
   TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas9", adCanvasFrame, 100, 100);
-
+  adCanvasFrame->AddFrame(adjCanvas, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
   canvas9 = adjCanvas->GetCanvas();
-  adCanvasFrame->AddFrame(adjCanvas, Hint);
-  TabPanel->AddFrame(adCanvasFrame, Hint);
 }
 
 
@@ -1730,54 +1924,76 @@ void Offline::MakeFold9Panel(TGCompositeFrame *TabPanel)
 void Offline::MakeFold10Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
-
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 4, 4, 4, 2));
+  parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   // draw
   OfflineDrawButton10 = new TGTextButton(parFrame, "&Draw", OFFLINEDRAW10);
+  parFrame->AddFrame(OfflineDrawButton10, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
   OfflineDrawButton10->SetEnabled(0);
   OfflineDrawButton10->Associate(this);
-  parFrame->AddFrame(OfflineDrawButton10, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
+  OfflineDrawButton10->ChangeOptions(OfflineDrawButton10->GetOptions() ^ kRaisedFrame);
+  OfflineDrawButton10->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineDrawButton10->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineDrawButton10->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));  
 
 
   // ch
-  offlinechnumB10 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUMB10, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  offlinechnumB10 = new TGNumberEntry(parFrame, 0, 2, OFFLINECHNUMB10, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
   parFrame->AddFrame(offlinechnumB10, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
   offlinechnumB10->SetButtonToNum(0);
   offlinechnumB10->Associate(this);
-  TGLabel *chB = new TGLabel( parFrame, "Ch B:"); 
-  parFrame->AddFrame(chB, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0)); 
+  offlinechnumB10->GetNumberEntry()->ChangeOptions(offlinechnumB10->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  offlinechnumB10->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  offlinechnumB10->GetButtonUp()->ChangeOptions(offlinechnumB10->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  offlinechnumB10->GetButtonDown()->ChangeOptions(offlinechnumB10->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  offlinechnumB10->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
   
-  offlinechnumA10 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUMA10, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  TGLabel *chB = new TGLabel(parFrame, "Ch B:"); 
+  parFrame->AddFrame(chB, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0)); 
+  chB->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  chB->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));  
+  
+  offlinechnumA10 = new TGNumberEntry(parFrame, 0, 2, OFFLINECHNUMA10, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
   parFrame->AddFrame(offlinechnumA10, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
   offlinechnumA10->SetButtonToNum(0);
   offlinechnumA10->Associate(this);
-  TGLabel *chA = new TGLabel( parFrame, "Ch A:"); 
+  offlinechnumA10->GetNumberEntry()->ChangeOptions(offlinechnumA10->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  offlinechnumA10->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  offlinechnumA10->GetButtonUp()->ChangeOptions(offlinechnumA10->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  offlinechnumA10->GetButtonDown()->ChangeOptions(offlinechnumA10->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  offlinechnumA10->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
+  
+  TGLabel *chA = new TGLabel(parFrame, "Ch A:"); 
   parFrame->AddFrame(chA, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-
+  chA->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  chA->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));  
  
   // text
   printtextinfor10 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  parFrame->AddFrame(printtextinfor10, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
   printtextinfor10->SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
-  fClient->GetColorByName("blue", color);
-  printtextinfor10->SetTextColor(color, false);
+  printtextinfor10->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
   printtextinfor10->SetText("Choose 'Ch A' and 'Ch B', enter button 'Draw'.");
   printtextinfor10->Resize(350, 12);
   printtextinfor10->SetEnabled(kFALSE);
   printtextinfor10->SetFrameDrawn(kFALSE);
-  parFrame->AddFrame(printtextinfor10, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+  printtextinfor10->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-  
   // Draw Style
   TGCompositeFrame *drawstyleparFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-  TabPanel->AddFrame(drawstyleparFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  TabPanel->AddFrame(drawstyleparFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 4, 4, 2, 4));
+  drawstyleparFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   TGLabel *LabelChooseDrawStyle = new TGLabel(drawstyleparFrame, "Draw Style:"); 
   drawstyleparFrame->AddFrame(LabelChooseDrawStyle, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("red", color);
-  LabelChooseDrawStyle->SetTextColor(color, false);
+  LabelChooseDrawStyle->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  LabelChooseDrawStyle->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   choosedrawstyle10 = new TGComboBox(drawstyleparFrame);
-  drawstyleparFrame->AddFrame(choosedrawstyle10, new TGLayoutHints(kLHintsLeft, 0, 10, 2, 2));
+  drawstyleparFrame->AddFrame(choosedrawstyle10, new TGLayoutHints(kLHintsLeft, 0, 10, 0, 0));
   choosedrawstyle10->Resize(55, 20);
   choosedrawstyle10->AddEntry("CFD", 0);
   choosedrawstyle10->AddEntry("FF", 1);
@@ -1785,25 +2001,28 @@ void Offline::MakeFold10Panel(TGCompositeFrame *TabPanel)
 
   
   TGLabel *LabelChooseHistXbin = new TGLabel(drawstyleparFrame,"Xbin:");
-  drawstyleparFrame->AddFrame(LabelChooseHistXbin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  // fClient->GetColorByName("green", color);
-  // LabelChooseHistXbin->SetTextColor(color, false);
+  drawstyleparFrame->AddFrame(LabelChooseHistXbin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelChooseHistXbin->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  LabelChooseHistXbin->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
+  
   histxminmax10[0] = new TGNumberEntryField(drawstyleparFrame, -1, 10000, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,1,100000);
   drawstyleparFrame->AddFrame(histxminmax10[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
   histxminmax10[0]->Resize(50, 20);
   
   TGLabel *LabelChooseHistXmin = new TGLabel(drawstyleparFrame,"Xmin(ns):");
-  drawstyleparFrame->AddFrame(LabelChooseHistXmin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  // fClient->GetColorByName("green", color);
-  // LabelChooseHistXmin->SetTextColor(color, false);
+  drawstyleparFrame->AddFrame(LabelChooseHistXmin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelChooseHistXmin->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  LabelChooseHistXmin->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
+  
   histxminmax10[1] = new TGNumberEntryField(drawstyleparFrame, -1, -100, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,-500,500);
   drawstyleparFrame->AddFrame(histxminmax10[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
   histxminmax10[1]->Resize(40, 20);
   
   TGLabel *LabelChooseHistXmax = new TGLabel(drawstyleparFrame,"Xmax(ns):");
-  drawstyleparFrame->AddFrame(LabelChooseHistXmax, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  // fClient->GetColorByName("green", color);
-  // LabelChooseHistXmax->SetTextColor(color, false);
+  drawstyleparFrame->AddFrame(LabelChooseHistXmax, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelChooseHistXmax->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  LabelChooseHistXmax->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
+  
   histxminmax10[2] = new TGNumberEntryField(drawstyleparFrame, -1, 100, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,-500,500);
   drawstyleparFrame->AddFrame(histxminmax10[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
   histxminmax10[2]->Resize(40, 20);  
@@ -1811,40 +2030,44 @@ void Offline::MakeFold10Panel(TGCompositeFrame *TabPanel)
 
   
   offlineenergylimit10 = new TGCheckButton(drawstyleparFrame, "Limits");
+  drawstyleparFrame->AddFrame(offlineenergylimit10, new TGLayoutHints(kLHintsLeft | kLHintsTop, 35, 5, 5, 0));
   offlineenergylimit10->SetOn(kFALSE);
-  fClient->GetColorByName("green", color);
-  offlineenergylimit10->SetTextColor(color, false);
-  drawstyleparFrame->AddFrame(offlineenergylimit10, new TGLayoutHints(kLHintsLeft | kLHintsTop, 35, 5, 4, 0));
+  offlineenergylimit10->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  offlineenergylimit10->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
 
   TGLabel *LabelELimits0 = new TGLabel(drawstyleparFrame,"AL:");
-  drawstyleparFrame->AddFrame(LabelELimits0, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelELimits0->SetTextColor(color, false);
+  drawstyleparFrame->AddFrame(LabelELimits0, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelELimits0->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelELimits0->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   energylimitsab10[0] = new TGNumberEntryField(drawstyleparFrame, -1, 0, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
   drawstyleparFrame->AddFrame(energylimitsab10[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
   energylimitsab10[0]->Resize(40, 20);
 
   TGLabel *LabelELimits1 = new TGLabel(drawstyleparFrame,"AR:");
-  drawstyleparFrame->AddFrame(LabelELimits1, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelELimits1->SetTextColor(color, false);
+  drawstyleparFrame->AddFrame(LabelELimits1, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelELimits1->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelELimits1->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   energylimitsab10[1] = new TGNumberEntryField(drawstyleparFrame, -1, 65536, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
   drawstyleparFrame->AddFrame(energylimitsab10[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
   energylimitsab10[1]->Resize(40, 20);
 
   TGLabel *LabelELimits2 = new TGLabel(drawstyleparFrame,"BL:");
-  drawstyleparFrame->AddFrame(LabelELimits2, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelELimits2->SetTextColor(color, false);
+  drawstyleparFrame->AddFrame(LabelELimits2, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelELimits2->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelELimits2->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   energylimitsab10[2] = new TGNumberEntryField(drawstyleparFrame, -1, 0, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
   drawstyleparFrame->AddFrame(energylimitsab10[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
   energylimitsab10[2]->Resize(40, 20);
   
   TGLabel *LabelELimits3 = new TGLabel(drawstyleparFrame,"BR:");
-  drawstyleparFrame->AddFrame(LabelELimits3, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 2, 5, 0));
-  fClient->GetColorByName("green", color);
-  LabelELimits3->SetTextColor(color, false);
+  drawstyleparFrame->AddFrame(LabelELimits3, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelELimits3->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelELimits3->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   energylimitsab10[3] = new TGNumberEntryField(drawstyleparFrame, -1, 65536, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
   drawstyleparFrame->AddFrame(energylimitsab10[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
   energylimitsab10[3]->Resize(40, 20);
@@ -1866,38 +2089,49 @@ void Offline::MakeFold10Panel(TGCompositeFrame *TabPanel)
 void Offline::MakeFold11Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
-
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 4, 4, 4, 4));
+  parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   // text
   printtextinfor11 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  parFrame->AddFrame(printtextinfor11, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
   printtextinfor11->SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
-  fClient->GetColorByName("blue", color);
-  printtextinfor11->SetTextColor(color, false);
+  printtextinfor11->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
   printtextinfor11->SetText("Choose 'Bin/Ch' then enter button 'Draw'.");
   printtextinfor11->Resize(450, 12);
   printtextinfor11->SetEnabled(kFALSE);
   printtextinfor11->SetFrameDrawn(kFALSE);
-  parFrame->AddFrame(printtextinfor11, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+  printtextinfor11->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
-  
   // draw
   OfflineDrawButton11 = new TGTextButton(parFrame, "&Draw", OFFLINEDRAW11);
   parFrame->AddFrame(OfflineDrawButton11, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));   
   OfflineDrawButton11->SetEnabled(0);
   OfflineDrawButton11->Associate(this);
-
+  OfflineDrawButton11->ChangeOptions(OfflineDrawButton11->GetOptions() ^ kRaisedFrame);
+  OfflineDrawButton11->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineDrawButton11->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineDrawButton11->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+  
   // ch
-  offlinechnum11 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM11, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  offlinechnum11 = new TGNumberEntry(parFrame, 0, 2, OFFLINECHNUM11, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
   parFrame->AddFrame(offlinechnum11, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
   offlinechnum11->SetButtonToNum(0);
   offlinechnum11->Associate(this);
+  offlinechnum11->GetNumberEntry()->ChangeOptions(offlinechnum11->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  offlinechnum11->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  offlinechnum11->GetButtonUp()->ChangeOptions(offlinechnum11->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  offlinechnum11->GetButtonDown()->ChangeOptions(offlinechnum11->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  offlinechnum11->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
+  
   TGLabel *ch = new TGLabel(parFrame, "Ch:"); 
   parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-   
+  ch->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  ch->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));   
 
   // Draw Style
   choosedenergybin11 = new TGComboBox(parFrame);
-  parFrame->AddFrame(choosedenergybin11, new TGLayoutHints(kLHintsRight, 0, 20, 2, 2));
+  parFrame->AddFrame(choosedenergybin11, new TGLayoutHints(kLHintsRight, 0, 20, 0, 0));
   choosedenergybin11->Resize(100, 20);
   choosedenergybin11->AddEntry("4096(65536)", 0);
   choosedenergybin11->AddEntry("2048(65536)", 1);
@@ -1915,77 +2149,90 @@ void Offline::MakeFold11Panel(TGCompositeFrame *TabPanel)
   choosedenergybin11->AddEntry("2000(2000)", 13);
   choosedenergybin11->AddEntry("1000(1000)", 14);  
   choosedenergybin11->Select(0);
+  
   TGLabel *LabelChooseEnergyBinDrawStyle = new TGLabel(parFrame, "E Bin:"); 
-  parFrame->AddFrame(LabelChooseEnergyBinDrawStyle, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 5, 0));
-
+  parFrame->AddFrame(LabelChooseEnergyBinDrawStyle, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+  LabelChooseEnergyBinDrawStyle->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  LabelChooseEnergyBinDrawStyle->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
+  
   choosedcfdbin11 = new TGComboBox(parFrame);
-  parFrame->AddFrame(choosedcfdbin11, new TGLayoutHints(kLHintsRight, 0, 20, 2, 2));
+  parFrame->AddFrame(choosedcfdbin11, new TGLayoutHints(kLHintsRight, 0, 20, 0, 0));
   choosedcfdbin11->Resize(50, 20);
   choosedcfdbin11->AddEntry("4096", 0);
   choosedcfdbin11->AddEntry("2048", 1);
   choosedcfdbin11->AddEntry("1024", 2);
   choosedcfdbin11->Select(0);
+  
   TGLabel *LabelChooseCFDBinDrawStyle = new TGLabel(parFrame, "CFD Bin:"); 
-  parFrame->AddFrame(LabelChooseCFDBinDrawStyle, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 5, 0));  
-
-
+  parFrame->AddFrame(LabelChooseCFDBinDrawStyle, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));  
+  LabelChooseCFDBinDrawStyle->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  LabelChooseCFDBinDrawStyle->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
-  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
+  TabPanel->AddFrame(adCanvasFrame, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 4, 4, 0, 4));
 
   TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas11", adCanvasFrame, 100, 100);
-
+  adCanvasFrame->AddFrame(adjCanvas, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
   canvas11 = adjCanvas->GetCanvas();
-  adCanvasFrame->AddFrame(adjCanvas, Hint);
-  TabPanel->AddFrame(adCanvasFrame, Hint);
 }
 
 
 void Offline::MakeFold12Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
-
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 4, 4, 4, 4));
+  parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   // text
   printtextinfor12 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  parFrame->AddFrame(printtextinfor12, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
   printtextinfor12->SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
-  fClient->GetColorByName("blue", color);
-  printtextinfor12->SetTextColor(color, false);
+  printtextinfor12->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
   printtextinfor12->SetText("Choose 'Ch' then enter button 'Draw'.");
   printtextinfor12->Resize(450, 12);
   printtextinfor12->SetEnabled(kFALSE);
   printtextinfor12->SetFrameDrawn(kFALSE);
-  parFrame->AddFrame(printtextinfor12, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
-
+  printtextinfor12->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));  
+    
   
   // draw
   OfflineDrawButton12 = new TGTextButton(parFrame, "&Draw", OFFLINEDRAW12);
   parFrame->AddFrame(OfflineDrawButton12, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));   
   OfflineDrawButton12->SetEnabled(0);
   OfflineDrawButton12->Associate(this);
+  OfflineDrawButton12->ChangeOptions(OfflineDrawButton12->GetOptions() ^ kRaisedFrame);
+  OfflineDrawButton12->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineDrawButton12->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineDrawButton12->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
 
+  
   // ch
   offlinechnum12 = new TGNumberEntry (parFrame, 0, 2, OFFLINECHNUM12, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
   parFrame->AddFrame(offlinechnum12, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
   offlinechnum12->SetButtonToNum(0);
   offlinechnum12->Associate(this);
+  offlinechnum12->GetNumberEntry()->ChangeOptions(offlinechnum12->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  offlinechnum12->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  offlinechnum12->GetButtonUp()->ChangeOptions(offlinechnum12->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  offlinechnum12->GetButtonDown()->ChangeOptions(offlinechnum12->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  offlinechnum12->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
+  
   TGLabel *ch = new TGLabel(parFrame, "Ch:"); 
   parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-   
+  ch->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  ch->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));     
 
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
-  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
+  TabPanel->AddFrame(adCanvasFrame, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 4, 4, 0, 4));
 
   TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas12", adCanvasFrame, 100, 100);
-
+  adCanvasFrame->AddFrame(adjCanvas, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
   canvas12 = adjCanvas->GetCanvas();
-  adCanvasFrame->AddFrame(adjCanvas, Hint);
-  TabPanel->AddFrame(adCanvasFrame, Hint);
 }
 
 
@@ -2865,8 +3112,7 @@ void Offline::Panel1Draw()
       adjustCanvas->Modified();
       adjustCanvas->Update();
       gSystem->ProcessEvents();
-      fClient->GetColorByName("red", color);
-      OfflineCurrentCountText->SetTextColor(color, false);
+      OfflineCurrentCountText->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
       if(offlineonlywaveformevent->IsOn())
 	{
 	  OfflineCurrentCountText->SetText(TString::Format("Ch%dNotWaveformData",(int)offlinechnum->GetIntNumber()).Data());
@@ -2890,8 +3136,7 @@ void Offline::Panel1Draw()
 	}
     }
   
-  fClient->GetColorByName("blue", color);
-  OfflineCurrentCountText->SetTextColor(color, false);
+  OfflineCurrentCountText->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
   OfflineCurrentCountText->SetText(TString::Format("/ %d",OfflineModuleEventsCount).Data());
   offlinecurrentcountentry->SetIntNumber(Long_t(OfflineCurrentCount)+1);
 
@@ -4214,8 +4459,7 @@ void Offline::Panel9Draw()
       canvas9->Clear();
       canvas9->Modified();
       canvas9->Update();
-      fClient->GetColorByName("red", color);
-      OfflineCurrentCountText9->SetTextColor(color, false);
+      OfflineCurrentCountText9->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
       OfflineCurrentCountText9->SetText(TString::Format("Ch%dNotWaveformData",(int)offlinechnum9->GetIntNumber()).Data());
       OfflineReadFileButton->SetEnabled(1);
       OfflineDrawButton9->SetEnabled(1);
@@ -4223,8 +4467,7 @@ void Offline::Panel9Draw()
       return;
     }
 
-  fClient->GetColorByName("blue", color);
-  OfflineCurrentCountText9->SetTextColor(color, false);
+  OfflineCurrentCountText9->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
   OfflineCurrentCountText9->SetText(TString::Format("Event: %d / %d",OfflineCurrentCount9,OfflineModuleEventsCount).Data());
   
   tracelength9 = offlinedata->GetEventTraceLength(OfflineCurrentCount9);//trace length
@@ -4325,8 +4568,7 @@ void Offline::Panel10Draw()
   OfflineReadFileButton->SetEnabled(0);
   OfflineDrawButton10->SetEnabled(0);
   
-  fClient->GetColorByName("red", color);
-  printtextinfor10->SetTextColor(color, false);
+  printtextinfor10->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
   printtextinfor10->SetText("Waitting ...");
   gSystem->ProcessEvents();
   
@@ -4338,8 +4580,7 @@ void Offline::Panel10Draw()
 
   if(offlinechnumA10->GetIntNumber() == offlinechnumB10->GetIntNumber())
     {
-      fClient->GetColorByName("red", color);
-      printtextinfor10->SetTextColor(color, false);
+      printtextinfor10->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
       printtextinfor10->SetText("Ch A == Ch B. Pelse re-select it.");
       
       canvas10->cd();
@@ -4526,9 +4767,7 @@ void Offline::Panel10Draw()
     }// for OfflineModuleEventsCount
 
 
-
-  fClient->GetColorByName("blue", color);
-  printtextinfor10->SetTextColor(color, false);
+  printtextinfor10->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
   printtextinfor10->SetText("Done!");
 
   canvas10->cd();
@@ -4837,8 +5076,7 @@ void Offline::Panel0ReadFile()
 
   
   OfflineCurrentCount = -1;
-  fClient->GetColorByName("green", color);
-  OfflineFileStatus->SetTextColor(color, false);
+  OfflineFileStatus->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
   OfflineFileStatus->SetText("Waitting...");
   gSystem->ProcessEvents();
 
@@ -4867,8 +5105,7 @@ void Offline::Panel0ReadFile()
     {
       offlinedata->ReadEventsInfo();
 
-      fClient->GetColorByName("red", color);
-      OfflineFileStatus->SetTextColor(color, false);
+      OfflineFileStatus->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
       char staok[20];
       sprintf(staok,"Total Events: %d",OfflineModuleEventsCount);
       OfflineFileStatus->SetText(staok);
@@ -4877,8 +5114,7 @@ void Offline::Panel0ReadFile()
     }
   else
     {
-      fClient->GetColorByName("red", color);
-      OfflineFileStatus->SetTextColor(color, false);
+      OfflineFileStatus->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
       OfflineFileStatus->SetText("READ ERROR");
     }
 }

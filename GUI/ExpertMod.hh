@@ -8,7 +8,7 @@
 #include "TGNumberEntry.h"
 #include "TGTextEntry.h"
 #include "TGWindow.h"
-
+#include "TColor.h"
 #include <iostream>
 using namespace std;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -34,7 +34,6 @@ private:
   short int modNumber;
   bool Load_Once;
   int change_values(Long_t mod);
-  Pixel_t color;
   
   enum Commands
     {
