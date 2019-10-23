@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 二 10月 22 22:42:44 2019 (+0800)
+// Last-Updated: 三 10月 23 11:00:53 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 989
+//     Update #: 995
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -991,7 +991,17 @@ void Offline::SelectDrawOptionPanel1(Bool_t on)
 	offlinemultigraph->Add(ffilterdata);
       if(offlinedrawoption1[6]->IsOn())
 	offlinemultigraph->Add(cfdsdata);
-      
+
+      if(choosedrawmarkerstyle->GetSelected() == 3 || choosedrawmarkerstyle->GetSelected() == 4)
+	{
+	  rawdata->SetMarkerStyle(2);
+	  threshdata->SetMarkerStyle(2);
+	  cfddata->SetMarkerStyle(2);
+	  cfdsdata->SetMarkerStyle(2);
+	  cfdthreshdata->SetMarkerStyle(2);
+	  sfilterdata->SetMarkerStyle(2);
+	  ffilterdata->SetMarkerStyle(2);
+	}
       if(choosedrawmarkerstyle->GetSelected() == 0 || choosedrawmarkerstyle->GetSelected() == 3)
 	{
 	  rawdata->SetLineWidth(1);
@@ -1017,9 +1027,9 @@ void Offline::SelectDrawOptionPanel1(Bool_t on)
       adjustCanvas->Clear();
       
       offlinemultigraph->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld   %s",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount),offlinedata->GetEventCfdForcedTriggerBit(OfflineCurrentCount)?"cfd: invalid":"cfd: valid").Data());
-      if(choosedrawmarkerstyle->GetSelected() == 0 || choosedrawmarkerstyle->GetSelected() == 3) offlinemultigraph->Draw("AL");
+      if(choosedrawmarkerstyle->GetSelected() == 0 || choosedrawmarkerstyle->GetSelected() == 1) offlinemultigraph->Draw("AL");
       if(choosedrawmarkerstyle->GetSelected() == 2) offlinemultigraph->Draw("AP");
-      if(choosedrawmarkerstyle->GetSelected() == 1 || choosedrawmarkerstyle->GetSelected() == 4) offlinemultigraph->Draw("ALP");
+      if(choosedrawmarkerstyle->GetSelected() == 3 || choosedrawmarkerstyle->GetSelected() == 4) offlinemultigraph->Draw("ALP");
       
       if(offlinedrawoption1[0]->IsOn() || offlinedrawoption1[1]->IsOn() || offlinedrawoption1[2]->IsOn() || offlinedrawoption1[3]->IsOn() || offlinedrawoption1[4]->IsOn() || offlinedrawoption1[5]->IsOn() || offlinedrawoption1[6]->IsOn())
 	offlinemultigraph->GetXaxis()->SetRangeUser(double(dslider->GetMinPosition()),double(dslider->GetMaxPosition()));
@@ -1364,7 +1374,7 @@ void PanelGausFit()
 	  double posl = h->GetFunction("gaus")->GetParameter(1)-3*h->GetFunction("gaus")->GetParameter(2);
 	  double posr = h->GetFunction("gaus")->GetParameter(1)+3*h->GetFunction("gaus")->GetParameter(2);	  
 	    
-	  h->SetTitle(TString::Format("Peak: %0.2f  Peak-to-total: %0.2f%%  #DeltaE/E: %0.2f%%",h->GetFunction("gaus")->GetParameter(1),h->Integral(h->FindBin(posl),h->FindBin(posr))/h->GetEntries()*100,h->GetFunction("gaus")->GetParameter(2)*2.355/h->GetFunction("gaus")->GetParameter(1)*100.0).Data());
+	  h->SetTitle(TString::Format("Peak: %0.2f  P/T: %0.2f%%  #DeltaE/E: %0.2f%%",h->GetFunction("gaus")->GetParameter(1),h->Integral(h->FindBin(posl),h->FindBin(posr))/h->GetEntries()*100,h->GetFunction("gaus")->GetParameter(2)*2.355/h->GetFunction("gaus")->GetParameter(1)*100.0).Data());
 	}
       else
 	{
@@ -3237,7 +3247,16 @@ void Offline::Panel1Draw()
   ffilterdata->SetMarkerColor(4);
   cfdsdata->SetMarkerStyle(7);
   cfdsdata->SetMarkerColor(6);
-
+  if(choosedrawmarkerstyle->GetSelected() == 3 || choosedrawmarkerstyle->GetSelected() == 4)
+    {
+      rawdata->SetMarkerStyle(2);
+      threshdata->SetMarkerStyle(2);
+      cfddata->SetMarkerStyle(2);
+      cfdsdata->SetMarkerStyle(2);
+      cfdthreshdata->SetMarkerStyle(2);
+      sfilterdata->SetMarkerStyle(2);
+      ffilterdata->SetMarkerStyle(2);
+    }
   if(choosedrawmarkerstyle->GetSelected() == 0 || choosedrawmarkerstyle->GetSelected() == 3)
     {
       rawdata->SetLineWidth(1);
@@ -3276,9 +3295,9 @@ void Offline::Panel1Draw()
   
   offlinemultigraph->SetTitle(TString::Format("Event: %d   e: %d   ts: %lld   %s",OfflineCurrentCount,offlinedata->GetEventEnergy(OfflineCurrentCount),(Long64_t(offlinedata->GetEventTime_High(OfflineCurrentCount)))*0x100000000+offlinedata->GetEventTime_Low(OfflineCurrentCount),offlinedata->GetEventCfdForcedTriggerBit(OfflineCurrentCount)?"cfd: invalid":"cfd: valid").Data());
   
-  if(choosedrawmarkerstyle->GetSelected() == 0 || choosedrawmarkerstyle->GetSelected() == 3) offlinemultigraph->Draw("AL");
+  if(choosedrawmarkerstyle->GetSelected() == 0 || choosedrawmarkerstyle->GetSelected() == 1) offlinemultigraph->Draw("AL");
   if(choosedrawmarkerstyle->GetSelected() == 2) offlinemultigraph->Draw("AP");
-  if(choosedrawmarkerstyle->GetSelected() == 1 || choosedrawmarkerstyle->GetSelected() == 4) offlinemultigraph->Draw("ALP");
+  if(choosedrawmarkerstyle->GetSelected() == 3 || choosedrawmarkerstyle->GetSelected() == 4) offlinemultigraph->Draw("ALP");
 
   if(offlinedrawoption1[0]->IsOn() || offlinedrawoption1[1]->IsOn() || offlinedrawoption1[2]->IsOn() || offlinedrawoption1[3]->IsOn() || offlinedrawoption1[4]->IsOn() || offlinedrawoption1[5]->IsOn() || offlinedrawoption1[6]->IsOn())
     offlinemultigraph->GetXaxis()->SetRangeUser(double(dslider->GetMinPosition()),double(dslider->GetMaxPosition()));
@@ -3782,7 +3801,7 @@ void Offline::Panel5Draw()
 	      if(retval < 0) ErrorInfo("Offline.cc", "Panel5Draw()", "HongyiWuPixie16ComputeFastFiltersOffline", retval);
 	      if(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()) == 500)
 		{
-		  retval = HongyiWuPixie16ComputeCFDFiltersOffline(offlinedata->GetEventTraceLength(i),1,5,5,1,RcdTrace,doublecfd5);
+		  retval = HongyiWuPixie16ComputeCFDFiltersOffline(offlinedata->GetEventTraceLength(i),1,5,5,1,RcdTrace5,doublecfd5);
 		  if(retval < 0) ErrorInfo("Offline.cc", "Panel5Draw()", "HongyiWuPixie16ComputeCFDFiltersOffline", retval);
 		}
 

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 3月  8 14:57:31 2018 (+0800)
-// Last-Updated: 日 4月 29 15:30:47 2018 (+0800)
+// Last-Updated: 三 10月 23 09:31:53 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 32
+//     Update #: 37
 // URL: http://wuhongyi.cn 
 
 #include "ReadChanStatus.hh"
@@ -21,7 +21,7 @@
 #include "TGTab.h"
 #include "TString.h"
 #include "TFitResultPtr.h"
-
+#include "TColor.h"
 #include <cstring>
 #include <iostream>
 using namespace std;
@@ -44,15 +44,24 @@ ReadChanStatus::ReadChanStatus(const TGWindow *p, const TGWindow *main,Detector 
       baselinetgraph1[i] = NULL;
     }
 
+  SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   TGTab *TabPanel = new TGTab(this);
   this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
   TGCompositeFrame *Tab0 = TabPanel->AddTab("ADC Trace");
+  TabPanel->GetTabTab("ADC Trace")->ChangeBackground(TColor::RGB2Pixel(TAB_BG_R,TAB_BG_G,TAB_BG_B));
   MakeFold0Panel(Tab0);
+  Tab0->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   TGCompositeFrame *Tab1 = TabPanel->AddTab("Baseline");
+  TabPanel->GetTabTab("Baseline")->ChangeBackground(TColor::RGB2Pixel(TAB_BG_R,TAB_BG_G,TAB_BG_B));
   MakeFold1Panel(Tab1);
+  Tab1->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
   SetWindowName("Trace & Baseline");
   MapSubwindows();
   MapWindow();
@@ -259,30 +268,48 @@ Bool_t ReadChanStatus::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 void ReadChanStatus::MakeFold0Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 4, 4, 4, 4));
+  parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   // draw
   DrawButton0 = new TGTextButton(parFrame, "&Draw", READCHANSTATUS_DRAW0);
-  DrawButton0->Associate(this);
   parFrame->AddFrame(DrawButton0, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
-
+  DrawButton0->Associate(this);
+  DrawButton0->ChangeOptions(DrawButton0->GetOptions() ^ kRaisedFrame);
+  DrawButton0->SetFont(TEXTBUTTONSMALL_FONT, false);
+  DrawButton0->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  DrawButton0->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));  
+  
   // ch
-  chnum0 = new TGNumberEntry (parFrame, 0, 2, READCHANSTATUS_CHNUM0, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  chnum0 = new TGNumberEntry(parFrame, 0, 2, READCHANSTATUS_CHNUM0, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
   parFrame->AddFrame(chnum0, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
   chnum0->SetButtonToNum(0);
   chnum0->Associate(this);
+  chnum0->GetNumberEntry()->ChangeOptions(chnum0->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  chnum0->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  chnum0->GetButtonUp()->ChangeOptions(chnum0->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  chnum0->GetButtonDown()->ChangeOptions(chnum0->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  chnum0->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
+
   TGLabel *ch = new TGLabel(parFrame, "Ch:"); 
   parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+  ch->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  ch->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B)); 
 
-
-  modnum0 = new TGNumberEntry (parFrame, 0, 2, READCHANSTATUS_MODNUM0, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, PRESET_MAX_MODULES-1);
+  modnum0 = new TGNumberEntry(parFrame, 0, 2, READCHANSTATUS_MODNUM0, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, PRESET_MAX_MODULES-1);
   parFrame->AddFrame(modnum0, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
   modnum0->SetButtonToNum(0);
   modnum0->Associate(this);
+  modnum0->GetNumberEntry()->ChangeOptions(modnum0->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  modnum0->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  modnum0->GetButtonUp()->ChangeOptions(modnum0->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  modnum0->GetButtonDown()->ChangeOptions(modnum0->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  modnum0->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
+
   TGLabel *mod = new TGLabel(parFrame, "Mod:"); 
   parFrame->AddFrame(mod, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-
-
+  mod->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  mod->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B)); 
 
   choosecanvasmode0 = new TGComboBox(parFrame);
   parFrame->AddFrame(choosecanvasmode0, new TGLayoutHints(kLHintsRight, 0, 10, 0, 0));
@@ -290,50 +317,68 @@ void ReadChanStatus::MakeFold0Panel(TGCompositeFrame *TabPanel)
   choosecanvasmode0->AddEntry("Single Channel Mode", 0);
   choosecanvasmode0->AddEntry("Multi Channel Mode", 1);
   choosecanvasmode0->Select(0);
+  
   TGLabel *choosemode = new TGLabel(parFrame, "Mode:"); 
   parFrame->AddFrame(choosemode, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-  fClient->GetColorByName("blue", color);
-  choosemode->SetTextColor(color, false);
-
+  choosemode->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
+  choosemode->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
-
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
   TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
-  TGLayoutHints *Hint = new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 1, 1, 1, 1);
+  TabPanel->AddFrame(adCanvasFrame, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 4, 4, 0, 4));
 
   TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas0", adCanvasFrame, 100, 100);
-
+  adCanvasFrame->AddFrame(adjCanvas, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
   canvas0 = adjCanvas->GetCanvas();
-  adCanvasFrame->AddFrame(adjCanvas, Hint);
-  TabPanel->AddFrame(adCanvasFrame, Hint);
 }
 
 void ReadChanStatus::MakeFold1Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
-  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
-
+  TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 4, 4, 4, 4));
+  parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   // draw
   DrawButton1 = new TGTextButton(parFrame, "&Draw", READCHANSTATUS_DRAW1);
   DrawButton1->Associate(this);
   parFrame->AddFrame(DrawButton1, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
+
+  DrawButton1->ChangeOptions(DrawButton1->GetOptions() ^ kRaisedFrame);
+  DrawButton1->SetFont(TEXTBUTTONSMALL_FONT, false);
+  DrawButton1->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  DrawButton1->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
 
   // ch
   chnum1 = new TGNumberEntry (parFrame, 0, 2, READCHANSTATUS_CHNUM1, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
   parFrame->AddFrame(chnum1, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
   chnum1->SetButtonToNum(0);
   chnum1->Associate(this);
+  chnum1->GetNumberEntry()->ChangeOptions(chnum1->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  chnum1->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  chnum1->GetButtonUp()->ChangeOptions(chnum1->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  chnum1->GetButtonDown()->ChangeOptions(chnum1->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  chnum1->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
+
   TGLabel *ch = new TGLabel(parFrame, "Ch:"); 
   parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-
+  ch->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  ch->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
+  
   modnum1 = new TGNumberEntry (parFrame, 0, 2, READCHANSTATUS_MODNUM1, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, PRESET_MAX_MODULES-1);
   parFrame->AddFrame(modnum1, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
   modnum1->SetButtonToNum(0);
   modnum1->Associate(this);
+  modnum1->GetNumberEntry()->ChangeOptions(modnum1->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  modnum1->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  modnum1->GetButtonUp()->ChangeOptions(modnum1->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  modnum1->GetButtonDown()->ChangeOptions(modnum1->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  modnum1->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
+
   TGLabel *mod = new TGLabel(parFrame, "Mod:"); 
   parFrame->AddFrame(mod, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-
+  mod->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  mod->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
 
   choosecanvasmode1 = new TGComboBox(parFrame);
   parFrame->AddFrame(choosecanvasmode1, new TGLayoutHints(kLHintsRight, 0, 10, 0, 0));
@@ -341,10 +386,11 @@ void ReadChanStatus::MakeFold1Panel(TGCompositeFrame *TabPanel)
   choosecanvasmode1->AddEntry("Single Channel Mode", 0);
   choosecanvasmode1->AddEntry("Multi Channel Mode", 1);
   choosecanvasmode1->Select(0);
+  
   TGLabel *choosemode = new TGLabel(parFrame, "Mode:"); 
   parFrame->AddFrame(choosemode, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-  fClient->GetColorByName("blue", color);
-  choosemode->SetTextColor(color, false);
+  choosemode->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
+  choosemode->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   choosebaselinedrawmode1 = new TGComboBox(parFrame);
   parFrame->AddFrame(choosebaselinedrawmode1, new TGLayoutHints(kLHintsRight, 0, 15, 0, 0));
@@ -355,8 +401,8 @@ void ReadChanStatus::MakeFold1Panel(TGCompositeFrame *TabPanel)
 
   TGLabel *choosetype = new TGLabel(parFrame, "Type:"); 
   parFrame->AddFrame(choosetype, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-  fClient->GetColorByName("red", color);
-  choosetype->SetTextColor(color, false);
+  choosetype->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  choosetype->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   

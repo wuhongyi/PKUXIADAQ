@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 二 10月 22 22:43:50 2019 (+0800)
+;; Last-Updated: 三 10月 23 14:12:19 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 137
+;;     Update #: 140
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -25,20 +25,20 @@ English | [简体中文](https://github.com/wuhongyi/PKUXIADAQ/blob/master/READM
 
 ### Stable Version
 
-**Stable Version Version:2019.10.19**  
+**Stable Version Version:2019.10.23**  
 
 Download the latest version, please click:  [PKUXIADAQ stable](https://github.com/pkuNucExp/PKUXIADAQ)
 
 For web page manual, please click:  [English/简体中文](https://pkunucexp.github.io/PKUXIADAQ/)
 
-- manual version in markdown: README/  
+- manual version in reStructuredText: README/  
 - manual version in offline web: docs/  
 - manual version in pdf: README_en.pdf  README_ch.pdf  
 
 
 ### Pre-alpha
 
-**Pre-alpha Version:2019.10.22**  
+**Pre-alpha Version:2019.10.23**  
 
 Download the latest version:  [PKUXIADAQ](https://github.com/wuhongyi/PKUXIADAQ)
 
@@ -76,6 +76,8 @@ Principal author of the instruction:
 - [Hongyi Wu 吴鸿毅](https://github.com/wuhongyi)
 - [Xiang Wang 王翔](https://github.com/wangxianggit)
 
+Art director:
+- Yi Song 宋祎
 
 The development of this program is supported by the following：
 - XIA LLC

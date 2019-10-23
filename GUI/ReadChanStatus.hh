@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 3月  8 14:57:16 2018 (+0800)
-// Last-Updated: 日 4月 29 10:50:55 2018 (+0800)
+// Last-Updated: 三 10月 23 09:26:10 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 6
+//     Update #: 7
 // URL: http://wuhongyi.cn 
 
 #ifndef _READCHANSTATUS_H_
@@ -68,7 +68,6 @@ protected:
   void Panel1Draw();
   
 private:
-  Pixel_t color;
   Detector *detector;
 
   // Fold0

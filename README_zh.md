@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 二 10月 22 22:44:02 2019 (+0800)
+;; Last-Updated: 三 10月 23 14:12:19 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 136
+;;     Update #: 139
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -25,26 +25,25 @@
 
 ### 稳定版本
 
-**稳定版本 Version:2019.10.19**  
+**稳定版本 Version:2019.10.23**  
 
 下载最新版本，请点击:  [PKUXIADAQ stable](https://github.com/pkuNucExp/PKUXIADAQ)
 
 网页版说明书请访问:  [English/简体中文](https://pkunucexp.github.io/PKUXIADAQ/)
 
 
-- markdown版说明书: README/  
+- reStructuredText版说明书: README/  
 - 离线网页版说明书: docs/  
 - pdf版本说明书: README_en.pdf  README_ch.pdf  
 
 
 ### 准预览版本
 
-**准预览版本 Version:2019.10.22**  
+**准预览版本 Version:2019.10.23**  
 
 程序下载请访问:  [PKUXIADAQ](https://github.com/wuhongyi/PKUXIADAQ)
 
 网页版说明书请访问:  [简体中文/English](http://wuhongyi.cn/PKUXIADAQ/)
-
 
 
 - 对本获取程序有任何的意见及建议(功能添加及改进)，欢迎给吴鸿毅(wuhongyi@qq.com)发邮件。
@@ -78,6 +77,9 @@
 - [Hongyi Wu 吴鸿毅](https://github.com/wuhongyi)
 - [Xiang Wang 王翔](https://github.com/wangxianggit)
 
+美术指导：
+- Yi Song 宋祎
+
 
 本程序的开发得到以下单位的支持：
 - XIA LLC
@@ -96,7 +98,7 @@
 
 ----
 
-## 目录
+## 文件目录
 
 用户使用程序包中包含以下文件/文件夹:
 

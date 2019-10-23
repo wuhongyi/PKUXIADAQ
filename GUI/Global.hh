@@ -4,25 +4,22 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 8月  9 09:24:46 2016 (+0800)
-// Last-Updated: 二 10月 22 22:40:20 2019 (+0800)
+// Last-Updated: 三 10月 23 14:18:56 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 66
+//     Update #: 71
 // URL: http://wuhongyi.cn 
 
 #ifndef _GLOBAL_HH_
 #define _GLOBAL_HH_
 
-const char gVERSION[] = "Version: 2019.10.22";
+const char gVERSION[] = "Version: 2019.10.23";
 
 const char gAbout[] = "\
 Version: Beta ---> Developer version\n\
-\n\
-The program developed by Peking University.\n\
-The program applies to XIA Pixie-16. \n\
+This program was developed by Peking University and is applicable to XIA Pixie16. \n\
 Support 100 MHz(RevD 12-bit,RevF 14-bit), \n\
         250 MHz(RevF 12/14/16-bit), \n\
         500 MHz(RevF 12/14-bit)\n\
-\n\
 \n\
 Program Developer:\n\
   Hongyi Wu (wuhongyi@qq.com   Peking University)\n\
@@ -155,8 +152,19 @@ Art Director:\n\
 // Normal Medium Bold Light DemiboldBlack
 // Roman Italic Oblique
 
-
-
+// times italic
+// times bold
+// times bold italic
+// helvetica
+// helvetica italic
+// helvetica bold
+// helvetica bold italic
+// courier
+// courier italic
+// courier bold
+// courier bold italic
+// symbol
+// times
 
 
 void ErrorInfo(const char *filename,const char *funcname,const char *detial,int ErrorN);
@@ -164,3 +172,13 @@ void ErrorInfo(const char *filename,const char *funcname,const char *detial,int 
 #endif /* _GLOBAL_HH_ */
 // 
 // Global.hh ends here
+
+
+
+
+
+
+
+
+
+

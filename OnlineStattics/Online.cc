@@ -4,12 +4,14 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 六 9月 28 16:13:56 2019 (+0800)
+// Last-Updated: 三 10月 23 14:04:04 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 251
+//     Update #: 293
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
+
+#include "TColor.h"
 #include <climits>
 #include <sys/time.h>
 #include <fcntl.h>
@@ -25,8 +27,7 @@ Online::Online(const TGWindow * p)
   number = UINT_MAX;
   flagrunnumber = false;
 
-  fClient->GetColorByName("white", colorwhite);
-  SetBackgroundColor(colorwhite);
+  SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   buf = new unsigned char[(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*2+SHAREDMEMORYDATAOFFSET];
   buf_new = new unsigned char[(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*2+SHAREDMEMORYDATAOFFSET];
@@ -161,13 +162,12 @@ void Online::AlertSave()
 
 void Online::AlertDefault()
 {
-  fClient->GetColorByName("black", color);
   for (int i = 0; i < 224; ++i)
     {
-      LowR[i]->SetTextColor(color, false);
+      LowR[i]->SetTextColor(TColor::RGB2Pixel(COLOR_BLACK_R,COLOR_BLACK_G,COLOR_BLACK_B), false);
       LowR[i]->SetText("0");
       
-      HighR[i]->SetTextColor(color, false);
+      HighR[i]->SetTextColor(TColor::RGB2Pixel(COLOR_BLACK_R,COLOR_BLACK_G,COLOR_BLACK_B), false);
       HighR[i]->SetText("0");     
     }
 }
@@ -177,35 +177,39 @@ void Online::AlertDefault()
 void Online::CreateMenuBar()
 {
   TGMenuBar *MenuBar = new TGMenuBar(this, 1, 1, kHorizontalFrame);
-  fClient->GetColorByName("pink", color);
-  MenuBar->ChangeBackground(color);
+  AddFrame(MenuBar, new TGLayoutHints(kLHintsTop | kLHintsLeft | kLHintsExpandX, 0, 0, 0, 0));
+  MenuBar->ChangeBackground(TColor::RGB2Pixel(TOPBAR_BG_R,TOPBAR_BG_G,TOPBAR_BG_B));
   
   TGPopupMenu *MenuFile = new TGPopupMenu(fClient->GetRoot());
   MenuFile->AddEntry("E&xit", FILE_EXIT);
   MenuFile->AddSeparator();
   MenuFile->Associate(this);
+  
   MenuBar->AddPopup("&File", MenuFile, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  AddFrame(MenuBar, new TGLayoutHints(kLHintsTop | kLHintsLeft | kLHintsExpandX, 0, 0, 0, 0));
 
-
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
   TGTab *TabPanel = new TGTab(this);
   this->AddFrame(TabPanel, new TGLayoutHints(kLHintsBottom | kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
-  TabPanel->SetBackgroundColor(colorwhite);
+  TabPanel->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGCompositeFrame *Tab1 = TabPanel->AddTab("CountRate");
+  TabPanel->GetTabTab("CountRate")->ChangeBackground(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B));
   MakeFold1Panel(Tab1);
-  Tab1->SetBackgroundColor(colorwhite);
-  fClient->GetColorByName("red", color);
-  TabPanel->GetTabTab("CountRate")->ChangeBackground(color);
+  Tab1->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
+  
   TGCompositeFrame *Tab2 = TabPanel->AddTab("Alert");
+  TabPanel->GetTabTab("Alert")->ChangeBackground(TColor::RGB2Pixel(COLOR_YELLOW_R,COLOR_YELLOW_G,COLOR_YELLOW_B));
   MakeFold2Panel(Tab2);
-  Tab2->SetBackgroundColor(colorwhite);
-  fClient->GetColorByName("yellow", color);
-  TabPanel->GetTabTab("Alert")->ChangeBackground(color);
+  Tab2->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
+  
   TGCompositeFrame *Tab3 = TabPanel->AddTab("EnergyMonitor");
+  TabPanel->GetTabTab("EnergyMonitor")->ChangeBackground(TColor::RGB2Pixel(COLOR_BLUE_R,COLOR_BLUE_G,COLOR_BLUE_B));
   MakeFold3Panel(Tab3);
-  Tab3->SetBackgroundColor(colorwhite);
-  fClient->GetColorByName("blue", color);
-  TabPanel->GetTabTab("EnergyMonitor")->ChangeBackground(color);
+  Tab3->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
 }
 
 void Online::CloseWindow()
@@ -359,48 +363,50 @@ Bool_t Online::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
 {
   TGGroupFrame *setgroup = new TGGroupFrame(TabPanel,"Setup");
-  TabPanel->AddFrame(setgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
-  setgroup->SetBackgroundColor(colorwhite);
+  TabPanel->AddFrame(setgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop,4,4,0,0));
+  setgroup->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
   
   TGHorizontalFrame *filepath = new TGHorizontalFrame(setgroup);
   setgroup->AddFrame(filepath,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
-  filepath->SetBackgroundColor(colorwhite);
+  filepath->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGLabel *filepathlabel = new TGLabel(filepath,"File Path: ");
   filepath->AddFrame(filepathlabel,new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 3, 4, 0));
-  filepathlabel->SetBackgroundColor(colorwhite);
+  filepathlabel->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   filepathtext = new TGTextEntry(filepath,new TGTextBuffer(20));
   filepath->AddFrame(filepathtext,new TGLayoutHints(kLHintsExpandX|kLHintsTop, 10 ,3,4,0));
   filepathtext->SetEnabled(kFALSE);
-  filepathtext->SetBackgroundColor(colorwhite);
+  filepathtext->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   TGLabel *filenamelabel = new TGLabel(filepath,"File Name: ");
   filepath->AddFrame(filenamelabel,new TGLayoutHints(kLHintsLeft | kLHintsTop, 10 ,3,4,0));
-  filenamelabel->SetBackgroundColor(colorwhite);
+  filenamelabel->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   filenametext = new TGTextEntry(filepath, new TGTextBuffer(20));
   filepath->AddFrame(filenametext,new TGLayoutHints(kLHintsLeft| kLHintsTop,10,3,4,0));
   filenametext->SetEnabled(kFALSE);
-  filenametext->SetBackgroundColor(colorwhite);
+  filenametext->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
 
   StateMsg = new TGTextEntry(filepath,new TGTextBuffer(20));
   filepath->AddFrame(StateMsg,new TGLayoutHints(kLHintsLeft|kLHintsTop,10,3,4,0));
   StateMsg->SetFont("-adobe-helvetica-bold-r-*-*-11-*-*-*-*-*-iso8859-1", false);
-  fClient->GetColorByName("green", color);
-  StateMsg->SetTextColor(color, false);
+  StateMsg->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
   StateMsg->SetText("Rxxxx     Mxx");
   StateMsg->SetEnabled(kFALSE);
   StateMsg->SetFrameDrawn(kFALSE);
-  StateMsg->SetBackgroundColor(colorwhite);
+  StateMsg->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
 
   startloop = new TGTextButton(filepath,"RunStart");
+  filepath->AddFrame(startloop,new TGLayoutHints(kLHintsRight|kLHintsTop,10,3,4,0));
   startloop->Connect("Pressed()","Online",this,"StartStop()");
   startloop->SetEnabled(0);
-  filepath->AddFrame(startloop,new TGLayoutHints(kLHintsRight|kLHintsTop,10,3,4,0));
-
-
   
-  // =================
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
   TGTextEntry **cl0 = new TGTextEntry *[14];
   TGTextEntry **LabelsI = new TGTextEntry *[14];
   TGTextEntry **LabelsO = new TGTextEntry *[14];
@@ -409,58 +415,67 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
   OCR = new TGTextEntry *[224];//[0-207] Output rate  >=208 not used
 
   TGGroupFrame *monitorgroup = new TGGroupFrame(TabPanel,"Monitor");
-  TabPanel->AddFrame(monitorgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
-  monitorgroup->SetBackgroundColor(colorwhite);
+  TabPanel->AddFrame(monitorgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop,4,4,0,0));
+  monitorgroup->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   TGHorizontalFrame *horizontal1 = new TGHorizontalFrame(monitorgroup);
-  monitorgroup->AddFrame(horizontal1,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
-  horizontal1->SetBackgroundColor(colorwhite);
+  monitorgroup->AddFrame(horizontal1,new TGLayoutHints(kLHintsExpandX|kLHintsTop,0,0,0,0));
+  horizontal1->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGHorizontalFrame *horizontal2 = new TGHorizontalFrame(monitorgroup);
-  monitorgroup->AddFrame(horizontal2,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
-  horizontal2->SetBackgroundColor(colorwhite);
+  monitorgroup->AddFrame(horizontal2,new TGLayoutHints(kLHintsExpandX|kLHintsTop,0,0,0,0));
+  horizontal2->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
   
   TGVerticalFrame **Column1 = new TGVerticalFrame *[42];
   for (int i = 0; i < 14; i++)
     {
       if(i < 7)
 	{
-	  Column1[3*i] = new TGVerticalFrame(horizontal1, 200, 300);
+	  Column1[3*i] = new TGVerticalFrame(horizontal1, 200,300);
 	  horizontal1->AddFrame(Column1[3*i], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
-	  Column1[3*i]->SetBackgroundColor(colorwhite);
+	  Column1[3*i]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
 	  Column1[3*i+1] = new TGVerticalFrame(horizontal1, 200, 300);
 	  horizontal1->AddFrame(Column1[3*i+1], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
-	  Column1[3*i+1]->SetBackgroundColor(colorwhite);
+	  Column1[3*i+1]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
 	  Column1[3*i+2] = new TGVerticalFrame(horizontal1, 200, 300);
 	  horizontal1->AddFrame(Column1[3*i+2], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
-	  Column1[3*i+2]->SetBackgroundColor(colorwhite);
+	  Column1[3*i+2]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 	}
       else
 	{
 	  Column1[3*i] = new TGVerticalFrame(horizontal2, 200, 300);
 	  horizontal2->AddFrame(Column1[3*i], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
-	  Column1[3*i]->SetBackgroundColor(colorwhite);
+	  Column1[3*i]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+	  
 	  Column1[3*i+1] = new TGVerticalFrame(horizontal2, 200, 300);
 	  horizontal2->AddFrame(Column1[3*i+1], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
-	  Column1[3*i+1]->SetBackgroundColor(colorwhite);
+	  Column1[3*i+1]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+	  
 	  Column1[3*i+2] = new TGVerticalFrame(horizontal2, 200, 300);
 	  horizontal2->AddFrame(Column1[3*i+2], new TGLayoutHints(kLHintsTop | kLHintsExpandX, 0, 0, 0, 0));
-	  Column1[3*i+2]->SetBackgroundColor(colorwhite);
+	  Column1[3*i+2]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 	}
       
       cl0[i] = new TGTextEntry(Column1[3*i], new TGTextBuffer(100), 10000,
 			       cl0[i]->GetDefaultGC()(),
 			       cl0[i]->GetDefaultFontStruct(),
 			       kRaisedFrame | kDoubleBorder, GetWhitePixel());
+      Column1[3*i]->AddFrame(cl0[i], new TGLayoutHints(kLHintsRight | kLHintsTop, 0, 0, 10, 0));
       cl0[i]->SetFont("-adobe-helvetica-bold-r-*-*-11-*-*-*-*-*-iso8859-1", false);
       if(i == 13)
 	cl0[i]->SetText("File");
       else
 	cl0[i]->SetText("ch #");
-      cl0[i]->Resize(35, 20);
+      // cl0[i]->SetTextColor(TColor::RGB2Pixel(TEXTENTRY_TEXT_R,TEXTENTRY_TEXT_G,TEXTENTRY_TEXT_B), false);
+      cl0[i]->Resize(30, 20);
       cl0[i]->SetEnabled(kFALSE);
-      cl0[i]->SetFrameDrawn(kTRUE);
-      Column1[3*i]->AddFrame(cl0[i], new TGLayoutHints(kLHintsCenterX, 0, 0, 10, 0));
-
+      cl0[i]->SetFrameDrawn(kFALSE);
+      // cl0[i]->SetAlignment(kTextRight);
+      cl0[i]->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+      
       LabelsI[i] = new TGTextEntry(Column1[3*i+1], new TGTextBuffer(100), 10000,
 				   LabelsI[i]->GetDefaultGC()(),
 				   LabelsI[i]->GetDefaultFontStruct(),
@@ -499,6 +514,7 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
 				      Labels[16*i+j]->GetDefaultFontStruct(),
 				      kRaisedFrame | kDoubleBorder,
 				      GetWhitePixel());
+	  Column1[3*i]->AddFrame(Labels[16*i+j], new TGLayoutHints(kLHintsRight | kLHintsTop, 0, 0, 0, 0));
 	  if(i == 13)
 	    {
 	      if(j < 13)
@@ -510,11 +526,10 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
 	    {
 	      Labels[16*i+j]->SetText(TString::Format("%02d",j).Data());
 	    }
-	  Labels[16*i+j]->Resize(35, 20);
+	  Labels[16*i+j]->Resize(30, 20);
 	  Labels[16*i+j]->SetEnabled(kFALSE);
-	  Labels[16*i+j]->SetFrameDrawn(kTRUE);
-	  Column1[3*i]->AddFrame(Labels[16*i+j], new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
-
+	  Labels[16*i+j]->SetFrameDrawn(kFALSE);
+	  Labels[16*i+j]->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 	  
 	  ICR[16*i+j] = new TGTextEntry(Column1[3*i+1], new TGTextBuffer(100), 10000,
 				      ICR[16*i+j]->GetDefaultGC()(),
@@ -522,7 +537,7 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
 				      kRaisedFrame | kDoubleBorder, GetWhitePixel());
 	  ICR[16*i+j]->SetAlignment(kTextCenterX);
 	  ICR[16*i+j]->SetText("");
-	  ICR[16*i+j]->Resize(35, 20);
+	  // ICR[16*i+j]->Resize(35, 20);
 	  ICR[16*i+j]->SetEnabled(kFALSE);
 	  // ICR[16*i+j]->SetFrameDrawn(kFALSE);
 	  Column1[3*i+1]->AddFrame(ICR[16*i+j], new TGLayoutHints(kLHintsExpandX, 0, 0, 0, 0));//kLHintsCenterX
@@ -567,7 +582,7 @@ void Online::MakeFold2Panel(TGCompositeFrame *TabPanel)
 {
   TGGroupFrame *setgroup = new TGGroupFrame(TabPanel,"Setup");
   TabPanel->AddFrame(setgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
-  setgroup->SetBackgroundColor(colorwhite);
+  setgroup->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   TGHorizontalFrame *filepath = new TGHorizontalFrame(setgroup);
   setgroup->AddFrame(filepath,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
@@ -606,7 +621,7 @@ void Online::MakeFold2Panel(TGCompositeFrame *TabPanel)
   
   TGGroupFrame *limitgroup = new TGGroupFrame(TabPanel,"Count rate limit");
   TabPanel->AddFrame(limitgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
-  limitgroup->SetBackgroundColor(colorwhite);
+  limitgroup->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   TGHorizontalFrame *horizontal1 = new TGHorizontalFrame(limitgroup);
   limitgroup->AddFrame(horizontal1,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
@@ -736,7 +751,7 @@ void Online::MakeFold3Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
   TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
-  parFrame->SetBackgroundColor(colorwhite);
+  parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   // draw
   OnlineDrawButton3 = new TGTextButton(parFrame, "&Draw", ONLINEDRAW3);
@@ -749,17 +764,19 @@ void Online::MakeFold3Panel(TGCompositeFrame *TabPanel)
   parFrame->AddFrame(onlinechnum3, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
   onlinechnum3->SetButtonToNum(0);
   onlinechnum3->Associate(this);
+  
   TGLabel *ch = new TGLabel(parFrame, "Ch:"); 
   parFrame->AddFrame(ch, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-
+  ch->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   onlinemodnum3 = new TGNumberEntry (parFrame, 0, 2, ONLINEMODNUM3, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, PRESET_MAX_MODULES-1);
   parFrame->AddFrame(onlinemodnum3, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
   onlinemodnum3->SetButtonToNum(0);
   onlinemodnum3->Associate(this);
+  
   TGLabel *mod = new TGLabel(parFrame, "Mod:"); 
   parFrame->AddFrame(mod, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-
+  mod->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
 
   chooseenergycanvasmode3 = new TGComboBox(parFrame);
@@ -768,11 +785,11 @@ void Online::MakeFold3Panel(TGCompositeFrame *TabPanel)
   chooseenergycanvasmode3->AddEntry("Single Channel Mode", 0);
   chooseenergycanvasmode3->AddEntry("Multi Channel Mode", 1);
   chooseenergycanvasmode3->Select(0);
+  
   TGLabel *choosemode = new TGLabel(parFrame, "Mode:"); 
   parFrame->AddFrame(choosemode, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
-  fClient->GetColorByName("blue", color);
-  choosemode->SetTextColor(color, false);
-
+  choosemode->SetTextColor(TColor::RGB2Pixel(COLOR_BLUE_R,COLOR_BLUE_G,COLOR_BLUE_B), false);
+  choosemode->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -904,13 +921,11 @@ void Online::LoopRun()
 		      filesize = GetFileSizeMB(Filename[i]);
 		      if(LowR[208+i]->GetNumber() > 0 && filesize > LowR[208+i]->GetNumber())
 			{
-			  fClient->GetColorByName("red", color);
-			  ICR[208+i]->SetTextColor(color, false);
+			  ICR[208+i]->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
 			}
 		      else
 			{
-			  fClient->GetColorByName("black", color);
-			  ICR[208+i]->SetTextColor(color, false);
+			  ICR[208+i]->SetTextColor(TColor::RGB2Pixel(COLOR_BLACK_R,COLOR_BLACK_G,COLOR_BLACK_B), false);
 			}
 
 		      ss.clear();
@@ -1027,18 +1042,15 @@ void Online::LoopRun()
 
 		      if(LowR[16*i+j]->GetNumber() > 0 && tempinputcountrate < LowR[16*i+j]->GetNumber())
 			{
-			  fClient->GetColorByName("blue", color);
-			  ICR[16*i+j]->SetTextColor(color, false);
+			  ICR[16*i+j]->SetTextColor(TColor::RGB2Pixel(COLOR_BLUE_R,COLOR_BLUE_G,COLOR_BLUE_B), false);
 			}
 		      else if(HighR[16*i+j]->GetNumber() > 0 && tempinputcountrate > HighR[16*i+j]->GetNumber())
 			{
-			  fClient->GetColorByName("red", color);
-			  ICR[16*i+j]->SetTextColor(color, false);
+			  ICR[16*i+j]->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
 			}
 		      else
 			{
-			  fClient->GetColorByName("black", color);
-			  ICR[16*i+j]->SetTextColor(color, false);
+			  ICR[16*i+j]->SetTextColor(TColor::RGB2Pixel(COLOR_BLACK_R,COLOR_BLACK_G,COLOR_BLACK_B), false);
 			}
 
 		      ss.clear();
@@ -1059,14 +1071,12 @@ void Online::LoopRun()
 	      StateMsg->SetText(charrunstate);
 	      if(flagrunnumber)
 		{
-		  fClient->GetColorByName("red", color);
-		  StateMsg->SetTextColor(color, false);
+		  StateMsg->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
 		  flagrunnumber = false;
 		}
 	      else
 		{
-		  fClient->GetColorByName("blue", color);
-		  StateMsg->SetTextColor(color, false);
+		  StateMsg->SetTextColor(TColor::RGB2Pixel(COLOR_BLUE_R,COLOR_BLUE_G,COLOR_BLUE_B), false);
 		  flagrunnumber = true;
 		}
 	    }
@@ -1079,8 +1089,7 @@ void Online::LoopRun()
 	  if(ElapsedProtectionTime > 5000)
 	    {
 	      StateMsg->SetText("NOT SHARE DATA");
-	      fClient->GetColorByName("yellow", color);
-	      StateMsg->SetTextColor(color, false);
+	      StateMsg->SetTextColor(TColor::RGB2Pixel(COLOR_YELLOW_R,COLOR_YELLOW_G,COLOR_YELLOW_B), false);
 	    }
 	  
 	}

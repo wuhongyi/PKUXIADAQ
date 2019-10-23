@@ -4,13 +4,54 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:41 2016 (+0800)
-// Last-Updated: 六 9月 28 15:34:25 2019 (+0800)
+// Last-Updated: 三 10月 23 13:39:41 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 71
+//     Update #: 74
 // URL: http://wuhongyi.cn 
 
 #ifndef _ONLINE_H_
 #define _ONLINE_H_
+
+#define FRAME_BG_R  255
+#define FRAME_BG_G  255
+#define FRAME_BG_B  255
+
+#define TOPBAR_BG_R  211  //26
+#define TOPBAR_BG_G  211  //26
+#define TOPBAR_BG_B  211  //26
+
+#define TOPBAR_TEXT_R  255
+#define TOPBAR_TEXT_G  255
+#define TOPBAR_TEXT_B  255
+
+#define TEXTENTRY_TEXT_R  0
+#define TEXTENTRY_TEXT_G  0
+#define TEXTENTRY_TEXT_B  0
+
+
+#define COLOR_WHITE_R  255
+#define COLOR_WHITE_G  255
+#define COLOR_WHITE_B  255
+
+#define COLOR_RED_R  255
+#define COLOR_RED_G  0
+#define COLOR_RED_B  0
+
+#define COLOR_YELLOW_R  255
+#define COLOR_YELLOW_G  255
+#define COLOR_YELLOW_B  0
+
+#define COLOR_GREEN_R  0
+#define COLOR_GREEN_G  255
+#define COLOR_GREEN_B  0
+
+#define COLOR_BLUE_R  0
+#define COLOR_BLUE_G  0
+#define COLOR_BLUE_B  255
+
+#define COLOR_BLACK_R  0
+#define COLOR_BLACK_G  0
+#define COLOR_BLACK_B  0
 
 #include "TGButton.h"
 #include "TGComboBox.h"
@@ -128,8 +169,6 @@ private:
   TGTextEntry	*filenametext;
   TGTextEntry *StateMsg;
 
-  Pixel_t color;
-  Pixel_t colorwhite;
   bool flagrunnumber;
   char charrunstate[16];
 

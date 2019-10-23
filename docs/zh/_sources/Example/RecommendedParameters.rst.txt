@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 14:55:57 2019 (+0800)
-.. Last-Updated: 三 7月  3 15:14:49 2019 (+0800)
+.. Last-Updated: 日 10月 20 11:36:53 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 2
+..     Update #: 3
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -14,6 +14,115 @@
 =================================
 
 **本页参数仅供参考**
+
+---------------------------------
+TAC
+---------------------------------
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+100M
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- fast filter
+	- FL: 
+	- GF: 
+- slow filter
+	- SL: 
+	- SG: 
+	- Range: 1
+	- TAU: 
+- cfd filter
+	- dealy: 
+	- scale: 
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+250M
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- fast filter
+	- FL: 
+	- GF: 
+- slow filter
+	- SL: 
+	- SG: 
+	- Range: 1
+	- TAU: 
+- cfd filter
+	- dealy: 
+	- scale: 
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+500M
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- fast filter
+	- FL: 
+	- GF: 
+- slow filter
+	- SL: 
+	- SG: 
+	- Range: 1
+	- TAU: 
+- cfd filter
+	- dealy: 
+	- scale: 
+
+----
+	  
+---------------------------------
+NIM signal
+---------------------------------
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+100M
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- fast filter
+	- FL: 
+	- GF: 
+- slow filter
+	- SL: 
+	- SG: 
+	- Range: 1
+	- TAU: 
+- cfd filter
+	- dealy: 
+	- scale: 
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+250M
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- fast filter
+	- FL: 
+	- GF: 
+- slow filter
+	- SL: 
+	- SG: 
+	- Range: 1
+	- TAU: 
+- cfd filter
+	- dealy: 
+	- scale: 
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+500M
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- fast filter
+	- FL: 
+	- GF: 
+- slow filter
+	- SL: 
+	- SG: 
+	- Range: 1
+	- TAU: 
+- cfd filter
+	- dealy: 
+	- scale: 
+
+----
 
 ---------------------------------
 HPGe
@@ -113,10 +222,22 @@ LaBr3
 - cfd filter
 	- dealy: 0.024
 	- scale: 0
-- Trace
-	- Delay: 1.496
-	- Length: 3.504
 
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+500M
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- fast filter
+	- FL: 0.02
+	- GF: 0.0
+- slow filter
+	- SL: 0.140
+	- SG: 0.06
+	- Range: 1
+	- TAU: 以实际测量为准(0.023)
+
+
+	  
 .. 
 .. RecommendedParameters.rst ends here

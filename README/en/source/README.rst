@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 20:19:34 2019 (+0800)
-.. Last-Updated: 二 9月 24 16:50:21 2019 (+0800)
+.. Last-Updated: 三 10月 23 14:13:30 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 22
+..     Update #: 23
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -25,7 +25,7 @@ Version
 Stable Version
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Stable Version Version:2019.09.24**  
+**Stable Version Version:2019.10.23**  
 
 Download the latest version, please click:  `PKUXIADAQ stable <https://github.com/pkuNucExp/PKUXIADAQ>`_ 
 
@@ -40,7 +40,7 @@ For web page manual, please click:  `English/简体中文 <https://pkunucexp.git
 Pre-alpha
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Pre-alpha Version:2019.09.24**  
+**Pre-alpha Version:2019.10.23**  
 
 Download the latest version:  `PKUXIADAQ <https://github.com/wuhongyi/PKUXIADAQ>`_ 
 
@@ -82,6 +82,10 @@ Principal author of the instruction:
 - `Hongyi Wu 吴鸿毅 <https://github.com/wuhongyi>`_
 - `Xiang Wang 王翔 <https://github.com/wangxianggit>`_ 
 
+Art director:
+
+- Yi Song 宋祎
+  
 The development of this program is supported by the following：
 
 - XIA LLC
@@ -105,7 +109,7 @@ Currently we have tested most types of modules, so you can run the type of modul
 ----
 
 ---------------------------------
-file contents
+File contents
 ---------------------------------
 
 The following files/folders are included in the user's use package:

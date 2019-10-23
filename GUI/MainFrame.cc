@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 一 10月 21 21:02:52 2019 (+0800)
+// Last-Updated: 三 10月 23 12:31:54 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 377
+//     Update #: 380
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -60,8 +60,6 @@ MainFrame::MainFrame(const TGWindow * p)
   // AppendPad(); //foarte important
 
   flagonlinemode = 0;
-
-
 }
 
 MainFrame::~MainFrame()
@@ -963,9 +961,9 @@ void MainFrame::SetMenuStatus(bool flag,int flagonline)
       MenuExpert->EnableEntry(LOGIC);
       MenuMonitor->EnableEntry(HISTXDT);
       if(flagonline == 1)
-	MenuMonitor->DisableEntry(READCHANSTATUS);
+      	MenuMonitor->DisableEntry(READCHANSTATUS);
       else
-	MenuMonitor->EnableEntry(READCHANSTATUS);
+      	MenuMonitor->EnableEntry(READCHANSTATUS);
       MenuOffline->EnableEntry(OFFLINEADJUSTPAR);
       MenuOffline->EnableEntry(SIMULATION);
     }
