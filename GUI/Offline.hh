@@ -4,16 +4,16 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 二 10月 22 22:40:09 2019 (+0800)
+// Last-Updated: 五 10月 25 22:21:16 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 182
+//     Update #: 185
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
 #define _OFFLINE_HH_
 
 
-#define PANELNUMBER 13
+#define PANELNUMBER 14
 const char gOfflineGuides[PANELNUMBER][128] =
   {
     "InitData: This page. Read the binary file.",
@@ -24,6 +24,7 @@ const char gOfflineGuides[PANELNUMBER][128] =
     "Calc Energy:  Recalculation of energy spectrum by waveforms.",
     "FF/CFD Thre:   Accumulation of a large number of fast filter/cfd filter waveforms to determine the threshold.",
     "Energy-FF:  The two dimensional relationship between energy and fast filter first/second peak height.",
+    "CFD D/F:  Time difference spectrum under different DELAY/SCALE parameters combinations",
     "Energy-CFD:   The two dimensional relationship between energy and cfd vaule.",
     "Event Flag:   Energy spectrum under different event flags.",
     "QDC:  It will be finished soon.",
@@ -80,6 +81,8 @@ public:
   void MakeFold10Panel(TGCompositeFrame *TabPanel);//Time Diff
   void MakeFold11Panel(TGCompositeFrame *TabPanel);//Energy-CFD
   void MakeFold12Panel(TGCompositeFrame *TabPanel);//Event Flag
+  void MakeFold13Panel(TGCompositeFrame *TabPanel);//CFD D/F
+
   
   void SelectRawEnergySumsBaseline(Bool_t on);
   void SelectQDCSums(Bool_t on);
@@ -141,6 +144,8 @@ private:
       OFFLINECHNUMB10,
       OFFLINECHNUM11,
       OFFLINECHNUM12,
+      OFFLINECHNUMA13,
+      OFFLINECHNUMB13,
       OFFLINEREAD,
       OFFLINELOAD,
       OFFLINEAPPLY,
@@ -156,6 +161,7 @@ private:
       OFFLINEDRAW10,
       OFFLINEDRAW11,
       OFFLINEDRAW12,
+      OFFLINEDRAW13,
       OFFLINEFASTLENGTH,
       OFFLINEFASTGAP,
       OFFLINESLOWLENGTH,
@@ -399,7 +405,17 @@ private:
   TH1I *offlineth1itraceevent12;
   TH1I *offlineth1iwithoutteaceevent12;
 
-
+  // Fold13
+  TCanvas *canvas13;
+  TGTextButton* OfflineDrawButton13;
+  TGNumberEntry	*offlinechnumA13;//int
+  TGNumberEntry	*offlinechnumB13;//int
+  int chanNumberA13;//
+  int chanNumberB13;//
+  TGNumberEntryField *histxminmax13[3];//0-bin 1-xmin 2-xmax
+  TGTextEntry* printtextinfor13;
+  TGCheckButton *offlineenergylimit13;
+  TGNumberEntryField *energylimitsab13[4];//0-AL  1-AR  2-BL  3-BR 
   
   void DrawButtonStatus(bool flag);
   
@@ -416,6 +432,7 @@ private:
   void Panel10Draw();
   void Panel11Draw();
   void Panel12Draw();
+  void Panel13Draw();
   
   void Panel0ReadFile();
 

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 三 10月 23 11:00:53 2019 (+0800)
+// Last-Updated: 五 10月 25 22:33:57 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 995
+//     Update #: 999
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -99,6 +99,8 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   chanNumberB10 = 0;
   chanNumber11 = 0;
   chanNumber12 = 0;
+  chanNumberA13 = 0;
+  chanNumberB13 = 0;
   fileRunNum = 0;
 
   adjustdslider = false;
@@ -248,6 +250,11 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   MakeFold8Panel(Tab8);
   Tab8->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
+  TGCompositeFrame *Tab13 = TabPanel->AddTab("CFD D/F");
+  TabPanel->GetTabTab("CFD D/F")->ChangeBackground(TColor::RGB2Pixel(TAB_BG_R,TAB_BG_G,TAB_BG_B));
+  MakeFold13Panel(Tab13);
+  Tab13->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
   TGCompositeFrame *Tab11 = TabPanel->AddTab("Energy-CFD");
   TabPanel->GetTabTab("Energy-CFD")->ChangeBackground(TColor::RGB2Pixel(TAB_BG_R,TAB_BG_G,TAB_BG_B));
   MakeFold11Panel(Tab11);
@@ -2245,7 +2252,153 @@ void Offline::MakeFold12Panel(TGCompositeFrame *TabPanel)
   canvas12 = adjCanvas->GetCanvas();
 }
 
+void Offline::MakeFold13Panel(TGCompositeFrame *TabPanel)
+{
+  TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
+  TabPanel->AddFrame(parFrame, new TGLayoutHints(kLHintsLeft | kLHintsExpandX, 4, 4, 4, 4));
+  parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
+  // draw
+  OfflineDrawButton13 = new TGTextButton(parFrame, "&Draw", OFFLINEDRAW13);
+  parFrame->AddFrame(OfflineDrawButton13, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 30, 0, 0));
+  OfflineDrawButton13->SetEnabled(0);
+  OfflineDrawButton13->Associate(this);
+  OfflineDrawButton13->ChangeOptions(OfflineDrawButton13->GetOptions() ^ kRaisedFrame);
+  OfflineDrawButton13->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineDrawButton13->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineDrawButton13->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));	
+
+
+  // ch
+  offlinechnumB13 = new TGNumberEntry(parFrame, 0, 2, OFFLINECHNUMB13, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  parFrame->AddFrame(offlinechnumB13, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
+  offlinechnumB13->SetButtonToNum(0);
+  offlinechnumB13->Associate(this);
+  offlinechnumB13->GetNumberEntry()->ChangeOptions(offlinechnumB13->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  offlinechnumB13->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  offlinechnumB13->GetButtonUp()->ChangeOptions(offlinechnumB13->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  offlinechnumB13->GetButtonDown()->ChangeOptions(offlinechnumB13->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  offlinechnumB13->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
+  
+  TGLabel *chB = new TGLabel(parFrame, "Ch B:"); 
+  parFrame->AddFrame(chB, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0)); 
+  chB->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  chB->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));  
+  
+  offlinechnumA13 = new TGNumberEntry(parFrame, 0, 2, OFFLINECHNUMA13, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3, 0, 15);
+  parFrame->AddFrame(offlinechnumA13, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 10, 0, 0));
+  offlinechnumA13->SetButtonToNum(0);
+  offlinechnumA13->Associate(this);
+  offlinechnumA13->GetNumberEntry()->ChangeOptions(offlinechnumA13->GetNumberEntry()->GetOptions() ^ kRaisedFrame);
+  offlinechnumA13->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
+  offlinechnumA13->GetButtonUp()->ChangeOptions(offlinechnumA13->GetButtonUp()->GetOptions() ^ kRaisedFrame);
+  offlinechnumA13->GetButtonDown()->ChangeOptions(offlinechnumA13->GetButtonDown()->GetOptions() ^ kRaisedFrame);
+  offlinechnumA13->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
+  
+  TGLabel *chA = new TGLabel(parFrame, "Ch A:"); 
+  parFrame->AddFrame(chA, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
+  chA->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  chA->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));  
+ 
+  // text
+  printtextinfor13 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
+  parFrame->AddFrame(printtextinfor13, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
+  printtextinfor13->SetFont("-adobe-helvetica-bold-r-*-*-14-*-*-*-*-*-iso8859-1", false);
+  printtextinfor13->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
+  printtextinfor13->SetText("Choose 'Ch A' and 'Ch B', enter button 'Draw'.");
+  printtextinfor13->Resize(350, 12);
+  printtextinfor13->SetEnabled(kFALSE);
+  printtextinfor13->SetFrameDrawn(kFALSE);
+  printtextinfor13->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
+  // style
+
+    
+  TGLabel *LabelChooseHistXbin = new TGLabel(parFrame,"Xbin:");
+  parFrame->AddFrame(LabelChooseHistXbin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelChooseHistXbin->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  LabelChooseHistXbin->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
+  
+  histxminmax13[0] = new TGNumberEntryField(parFrame, -1, 10000, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,1,100000);
+  parFrame->AddFrame(histxminmax13[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  histxminmax13[0]->Resize(50, 20);
+  
+  TGLabel *LabelChooseHistXmin = new TGLabel(parFrame,"Xmin(ns):");
+  parFrame->AddFrame(LabelChooseHistXmin, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelChooseHistXmin->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  LabelChooseHistXmin->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
+  
+  histxminmax13[1] = new TGNumberEntryField(parFrame, -1, -100, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,-500,500);
+  parFrame->AddFrame(histxminmax13[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  histxminmax13[1]->Resize(40, 20);
+  
+  TGLabel *LabelChooseHistXmax = new TGLabel(parFrame,"Xmax(ns):");
+  parFrame->AddFrame(LabelChooseHistXmax, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelChooseHistXmax->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  LabelChooseHistXmax->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
+  
+  histxminmax13[2] = new TGNumberEntryField(parFrame, -1, 100, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,-500,500);
+  parFrame->AddFrame(histxminmax13[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  histxminmax13[2]->Resize(40, 20);  
+
+
+
+  
+  offlineenergylimit13 = new TGCheckButton(parFrame, "Limits");
+  parFrame->AddFrame(offlineenergylimit13, new TGLayoutHints(kLHintsLeft | kLHintsTop, 35, 5, 5, 0));
+  offlineenergylimit13->SetOn(kFALSE);
+  offlineenergylimit13->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  offlineenergylimit13->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
+
+  TGLabel *LabelELimits0 = new TGLabel(parFrame,"AL:");
+  parFrame->AddFrame(LabelELimits0, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelELimits0->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelELimits0->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
+  energylimitsab13[0] = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  parFrame->AddFrame(energylimitsab13[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  energylimitsab13[0]->Resize(40, 20);
+
+  TGLabel *LabelELimits1 = new TGLabel(parFrame,"AR:");
+  parFrame->AddFrame(LabelELimits1, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelELimits1->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelELimits1->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
+  energylimitsab13[1] = new TGNumberEntryField(parFrame, -1, 65536, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  parFrame->AddFrame(energylimitsab13[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  energylimitsab13[1]->Resize(40, 20);
+
+  TGLabel *LabelELimits2 = new TGLabel(parFrame,"BL:");
+  parFrame->AddFrame(LabelELimits2, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelELimits2->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelELimits2->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
+  energylimitsab13[2] = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  parFrame->AddFrame(energylimitsab13[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  energylimitsab13[2]->Resize(40, 20);
+  
+  TGLabel *LabelELimits3 = new TGLabel(parFrame,"BR:");
+  parFrame->AddFrame(LabelELimits3, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelELimits3->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelELimits3->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
+  energylimitsab13[3] = new TGNumberEntryField(parFrame, -1, 65536, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,65536);
+  parFrame->AddFrame(energylimitsab13[3], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  energylimitsab13[3]->Resize(40, 20);
+  
+  
+  
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  TGCompositeFrame *adCanvasFrame = new TGCompositeFrame(TabPanel, 800, 800, kHorizontalFrame);
+  TabPanel->AddFrame(adCanvasFrame, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 4, 4, 0, 4));
+
+  TRootEmbeddedCanvas *adjCanvas = new TRootEmbeddedCanvas("canvas13", adCanvasFrame, 100, 100);
+  adCanvasFrame->AddFrame(adjCanvas, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 0, 0, 0, 0));
+  canvas13 = adjCanvas->GetCanvas();
+}
 
 Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 {
@@ -2338,6 +2491,9 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 	    case OFFLINEDRAW12:
 	      Panel12Draw();
+	      break;
+	    case OFFLINEDRAW13:
+	      Panel13Draw();
 	      break;
 	      
 	    case OFFLINEGAUSFIT4:
@@ -2640,6 +2796,44 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		    }
 		}
 	      break;
+	    case OFFLINECHNUMA13:
+	      if (parm2 == 0)
+		{
+		  if (chanNumberA13 != 15)
+		    {
+		      ++chanNumberA13;
+		      offlinechnumA13->SetIntNumber(chanNumberA13);
+		    }
+		}
+	      else
+		{
+		  if (chanNumberA13 != 0)
+		    {
+		      if (--chanNumberA13 == 0)
+			chanNumberA13 = 0;
+		      offlinechnumA13->SetIntNumber(chanNumberA13);
+		    }
+		}
+	      break;
+	    case OFFLINECHNUMB13:
+	      if (parm2 == 0)
+		{
+		  if (chanNumberB13 != 15)
+		    {
+		      ++chanNumberB13;
+		      offlinechnumB13->SetIntNumber(chanNumberB13);
+		    }
+		}
+	      else
+		{
+		  if (chanNumberB13 != 0)
+		    {
+		      if (--chanNumberB13 == 0)
+			chanNumberB13 = 0;
+		      offlinechnumB13->SetIntNumber(chanNumberB13);
+		    }
+		}
+	      break;
 
 	      
 	    default:
@@ -2797,8 +2991,34 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 	    }
 	  break;	  
+	case OFFLINECHNUMA13:
+	  switch (GET_SUBMSG(msg))
+	    {
+	    case kTE_ENTER:
+	      chanNumberA13 = offlinechnumA13->GetIntNumber();
+	      if(chanNumberA13 > 15) chanNumberA13 = 15;
+	      if(chanNumberA13 < 0) chanNumberA13 = 0;
+	      offlinechnumA13->SetIntNumber(chanNumberA13);
+	      break;
+	    default:
+	      break;
+	    }
+	  break;
+	case OFFLINECHNUMB13:
+	  switch (GET_SUBMSG(msg))
+	    {
+	    case kTE_ENTER:
+	      chanNumberB13 = offlinechnumB13->GetIntNumber();
+	      if(chanNumberB13 > 15) chanNumberB13 = 15;
+	      if(chanNumberB13 < 0) chanNumberB13 = 0;
+	      offlinechnumB13->SetIntNumber(chanNumberB13);
+	      break;
+	    default:
+	      break;
+	    }
+	  break;
 
-	  
+	 
 	  
 	case OFFLINEFILTERRANGE:
 	  switch (GET_SUBMSG(msg))
@@ -4609,7 +4829,6 @@ void Offline::Panel10Draw()
       OfflineDrawButton10->SetEnabled(1);
       OfflineReadFileButton->SetEnabled(1);
       gSystem->ProcessEvents();
-
       return;
     }
   
@@ -5061,6 +5280,82 @@ void Offline::Panel12Draw()
   gSystem->ProcessEvents();  
 }
 
+void Offline::Panel13Draw()
+{
+  OfflineReadFileButton->SetEnabled(0);
+  OfflineDrawButton13->SetEnabled(0);
+  
+  printtextinfor13->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+  printtextinfor13->SetText("Waitting ...");
+  gSystem->ProcessEvents();
+
+  // TODO hist init
+
+  if(offlinechnumA13->GetIntNumber() == offlinechnumB13->GetIntNumber())
+    {
+      printtextinfor13->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+      printtextinfor13->SetText("Ch A == Ch B. Pelse re-select it.");
+      
+      canvas13->cd();
+      canvas13->Clear();
+      canvas13->Modified();
+      canvas13->Update();
+      OfflineDrawButton13->SetEnabled(1);
+      OfflineReadFileButton->SetEnabled(1);
+      gSystem->ProcessEvents();
+      return;
+    }
+
+  if(histxminmax13[1]->GetNumber() >= histxminmax13[2]->GetNumber())
+    {
+      std::cout<<"The range of the histogram is not suitable (xmin >= xmax). The recommended value will be used."<<std::endl;
+      histxminmax13[1]->SetNumber(-500);
+      histxminmax13[2]->SetNumber(500);
+    }
+
+  if(offlineenergylimit13->IsOn())
+    {
+      
+      if(energylimitsab13[0]->GetNumber() >= energylimitsab13[1]->GetNumber())
+	{
+	  std::cout<<"The range of limits of energy is not suitable (A Left >= A Right). The recommended value will be used."<<std::endl;
+	  energylimitsab13[0]->SetNumber(0);
+	  energylimitsab13[1]->SetNumber(65536);
+	}
+
+      if(energylimitsab13[2]->GetNumber() >= energylimitsab13[3]->GetNumber())
+	{
+	  std::cout<<"The range of limits of energy is not suitable (B Left >= B Right). The recommended value will be used."<<std::endl;
+	  energylimitsab13[2]->SetNumber(0);
+	  energylimitsab13[3]->SetNumber(65536);
+	}
+    }
+
+  // TODO NEW HIST
+
+  
+  
+
+
+
+  
+
+
+  printtextinfor13->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);
+  printtextinfor13->SetText("Done!");
+
+  canvas13->cd();
+  canvas13->Clear();
+
+  // offlineth1i10->Draw();
+  
+  canvas13->Modified();
+  canvas13->Update();
+  OfflineDrawButton13->SetEnabled(1);
+  OfflineReadFileButton->SetEnabled(1);
+  gSystem->ProcessEvents();
+}
+
 
 
 void Offline::Panel0ReadFile()
@@ -5259,6 +5554,7 @@ void Offline::DrawButtonStatus(bool flag)
   OfflineDrawButton10->SetEnabled(flag);
   OfflineDrawButton11->SetEnabled(flag);
   OfflineDrawButton12->SetEnabled(flag);
+  OfflineDrawButton13->SetEnabled(flag);
 }
 
 
