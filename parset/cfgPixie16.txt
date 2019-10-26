@@ -5,7 +5,7 @@ CrateID 0
 
 ## Register parameters
 
-SettingPars ../parset/mod100250500.set
+SettingPars ../parset/DSP634.set
 
 
 ## -----------------------------------------------------------------------------

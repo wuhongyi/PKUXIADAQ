@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 五 10月 25 22:33:57 2019 (+0800)
+// Last-Updated: 六 10月 26 15:10:59 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 999
+//     Update #: 1002
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -193,6 +193,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   OfflineCurrentCount9 = -1;
 
   offlineth1i10 = NULL;
+  falggausfit10 = false;
   
   offlineth1icfdinvalid11 = NULL;
   offlineth1icfdvalid11 = NULL; 
@@ -1347,6 +1348,24 @@ void Offline::GausFit6()
     }
 }
 
+void Offline::GausFit10()
+{
+  if(falggausfit10)
+    {
+      GausFitButton10->SetText("Open  Fit");
+      falggausfit10 = false;
+      canvas10->DeleteExec("dynamicPanel10GausFit");
+    }
+  else
+    {
+      GausFitButton10->SetText("Close Fit");
+      falggausfit10 = true;
+      canvas10->AddExec("dynamicPanel10GausFit","PanelTimeGausFit()");
+    }
+}
+
+
+
 void PanelGausFit()
 {
   // TODO  可以加显示选择的线
@@ -1391,7 +1410,49 @@ void PanelGausFit()
     }
 }
 
-  
+
+void PanelTimeGausFit()
+{
+  // TODO  可以加显示选择的线
+  int pe = gPad->GetEvent();
+  if(pe != 11) return;
+  gPad->GetCanvas()->FeedbackMode(kTRUE);
+
+  if(gPad->GetUniqueID() == 0)
+    {
+      gPad->SetUniqueID(gPad->GetEventX());
+    }
+  else
+    {
+      int pxold = gPad->GetUniqueID();
+      Float_t upxold = gPad->AbsPixeltoX(pxold);
+      int px = gPad->GetEventX();
+      Float_t upx = gPad->AbsPixeltoX(px);
+
+      TObject *select = gPad->GetSelected();
+      if(!select) {gPad->SetUniqueID(0); return;}
+      if (!select->InheritsFrom(TH1::Class())) {gPad->SetUniqueID(0); return;}
+      TH1 *h = (TH1*)select;					      
+      if(upxold > upx)
+	{
+	  Float_t temp;
+	  temp = upxold;
+	  upxold = upx;
+	  upx = temp;
+	}
+      if(h->Fit("gaus","QL","",upxold,upx) == 0)
+	{
+	  h->SetTitle(TString::Format("FWHM:  %0.2f ps",h->GetFunction("gaus")->GetParameter(2)*2.355*1000).Data());
+	}
+      else
+	{
+	  h->SetTitle("Please choose Fit range again.");
+	}
+      gPad->SetUniqueID(0);
+    }
+}
+
+
 void Offline::MakeFold5Panel(TGCompositeFrame *TabPanel)
 {
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
@@ -1997,6 +2058,17 @@ void Offline::MakeFold10Panel(TGCompositeFrame *TabPanel)
   printtextinfor10->SetFrameDrawn(kFALSE);
   printtextinfor10->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
+  // Fit
+  GausFitButton10 = new TGTextButton(parFrame, "Open  Fit", OFFLINEGAUSFIT10);
+  parFrame->AddFrame(GausFitButton10, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 30, 0, 0));
+  GausFitButton10->SetEnabled(0);
+  GausFitButton10->Associate(this);
+  GausFitButton10->ChangeOptions(GausFitButton10->GetOptions() ^ kRaisedFrame);
+  GausFitButton10->SetFont(TEXTBUTTONSMALL_FONT, false);
+  GausFitButton10->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  GausFitButton10->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+
+  
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
   // Draw Style
@@ -2502,7 +2574,11 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    case OFFLINEGAUSFIT6:
 	      GausFit6();
 	      break;
+	    case OFFLINEGAUSFIT10:
+	      GausFit10();
+	      break;
 
+	      
 	    case OFFLINESTOPDRAW5:
 	      Panel5StopDraw();
 	      break;
@@ -3779,6 +3855,8 @@ void Offline::Panel3Draw()
 void Offline::Panel4Draw()
 {
   OfflineReadFileButton->SetEnabled(0);
+  OfflineDrawButton4->SetEnabled(0);
+  
   GausFitButton4->SetEnabled(0);
   GausFitButton4->SetText("Open  Fit");
   canvas4->DeleteExec("dynamicPanel4GausFit");
@@ -3843,6 +3921,7 @@ void Offline::Panel4Draw()
   canvas4->Modified();
   canvas4->Update();
   GausFitButton4->SetEnabled(1);
+  OfflineDrawButton4->SetEnabled(1);
   OfflineReadFileButton->SetEnabled(1);
   gSystem->ProcessEvents();
 }
@@ -4806,6 +4885,11 @@ void Offline::Panel10Draw()
 {
   OfflineReadFileButton->SetEnabled(0);
   OfflineDrawButton10->SetEnabled(0);
+
+  GausFitButton10->SetEnabled(0);
+  GausFitButton10->SetText("Open  Fit");
+  canvas10->DeleteExec("dynamicPanel10GausFit");
+  falggausfit10 = false;
   
   printtextinfor10->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
   printtextinfor10->SetText("Waitting ...");
@@ -5015,6 +5099,7 @@ void Offline::Panel10Draw()
   
   canvas10->Modified();
   canvas10->Update();
+  GausFitButton10->SetEnabled(1);
   OfflineDrawButton10->SetEnabled(1);
   OfflineReadFileButton->SetEnabled(1);
   gSystem->ProcessEvents();
@@ -5290,6 +5375,20 @@ void Offline::Panel13Draw()
   gSystem->ProcessEvents();
 
   // TODO hist init
+  if(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()) == 500)
+    {
+      printtextinfor13->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+      printtextinfor13->SetText("500M module CFD is not adjustable.");
+      
+      canvas13->cd();
+      canvas13->Clear();
+      canvas13->Modified();
+      canvas13->Update();
+      OfflineDrawButton13->SetEnabled(1);
+      OfflineReadFileButton->SetEnabled(1);
+      gSystem->ProcessEvents();
+      return;
+    }
 
   if(offlinechnumA13->GetIntNumber() == offlinechnumB13->GetIntNumber())
     {
@@ -5332,13 +5431,91 @@ void Offline::Panel13Draw()
     }
 
   // TODO NEW HIST
+  Long64_t deltaft;
+  double deltat;
+  bool flagenergylimits;
+  for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
+    {
+      if(offlinechnumA13->GetIntNumber() == offlinedata->GetEventChannel(i) && offlinedata->GetEventTraceLength(i) > 0)//ch
+	{
+	  for (unsigned int j = i; j < OfflineModuleEventsCount; ++j)
+	    {
+	      deltaft = ((Long64_t(offlinedata->GetEventTime_High(i)))*0x100000000+offlinedata->GetEventTime_Low(i))-((Long64_t(offlinedata->GetEventTime_High(j)))*0x100000000+offlinedata->GetEventTime_Low(j));
+	      if(TMath::Abs(deltaft) < 100000)
+		{
+		  if(offlinechnumB13->GetIntNumber() == offlinedata->GetEventChannel(j) && offlinedata->GetEventTraceLength(j) > 0)//ch
+		    {
+		      if(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()) == 250)
+			deltat = deltaft*8.0;
+		      else
+			deltat = deltaft*10.0;
 
-  
-  
+		      if(deltat >= histxminmax13[1]->GetNumber() && deltat <= histxminmax13[2]->GetNumber())
+			{
+			  flagenergylimits = true;
+			  if(offlineenergylimit13->IsOn())
+			    {
+			      if((int(offlinedata->GetEventEnergy(i)) > energylimitsab13[0]->GetNumber()) && (int(offlinedata->GetEventEnergy(i)) < energylimitsab13[1]->GetNumber()) && (int(offlinedata->GetEventEnergy(j)) > energylimitsab13[2]->GetNumber()) && (int(offlinedata->GetEventEnergy(j)) < energylimitsab13[3]->GetNumber()))
+				flagenergylimits = true;
+			      else
+				flagenergylimits = false;
+			    }
+			  if(flagenergylimits)
+			    {
 
 
 
-  
+			    }
+			}
+		    }
+		}
+	      else
+	  	{
+	  	  break;
+	  	}
+	    }
+
+	  // =====
+
+	  for (unsigned int j = i; j > 0; --j)
+	    {
+	      deltaft = ((Long64_t(offlinedata->GetEventTime_High(i)))*0x100000000+offlinedata->GetEventTime_Low(i))-((Long64_t(offlinedata->GetEventTime_High(j)))*0x100000000+offlinedata->GetEventTime_Low(j));
+	      if(TMath::Abs(deltaft) < 100000)
+		{
+		  if(offlinechnumB13->GetIntNumber() == offlinedata->GetEventChannel(j) && offlinedata->GetEventTraceLength(j) > 0)//ch
+		    {
+		      if(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()) == 250)
+			deltat = deltaft*8.0;
+		      else
+			deltat = deltaft*10.0;
+
+		      if(deltat >= histxminmax13[1]->GetNumber() && deltat <= histxminmax13[2]->GetNumber())
+			{
+			  flagenergylimits = true;
+			  if(offlineenergylimit13->IsOn())
+			    {
+			      if((int(offlinedata->GetEventEnergy(i)) > energylimitsab13[0]->GetNumber()) && (int(offlinedata->GetEventEnergy(i)) < energylimitsab13[1]->GetNumber()) && (int(offlinedata->GetEventEnergy(j)) > energylimitsab13[2]->GetNumber()) && (int(offlinedata->GetEventEnergy(j)) < energylimitsab13[3]->GetNumber()))
+				flagenergylimits = true;
+			      else
+				flagenergylimits = false;
+			    }
+			  if(flagenergylimits)
+			    {
+
+
+
+			    }
+			}
+		    }
+		}
+	      else
+	  	{
+	  	  break;
+	  	}
+	    }
+	  
+	}// ch
+    }// for OfflineModuleEventsCount
 
 
   printtextinfor13->SetTextColor(TColor::RGB2Pixel(COLOR_DODERBLUE_R,COLOR_DODERBLUE_G,COLOR_DODERBLUE_B), false);

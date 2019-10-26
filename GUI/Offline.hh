@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 五 10月 25 22:21:16 2019 (+0800)
+// Last-Updated: 六 10月 26 14:24:58 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 185
+//     Update #: 186
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -174,6 +174,7 @@ private:
       OFFLINEFILTERRANGE,
       OFFLINEGAUSFIT4,
       OFFLINEGAUSFIT6,
+      OFFLINEGAUSFIT10,
       OFFLINEPROJECTYFF5,
       OFFLINEPROJECTYCFD5,
       OFFLINEORIGINALCFD5,
@@ -374,6 +375,8 @@ private:
   TGNumberEntry	*offlinechnumB10;//int
   int chanNumberA10;//
   int chanNumberB10;//
+  TGTextButton* GausFitButton10;
+  bool falggausfit10;
   TGNumberEntryField *histxminmax10[3];//0-bin 1-xmin 2-xmax
   TH1I *offlineth1i10;
   TGComboBox *choosedrawstyle10;//0-cfd 1-fast filter
@@ -438,6 +441,7 @@ private:
 
   void GausFit4();
   void GausFit6();
+  void GausFit10();
   void FFShowProjectY5();
   void CFDShowProjectY5();
   void OriginalCFDShow5();
@@ -451,7 +455,7 @@ private:
 void DynamicFFShowProjectY5();
 void DynamicCFDShowProjectY5();
 void PanelGausFit();
-
+void PanelTimeGausFit();
 
 #endif /* _OFFLINE_HH_ */
 // 
