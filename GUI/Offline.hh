@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 六 10月 26 14:24:58 2019 (+0800)
+// Last-Updated: 三 11月 13 22:00:14 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 186
+//     Update #: 189
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -181,7 +181,8 @@ private:
       OFFLINECALCULATECFD5,
       OFFLINESTOPDRAW5,
       OFFLINESTOPDRAW6,
-      OFFLINESTOPDRAW8
+      OFFLINESTOPDRAW8,
+      OFFLINESTOPDRAW13
     };
 
   // Fold0
@@ -411,6 +412,7 @@ private:
   // Fold13
   TCanvas *canvas13;
   TGTextButton* OfflineDrawButton13;
+  TGTextButton* OfflineStopButton13;
   TGNumberEntry	*offlinechnumA13;//int
   TGNumberEntry	*offlinechnumB13;//int
   int chanNumberA13;//
@@ -419,6 +421,15 @@ private:
   TGTextEntry* printtextinfor13;
   TGCheckButton *offlineenergylimit13;
   TGNumberEntryField *energylimitsab13[4];//0-AL  1-AR  2-BL  3-BR 
+  unsigned short RcdTraceA13[65536];//
+  unsigned short RcdTraceB13[65536];//
+  double doublefastfilterA13[65536];//
+  double doublefastfilterB13[65536];//
+  double doublecfdA13[65536];//
+  double doublecfdB13[65536];//
+  bool flagdrawstop13;
+  TH1I *offlineth1i13[8][64];
+  TGComboBox *choosedelay13;
   
   void DrawButtonStatus(bool flag);
   
@@ -449,6 +460,7 @@ private:
   void Panel5StopDraw();
   void Panel6StopDraw();
   void Panel8StopDraw();
+  void Panel13StopDraw();
   
 };
 

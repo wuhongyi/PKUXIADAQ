@@ -6353,6 +6353,44 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16ComputeSlowFiltersOffline (
 	
 }
 
+PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ReadTraceOffline(
+	char           *FileName,          // the list mode data file name (with complete path)
+	unsigned int   FileLocation,       // the location of the trace in the file
+	unsigned short RcdTraceLength,     // recorded trace length
+	unsigned short *RcdTrace)          // recorded trace
+{
+  char ErrMSG[MAX_ERRMSG_LENGTH];
+  FILE *ListModeFile = NULL;
+
+  // Check if RcdTrace is valid
+  if(RcdTrace == NULL)
+    {
+      sprintf(ErrMSG, "*Error* (HongyiWuPixie16ReadTraceOffline): Null pointer *RcdTrace");
+      Pixie_Print_MSG(ErrMSG);
+      return(-1);
+    }  
+
+  // Open the list mode file
+  ListModeFile = fopen(FileName, "rb");
+  if(ListModeFile != NULL)
+    {
+      // Position ListModeFile to the requested trace location
+      fseek(ListModeFile, FileLocation*4, SEEK_SET);		
+      // Read trace
+      fread(RcdTrace, 2, RcdTraceLength, ListModeFile);
+      // Close file
+      fclose(ListModeFile);
+    }
+  else
+    {
+      sprintf(ErrMSG, "*ERROR* (HongyiWuPixie16ReadTraceOffline): can't open list mode file %s", FileName);
+      Pixie_Print_MSG(ErrMSG);
+      return(-2);
+    }
+	
+  return(0);
+}
+
 PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeCFDFiltersOffline (
 	unsigned short RcdTraceLength,     // recorded trace length
 	double w,
@@ -6427,6 +6465,69 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeCFDFiltersOffline (
   for (i = RcdTraceLength-L; i < RcdTraceLength; ++i)
     {
       cfd[i] = cfd[RcdTraceLength-L-1];
+    }
+
+  return(0);
+}
+
+PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeCFDOffline(
+	unsigned short RcdTraceLength,     // recorded trace length
+	double         *fastfilter,        // fast filter response
+	unsigned short cfddelay,
+	unsigned short cfdweight,
+	short *pointcfd,
+	double *cfd)
+{
+  unsigned int i;
+  double tempvaule = -100000;
+  int tempindexpeak = -1;
+  int tempindexstart = -1;
+
+  double cfdscale = 1.0 - cfdweight * 0.125;
+  double data[64];
+
+  *pointcfd = -1;
+  *cfd = -1;
+  
+  for(i=0; i<RcdTraceLength; i++)
+    {
+      if(fastfilter[i] > tempvaule)
+	{
+	  tempvaule = fastfilter[i];
+	  tempindexpeak = i;
+	}
+    }
+  
+  if(tempindexpeak > -1)
+    {
+      for(i=tempindexpeak;i>0;i--)
+	{
+	  if(fastfilter[i] < 0)
+	    {
+	      tempindexstart = i;
+	      break;
+	    }
+	}
+
+      int flag = 0;
+      if(tempindexstart > -1 && tempindexstart >= cfddelay)
+	{
+	  data[0] = (-fastfilter[tempindexstart-cfddelay] + fastfilter[tempindexstart] * cfdscale);
+	  for (i = 1; i < 64; ++i)
+	    {
+	      if(i+tempindexstart>=RcdTraceLength)
+		{
+		  break;
+		}
+	      data[i] = (-fastfilter[i+tempindexstart-cfddelay] + fastfilter[i+tempindexstart] * cfdscale);
+	      if(data[i-1] > 3 && data[i] > 3) flag = 1;
+	      if(flag>0 && data[i-1] >=0 && data[i] < 0)
+		{
+		  *pointcfd = tempindexstart+i-1;
+		  *cfd = data[i-1]/(data[i-1]-data[i]);
+		}
+	    }
+	}
     }
 
   return(0);

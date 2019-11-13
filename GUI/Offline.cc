@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 六 10月 26 15:10:59 2019 (+0800)
+// Last-Updated: 三 11月 13 22:26:31 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 1002
+//     Update #: 1025
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -205,6 +205,9 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   offlineth1itraceevent12 = NULL;    
   offlineth1iwithoutteaceevent12 = NULL;    
 
+  for (int i = 0; i < 8; ++i)
+    for (int j = 0; j < 64; ++j)
+      offlineth1i13[i][j] = NULL;
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
@@ -344,7 +347,11 @@ Offline::~Offline()
   if(offlineth1igoogevent12 != NULL) delete offlineth1igoogevent12;
   if(offlineth1itraceevent12 != NULL) delete offlineth1itraceevent12;
   if(offlineth1iwithoutteaceevent12 != NULL) delete offlineth1iwithoutteaceevent12;
-  
+
+  for (int i = 0; i < 8; ++i)
+    for (int j = 0; j < 64; ++j)
+      if(offlineth1i13[i][j] != NULL) delete offlineth1i13[i][j];
+
   for (int i = 0; i < 16; ++i)
     {
       if(rawdata2[i] != NULL) delete rawdata2[i];
@@ -2371,7 +2378,28 @@ void Offline::MakeFold13Panel(TGCompositeFrame *TabPanel)
   parFrame->AddFrame(chA, new TGLayoutHints(kLHintsRight | kLHintsTop, 1, 2, 3, 0));
   chA->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   chA->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));  
- 
+
+
+  choosedelay13 = new TGComboBox(parFrame);
+  parFrame->AddFrame(choosedelay13, new TGLayoutHints(kLHintsRight, 0, 20, 0, 0));
+  choosedelay13->Resize(100, 20);
+  choosedelay13->AddEntry("Delay 1-5", 5);
+  choosedelay13->AddEntry("Delay 1-10", 10);
+  choosedelay13->AddEntry("Delay 1-15", 15);
+  choosedelay13->AddEntry("Delay 1-20", 20);
+  choosedelay13->Select(5);
+    
+  // stop
+  OfflineStopButton13 = new TGTextButton(parFrame, "&Stop", OFFLINESTOPDRAW13);
+  parFrame->AddFrame(OfflineStopButton13, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 10, 0, 0));
+  OfflineStopButton13->SetEnabled(0);
+  OfflineStopButton13->Associate(this);
+  OfflineStopButton13->ChangeOptions(OfflineStopButton13->GetOptions() ^ kRaisedFrame);
+  OfflineStopButton13->SetFont(TEXTBUTTONSMALL_FONT, false);
+  OfflineStopButton13->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  OfflineStopButton13->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+
+  
   // text
   printtextinfor13 = new TGTextEntry(parFrame,new TGTextBuffer(30), 10000);
   parFrame->AddFrame(printtextinfor13, new TGLayoutHints(kLHintsLeft | kLHintsTop, 10, 0, 6, 0));
@@ -2588,7 +2616,9 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    case OFFLINESTOPDRAW8:
 	      Panel8StopDraw();
 	      break;	
-
+	    case OFFLINESTOPDRAW13:
+	      Panel13StopDraw();
+	      break;	
 	      
 	    case OFFLINEPROJECTYFF5:
 	      FFShowProjectY5();
@@ -5365,16 +5395,29 @@ void Offline::Panel12Draw()
   gSystem->ProcessEvents();  
 }
 
+void Offline::Panel13StopDraw()
+{
+  flagdrawstop13 = true;
+}
+
 void Offline::Panel13Draw()
 {
   OfflineReadFileButton->SetEnabled(0);
   OfflineDrawButton13->SetEnabled(0);
-  
+  OfflineStopButton13->SetEnabled(1);
+  flagdrawstop13 = false;
   printtextinfor13->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
   printtextinfor13->SetText("Waitting ...");
   gSystem->ProcessEvents();
 
-  // TODO hist init
+  for (int i = 0; i < 8; ++i)
+    for (int j = 0; j < 64; ++j)
+      if(offlineth1i13[i][j] != NULL)
+	{
+	  delete offlineth1i13[i][j];
+	  offlineth1i13[i][j] = NULL;
+	}
+
   if(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()) == 500)
     {
       printtextinfor13->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
@@ -5385,6 +5428,7 @@ void Offline::Panel13Draw()
       canvas13->Modified();
       canvas13->Update();
       OfflineDrawButton13->SetEnabled(1);
+      OfflineStopButton13->SetEnabled(0);
       OfflineReadFileButton->SetEnabled(1);
       gSystem->ProcessEvents();
       return;
@@ -5400,6 +5444,7 @@ void Offline::Panel13Draw()
       canvas13->Modified();
       canvas13->Update();
       OfflineDrawButton13->SetEnabled(1);
+      OfflineStopButton13->SetEnabled(0);
       OfflineReadFileButton->SetEnabled(1);
       gSystem->ProcessEvents();
       return;
@@ -5430,10 +5475,19 @@ void Offline::Panel13Draw()
 	}
     }
 
-  // TODO NEW HIST
+  for (int i = 0; i < 8; ++i)
+    for (int j = 0; j < 64; ++j)
+      {
+	offlineth1i13[i][j] = new TH1I(TString::Format("offlineth1i13_%d_%d",i,j+1).Data(),"",histxminmax13[0]->GetNumber(),histxminmax13[1]->GetNumber(),histxminmax13[2]->GetNumber());
+	offlineth1i13[i][j]->GetXaxis()->SetTitle("#DeltaT / ns");
+	offlineth1i13[i][j]->SetTitle(TString::Format("W_%d",i).Data());
+      }
+  
   Long64_t deltaft;
   double deltat;
   bool flagenergylimits;
+  short pointcfdA[8][64],pointcfdB[8][64];
+  double cfdA[8][64],cfdB[8][64];
   for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
     {
       if(offlinechnumA13->GetIntNumber() == offlinedata->GetEventChannel(i) && offlinedata->GetEventTraceLength(i) > 0)//ch
@@ -5464,6 +5518,31 @@ void Offline::Panel13Draw()
 			    {
 
 
+			      
+			      int retval;
+			      retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)offlinechnumA13->GetIntNumber(), offlinedata->GetEventWaveLocation(i),offlinedata->GetEventTraceLength(i), RcdTraceA13, doublefastfilterA13, doublecfdA13);//trace length/trace location
+			      if(retval < 0) ErrorInfo("Offline.cc", "Panel13Draw()", "Pixie16ComputeFastFiltersOffline", retval);
+			      retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)offlinechnumB13->GetIntNumber(), offlinedata->GetEventWaveLocation(j),offlinedata->GetEventTraceLength(j), RcdTraceB13, doublefastfilterB13, doublecfdB13);//trace length/trace location
+			      if(retval < 0) ErrorInfo("Offline.cc", "Panel13Draw()", "Pixie16ComputeFastFiltersOffline", retval);
+
+			      for (int mm = 0; mm < 8; ++mm)
+				for (int nn = 0; nn < choosedelay13->GetSelected(); ++nn)
+				{
+				  HongyiWuPixie16ComputeCFDOffline(offlinedata->GetEventTraceLength(i),doublefastfilterA13,nn+1,mm,&pointcfdA[mm][nn],&cfdA[mm][nn]);
+				  HongyiWuPixie16ComputeCFDOffline(offlinedata->GetEventTraceLength(j),doublefastfilterB13,nn+1,mm,&pointcfdB[mm][nn],&cfdB[mm][nn]);
+				  if(pointcfdA[mm][nn] > -1 && pointcfdB[mm][nn] > -1)
+				    {
+				      if(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()) == 100)
+					offlineth1i13[mm][nn]->Fill((pointcfdA[mm][nn]-pointcfdB[mm][nn]+cfdA[mm][nn]-cfdB[mm][nn])*10+(((Long64_t(offlinedata->GetEventTime_High(i)))*0x100000000+offlinedata->GetEventTime_Low(i))-((Long64_t(offlinedata->GetEventTime_High(j)))*0x100000000+offlinedata->GetEventTime_Low(j)))*10);
+				      else if(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()) == 250)
+					offlineth1i13[mm][nn]->Fill((pointcfdA[mm][nn]-pointcfdB[mm][nn]+cfdA[mm][nn]-cfdB[mm][nn])*4+(((Long64_t(offlinedata->GetEventTime_High(i)))*0x100000000+offlinedata->GetEventTime_Low(i))-((Long64_t(offlinedata->GetEventTime_High(j)))*0x100000000+offlinedata->GetEventTime_Low(j)))*8);
+				    }
+				}
+			      
+			     
+
+		
+		
 
 			    }
 			}
@@ -5503,6 +5582,30 @@ void Offline::Panel13Draw()
 			    {
 
 
+			      int retval;
+			      retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)offlinechnumA13->GetIntNumber(), offlinedata->GetEventWaveLocation(i),offlinedata->GetEventTraceLength(i), RcdTraceA13, doublefastfilterA13, doublecfdA13);//trace length/trace location
+			      if(retval < 0) ErrorInfo("Offline.cc", "Panel13Draw()", "Pixie16ComputeFastFiltersOffline", retval);
+			      retval = Pixie16ComputeFastFiltersOffline(offlinefilename, (unsigned short)offlinemodnum->GetIntNumber(), (unsigned short)offlinechnumB13->GetIntNumber(), offlinedata->GetEventWaveLocation(j),offlinedata->GetEventTraceLength(j), RcdTraceB13, doublefastfilterB13, doublecfdB13);//trace length/trace location
+			      if(retval < 0) ErrorInfo("Offline.cc", "Panel13Draw()", "Pixie16ComputeFastFiltersOffline", retval);
+
+			      for (int mm = 0; mm < 8; ++mm)
+				for (int nn = 0; nn < choosedelay13->GetSelected(); ++nn)
+				{
+				  HongyiWuPixie16ComputeCFDOffline(offlinedata->GetEventTraceLength(i),doublefastfilterA13,nn+1,mm,&pointcfdA[mm][nn],&cfdA[mm][nn]);
+				  HongyiWuPixie16ComputeCFDOffline(offlinedata->GetEventTraceLength(j),doublefastfilterB13,nn+1,mm,&pointcfdB[mm][nn],&cfdB[mm][nn]);
+				  if(pointcfdA[mm][nn] > -1 && pointcfdB[mm][nn] > -1)
+				    {
+				      if(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()) == 100)
+					offlineth1i13[mm][nn]->Fill((pointcfdA[mm][nn]-pointcfdB[mm][nn]+cfdA[mm][nn]-cfdB[mm][nn])*10+(((Long64_t(offlinedata->GetEventTime_High(i)))*0x100000000+offlinedata->GetEventTime_Low(i))-((Long64_t(offlinedata->GetEventTime_High(j)))*0x100000000+offlinedata->GetEventTime_Low(j)))*10);
+				      else if(detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()) == 250)
+					offlineth1i13[mm][nn]->Fill((pointcfdA[mm][nn]-pointcfdB[mm][nn]+cfdA[mm][nn]-cfdB[mm][nn])*4+(((Long64_t(offlinedata->GetEventTime_High(i)))*0x100000000+offlinedata->GetEventTime_Low(i))-((Long64_t(offlinedata->GetEventTime_High(j)))*0x100000000+offlinedata->GetEventTime_Low(j)))*8);
+				    }
+				}
+
+
+
+
+			      
 
 			    }
 			}
@@ -5515,6 +5618,14 @@ void Offline::Panel13Draw()
 	    }
 	  
 	}// ch
+
+      if(i%500 == 0)
+	{
+	  if(flagdrawstop13) break;
+	  printtextinfor13->SetText(TString::Format("Drawing...please wait a moment. ==> %d/%d",i,OfflineModuleEventsCount).Data());
+	  gSystem->ProcessEvents();
+	}
+
     }// for OfflineModuleEventsCount
 
 
@@ -5523,12 +5634,23 @@ void Offline::Panel13Draw()
 
   canvas13->cd();
   canvas13->Clear();
+  canvas13->Divide(4,2);
 
-  // offlineth1i10->Draw();
-  
+  for (int mm = 0; mm < 8; ++mm)
+    for (int nn = 0; nn < choosedelay13->GetSelected(); ++nn)
+      {
+	offlineth1i13[mm][nn]->SetLineColor(nn+1);
+	if(nn==9 || nn==19) offlineth1i13[mm][nn]->SetLineColor(21);
+	canvas13->cd(mm+1);
+	if(nn==0)
+	  offlineth1i13[mm][nn]->Draw();
+	else
+	  offlineth1i13[mm][nn]->Draw("same");
+      }
   canvas13->Modified();
   canvas13->Update();
   OfflineDrawButton13->SetEnabled(1);
+  OfflineStopButton13->SetEnabled(0);
   OfflineReadFileButton->SetEnabled(1);
   gSystem->ProcessEvents();
 }
