@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 三 11月 13 22:26:31 2019 (+0800)
+// Last-Updated: 四 11月 14 14:17:12 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 1025
+//     Update #: 1035
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -56,6 +56,7 @@
 #include "pixie16sys_export.h"
 #include "xia_common.h"
 
+#include "TLegend.h"
 #include "TGTab.h"
 #include "TString.h"
 #include "TFitResultPtr.h"
@@ -5636,16 +5637,37 @@ void Offline::Panel13Draw()
   canvas13->Clear();
   canvas13->Divide(4,2);
 
+  TLegend *legend[8];
+  double histmax[8] = {0};
+  for (int mm = 0; mm < 8; ++mm)
+    for (int nn = 0; nn < choosedelay13->GetSelected(); ++nn)
+      {
+	if(offlineth1i13[mm][nn]->GetMaximum() > histmax[mm])
+	  histmax[mm] = offlineth1i13[mm][nn]->GetMaximum();
+
+	if(nn==0)
+	  {
+	    legend[mm] = new TLegend(0.77,0.25,0.87,0.82);
+	    legend[mm]->SetBorderSize(0);
+	  }
+	legend[mm]->AddEntry(offlineth1i13[mm][nn],detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()) == 250?TString::Format("%0.3f",(nn+1)*0.008).Data():TString::Format("%0.3f",(nn+1)*0.01).Data(),"L");
+      }
+
   for (int mm = 0; mm < 8; ++mm)
     for (int nn = 0; nn < choosedelay13->GetSelected(); ++nn)
       {
 	offlineth1i13[mm][nn]->SetLineColor(nn+1);
 	if(nn==9 || nn==19) offlineth1i13[mm][nn]->SetLineColor(21);
+
+	offlineth1i13[mm][nn]->GetYaxis()->SetRangeUser(0,1.1*histmax[mm]);
+	
 	canvas13->cd(mm+1);
 	if(nn==0)
 	  offlineth1i13[mm][nn]->Draw();
 	else
 	  offlineth1i13[mm][nn]->Draw("same");
+
+	if(nn == choosedelay13->GetSelected()-1) legend[mm]->Draw();
       }
   canvas13->Modified();
   canvas13->Update();
