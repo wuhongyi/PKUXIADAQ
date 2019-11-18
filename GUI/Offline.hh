@@ -4,16 +4,16 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 三 11月 13 22:00:14 2019 (+0800)
+// Last-Updated: 一 11月 18 20:55:03 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 189
+//     Update #: 191
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
 #define _OFFLINE_HH_
 
 
-#define PANELNUMBER 14
+#define PANELNUMBER 15
 const char gOfflineGuides[PANELNUMBER][128] =
   {
     "InitData: This page. Read the binary file.",
@@ -25,6 +25,7 @@ const char gOfflineGuides[PANELNUMBER][128] =
     "FF/CFD Thre:   Accumulation of a large number of fast filter/cfd filter waveforms to determine the threshold.",
     "Energy-FF:  The two dimensional relationship between energy and fast filter first/second peak height.",
     "CFD D/F:  Time difference spectrum under different DELAY/SCALE parameters combinations",
+    "CFD Frac:   The position with the largest slope in the fast filterx",
     "Energy-CFD:   The two dimensional relationship between energy and cfd vaule.",
     "Event Flag:   Energy spectrum under different event flags.",
     "QDC:  It will be finished soon.",
@@ -82,7 +83,7 @@ public:
   void MakeFold11Panel(TGCompositeFrame *TabPanel);//Energy-CFD
   void MakeFold12Panel(TGCompositeFrame *TabPanel);//Event Flag
   void MakeFold13Panel(TGCompositeFrame *TabPanel);//CFD D/F
-
+  void MakeFold14Panel(TGCompositeFrame *TabPanel);//CFD Frac
   
   void SelectRawEnergySumsBaseline(Bool_t on);
   void SelectQDCSums(Bool_t on);
@@ -146,6 +147,7 @@ private:
       OFFLINECHNUM12,
       OFFLINECHNUMA13,
       OFFLINECHNUMB13,
+      OFFLINECHNUM14,
       OFFLINEREAD,
       OFFLINELOAD,
       OFFLINEAPPLY,
@@ -162,6 +164,7 @@ private:
       OFFLINEDRAW11,
       OFFLINEDRAW12,
       OFFLINEDRAW13,
+      OFFLINEDRAW14,
       OFFLINEFASTLENGTH,
       OFFLINEFASTGAP,
       OFFLINESLOWLENGTH,
@@ -182,7 +185,8 @@ private:
       OFFLINESTOPDRAW5,
       OFFLINESTOPDRAW6,
       OFFLINESTOPDRAW8,
-      OFFLINESTOPDRAW13
+      OFFLINESTOPDRAW13,
+      OFFLINESTOPDRAW14
     };
 
   // Fold0
@@ -430,6 +434,18 @@ private:
   bool flagdrawstop13;
   TH1I *offlineth1i13[8][64];
   TGComboBox *choosedelay13;
+
+  // Fold 14
+  TCanvas *canvas14;
+  TGTextButton* OfflineDrawButton14;
+  TGTextButton* OfflineStopButton14;
+  TGNumberEntry	*offlinechnum14;//int
+  int chanNumber14;
+  TGTextEntry* printtextinfor14;
+  bool flagdrawstop14;
+  unsigned short *RcdTrace14;//
+  double *doublefastfilter14;//
+  TH1I *offlineth1i14;
   
   void DrawButtonStatus(bool flag);
   
@@ -447,6 +463,8 @@ private:
   void Panel11Draw();
   void Panel12Draw();
   void Panel13Draw();
+  void Panel14Draw();
+
   
   void Panel0ReadFile();
 
@@ -461,7 +479,7 @@ private:
   void Panel6StopDraw();
   void Panel8StopDraw();
   void Panel13StopDraw();
-  
+  void Panel14StopDraw();
 };
 
 void DynamicFFShowProjectY5();

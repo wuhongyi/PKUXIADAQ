@@ -6525,6 +6525,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeCFDOffline(
 		{
 		  *pointcfd = tempindexstart+i-1;
 		  *cfd = data[i-1]/(data[i-1]-data[i]);
+		  break;
 		}
 	    }
 	}
@@ -6557,7 +6558,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeFastFiltersOffline (
 	// Check if RcdTrace is valid
 	if(RcdTrace == NULL)
 	{
-		sprintf(ErrMSG, "*Error* (Pixie16ComputeFastFiltersOffline): Null pointer *RcdTrace");
+		sprintf(ErrMSG, "*Error* (HongyiWuPixie16ComputeFastFiltersOffline): Null pointer *RcdTrace");
 		Pixie_Print_MSG(ErrMSG);
 		return(-1);
 	}
@@ -6565,7 +6566,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeFastFiltersOffline (
 	// Check if fastfilter is valid
 	if(fastfilter == NULL)
 	{
-		sprintf(ErrMSG, "*Error* (Pixie16ComputeFastFiltersOffline): Null pointer *fastfilter");
+		sprintf(ErrMSG, "*Error* (HongyiWuPixie16ComputeFastFiltersOffline): Null pointer *fastfilter");
 		Pixie_Print_MSG(ErrMSG);
 		return(-2);
 	}
@@ -6573,14 +6574,14 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeFastFiltersOffline (
 	// Check if cfd is valid
 	if(cfd == NULL)
 	{
-		sprintf(ErrMSG, "*Error* (Pixie16ComputeFastFiltersOffline): Null pointer *cfd");
+		sprintf(ErrMSG, "*Error* (HongyiWuPixie16ComputeFastFiltersOffline): Null pointer *cfd");
 		Pixie_Print_MSG(ErrMSG);
 		return(-3);
 	}
 
 	if(ModuleNumber >= PRESET_MAX_MODULES)
 	{
-		sprintf(ErrMSG, "*ERROR* (Pixie16ComputeFastFiltersOffline): Target module number is invalid %d", ModuleNumber);
+		sprintf(ErrMSG, "*ERROR* (HongyiWuPixie16ComputeFastFiltersOffline): Target module number is invalid %d", ModuleNumber);
 		Pixie_Print_MSG(ErrMSG);
 		return(-4);
 	}
@@ -6595,7 +6596,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeFastFiltersOffline (
 	// Check if trace length is sufficiently long
 	if(RcdTraceLength < ((2*FastLen + FastGap)*2))
 	{
-		sprintf(ErrMSG, "*Error* (Pixie16ComputeFastFiltersOffline): the length of recorded trace is too short");
+		sprintf(ErrMSG, "*Error* (HongyiWuPixie16ComputeFastFiltersOffline): the length of recorded trace is too short");
 		Pixie_Print_MSG(ErrMSG);
 		return(-5);
 	}
@@ -6661,7 +6662,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeFastFiltersOffline (
 	}
 	else
 	{
-		sprintf(ErrMSG, "*ERROR* (Pixie16ComputeFastFiltersOffline): can't open list mode file %s", FileName);
+		sprintf(ErrMSG, "*ERROR* (HongyiWuPixie16ComputeFastFiltersOffline): can't open list mode file %s", FileName);
 		Pixie_Print_MSG(ErrMSG);
 		return(-6);
 	}
@@ -6693,7 +6694,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	// Check if RcdTrace is valid
 	if(RcdTrace == NULL)
 	{
-		sprintf(ErrMSG, "*Error* (Pixie16ComputeSlowFiltersOffline): Null pointer *RcdTrace");
+		sprintf(ErrMSG, "*Error* (HongyiWuPixie16ComputeSlowFiltersOffline): Null pointer *RcdTrace");
 		Pixie_Print_MSG(ErrMSG);
 		return(-1);
 	}
@@ -6701,14 +6702,14 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	// Check if slowfilter is valid
 	if(slowfilter == NULL)
 	{
-		sprintf(ErrMSG, "*Error* (Pixie16ComputeSlowFiltersOffline): Null pointer *slowfilter");
+		sprintf(ErrMSG, "*Error* (HongyiWuPixie16ComputeSlowFiltersOffline): Null pointer *slowfilter");
 		Pixie_Print_MSG(ErrMSG);
 		return(-2);
 	}
 	
 	if(ModuleNumber >= PRESET_MAX_MODULES)
 	{
-		sprintf(ErrMSG, "*ERROR* (Pixie16ComputeSlowFiltersOffline): Target module number is invalid %d", ModuleNumber);
+		sprintf(ErrMSG, "*ERROR* (HongyiWuPixie16ComputeSlowFiltersOffline): Target module number is invalid %d", ModuleNumber);
 		Pixie_Print_MSG(ErrMSG);
 		return(-3);
 	}
@@ -6724,7 +6725,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	// Check if trace length is sufficiently long
 	if(RcdTraceLength < ((2*SlowLen + SlowGap)*2))
 	{
-		sprintf(ErrMSG, "*Error* (Pixie16ComputeSlowFiltersOffline): the length of recorded trace is too short");
+		sprintf(ErrMSG, "*Error* (HongyiWuPixie16ComputeSlowFiltersOffline): the length of recorded trace is too short");
 		Pixie_Print_MSG(ErrMSG);
 		return(-4);
 	}
@@ -6801,7 +6802,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	}
 	else
 	{
-		sprintf(ErrMSG, "*ERROR* (Pixie16ComputeSlowFiltersOffline): can't open list mode file %s", FileName);
+		sprintf(ErrMSG, "*ERROR* (HongyiWuPixie16ComputeSlowFiltersOffline): can't open list mode file %s", FileName);
 		Pixie_Print_MSG(ErrMSG);
 		return(-5);
 	}
