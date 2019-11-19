@@ -185,6 +185,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#calc-energy">Calc Energy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ff-cfd-thre">FF/CFD Thre</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#energy-ff">Energy-FF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cfd-d-f">CFD D/F</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cfd-frac">CFD Frac</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#energy-cfd">Energy-CFD</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id27">QDC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fft">FFT</a></li>
@@ -1133,6 +1135,19 @@
 <p>首先 Draw Style 选择 Graph，即二维散点图模式。选择查看通道，然后按 Draw 按钮则开始进入计算，左上角可时时监视进度，也可按 Stop 按钮提前终止计算。计算结束得到如上图所示。</p>
 <img alt="../_images/EnergyFFHist.png" src="../_images/EnergyFFHist.png" />
 <p>二维散点图并不能很直观显示展示数据点的密度分布，因此 Draw Style 选择 Hist 模式，选择 X、Y轴的分 bin 数即范围，然后同样按 Draw 按钮开始计算。结果如上图所示，右图反映了噪声的水平。</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="cfd-d-f">
+<h3>CFD D/F<a class="headerlink" href="#cfd-d-f" title="永久链接至标题">¶</a></h3>
+<img alt="../_images/CFDDF.png" src="../_images/CFDDF.png" />
+<p>该界面用于辅助选择合理的 cfd filter 参数，使用该界面前必须先用两个通道采集波形（可以将探测器信号一分为二输入两个通道）。众所周知的是，对于一个 scale 参数，需要选择出最佳的 delay 参数。本页面通过计算不同 “scale - delay” 组合下的时间分辨，用户可以从中选择合适的参数组合。</p>
+<p>需要注意的一点是，时间分辨不仅仅取决于 CFD filter 参数，还取决于 fast filter 参数。</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="cfd-frac">
+<h3>CFD Frac<a class="headerlink" href="#cfd-frac" title="永久链接至标题">¶</a></h3>
+<img alt="../_images/CFDFrac.png" src="../_images/CFDFrac.png" />
+<p>本界面统计 fast filter 波形中上升沿斜率最大位置的分布。</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="energy-cfd">

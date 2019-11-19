@@ -185,6 +185,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#calc-energy">Calc Energy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ff-cfd-thre">FF/CFD Thre</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#energy-ff">Energy-FF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cfd-d-f">CFD D/F</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cfd-frac">CFD Frac</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#energy-cfd">Energy-CFD</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id14">QDC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fft">FFT</a></li>
@@ -1152,6 +1154,19 @@ This is a significant source of the enhanced throughput found in digital systems
 <p>Firstly, for <strong>Draw Style</strong> we choose <strong>Graph</strong>, which is the 2D scatter plot mode. Select the channel you want to view, then press the <em>Draw</em> button to start the calculation, in the top left corner the progress from time to time can be monitored, or you can press the <em>Stop</em> button to terminate the calculation early. The calculation ends as shown in the figure above.</p>
 <img alt="../_images/EnergyFFHist.png" src="../_images/EnergyFFHist.png" />
 <p>The 2D scatter plot does not visually show the density distribution of the displayed data points, so for <strong>Draw Style</strong> we select the <strong>Hist mode</strong>. Select the bins or ranges of the X and Y axis, and then press the <em>Draw</em> button to start the calculation. The result is shown in the figure above, and the right figure reflects the level of noise.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="cfd-d-f">
+<h3>CFD D/F<a class="headerlink" href="#cfd-d-f" title="永久链接至标题">¶</a></h3>
+<img alt="../_images/CFDDF.png" src="../_images/CFDDF.png" />
+<p>This interface is used to assist in selecting a reasonable CFD filter parameters. Before using this interface, the waveform must be acquired with two channels(the detector output signal can be divided into two channels). It is well known that for a scale parameter, user need to choose the best delay parameter. This page calculates the time resolution under the different “scale - delay” combinations, from which the user can select the appropriate combination of parameters.</p>
+<p>One thing to note is that time resolution depends not only on the CFD filter parameters, but also on the fast filter parameters.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="cfd-frac">
+<h3>CFD Frac<a class="headerlink" href="#cfd-frac" title="永久链接至标题">¶</a></h3>
+<img alt="../_images/CFDFrac.png" src="../_images/CFDFrac.png" />
+<p>This interface counts the distribution of the maximum position of the rising edge slope in the fast filter waveform.</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="energy-cfd">

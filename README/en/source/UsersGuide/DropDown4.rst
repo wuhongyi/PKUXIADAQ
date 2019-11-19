@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:51:08 2019 (+0800)
-.. Last-Updated: 三 7月  3 17:21:42 2019 (+0800)
+.. Last-Updated: 二 11月 19 16:44:19 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 7
+..     Update #: 8
 .. URL: http://wuhongyi.cn 
 
 ---------------------------------
@@ -171,7 +171,30 @@ The 2D scatter plot does not visually show the density distribution of the displ
 
 	   
 ----
-  
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+CFD D/F
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. image:: /_static/img/CFDDF.png
+	   
+This interface is used to assist in selecting a reasonable CFD filter parameters. Before using this interface, the waveform must be acquired with two channels(the detector output signal can be divided into two channels). It is well known that for a scale parameter, user need to choose the best delay parameter. This page calculates the time resolution under the different "scale - delay" combinations, from which the user can select the appropriate combination of parameters.
+
+One thing to note is that time resolution depends not only on the CFD filter parameters, but also on the fast filter parameters.
+	   
+----
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+CFD Frac
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. image:: /_static/img/CFDFrac.png
+
+This interface counts the distribution of the maximum position of the rising edge slope in the fast filter waveform.
+
+	   
+----
+
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Energy-CFD
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

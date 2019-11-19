@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 一 11月 18 21:14:27 2019 (+0800)
+// Last-Updated: 二 11月 19 15:40:50 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 1043
+//     Update #: 1045
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -5837,7 +5837,7 @@ void Offline::Panel14Draw()
 
   offlineth1i14 = new TH1I("offlineth1i14","",1000,0,1);
   offlineth1i14->GetXaxis()->SetTitle("fraction");
-  offlineth1i14->SetTitle("0.125->7 0.25->2 0.375->3 0.5->4 0.625->3 0.75->2 0.875->1 1.0->0");
+  offlineth1i14->SetTitle("0.125->7 0.25->6 0.375->5 0.5->4 0.625->3 0.75->2 0.875->1 1.0->0");
   
   int inttracelength = -1;
   for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
@@ -5964,7 +5964,7 @@ void Offline::Panel14Draw()
 			      break;
 			    }
 			}
-		      if(flagslopemax > 0) offlineth1i14->Fill(doublefastfilter14[flagslopemax]/doublefastfilter14[flagfffirst]);
+		      if(flagslopemax > 0) offlineth1i14->Fill((doublefastfilter14[flagslopemax]+doublefastfilter14[flagslopemax+1])/2.0/doublefastfilter14[flagfffirst]);
 		    }
 
 		}//fast filter
