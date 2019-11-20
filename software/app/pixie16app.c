@@ -6126,9 +6126,24 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16ComputeFastFiltersOffline (
 
 	// Retrieve channel parameters
 	FastFilterRange = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastFilterRange_Address[ModuleNumber] - DATA_MEMORY_ADDRESS];
-	FastLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange);
-	FastGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange);
-	CFD_Delay = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[CFDDelay_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS];
+	if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
+	  FastLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange);
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
+	  FastLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange) *2;
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)  
+	  FastLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange) *5;
+	if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
+	  FastGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange);
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
+	  FastGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange) *2;
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)  
+	  FastGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange) *5;
+	if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
+	  CFD_Delay = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[CFDDelay_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS];
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
+	  CFD_Delay = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[CFDDelay_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] *2;
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)  
+	  CFD_Delay = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[CFDDelay_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] *5;
 	CFD_W = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[CFDScale_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS];
 
 	// Check if trace length is sufficiently long
@@ -6263,8 +6278,18 @@ PIXIE16APP_EXPORT int PIXIE16APP_API Pixie16ComputeSlowFiltersOffline (
 	// Retrieve channel parameters
 
 	SlowFilterRange = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowFilterRange_Address[ModuleNumber] - DATA_MEMORY_ADDRESS];
-	SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
-	SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
+	if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
+	  SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
+	  SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange) *2;
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)    
+	  SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange) *5;  
+	if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
+	  SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
+	  SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange) *2;
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)    
+	  SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange) *5;
 	PreampTau_IEEE = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[PreampTau_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS];
 	preamptau = IEEEFloating2Decimal(PreampTau_IEEE);
 
@@ -6588,9 +6613,24 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeFastFiltersOffline (
 
 	// Retrieve channel parameters
 	FastFilterRange = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastFilterRange_Address[ModuleNumber] - DATA_MEMORY_ADDRESS];
-	FastLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange);
-	FastGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange);
-	CFD_Delay = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[CFDDelay_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS];
+	if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
+	  FastLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange);
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
+	  FastLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange) *2;
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)  
+	  FastLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange) *5;  
+	if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
+	  FastGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange);
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
+	  FastGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange) *2;
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)
+	  FastGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[FastGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)FastFilterRange) *5;
+	if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
+	  CFD_Delay = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[CFDDelay_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS];
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
+	  CFD_Delay = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[CFDDelay_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] *2;
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)
+	  CFD_Delay = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[CFDDelay_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] *5;
 	CFD_W = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[CFDScale_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS];
 
 	// Check if trace length is sufficiently long
@@ -6644,13 +6684,7 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeFastFiltersOffline (
 		for(x=CFD_Delay; x<RcdTraceLength; x++)
 		{
 		  cfds[x] = (-fastfilter[x-CFD_Delay] + fastfilter[x] * cfdscale);
-		  
-		  if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
-		    cfd[x] = cfds[x]*(double)FastLen;
-		  else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
-		    cfd[x] = cfds[x]*(double)FastLen*2;
-		  else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)
-		    cfd[x] = cfds[x]*(double)FastLen*5;
+		  cfd[x] = cfds[x]*(double)FastLen;
 		}
 
 		// Extend the value of cfd[CFD_Delay] to all non-computed ones from index 0 to CFD_Delay-1
@@ -6715,10 +6749,19 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOffline (
 	}
 
 	// Retrieve channel parameters
-
 	SlowFilterRange = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowFilterRange_Address[ModuleNumber] - DATA_MEMORY_ADDRESS];
-	SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
-	SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
+	if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
+	  SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
+	  SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange) *2;
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)  
+	  SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange) *5;  
+	if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
+	  SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
+	  SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange) *2;
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)  
+	  SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange) *5;
 	PreampTau_IEEE = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[PreampTau_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS];
 	preamptau = IEEEFloating2Decimal(PreampTau_IEEE);
 
@@ -6856,8 +6899,18 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOfflineAve
 	// Retrieve channel parameters
 
 	SlowFilterRange = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowFilterRange_Address[ModuleNumber] - DATA_MEMORY_ADDRESS];
-	SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
-	SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
+	if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
+	  SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
+	  SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange) *2;	  
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)
+	  SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange) *5;
+	if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
+	  SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
+	  SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange) *2;	  
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)
+	  SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange) *5;
 	PreampTau_IEEE = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[PreampTau_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS];
 	preamptau = IEEEFloating2Decimal(PreampTau_IEEE);
 
@@ -7050,26 +7103,35 @@ PIXIE16APP_EXPORT int PIXIE16APP_API HongyiWuPixie16ComputeSlowFiltersOfflineExt
 	}
 
 	// Retrieve channel parameters
-
 	SlowFilterRange = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowFilterRange_Address[ModuleNumber] - DATA_MEMORY_ADDRESS];
-	SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
-	SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
+	if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
+	  SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
+	  SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange) *2; 
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)  
+	  SlowLen = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowLength_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange) *5;
+	if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
+	  SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange);
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
+	  SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange) *2;
+	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)  
+	  SlowGap = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[SlowGap_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS] * (unsigned int)pow(2.0, (double)SlowFilterRange) *5;  
 	PreampTau_IEEE = Pixie_Devices[ModuleNumber].DSP_Parameter_Values[PreampTau_Address[ModuleNumber] + ChannelNumber - DATA_MEMORY_ADDRESS];
 	preamptau = IEEEFloating2Decimal(PreampTau_IEEE);
 
 	if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
 	  OldSlowLen = ROUND(sl*Module_Information[ModuleNumber].Module_ADCMSPS/pow(2.0,(double)sfr))*pow(2.0,(double)sfr);
 	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
-	  OldSlowLen = ROUND(sl*(Module_Information[ModuleNumber].Module_ADCMSPS/2)/pow(2.0,(double)sfr))*pow(2.0,(double)sfr);
+	  OldSlowLen = ROUND(sl*(Module_Information[ModuleNumber].Module_ADCMSPS/2)/pow(2.0,(double)sfr))*pow(2.0,(double)sfr) *2;
 	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)
-	  OldSlowLen = ROUND(sl*(Module_Information[ModuleNumber].Module_ADCMSPS/5)/pow(2.0,(double)sfr))*pow(2.0,(double)sfr);
+	  OldSlowLen = ROUND(sl*(Module_Information[ModuleNumber].Module_ADCMSPS/5)/pow(2.0,(double)sfr))*pow(2.0,(double)sfr) *5;
 	
 	if(Module_Information[ModuleNumber].Module_ADCMSPS == 100)
 	  OldSlowGap = ROUND(sg*Module_Information[ModuleNumber].Module_ADCMSPS/pow(2.0,(double)sfr))*pow(2.0,(double)sfr);
 	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 250)
-	  OldSlowGap = ROUND(sg*(Module_Information[ModuleNumber].Module_ADCMSPS/2)/pow(2.0,(double)sfr))*pow(2.0,(double)sfr);
+	  OldSlowGap = ROUND(sg*(Module_Information[ModuleNumber].Module_ADCMSPS/2)/pow(2.0,(double)sfr))*pow(2.0,(double)sfr) *2;
 	else if(Module_Information[ModuleNumber].Module_ADCMSPS == 500)
-	  OldSlowGap = ROUND(sg*(Module_Information[ModuleNumber].Module_ADCMSPS/5)/pow(2.0,(double)sfr))*pow(2.0,(double)sfr);
+	  OldSlowGap = ROUND(sg*(Module_Information[ModuleNumber].Module_ADCMSPS/5)/pow(2.0,(double)sfr))*pow(2.0,(double)sfr) *5;
 	
 	int AverageRcdTrace = 0;
 	int i;

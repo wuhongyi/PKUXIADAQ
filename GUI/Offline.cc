@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 二 11月 19 15:40:50 2019 (+0800)
+// Last-Updated: 三 11月 20 19:20:26 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 1045
+//     Update #: 1053
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -2808,7 +2808,7 @@ Bool_t Offline::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		      offlinechnum->SetIntNumber(chanNumber);
 		    }
 		}
-	      for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)//每次改变channel，横坐标范围都回到全部sample
+	      for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)//when change channel, X axis range return to [0,sample]
 		{
 		  if(offlinechnum->GetIntNumber() == offlinedata->GetEventChannel(i) && offlinedata->GetEventTraceLength(i) > 0)//ch / trace length > 0
 		    {
@@ -4305,7 +4305,7 @@ void Offline::Panel5Draw()
 	  if(i%500 == 0)
 	    {
 	      if(flagdrawstop5) break;
-	      printtextinfor5->SetText(TString::Format("Drawing...please wait a moment. ==> %d/%d",i,OfflineModuleEventsCount).Data());
+	      printtextinfor5->SetText(TString::Format("Drawing... ==> %d/%d",i,OfflineModuleEventsCount).Data());
 	      gSystem->ProcessEvents();
 	    }
 	}
@@ -4458,10 +4458,10 @@ void Offline::Panel6Draw()
 	  SlowLen = ROUND(ChanParData*100/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
 	  break;
 	case 250 ://250
-	  SlowLen = ROUND(ChanParData*125/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
+	  SlowLen = ROUND(ChanParData*125/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange) *2;
 	  break;	  
 	case 500 ://500
-	  SlowLen = ROUND(ChanParData*100/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
+	  SlowLen = ROUND(ChanParData*100/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange) *5;
 	  break;
 	default:
 	  std::cout<<"ERROR: Please call Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
@@ -4476,10 +4476,10 @@ void Offline::Panel6Draw()
 	  SlowGap = ROUND(ChanParData*100/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
 	  break;
 	case 250 ://250
-	  SlowGap = ROUND(ChanParData*125/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
+	  SlowGap = ROUND(ChanParData*125/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange) *2;
 	  break;	  
 	case 500 ://500
-	  SlowGap = ROUND(ChanParData*100/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange);
+	  SlowGap = ROUND(ChanParData*100/std::pow(2.0,(double)SlowFilterRange))*std::pow(2.0,(double)SlowFilterRange) *5;
 	  break;
 	default:
 	  std::cout<<"ERROR: Please call Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
@@ -4561,7 +4561,7 @@ void Offline::Panel6Draw()
 	  if(i%500 == 0)
 	    {
 	      if(flagdrawstop6) break;
-	      printtextinfor6->SetText(TString::Format("Drawing...please wait a moment. ==> %d/%d",i,OfflineModuleEventsCount).Data());
+	      printtextinfor6->SetText(TString::Format("Drawing... ==> %d/%d",i,OfflineModuleEventsCount).Data());
 	      gSystem->ProcessEvents();
 	    }
 	}
@@ -4697,10 +4697,10 @@ void Offline::Panel8Draw()
 	  FastLen = ROUND(ChanParData*100/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
 	  break;
 	case 250 ://250
-	  FastLen = ROUND(ChanParData*125/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
+	  FastLen = ROUND(ChanParData*125/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange) *2;
 	  break;	  
 	case 500 ://500
-	  FastLen = ROUND(ChanParData*100/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
+	  FastLen = ROUND(ChanParData*100/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange) *5;
 	  break;
 	default:
 	  std::cout<<"ERROR: Please call Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
@@ -4715,10 +4715,10 @@ void Offline::Panel8Draw()
 	  FastGap = ROUND(ChanParData*100/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
 	  break;
 	case 250 ://250
-	  FastGap = ROUND(ChanParData*125/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
+	  FastGap = ROUND(ChanParData*125/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange) *2;
 	  break;	  
 	case 500 ://500
-	  FastGap = ROUND(ChanParData*100/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange);
+	  FastGap = ROUND(ChanParData*100/std::pow(2.0,(double)FastFilterRange))*std::pow(2.0,(double)FastFilterRange) *5;
 	  break;
 	default:
 	  std::cout<<"ERROR: Please call Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
@@ -4827,7 +4827,7 @@ void Offline::Panel8Draw()
 	  if(i%500 == 0)
 	    {
 	      if(flagdrawstop8) break;
-	      printtextinfor8->SetText(TString::Format("Drawing...please wait a moment. ==> %d/%d",i,OfflineModuleEventsCount).Data());
+	      printtextinfor8->SetText(TString::Format("Drawing... ==> %d/%d",i,OfflineModuleEventsCount).Data());
 	      gSystem->ProcessEvents();
 	    }
 
@@ -5263,7 +5263,7 @@ void Offline::Panel11Draw()
   OfflineReadFileButton->SetEnabled(0);
   OfflineDrawButton11->SetEnabled(0);
 
-  printtextinfor11->SetText("Drawing...please wait a moment.");
+  printtextinfor11->SetText("Drawing...");
   canvas11->cd();
   canvas11->Clear();
   canvas11->Divide(2,2);
@@ -5436,7 +5436,7 @@ void Offline::Panel12Draw()
   OfflineReadFileButton->SetEnabled(0);
   OfflineDrawButton12->SetEnabled(0);
 
-  printtextinfor12->SetText("Drawing...please wait a moment.");
+  printtextinfor12->SetText("Drawing...");
   canvas12->cd();
   canvas12->Clear();
   canvas12->Divide(2,2);
@@ -5744,7 +5744,7 @@ void Offline::Panel13Draw()
       if(i%500 == 0)
 	{
 	  if(flagdrawstop13) break;
-	  printtextinfor13->SetText(TString::Format("Drawing...please wait a moment. ==> %d/%d",i,OfflineModuleEventsCount).Data());
+	  printtextinfor13->SetText(TString::Format("Drawing... ==> %d/%d",i,OfflineModuleEventsCount).Data());
 	  gSystem->ProcessEvents();
 	}
 
@@ -5771,7 +5771,7 @@ void Offline::Panel13Draw()
 	    legend[mm] = new TLegend(0.77,0.25,0.87,0.82);
 	    legend[mm]->SetBorderSize(0);
 	  }
-	legend[mm]->AddEntry(offlineth1i13[mm][nn],detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()) == 250?TString::Format("%0.3f",(nn+1)*0.008).Data():TString::Format("%0.3f",(nn+1)*0.01).Data(),"L");
+	legend[mm]->AddEntry(offlineth1i13[mm][nn],detector->GetModuleADCMSPS(offlinemodnum->GetIntNumber()) == 250?TString::Format("%0.3f",(nn+1)*0.004).Data():TString::Format("%0.3f",(nn+1)*0.01).Data(),"L");
       }
 
   for (int mm = 0; mm < 8; ++mm)
@@ -5974,7 +5974,7 @@ void Offline::Panel14Draw()
 	  if(i%500 == 0)
 	    {
 	      if(flagdrawstop14) break;
-	      printtextinfor14->SetText(TString::Format("Drawing...please wait a moment. ==> %d/%d",i,OfflineModuleEventsCount).Data());
+	      printtextinfor14->SetText(TString::Format("Drawing... ==> %d/%d",i,OfflineModuleEventsCount).Data());
 	      gSystem->ProcessEvents();
 	    }
 	}//for i
