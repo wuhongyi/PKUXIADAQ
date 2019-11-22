@@ -4,15 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 8月  9 09:24:46 2016 (+0800)
-// Last-Updated: 三 11月 20 21:02:12 2019 (+0800)
+// Last-Updated: 五 11月 22 17:02:46 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 75
+//     Update #: 77
 // URL: http://wuhongyi.cn 
 
 #ifndef _GLOBAL_HH_
 #define _GLOBAL_HH_
 
-const char gVERSION[] = "Version: STD - 2019.11.20";
+const char gVERSION[] = "Version: STD - 2019.11.22";
 
 const char gAbout[] = "\
 Version: Beta ---> Developer version\n\
@@ -172,13 +172,3 @@ void ErrorInfo(const char *filename,const char *funcname,const char *detial,int 
 #endif /* _GLOBAL_HH_ */
 // 
 // Global.hh ends here
-
-
-
-
-
-
-
-
-
-

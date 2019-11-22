@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:52:00 2016 (+0800)
-// Last-Updated: 三 10月 16 21:57:11 2019 (+0800)
+// Last-Updated: 五 11月 22 17:01:37 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 44
+//     Update #: 45
 // URL: http://wuhongyi.cn 
 
 #include "Detector.hh"
@@ -314,7 +314,74 @@ bool Detector::BootSystem()
       if (retval != 0)
   	{
   	  ErrorInfo("Detector.cc", "BootSystem()", "Pixie16BootModule", retval);
-  	  std::cout << "cards booting has failed !  Module NUMBER "<< k <<std::endl;;
+  	  std::cout << "cards booting has failed !  Module NUMBER "<< k <<std::endl;
+	  switch(retval)
+	    {
+	    case -1:
+	      std::cout<<"Invalid Pixie-16 module number."<<std::endl;
+	      break;
+	    case -2:
+	      std::cout<<"Size of ComFPGAConfigFile is invalid."<<std::endl;
+	      break;
+	    case -3:
+	      std::cout<<"Failed to boot Communication FPGA, Check log file."<<std::endl;
+	      break;
+	    case -4:
+	      std::cout<<"Failed to allocate memory to store data in ComFPGAConfigFile."<<std::endl;
+	      break;
+	    case -5:
+	      std::cout<<"Failed to open ComFPGAConfigFile"<<std::endl;
+	      break;
+	    case -10:
+	      std::cout<<"Size of SPFPGAConfigFile is invalid"<<std::endl;
+	      break;
+	    case -11:
+	      std::cout<<"Failed to boot signal processing FPGA, Check log file."<<std::endl;
+	      break;
+	    case -12:
+	      std::cout<<"Failed to allocate memory to store data in SPFPGAConfigFile."<<std::endl;
+	      break;
+	    case -13:
+	      std::cout<<"Failed to open SPFPGAConfigFile"<<std::endl;
+	      break;
+	    case -14:
+	      std::cout<<"Failed to boot DSP, Check log file."<<std::endl;
+	      break;
+	    case -15:
+	      std::cout<<"Failed to allocate memory to store DSP executable code."<<std::endl;
+	      break;
+	    case -16:
+	      std::cout<<"Failed to open DSPCodeFile."<<std::endl;
+	      break;
+	    case -17:
+	      std::cout<<"Size of DSPParFile is invalid."<<std::endl;
+	      break;
+	    case -18:
+	      std::cout<<"Failed to open DSPParFile."<<std::endl;
+	      break;
+	    case -19:
+	      std::cout<<"Can’t initialize DSP variable indices."<<std::endl;
+	      break;
+	    case -20:
+	      std::cout<<"Can’t copy DSP variable indices, Check log file."<<std::endl;
+	      break;
+	    case -21:
+	      std::cout<<"Failed to program Fippi in a module, Check log file."<<std::endl;
+	      break;
+	    case -22:
+	      std::cout<<"Failed to set DACs in a module, Check log file."<<std::endl;
+	      break;
+	    case -23:
+	      std::cout<<"Failed to start RESET_ADC run in a module, Check log file."<<std::endl;
+	      break;
+	    case -24:
+	      std::cout<<"RESET_ADC run timed out in a module, Check log file."<<std::endl;
+	      break;
+
+	    default:
+	      std::cout<<""<<std::endl;
+	      break;
+	    }
   	  return false;
   	}
 
