@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 三 10月 23 12:31:54 2019 (+0800)
+// Last-Updated: 六 11月 23 14:32:30 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 380
+//     Update #: 395
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -206,43 +206,43 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	     about->Popup();
 	      break;
 	    case BASE:
-	      base = new Base(fClient->GetRoot(), this, (char*)"Base Setup", 6, 16, detector->NumModules);
+	      base = new Base(fClient->GetRoot(), this, (char*)"Base Setup", 6, 16, detector);
 	      base->load_info(0);
 	      break;
 	    case CFDP:
-	      cfd = new Cfd(fClient->GetRoot(),this,(char*)"Cfd Par.", 4, 16, detector->NumModules);
+	      cfd = new Cfd(fClient->GetRoot(),this,(char*)"Cfd Par.", 4, 16, detector);
 	      cfd->load_info(0);
 	      break;
 	    case QDCP:
-	      qdc=new Qdc(fClient->GetRoot(),this,(char*)"Qdc Par.", 9, 16, detector->NumModules);
+	      qdc=new Qdc(fClient->GetRoot(),this,(char*)"Qdc Par.", 9, 16, detector);
 	      qdc->load_info(0);
 	      break;
 	    case DECIMATIONP:
-	      decimation = new Decimation(fClient->GetRoot(),this,(char*)"Waveform Decimation", 2, 16, detector->NumModules);
+	      decimation = new Decimation(fClient->GetRoot(),this,(char*)"Waveform Decimation", 2, 16, detector);
 	      decimation->load_info(0);
 	      break;
 	    case ENERGY:
-	      energy = new Energy(fClient->GetRoot(), this, (char*)"Energy", 5, 16, detector->NumModules);
+	      energy = new Energy(fClient->GetRoot(), this, (char*)"Energy", 5, 16, detector);
 	      energy->load_info(0);
 	      break;
 	    case CSRA:
-	      csra = new Csra(fClient->GetRoot(), this,detector->NumModules);
+	      csra = new Csra(fClient->GetRoot(), this,detector);
 	      csra->load_info(0);
 	      break;
 	    case TFILTER:
-	      triggerfilter = new TriggerFilter(fClient->GetRoot (), this, (char*)"Trigger Filter", 4, 16, detector->NumModules);
+	      triggerfilter = new TriggerFilter(fClient->GetRoot (), this, (char*)"Trigger Filter", 4, 16, detector);
 	      triggerfilter->load_info(0);
 	      break;
 	    case MODVAR:
-	      expertmod = new ExpertMod(fClient->GetRoot(), this, (char*)"Expert MOD", detector->NumModules);
+	      expertmod = new ExpertMod(fClient->GetRoot(), this, (char*)"Expert MOD", detector);
 	      expertmod->load_info(0);
 	      break;
 	    case LOGIC:
-	      logictrigger = new LogicTrigger(fClient->GetRoot(),this,(char*)"Logic Trigger", 16/*7*/, 16, detector->NumModules);
+	      logictrigger = new LogicTrigger(fClient->GetRoot(),this,(char*)"Logic Trigger", 16/*7*/, 16, detector);
 	      logictrigger->load_info(0);
 	      break;
 	    case HISTXDT:
-	      histxdt = new HistXDT(fClient->GetRoot(), this, (char*)"Hist & XDT", 4, 16, detector->NumModules);
+	      histxdt = new HistXDT(fClient->GetRoot(), this, (char*)"Hist & XDT", 4, 16, detector);
 	      histxdt->load_info(0);
 	      break;
 	    case OFFLINEADJUSTPAR:
@@ -287,6 +287,7 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      detector = new Detector(flagonlinemode);
 	      detector->SetRecordFlag(true);
 	      recordchk->SetState(kButtonDown);
+	      detector->SetRunFlag(true);
 	      if(detector->BootSystem())
 		{
 		  StateMsgFold1->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
@@ -302,6 +303,7 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		  StateMsgFold1->SetText("Boot Failed...");
 		  bootB->SetEnabled(1);
 		}
+	      detector->SetRunFlag(false);
 	      break;
 
 	    default:
@@ -683,6 +685,7 @@ void MainFrame::ConfigFileInfo()
       
       startdaq->SetEnabled(1);
       fstartdaq = 0;
+      detector->SetRunFlag(fstartdaq);
 
       if(flagonlinemode == 0)
       	{
@@ -731,11 +734,12 @@ void MainFrame::SetFileName()
       
       startdaq->SetEnabled(1);
       fstartdaq = 0;
+      detector->SetRunFlag(fstartdaq);
     }
   else
     {
       startdaq->SetEnabled(0);
-      std::cout<<"The output file directory does not exist"<<std::endl;
+      std::cout<<"The output file directory does not exist."<<std::endl;
     }
 }
 
@@ -788,19 +792,19 @@ void MainFrame::StartRun()
 	  return;
 	}
 
-
-      
+      fstartdaq = 1;
+      detector->SetRunFlag(fstartdaq);
       usleep(100000); //delay for the DSP boot 
       // sleep(2);// wait 2 seconds for modules to be ready
       // start a new run, not resume
-      fstartdaq = 1;
-      fstopdaq = 0;
+      
       startdaq->SetText("Run Stop");
       RunReadData();
     }
   else
     {
       fstartdaq = 0;
+      
       startdaq->SetText("Run Start");
       filerunnum->SetIntNumber((++runnum));
 
@@ -833,7 +837,7 @@ void MainFrame::StartRun()
 
 void MainFrame::RunReadData()
 {
-  std::cout<<"MainFrame:: read loop.."<<std::endl;
+  std::cout<<"Read loop ..."<<std::endl;
   while(fstartdaq)
     {
       detector->ReadDataFromModules(0,0); // during the run
@@ -861,6 +865,7 @@ void MainFrame::RunReadData()
     }
   
   std::cout<<"finish!"<<std::endl;
+  detector->SetRunFlag(false);
 }
 
 void MainFrame::SetOnlineMode()

@@ -62,6 +62,8 @@ public:
   int CloseFile();
   int SetOnlineFlag(bool flag);
   void SetRecordFlag(bool flag);
+  void SetRunFlag(bool flag);
+  bool GetRunFlag() {return frunstatus;}
   int SaveHistogram(char *fileN,int mod);
   int SaveDSPPars(char *file);
   int OpenSharedMemory();
@@ -69,7 +71,7 @@ public:
   void SetRunNumber(int r);
   void UpdateFilePathAndNameInSharedMemory(const char *path,const char *filen);
   unsigned int GetFileSize(int n); // in MB
-
+  
   int AcquireADCTrace(unsigned short *trace, unsigned long size, unsigned short module, unsigned short ChanNum);
 
   bool BootSystem();
@@ -173,6 +175,7 @@ private:
   bool   fonline;
   bool   frecord;
   int runnumber;
+  bool frunstatus;
   //  	bool BootSystem (unsigned short NumModules, unsigned short *PXISlotMap);
 
   uint64_t CurrentTime;
@@ -185,3 +188,11 @@ private:
 };
 
 #endif /*DETECTOR_HH_*/
+
+
+
+
+
+
+
+

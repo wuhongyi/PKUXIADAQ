@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 3月  8 13:32:50 2018 (+0800)
-// Last-Updated: 二 10月 22 11:55:01 2019 (+0800)
+// Last-Updated: 六 11月 23 13:55:05 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 3
+//     Update #: 5
 // URL: http://wuhongyi.cn 
 
 #ifndef _HISTXDT_H_
@@ -14,11 +14,12 @@
 
 #include "Table.hh"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+class Detector;
 
 class HistXDT : public Table
 {
 public:
-  HistXDT(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, int NumModules);
+  HistXDT(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, Detector *det);
   virtual ~HistXDT();
 
   int change_values(Long_t mod);
@@ -38,6 +39,8 @@ protected:
   
   float emin, bin;
   float decay;
+private:
+  Detector *detector;  
 };
 
 

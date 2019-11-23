@@ -1,15 +1,16 @@
 #include "Qdc.hh"
 #include "Global.hh"
-
+#include "Detector.hh"
 #include "pixie16app_export.h"
 #include "TColor.h"
 #include <iostream>
 using namespace std;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-Qdc::Qdc(const TGWindow *p, const TGWindow *main, char *name, int columns, int rows,int NumModules)
-  : Table(p,main,columns,rows,name, NumModules)
+Qdc::Qdc(const TGWindow *p, const TGWindow *main, char *name, int columns, int rows,Detector *det)
+  : Table(p,main,columns,rows,name, det->NumModules)
 {
+  detector = det;
   modNumber = 0;
   cl0->SetText("ch #");
   for(int i = 0; i < rows; i++)
@@ -187,6 +188,8 @@ Bool_t Qdc::ProcessMessage(Long_t msg, Long_t parm1,Long_t parm2)
 
 int Qdc::change_values(Long_t mod)
 {
+  if(detector->GetRunFlag()) return 0;
+  
   int retval;
   for(int i = 0; i < 16; i++)
     {
@@ -206,6 +209,8 @@ int Qdc::change_values(Long_t mod)
 
 int Qdc::load_info(Long_t mod)
 {
+  if(detector->GetRunFlag()) return 0;
+  
   int retval;
   double ChanParData = -1;
   char varN[8][10] = {"QDCLen0","QDCLen1","QDCLen2","QDCLen3","QDCLen4","QDCLen5","QDCLen6","QDCLen7"};

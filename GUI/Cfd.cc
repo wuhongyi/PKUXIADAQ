@@ -1,15 +1,16 @@
 #include "Cfd.hh"
 #include "Global.hh"
-
+#include "Detector.hh"
 #include "pixie16app_export.h"
 #include "TColor.h"
 #include <iostream>
 using namespace std;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-Cfd::Cfd(const TGWindow *p, const TGWindow * main, char *name, int columns, int rows, int NumModules)
-  :Table(p,main,columns,rows,name, NumModules)
+Cfd::Cfd(const TGWindow *p, const TGWindow * main, char *name, int columns, int rows, Detector *det)
+  :Table(p,main,columns,rows,name, det->NumModules)
 {
+  detector = det;
   modNumber = 0;
   cl0->SetText("ch #");
   for(int i = 0; i < rows; i++)
@@ -178,6 +179,8 @@ Bool_t Cfd::ProcessMessage(Long_t msg,Long_t parm1, Long_t parm2)
 
 int Cfd::load_info(Long_t mod)
 {
+  if(detector->GetRunFlag()) return 1;
+  
   double ChanParData = -1;
   int retval;
 
@@ -201,6 +204,8 @@ int Cfd::load_info(Long_t mod)
 
 int Cfd::change_values(Long_t mod)
 {
+  if(detector->GetRunFlag()) return 1;
+  
   double delay;
   double frac;
   double thres;

@@ -16,15 +16,17 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #define CCSRAUSEDBITBUMBER 22 // <32  根据使用bit数增加
+class Detector;
 class Csra : public TGTransientFrame
 {
 public:
-  Csra(const TGWindow * p, const TGWindow * main,int NumModules);
+  Csra(const TGWindow * p, const TGWindow * main,Detector *det);
   virtual ~Csra();
 
   int load_info(Long_t);
-    
+  int change_values(Long_t);
 private:
+  Detector *detector;
   int numModules;
   TGHorizontalFrame * mn, *buttons;
   TGVerticalFrame *mn_vert;
@@ -46,7 +48,7 @@ private:
   ///////////////buttons//////////////////
   TGTextButton *LoadButton, *CancelButton, *ApplyButton, *ExitButton;
   TGNumberEntry *numericMod;
-  int change_values(Long_t);
+  
   bool Load_Once;
   Long_t module_number1;
   Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2);

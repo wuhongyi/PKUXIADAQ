@@ -4,21 +4,23 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 4月 23 10:49:38 2018 (+0800)
-// Last-Updated: 二 10月 22 13:48:56 2019 (+0800)
+// Last-Updated: 六 11月 23 14:22:40 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 7
+//     Update #: 9
 // URL: http://wuhongyi.cn 
 
 #include "Decimation.hh"
 #include "Global.hh"
-
+#include "Detector.hh"
 #include "pixie16app_export.h"
 #include "TColor.h"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-Decimation::Decimation(const TGWindow * p, const TGWindow * main,  char *name, int columns, int rows, int NumModules)
-  :Table(p,main,columns,rows,name, NumModules)
+Decimation::Decimation(const TGWindow * p, const TGWindow * main,  char *name, int columns, int rows, Detector *det)
+  :Table(p,main,columns,rows,name, det->NumModules)
 {
+  detector = det;
+  
   cl0->SetText("ch #");
   for(int i  =0;i < rows;i++)
     {
@@ -200,6 +202,8 @@ Bool_t Decimation::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 
 int Decimation::load_info(Long_t mod)
 {
+  if(detector->GetRunFlag()) return 1;
+  
   double ChanParData = -1;
   int retval;
 
@@ -215,6 +219,8 @@ int Decimation::load_info(Long_t mod)
 
 int Decimation::change_values(Long_t mod)
 {
+  if(detector->GetRunFlag()) return 1;
+  
   double decim;
   int retval;
   for (int i = 0; i < 16; i++)

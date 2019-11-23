@@ -4,22 +4,24 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 11月 18 19:24:01 2016 (+0800)
-// Last-Updated: 二 10月 22 13:46:28 2019 (+0800)
+// Last-Updated: 六 11月 23 14:32:22 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 59
+//     Update #: 60
 // URL: http://wuhongyi.cn 
 
 #include "Base.hh"
 #include "Global.hh"
-
+#include "Detector.hh"
 #include "pixie16app_export.h"
 
 #include "TColor.h"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-Base::Base(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, int NumModules)
-  : Table(p, main, columns, rows, name,NumModules)
+Base::Base(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, Detector *det)
+  : Table(p, main, columns, rows, name,det->NumModules)
 {
+  detector = det;
+  
   cl0->SetText("ch #");
   for (int i = 0; i < rows; i++)
     {
@@ -434,29 +436,34 @@ Bool_t Base::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      break;
 	    case (COPYBUTTON+2000):
 	      {
-		int retval = Pixie16AdjustOffsets(modNumber);
-		if(retval < 0)
+		if(!detector->GetRunFlag())
 		  {
-		    ErrorInfo("Base.cc", "ProcessMessage(...)", "Pixie16AdjustOffsets", retval);
-		    break;
+		    int retval = Pixie16AdjustOffsets(modNumber);
+		    if(retval < 0)
+		      {
+			ErrorInfo("Base.cc", "ProcessMessage(...)", "Pixie16AdjustOffsets", retval);
+			break;
+		      }
+		    load_info(modNumber);
 		  }
-		load_info(modNumber);
 	      }
 	      break;
 	    case (COPYBUTTON+3000):
 	      {
-		int retval;
-		unsigned int blcut;
-		for (unsigned short i = 0; i < 16; ++i)
+		if(!detector->GetRunFlag())
 		  {
-		    retval = Pixie16BLcutFinder(modNumber,i,&blcut);
-		    if(retval < 0)
+		    int retval;
+		    unsigned int blcut;
+		    for (unsigned short i = 0; i < 16; ++i)
 		      {
-			ErrorInfo("Base.cc", "ProcessMessage(...)", "Pixie16BLcutFinder", retval);
+			retval = Pixie16BLcutFinder(modNumber,i,&blcut);
+			if(retval < 0)
+			  {
+			    ErrorInfo("Base.cc", "ProcessMessage(...)", "Pixie16BLcutFinder", retval);
+			  }
+			NumEntry[2][i]->SetText(TString::Format("%d",blcut).Data());
 		      }
-		    NumEntry[2][i]->SetText(TString::Format("%d",blcut).Data());
 		  }
-		
 	      }
 	      break;
 	    default:
@@ -491,6 +498,8 @@ Bool_t Base::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 
 int Base::load_info(Long_t mod)
 {
+  if(detector->GetRunFlag()) return 1;
+  
   double ChanParData = -1;
   int retval;
   unsigned short gain;
@@ -570,6 +579,8 @@ int Base::load_info(Long_t mod)
 
 int Base::change_values(Long_t mod)
 {
+  if(detector->GetRunFlag()) return 1;
+  
   int retval;
   double offset;
   double ChanParData = -1;

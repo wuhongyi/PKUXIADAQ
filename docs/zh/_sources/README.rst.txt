@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 20:19:34 2019 (+0800)
-.. Last-Updated: 五 11月 22 17:14:33 2019 (+0800)
+.. Last-Updated: 六 11月 23 14:45:38 2019 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 28
+..     Update #: 30
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -25,7 +25,7 @@
 稳定版本
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**稳定版本 Version:2019.11.20**
+**稳定版本 Version:2019.11.23**
 
 下载最新版本，请点击:  `PKUXIADAQ stable <https://github.com/pkuNucExp/PKUXIADAQ>`_ 
 
@@ -39,7 +39,7 @@
 准预览版本
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**准预览版本 Version:2019.11.22**  
+**准预览版本 Version:2019.11.23**  
 
 程序下载请访问:  `PKUXIADAQ <https://github.com/wuhongyi/PKUXIADAQ>`_ 
 
@@ -51,7 +51,7 @@
 ----
 
 ---------------------------------  
-关于  
+关于
 ---------------------------------
 
 **本说明书仅适用于 XIA LLC 的 Pixie-16 系列采集卡**

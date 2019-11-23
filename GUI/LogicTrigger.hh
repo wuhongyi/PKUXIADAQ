@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:36 2016 (+0800)
-// Last-Updated: 二 10月 22 15:05:38 2019 (+0800)
+// Last-Updated: 六 11月 23 13:58:50 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 29
+//     Update #: 31
 // URL: http://wuhongyi.cn 
 
 #ifndef _LOGICTRIGGER_HH_
@@ -17,13 +17,14 @@
 #include "TGComboBox.h"
 #include "TGTextEntry.h"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+class Detector;
 
 class LogicTrigger : public Table
 {
 public:
   LogicTrigger(const TGWindow * p, const TGWindow * main, 
 	       char *name, int columns,
-	       int rows, int NumModules);
+	       int rows, Detector *det);
   virtual ~LogicTrigger();
 
   int change_values(Long_t mod);
@@ -99,6 +100,9 @@ protected:
   TGComboBox *ChannelOfTestSignals;
   TGComboBox *TestSignals;
   TGComboBox *DebugSignalsOfBackplane;
+
+private:
+  Detector *detector;
 };
 
 #endif /* _LOGICTRIGGER_HH_ */

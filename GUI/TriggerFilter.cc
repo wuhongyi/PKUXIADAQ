@@ -1,13 +1,15 @@
 #include "TriggerFilter.hh"
 #include "Global.hh"
-
+#include "Detector.hh"
 #include "pixie16app_export.h"
 #include "TColor.h"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-TriggerFilter::TriggerFilter(const TGWindow * p, const TGWindow * main, char *name,int columns,int rows, int NumModules)
-  :Table(p,main,columns,rows,name, NumModules)
+TriggerFilter::TriggerFilter(const TGWindow * p, const TGWindow * main, char *name,int columns,int rows, Detector *det)
+  :Table(p,main,columns,rows,name, det->NumModules)
 {
+  detector = det;
+  
   cl0->SetText("ch #");
   for(int i = 0; i < rows; i++)
     {
@@ -178,6 +180,8 @@ Bool_t TriggerFilter::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 
 int TriggerFilter::load_info(Long_t mod)
 {
+  if(detector->GetRunFlag()) return 1;
+  
   double ChanParData = -1;
   int retval;
 
@@ -202,6 +206,8 @@ int TriggerFilter::load_info(Long_t mod)
 
 int TriggerFilter::change_values(Long_t mod)
 {
+  if(detector->GetRunFlag()) return 1;
+  
   int retval;
   double rise;
   double flat;

@@ -4,23 +4,25 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 二 10月 22 18:29:14 2019 (+0800)
+// Last-Updated: 六 11月 23 14:00:12 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 215
+//     Update #: 217
 // URL: http://wuhongyi.cn 
 
 #include "LogicTrigger.hh"
 #include "Global.hh"
-
+#include "Detector.hh"
 #include "pixie16app_export.h"
 #include "TColor.h"
 #include <iostream>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 #define MULTIPLICITYOFFSET 6
 
-LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, int columns, int rows,int NumModules)
-  : Table(p,main,columns,rows,name, NumModules)
+LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, int columns, int rows,Detector *det)
+  : Table(p,main,columns,rows,name, det->NumModules)
 {
+  detector = det;
+  
   cl0->SetText("ch #");
   for(int i = 0; i < rows; i++)
     {
@@ -1016,6 +1018,8 @@ Bool_t LogicTrigger::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 
 int LogicTrigger::load_info(Long_t mod)
 {
+  if(detector->GetRunFlag()) return 1;
+  
   double ChanParData = -1;
   unsigned int ModParData;
   unsigned int b;
@@ -1179,7 +1183,8 @@ int LogicTrigger::load_info(Long_t mod)
 
 int LogicTrigger::change_values(Long_t mod)
 {
-
+  if(detector->GetRunFlag()) return 1;
+  
   double ChanParData = -1;
   unsigned int ModParData;
   int retval;

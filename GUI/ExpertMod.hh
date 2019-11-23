@@ -12,13 +12,15 @@
 #include <iostream>
 using namespace std;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+class Detector;
 
 class ExpertMod : public TGTransientFrame
 {
 public:
-  ExpertMod(const TGWindow * p, const TGWindow * main,char *name,int NumModules);
+  ExpertMod(const TGWindow * p, const TGWindow * main,char *name,Detector *det);
   virtual ~ExpertMod();
   int load_info(Long_t mod);
+  int change_values(Long_t mod);
   
 private:
   Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2);
@@ -33,7 +35,8 @@ private:
 
   short int modNumber;
   bool Load_Once;
-  int change_values(Long_t mod);
+  
+  Detector *detector;
   
   enum Commands
     {

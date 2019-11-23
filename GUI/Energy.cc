@@ -4,21 +4,22 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 11月 18 20:32:50 2016 (+0800)
-// Last-Updated: 二 10月 22 13:47:59 2019 (+0800)
+// Last-Updated: 六 11月 23 14:33:49 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 28
+//     Update #: 30
 // URL: http://wuhongyi.cn 
 
 #include "Energy.hh"
 #include "Global.hh"
-
+#include "Detector.hh"
 #include "pixie16app_export.h"
 #include "TColor.h"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-Energy::Energy(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, int NumModules)
-  : Table(p, main, columns, rows, name, NumModules)
+Energy::Energy(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, Detector *det)
+  : Table(p, main, columns, rows, name, det->NumModules)
 {
+  detector = det;
   modNumber = 0;
   chanNumber = 0;
   decay = 0;
@@ -288,6 +289,8 @@ Bool_t Energy::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 
 int Energy::load_info(Long_t mod)
 {
+  if(detector->GetRunFlag()) return 1;
+  
   double ChanParData = -1;
   int retval;
   
@@ -316,6 +319,8 @@ int Energy::load_info(Long_t mod)
 
 int Energy::change_values(Long_t mod)
 {
+  if(detector->GetRunFlag()) return 1;
+  
   int retval;
   double d;
   double length;
@@ -341,6 +346,8 @@ int Energy::change_values(Long_t mod)
 
 void Energy::findtau(short int mod)
 {
+  if(detector->GetRunFlag()) return;
+  
   double TauByFPGA[16];
   int retval = Pixie16TauFinder(mod,TauByFPGA);
   if(retval < 0)

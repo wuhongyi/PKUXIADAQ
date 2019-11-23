@@ -1,6 +1,6 @@
 #include "Csra.hh"
 #include "Global.hh"
-
+#include "Detector.hh"
 #include "pixie16app_export.h"
 
 #include "GuiTypes.h"
@@ -11,14 +11,13 @@
 using namespace std;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
+Csra::Csra(const TGWindow * p, const TGWindow * main, Detector *det)
   :TGTransientFrame(p, main, 10, 10, kHorizontalFrame)
 {
   SetCleanup(kDeepCleanup);
+  detector = det;
   module_number1 = 0;
-
-  numModules = NumModules;
-
+  numModules = detector->NumModules;
   SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -44,7 +43,6 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, int NumModules)
     }
 
   
-
 
   TGTextEntry *te = new TGTextEntry(ccolumn, new TGTextBuffer(100), 10000,
 				    te->GetDefaultGC ()(),
@@ -317,6 +315,8 @@ Bool_t Csra::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 
 int Csra::load_info(Long_t mod)
 {
+  if(detector->GetRunFlag()) return 1;
+  
   double ChanParData = -1;
   int retval;
   unsigned short gt;
@@ -341,6 +341,8 @@ int Csra::load_info(Long_t mod)
 
 int Csra::change_values(Long_t mod)
 {
+  if(detector->GetRunFlag()) return 1;
+  
   double ChanParData = 0;
   int retval;
 

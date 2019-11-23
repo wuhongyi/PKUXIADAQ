@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 3月  8 14:57:16 2018 (+0800)
-// Last-Updated: 三 10月 23 09:26:10 2019 (+0800)
+// Last-Updated: 六 11月 23 12:09:24 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 7
+//     Update #: 8
 // URL: http://wuhongyi.cn 
 
 #ifndef _READCHANSTATUS_H_
@@ -73,7 +73,7 @@ private:
   // Fold0
   TCanvas *canvas0;
   TGTextButton* DrawButton0;  
-  TH1S *traceth1s0[16];
+  TH1I *traceth1s0[16];
   TGNumberEntry	*chnum0;//int
   TGNumberEntry	*modnum0;
   int chanNumber0;

@@ -1,16 +1,16 @@
 #include "Global.hh"
 #include "ExpertMod.hh"
-
+#include "Detector.hh"
 #include "pixie16app_common.h"
 #include "pixie16app_export.h"
 #include "pixie16sys_export.h"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-ExpertMod::ExpertMod(const TGWindow * p, const TGWindow * main, char *name,int NumModules)
+ExpertMod::ExpertMod(const TGWindow * p, const TGWindow * main, char *name,Detector *det)
 {
   SetCleanup(kDeepCleanup);
-
-  numModules = NumModules;
+  detector = det;
+  numModules = detector->NumModules;
 
   SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
@@ -282,6 +282,8 @@ Bool_t ExpertMod::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 
 int ExpertMod::load_info(Long_t mod)
 {
+  if(detector->GetRunFlag()) return 0;
+  
   int retval = 0;
   unsigned int ModParData = 0;
   unsigned short gt;
@@ -312,6 +314,8 @@ int ExpertMod::load_info(Long_t mod)
 
 int ExpertMod::change_values(Long_t mod)
 {
+  if(detector->GetRunFlag()) return 0;
+  
   unsigned int ModParData = 0;
   int retval = 0;
 

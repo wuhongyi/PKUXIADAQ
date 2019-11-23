@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 3月  8 14:19:00 2018 (+0800)
-// Last-Updated: 二 10月 22 13:42:10 2019 (+0800)
+// Last-Updated: 六 11月 23 13:34:26 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 90
+//     Update #: 91
 // URL: http://wuhongyi.cn 
 
 #include "CopyPars.hh"
@@ -333,6 +333,8 @@ void  CopyPars::checkbutton(Long_t parm1)
 
 void CopyPars::copy_values()
 {
+  if(detector->GetRunFlag()) return;
+  
   int retval;
   unsigned short BitMask = 0;
   unsigned short DestinationMask[13*16] ={0};

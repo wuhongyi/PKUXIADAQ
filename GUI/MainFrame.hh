@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:17 2018 (+0800)
-// Last-Updated: 一 10月 21 21:31:00 2019 (+0800)
+// Last-Updated: 六 11月 23 12:14:32 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 56
+//     Update #: 57
 // URL: http://wuhongyi.cn 
 
 #ifndef MAINFRAME_HH_
@@ -166,7 +166,6 @@ private:
   bool            fonlinedata;
   bool            frecorddata;
   bool            fstartdaq;
-  bool            fstopdaq;
 
   // ******* information *******
   TGTextEntry* lastruntextinfor;

@@ -675,6 +675,11 @@ void Detector::SetRecordFlag(bool flag)
   frecord = flag;
 }
 
+void Detector::SetRunFlag(bool flag)
+{
+  frunstatus = flag;
+}
+
 int Detector::SavetoFile(int nFile)
 {
   // std::cout<<"saving file ..."<<std::endl;

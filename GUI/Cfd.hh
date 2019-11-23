@@ -3,11 +3,12 @@
 
 #include "Table.hh"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+class Detector;
 
 class Cfd : public Table
 {
 public:
-  Cfd(const TGWindow *p, const TGWindow *main, char *name,int colunms,int rows,int NumModules);
+  Cfd(const TGWindow *p, const TGWindow *main, char *name,int colunms,int rows,Detector *det);
   virtual ~Cfd();
 
   Bool_t ProcessMessage(Long_t msg,Long_t parm1,Long_t parm2);
@@ -21,6 +22,9 @@ protected:
   short int modNumber;
   short int chanNumber;
   TGNumberEntry* chanCopy;
+
+private:
+  Detector *detector;  
 };
 
 #endif

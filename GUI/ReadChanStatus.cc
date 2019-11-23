@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 3月  8 14:57:31 2018 (+0800)
-// Last-Updated: 三 10月 23 09:31:53 2019 (+0800)
+// Last-Updated: 六 11月 23 13:00:44 2019 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 37
+//     Update #: 40
 // URL: http://wuhongyi.cn 
 
 #include "ReadChanStatus.hh"
@@ -418,11 +418,13 @@ void ReadChanStatus::MakeFold1Panel(TGCompositeFrame *TabPanel)
 
 void ReadChanStatus::Panel0Draw()
 {
+  if(detector->GetRunFlag()) return;
+  
   for (int i = 0; i < 16; ++i)
     {
       if(traceth1s0[i] == NULL)
 	{
-	  traceth1s0[i] = new TH1S(TString::Format("trace_ch%02d",i).Data(),"",8192,0,8192);
+	  traceth1s0[i] = new TH1I(TString::Format("trace_ch%02d",i).Data(),"",8192,0,8192);
 	  traceth1s0[i]->SetTitle(TString::Format("Ch: %d",i).Data());
 	  traceth1s0[i]->GetXaxis()->SetTitle("sample");
 	  traceth1s0[i]->GetXaxis()->SetLabelSize(0.06);
@@ -495,6 +497,8 @@ void ReadChanStatus::Panel0Draw()
 
 void ReadChanStatus::Panel1Draw()
 {
+  if(detector->GetRunFlag()) return;
+  
   for (int i = 0; i < 16; ++i)
     {
       if(choosebaselinedrawmode1->GetSelected() == 0)

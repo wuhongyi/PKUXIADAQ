@@ -3,11 +3,12 @@
 
 #include "Table.hh"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+class Detector;
 
 class TriggerFilter : public Table
 {
 public:
-  TriggerFilter(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, int NumModules);
+  TriggerFilter(const TGWindow * p, const TGWindow * main, char *name, int columns, int rows, Detector *det);
   virtual ~TriggerFilter();
 
   int change_values(Long_t mod);
@@ -22,6 +23,9 @@ protected:
   bool Load_Once;
   char tmp[10];
   float tpeak,tgap,thre;
+  
+private:
+  Detector *detector;
 };
 
 #endif /*TRIGGERFILTER_HH_*/
