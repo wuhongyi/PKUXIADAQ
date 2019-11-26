@@ -121,6 +121,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#id3">机箱及配套</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id4">逻辑模块</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pin16smb">34pin到16SMB转接线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">其它一些可能有用的配套设备</a></li>
 </ul>
 </li>
 </ul>
@@ -259,6 +260,13 @@
 <img alt="_images/pin34_SMB16.png" src="_images/pin34_SMB16.png" />
 <p>由于核物理实验中双面硅微条路数在 200-300 路，规模较大的可达到 500-600 路。而硅信号的输出一般都是 34 pin 的连接器，Pixie16 采集卡的输入是 SMB 连接器，XIA 出厂默认为 BNC 转 SMB 连接线，在硅探测器上使用起来及其不方便，因此必须采用一个合适的转接器来实现。</p>
 <p>为此，我们与 XIA 沟通，设计生产出上图中的转接器（第一版本），通过该转接器，多路数的硅探测器在信号输入变得容易，同时也消除了由于线缆排列不当造成的应力问题。用户根据需要采购。</p>
+</div>
+<div class="section" id="id5">
+<h2>其它一些可能有用的配套设备<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p><strong>本栏目介绍的硬件，不是必须品，用户根据实际情况自行选择。</strong></p>
+<p>一般的脉冲发生器产生的信号与实际探测器输出的信号还是存在较大区别的，特别是信号的上升沿部分无法调节，不容易构造出随时间变化的脉冲序列。</p>
+<p>CAEN 的探测器模拟器专门为解决模拟探测器信号源而开发，它可用于没有探测器时候的获取调节联系，帮助用户更快熟悉获取系统。另外，由于它的可编程性、可重复性，能够用于检测获取系统的可靠性，评估系统的能力上限。</p>
+<p>更多详细信息请阅读官网手册，CAEN DT5810B Fast Digital Detector Emulator <a class="reference external" href="https://www.caen.it/products/dt5810/">https://www.caen.it/products/dt5810/</a></p>
 </div>
 </div>
 
