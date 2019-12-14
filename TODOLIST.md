@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 五 11月 30 20:59:18 2018 (+0800)
-;; Last-Updated: 六 9月  7 17:26:46 2019 (+0800)
+;; Last-Updated: 二 12月  3 16:14:46 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 4
+;;     Update #: 5
 ;; URL: http://wuhongyi.cn -->
 
 # TODO
@@ -77,6 +77,12 @@ make[1]: 进入目录“/usr/src/kernels/3.10.0-957.12.2.el7.x86_64”
 arch/x86/Makefile:166: *** CONFIG_RETPOLINE=y, but not supported by the compiler. Compiler update recommended.。 停止。
 make[1]: 离开目录“/usr/src/kernels/3.10.0-957.12.2.el7.x86_64”
 make: *** [BuildDriver] 错误 2
+
+make[1]: Entering directory '/usr/src/kernels/3.10.0-957.12.2.el7.x86_64'
+arch/x86/Makefile:166: *** CONFIG_RETPOLINE=y, but not supported by the compiler. Compiler update recommended.。 Stop.
+make[1]: Leaving directory '/usr/src/kernels/3.10.0-957.12.2.el7.x86_64'
+make: *** [BuildDriver] Error 2
+
 [wuhongyi@pkudaq Driver]$ su
 密码：
 [root@pkudaq Driver]# emacs /usr/src/kernels/3.10.0-957.12.2.el7.x86_64/
