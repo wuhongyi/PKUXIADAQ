@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 日 9月  8 20:31:48 2019 (+0800)
+.. Last-Updated: 四 1月 30 23:19:40 2020 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 28
+..     Update #: 29
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -248,6 +248,51 @@
   #在上一轮获取结束之后，我们便可将上一轮数据转为ROOT文件
   ./decode xxx
   # xxx 为运行 run number
+
+
+---------------------------------
+常见安装错误
+---------------------------------
+
+针对 CentOS/Scientific Linux 7.6/7.7，安装 PLX9054 驱动时候错误的解决方案：
+
+.. code:: bash
 	  
+  ./builddriver 9054
+
+
+.. code:: bash	
+
+  Build: Plx9054
+   
+  - PLA: CentOS Linux release 7.6.1810 (Core) 
+  - KER: 3.10.0-957.12.2.el7.x86_64
+  - INC: /lib/modules/3.10.0-957.12.2.el7.x86_64/build/include
+  - CPU: x86_64 (64-bit Little Endian)
+  - CMP: Gcc
+  - TYP: Driver
+  - PLX: 9054
+  - CFG: Release
+   
+  make[1]: Entering directory '/usr/src/kernels/3.10.0-957.12.2.el7.x86_64'
+  arch/x86/Makefile:166: *** CONFIG_RETPOLINE=y, but not supported by the compiler. Compiler update recommended.。 Stop.
+  make[1]: Leaving directory '/usr/src/kernels/3.10.0-957.12.2.el7.x86_64'
+  make: *** [BuildDriver] Error 2
+
+以上为错误发生时候的输出提示。
+
+此时，用户可以修改 **/usr/src/kernels/3.10.0-957.12.2.el7.x86_64/arch/x86/Makefile** 文件，通过注释以下代码来避免这个错误发生。
+
+.. code:: bash	
+
+    ifneq ($(RETPOLINE_CFLAGS),)
+        KBUILD_CFLAGS += $(RETPOLINE_CFLAGS) -DRETPOLINE
+    else
+        $(error CONFIG_RETPOLINE=y, but not supported by the compiler. Compiler update recommended.)
+    endif
+
+
+
+  
 .. 
 .. INSTALL.rst ends here

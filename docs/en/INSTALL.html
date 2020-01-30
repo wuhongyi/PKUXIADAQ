@@ -92,6 +92,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation of Software</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-steps-for-installation">The steps for Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#instruction-for-use">Instruction for use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-installation-errors">Common installation errors</a></li>
 </ul>
 </li>
 </ul>
@@ -406,6 +407,39 @@ su <span class="c1">#input ROOT password</span>
 
 ./decode xxx
 <span class="c1">#xxx indicates Run Number</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="common-installation-errors">
+<h2>Common installation errors<a class="headerlink" href="#common-installation-errors" title="永久链接至标题">¶</a></h2>
+<p>For CentOS / scientific Linux 7.6 / 7.7, the wrong solution for installing PLX9054 driver:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./builddriver <span class="m">9054</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Build: Plx9054
+
+- PLA: CentOS Linux release <span class="m">7</span>.6.1810 <span class="o">(</span>Core<span class="o">)</span>
+- KER: <span class="m">3</span>.10.0-957.12.2.el7.x86_64
+- INC: /lib/modules/3.10.0-957.12.2.el7.x86_64/build/include
+- CPU: x86_64 <span class="o">(</span><span class="m">64</span>-bit Little Endian<span class="o">)</span>
+- CMP: Gcc
+- TYP: Driver
+- PLX: <span class="m">9054</span>
+- CFG: Release
+
+make<span class="o">[</span><span class="m">1</span><span class="o">]</span>: Entering directory <span class="s1">&#39;/usr/src/kernels/3.10.0-957.12.2.el7.x86_64&#39;</span>
+arch/x86/Makefile:166: *** <span class="nv">CONFIG_RETPOLINE</span><span class="o">=</span>y, but not supported by the compiler. Compiler update recommended.。 Stop.
+make<span class="o">[</span><span class="m">1</span><span class="o">]</span>: Leaving directory <span class="s1">&#39;/usr/src/kernels/3.10.0-957.12.2.el7.x86_64&#39;</span>
+make: *** <span class="o">[</span>BuildDriver<span class="o">]</span> Error <span class="m">2</span>
+</pre></div>
+</div>
+<p>The above is the output prompt when the error occurs.</p>
+<p>At this point, the user can modify the file <strong>/usr/src/kernels/3.10.0-957.12.2.el7.x86_64/arch/x86/Makefile</strong> to avoid this error by cancel the following code.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ifneq <span class="o">(</span><span class="k">$(</span>RETPOLINE_CFLAGS<span class="k">)</span>,<span class="o">)</span>
+    <span class="nv">KBUILD_CFLAGS</span> <span class="o">+=</span> <span class="k">$(</span>RETPOLINE_CFLAGS<span class="k">)</span> -DRETPOLINE
+<span class="k">else</span>
+    <span class="k">$(</span>error <span class="nv">CONFIG_RETPOLINE</span><span class="o">=</span>y, but not supported by the compiler. Compiler update recommended.<span class="k">)</span>
+endif
 </pre></div>
 </div>
 </div>

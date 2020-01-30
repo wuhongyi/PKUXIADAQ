@@ -92,6 +92,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">程序安装</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">软件安装步骤</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">程序使用说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">常见安装错误</a></li>
 </ul>
 </li>
 </ul>
@@ -402,6 +403,39 @@ su <span class="c1">#输入ROOT密码</span>
 <span class="c1">#在上一轮获取结束之后，我们便可将上一轮数据转为ROOT文件</span>
 ./decode xxx
 <span class="c1"># xxx 为运行 run number</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>常见安装错误<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>针对 CentOS/Scientific Linux 7.6/7.7，安装 PLX9054 驱动时候错误的解决方案：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./builddriver <span class="m">9054</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Build: Plx9054
+
+- PLA: CentOS Linux release <span class="m">7</span>.6.1810 <span class="o">(</span>Core<span class="o">)</span>
+- KER: <span class="m">3</span>.10.0-957.12.2.el7.x86_64
+- INC: /lib/modules/3.10.0-957.12.2.el7.x86_64/build/include
+- CPU: x86_64 <span class="o">(</span><span class="m">64</span>-bit Little Endian<span class="o">)</span>
+- CMP: Gcc
+- TYP: Driver
+- PLX: <span class="m">9054</span>
+- CFG: Release
+
+make<span class="o">[</span><span class="m">1</span><span class="o">]</span>: Entering directory <span class="s1">&#39;/usr/src/kernels/3.10.0-957.12.2.el7.x86_64&#39;</span>
+arch/x86/Makefile:166: *** <span class="nv">CONFIG_RETPOLINE</span><span class="o">=</span>y, but not supported by the compiler. Compiler update recommended.。 Stop.
+make<span class="o">[</span><span class="m">1</span><span class="o">]</span>: Leaving directory <span class="s1">&#39;/usr/src/kernels/3.10.0-957.12.2.el7.x86_64&#39;</span>
+make: *** <span class="o">[</span>BuildDriver<span class="o">]</span> Error <span class="m">2</span>
+</pre></div>
+</div>
+<p>以上为错误发生时候的输出提示。</p>
+<p>此时，用户可以修改 <strong>/usr/src/kernels/3.10.0-957.12.2.el7.x86_64/arch/x86/Makefile</strong> 文件，通过注释以下代码来避免这个错误发生。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ifneq <span class="o">(</span><span class="k">$(</span>RETPOLINE_CFLAGS<span class="k">)</span>,<span class="o">)</span>
+    <span class="nv">KBUILD_CFLAGS</span> <span class="o">+=</span> <span class="k">$(</span>RETPOLINE_CFLAGS<span class="k">)</span> -DRETPOLINE
+<span class="k">else</span>
+    <span class="k">$(</span>error <span class="nv">CONFIG_RETPOLINE</span><span class="o">=</span>y, but not supported by the compiler. Compiler update recommended.<span class="k">)</span>
+endif
 </pre></div>
 </div>
 </div>
