@@ -28,6 +28,7 @@ Welcome to GDDAQ's guides.
    :caption: 程序安装
    
    INSTALL.rst
+   MYSQL.rst
 
 
 #################################

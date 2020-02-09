@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:52:00 2016 (+0800)
-// Last-Updated: 日 2月  9 13:39:13 2020 (+0800)
+// Last-Updated: 日 2月  9 20:38:23 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 46
+//     Update #: 47
 // URL: http://wuhongyi.cn 
 
 #include "Detector.hh"
@@ -805,8 +805,8 @@ void Detector::UpdateEnergySpectrumForModule()
 
 void Detector::UpdateFilePathAndNameInSharedMemory(const char *path,const char *filen)
 {
-  memcpy(shmptr+14,filen,sizeof(unsigned int)*128);
-  memcpy(shmptr+142,path,sizeof(unsigned int)*1024);
+  memcpy(shmptr+14,filen,128);
+  memcpy(shmptr+142,path,1024);
   return;
 }
 

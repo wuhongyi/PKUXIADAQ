@@ -858,8 +858,8 @@ void Detector::UpdateEnergySpectrumForModule()
 
 void Detector::UpdateFilePathAndNameInSharedMemory(const char *path,const char *filen)
 {
-  memcpy(shmptr+14,filen,sizeof(unsigned int)*128);
-  memcpy(shmptr+142,path,sizeof(unsigned int)*1024);
+  memcpy(shmptr+14,filen,128);
+  memcpy(shmptr+142,path,1024);
   return;
 }
 
