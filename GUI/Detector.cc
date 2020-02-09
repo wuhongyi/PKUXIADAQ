@@ -806,7 +806,8 @@ int Detector::UpdateSharedMemory()
   shmid1++;
   memcpy(shmptr,&shmid1,sizeof(unsigned int));
   memcpy(shmptr+4,&NumModules,sizeof(unsigned short));
-  memcpy(shmptr+6,&runnumber,sizeof(unsigned int));
+  crateidrunnumber = (crateid << 24) + (runnumber & 0xFFFFFF);
+  memcpy(shmptr+6,&crateidrunnumber,sizeof(unsigned int));
   
   int retval = 0;
   unsigned int Statistics[SHAREDMEMORYDATASTATISTICS];

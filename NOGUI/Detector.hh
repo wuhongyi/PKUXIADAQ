@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:51:04 2016 (+0800)
-// Last-Updated: 四 8月 29 20:12:05 2019 (+0800)
+// Last-Updated: 日 2月  9 13:38:32 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 15
+//     Update #: 16
 // URL: http://wuhongyi.cn 
 
 #ifndef _DETECTOR_H_
@@ -44,7 +44,7 @@
 #define SHAREDMEMORYDATAOFFSET 1170 //BYTE
 // 1st 4    bytes IDcode for event shared memory
 // 2nd 2    bytes number of valid Num Modules in shared memory
-// 3rd 4    bytes Run Number
+// 3rd 4    Crate ID/Run Number  [31:24]  [23:0]
 // 4   4    bytes ID for update spectrum
 // 5   128  bytes name of data file
 // 6   1024 bytes path of data file
@@ -186,6 +186,7 @@ private:
   bool fautorun;
   uint64_t  timesperrun;//ms
   int runnumber;
+  unsigned int crateidrunnumber;
   
   uint64_t CurrentTime;
   uint64_t PrevRateTime;

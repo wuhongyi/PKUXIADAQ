@@ -4,19 +4,19 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 8月  9 09:24:46 2016 (+0800)
-// Last-Updated: 六 11月 23 14:34:30 2019 (+0800)
+// Last-Updated: 日 2月  9 13:40:27 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 78
+//     Update #: 79
 // URL: http://wuhongyi.cn 
 
 #ifndef _GLOBAL_HH_
 #define _GLOBAL_HH_
 
-const char gVERSION[] = "Version: STD - 2019.11.23";
+const char gVERSION[] = "Version: STD - 2020.02.09";
 
 const char gAbout[] = "\
 Version: Beta ---> Developer version\n\
-This program was developed by Peking University and is applicable to XIA Pixie16. \n\
+This program was developed by Peking University and is applicable to XIA Pixie-16. \n\
 Support 100 MHz(RevD 12-bit,RevF 14-bit), \n\
         250 MHz(RevF 12/14/16-bit), \n\
         500 MHz(RevF 12/14-bit)\n\

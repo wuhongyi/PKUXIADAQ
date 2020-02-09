@@ -32,7 +32,7 @@
 #define SHAREDMEMORYDATAOFFSET 1170 //BYTE
 // 1st 4    bytes IDcode for event shared memory
 // 2nd 2    bytes number of valid Num Modules in shared memory
-// 3rd 4    bytes Run Number
+// 3rd 4    bytes Crate ID/Run Number  [31:24]  [23:0]
 // 4   4    bytes ID for update spectrum
 // 5   128  bytes name of data file
 // 6   1024 bytes path of data file
@@ -176,6 +176,7 @@ private:
   bool   frecord;
   int runnumber;
   bool frunstatus;
+  unsigned int crateidrunnumber;
   //  	bool BootSystem (unsigned short NumModules, unsigned short *PXISlotMap);
 
   uint64_t CurrentTime;

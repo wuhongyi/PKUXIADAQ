@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 三 10月 23 14:04:04 2019 (+0800)
+// Last-Updated: 日 2月  9 13:48:47 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 293
+//     Update #: 295
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -394,7 +394,7 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
   filepath->AddFrame(StateMsg,new TGLayoutHints(kLHintsLeft|kLHintsTop,10,3,4,0));
   StateMsg->SetFont("-adobe-helvetica-bold-r-*-*-11-*-*-*-*-*-iso8859-1", false);
   StateMsg->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
-  StateMsg->SetText("Rxxxx     Mxx");
+  StateMsg->SetText("Cxx    Rxxxx    Mxx");
   StateMsg->SetEnabled(kFALSE);
   StateMsg->SetFrameDrawn(kFALSE);
   StateMsg->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
@@ -971,7 +971,9 @@ void Online::LoopRun()
 
 	      // =======
 	      memcpy(&ModNum,buf_new+4,2);
-	      memcpy(&RunNumber,buf_new+6,4);
+	      memcpy(&tempN,buf_new+6,4);
+	      RunNumber = tempN & 0xFFFFFF;
+	      CrateID = (tempN & 0xFF000000)>>24;
 	      // printf("RunNumber: %d -- Num: %d\n",RunNumber,number);
 	      if(OldRunNUmber != RunNumber)
 		{
@@ -1067,7 +1069,7 @@ void Online::LoopRun()
 
 	      memcpy(buf,buf_new,(PRESET_MAX_MODULES*SHAREDMEMORYDATASTATISTICS*4)+PRESET_MAX_MODULES*2+SHAREDMEMORYDATAOFFSET);
 
-	      sprintf(charrunstate,"R%04d     M%02d",RunNumber,ModNum);
+	      sprintf(charrunstate,"C%d    R%04d    M%02d",CrateID,RunNumber,ModNum);
 	      StateMsg->SetText(charrunstate);
 	      if(flagrunnumber)
 		{
