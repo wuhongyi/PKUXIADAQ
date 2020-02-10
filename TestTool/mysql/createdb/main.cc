@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 8月 29 21:53:45 2019 (+0800)
-// Last-Updated: 五 8月 30 13:01:30 2019 (+0800)
+// Last-Updated: 一 2月 10 00:09:50 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 18
+//     Update #: 20
 // URL: http://wuhongyi.cn 
 
 // g++ main.cc `mysql_config --cflags --libs` -o 123
@@ -35,20 +35,29 @@ int main(int argc, char *argv[])
   mysql_options(mysql, MYSQL_OPT_RECONNECT, &reconnect);
   mysql_options(mysql,MYSQL_OPT_COMPRESS,0);
   
-  if (!mysql_real_connect(mysql,"162.105.54.92","admin","123456",NULL,0,NULL,0))
+  if (!mysql_real_connect(mysql,"222.29.111.178","admin","123456",NULL,0,NULL,0))
     {
       fprintf(stderr, "Failed to connect to database: Error: %s\n", mysql_error(mysql));
     }
 
-  mysql_query(mysql, "CREATE DATABASE IF NOT EXISTS GDDAQ;");
+  if(mysql_query(mysql, "CREATE DATABASE IF NOT EXISTS GDDAQ;"))
+    {
+      fprintf(stderr, "Failed to create database GDDAQ: Error: %s\n", mysql_error(mysql));
+    }
 
-  mysql_select_db(mysql,"GDDAQ");
+  if(mysql_select_db(mysql,"GDDAQ"))
+    {
+      fprintf(stderr, "Failed to select database GDDAQ: Error: %s\n", mysql_error(mysql));
+    }
 
-   FILE *fp = fopen("gddaqshm.sql", "r");
+   FILE *fp = fopen("statistics.sql", "r");
    char sql[4096];
    fread(sql, 1, 4096, fp);
    fclose(fp);
-   mysql_query(mysql, sql);
+   if(mysql_query(mysql, sql))
+     {
+       fprintf(stderr, "Failed to create tables: Error: %s\n", mysql_error(mysql));
+     }
   
 
 
