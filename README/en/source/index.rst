@@ -28,7 +28,7 @@ Welcome to PKUXIADAQ's guides.
    :caption: Install
    
    INSTALL.rst
-
+   MYSQL.rst
 
 #################################
 

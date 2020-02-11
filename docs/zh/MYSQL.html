@@ -96,7 +96,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#ubuntu-18-04lts">Ubuntu 18.04LTS</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">检查数据库、表是否配置成功</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">MySQL 基本设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">数据库基本操作命令</a></li>
 </ul>
 </li>
 </ul>
@@ -205,8 +206,7 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># CentOS 7</span>
 yum remove akonadi-mysql.x86_64
 
-<span class="c1">#MySQL 依赖 libaio，所以先要安装 libaio</span>
-
+<span class="c1">#MYSQL 依赖 libaio，所以先要安装 libaio</span>
 yum search libaio  <span class="c1"># 检索相关信息</span>
 yum install libaio <span class="c1"># 安装依赖包</span>
 
@@ -220,7 +220,7 @@ wget http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
 <span class="c1">#添加 MySQL Yum Repository</span>
 yum localinstall mysql-community-release-el7-5.noarch.rpm
 
-<span class="c1">#验证下是否添加成功</span>
+<span class="c1">#验证是否添加成功</span>
 yum repolist enabled <span class="p">|</span> grep <span class="s2">&quot;mysql.*-community.*&quot;</span>
 
 <span class="c1">######选择要启用 MySQL 版本</span>
@@ -233,7 +233,7 @@ yum repolist all <span class="p">|</span> grep mysql
 yum-config-manager --disable mysql56-community
 yum-config-manager --enable mysql57-community-dmr
 
-<span class="c1">#查看当前的启动的 MySQL 版本</span>
+<span class="c1">#查看当前启动的 MySQL 版本</span>
 yum repolist enabled <span class="p">|</span> grep mysql
 
 <span class="c1">#通过 Yum 来安装 MySQL</span>
@@ -250,11 +250,11 @@ systemctl start  mysqld
 <span class="c1">#查看 MySQL Server 状态</span>
 systemctl status  mysqld
 
-<span class="c1">#关闭 MySQL Server</span>
+<span class="c1">#关闭 MySQL Server，如果需要的时候</span>
 systemctl stop mysqld
 </pre></div>
 </div>
-<p><strong>开机自起</strong></p>
+<p><strong>开机自启动</strong></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#查看 MySQL 服务是否开机启动</span>
 systemctl is-enabled mysql.service<span class="p">;</span><span class="nb">echo</span> <span class="nv">$?</span>
 
@@ -262,9 +262,12 @@ systemctl is-enabled mysql.service<span class="p">;</span><span class="nb">echo<
 chkconfig --levels <span class="m">235</span> mysqld on
 </pre></div>
 </div>
-<p><strong>防火墙设置 firewall-cmd</strong></p>
-<p>远程访问 MySQL， 需开放默认端口号 3306.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#执行开放了相应的端口</span>
+<p><strong>防火墙设置 (firewall-cmd)</strong></p>
+<p>远程访问 MySQL， 需开放默认端口号 3306。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#开启防火墙，没有任何提示即开启成功</span>
+systemctl start firewalld
+
+<span class="c1">#执行开放了相应的端口</span>
 firewall-cmd --permanent --zone<span class="o">=</span>public --add-port<span class="o">=</span><span class="m">3306</span>/tcp
 firewall-cmd --permanent --zone<span class="o">=</span>public --add-port<span class="o">=</span><span class="m">3306</span>/udp
 
@@ -272,51 +275,100 @@ firewall-cmd --permanent --zone<span class="o">=</span>public --add-port<span cl
 firewall-cmd --reload
 </pre></div>
 </div>
+</div>
+<div class="section" id="ubuntu-18-04lts">
+<h3>Ubuntu 18.04LTS<a class="headerlink" href="#ubuntu-18-04lts" title="永久链接至标题">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#安装默认的 MySQL 软件包</span>
+apt install mysql-server
+<span class="c1">#上面的命令将安装 MySQL 服务和所有必需的依赖项。安装完成后，MySQL 服务将自动启动。</span>
+
+<span class="c1">#验证 MySQL 服务是否正在运行</span>
+service mysql status
+
+vi /etc/mysql/mysql.conf.d/mysqld.cnf
+<span class="c1">#查找下面的行，并使用 # 字符将其注释掉：</span>
+<span class="c1"># bind-address = 127.0.0.1</span>
+<span class="c1">#保存文件并退出，然后像下面这样重新启动mysql服务：</span>
+service mysql restart
+</pre></div>
+</div>
+<p>MySQL 作为系统服务安装。这意味着您可以在 Ubuntu上 使用 <strong>systemctl</strong> 或 <strong>service</strong> 等标准系统命令进行管理。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#To start the MySQL service</span>
+service mysql start
+
+<span class="c1">#To check the current status of the MySQL service</span>
+service mysql status
+
+<span class="c1">#Stop the service anytime by typing:</span>
+service mysql stop
+
+<span class="c1">#If you want to restart the service</span>
+service mysql restart
+
+<span class="c1">#To reload the MySQL service</span>
+service mysql reload
+
+<span class="c1">#By default, MySQL is configured to start automatically when the server starts. You can disable the automatic startup by typing:</span>
+systemctl disable mysql
+
+<span class="c1">#If you want to enable the automatic startup again, just type:</span>
+systemctl <span class="nb">enable</span> mysql
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>MySQL 基本设置<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <p><strong>MySQL 安全设置</strong></p>
-<p>服务器启动后，可以执行</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mysql_secure_installation
+<p>在安装过程中，安装程序不会提示您选择 root 用户的密码或确认其它任何配置更改。由于这会使 MySQL 安装不安全，因此您需要手动运行随附的安全脚本来设置密码并更改其它安全默认值。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#在终端中执行</span>
+mysql_secure_installation
 </pre></div>
 </div>
-<p>此时输入 root 原始密码（初始化安装的话为空），接下来，为了安全，MySQL 会提示你重置 root 密码，移除其他用户账号，禁用 root 远程登录，移除 test 数据库，重新加载 privilege 表格等，你只需输入 y 继续执行即可。至此，整个 MySQL 安装完成
+<p>此时输入 root 原始密码（初始化安装的话为空），接下来，为了安全，MySQL 会提示你重置 root 密码，移除其他用户账号，禁用 root 远程登录，移除 test 数据库，重新加载 privilege 表格等，你只需输入 <strong>y</strong> 继续执行即可。至此，整个 MySQL 安装完成
 … Remove anonymous users?  Disallow root login remotely? Remove test database and access to it? Reload privilege tables now?</p>
-<p><strong>远程访问设置</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mysql -h <span class="m">127</span>.0.0.1 -u root -p
+<p><strong>创建指定用户</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#在终端中执行</span>
+mysql -u root -p
+<span class="c1">#然后输入之前设置的密码</span>
 </pre></div>
 </div>
-<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="c1">#创建一个普通用户 data ，密码是 some_pass</span>
-<span class="k">CREATE</span> <span class="n">USER</span> <span class="s1">&#39;data&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span> <span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;some_pass&#39;</span><span class="p">;</span>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="c1">#创建一个普通用户 data ，密码是 xia17pxn</span>
+<span class="k">CREATE</span> <span class="n">USER</span> <span class="s1">&#39;data&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span> <span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;xia17pxn&#39;</span><span class="p">;</span>
 
 <span class="c1">#给这个用户授予 SELECT,INSERT,UPDATE,DELETE 的远程访问的权限，这个账号一般用于提供给实施的系统访问</span>
 <span class="k">GRANT</span> <span class="k">SELECT</span><span class="p">,</span><span class="k">INSERT</span><span class="p">,</span><span class="k">UPDATE</span><span class="p">,</span><span class="k">DELETE</span>  <span class="k">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;data&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
 
-<span class="c1">#创建一个管理员用户 admin 账号 ，密码是 some_pass</span>
-<span class="k">CREATE</span> <span class="n">USER</span> <span class="s1">&#39;admin&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span> <span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;some_pass&#39;</span><span class="p">;</span>
+<span class="c1">#创建一个管理员用户 admin 账号 ，密码是 xia17pxn</span>
+<span class="k">CREATE</span> <span class="n">USER</span> <span class="s1">&#39;admin&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span> <span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;xia17pxn&#39;</span><span class="p">;</span>
 
 <span class="c1">#给这个用户授予所有的远程访问的权限。这个用户主要用于管理整个数据库、备份、还原等操作。</span>
 <span class="k">GRANT</span> <span class="k">ALL</span>  <span class="k">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;admin&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
 
 <span class="c1">#使授权立刻生效</span>
 <span class="k">flush</span> <span class="n">privileges</span><span class="p">;</span>
+
+<span class="c1">#退出</span>
+<span class="k">exit</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="ubuntu-18-04lts">
-<h3>Ubuntu 18.04LTS<a class="headerlink" href="#ubuntu-18-04lts" title="永久链接至标题">¶</a></h3>
-<p>MZTIO install for web.</p>
-</div>
-</div>
-<div class="section" id="id2">
-<h2>检查数据库、表是否配置成功<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mysql  -h <span class="m">127</span>.0.0.1 -u data -p
+<div class="section" id="id3">
+<h2>数据库基本操作命令<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mysql  -h <span class="m">127</span>.0.0.1 -u admin -p
+mysql  -h <span class="m">127</span>.0.0.1 -u data -p
 <span class="c1">#这里的 127.0.0.1 表示查看本机,如果从其它电脑远程查询,则更改为相应电脑的 IP,然后输入密码</span>
 </pre></div>
 </div>
-<p>现在数据库名称为 GDDAQ,数据表 cool表示水冷机器,数据表press1表示真空计</p>
+<p>现在数据库名称为 GDDAQ，数据表 statistics 存储在线监视的数据，数据表 fileinfo 存储原始文件大小信息。</p>
 <div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="c1"># 查看所有数据库</span>
 <span class="k">SHOW</span> <span class="k">DATABASES</span><span class="p">;</span>
 
 <span class="c1">#进入我们要操作的数据库</span>
-<span class="k">use</span> <span class="n">monitor</span><span class="p">;</span>
+<span class="k">use</span> <span class="n">GDDAQ</span><span class="p">;</span>
+
+<span class="c1">#展示数据表中的元素</span>
+<span class="k">desc</span> <span class="n">statistics</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
@@ -342,7 +394,7 @@ firewall-cmd --reload
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, Hongyi Wu(吴鸿毅)
+        &copy; Copyright 2020, Hongyi Wu(吴鸿毅)
 
     </p>
   </div>

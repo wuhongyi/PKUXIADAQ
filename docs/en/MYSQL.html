@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MYSQL &mdash; GDDAQ beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="Guide" href="UsersGuide/README.html" />
+    <link rel="prev" title="Installation of Software" href="INSTALL.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> GDDAQ
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="README.html">Introduction</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Install</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="INSTALL.html">Installation of Software</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MYSQL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mysql-installation-steps">MYSQL installation steps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#centos-7">CentOS 7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ubuntu-18-04lts">Ubuntu 18.04LTS</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mysql-basic-settings">MySQL Basic Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-database-operation-commands">Basic database operation commands</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Users Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/README.html">Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/Crate.html">Crate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/FIRMWARE.html">FIRMWARE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/Decode.html">Decode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/GUI.html">GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/NOGUI.html">NOGUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/OnlineStattics.html">Online Stattics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/MakeEvent.html">MakeEvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/FrontPanel.html">Front Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/Logic.html">Logic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/MultipleModulesSynchronously.html">Multiple Modules Synchronously</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/UpdateCPLD.html">Update CPLD</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Applications</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Example/README.html">Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Example/TOF2TAC.html">TOF measurement in 100M</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Example/TimeResolution.html">Time Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Example/RecommendedParameters.html">Recommended Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Example/InBeamGammaCIAE.html">In Beam Gamma</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programmers Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ProgrammersGuide/README.html">Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ProgrammersGuide/XIAAPI.html">PIXIE-16 API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ProgrammersGuide/PKUCode.html">PKU Code</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">GDDAQ</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>MYSQL</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/MYSQL.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="mysql">
+<h1>MYSQL<a class="headerlink" href="#mysql" title="永久链接至标题">¶</a></h1>
+<div class="section" id="mysql-installation-steps">
+<h2>MYSQL installation steps<a class="headerlink" href="#mysql-installation-steps" title="永久链接至标题">¶</a></h2>
+<div class="section" id="centos-7">
+<h3>CentOS 7<a class="headerlink" href="#centos-7" title="永久链接至标题">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># CentOS 7</span>
+yum remove akonadi-mysql.x86_64
+
+<span class="c1">#MySQL depends on libaio, so first install libaio</span>
+yum search libaio
+yum install libaio
+
+<span class="c1">#Check if MySQL is installed</span>
+yum list installed <span class="p">|</span> grep mysql
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#Download MySQL Yum Repository</span>
+wget http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
+
+<span class="c1">#Add MySQL Yum Repository</span>
+yum localinstall mysql-community-release-el7-5.noarch.rpm
+
+<span class="c1">#Verify that it was added successfully</span>
+yum repolist enabled <span class="p">|</span> grep <span class="s2">&quot;mysql.*-community.*&quot;</span>
+
+<span class="c1">######Select the MySQL version you want to enable</span>
+
+<span class="c1">#View MySQL version, execute</span>
+yum repolist all <span class="p">|</span> grep mysql
+<span class="c1">#You can see 5.5, 5.7 is disabled by default, because the latest stable version is 5.6</span>
+
+<span class="c1">#Some versions can be started with statements like</span>
+yum-config-manager --disable mysql56-community
+yum-config-manager --enable mysql57-community-dmr
+
+<span class="c1">#View the currently enabled MySQL version</span>
+yum repolist enabled <span class="p">|</span> grep mysql
+
+<span class="c1">#Install MySQL via Yum</span>
+yum install mysql-community-server
+
+<span class="c1">#View the MySQL installation directory</span>
+whereis mysql
+</pre></div>
+</div>
+<p><strong>Start and stop MySQL Server</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#start MySQL Server</span>
+systemctl start  mysqld
+
+<span class="c1">#check MySQL Server status</span>
+systemctl status  mysqld
+
+<span class="c1">#stop MySQL Server, If needed</span>
+systemctl stop mysqld
+</pre></div>
+</div>
+<p><strong>Self-starting</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#Check if MySQL service starts automatically</span>
+systemctl is-enabled mysql.service<span class="p">;</span><span class="nb">echo</span> <span class="nv">$?</span>
+
+<span class="c1">#If it is enabled, it means it is on automatically, if not, execute</span>
+chkconfig --levels <span class="m">235</span> mysqld on
+</pre></div>
+</div>
+<p><strong>Firewall settings (firewall-cmd)</strong></p>
+<p>To access MySQL remotely, open the default port 3306.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#Turn on the firewall, it will open successfully without any prompts</span>
+systemctl start firewalld
+
+<span class="c1">#Open the corresponding port</span>
+firewall-cmd --permanent --zone<span class="o">=</span>public --add-port<span class="o">=</span><span class="m">3306</span>/tcp
+firewall-cmd --permanent --zone<span class="o">=</span>public --add-port<span class="o">=</span><span class="m">3306</span>/udp
+
+<span class="c1">#Make the latest firewall settings rules take effect</span>
+firewall-cmd --reload
+</pre></div>
+</div>
+</div>
+<div class="section" id="ubuntu-18-04lts">
+<h3>Ubuntu 18.04LTS<a class="headerlink" href="#ubuntu-18-04lts" title="永久链接至标题">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#install the default MySQL package</span>
+apt install mysql-server
+<span class="c1">#The above command will install the MySQL server and all required dependencies. Once the installation is completed, the MySQL service will start automatically.</span>
+
+<span class="c1">#verify whether the MySQL service is running</span>
+service mysql status
+
+vi /etc/mysql/mysql.conf.d/mysqld.cnf
+<span class="c1">#Look for the line below and comment it out using the # character:</span>
+<span class="c1"># bind-address = 127.0.0.1</span>
+<span class="c1">#Save the file and exit, afterwards restart the mysql service like so:</span>
+service mysql restart
+</pre></div>
+</div>
+<p>MySQL is installed as a systemd service. It means that you can manage it using standard systemd commands like <strong>systemctl</strong> or <strong>service</strong> on Ubuntu.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#To start the MySQL service</span>
+service mysql start
+
+<span class="c1">#To check the current status of the MySQL service</span>
+service mysql status
+
+<span class="c1">#Stop the service anytime by typing:</span>
+service mysql stop
+
+<span class="c1">#If you want to restart the service</span>
+service mysql restart
+
+<span class="c1">#To reload the MySQL service</span>
+service mysql reload
+
+<span class="c1">#By default, MySQL is configured to start automatically when the server starts. You can disable the automatic startup by typing:</span>
+systemctl disable mysql
+
+<span class="c1">#If you want to enable the automatic startup again, just type:</span>
+systemctl <span class="nb">enable</span> mysql
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="mysql-basic-settings">
+<h2>MySQL Basic Settings<a class="headerlink" href="#mysql-basic-settings" title="永久链接至标题">¶</a></h2>
+<p><strong>MySQL security settings</strong></p>
+<p>During the installation, the installer will not prompt you to choose a password for the root user or confirm any other configuration changes. Since this leaves the MySQL installation insecure, you need to manually run the included security script to set a password and change other security defaults.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#Execute in terminal</span>
+mysql_secure_installation
+</pre></div>
+</div>
+<p>First, enter MySQL the root user password (it is empty for initial installation). Next, for security, MySQL will prompt you to reset the root password, remove other user accounts, disable root remote login, remove the test database, and reload the privilege table , You just enter <strong>y</strong> to continue execution. At this point, the entire MySQL installation is complete.</p>
+<p><strong>Create specified user</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#Execute in terminal</span>
+mysql -u root -p
+<span class="c1">#Then enter the password you set previously</span>
+</pre></div>
+</div>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="c1">#Create a normal user &#39;data&#39; with a password of &#39;xia17pxn&#39;</span>
+<span class="k">CREATE</span> <span class="n">USER</span> <span class="s1">&#39;data&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span> <span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;xia17pxn&#39;</span><span class="p">;</span>
+
+<span class="c1">#Give this user remote access permissions of SELECT, INSERT, UPDATE, DELETE. This account is generally used to provide system access for implementation.</span>
+<span class="k">GRANT</span> <span class="k">SELECT</span><span class="p">,</span><span class="k">INSERT</span><span class="p">,</span><span class="k">UPDATE</span><span class="p">,</span><span class="k">DELETE</span>  <span class="k">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;data&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+
+<span class="c1">#Create an administrator user &#39;admin&#39; with password &#39;xia17pxn&#39;</span>
+<span class="k">CREATE</span> <span class="n">USER</span> <span class="s1">&#39;admin&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span> <span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;xia17pxn&#39;</span><span class="p">;</span>
+
+<span class="c1">#Grant this user all remote access permissions. This user is mainly used to manage the entire database, backup, restore and other operations.</span>
+<span class="k">GRANT</span> <span class="k">ALL</span>  <span class="k">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;admin&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+
+<span class="c1">#Make the authorization effective immediately</span>
+<span class="k">flush</span> <span class="n">privileges</span><span class="p">;</span>
+
+<span class="c1">#Exit</span>
+<span class="k">exit</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="basic-database-operation-commands">
+<h2>Basic database operation commands<a class="headerlink" href="#basic-database-operation-commands" title="永久链接至标题">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mysql  -h <span class="m">127</span>.0.0.1 -u admin -p
+mysql  -h <span class="m">127</span>.0.0.1 -u data -p
+<span class="c1">#Here 127.0.0.1 means to view the machine, if remotely query from other computers, change to the IP of the corresponding computer, and then enter the password</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="UsersGuide/README.html" class="btn btn-neutral float-right" title="Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="INSTALL.html" class="btn btn-neutral float-left" title="Installation of Software" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Hongyi Wu(吴鸿毅)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
