@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 2月 11 13:18:52 2020 (+0800)
-.. Last-Updated: 二 2月 11 15:17:15 2020 (+0800)
+.. Last-Updated: 二 2月 11 23:13:54 2020 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 8
+..     Update #: 9
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -117,6 +117,7 @@ Ubuntu 18.04LTS
 
    #install the default MySQL package
    apt install mysql-server
+   apt install libmysqlclient-dev
    #The above command will install the MySQL server and all required dependencies. Once the installation is completed, the MySQL service will start automatically. 
 
    #verify whether the MySQL service is running

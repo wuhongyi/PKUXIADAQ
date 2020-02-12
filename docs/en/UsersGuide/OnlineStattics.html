@@ -101,7 +101,8 @@
 <li class="toctree-l1"><a class="reference internal" href="GUI.html">GUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NOGUI.html">NOGUI</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Online Stattics</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#root-based-graphical-interface">ROOT-based graphical interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#web-based-graphical-interface">Web-based graphical interface</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="MakeEvent.html">MakeEvent</a></li>
@@ -189,16 +190,51 @@
             
   <div class="section" id="online-stattics">
 <h1>Online Stattics<a class="headerlink" href="#online-stattics" title="永久链接至标题">¶</a></h1>
-<div class="section" id="interface">
-<h2>Interface<a class="headerlink" href="#interface" title="永久链接至标题">¶</a></h2>
-<p>Modify the file <strong>PixieOnline.config</strong> in <strong>OnlineStattics</strong>, where the first line is the original binary file storage path and the second line is the file name. The two-line parameters is file name. There are used to monitor the real-time size and disk usage of each file.</p>
+<div class="section" id="root-based-graphical-interface">
+<h2>ROOT-based graphical interface<a class="headerlink" href="#root-based-graphical-interface" title="永久链接至标题">¶</a></h2>
 <p>Open the online monitoring main interface by executing the following command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./online
 </pre></div>
 </div>
-<p>Check the binary file path and file name for any problems. If there is no problem, click the button <strong>Complete</strong>, then click <strong>RunStart</strong> to enable online monitoring, and online monitoring will be refreshed every 3 seconds. The trigger rate of each channel and the actual event output rate of each channel can be monitored in real time.</p>
+<p>click <strong>RunStart</strong> to enable online monitoring, and online monitoring will be refreshed every 3 seconds. The trigger rate of each channel and the actual event output rate of each channel can be monitored in real time.</p>
 <p>The monitoring interface is as follows:</p>
 <img alt="../_images/OnlineMainFrame.png" src="../_images/OnlineMainFrame.png" />
+<p>In the “Alert” interface, users can set the upper limit and lower limit of the trigger rate of each channel. When the trigger rate is lower than the set lower limit or higher than the set upper limit, the value of the channel will turn blue and red.</p>
+<p>In the “EnergyMonitor” interface, users can browse the energy spectrum of each channel.</p>
+</div>
+<div class="section" id="web-based-graphical-interface">
+<h2>Web-based graphical interface<a class="headerlink" href="#web-based-graphical-interface" title="永久链接至标题">¶</a></h2>
+<p><strong>The premise of using this web program is to install the MYSQL database. For how to install and set up the database, please check the corresponding chapter.</strong></p>
+<img alt="../_images/webOnlineMainFrame.png" src="../_images/webOnlineMainFrame.png" />
+<p>There are two subdirectories under the <em>mysql</em> directory, respectively <em>createdb</em> and <em>online</em>.</p>
+<p><strong>createdb</strong></p>
+<p>Modify the database parameters in the <em>mysql/createdb/UserDefine.hh</em> file. The information includes the IP of the database, and the user name and password for creating the database.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define HOST_NAME    &quot;222.29.111.140&quot;</span>
+<span class="cp">#define USER_NAME    &quot;admin&quot;</span>
+<span class="cp">#define USER_PASSWD  &quot;xia17pxn&quot;</span>
+</pre></div>
+</div>
+<p>Then run the following command to compile the program:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> mysql/createdb
+make clean
+make
+</pre></div>
+</div>
+<p>Compilation will generate the executable file <em>createdb</em>. Executing the program will create the database and the corresponding tables. <strong>It should be noted that each time the program is executed, the original database will be deleted and then re-created.</strong></p>
+<p><strong>online</strong></p>
+<p>Modify the database parameters in the <em>mysql/online/UserDefine.hh</em> file. The information includes the IP of the database, and a user name and password that has permissions to write and update the database.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define HOST_NAME    &quot;222.29.111.140&quot;</span>
+<span class="cp">#define USER_NAME    &quot;data&quot;</span>
+<span class="cp">#define USER_PASSWD  &quot;xia17pxn&quot;</span>
+</pre></div>
+</div>
+<p>Then run the following command to compile the program:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> mysql/online
+make clean
+make
+</pre></div>
+</div>
+<p>Compilation will generate an executable file <em>onlinedb</em>, execute the program, and periodically read the data in shared memory and write it to the database. <strong>This program needs to run at all times.</strong></p>
 </div>
 </div>
 

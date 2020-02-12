@@ -101,7 +101,8 @@
 <li class="toctree-l1"><a class="reference internal" href="GUI.html">图形交互界面</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NOGUI.html">非图形交互界面</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">在线统计</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id2">控制界面</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#root">基于 ROOT 的图形界面</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">基于网页的图形界面</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="MakeEvent.html">MakeEvent</a></li>
@@ -193,16 +194,51 @@
             
   <div class="section" id="id1">
 <h1>在线统计<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<div class="section" id="id2">
-<h2>控制界面<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<p>修改 <strong>OnlineStattics</strong> 中的文件 <strong>PixieOnline.config</strong>，其中第一行为原始二进制文件存放路径，第二行为文件名。通过该两行参数来监视每个文件时时大小及硬盘占用量。</p>
+<div class="section" id="root">
+<h2>基于 ROOT 的图形界面<a class="headerlink" href="#root" title="永久链接至标题">¶</a></h2>
 <p>通过执行以下命令，开启在线监视主界面：</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./online
 </pre></div>
 </div>
-<p>检查二进制文件路径、文件名是否有问题，如果没问题则点击按钮 <strong>Complete</strong>，之后点击 <strong>RunStart</strong> 则开启在线监视，在线监视每 3 秒刷新一次。可时时监视每路的触发率、每路的实际事件输出率。</p>
+<p>点击 <strong>RunStart</strong> 则开启在线监视，在线监视每 3 秒刷新一次。可时时监视每路的触发率、每路的实际事件输出率。</p>
 <p>监视界面如下：</p>
 <img alt="../_images/OnlineMainFrame.png" src="../_images/OnlineMainFrame.png" />
+<p>在 “Alert” 界面用户可以设置每个通道触发率的上限以及下限，当触发率低于设置的下限或者高于设置的上限，则该通道的数值将会变成蓝色和红色。</p>
+<p>在“EnergyMonitor”界面用户可以浏览每个通道的能谱。</p>
+</div>
+<div class="section" id="id2">
+<h2>基于网页的图形界面<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p><strong>使用本程序的前提是安装 MYSQL 数据库。关于如何安装及设置数据库，请查看相对应的章节。</strong></p>
+<img alt="../_images/webOnlineMainFrame.png" src="../_images/webOnlineMainFrame.png" />
+<p>在 mysql 目录下有两个子目录，分别为 createdb 和 online。</p>
+<p><strong>createdb</strong></p>
+<p>修改 <em>mysql/createdb/UserDefine.hh</em> 文件中的数据库参数，该信息包括数据库的 IP，拥有创建数据库的用户名和密码。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define HOST_NAME    &quot;222.29.111.140&quot;</span>
+<span class="cp">#define USER_NAME    &quot;admin&quot;</span>
+<span class="cp">#define USER_PASSWD  &quot;xia17pxn&quot;</span>
+</pre></div>
+</div>
+<p>然后运行以下命令编译程序：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> mysql/createdb
+make clean
+make
+</pre></div>
+</div>
+<p>编译完成将生成可执行文件 <em>createdb</em> ，执行该程序，将创建数据库以及相应的表。<strong>需要注意的是，每次执行该程序，将会删除原有的数据库然后重新创建。</strong></p>
+<p><strong>online</strong></p>
+<p>修改 <em>mysql/online/UserDefine.hh</em> 文件中的数据库参数，该信息包括数据库的 IP，拥有能够对数据库进行写入、更新权限的用户名和密码。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define HOST_NAME    &quot;222.29.111.140&quot;</span>
+<span class="cp">#define USER_NAME    &quot;data&quot;</span>
+<span class="cp">#define USER_PASSWD  &quot;xia17pxn&quot;</span>
+</pre></div>
+</div>
+<p>然后运行以下命令编译程序：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> mysql/online
+make clean
+make
+</pre></div>
+</div>
+<p>编译完成将生成可执行文件 <em>onlinedb</em> ，执行该程序，将周期性读取共享内存中的数据，并写入到数据库中。<strong>本程序需要始终运行。</strong></p>
 </div>
 </div>
 
