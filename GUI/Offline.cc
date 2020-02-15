@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 三 11月 20 19:20:26 2019 (+0800)
+// Last-Updated: 六 2月 15 18:46:28 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 1053
+//     Update #: 1058
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -214,6 +214,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
   RcdTrace14 = NULL;
   doublefastfilter14 = NULL;
   offlineth1i14 = NULL;
+  offlineth2i14 = NULL;
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
@@ -366,6 +367,7 @@ Offline::~Offline()
   if(RcdTrace14 != NULL) delete []RcdTrace14;
   if(doublefastfilter14 != NULL) delete []doublefastfilter14;
   if(offlineth1i14 != NULL) delete offlineth1i14;
+  if(offlineth2i14 != NULL) delete offlineth2i14;
   
   for (int i = 0; i < 16; ++i)
     {
@@ -5828,6 +5830,12 @@ void Offline::Panel14Draw()
       delete offlineth1i14;
       offlineth1i14 = NULL;
     }
+  if(offlineth2i14 != NULL)
+    {
+      delete offlineth2i14;
+      offlineth2i14 = NULL;
+    }
+
   
   canvas14->cd();
   canvas14->Clear();
@@ -5838,6 +5846,9 @@ void Offline::Panel14Draw()
   offlineth1i14 = new TH1I("offlineth1i14","",1000,0,1);
   offlineth1i14->GetXaxis()->SetTitle("fraction");
   offlineth1i14->SetTitle("0.125->7 0.25->6 0.375->5 0.5->4 0.625->3 0.75->2 0.875->1 1.0->0");
+  offlineth2i14 = new TH2I("offlineth2i14","",1000,0,1,1024,0,65536);
+  offlineth2i14->GetXaxis()->SetTitle("fraction");
+  offlineth2i14->GetYaxis()->SetTitle("Energy[ch]");
   
   int inttracelength = -1;
   for (unsigned int i = 0; i < OfflineModuleEventsCount; ++i)
@@ -5964,7 +5975,11 @@ void Offline::Panel14Draw()
 			      break;
 			    }
 			}
-		      if(flagslopemax > 0) offlineth1i14->Fill((doublefastfilter14[flagslopemax]+doublefastfilter14[flagslopemax+1])/2.0/doublefastfilter14[flagfffirst]);
+		      if(flagslopemax > 0)
+			{
+			  offlineth1i14->Fill((doublefastfilter14[flagslopemax]+doublefastfilter14[flagslopemax+1])/2.0/doublefastfilter14[flagfffirst]);
+			  offlineth2i14->Fill((doublefastfilter14[flagslopemax]+doublefastfilter14[flagslopemax+1])/2.0/doublefastfilter14[flagfffirst],offlinedata->GetEventEnergy(i));
+			}
 		    }
 
 		}//fast filter
@@ -5983,6 +5998,10 @@ void Offline::Panel14Draw()
     }// inttracelength > -1
   
   printtextinfor14->SetText("Draw Done!");
+  canvas14->Divide(2,1);
+  canvas14->cd(1);
+  offlineth2i14->Draw("colz");
+  canvas14->cd(2);
   offlineth1i14->Draw();
   canvas14->Modified();
   canvas14->Update();
