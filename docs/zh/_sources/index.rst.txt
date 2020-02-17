@@ -62,7 +62,7 @@ Welcome to GDDAQ's guides.
    Example/RecommendedParameters.rst
    Example/InBeamGammaCIAE.rst
 
-
+   
 #################################
 
 .. toctree::

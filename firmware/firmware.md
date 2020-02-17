@@ -4,12 +4,34 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 12月 13 09:41:49 2016 (+0800)
-;; Last-Updated: 六 11月 23 15:14:38 2019 (+0800)
+;; Last-Updated: 一 2月 17 21:12:06 2020 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 40
+;;     Update #: 41
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
+
+## coming soon
+
+- pixie16_revfpku_14b500m_firmware_release_xxxxxxxx  PKU firmware
+	- Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
+	- Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
+	- The value is set to 0 when the calculated energy is negative.
+	- The pileup event energy is not set to 0, output calculated values directly.
+
+- pixie16_revfpku_14b250m_release_xxxxxxxx  PKU firmware
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
+	- The value is set to 0 when the calculated energy is negative.
+	- The pileup event energy is not set to 0, output calculated values directly.
+	- 4-ch debug signals of the front panel A to the chassis backplane’s TriggerAll bits 28 to 31. TrigConfig3[0] control
+	- In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
+	
+- pixie16_revfpku_16b250m_release_xxxxxxxx  PKU firmware
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
+	- The value is set to 0 when the calculated energy is negative.
+	- The pileup event energy is not set to 0, output calculated values directly.
+	- 4-ch debug signals of the front panel A to the chassis backplane’s TriggerAll bits 28 to 31. TrigConfig3[0] control
+	- In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
 
 
 ## current firmware version
