@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 六 11月 23 14:00:12 2019 (+0800)
+// Last-Updated: 五 2月 21 13:00:00 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 217
+//     Update #: 221
 // URL: http://wuhongyi.cn 
 
 #include "LogicTrigger.hh"
@@ -101,21 +101,25 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
 
-  TGHorizontal3DLine *ln2 = new TGHorizontal3DLine(mn_vert, 200, 2);
-  mn_vert->AddFrame(ln2, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
+  // TGHorizontal3DLine *ln2 = new TGHorizontal3DLine(mn_vert, 200, 2);
+  // mn_vert->AddFrame(ln2, new TGLayoutHints(kLHintsCenterX | kLHintsCenterY, 0, 0, 10, 10));
 
   
-  TGHorizontalFrame *CopyButton = new TGHorizontalFrame(mn_vert, 400, 300);
-  mn_vert->AddFrame(CopyButton, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
-  CopyButton->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
-  
-  TGLabel *Copy = new TGLabel(CopyButton, "Select channel #");
-  CopyButton->AddFrame(Copy, new TGLayoutHints(kLHintsCenterX, 5, 10, 5, 0));
-  Copy->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
-  Copy->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
-  
-  chanCopy = new TGNumberEntry(CopyButton, 0, 4, MODNUMBER+1000, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3/*kNELLimitMinMax*/, 0, 3);
-  CopyButton->AddFrame(chanCopy, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 3, 0));
+  // TGHorizontalFrame *CopyButton = new TGHorizontalFrame(mn_vert, 400, 300);
+  // mn_vert->AddFrame(CopyButton, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  // CopyButton->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
+  TGTextButton *copyB = new TGTextButton(Buttons, "C&opy", COPYBUTTON+1000);
+  Buttons->AddFrame(copyB, new TGLayoutHints(kLHintsTop | kLHintsRight, 0, 20, 0, 0));
+  copyB->Associate(this);
+  copyB->SetToolTipText("Copy the setup of the selected channel to all channels of the module", 0);
+  copyB->ChangeOptions(copyB->GetOptions() ^ kRaisedFrame);
+  copyB->SetFont(TEXTBUTTON_FONT, false);
+  copyB->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  copyB->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+
+  chanCopy = new TGNumberEntry(Buttons, 0, 4, MODNUMBER+1000, (TGNumberFormat::EStyle) 0, (TGNumberFormat::EAttribute) 1, (TGNumberFormat::ELimit) 3/*kNELLimitMinMax*/, 0, 3);
+  Buttons->AddFrame(chanCopy, new TGLayoutHints(kLHintsTop | kLHintsRight, 0, 10, 3, 0));
   chanCopy->SetButtonToNum(0);
   chanCopy->IsEditable();
   chanCopy->SetIntNumber(0);
@@ -124,18 +128,14 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   chanCopy->GetNumberEntry()->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
   chanCopy->GetButtonUp()->ChangeOptions(chanCopy->GetButtonUp()->GetOptions() ^ kRaisedFrame);
   chanCopy->GetButtonDown()->ChangeOptions(chanCopy->GetButtonDown()->GetOptions() ^ kRaisedFrame);
-  chanCopy->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));
+  chanCopy->ChangeSubframesBackground(TColor::RGB2Pixel(TEXTENTRY_BG_R,TEXTENTRY_BG_G,TEXTENTRY_BG_B));  
 
-  TGTextButton *copyB = new TGTextButton(CopyButton, "C&opy", COPYBUTTON+1000);
-  CopyButton->AddFrame(copyB, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 20, 0, 0));
-  copyB->Associate(this);
-  copyB->SetToolTipText("Copy the setup of the selected channel to all channels of the module", 0);
-  copyB->ChangeOptions(copyB->GetOptions() ^ kRaisedFrame);
-  copyB->SetFont(TEXTBUTTON_FONT, false);
-  copyB->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
-  copyB->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
-
+  TGLabel *Copy = new TGLabel(Buttons, "Select channel #");
+  Buttons->AddFrame(Copy, new TGLayoutHints(kLHintsCenterX | kLHintsRight, 150, 0, 5, 0));
+  Copy->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  Copy->SetTextColor(TColor::RGB2Pixel(TABLE_LABEL_TEXT_R,TABLE_LABEL_TEXT_G,TABLE_LABEL_TEXT_B));
   
+
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
   TGHorizontal3DLine *ln22 = new TGHorizontal3DLine(mn_vert, 200, 2);

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 日 2月  9 13:48:47 2020 (+0800)
+// Last-Updated: 五 2月 21 11:28:28 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 295
+//     Update #: 304
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -362,7 +362,7 @@ Bool_t Online::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 
 void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
 {
-  TGGroupFrame *setgroup = new TGGroupFrame(TabPanel,"Setup");
+  TGGroupFrame *setgroup = new TGGroupFrame(TabPanel,"Info");
   TabPanel->AddFrame(setgroup,new TGLayoutHints(kLHintsExpandX|kLHintsTop,4,4,0,0));
   setgroup->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
@@ -537,7 +537,7 @@ void Online::MakeFold1Panel(TGCompositeFrame * TabPanel)
 				      kRaisedFrame | kDoubleBorder, GetWhitePixel());
 	  ICR[16*i+j]->SetAlignment(kTextCenterX);
 	  ICR[16*i+j]->SetText("");
-	  // ICR[16*i+j]->Resize(35, 20);
+	  ICR[16*i+j]->Resize(35, 20);
 	  ICR[16*i+j]->SetEnabled(kFALSE);
 	  // ICR[16*i+j]->SetFrameDrawn(kFALSE);
 	  Column1[3*i+1]->AddFrame(ICR[16*i+j], new TGLayoutHints(kLHintsExpandX, 0, 0, 0, 0));//kLHintsCenterX
@@ -996,6 +996,13 @@ void Online::LoopRun()
 		  memcpy(Statistics,buf+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+4*SHAREDMEMORYDATASTATISTICS*i,SHAREDMEMORYDATASTATISTICS*4);
 		  memcpy(Statistics_new,buf_new+SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+4*SHAREDMEMORYDATASTATISTICS*i,SHAREDMEMORYDATASTATISTICS*4);
 
+    // for (int j = 0; j < 4*448; ++j)
+    //   {
+    // 	printf("%02x ",buf[SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+4*SHAREDMEMORYDATASTATISTICS*i+j]);
+    //   }
+    // printf("\n");
+
+		  
 		  RealTime = (double)Statistics[2] * pow(2.0, 32.0);
 		  RealTime += (double)Statistics[3];
 		  RealTime *= 1.0e-6 / (double)SYSTEM_CLOCK_MHZ;
