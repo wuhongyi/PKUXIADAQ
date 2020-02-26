@@ -33,6 +33,12 @@ Detector::Detector(int mode)
   if(shmfd < 0) OpenSharedMemory();
   shmid1 = 0;
   shmid2 = 0;
+
+
+#ifdef DECODERONLINE
+  InitDecoderOnline();
+#endif
+  
 }
 
 Detector::~Detector()
@@ -503,6 +509,15 @@ int Detector::StartRun(int continue_run)
 {
   std::cout<<"RUN START"<<std::endl;
 
+#ifdef DECODERONLINE
+  memcpy(shmptr_dec,&runnumber,sizeof(int));
+  for(unsigned short i = 0;i < NumModules;i++)
+    {
+      memcpy(shmptr_dec+4+4*i,&buffid[i],sizeof(int));
+    }
+#endif
+
+  
   int retval = 0;
   // All modules start acuqire and Stop acquire simultaneously
   retval = Pixie16WriteSglModPar((char*)"SYNCH_WAIT", 1, 0);
@@ -538,7 +553,7 @@ int Detector::StartRun(int continue_run)
       fprintf(stderr, "Failed to start ListMode run in module");
       return retval;
     }
-
+ 
   return 0;
 }
 
@@ -571,7 +586,7 @@ int Detector::ReadDataFromModules(int thres,unsigned short  endofrun)
 
       if(nwords < (unsigned int)thres) continue;
 
-      if(buffid[i]+nwords >= BLEN)
+      if(buffid[i]+nwords >= BUFFLENGTH)
 	{
 	  SavetoFile(i);
 	}
@@ -690,7 +705,25 @@ int Detector::SavetoFile(int nFile)
       buffid[nFile] = 0;
       return 1;
     }
-      
+
+#ifdef DECODERONLINE
+  if(fdecoder)
+    {
+      for( ; ; )
+	{
+	  int point;
+	  memcpy(&point,shmptr_dec+4+4*nFile,sizeof(int));
+	  if(point == 0)
+	    {
+	      memcpy(shmptr_dec+60+BUFFLENGTH*4*nFile,&buff[nFile],sizeof(int)*buffid[nFile]);
+	      memcpy(shmptr_dec+4+4*nFile,&buffid[nFile],sizeof(int));
+	      break;
+	    }
+	  std::cout<<"Wait Mod: "<<nFile<<"  Buff: "<<buffid[nFile]<<std::endl;
+	}
+    }
+#endif
+
   if(frecord)
     {
       size_t n = fwrite(buff[nFile],4,buffid[nFile],fsave[nFile]);
@@ -760,6 +793,34 @@ int Detector::StopRun()
   return 0;
 }
 
+#ifdef DECODERONLINE
+void Detector::SetDecoterFlag(bool flag)
+{
+  fdecoder = flag;
+}
+
+void Detector::InitDecoderOnline()
+{
+  shmfd_dec = -1;
+  if((shmfd_dec = shm_open("shmpixie16pkuxiadaqdecoderonline",O_CREAT|O_RDWR,0666)) < 0)
+    {
+      std::cout<<"Can not create shared memory [decoderonline]"<<std::endl;
+    }
+
+  if(ftruncate(shmfd_dec,(off_t)(60+BUFFLENGTH*13*4)) < 0)
+    {
+      std::cout<<"Can not alloc memory for shared memory [decoderonline] !"<<std::endl;
+    }
+
+  if((shmptr_dec = (unsigned char*) mmap(NULL,60+BUFFLENGTH*13*4, PROT_READ|PROT_WRITE,MAP_SHARED,shmfd_dec,0)) == MAP_FAILED)
+    {
+      std::cout<<"Can not mmap the shared memroy [decoderonline] to process space"<<std::endl;
+    }
+  return;
+}
+#endif
+
+
 int Detector::OpenSharedMemory()
 {
    int flag = 0;
@@ -777,7 +838,6 @@ int Detector::OpenSharedMemory()
 
    if(ftruncate(shmfd,(off_t)(SHAREDMEMORYDATAOFFSET+PRESET_MAX_MODULES*2+PRESET_MAX_MODULES*4*SHAREDMEMORYDATASTATISTICS+PRESET_MAX_MODULES*4*SHAREDMEMORYDATAENERGYLENGTH*SHAREDMEMORYDATAMAXCHANNEL)) < 0)
      {
-
        std::cout<<"Cannot alloc memory for shared memory!"<<std::endl;
        flag++;
      }

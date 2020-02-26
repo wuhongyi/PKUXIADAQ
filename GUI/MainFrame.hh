@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:17 2018 (+0800)
-// Last-Updated: 六 11月 23 12:14:32 2019 (+0800)
+// Last-Updated: 三 2月 26 22:10:55 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 57
+//     Update #: 58
 // URL: http://wuhongyi.cn 
 
 #ifndef MAINFRAME_HH_
@@ -94,7 +94,10 @@ public:
   void SetOnlineDataFlag();
   void SetRecordDataFlag();
   void SetOnlineMode();
-
+#ifdef DECODERONLINE
+  void SetDecoderDataFlag();
+#endif
+  
   
 private:
   TGTextEntry *StateMsgFold1;
@@ -167,6 +170,10 @@ private:
   bool            frecorddata;
   bool            fstartdaq;
 
+#ifdef DECODERONLINE
+TGCheckButton   *decoderchk;
+#endif
+  
   // ******* information *******
   TGTextEntry* lastruntextinfor;
 
@@ -184,3 +191,4 @@ void DynamicExec();
 
 // 
 // MainFrame.hh ends here
+

@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 五 11月 30 20:59:18 2018 (+0800)
-;; Last-Updated: 二 12月  3 16:14:46 2019 (+0800)
+;; Last-Updated: 三 2月 26 13:08:34 2020 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 5
+;;     Update #: 6
 ;; URL: http://wuhongyi.cn -->
 
 # TODO
@@ -108,6 +108,11 @@ exit
 ```
 
 
+
+警告：teamviewer_15.2.2756.x86_64.rpm: 头V4 RSA/SHA1 Signature, 密钥 ID 0c1289c0: NOKEY
+gtk-update-icon-cache: Cache file created successfully.
+Error in file "/usr/share/applications/org.gnome.font-viewer.desktop": "font/ttf" is an invalid MIME type ("font" is an unregistered media type)
+Error in file "/usr/share/applications/org.gnome.font-viewer.desktop": "font/otf" is an invalid MIME type ("font" is an unregistered media type)
 
 
 <!-- TODOLIST.md ends here -->

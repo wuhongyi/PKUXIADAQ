@@ -1,6 +1,7 @@
 #ifndef DETECTOR_HH_
 #define DETECTOR_HH_
 
+#include "Global.hh"
 #include "../software/app/pixie16app_export.h"
 
 #include <fcntl.h>
@@ -26,8 +27,7 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#define BLEN (500*2516) // size of 1 buffer
-#define BUFFLENGTH (500*2516) // 4.8MB Buffer *2 (DBUFF)
+#define BUFFLENGTH 1310720 // 5.0MB Buffer *2 (DBUFF)
 
 #define SHAREDMEMORYDATAOFFSET 1170 //BYTE
 // 1st 4    bytes IDcode for event shared memory
@@ -62,6 +62,9 @@ public:
   int CloseFile();
   int SetOnlineFlag(bool flag);
   void SetRecordFlag(bool flag);
+#ifdef DECODERONLINE
+  void SetDecoterFlag(bool flag);
+#endif
   void SetRunFlag(bool flag);
   bool GetRunFlag() {return frunstatus;}
   int SaveHistogram(char *fileN,int mod);
@@ -171,6 +174,20 @@ private:
   unsigned char *shmptr;// pointer to shm
 
   unsigned int shmid1,shmid2;
+
+#ifdef DECODERONLINE
+  int    shmfd_dec;  // shared memory id
+  unsigned char *shmptr_dec;// pointer to shm
+  // runnumber 4 byte
+  // bufflegth 4 byte * 13
+  // temp      4 byte
+  // buff * 14
+  
+  void InitDecoderOnline();
+  bool   fdecoder;
+#endif
+
+
   
   bool   fonline;
   bool   frecord;

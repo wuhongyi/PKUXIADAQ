@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 六 11月 23 14:32:30 2019 (+0800)
+// Last-Updated: 三 2月 26 22:49:34 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 395
+//     Update #: 402
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -287,6 +287,10 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      detector = new Detector(flagonlinemode);
 	      detector->SetRecordFlag(true);
 	      recordchk->SetState(kButtonDown);
+#ifdef DECODERONLINE	      
+	      detector->SetDecoterFlag(false);
+	      decoderchk->SetState(kButtonUp);
+#endif
 	      detector->SetRunFlag(true);
 	      if(detector->BootSystem())
 		{
@@ -584,6 +588,17 @@ void MainFrame::ControlPanel(TGCompositeFrame *TabPanel)
   updateenergyonline->SetOn(kFALSE);
   cgrouphframe2->AddFrame(updateenergyonline,new TGLayoutHints(kLHintsLeft|kLHintsTop,0,0,10,3));
 
+#ifdef DECODERONLINE
+  // record/not record raw data
+  decoderchk = new TGCheckButton(cgrouphframe2,"Decoder");
+  decoderchk->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  decoderchk->SetTextColor(TColor::RGB2Pixel(CHECKBUTTON_TEXT_R,CHECKBUTTON_TEXT_G,CHECKBUTTON_TEXT_B));
+  decoderchk->SetFont(CHECKBUTTON_FONT, false);
+  decoderchk->SetState(kButtonUp);
+  decoderchk->Connect("Clicked()","MainFrame",this,"SetDecoderDataFlag()");
+  cgrouphframe2->AddFrame(decoderchk,new TGLayoutHints(kLHintsRight|kLHintsTop,0,0,10,3));
+#endif
+  
 
   
   // restore last run's file information
@@ -750,6 +765,9 @@ void MainFrame::StartRun()
       onlinemode->SetEnabled(0);
       filesetdone->SetEnabled(0);
       recordchk->SetEnabled(0);
+#ifdef DECODERONLINE
+      decoderchk->SetEnabled(0);
+#endif
       
       SetMenuStatus(false,flagonlinemode);
       
@@ -832,6 +850,9 @@ void MainFrame::StartRun()
       onlinemode->SetEnabled(1);
       filesetdone->SetEnabled(1);
       recordchk->SetEnabled(1);
+#ifdef DECODERONLINE
+      decoderchk->SetEnabled(1);
+#endif
     }
 }
 
@@ -891,6 +912,7 @@ void MainFrame::SetOnlineMode()
 
 void MainFrame::SetOnlineDataFlag()
 {
+   if(detector == NULL) return;
   if(onlinechk->IsOn())
     {
       fonlinedata = 1;
@@ -905,8 +927,25 @@ void MainFrame::SetOnlineDataFlag()
     }
 }
 
+
+#ifdef DECODERONLINE
+void MainFrame::SetDecoderDataFlag()
+{
+  if(detector == NULL) return;
+  if(decoderchk->IsOn())
+    {
+      detector->SetDecoterFlag(true);
+    }
+  else
+    {
+      detector->SetDecoterFlag(false);
+    }
+}
+#endif
+
 void MainFrame::SetRecordDataFlag()
 {
+  if(detector == NULL) return;
   if(recordchk->IsOn())
     {
       frecorddata = true;
