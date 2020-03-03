@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 六 2月 15 18:46:28 2020 (+0800)
+// Last-Updated: 二 3月  3 14:08:23 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 1058
+//     Update #: 1059
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -298,7 +298,7 @@ Offline::Offline(const TGWindow * p, const TGWindow * main,Detector *det,TGTextE
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
-  SetWindowName("Review & Adjust Par");
+  SetWindowName("Review & Offline optimization");
   MapSubwindows();
   MapWindow();
   Resize(1500,1000);

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 三 2月 26 22:49:34 2020 (+0800)
+// Last-Updated: 二 3月  3 14:09:34 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 402
+//     Update #: 403
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -106,7 +106,7 @@ void MainFrame::CreateMenuBar()
   MenuMonitor->SetBackgroundColor(TColor::RGB2Pixel(0,128,0));
 
   MenuOffline = new TGPopupMenu(fClient->GetRoot());
-  MenuOffline->AddEntry("Adjust Par", OFFLINEADJUSTPAR);
+  MenuOffline->AddEntry("Pars optimization", OFFLINEADJUSTPAR);
   MenuOffline->AddEntry("Simulation", SIMULATION);
   MenuOffline->Associate(this);
   MenuOffline->SetBackgroundColor(TColor::RGB2Pixel(0,128,0));
