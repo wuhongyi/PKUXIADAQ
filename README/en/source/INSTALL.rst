@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 四 1月 30 23:19:42 2020 (+0800)
+.. Last-Updated: 日 3月 22 19:27:55 2020 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 30
+..     Update #: 32
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -308,6 +308,16 @@ At this point, the user can modify the file **/usr/src/kernels/3.10.0-957.12.2.e
     endif
 
 
+---------------------------------
+TeamViewer
+---------------------------------
+
+TeamViewer is an app that allows you to remotely connect to multiple workstations. There are many apps that allow remote control of different systems, but TeamViewer is set up to be extremely accessible, while also being powerful.
+
+
+https://www.teamviewer.cn/cn/download/linux/
+
+.. image:: /_static/img/TeamViewer.png
 
 
 .. 

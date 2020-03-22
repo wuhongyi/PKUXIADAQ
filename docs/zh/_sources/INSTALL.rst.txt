@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 四 1月 30 23:19:40 2020 (+0800)
+.. Last-Updated: 日 3月 22 19:27:54 2020 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 29
+..     Update #: 31
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -291,6 +291,17 @@
         $(error CONFIG_RETPOLINE=y, but not supported by the compiler. Compiler update recommended.)
     endif
 
+---------------------------------
+TeamViewer
+---------------------------------
+
+TeamViewer是一个应用程序，可让您远程连接到多个工作站。 有许多应用程序可以远程控制不同的系统，但TeamViewer设置为具有极强的可访问性，同时功能也很强大。
+
+
+https://www.teamviewer.cn/cn/download/linux/
+
+
+.. image:: /_static/img/TeamViewer.png
 
 
   

@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 三 2月 26 22:50:47 2020 (+0800)
+;; Last-Updated: 日 3月 22 19:09:04 2020 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 151
+;;     Update #: 152
 ;; URL: http://wuhongyi.cn -->
 
 # A general-purpose digital data acquisition system(GDDAQ)
@@ -25,7 +25,7 @@ English | [简体中文](https://github.com/wuhongyi/PKUXIADAQ/blob/master/READM
 
 ### Stable Version
 
-**Stable Version Version:2020.02.09**  
+**Stable Version Version:2020.03.20**  
 
 Download the latest version, please click:  [PKUXIADAQ stable](https://github.com/pkuNucExp/PKUXIADAQ)
 
@@ -38,7 +38,7 @@ For web page manual, please click:  [English/简体中文](https://pkunucexp.git
 
 ### Pre-alpha
 
-**Pre-alpha Version:2020.02.26**  
+**Pre-alpha Version:2020.03.20**  
 
 Download the latest version:  [PKUXIADAQ](https://github.com/wuhongyi/PKUXIADAQ)
 
