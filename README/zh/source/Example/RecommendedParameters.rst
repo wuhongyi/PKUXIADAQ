@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 14:55:57 2019 (+0800)
-.. Last-Updated: 日 10月 20 11:36:53 2019 (+0800)
+.. Last-Updated: 三 5月  6 19:07:38 2020 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 3
+..     Update #: 4
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -192,6 +192,8 @@ Si
 100M
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+CIAE pre-amp
+
 - fast filter
 	- FL: 0.1
 	- GF: 0.0
@@ -201,6 +203,18 @@ Si
 	- Range: 2
 	- TAU: Based on actual measurements
 
+
+mesytec pre-amp
+
+- fast filter
+	- FL: 0.2
+	- GF: 0.0
+- slow filter
+	- SL: 3.52
+	- SG: 0.8
+	- Range: 2
+	- TAU: Based on actual measurements
+	  
 ----
 
 ---------------------------------

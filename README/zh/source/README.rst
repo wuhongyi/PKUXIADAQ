@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 20:19:34 2019 (+0800)
-.. Last-Updated: 日 3月 22 19:07:25 2020 (+0800)
+.. Last-Updated: 五 6月  5 20:55:19 2020 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 32
+..     Update #: 33
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -140,9 +140,9 @@
 版权声明
 ---------------------------------  
 
+如果您使用本软件或者基于本软件开发的任何软件，请引用以下文献：
 
-
-
+- `A general-purpose digital data acquisition system (GDDAQ) at Peking University <https://doi.org/10.1016/j.nima.2020.164200>`_ 
 
 .. 
 .. README.rst ends here
