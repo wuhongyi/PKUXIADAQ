@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 五 2月 21 13:00:00 2020 (+0800)
+// Last-Updated: 三 6月 10 13:41:25 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 221
+//     Update #: 236
 // URL: http://wuhongyi.cn 
 
 #include "LogicTrigger.hh"
@@ -174,7 +174,7 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   fVV2_->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   TGTextEntry *LabelFastTriggerBackplaneRight = new TGTextEntry(fVV2_,new TGTextBuffer(100));
-  fVV2_->AddFrame(LabelFastTriggerBackplaneRight, new TGLayoutHints(kLHintsCenterX, 20, 0, 0, 0));
+  fVV2_->AddFrame(LabelFastTriggerBackplaneRight, new TGLayoutHints(kLHintsCenterX, 10, 0, 0, 0));
   LabelFastTriggerBackplaneRight->SetText("FastTrigBackplaneRight[0-FFFF]:");
   LabelFastTriggerBackplaneRight->SetEnabled(kFALSE);
   LabelFastTriggerBackplaneRight->SetFrameDrawn(kFALSE);
@@ -196,33 +196,33 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   frontpaneloutputframe->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   TGTextEntry *LabelFrontPanelOutput = new TGTextEntry(frontpaneloutputframe,new TGTextBuffer(100));
-  frontpaneloutputframe->AddFrame(LabelFrontPanelOutput, new TGLayoutHints(kLHintsCenterX, 20, 0, 0, 0));
+  frontpaneloutputframe->AddFrame(LabelFrontPanelOutput, new TGLayoutHints(kLHintsCenterX, 10, 0, 0, 0));
   LabelFrontPanelOutput->SetText("Debug Monitor");
   LabelFrontPanelOutput->SetEnabled(kFALSE);
   LabelFrontPanelOutput->SetFrameDrawn(kFALSE);
   LabelFrontPanelOutput->SetAlignment(kTextCenterX);
   LabelFrontPanelOutput->SetBackgroundColor(TColor::RGB2Pixel(COLOR_YELLOW_R,COLOR_YELLOW_G,COLOR_YELLOW_B));
   // LabelFrontPanelOutput->SetToolTipText("", 0);
-  LabelFrontPanelOutput->Resize(120, 20);
+  LabelFrontPanelOutput->Resize(90, 20);
   
 
   EnableDisableOfTestSignals = new TGComboBox(frontpaneloutputframe);
   frontpaneloutputframe->AddFrame(EnableDisableOfTestSignals, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-  EnableDisableOfTestSignals->Resize(100, 20);
+  EnableDisableOfTestSignals->Resize(70, 20);
   EnableDisableOfTestSignals->AddEntry("Disable", 1);
   EnableDisableOfTestSignals->AddEntry("Enable", 2);
   EnableDisableOfTestSignals->Select(1);
   
   GroupOfTestSignals = new TGComboBox(frontpaneloutputframe);
   frontpaneloutputframe->AddFrame(GroupOfTestSignals, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-  GroupOfTestSignals->Resize(100, 20);
+  GroupOfTestSignals->Resize(80, 20);
   GroupOfTestSignals->AddEntry("Group 000", 1);
   GroupOfTestSignals->AddEntry("Group 001", 2);
   GroupOfTestSignals->Select(1);
 
   ChannelOfTestSignals = new TGComboBox(frontpaneloutputframe);
   frontpaneloutputframe->AddFrame(ChannelOfTestSignals, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-  ChannelOfTestSignals->Resize(100, 20);
+  ChannelOfTestSignals->Resize(55, 20);
   for (int i = 0; i < 16; ++i)
     {
       ChannelOfTestSignals->AddEntry(TString::Format("Ch %02d",i).Data(), i+1);
@@ -231,7 +231,7 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
 
   TestSignals = new TGComboBox(frontpaneloutputframe);
   frontpaneloutputframe->AddFrame(TestSignals, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-  TestSignals->Resize(100, 20);
+  TestSignals->Resize(85, 20);
   for (int i = 0; i < 16; ++i)
     {
       TestSignals->AddEntry(TString::Format("TestSig %02d",i).Data(), i+1);
@@ -245,17 +245,55 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   LabelBackplaneOutput->SetAlignment(kTextCenterX);
   LabelBackplaneOutput->SetBackgroundColor(TColor::RGB2Pixel(COLOR_YELLOW_R,COLOR_YELLOW_G,COLOR_YELLOW_B));
   // LabelBackplaneOutput->SetToolTipText("", 0);
-  LabelBackplaneOutput->Resize(80, 20);
+  LabelBackplaneOutput->Resize(70, 20);
   frontpaneloutputframe->AddFrame(LabelBackplaneOutput, new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
 
   
   DebugSignalsOfBackplane = new TGComboBox(frontpaneloutputframe);
   frontpaneloutputframe->AddFrame(DebugSignalsOfBackplane, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
-  DebugSignalsOfBackplane->Resize(100, 20);
+  DebugSignalsOfBackplane->Resize(70, 20);
   DebugSignalsOfBackplane->AddEntry("Disable", 1);
   DebugSignalsOfBackplane->AddEntry("Enable", 2);
   DebugSignalsOfBackplane->Select(1);
   
+
+  TGTextEntry *LabelBackplaneInputETS = new TGTextEntry(frontpaneloutputframe,new TGTextBuffer(100));
+  LabelBackplaneInputETS->SetText("ETS");
+  LabelBackplaneInputETS->SetEnabled(kFALSE);
+  LabelBackplaneInputETS->SetFrameDrawn(kFALSE);
+  LabelBackplaneInputETS->SetAlignment(kTextCenterX);
+  LabelBackplaneInputETS->SetBackgroundColor(TColor::RGB2Pixel(COLOR_PURPLE_R,COLOR_PURPLE_G,COLOR_PURPLE_B));
+  // LabelBackplaneInput->SetToolTipText("", 0);
+  LabelBackplaneInputETS->Resize(20, 20);
+  frontpaneloutputframe->AddFrame(LabelBackplaneInputETS, new TGLayoutHints(kLHintsCenterX, 10, 0, 0, 0));
+
+  SignalsOfBackplaneTimestamp = new TGComboBox(frontpaneloutputframe);
+  frontpaneloutputframe->AddFrame(SignalsOfBackplaneTimestamp, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  SignalsOfBackplaneTimestamp->Resize(85, 20);
+  SignalsOfBackplaneTimestamp->AddEntry("front panel", 1);
+  SignalsOfBackplaneTimestamp->AddEntry("backplane", 2);
+  SignalsOfBackplaneTimestamp->Select(1);
+
+
+  TGTextEntry *LabelBackplaneInputInhibit = new TGTextEntry(frontpaneloutputframe,new TGTextBuffer(100));
+  LabelBackplaneInputInhibit->SetText("Inhibit");
+  LabelBackplaneInputInhibit->SetEnabled(kFALSE);
+  LabelBackplaneInputInhibit->SetFrameDrawn(kFALSE);
+  LabelBackplaneInputInhibit->SetAlignment(kTextCenterX);
+  LabelBackplaneInputInhibit->SetBackgroundColor(TColor::RGB2Pixel(COLOR_PURPLE_R,COLOR_PURPLE_G,COLOR_PURPLE_B));
+  // LabelBackplaneInput->SetToolTipText("", 0);
+  LabelBackplaneInputInhibit->Resize(45, 20);
+  frontpaneloutputframe->AddFrame(LabelBackplaneInputInhibit, new TGLayoutHints(kLHintsCenterX, 0, 0, 0, 0));
+
+  SignalsOfBackplaneInhibit = new TGComboBox(frontpaneloutputframe);
+  frontpaneloutputframe->AddFrame(SignalsOfBackplaneInhibit, new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 0, 0, 0));
+  SignalsOfBackplaneInhibit->Resize(85, 20);
+  SignalsOfBackplaneInhibit->AddEntry("front panel", 1);
+  SignalsOfBackplaneInhibit->AddEntry("backplane", 2);
+  SignalsOfBackplaneInhibit->Select(1);
+
+
+
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
@@ -1059,7 +1097,10 @@ int LogicTrigger::load_info(Long_t mod)
   if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/TrigConfig3", retval);
   gt = APP32_TstBit(0, ModParData);
   DebugSignalsOfBackplane->Select(gt+1);
-
+  gt = APP32_TstBit(1, ModParData);
+  SignalsOfBackplaneTimestamp->Select(gt+1);
+  gt = APP32_TstBit(2, ModParData);
+  SignalsOfBackplaneInhibit->Select(gt+1);
   
   retval = Pixie16ReadSglModPar((char*)"TrigConfig0", &ModParData, mod);
   if(retval < 0) ErrorInfo("LogicTrigger.cc", "load_info(...)", "Pixie16ReadSglChanPar/TrigConfig0", retval);
@@ -1457,6 +1498,17 @@ int LogicTrigger::change_values(Long_t mod)
 	}
     }
 
+  if(SignalsOfBackplaneTimestamp->GetSelected() == 1)
+    ModParData = APP32_ClrBit(1, ModParData);
+  else
+    ModParData = APP32_SetBit(1, ModParData);
+
+  if(SignalsOfBackplaneInhibit->GetSelected() == 1)
+    ModParData = APP32_ClrBit(2, ModParData);
+  else
+    ModParData = APP32_SetBit(2, ModParData);
+
+  
   retval = Pixie16WriteSglModPar((char*)"TrigConfig3", ModParData, mod);
   if(retval < 0) ErrorInfo("LogicTrigger.cc", "change_values(...)", "Pixie16WriteSglModPar/TrigConfig3", retval);
 

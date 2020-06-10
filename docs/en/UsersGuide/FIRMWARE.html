@@ -204,8 +204,9 @@
 </dl>
 </li>
 <li><dl class="simple">
-<dt>100MHz 14 bit(pixie16_revfpku_14b100m_firmware_release_10142019) DSP down frequency 1/4 output has bug</dt><dd><ul>
+<dt>100MHz 14 bit(pixie16_revfpku_14b100m_firmware_release_06092020) DSP down frequency 1/4 output has bug</dt><dd><ul>
 <li><p>4-ch debug signals of the front panel A to the chassis backplane’s TriggerAll bits 28 to 31. TrigConfig3[0] control</p></li>
+<li><p>send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane</p></li>
 <li><p>multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1.  Output from front panel A and RJ45.</p></li>
 <li><p>The value is set to 0 when the calculated energy is negative.</p></li>
 <li><p>The pileup event energy is not set to 0, output calculated values directly.</p></li>

@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 22:13:09 2019 (+0800)
-.. Last-Updated: 六 11月 23 15:15:45 2019 (+0800)
+.. Last-Updated: 三 6月 10 16:45:26 2020 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 7
+..     Update #: 9
 .. URL: http://wuhongyi.cn 
 
 =================================
@@ -23,8 +23,9 @@
 - 100MHz 14 bit(pixie16_revf_general_14b100m_firmware_release)	  
 	- 标准固件
 
-- 100MHz 14 bit(pixie16_revfpku_14b100m_firmware_release_10142019) 波形降频1/4时存在问题
-        - 4 路调试监视信号输出到机箱背板 TriggerAll[28:31]，通过 TrigConfig3[0] 来控制是否开启
+- 100MHz 14 bit(pixie16_revfpku_14b100m_firmware_release_06092020) 波形降频1/4时存在问题
+        - 4 路调试监视信号输出到机箱背板 TriggerAll[28:31]，通过 TrigConfig3[1/2] 来控制是否开启
+	- 通过机箱背板传输外部时钟清除信号、外部时钟信号、run inhibit 信号。通过 TrigConfig3[0] 来控制信号源是前面板还是机箱背板
 	- MultiplicityMaskHigh[31]=0和1 时候RJ45口与前面板A均能输出 multiplicity 结果。
 	- 当计算的能量为负数时，该值设置为 0。
 	- pileup 事件能量保留，不设置为 0。

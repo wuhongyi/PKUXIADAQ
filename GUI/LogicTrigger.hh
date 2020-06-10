@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:36 2016 (+0800)
-// Last-Updated: 六 11月 23 13:58:50 2019 (+0800)
+// Last-Updated: 三 6月 10 13:29:12 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 31
+//     Update #: 33
 // URL: http://wuhongyi.cn 
 
 #ifndef _LOGICTRIGGER_HH_
@@ -100,7 +100,8 @@ protected:
   TGComboBox *ChannelOfTestSignals;
   TGComboBox *TestSignals;
   TGComboBox *DebugSignalsOfBackplane;
-
+  TGComboBox *SignalsOfBackplaneTimestamp;
+  TGComboBox *SignalsOfBackplaneInhibit;
 private:
   Detector *detector;
 };

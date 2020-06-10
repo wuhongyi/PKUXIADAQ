@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 22:13:09 2019 (+0800)
-.. Last-Updated: 六 11月 23 15:15:45 2019 (+0800)
+.. Last-Updated: 三 6月 10 16:44:39 2020 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 8
+..     Update #: 10
 .. URL: http://wuhongyi.cn 
 
 =================================
@@ -23,8 +23,9 @@ Added the following features based on standard firmware：
 - 100MHz 14 bit(pixie16_revf_general_14b100m_firmware_release)
 	- standard firmware  
 
-- 100MHz 14 bit(pixie16_revfpku_14b100m_firmware_release_10142019) DSP down frequency 1/4 output has bug
+- 100MHz 14 bit(pixie16_revfpku_14b100m_firmware_release_06092020) DSP down frequency 1/4 output has bug
 	- 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits 28 to 31. TrigConfig3[0] control
+	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
 	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1.  Output from front panel A and RJ45.
 	- The value is set to 0 when the calculated energy is negative. 
 	- The pileup event energy is not set to 0, output calculated values directly.

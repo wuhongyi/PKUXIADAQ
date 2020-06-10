@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 12月 13 09:41:49 2016 (+0800)
-;; Last-Updated: 一 2月 17 21:12:06 2020 (+0800)
+;; Last-Updated: 三 6月 10 16:45:11 2020 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 41
+;;     Update #: 44
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
@@ -35,6 +35,20 @@
 
 
 ## current firmware version
+
+- pixie16_revfpku_14b100m_firmware_release_06092020  PKU firmware(DSP down frequency 1/4 output has bug)
+	- 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits 28 to 31. TrigConfig3[0] control
+	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1.  Output from front panel A and RJ45.
+	- The value is set to 0 when the calculated energy is negative. 
+	- The pileup event energy is not set to 0, output calculated values directly.
+	- In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
+	- The record waveform mode with down frequency output. The strategy adopted is to select the output of 1, 1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128 frequency, ie how many points retain one point. The points retained are the averaged values.
+	- tried to speed up the event processing, by removing some of the unnecessary wait when reading trace from each channel.
+	- Also removed a few unnecessary processing routines in the DSP code:
+		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
+		- (2) removed "no traces for large pulses" feature.
+
 
 - pixie16_revfpku_14b100m_firmware_release_10142019  PKU firmware(DSP down frequency 1/4 output has bug)
 	- 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits 28 to 31. TrigConfig3[0] control
@@ -209,6 +223,21 @@
 	- Also removed a few unnecessary processing routines in the DSP code:
 		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
 		- (2) removed "no traces for large pulses" feature.
+
+- pixie16_revfpku_14b100m_firmware_release_06092020  PKU firmware(DSP down frequency 1/4 output has bug)
+	- 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits 28 to 31. TrigConfig3[0] control
+	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1.  Output from front panel A and RJ45.
+	- The value is set to 0 when the calculated energy is negative. 
+	- The pileup event energy is not set to 0, output calculated values directly.
+	- In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
+	- The record waveform mode with down frequency output. The strategy adopted is to select the output of 1, 1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128 frequency, ie how many points retain one point. The points retained are the averaged values.
+	- tried to speed up the event processing, by removing some of the unnecessary wait when reading trace from each channel.
+	- Also removed a few unnecessary processing routines in the DSP code:
+		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
+		- (2) removed "no traces for large pulses" feature.
+
+
 
 
 
