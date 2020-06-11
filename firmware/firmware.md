@@ -4,54 +4,49 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 12月 13 09:41:49 2016 (+0800)
-;; Last-Updated: 三 6月 10 16:45:11 2020 (+0800)
+;; Last-Updated: 四 6月 11 23:36:06 2020 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 44
+;;     Update #: 50
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
 
-## coming soon
+## current firmware version
 
-- pixie16_revfpku_14b500m_firmware_release_xxxxxxxx  PKU firmware
+- pixie16_revfpku_14b500m_firmware_release_06102020  PKU firmware
 	- Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
+	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
 	- Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
 	- The value is set to 0 when the calculated energy is negative.
 	- The pileup event energy is not set to 0, output calculated values directly.
 
-- pixie16_revfpku_14b250m_release_xxxxxxxx  PKU firmware
+- pixie16_revfpku_14b250m_release_06102020  PKU firmware(sometime not output)
 	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
-	- The value is set to 0 when the calculated energy is negative.
-	- The pileup event energy is not set to 0, output calculated values directly.
-	- 4-ch debug signals of the front panel A to the chassis backplane’s TriggerAll bits 28 to 31. TrigConfig3[0] control
-	- In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
-	
-- pixie16_revfpku_16b250m_release_xxxxxxxx  PKU firmware
-	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
-	- The value is set to 0 when the calculated energy is negative.
-	- The pileup event energy is not set to 0, output calculated values directly.
-	- 4-ch debug signals of the front panel A to the chassis backplane’s TriggerAll bits 28 to 31. TrigConfig3[0] control
-	- In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
-
-
-## current firmware version
-
-- pixie16_revfpku_14b100m_firmware_release_06092020  PKU firmware(DSP down frequency 1/4 output has bug)
-	- 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits 28 to 31. TrigConfig3[0] control
 	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
-	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1.  Output from front panel A and RJ45.
-	- The value is set to 0 when the calculated energy is negative. 
+	- The value is set to 0 when the calculated energy is negative.
 	- The pileup event energy is not set to 0, output calculated values directly.
+	- 4-ch debug signals of the front panel A to the chassis backplane’s TriggerAll bits 28 to 31. TrigConfig3[0] control
 	- In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
-	- The record waveform mode with down frequency output. The strategy adopted is to select the output of 1, 1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128 frequency, ie how many points retain one point. The points retained are the averaged values.
+	- tried to speed up the event processing, by removing some of the unnecessary wait when reading trace from each channel.
+	- Also removed a few unnecessary processing routines in the DSP code:
+		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
+		- (2) removed "no traces for large pulses" feature.	
+		
+- pixie16_revfpku_16b250m_release_06102020  PKU firmware(sometime not output)
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
+	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
+	- The value is set to 0 when the calculated energy is negative.
+	- The pileup event energy is not set to 0, output calculated values directly.
+	- 4-ch debug signals of the front panel A to the chassis backplane’s TriggerAll bits 28 to 31. TrigConfig3[0] control
+	- In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
 	- tried to speed up the event processing, by removing some of the unnecessary wait when reading trace from each channel.
 	- Also removed a few unnecessary processing routines in the DSP code:
 		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
 		- (2) removed "no traces for large pulses" feature.
 
-
-- pixie16_revfpku_14b100m_firmware_release_10142019  PKU firmware(DSP down frequency 1/4 output has bug)
+- pixie16_revfpku_14b100m_firmware_release_06092020  PKU firmware(DSP down frequency 1/4 output has bug)
 	- 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits 28 to 31. TrigConfig3[0] control
+	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
 	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1.  Output from front panel A and RJ45.
 	- The value is set to 0 when the calculated energy is negative. 
 	- The pileup event energy is not set to 0, output calculated values directly.
@@ -79,16 +74,6 @@
 
 - pixie16_revf_12b250m_firmware_release  standard firmware
 
-- pixie16_revfpku_14b250m_release_06092019   PKU firmware(sometime not output)
-	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
-	- The value is set to 0 when the calculated energy is negative.
-	- The pileup event energy is not set to 0, output calculated values directly.
-	
-- pixie16_revfpku_16b250m_release_06092019   PKU firmware(sometime not output)
-	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
-	- The value is set to 0 when the calculated energy is negative.
-	- The pileup event energy is not set to 0, output calculated values directly.
-	
 - pixie16_revf_14b500m_firmware_release  standard firmware	
 	
 ----
@@ -237,8 +222,36 @@
 		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
 		- (2) removed "no traces for large pulses" feature.
 
+- pixie16_revfpku_14b500m_firmware_release_06102020  PKU firmware
+	- Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
+	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
+	- Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
+	- The value is set to 0 when the calculated energy is negative.
+	- The pileup event energy is not set to 0, output calculated values directly.
 
-
+- pixie16_revfpku_14b250m_release_06102020  PKU firmware(sometime not output)
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
+	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
+	- The value is set to 0 when the calculated energy is negative.
+	- The pileup event energy is not set to 0, output calculated values directly.
+	- 4-ch debug signals of the front panel A to the chassis backplane’s TriggerAll bits 28 to 31. TrigConfig3[0] control
+	- In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
+	- tried to speed up the event processing, by removing some of the unnecessary wait when reading trace from each channel.
+	- Also removed a few unnecessary processing routines in the DSP code:
+		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
+		- (2) removed "no traces for large pulses" feature.	
+	
+- pixie16_revfpku_16b250m_release_06102020  PKU firmware(sometime not output)
+	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
+	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
+	- The value is set to 0 when the calculated energy is negative.
+	- The pileup event energy is not set to 0, output calculated values directly.
+	- 4-ch debug signals of the front panel A to the chassis backplane’s TriggerAll bits 28 to 31. TrigConfig3[0] control
+	- In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
+	- tried to speed up the event processing, by removing some of the unnecessary wait when reading trace from each channel.
+	- Also removed a few unnecessary processing routines in the DSP code:
+		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
+		- (2) removed "no traces for large pulses" feature.
 
 
 <!-- firmware.md ends here -->

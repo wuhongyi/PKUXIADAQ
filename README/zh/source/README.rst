@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 20:19:34 2019 (+0800)
-.. Last-Updated: 三 6月 10 20:47:15 2020 (+0800)
+.. Last-Updated: 四 6月 11 23:40:53 2020 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 34
+..     Update #: 35
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -19,7 +19,7 @@
 版本
 ---------------------------------
 
-**我们建议用户下载稳定版本**
+**我们建议用户下载稳定版本。建议中国用户下载最新的准预览版本。**
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 稳定版本
@@ -31,6 +31,8 @@
 
 网页版说明书请访问:  `English/简体中文 <https://pkunucexp.github.io/PKUXIADAQ/>`_  
 
+MZTIO 网页版说明书请访问:  `English/简体中文 <https://pkunucexp.github.io/MZTIO/>`_  
+
 - reStructuredText版说明书: README/  
 - 离线网页版说明书: docs/  
 - pdf版本说明书: README_en.pdf  README_ch.pdf
@@ -39,11 +41,14 @@
 准预览版本
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**准预览版本 Version:2020.06.10**  
+**准预览版本 Version:2020.06.11**  
 
 程序下载请访问:  `PKUXIADAQ <https://github.com/wuhongyi/PKUXIADAQ>`_ 
 
 网页版说明书请访问:  `简体中文/English <http://wuhongyi.cn/PKUXIADAQ/>`_ 
+
+MZTIO 网页版说明书请访问:  `简体中文/English <http://wuhongyi.cn/MZTIO/>`_ 
+
 
 - 对本获取程序有任何的意见及建议(功能添加及改进)，欢迎给吴鸿毅(wuhongyi@qq.com)发邮件。
 - 我们将会尽快完善软件的中英文使用说明书，当前主要以操作演示来讲解软件的使用。
