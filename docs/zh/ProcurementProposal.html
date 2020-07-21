@@ -122,7 +122,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#id3">机箱及配套</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id4">逻辑模块</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pin16smb">34pin到16SMB转接线</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">其它一些可能有用的配套设备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">多机箱同步模块</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">其它一些可能有用的配套设备</a></li>
 </ul>
 </li>
 </ul>
@@ -200,6 +201,30 @@
 <p><strong>特别声明：北京大学实验核物理组与 XIA LLC 当前中国区代理北京华恒鑫达科技发展有限公司不存在任何形式的合作。任何打着北京大学实验核物理组名义的宣传都是非法的，请大家谨防上当受骗。关于产品硬件的性能、固件能力等信息，以本说明书为准。PKUXIADAQ 长期进行版本更新，请大家时常关注是否有新版本发布。如有任何疑问，请与吴鸿毅联系（wuhongyi&#64;qq.com）</strong></p>
 <img alt="_images/System.jpg" src="_images/System.jpg" />
 <p>XIA LLC 推出的 Pixie16 系列采集卡，拥有 100M 12/14 bit、250M 12/14/16 bit、500M 12/14 bit 采样率/垂直精度的采集卡，PKUXIADAQ 支持以上任意采样率/垂直精度卡的混合使用。</p>
+<p>关于本系统及其配套电路，我们推荐用户阅读以下文献：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>博士论文 - 通用数字化获取系统的开发</dt><dd><ul>
+<li><p>请与吴鸿毅联系。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>NIMA - A general-purpose digital data acquisition system (GDDAQ) at Peking University</dt><dd><ul>
+<li><p><a class="reference external" href="https://doi.org/10.1016/j.nima.2020.164200">https://doi.org/10.1016/j.nima.2020.164200</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>NST - Compact 16-channel integrated charge-sensitive preamplifier module for silicon strip detectors</dt><dd><ul>
+<li><p><a class="reference external" href="https://doi.org/10.1007/s41365-020-00755-0">https://doi.org/10.1007/s41365-020-00755-0</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
 <div class="section" id="id2">
 <h2>采集卡<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <ul class="simple">
@@ -227,7 +252,8 @@
 </dl>
 </li>
 </ul>
-<p>对于快时间信号的测量，推荐优先购买 500M-14bit / 250M-16bit 两个型号， <strong>从优化的角度来说，不一定 500M就能比250M得到更好的时间分辨</strong>。关于快时间的数字化测量，这是一个充满挑战的课题，针对不同的探测器，还需要先将探测器信号进行一定的低通滤波处理，并且优化固件中的CFD算法才能达到与模拟可比拟或者更优的效果。这个建议有一定实际测试经验之后再根据探测器类型进行大规模的采购。</p>
+<p>数字化系统在能量测量方面，其分辨与模拟电子学系统相当或者优于模拟电子学系统。</p>
+<p>对于快时间信号的测量，推荐优先购买 500M-14bit / 250M-16bit 两个型号， <strong>从优化的角度来说，不一定 500 M 就能比 250 M 得到更好的时间分辨</strong>。关于快时间的数字化测量，这是一个充满挑战的课题，针对不同的探测器，还需要先将探测器信号进行一定的低通滤波处理，并且优化固件中的 CFD 算法才能达到与模拟可比拟或者更优的效果。这个建议有一定实际测试经验之后再根据探测器类型进行大规模的采购。</p>
 </div>
 <div class="section" id="id3">
 <h2>机箱及配套<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
@@ -253,7 +279,7 @@
 <img alt="_images/MZTIO.jpg" src="_images/MZTIO.jpg" />
 <p><strong>MZTIO + MZTIO-MEZZ01</strong> 需要复杂实验触发逻辑的用户需要采购该配套模块。我们建议每个机箱配一个该模块。</p>
 <p>PKU 固件中，通过前面板的网口将多重性选择的结果输出，然后通过外部的可编程逻辑插件来实现逻辑运算，最后将外部逻辑通过网口送到采集卡。外部逻辑信号与每个通道的自触发逻辑进行与运算作为有效触发信号。这样就能避免记录大量无用的数据。</p>
-<p>外部可编程逻辑插件推荐使用 XIA 的 MZTIO 触发逻辑模块（该模块是我们与 XIA LLC 讨论开发的，具体情况可参考XIA官网介绍 <a class="reference external" href="https://www.xia.com/flexible-and-customizable-real-time-solution-interfacing-pixie-16-electronics-to-external-systems.html">https://www.xia.com/flexible-and-customizable-real-time-solution-interfacing-pixie-16-electronics-to-external-systems.html</a> 。相比 CAEN 的类似功能模块 MZTIO 使用上更容易）。为了方便通过示波器来观测触发逻辑与采集门之间的关系、触发逻辑与 veto 的关系等，实现在束可视化远程调节采集逻辑，PKU 固件将通过机箱背板把监视信号传输到 MZTIO 模块，然后推荐使用配套的 8 通道转接板，监视信号通过 LEMO 连接器连接到示波器。当然，此 8 通道转接板也可作为信号输入使用，可通过该转接板将外部信号输入 MZTIO 模块参与触发逻辑的运算。</p>
+<p>外部可编程逻辑插件推荐使用 XIA 的 MZTIO 触发逻辑模块（该模块是我们与 XIA LLC 合作开发的，具体情况可参考 XIA 官网介绍 <a class="reference external" href="https://www.xia.com/flexible-and-customizable-real-time-solution-interfacing-pixie-16-electronics-to-external-systems.html">https://www.xia.com/flexible-and-customizable-real-time-solution-interfacing-pixie-16-electronics-to-external-systems.html</a> 。相比 CAEN 的类似功能模块 MZTIO 使用上更容易）。为了方便通过示波器来观测触发逻辑与采集门之间的关系、触发逻辑与 veto 的关系等，实现在束可视化远程调节采集逻辑，PKU 固件将通过机箱背板把监视信号传输到 MZTIO 模块，然后推荐使用配套的 8 通道转接板，监视信号通过 LEMO 连接器连接到示波器。当然，此 8 通道转接板也可作为信号输入使用，可通过该转接板将外部信号输入 MZTIO 模块参与触发逻辑的运算。 <a class="reference external" href="http://wuhongyi.cn/MZTIO/">http://wuhongyi.cn/MZTIO/</a> 网页中介绍了北京大学实验核物理组关于</p>
 <p>因此，采用该模块，可以取代传统电子学中的逻辑插件，并且具有可调节范围更广，逻辑缺陷少的优点。</p>
 </div>
 <div class="section" id="pin16smb">
@@ -263,7 +289,11 @@
 <p>为此，我们与 XIA 沟通，设计生产出上图中的转接器（第一版本），通过该转接器，多路数的硅探测器在信号输入变得容易，同时也消除了由于线缆排列不当造成的应力问题。用户根据需要采购。</p>
 </div>
 <div class="section" id="id5">
-<h2>其它一些可能有用的配套设备<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<h2>多机箱同步模块<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>由于一个机箱只有 13 个槽，最多支持 208 路。因此大型实验通常需要多个机箱并行使用。</p>
+</div>
+<div class="section" id="id6">
+<h2>其它一些可能有用的配套设备<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
 <p><strong>本栏目介绍的硬件，不是必须品，用户根据实际情况自行选择。</strong></p>
 <p>一般的脉冲发生器产生的信号与实际探测器输出的信号还是存在较大区别的，特别是信号的上升沿部分无法调节，不容易构造出随时间变化的脉冲序列。</p>
 <p>CAEN 的探测器模拟器专门为解决模拟探测器信号源而开发，它可用于没有探测器时候的获取调节联系，帮助用户更快熟悉获取系统。另外，由于它的可编程性、可重复性，能够用于检测获取系统的可靠性，评估系统的能力上限。</p>
