@@ -67,10 +67,11 @@ Welcome to GDDAQ's guides.
 
 .. toctree::
    :maxdepth: 2
-   :caption: 采购建议
+   :caption: 采购建议与实验调试
       
    ProcurementProposal.rst
-
+   ExperimentalDebugging.rst
+   
 #################################
 
 .. toctree::

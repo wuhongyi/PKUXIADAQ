@@ -38,7 +38,7 @@
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
-    <link rel="next" title="开发者指南" href="ProgrammersGuide/README.html" />
+    <link rel="next" title="实验调试" href="ExperimentalDebugging.html" />
     <link rel="prev" title="在束伽马谱学" href="Example/InBeamGammaCIAE.html" /> 
 </head>
 
@@ -115,17 +115,17 @@
 <li class="toctree-l1"><a class="reference internal" href="Example/RecommendedParameters.html">推荐参数</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Example/InBeamGammaCIAE.html">在束伽马谱学</a></li>
 </ul>
-<p class="caption"><span class="caption-text">采购建议</span></p>
+<p class="caption"><span class="caption-text">采购建议与实验调试</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">采购推荐</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">采集卡</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">机箱及配套</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id4">逻辑模块</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pin16smb">34pin到16SMB转接线</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">多机箱同步模块</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id6">其它一些可能有用的配套设备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pin-16smb">34pin 到 16SMB 转接线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">其它一些可能有用的配套设备</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="ExperimentalDebugging.html">实验调试</a></li>
 </ul>
 <p class="caption"><span class="caption-text">编程指南</span></p>
 <ul>
@@ -198,7 +198,7 @@
             
   <div class="section" id="id1">
 <h1>采购推荐<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<p><strong>特别声明：北京大学实验核物理组与 XIA LLC 当前中国区代理北京华恒鑫达科技发展有限公司不存在任何形式的合作。任何打着北京大学实验核物理组名义的宣传都是非法的，请大家谨防上当受骗。关于产品硬件的性能、固件能力等信息，以本说明书为准。PKUXIADAQ 长期进行版本更新，请大家时常关注是否有新版本发布。如有任何疑问，请与吴鸿毅联系（wuhongyi&#64;qq.com）</strong></p>
+<p><strong>特别声明：北京大学实验核物理组与 XIA LLC 当前中国代理北京华恒鑫达科技发展有限公司不存在任何形式的合作。任何打着北京大学实验核物理组名义的销售宣传都是非法的，请大家谨防上当受骗。关于产品硬件的性能、固件能力等信息，以 XIA LLC 官方邮件回复和本说明书为准。PKUXIADAQ 长期进行版本更新，请大家时常关注是否有新版本发布。如有任何疑问，请与吴鸿毅联系（wuhongyi&#64;qq.com）</strong></p>
 <img alt="_images/System.jpg" src="_images/System.jpg" />
 <p>XIA LLC 推出的 Pixie16 系列采集卡，拥有 100M 12/14 bit、250M 12/14/16 bit、500M 12/14 bit 采样率/垂直精度的采集卡，PKUXIADAQ 支持以上任意采样率/垂直精度卡的混合使用。</p>
 <p>关于本系统及其配套电路，我们推荐用户阅读以下文献：</p>
@@ -246,6 +246,7 @@
 <li><p>Plastic scintillator</p></li>
 <li><p>Liquid scintillator</p></li>
 <li><p>BaF2</p></li>
+<li><p>PPAC</p></li>
 <li><p>…</p></li>
 </ul>
 </dd>
@@ -253,7 +254,7 @@
 </li>
 </ul>
 <p>数字化系统在能量测量方面，其分辨与模拟电子学系统相当或者优于模拟电子学系统。</p>
-<p>对于快时间信号的测量，推荐优先购买 500M-14bit / 250M-16bit 两个型号， <strong>从优化的角度来说，不一定 500 M 就能比 250 M 得到更好的时间分辨</strong>。关于快时间的数字化测量，这是一个充满挑战的课题，针对不同的探测器，还需要先将探测器信号进行一定的低通滤波处理，并且优化固件中的 CFD 算法才能达到与模拟可比拟或者更优的效果。这个建议有一定实际测试经验之后再根据探测器类型进行大规模的采购。</p>
+<p>对于快时间信号的测量，推荐优先购买 500M-14bit / 250M-16bit 两个型号， <strong>从优化的角度来说，不一定 500 M 就能比 250 M 得到更好的时间分辨</strong> 。关于快时间的数字化测量，这是一个充满挑战的课题，针对不同的探测器，还需要先将探测器信号进行一定的低通滤波处理，并且优化固件中的 CFD 算法才能达到与模拟可比拟或者更优的效果。这个建议有一定实际测试经验之后再根据探测器类型进行大规模的采购。</p>
 </div>
 <div class="section" id="id3">
 <h2>机箱及配套<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
@@ -262,16 +263,16 @@
 <p>另外，控制器也可以选择嵌入式电脑，即一个小电脑嵌入在机箱最左侧，采集卡的数据直接传输到该电脑。采用该方案需要注意的几点是，PKUXIADAQ 仅支持 LINUX 操作系统，因此选择该方案需要购买 linux 操作系统的嵌入式电脑。另外，嵌入式电脑的硬盘容量较小，一般来说，需要配合外部的磁盘阵列（或者服务器）来使用才能满足核物理实验的数据存储需求（如果仅仅是简单测试那就不需要磁盘阵列，直接外挂一个 USB3.0 的移动硬盘即可），该方案适合于固定实验终端的配套获取使用，例如 MSU/NSCL 的做法，将数据通过以太网实时传到服务器上。这个方案需要一定的技术考虑，主要是需要一个网络架构来保证数据的传输不会影响数据计数率，也就是数据传输引起的死时间不会影响系统性能，这个需要比较专业的网络技术部门来提供技术支持。</p>
 <p>另外，关于电脑控制器是采用 PCI 还是 PCIe 的，这个取决于电脑主板上的插槽，购买前请先考虑好要使用的控制电脑。但是现在采购的电脑，如果没有特别说明，默认采购到的将是只有 PCIe 接口的电脑。如果是 PCIe 的，还需要注意插槽的宽度，插槽分为 x1，x4，x8，x16，而且是想下兼容的，例如，一个 x4 宽度的控制器，可以插入 x4，x8，x16 的插槽，但是无法插入 x1 的插槽。</p>
 <p><strong>这里给出几个选项供大家参考</strong></p>
-<p>电脑端PCIe控制器</p>
+<p>电脑端 PCIe 控制器</p>
 <ul class="simple">
 <li><p>PXI-8360/PCIe-8361 机箱端使用 PXI8360 卡，电脑端使用 PCIe8361 x1卡，同轴电缆链接，记得指定要 7 米的电缆。</p></li>
 <li><p>PXI-8360/PCIe-8362 机箱端使用 PXI8360 卡，电脑端使用 PCIe8362 x1卡，同轴电缆链接，记得指定要 7 米的电缆。</p></li>
 </ul>
-<p>电脑端PCI控制器</p>
+<p>电脑端 PCI 控制器</p>
 <ul class="simple">
 <li><p>PXI-8368/PCI-8366 机箱端使用 PXI8368 卡，电脑端使用 PCI8366 卡，光纤链接，光纤长度可选择 10/30/200 米。</p></li>
 </ul>
-<p>如果需要多个机箱的同步使用，那就需要给每个机箱配套一个时间同步模块，该模块插在机箱背板，通过网线来实现不同机箱中的时间同步、触发信号共享等功能。</p>
+<p>由于一个机箱只有 13 个槽，最多支持 208 路。因此大型实验通常需要多个机箱并行使用。如果需要多个机箱的同步使用，那就需要给每个机箱配套一个时间同步模块，该模块插在机箱背板，通过网线来实现不同机箱中的时间同步、触发信号共享等功能。</p>
 <img alt="_images/reariotriggermodules.png" src="_images/reariotriggermodules.png" />
 </div>
 <div class="section" id="id4">
@@ -282,22 +283,20 @@
 <p>外部可编程逻辑插件推荐使用 XIA 的 MZTIO 触发逻辑模块（该模块是我们与 XIA LLC 合作开发的，具体情况可参考 XIA 官网介绍 <a class="reference external" href="https://www.xia.com/flexible-and-customizable-real-time-solution-interfacing-pixie-16-electronics-to-external-systems.html">https://www.xia.com/flexible-and-customizable-real-time-solution-interfacing-pixie-16-electronics-to-external-systems.html</a> 。相比 CAEN 的类似功能模块 MZTIO 使用上更容易）。为了方便通过示波器来观测触发逻辑与采集门之间的关系、触发逻辑与 veto 的关系等，实现在束可视化远程调节采集逻辑，PKU 固件将通过机箱背板把监视信号传输到 MZTIO 模块，然后推荐使用配套的 8 通道转接板，监视信号通过 LEMO 连接器连接到示波器。当然，此 8 通道转接板也可作为信号输入使用，可通过该转接板将外部信号输入 MZTIO 模块参与触发逻辑的运算。 <a class="reference external" href="http://wuhongyi.cn/MZTIO/">http://wuhongyi.cn/MZTIO/</a> 网页中介绍了北京大学实验核物理组关于</p>
 <p>因此，采用该模块，可以取代传统电子学中的逻辑插件，并且具有可调节范围更广，逻辑缺陷少的优点。</p>
 </div>
-<div class="section" id="pin16smb">
-<h2>34pin到16SMB转接线<a class="headerlink" href="#pin16smb" title="永久链接至标题">¶</a></h2>
+<div class="section" id="pin-16smb">
+<h2>34pin 到 16SMB 转接线<a class="headerlink" href="#pin-16smb" title="永久链接至标题">¶</a></h2>
 <img alt="_images/pin34_SMB16.png" src="_images/pin34_SMB16.png" />
 <p>由于核物理实验中双面硅微条路数在 200-300 路，规模较大的可达到 500-600 路。而硅信号的输出一般都是 34 pin 的连接器，Pixie16 采集卡的输入是 SMB 连接器，XIA 出厂默认为 BNC 转 SMB 连接线，在硅探测器上使用起来及其不方便，因此必须采用一个合适的转接器来实现。</p>
 <p>为此，我们与 XIA 沟通，设计生产出上图中的转接器（第一版本），通过该转接器，多路数的硅探测器在信号输入变得容易，同时也消除了由于线缆排列不当造成的应力问题。用户根据需要采购。</p>
 </div>
 <div class="section" id="id5">
-<h2>多机箱同步模块<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
-<p>由于一个机箱只有 13 个槽，最多支持 208 路。因此大型实验通常需要多个机箱并行使用。</p>
-</div>
-<div class="section" id="id6">
-<h2>其它一些可能有用的配套设备<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<h2>其它一些可能有用的配套设备<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
 <p><strong>本栏目介绍的硬件，不是必须品，用户根据实际情况自行选择。</strong></p>
 <p>一般的脉冲发生器产生的信号与实际探测器输出的信号还是存在较大区别的，特别是信号的上升沿部分无法调节，不容易构造出随时间变化的脉冲序列。</p>
-<p>CAEN 的探测器模拟器专门为解决模拟探测器信号源而开发，它可用于没有探测器时候的获取调节联系，帮助用户更快熟悉获取系统。另外，由于它的可编程性、可重复性，能够用于检测获取系统的可靠性，评估系统的能力上限。</p>
+<p>CAEN 的探测器模拟器专门为解决模拟探测器信号源而开发，它可用于没有探测器时的获取调节练习，帮助用户更快熟悉获取系统。另外，由于它的可编程性、可重复性，能够用于检测获取系统的可靠性，评估系统的能力上限。</p>
 <p>更多详细信息请阅读官网手册，CAEN DT5810B Fast Digital Detector Emulator <a class="reference external" href="https://www.caen.it/products/dt5810/">https://www.caen.it/products/dt5810/</a></p>
+<p>针对大型探测器阵列，一个高通道密度、低成本的解决方案是采用 CAEN R5560SE <a class="reference external" href="https://www.caen.it/products/r5560se/">https://www.caen.it/products/r5560se/</a> 。该模块 128 通道，125M-14bit，通过自行开发固件能够满足个性化的实验需求。非常适合于上千通道的硅探测阵列，在束谱学中的带电粒子探测等应用。</p>
+<p>此外，还有例如 APG7305A USB-MCA-amp <a class="reference external" href="http://www.techno-ap.com/img/APG7305A_e.pdf">http://www.techno-ap.com/img/APG7305A_e.pdf</a> 的数字化多道，采用偏高斯整形，能够用于快速对探测器性能进行标定。</p>
 </div>
 </div>
 
@@ -309,7 +308,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="ProgrammersGuide/README.html" class="btn btn-neutral float-right" title="开发者指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="ExperimentalDebugging.html" class="btn btn-neutral float-right" title="实验调试" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="Example/InBeamGammaCIAE.html" class="btn btn-neutral float-left" title="在束伽马谱学" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
