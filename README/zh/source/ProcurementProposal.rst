@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 14:57:03 2019 (+0800)
-.. Last-Updated: 六 8月 22 09:31:21 2020 (+0800)
+.. Last-Updated: 三 9月 16 19:50:02 2020 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 20
+..     Update #: 21
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -91,7 +91,7 @@ Pixie16 需要 XIA 定制的专用机箱。需要使用这个机箱的原因是�
 
 PKU 固件中，通过前面板的网口将多重性选择的结果输出，然后通过外部的可编程逻辑插件来实现逻辑运算，最后将外部逻辑通过网口送到采集卡。外部逻辑信号与每个通道的自触发逻辑进行与运算作为有效触发信号。这样就能避免记录大量无用的数据。
 
-外部可编程逻辑插件推荐使用 XIA 的 MZTIO 触发逻辑模块（该模块是我们与 XIA LLC 合作开发的，具体情况可参考 XIA 官网介绍 https://www.xia.com/flexible-and-customizable-real-time-solution-interfacing-pixie-16-electronics-to-external-systems.html 。相比 CAEN 的类似功能模块 MZTIO 使用上更容易）。为了方便通过示波器来观测触发逻辑与采集门之间的关系、触发逻辑与 veto 的关系等，实现在束可视化远程调节采集逻辑，PKU 固件将通过机箱背板把监视信号传输到 MZTIO 模块，然后推荐使用配套的 8 通道转接板，监视信号通过 LEMO 连接器连接到示波器。当然，此 8 通道转接板也可作为信号输入使用，可通过该转接板将外部信号输入 MZTIO 模块参与触发逻辑的运算。 http://wuhongyi.cn/MZTIO/ 网页中介绍了北京大学实验核物理组关于
+外部可编程逻辑插件推荐使用 XIA 的 MZTIO 触发逻辑模块（该模块是我们与 XIA LLC 合作开发的，具体情况可参考 XIA 官网介绍 https://www.xia.com/flexible-and-customizable-real-time-solution-interfacing-pixie-16-electronics-to-external-systems.html 。相比 CAEN 的类似功能模块 MZTIO 使用上更容易）。为了方便通过示波器来观测触发逻辑与采集门之间的关系、触发逻辑与 veto 的关系等，实现在束可视化远程调节采集逻辑，PKU 固件将通过机箱背板把监视信号传输到 MZTIO 模块，然后推荐使用配套的 8 通道转接板，监视信号通过 LEMO 连接器连接到示波器。当然，此 8 通道转接板也可作为信号输入使用，可通过该转接板将外部信号输入 MZTIO 模块参与触发逻辑的运算。 http://wuhongyi.cn/MZTIO/ 网页中介绍了北京大学实验核物理组关于该模块的应用场景。
 
 因此，采用该模块，可以取代传统电子学中的逻辑插件，并且具有可调节范围更广，逻辑缺陷少的优点。
 

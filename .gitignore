@@ -14,3 +14,4 @@ event
 pku
 online
 README/node_modules/*
+*.root

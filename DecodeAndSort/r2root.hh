@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:31 2016 (+0800)
-// Last-Updated: 五 3月 13 19:17:20 2020 (+0800)
+// Last-Updated: 三 9月 16 22:55:33 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 40
+//     Update #: 45
 // URL: http://wuhongyi.cn 
 
 #ifndef _R2ROOT_H_
@@ -30,6 +30,8 @@
 #include <vector>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+#define MAXMODULENUMBER 104  //13*8
+
 struct eventdata
 {
   Long64_t        tsflag;
@@ -49,7 +51,7 @@ struct eventdata
 class r2root
 {
 public:
-  r2root(TString rawfilepath,TString rootfilepath,TString filename,int  runnumber);
+  r2root(int run[8]);
   virtual ~r2root();
 
   void Process();
@@ -62,10 +64,11 @@ private:
 
 private:  
   decoder *rawdec;
-  bool  havedata[MAXBOARD];//如果还有数据则为true
+  bool  havedata[MAXMODULENUMBER];//如果还有数据则为true
+  int   flagcrate[MAXMODULENUMBER];
   int flagfile;
   Int_t nevt;
-
+  int mmod;
 
   TFile *file;
   TTree *t;
@@ -79,10 +82,9 @@ private:
   Long64_t flagkey;
   eventdata mapvalue;
 
-
-  Short_t timeoffset[256];
-  UShort_t chlow[256];
-  UShort_t chhigh[256];  
+  Short_t timeoffset[8][256];
+  UShort_t chlow[8][256];
+  UShort_t chhigh[8][256];  
   
 private:
   Short_t sr;//sampling rate
