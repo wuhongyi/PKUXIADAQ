@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 二 3月  3 14:09:34 2020 (+0800)
+// Last-Updated: 三 9月 30 19:31:54 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 403
+//     Update #: 407
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -23,6 +23,9 @@
 #include <fstream>
 #include <unistd.h>
 #include <sys/stat.h>//stat(const char *file_name,struct stat *buf)
+#include <net/if.h>
+#include <arpa/inet.h>
+#include <sys/ioctl.h>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 ClassImp(MainFrame)
@@ -355,7 +358,11 @@ void MainFrame::ControlPanel(TGCompositeFrame *TabPanel)
   titleinfor->SetAlignment(kTextCenterX);
   titleinfor->SetFont(TITLE_FONT, false);
   titleinfor->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B), false);
-  titleinfor->SetText("List Mode");
+  char ip[1024];
+  if(GetLocalIP(ip)==0)
+    titleinfor->SetText(ip);
+  else 
+    titleinfor->SetText("List Mode");
   titleinfor->Resize(INITIAL_WIDTH, TITLE_LISTMODE_HIGHT);
   titleinfor->SetEnabled(kFALSE);
   titleinfor->SetFrameDrawn(kFALSE);
@@ -1034,6 +1041,53 @@ void MainFrame::SetMenuStatus(bool flag,int flagonline)
       MenuOffline->DisableEntry(SIMULATION);
     }
 
+}
+
+
+int MainFrame::GetLocalIP(char* outip)
+{
+  int i=0;
+  int sockfd;
+  struct ifconf ifconf;
+  char buf[512];
+  struct ifreq *ifreq;
+  char* ip;
+  TString totalip="";
+  bool flag=false;
+  //初始化ifconf
+  ifconf.ifc_len = 512;
+  ifconf.ifc_buf = buf;
+ 
+  if((sockfd = socket(AF_INET, SOCK_DGRAM, 0))<0)
+    {
+      return -1;
+    }
+  ioctl(sockfd, SIOCGIFCONF, &ifconf);    //获取所有接口信息
+  close(sockfd);
+  //接下来一个一个的获取IP地址
+  ifreq = (struct ifreq*)buf;
+ 
+  for(i=(ifconf.ifc_len/sizeof(struct ifreq)); i>0; i--)
+    {
+      ip = inet_ntoa(((struct sockaddr_in*)&(ifreq->ifr_addr))->sin_addr);
+      //排除127.0.0.1，继续下一个
+      if(strcmp(ip,"127.0.0.1")==0 || strcmp(ip,"192.168.122.1")==0)//
+        {
+	  ifreq++;
+	  continue;
+        }
+      totalip+=ip;
+      totalip+="  ";
+      flag=true;
+      ifreq++;
+    }
+  if(flag)
+    {
+      strcpy(outip,totalip.Data());
+      return 0;
+    }
+
+  return -1;
 }
 
 // 

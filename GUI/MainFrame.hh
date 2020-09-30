@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:17 2018 (+0800)
-// Last-Updated: 三 2月 26 22:10:55 2020 (+0800)
+// Last-Updated: 三 9月 30 19:29:54 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 58
+//     Update #: 59
 // URL: http://wuhongyi.cn 
 
 #ifndef MAINFRAME_HH_
@@ -98,6 +98,7 @@ public:
   void SetDecoderDataFlag();
 #endif
   
+  int GetLocalIP(char* outip);
   
 private:
   TGTextEntry *StateMsgFold1;
