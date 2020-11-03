@@ -133,11 +133,11 @@ ModuleBits 7 14 14 14 14 14 16 14
 # 4-ch debug signals of the front panel A to the chassis backplane’s TriggerAll bits 28 to 31. TrigConfig3[0] control
 # In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
 # speed up the event processing & removed a few unnecessary processing routines
-250M14bit_sys ../firmware/pixie16_revfpku_14b250m_release_06102020/syspixie16_revfpku_adc250hz_r44499.bin
-250M14bit_fip ../firmware/pixie16_revfpku_14b250m_release_06102020/fippixie16_revfpku_14b250m_r44501.bin
-250M14bit_dsplst ../firmware/pixie16_revfpku_14b250m_release_06102020/Pixie16DSP_revfpku_14b250m_r44496.lst
-250M14bit_dspldr ../firmware/pixie16_revfpku_14b250m_release_06102020/Pixie16DSP_revfpku_14b250m_r44496.ldr
-250M14bit_dspvar ../firmware/pixie16_revfpku_14b250m_release_06102020/Pixie16DSP_revfpku_14b250m_r44496.var
+250M14bit_sys ../firmware/pixie16_revfpku_14b250m_release_11032020/syspixie16_revfpku_adc250hz_r44499.bin
+250M14bit_fip ../firmware/pixie16_revfpku_14b250m_release_11032020/fippixie16_revfpku_14b250m_r45226.bin
+250M14bit_dsplst ../firmware/pixie16_revfpku_14b250m_release_11032020/Pixie16DSP_revfpku_14b250m_r44496.lst
+250M14bit_dspldr ../firmware/pixie16_revfpku_14b250m_release_11032020/Pixie16DSP_revfpku_14b250m_r44496.ldr
+250M14bit_dspvar ../firmware/pixie16_revfpku_14b250m_release_11032020/Pixie16DSP_revfpku_14b250m_r44496.var
 
 
 # NoNegEnergy && AlwaysCompEnergy
@@ -158,11 +158,11 @@ ModuleBits 7 14 14 14 14 14 16 14
 # 4-ch debug signals of the front panel A to the chassis backplane’s TriggerAll bits 28 to 31. TrigConfig3[0] control
 # In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
 # speed up the event processing & removed a few unnecessary processing routines
-250M16bit_sys ../firmware/pixie16_revfpku_16b250m_release_06102020/syspixie16_revfpku_adc250hz_r44499.bin
-250M16bit_fip ../firmware/pixie16_revfpku_16b250m_release_06102020/fippixie16_revfpku_16b250m_r44502.bin
-250M16bit_dsplst ../firmware/pixie16_revfpku_16b250m_release_06102020/Pixie16DSP_revfpku_16b250m_r44497.lst
-250M16bit_dspldr ../firmware/pixie16_revfpku_16b250m_release_06102020/Pixie16DSP_revfpku_16b250m_r44497.ldr
-250M16bit_dspvar ../firmware/pixie16_revfpku_16b250m_release_06102020/Pixie16DSP_revfpku_16b250m_r44497.var
+250M16bit_sys ../firmware/pixie16_revfpku_16b250m_release_11022020/syspixie16_revfpku_adc250hz_r44499.bin
+250M16bit_fip ../firmware/pixie16_revfpku_16b250m_release_11022020/fippixie16_revfpku_16b250m_r45222.bin
+250M16bit_dsplst ../firmware/pixie16_revfpku_16b250m_release_11022020/Pixie16DSP_revfpku_16b250m_r44497.lst
+250M16bit_dspldr ../firmware/pixie16_revfpku_16b250m_release_11022020/Pixie16DSP_revfpku_16b250m_r44497.ldr
+250M16bit_dspvar ../firmware/pixie16_revfpku_16b250m_release_11022020/Pixie16DSP_revfpku_16b250m_r44497.var
 
 
 # NoNegEnergy && AlwaysCompEnergy

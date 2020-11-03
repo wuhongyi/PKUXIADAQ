@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 22:13:09 2019 (+0800)
-.. Last-Updated: 四 6月 11 23:35:05 2020 (+0800)
+.. Last-Updated: 二 11月  3 20:52:47 2020 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 10
+..     Update #: 11
 .. URL: http://wuhongyi.cn 
 
 =================================
@@ -44,15 +44,16 @@
 - 250MHz 12bit(pixie16_revf_12b250m_firmware_release)	
 	- 标准固件
   
-- 250MHz 14bit(pixie16_revfpku_14b250m_release_06102020) 存在问题
+- 250MHz 14bit(pixie16_revfpku_14b250m_release_11032020) 存在问题
 	- MultiplicityMaskHigh[31]=0和1 时候RJ45口与前面板均能输出 multiplicity 结果。
 	- 通过机箱背板传输外部时钟清除信号、外部时钟信号、run inhibit 信号。通过 TrigConfig3[1/2] 来控制信号源是前面板还是机箱背板
 	- 当计算的能量为负数时，该值设置为 0。
 	- pileup 事件能量保留，不设置为 0。
 	- 4 路调试监视信号输出到机箱背板 TriggerAll[28:31]，通过 TrigConfig3[0] 来控制是否开启
+	- 删除一些非必要的等待来加速事件处理。
+	- 删除DSP中非必要的处理：包括堆积检测、超量程波形检测等	  
 	  
-
-- 250MHz 16bit(pixie16_revfpku_16b250m_release_06102020) 存在问题
+- 250MHz 16bit(pixie16_revfpku_16b250m_release_11022020) 存在问题
 	- MultiplicityMaskHigh[31]=0和1 时候RJ45口与前面板均能输出 multiplicity 结果。
 	- 通过机箱背板传输外部时钟清除信号、外部时钟信号、run inhibit 信号。通过 TrigConfig3[1/2] 来控制信号源是前面板还是机箱背板
 	- 当计算的能量为负数时，该值设置为 0。
