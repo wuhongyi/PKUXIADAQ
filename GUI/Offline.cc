@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 二 3月  3 14:08:23 2020 (+0800)
+// Last-Updated: 四 11月 19 20:36:18 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 1059
+//     Update #: 1060
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -77,6 +77,8 @@ using namespace std;
 #define BLACKMAN_FFT_WINDOW   2
 #define RECT_FFT_WINDOW       3
 
+
+#define TIMEDIFFGATE  10000  //ns
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -2127,7 +2129,7 @@ void Offline::MakeFold10Panel(TGCompositeFrame *TabPanel)
   LabelChooseHistXmin->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   LabelChooseHistXmin->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
   
-  histxminmax10[1] = new TGNumberEntryField(drawstyleparFrame, -1, -100, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,-500,500);
+  histxminmax10[1] = new TGNumberEntryField(drawstyleparFrame, -1, -100, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,-TIMEDIFFGATE,TIMEDIFFGATE);
   drawstyleparFrame->AddFrame(histxminmax10[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
   histxminmax10[1]->Resize(40, 20);
   
@@ -2136,7 +2138,7 @@ void Offline::MakeFold10Panel(TGCompositeFrame *TabPanel)
   LabelChooseHistXmax->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   LabelChooseHistXmax->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
   
-  histxminmax10[2] = new TGNumberEntryField(drawstyleparFrame, -1, 100, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,-500,500);
+  histxminmax10[2] = new TGNumberEntryField(drawstyleparFrame, -1, 100, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,-TIMEDIFFGATE,TIMEDIFFGATE);
   drawstyleparFrame->AddFrame(histxminmax10[2], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
   histxminmax10[2]->Resize(40, 20);  
 
@@ -5073,8 +5075,8 @@ void Offline::Panel10Draw()
   if(histxminmax10[1]->GetNumber() >= histxminmax10[2]->GetNumber())
     {
       std::cout<<"The range of the histogram is not suitable (xmin >= xmax). The recommended value will be used."<<std::endl;
-      histxminmax10[1]->SetNumber(-500);
-      histxminmax10[2]->SetNumber(500);
+      histxminmax10[1]->SetNumber(-TIMEDIFFGATE);
+      histxminmax10[2]->SetNumber(TIMEDIFFGATE);
     }
 
   if(offlineenergylimit10->IsOn())
