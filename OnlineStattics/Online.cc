@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:50 2016 (+0800)
-// Last-Updated: 五 2月 21 11:28:28 2020 (+0800)
+// Last-Updated: 四 11月 26 22:56:38 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 304
+//     Update #: 307
 // URL: http://wuhongyi.cn 
 
 #include "Online.hh"
@@ -752,6 +752,35 @@ void Online::MakeFold3Panel(TGCompositeFrame *TabPanel)
   TGCompositeFrame *parFrame = new TGCompositeFrame(TabPanel, 0, 0, kHorizontalFrame);
   TabPanel->AddFrame(parFrame, new TGLayoutHints( kLHintsLeft | kLHintsExpandX, 2, 2, 1, 1));
   parFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
+  
+  onlineuserrange3 = new TGCheckButton(parFrame, "RangeUser");
+  parFrame->AddFrame(onlineuserrange3, new TGLayoutHints(kLHintsLeft | kLHintsTop, 35, 5, 5, 0));
+  onlineuserrange3->SetOn(kFALSE);
+  onlineuserrange3->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  onlineuserrange3->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
+
+  TGLabel *LabelELimits0 = new TGLabel(parFrame,"Left:");
+  parFrame->AddFrame(LabelELimits0, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelELimits0->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelELimits0->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
+  onlineenergylimitslr3[0] = new TGNumberEntryField(parFrame, -1, 0, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,32768);
+  parFrame->AddFrame(onlineenergylimitslr3[0], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  onlineenergylimitslr3[0]->Resize(40, 20);
+
+  TGLabel *LabelELimits1 = new TGLabel(parFrame,"Right:");
+  parFrame->AddFrame(LabelELimits1, new TGLayoutHints(kLHintsLeft | kLHintsTop, 3, 2, 5, 0));
+  LabelELimits1->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  LabelELimits1->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
+  onlineenergylimitslr3[1] = new TGNumberEntryField(parFrame, -1, 32768, TGNumberFormat::kNESInteger,TGNumberFormat::kNEAAnyNumber,TGNumberFormat::kNELLimitMinMax,0,32768);
+  parFrame->AddFrame(onlineenergylimitslr3[1], new TGLayoutHints(kLHintsLeft | kLHintsTop, 1, 5, 2, 0));
+  onlineenergylimitslr3[1]->Resize(40, 20);
+
+
+
   
   // draw
   OnlineDrawButton3 = new TGTextButton(parFrame, "&Draw", ONLINEDRAW3);
@@ -809,6 +838,18 @@ void Online::MakeFold3Panel(TGCompositeFrame *TabPanel)
 
 void Online::Panel3Draw()
 {
+
+  if(onlineuserrange3->IsOn())
+    {
+      
+      if(onlineenergylimitslr3[0]->GetNumber() >= onlineenergylimitslr3[1]->GetNumber())
+	{
+	  std::cout<<"The range of TH1 is not suitable (Left >= Right). The recommended value will be used."<<std::endl;
+	  onlineenergylimitslr3[0]->SetNumber(0);
+	  onlineenergylimitslr3[1]->SetNumber(32768);
+	}
+    }
+
   for (int i = 0; i < 16; ++i)
     {
       if(onlineth1i3[i] == NULL)
@@ -841,6 +882,8 @@ void Online::Panel3Draw()
 	  onlineth1i3[onlinechnum3->GetIntNumber()]->SetBinContent(j+1, Double_t(EnergySpec[onlinechnum3->GetIntNumber()*SHAREDMEMORYDATAENERGYLENGTH+j]));
 	}
       onlineth1i3[onlinechnum3->GetIntNumber()]->Draw();
+      if(onlineuserrange3->IsOn()) onlineth1i3[onlinechnum3->GetIntNumber()]->GetXaxis()->SetRangeUser(onlineenergylimitslr3[0]->GetNumber(),onlineenergylimitslr3[1]->GetNumber());
+      else onlineth1i3[onlinechnum3->GetIntNumber()]->GetXaxis()->SetRangeUser(0,32768);
       break;
 
     case 1://multi
@@ -854,6 +897,8 @@ void Online::Panel3Draw()
 	      onlineth1i3[i]->SetBinContent(j+1, Double_t(EnergySpec[i*SHAREDMEMORYDATAENERGYLENGTH+j]));
 	    }
 	  onlineth1i3[i]->Draw();
+	  if(onlineuserrange3->IsOn()) onlineth1i3[i]->GetXaxis()->SetRangeUser(onlineenergylimitslr3[0]->GetNumber(),onlineenergylimitslr3[1]->GetNumber());
+	  else onlineth1i3[i]->GetXaxis()->SetRangeUser(0,32768);
 	}
       break;
 

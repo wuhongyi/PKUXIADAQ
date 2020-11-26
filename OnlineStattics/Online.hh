@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 10月  3 10:42:41 2016 (+0800)
-// Last-Updated: 日 2月  9 13:47:55 2020 (+0800)
+// Last-Updated: 四 11月 26 18:50:07 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 75
+//     Update #: 76
 // URL: http://wuhongyi.cn 
 
 #ifndef _ONLINE_H_
@@ -193,6 +193,9 @@ private:
   int modNumber3;
   TGComboBox *chooseenergycanvasmode3;
 
+  TGCheckButton *onlineuserrange3;
+  TGNumberEntryField *onlineenergylimitslr3[2];
+  
 
 private:
   int shm_id;
