@@ -12,12 +12,12 @@
 #ifndef _USERDEFINE_H_
 #define _USERDEFINE_H_
 
-#define RAWFILEPATH "./"   //Path to the original ROOT file
+#define RAWFILEPATH "../"   //Path to the original ROOT file
 #define RAWFILENAME "data"                   //The file name of the original file
 #define RAWFILECRATENUMBER "C2"
 
 
-#define ROOTFILEPATH "./"  //The path to generate the ROOT file
+#define ROOTFILEPATH "../"  //The path to generate the ROOT file
 #define ROOTFILENAME "event"
 
 

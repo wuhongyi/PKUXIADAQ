@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 10月 20 16:16:28 2017 (+0800)
-// Last-Updated: 一 9月 21 14:45:37 2020 (+0800)
+// Last-Updated: 六 11月  7 19:11:15 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 25
+//     Update #: 26
 // URL: http://wuhongyi.cn 
 
 // The user needs to modify the parameters in this file.
@@ -25,22 +25,22 @@
 // #define Crate6
 // #define Crate7
 
-#define ROOTFILEPATH "./"  //The path to generate the ROOT file
+#define ROOTFILEPATH "../"  //The path to generate the ROOT file
 #define ROOTFILENAME "data"
 #define TimesHist 3600  // second
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#define Crate0RAWFILEPATH "/home/wuhongyi/data/"   //Path to the original binary
+#define Crate0RAWFILEPATH "/home/wuhy/data/C0/"   //Path to the original binary
 #define Crate0RAWFILENAME "data"                   //The file name of the original file
-#define Crate0num 6   //Number of modules used in this crate
-const int Crate0SamplingRate[Crate0num] = {100,100,100,100,100,100};//Specify the sampling rate of each modules separately; 100/250/500 sampling rates; 0 to skip the module
+#define Crate0num 8   //Number of modules used in this crate
+const int Crate0SamplingRate[Crate0num] = {100,100,100,100,100,100,100,500};//Specify the sampling rate of each modules separately; 100/250/500 sampling rates; 0 to skip the module
 
 
-#define Crate1RAWFILEPATH "/home/wuhongyi/data/"   //Path to the original binary
+#define Crate1RAWFILEPATH "/home/wuhy/data/C1/"   //Path to the original binary
 #define Crate1RAWFILENAME "data"                   //The file name of the original file
-#define Crate1num 6   //Number of modules used in this crate
-const int Crate1SamplingRate[Crate1num] = {100,100,100,100,100,100};//Specify the sampling rate of each modules separately; 100/250/500 sampling rates; 0 to skip the module
+#define Crate1num 8   //Number of modules used in this crate
+const int Crate1SamplingRate[Crate1num] = {250,250,250,250,250,250,250,250};//Specify the sampling rate of each modules separately; 100/250/500 sampling rates; 0 to skip the module
 
 
 #define Crate2RAWFILEPATH "/home/wuhongyi/data/"   //Path to the original binary

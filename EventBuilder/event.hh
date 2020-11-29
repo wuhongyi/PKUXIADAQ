@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 9月 21 16:28:28 2020 (+0800)
-// Last-Updated: 一 9月 21 20:40:33 2020 (+0800)
+// Last-Updated: 五 11月 27 19:53:16 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 10
+//     Update #: 11
 // URL: http://wuhongyi.cn 
 
 #ifndef _EVENT_H_
@@ -33,7 +33,7 @@
 typedef struct DATAEVENT
 {
   Short_t      det;//探测器类型
-  Short_t      id;//探测器编号 1-110
+  Short_t      id;//探测器编号
 
   Short_t         sr;
   Long64_t        ts;

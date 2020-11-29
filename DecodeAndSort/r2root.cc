@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:39 2016 (+0800)
-// Last-Updated: 一 9月 21 15:22:14 2020 (+0800)
+// Last-Updated: 日 11月 29 15:19:48 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 119
+//     Update #: 124
 // URL: http://wuhongyi.cn 
 
 #include "r2root.hh"
@@ -487,7 +487,7 @@ void r2root::Process()
 	havedata[i] = rawdec[i].getnextevt();
     }
 
-  Long64_t deltat = 1000000000;
+  Long64_t deltat = 1000000000;//1 s
   while(true)
     {
       timestamp = LLONG_MAX;
@@ -519,7 +519,7 @@ void r2root::Process()
 
 		  posflag = (mapvalue.sid<<4)+mapvalue.ch;
 		  if(mapvalue.evte < chlow[flagcrate[i]][posflag] || mapvalue.evte > chhigh[flagcrate[i]][posflag]) continue;
-		  if(sr == 250)
+		  if(mapvalue.sr == 250)
 		    {
 		      mapvalue.ts = mapvalue.ts+(timeoffset[flagcrate[i]][posflag]/8);
 		      mapvalue.tsflag = mapvalue.ts*8;
@@ -540,9 +540,9 @@ void r2root::Process()
 	    }
 	}
 
-      deltat += 1000000000;
+      deltat += 1000000000;//1 s
 
-      sizelen = sortdata.size() * 0.9;
+      sizelen = sortdata.size() * 0.9;// 0.9
       for (unsigned int i = 0; i < sizelen; ++i)
 	{
 	  itkey = sortdata.begin();

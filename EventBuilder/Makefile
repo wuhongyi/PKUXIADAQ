@@ -11,7 +11,7 @@ GXX = g++
 all:$(OBJ)
 
 LinkDict.cc : event.hh Linkdef.h
-	rootcint -f LinkDict.cc -c $^		
+	rootcling -f LinkDict.cc -c $^		
 
 $(OBJ): $(sourcefile)
 	$(GXX) $(CFLAGS) $(ROOTCFLAGS) $(ROOTLIBS) -o $@ $(filter %.cc ,$(sourcefile))

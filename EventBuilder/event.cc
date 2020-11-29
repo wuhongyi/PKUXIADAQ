@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 9月 21 16:28:37 2020 (+0800)
-// Last-Updated: 一 9月 21 20:41:18 2020 (+0800)
+// Last-Updated: 五 11月 27 20:00:23 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 15
+//     Update #: 16
 // URL: http://wuhongyi.cn 
 
 #include "event.hh"
@@ -47,12 +47,12 @@ event::event(int run)
       readtxt>>cid_tmp>>sid_tmp>>ch_tmp>>det_tmp>>id_tmp>>a0_tmp>>a1_tmp>>a2_tmp;
       if(readtxt.eof()) break;
       Short_t flagchtmp = (sid_tmp-2)*16+ch_tmp;
-      flagdet[cid][flagchtmp] = det_tmp;
-      flagdetid[cid][flagchtmp] = id_tmp;
-      calia0[cid][flagchtmp] = a0_tmp;
-      calia1[cid][flagchtmp] = a1_tmp;
-      calia2[cid][flagchtmp] = a2_tmp;
-      std::cout<<flagdet[cid][flagchtmp]<<"  "<<flagdetid[cid][flagchtmp]<<"  "<<calia0[cid][flagchtmp]<<"  "<<calia1[cid][flagchtmp]<<"  "<<calia2[cid][flagchtmp]<<"  "<<std::endl;
+      flagdet[cid_tmp][flagchtmp] = det_tmp;
+      flagdetid[cid_tmp][flagchtmp] = id_tmp;
+      calia0[cid_tmp][flagchtmp] = a0_tmp;
+      calia1[cid_tmp][flagchtmp] = a1_tmp;
+      calia2[cid_tmp][flagchtmp] = a2_tmp;
+      std::cout<<flagdet[cid_tmp][flagchtmp]<<"  "<<flagdetid[cid_tmp][flagchtmp]<<"  "<<calia0[cid_tmp][flagchtmp]<<"  "<<calia1[cid_tmp][flagchtmp]<<"  "<<calia2[cid_tmp][flagchtmp]<<"  "<<std::endl;
     }
   readtxt.close();  
 
