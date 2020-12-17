@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:39 2016 (+0800)
-// Last-Updated: 一 5月  6 20:15:20 2019 (+0800)
+// Last-Updated: 四 12月 17 16:39:12 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 80
+//     Update #: 81
 // URL: http://wuhongyi.cn 
 
 #include "r2root.hh"
@@ -146,9 +146,10 @@ r2root::r2root(TString rawfilepath,TString rootfilepath,TString filename,int run
 
   t->Branch("ltra",&ltra,"ltra/s");
   t->Branch("data",&data,"data[ltra]/s");
-  t->Branch("dt",&dt,"dt[ltra]/s");
 
-  t->Branch("nevt",&nevt,"nevt/I");
+  // remove in 20201217
+  // t->Branch("dt",&dt,"dt[ltra]/s");
+  // t->Branch("nevt",&nevt,"nevt/I");
 }
 
 r2root::~r2root()
@@ -250,7 +251,7 @@ void r2root::Process()
       if(rawdec[mark].gettraceflag())
 	{
 	  rawdec[mark].gettrace(data);
-	  for(int i = 0;i < int(ltra);i++) dt[i] = i;
+	  // for(int i = 0;i < int(ltra);i++) dt[i] = i; remove in 20201217
 	}
       t->Fill();
 
@@ -371,7 +372,7 @@ void r2root::clearopt()
   ets = 0;
   memset(qs,0,sizeof(UInt_t)*8);
   memset(data,0,sizeof(UShort_t)*MAXTRACEN);
-  memset(dt,0,sizeof(UShort_t)*MAXTRACEN);
+  // memset(dt,0,sizeof(UShort_t)*MAXTRACEN); remove in 20201217
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

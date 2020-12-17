@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 1月  5 13:50:53 2019 (+0800)
-// Last-Updated: 六 1月  5 21:58:55 2019 (+0800)
+// Last-Updated: 四 12月 17 16:46:00 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 6
+//     Update #: 7
 // URL: http://wuhongyi.cn 
 
 #ifndef _MERGE_H_
@@ -70,8 +70,8 @@ private:
   UInt_t qs[8];
   Long64_t ets;
   UShort_t data[MAXTRACEN];
-  UShort_t dt[MAXTRACEN];
-  Int_t nevt;
+  // UShort_t dt[MAXTRACEN];
+  // Int_t nevt;
   Int_t nevent;
   
   // List of branches
@@ -94,8 +94,8 @@ private:
   TBranch        *b_qs;   //!
   TBranch        *b_ltra;   //!
   TBranch        *b_data;   //!
-  TBranch        *b_dt;   //!
-  TBranch        *b_nevt;   //!
+  // TBranch        *b_dt;   //!
+  // TBranch        *b_nevt;   //!
   
 };
 

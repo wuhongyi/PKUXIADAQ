@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 1月  5 13:51:08 2019 (+0800)
-// Last-Updated: 一 1月 14 13:26:17 2019 (+0800)
+// Last-Updated: 四 12月 17 16:46:06 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 30
+//     Update #: 31
 // URL: http://wuhongyi.cn 
 
 #include "UserDefine.hh"
@@ -88,14 +88,14 @@ merge::merge(int an,char *av[])
       treeread[i]->SetBranchAddress("qs", qs, &b_qs);
       treeread[i]->SetBranchAddress("ltra", &ltra, &b_ltra);
       treeread[i]->SetBranchAddress("data", data, &b_data);
-      treeread[i]->SetBranchAddress("dt", dt, &b_dt);
-      treeread[i]->SetBranchAddress("nevt", &nevt, &b_nevt);      
+      // treeread[i]->SetBranchAddress("dt", dt, &b_dt);
+      // treeread[i]->SetBranchAddress("nevt", &nevt, &b_nevt);      
     }
 
   // ==========
 
   file = new TFile(TString::Format("%s%s_C%d%s.root",rootfilepath.Data(),filename.Data(),mhitcrate,tempfilename.Data()).Data(),"RECREATE");
-  t = new TTree("tree","PKU XIA Pixie-16 Multi Crate Data");
+  t = new TTree("tree","GDDAQ Multi Crate Data");
   
   t->Branch("sr",&sr,"sr/S");
   
@@ -122,9 +122,9 @@ merge::merge(int an,char *av[])
 
   t->Branch("ltra",&ltra,"ltra/s");
   t->Branch("data",&data,"data[ltra]/s");
-  t->Branch("dt",&dt,"dt[ltra]/s");
-
-  t->Branch("nevt",&nevent,"nevt/I");  
+  
+  //t->Branch("dt",&dt,"dt[ltra]/s");
+  // t->Branch("nevt",&nevent,"nevt/I");  
  
 }
 
@@ -164,33 +164,24 @@ void merge::Process()
 	    {
 	      fileread[i]->cd();
 	      treeread[i]->GetEvent(CrateEntry[i]);
-	      
-	      switch(sr)
-	      	{
-	      	case 100:
-	      	  if(10*ts < timestamp)
-	      	    {
-	      	      timestamp = 10*ts;
-	      	      mark = i;
-	      	    }
-	      	  break;
-	      	case 250:
+
+	      if(sr==250)
+		{
 	      	  if(8*ts < timestamp)
 	      	    {
 	      	      timestamp = 8*ts;
 	      	      mark = i;
 	      	    }
-	      	  break;
-	      	case 500:
+		}
+	      else
+		{
 	      	  if(10*ts < timestamp)
 	      	    {
 	      	      timestamp = 10*ts;
 	      	      mark = i;
 	      	    }
-	      	  break;
-	      	default:
-	      	  break;
-	      	} 
+		}
+
 	    }
 	}
 
