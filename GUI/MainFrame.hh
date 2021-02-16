@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:17 2018 (+0800)
-// Last-Updated: 三 9月 30 19:29:54 2020 (+0800)
+// Last-Updated: 二 2月 16 17:01:36 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 59
+//     Update #: 63
 // URL: http://wuhongyi.cn 
 
 #ifndef MAINFRAME_HH_
@@ -27,6 +27,7 @@
 #include "Simulation.hh"
 #include "TriggerFilter.hh"
 #include "ReadChanStatus.hh"
+#include "ExpThresholdChange.hh"
 
 #include "../software/app/pixie16app_export.h"
 
@@ -78,7 +79,8 @@ enum Commands //commands for the menu bar popups
     HISTXDT,
     READCHANSTATUS,
     OFFLINEADJUSTPAR,
-    SIMULATION
+    SIMULATION,
+    EXPTHRESHOLDCHANGE
   };
 
 class Detector;
@@ -123,6 +125,9 @@ private:
   Offline *popupoffline;
   Simulation *simulation;
 
+  ExpThresholdChange *expthresholdchange;
+
+  
   Detector *detector;
 
   virtual Bool_t ProcessMessage(Long_t msg, Long_t parm1, Long_t);//process message queue
@@ -143,6 +148,7 @@ private:
   TGPopupMenu *MenuExpert;
   TGPopupMenu *MenuMonitor;
   TGPopupMenu *MenuOffline;
+  TGPopupMenu *MenuExp;
   TGTextButton *bootB;
 
   
@@ -182,6 +188,8 @@ TGCheckButton   *decoderchk;
   void RunReadData();
   bool IsDirectoryExists(const char *path);//Determine if the folder exists
   bool CreateDirectory(const char *path);//Create folder
+
+  void ExpModeInit();
   
   ClassDef(MainFrame,1)
 };

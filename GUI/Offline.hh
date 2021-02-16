@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 六 2月 15 18:45:10 2020 (+0800)
+// Last-Updated: 一 12月 21 16:12:09 2020 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 193
+//     Update #: 195
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -278,7 +278,10 @@ private:
   TGNumberEntry	*offlinechnum4;//int
   int chanNumber4;
   TGComboBox *chooseth1dbin4;
+  TGHButtonGroup *FitButtonGroup4;
+  TGRadioButton *FitRadioButton4[2];
 
+  
   // Fold5
   TCanvas *canvas5;
   TCanvas * OriginalCFDcanvas5;

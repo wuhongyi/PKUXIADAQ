@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 三 9月 30 19:31:54 2020 (+0800)
+// Last-Updated: 二 2月 16 17:02:15 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 407
+//     Update #: 416
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -114,6 +114,13 @@ void MainFrame::CreateMenuBar()
   MenuOffline->Associate(this);
   MenuOffline->SetBackgroundColor(TColor::RGB2Pixel(0,128,0));
 
+  MenuExp = new TGPopupMenu(fClient->GetRoot());
+  MenuExp->AddEntry("Change Thre", EXPTHRESHOLDCHANGE);
+  // MenuExp->AddEntry("Simulation", SIMULATION);
+  MenuExp->Associate(this);
+  MenuExp->SetBackgroundColor(TColor::RGB2Pixel(0,128,0));
+
+  
 
   // MenuBar->GetTitles()->Print();
   
@@ -135,6 +142,8 @@ void MainFrame::CreateMenuBar()
   MenuBar->AddPopup("&Expert ", MenuExpert, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   MenuBar->AddPopup(" &Debug ", MenuMonitor, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
   MenuBar->AddPopup("&Offline", MenuOffline, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  MenuBar->AddPopup("Exp&Mode", MenuExp, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 0, 0));
+  
 
   // std::cout<<MenuBar->GetTitles()->GetSize()<<std::endl;
   // for (int i = 0; i < MenuBar->GetTitles()->GetSize(); ++i)
@@ -260,6 +269,12 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    case SIMULATION:
 	      simulation = new Simulation(fClient->GetRoot(), this/*, detector,filepathtext,filenametext*/); //TODO
 	      break;
+	    case EXPTHRESHOLDCHANGE:
+	      expthresholdchange = new ExpThresholdChange(fClient->GetRoot(), this, detector);
+	      break;
+
+	      
+
 	      
 	    case FILE_SAVE:
 	      {
@@ -311,6 +326,7 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 		  bootB->SetEnabled(1);
 		}
 	      detector->SetRunFlag(false);
+	      ExpModeInit();
 	      break;
 
 	    default:
@@ -1017,6 +1033,7 @@ void MainFrame::SetMenuStatus(bool flag,int flagonline)
       	MenuMonitor->EnableEntry(READCHANSTATUS);
       MenuOffline->EnableEntry(OFFLINEADJUSTPAR);
       MenuOffline->EnableEntry(SIMULATION);
+      MenuExp->EnableEntry(EXPTHRESHOLDCHANGE);
     }
   else
     {
@@ -1039,8 +1056,34 @@ void MainFrame::SetMenuStatus(bool flag,int flagonline)
       MenuMonitor->DisableEntry(READCHANSTATUS);
       MenuOffline->DisableEntry(OFFLINEADJUSTPAR);
       MenuOffline->DisableEntry(SIMULATION);
+      MenuExp->DisableEntry(EXPTHRESHOLDCHANGE);
     }
 
+}
+
+void MainFrame::ExpModeInit()
+{
+  std::cout<<"ExpModeInit"<<std::endl;
+
+  double ChanParData = -1;
+  int retval;
+  std::ofstream expmodeinitwrite;
+  expmodeinitwrite.open("exp/DSPpar.thre");//ios::bin ios::app
+  if(!expmodeinitwrite.is_open())
+    {
+      std::cout<<"can't open file -- exp/DSPpar.thre"<<std::endl;
+      return;
+    }
+
+  for (int mod = 0; mod < detector->NumModules; ++mod)
+    for (int i = 0; i < 16; i++)
+      {
+	retval = Pixie16ReadSglChanPar((char*)"TRIGGER_THRESHOLD", &ChanParData, mod, i);
+	if(retval < 0) ErrorInfo("MainFrame.cc", "ExpModeInit()", "Pixie16ReadSglChanPar/TRIGGER_THRESHOLD", retval);
+	expmodeinitwrite<<mod <<"  "<<i<<"  "<<ChanParData<<endl;
+      }
+  expmodeinitwrite.close();
+  
 }
 
 
