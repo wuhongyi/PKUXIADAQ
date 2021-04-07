@@ -4,15 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 8月  9 09:24:46 2016 (+0800)
-// Last-Updated: 四 11月 19 20:45:16 2020 (+0800)
+// Last-Updated: 三 4月  7 15:35:36 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 89
+//     Update #: 90
 // URL: http://wuhongyi.cn 
 
 #ifndef _GLOBAL_HH_
 #define _GLOBAL_HH_
 
-const char gVERSION[] = "Version: STD - 2020.11.19";
+const char gVERSION[] = "Version: STD - 2021.04.07";
 
 const char gAbout[] = "\
 Version: STD-20200930\n\

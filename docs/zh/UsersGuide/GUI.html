@@ -377,7 +377,7 @@
 <p>界面下方的 Status 显示为 <strong>绿色的 Ready</strong> 时表示可操作该界面，否则需要等待。</p>
 <p>界面中 Module 后面的参数用来选择调节的采集卡模块， <strong>Load</strong> 表示读取该采集卡的参数数值， <strong>Apply</strong> 表示将界面中的数值写入采集卡。</p>
 <p>界面下方的 Select Channel 后面的参数表示选择用来将界面上该通道的参数复制给其它通道，点击后面 <strong>Copy</strong> 完成复制，然后需要 <strong>Apply</strong> 来将参数写入采集卡。</p>
-<p><strong>Base Setup</strong> 页面控制每个通道的模拟增益，便置和极性。单击顶部控制栏中 <strong>Monitor</strong> 的 <strong>Trace＆Baseline</strong> 可以查看从 ADC 读取的信号，同时调整这些参数。该页面可以显示模块的一个或全部 16 个通道。您可以在 <strong>Hist＆XDT</strong> 页面中设置每个模块每个通道的采样间隔以捕获更长的时间帧。单击 <strong>Draw</strong> 以更新图形。</p>
+<p><strong>Base Setup</strong> 页面控制每个通道的模拟增益，偏置和极性。单击顶部控制栏中 <strong>Monitor</strong> 的 <strong>Trace＆Baseline</strong> 可以查看从 ADC 读取的信号，同时调整这些参数。该页面可以显示模块的一个或全部 16 个通道。您可以在 <strong>Hist＆XDT</strong> 页面中设置每个模块每个通道的采样间隔以捕获更长的时间帧。单击 <strong>Draw</strong> 以更新图形。</p>
 <p>来自探测器的脉冲应落在 0 到 16383（例如 14位）的范围内，基线在 ~1638 处允许漂移和/或下冲，并且在上限处没有削波。如果存在削波，请调整增益和偏置，或单击 <strong>AdjustOffset</strong> 按钮让软件将 DC 偏置设置为适当的水平。</p>
 <p>由于 FPGA 中的触发/滤波电路仅作用于正极性脉冲，因此负脉冲在输入 FPGA 处进行极性反转，并且 ADC 波形显示中显示的波形包括此可选的反转。因此，设置通道的极性，使得来自探测器的脉冲以正幅度（上升沿）出现。</p>
 <p>在 <strong>Base Setup</strong> 选项卡中，您可以设置在列表模式运行中获取的波形的总跟踪长度和预触发跟踪延迟。</p>

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 一 12月 21 17:25:17 2020 (+0800)
+// Last-Updated: 三 4月  7 15:34:31 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 1081
+//     Update #: 1082
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -1279,23 +1279,23 @@ void Offline::MakeFold4Panel(TGCompositeFrame *TabPanel)
   GausFitButton4->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
 
 
-  FitButtonGroup4 = new TGHButtonGroup(parFrame, "");
-  parFrame->AddFrame(FitButtonGroup4, new TGLayoutHints(kLHintsLeft | kLHintsTop,1, 1, 1, 1));
-  FitButtonGroup4->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
-  // FitButtonGroup4->ChangeSubframesBackground(TColor::RGB2Pixel(100,0,0));
-  FitButtonGroup4->SetLayoutHints( new TGLayoutHints(kLHintsLeft | kLHintsTop,0, 0, 0, 0),  0);
-  FitButtonGroup4->SetBorderDrawn(kFALSE);
-  FitButtonGroup4->SetTitlePos(TGGroupFrame::kLeft);
-  FitButtonGroup4->Show();
-  FitButtonGroup4->SetState(kTRUE);//是否开启，开启才可以选，不开启是灰色的
-  FitButtonGroup4->SetRadioButtonExclusive(kTRUE);
-  FitRadioButton4[0] = new TGRadioButton(FitButtonGroup4, new TGHotString("Gaus"));
-  FitRadioButton4[1] = new TGRadioButton(FitButtonGroup4, new TGHotString("Exp+Gaus"));
-  FitRadioButton4[0]->SetOn();//Default state
-  FitRadioButton4[0]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
-  FitRadioButton4[1]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
-  FitRadioButton4[0]->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
-  FitRadioButton4[1]->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
+  // FitButtonGroup4 = new TGHButtonGroup(parFrame, "");
+  // parFrame->AddFrame(FitButtonGroup4, new TGLayoutHints(kLHintsLeft | kLHintsTop,1, 1, 1, 1));
+  // FitButtonGroup4->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  // // FitButtonGroup4->ChangeSubframesBackground(TColor::RGB2Pixel(100,0,0));
+  // FitButtonGroup4->SetLayoutHints( new TGLayoutHints(kLHintsLeft | kLHintsTop,0, 0, 0, 0),  0);
+  // FitButtonGroup4->SetBorderDrawn(kFALSE);
+  // FitButtonGroup4->SetTitlePos(TGGroupFrame::kLeft);
+  // FitButtonGroup4->Show();
+  // FitButtonGroup4->SetState(kTRUE);//是否开启，开启才可以选，不开启是灰色的
+  // FitButtonGroup4->SetRadioButtonExclusive(kTRUE);
+  // FitRadioButton4[0] = new TGRadioButton(FitButtonGroup4, new TGHotString("Gaus"));
+  // FitRadioButton4[1] = new TGRadioButton(FitButtonGroup4, new TGHotString("Exp+Gaus"));
+  // FitRadioButton4[0]->SetOn();//Default state
+  // FitRadioButton4[0]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  // FitRadioButton4[1]->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  // FitRadioButton4[0]->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
+  // FitRadioButton4[1]->SetTextColor(TColor::RGB2Pixel(TITLE_TEXT_R,TITLE_TEXT_G,TITLE_TEXT_B));
 
   
   // draw
