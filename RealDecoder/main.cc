@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 三 2月 26 20:42:35 2020 (+0800)
-// Last-Updated: 五 9月 11 20:10:29 2020 (+0800)
+// Last-Updated: 二 4月 27 17:17:59 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 36
+//     Update #: 39
 // URL: http://wuhongyi.cn 
 
 // wugroot main.cc  -lrt  -o 123
@@ -43,12 +43,62 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+  int histbin[MODULE_NUM_MAX][16];
+  double histmin[MODULE_NUM_MAX][16];
+  double histmax[MODULE_NUM_MAX][16];
+  double  calia0[MODULE_NUM_MAX][16];
+  double  calia1[MODULE_NUM_MAX][16];
+  double  calia2[MODULE_NUM_MAX][16];
+  for (int i = 0; i < MODULE_NUM_MAX; ++i)
+    for (int j = 0; j < 16; ++j)
+      {
+	histbin[i][j] = 1000;
+	histmin[i][j] = 0;
+	histmax[i][j] = 10000;
+	calia0[i][j] = 0.0;
+	calia1[i][j] = 0.0;
+	calia2[i][j] = 0.0;
+      }
+  
+  std::ifstream readtxt;
+  readtxt.open("par.dat");
+  if(!readtxt.is_open())
+    {
+      std::cout<<"can't open file."<<std::endl;
+    }
+
+  std::string str_tmp;
+  getline(readtxt,str_tmp);
+
+  Short_t sid_tmp, ch_tmp;
+  int histbin_tmp;
+  double histmin_tmp, histmax_tmp;
+  Double_t a0_tmp, a1_tmp, a2_tmp;
+  while(!readtxt.eof())
+    {
+      readtxt>>sid_tmp>>ch_tmp>>histbin_tmp>>histmin_tmp>>histmax_tmp>>a0_tmp>>a1_tmp>>a2_tmp;
+      if(readtxt.eof()) break;
+      histbin[sid_tmp-2][ch_tmp] = histbin_tmp;
+      histmin[sid_tmp-2][ch_tmp] = histmin_tmp;
+      histmax[sid_tmp-2][ch_tmp] = histmax_tmp;
+      calia0[sid_tmp-2][ch_tmp] = a0_tmp;
+      calia1[sid_tmp-2][ch_tmp] = a1_tmp;
+      calia2[sid_tmp-2][ch_tmp] = a2_tmp;
+    }
+  readtxt.close();  
+
+
+
+  
   TH1I *adc[MODULE_NUM_MAX][16];
+  TH1I *energy[MODULE_NUM_MAX][16];
   for (int i = 0; i < MODULE_NUM_MAX; ++i)
     for (int j = 0; j < 16; ++j)
       {
 	adc[i][j] = new TH1I(TString::Format("ADC_%02d_%02d",i,j).Data(),"",ADC_HIST_BIN,ADC_HIST_MIN,ADC_HIST_MAX);
 	adc[i][j]->SetDirectory(0);
+	energy[i][j] = new TH1I(TString::Format("ENERGY_%02d_%02d",i,j).Data(),"",histbin[i][j],histmin[i][j],histmax[i][j]);
+	energy[i][j]->SetDirectory(0);
       }
 
   
@@ -66,6 +116,7 @@ int main(int argc, char *argv[])
     for (int j = 0; j < 16; ++j)
       {
 	serv->Register("ADC",adc[i][j]);
+	serv->Register("ENERGY",energy[i][j]);
       }
 
   
@@ -74,15 +125,19 @@ int main(int argc, char *argv[])
       {
 	serv->RegisterCommand(TString::Format("/Control/ADC/ADC_%02d_%02d",i,j).Data(),TString::Format("/Objects/ADC/ADC_%02d_%02d/->Reset()",i,j).Data(), "rootsys/icons/ed_delete.png");
 	serv->SetItemField(TString::Format("/Control/ADC/ADC_%02d_%02d",i,j).Data(),"_update_item", TString::Format("ADC_%02d_%02d",i,j).Data()); // let browser update histogram view after commands execution
+
+	serv->RegisterCommand(TString::Format("/Control/ENERGY/ENERGY_%02d_%02d",i,j).Data(),TString::Format("/Objects/ENERGY/ENERGY_%02d_%02d/->Reset()",i,j).Data(), "rootsys/icons/ed_delete.png");
+	serv->SetItemField(TString::Format("/Control/ENERGY/ENERGY_%02d_%02d",i,j).Data(),"_update_item", TString::Format("ENERGY_%02d_%02d",i,j).Data()); // let browser update histogram view after commands execution
       }
 
 
   serv->Restrict("/Control",  "visible=admin");
   // serv->Restrict("/Control", "hidden=guest");
-  serv->RegisterCommand("/Control/Exit","gSystem->Exit()");
+  serv->RegisterCommand("/Control/Exit","gSystem->Exit(0)");
 
   serv->SetItemField("/","_monitoring","5000");
   serv->SetItemField("/ADC/","_drawopt","");
+  serv->SetItemField("/ENERGY/","_drawopt","");
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -154,6 +209,7 @@ int main(int argc, char *argv[])
 	    for (int j = 0; j < 16; ++j)
 	      {
 		adc[i][j]->Reset("ICES");
+		energy[i][j]->Reset("ICES");
 	      }
 #endif
 	}
@@ -171,6 +227,7 @@ int main(int argc, char *argv[])
 		  if(rawdec[i].readword(data))
 		    {
 		      adc[i][rawdec[i].getch()]->Fill(rawdec[i].getevte());
+		      energy[i][rawdec[i].getch()]->Fill(calia0[i][rawdec[i].getch()]+calia1[i][rawdec[i].getch()]*rawdec[i].getevte()+calia2[i][rawdec[i].getch()]*rawdec[i].getevte()*rawdec[i].getevte());
 		    }
 		}
 	      
