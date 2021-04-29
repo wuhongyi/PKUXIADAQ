@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 三 4月  7 15:34:31 2021 (+0800)
+// Last-Updated: 四 4月 29 19:40:35 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 1082
+//     Update #: 1083
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -56,6 +56,7 @@
 #include "pixie16sys_export.h"
 #include "xia_common.h"
 
+#include "TVirtualX.h"
 #include "TLegend.h"
 #include "TGTab.h"
 #include "TString.h"

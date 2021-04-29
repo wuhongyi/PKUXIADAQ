@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:40:09 2016 (+0800)
-// Last-Updated: 一 12月 21 16:12:09 2020 (+0800)
+// Last-Updated: 四 4月 29 19:38:21 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 195
+//     Update #: 196
 // URL: http://wuhongyi.cn 
 
 #ifndef _OFFLINE_HH_
@@ -48,6 +48,7 @@ const char gOfflineGuides[PANELNUMBER][128] =
 #include "TGraph.h"
 #include "TGStatusBar.h"
 #include "TGTextEntry.h"
+#include "TF1.h"
 #include "TH1.h"
 #include "TH2.h"
 #include "TObject.h"
