@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 三 2月 26 20:42:35 2020 (+0800)
-// Last-Updated: 二 4月 27 17:17:59 2021 (+0800)
+// Last-Updated: 三 5月 19 11:07:18 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 39
+//     Update #: 42
 // URL: http://wuhongyi.cn 
 
 // wugroot main.cc  -lrt  -o 123
@@ -43,6 +43,7 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+  int goodch[MODULE_NUM_MAX][16];
   int histbin[MODULE_NUM_MAX][16];
   double histmin[MODULE_NUM_MAX][16];
   double histmax[MODULE_NUM_MAX][16];
@@ -52,6 +53,7 @@ int main(int argc, char *argv[])
   for (int i = 0; i < MODULE_NUM_MAX; ++i)
     for (int j = 0; j < 16; ++j)
       {
+	goodch[i][j] = 0;
 	histbin[i][j] = 1000;
 	histmin[i][j] = 0;
 	histmax[i][j] = 10000;
@@ -71,13 +73,15 @@ int main(int argc, char *argv[])
   getline(readtxt,str_tmp);
 
   Short_t sid_tmp, ch_tmp;
+  int goodch_tmp;
   int histbin_tmp;
   double histmin_tmp, histmax_tmp;
   Double_t a0_tmp, a1_tmp, a2_tmp;
   while(!readtxt.eof())
     {
-      readtxt>>sid_tmp>>ch_tmp>>histbin_tmp>>histmin_tmp>>histmax_tmp>>a0_tmp>>a1_tmp>>a2_tmp;
+      readtxt>>sid_tmp>>ch_tmp>>goodch_tmp>>histbin_tmp>>histmin_tmp>>histmax_tmp>>a0_tmp>>a1_tmp>>a2_tmp;
       if(readtxt.eof()) break;
+      goodch[sid_tmp-2][ch_tmp] = goodch_tmp;
       histbin[sid_tmp-2][ch_tmp] = histbin_tmp;
       histmin[sid_tmp-2][ch_tmp] = histmin_tmp;
       histmax[sid_tmp-2][ch_tmp] = histmax_tmp;
@@ -115,19 +119,25 @@ int main(int argc, char *argv[])
   for (int i = 0; i < MODULE_NUM_MAX; ++i)
     for (int j = 0; j < 16; ++j)
       {
-	serv->Register("ADC",adc[i][j]);
-	serv->Register("ENERGY",energy[i][j]);
+	if(goodch[i][j]==1)
+	  {
+	    serv->Register("ADC",adc[i][j]);
+	    serv->Register("ENERGY",energy[i][j]);
+	  }
       }
 
   
   for (int i = 0; i < MODULE_NUM_MAX; ++i)
     for (int j = 0; j < 16; ++j)
       {
-	serv->RegisterCommand(TString::Format("/Control/ADC/ADC_%02d_%02d",i,j).Data(),TString::Format("/Objects/ADC/ADC_%02d_%02d/->Reset()",i,j).Data(), "rootsys/icons/ed_delete.png");
-	serv->SetItemField(TString::Format("/Control/ADC/ADC_%02d_%02d",i,j).Data(),"_update_item", TString::Format("ADC_%02d_%02d",i,j).Data()); // let browser update histogram view after commands execution
+	if(goodch[i][j]==1)
+	  {
+	    serv->RegisterCommand(TString::Format("/Control/ADC/ADC_%02d_%02d",i,j).Data(),TString::Format("/Objects/ADC/ADC_%02d_%02d/->Reset()",i,j).Data(), "rootsys/icons/ed_delete.png");
+	    serv->SetItemField(TString::Format("/Control/ADC/ADC_%02d_%02d",i,j).Data(),"_update_item", TString::Format("ADC_%02d_%02d",i,j).Data()); // let browser update histogram view after commands execution
 
-	serv->RegisterCommand(TString::Format("/Control/ENERGY/ENERGY_%02d_%02d",i,j).Data(),TString::Format("/Objects/ENERGY/ENERGY_%02d_%02d/->Reset()",i,j).Data(), "rootsys/icons/ed_delete.png");
-	serv->SetItemField(TString::Format("/Control/ENERGY/ENERGY_%02d_%02d",i,j).Data(),"_update_item", TString::Format("ENERGY_%02d_%02d",i,j).Data()); // let browser update histogram view after commands execution
+	    serv->RegisterCommand(TString::Format("/Control/ENERGY/ENERGY_%02d_%02d",i,j).Data(),TString::Format("/Objects/ENERGY/ENERGY_%02d_%02d/->Reset()",i,j).Data(), "rootsys/icons/ed_delete.png");
+	    serv->SetItemField(TString::Format("/Control/ENERGY/ENERGY_%02d_%02d",i,j).Data(),"_update_item", TString::Format("ENERGY_%02d_%02d",i,j).Data()); // let browser update histogram view after commands execution
+	  }
       }
 
 
@@ -227,7 +237,8 @@ int main(int argc, char *argv[])
 		  if(rawdec[i].readword(data))
 		    {
 		      adc[i][rawdec[i].getch()]->Fill(rawdec[i].getevte());
-		      energy[i][rawdec[i].getch()]->Fill(calia0[i][rawdec[i].getch()]+calia1[i][rawdec[i].getch()]*rawdec[i].getevte()+calia2[i][rawdec[i].getch()]*rawdec[i].getevte()*rawdec[i].getevte());
+		      double rawch = rawdec[i].getevte()+gRandom->Rndm();
+		      energy[i][rawdec[i].getch()]->Fill(calia0[i][rawdec[i].getch()]+calia1[i][rawdec[i].getch()]*rawch+calia2[i][rawdec[i].getch()]*rawch*rawch);
 		    }
 		}
 	      
