@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 7月 28 18:18:03 2016 (+0800)
-// Last-Updated: 三 6月 10 13:41:25 2020 (+0800)
+// Last-Updated: 三 7月 21 18:24:26 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 236
+//     Update #: 237
 // URL: http://wuhongyi.cn 
 
 #include "LogicTrigger.hh"
@@ -694,7 +694,7 @@ LogicTrigger::LogicTrigger(const TGWindow *p, const TGWindow *main, char *name, 
   ExternalFastTrigger->AddEntry("Ext_FastTrig_Sel(front panel TTL)", 1);
   ExternalFastTrigger->AddEntry("Int_FastTrig_Sgl(1 out of 16 fast trigger)", 2);
   ExternalFastTrigger->AddEntry("FTIN_Or(OR of 16 fast trigger)", 3);
-  ExternalFastTrigger->AddEntry("LVDS_ValidTrig_FP(front panel Ethernet cables)", 4);
+  ExternalFastTrigger->AddEntry("LVDS_FastTrig_FP(front panel Ethernet cables)", 4);
   ExternalFastTrigger->AddEntry("ChanTrig_Sel(1 out of 16 valid trigger)", 5);
   ExternalFastTrigger->Select(1);
 
