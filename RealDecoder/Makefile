@@ -11,7 +11,7 @@ GXX = g++
 all: $(OBJS)
 
 $(OBJS): $(sourcefile)
-	$(GXX) $(CFLAGS) $(ROOTCFLAGS) $(ROOTLIBS) -o $@ $(filter %.cc ,$(sourcefile))
+	$(GXX) $(CFLAGS) $(ROOTCFLAGS) -o $@ $(filter %.cc ,$(sourcefile)) $(ROOTLIBS)
 
 clean:
 	rm -f *~ *.o $(OBJS) 

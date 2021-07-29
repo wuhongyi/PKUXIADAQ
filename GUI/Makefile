@@ -1,9 +1,9 @@
 OBJ = pku
 
-CXX=g++        
-CXXFLAGS:=-std=c++11 -g -Wall -lrt -lfftw3 -I. -I../software/app -I../software/sys
+CXX=g++ #-std=c++11  
+CXXFLAGS:=-fno-stack-protector -g -Wall -lrt -lfftw3 -I. -I../software/app -I../software/sys
 ROOTLIBS = $(shell root-config --libs) -lGui
-ROOTINC = -I$(shell root-config --incdir) 
+ROOTINC = -I$(shell root-config --cflags) 
 CXXFLAGS+=$(ROOTINC)
 LIBS:=../software/libPixie16App.a  ../software/libPixie16Sys.a  $(PLX_SDK_DIR)/PlxApi/Library/PlxApi.a
 

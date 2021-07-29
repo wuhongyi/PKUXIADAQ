@@ -4,9 +4,9 @@
 ## Author: Hongyi Wu(吴鸿毅)
 ## Email: wuhongyi@qq.com 
 ## Created: 日 10月  2 19:40:07 2016 (+0800)
-## Last-Updated: 四 1月  3 18:29:01 2019 (+0800)
+## Last-Updated: 四 7月 29 16:26:21 2021 (+0800)
 ##           By: Hongyi Wu(吴鸿毅)
-##     Update #: 6
+##     Update #: 7
 ## URL: http://wuhongyi.cn 
 
 OBJ = decode
@@ -22,7 +22,7 @@ GXX = g++
 all:$(OBJ)
 
 $(OBJ): $(sourcefile)
-	$(GXX) $(CFLAGS) $(ROOTCFLAGS) $(ROOTLIBS) -o $@ $(filter %.cc ,$(sourcefile))
+	$(GXX) $(CFLAGS) $(ROOTCFLAGS) -o $@ $(filter %.cc ,$(sourcefile))  $(ROOTLIBS)
 
 clean:
 	rm -f *~ *.o *.txt *.root $(OBJ)

@@ -11,7 +11,7 @@ GXX = g++
 all:$(OBJ)
 
 $(OBJ): $(sourcefile)
-	$(GXX) $(CFLAGS) $(MYSQLCFLAGS) $(MYSQLLIBS) -o $@ $(filter %.cc ,$(sourcefile))
+	$(GXX) $(CFLAGS) $(MYSQLCFLAGS) -o $@ $(filter %.cc ,$(sourcefile)) $(MYSQLLIBS)
 
 clean:
 	rm -f *~ *.o  $(OBJ)

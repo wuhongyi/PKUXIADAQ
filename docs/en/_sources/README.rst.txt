@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 20:19:34 2019 (+0800)
-.. Last-Updated: 三 4月  7 15:38:37 2021 (+0800)
+.. Last-Updated: 四 7月 29 16:43:37 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 36
+..     Update #: 37
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -28,7 +28,7 @@ Version
 Stable Version
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Stable Version Version:2021.04.07**  
+**Stable Version Version:2021.07.29**  
 
 Download the latest version, please click:  `PKUXIADAQ stable <https://github.com/pkuNucExp/PKUXIADAQ>`_ 
 
@@ -45,7 +45,7 @@ For web page MZTIO manual, please click: `English/简体中文 <https://pkunucex
 Pre-alpha
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Pre-alpha Version:2021.04.07**  
+**Pre-alpha Version:2021.07.29**  
 
 Download the latest version:  `PKUXIADAQ <https://github.com/wuhongyi/PKUXIADAQ>`_ 
 

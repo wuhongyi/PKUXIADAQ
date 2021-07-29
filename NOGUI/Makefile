@@ -1,7 +1,7 @@
 OBJ = pku
 
-CXX=g++        
-CXXFLAGS:=-std=c++11 -g -Wall -lrt -ldl -lm -lpthread -I. -I../software/app -I../software/sys
+CXX=g++ -std=c++11
+CXXFLAGS:= -g -Wall -lrt -ldl -lm -lpthread -I. -I../software/app -I../software/sys
 LIBS:= ../software/libPixie16App.a  ../software/libPixie16Sys.a $(PLX_SDK_DIR)/PlxApi/Library/PlxApi.a
 
 
