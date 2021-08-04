@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 14:57:03 2019 (+0800)
-.. Last-Updated: 三 9月 16 19:50:02 2020 (+0800)
+.. Last-Updated: 三 8月  4 21:57:30 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 21
+..     Update #: 22
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -26,6 +26,8 @@ XIA LLC 推出的 Pixie16 系列采集卡，拥有 100M 12/14 bit、250M 12/14/1
     - 请与吴鸿毅联系。
 - NIMA - A general-purpose digital data acquisition system (GDDAQ) at Peking University
     - https://doi.org/10.1016/j.nima.2020.164200
+- NST - Performance of digital data acquisition system in gamma-ray spectroscopy
+    - https://doi.org/10.1007/s41365-021-00917-8
 - NST - Compact 16-channel integrated charge-sensitive preamplifier module for silicon strip detectors
     - https://doi.org/10.1007/s41365-020-00755-0
 
