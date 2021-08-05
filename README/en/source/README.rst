@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 20:19:34 2019 (+0800)
-.. Last-Updated: 三 8月  4 21:52:28 2021 (+0800)
+.. Last-Updated: 四 8月  5 18:20:33 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 38
+..     Update #: 39
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -163,7 +163,7 @@ If you use part of this software, please cite the following paper:
 
 - `A general-purpose digital data acquisition system (GDDAQ) at Peking University <https://doi.org/10.1016/j.nima.2020.164200>`_ 
 - `Performance of digital data acquisition system in gamma-ray spectroscopy <https://doi.org/10.1007/s41365-021-00917-8>`_
-
+- `基于数字化的通用获取系统及波形分析算法 <https://doi.org/10.1360/TB-2021-0552>`_
   
 
 .. 
