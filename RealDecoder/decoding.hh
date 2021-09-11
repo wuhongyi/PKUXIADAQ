@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 9月 11 16:57:39 2020 (+0800)
-// Last-Updated: 五 9月 11 17:34:27 2020 (+0800)
+// Last-Updated: 二 9月  7 10:44:47 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 2
+//     Update #: 4
 // URL: http://wuhongyi.cn 
 
 #ifndef _DECODING_H_
@@ -29,7 +29,11 @@ public:
   // inline short getcid() {return cid;}
   inline bool getpileup() {return pileup;}
 
-  // inline long getts() {return ts;}
+#ifdef CLEAR_IN_NEW_RUN
+#ifdef SHOW_OUTPUT_RATE  
+  inline long getts() {return ts;}
+#endif
+#endif  
   inline short getcfd() {return cfd;}
   inline bool getcfdft() {return cfdft;}
   inline short getcfds() {return cfds;}

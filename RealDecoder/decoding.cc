@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 9月 11 16:57:53 2020 (+0800)
-// Last-Updated: 五 9月 11 17:41:27 2020 (+0800)
+// Last-Updated: 二 9月  7 10:44:45 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 4
+//     Update #: 5
 // URL: http://wuhongyi.cn 
 
 #include "decoding.hh"
@@ -52,14 +52,21 @@ bool decoding::readword(unsigned int buff)
       
     case 1:
       // decode 2nd word in this event
-      // ts = ( buff & kMasktslo ) >> kShifttslo;
-
+#ifdef CLEAR_IN_NEW_RUN
+#ifdef SHOW_OUTPUT_RATE       
+      ts = ( buff & kMasktslo ) >> kShifttslo;
+#endif
+#endif 
       statemachine = 2;
       break;
 
     case 2:
       // decode 3rd
-      // ts = ts+(((long)( buff & kMasktshi ) >> kShifttshi)*0x100000000);
+#ifdef CLEAR_IN_NEW_RUN
+#ifdef SHOW_OUTPUT_RATE        
+      ts = ts+(((long)( buff & kMasktshi ) >> kShifttshi)*0x100000000);
+#endif
+#endif 
       switch(int(samplerate))
 	{
 	case 100:

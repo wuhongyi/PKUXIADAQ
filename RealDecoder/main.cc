@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 三 2月 26 20:42:35 2020 (+0800)
-// Last-Updated: 三 5月 19 11:07:18 2021 (+0800)
+// Last-Updated: 二 9月  7 10:49:52 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 42
+//     Update #: 45
 // URL: http://wuhongyi.cn 
 
 // wugroot main.cc  -lrt  -o 123
@@ -96,6 +96,7 @@ int main(int argc, char *argv[])
   
   TH1I *adc[MODULE_NUM_MAX][16];
   TH1I *energy[MODULE_NUM_MAX][16];
+  TH1I *rate[MODULE_NUM_MAX][16];
   for (int i = 0; i < MODULE_NUM_MAX; ++i)
     for (int j = 0; j < 16; ++j)
       {
@@ -103,6 +104,12 @@ int main(int argc, char *argv[])
 	adc[i][j]->SetDirectory(0);
 	energy[i][j] = new TH1I(TString::Format("ENERGY_%02d_%02d",i,j).Data(),"",histbin[i][j],histmin[i][j],histmax[i][j]);
 	energy[i][j]->SetDirectory(0);
+#ifdef CLEAR_IN_NEW_RUN
+#ifdef SHOW_OUTPUT_RATE
+	rate[i][j] = new TH1I(TString::Format("RATE_%02d_%02d",i,j).Data(),"",RATE_HIST_BIN,RATE_HIST_MIN,RATE_HIST_MAX);
+	rate[i][j]->SetDirectory(0);	
+#endif
+#endif	
       }
 
   
@@ -123,6 +130,11 @@ int main(int argc, char *argv[])
 	  {
 	    serv->Register("ADC",adc[i][j]);
 	    serv->Register("ENERGY",energy[i][j]);
+#ifdef CLEAR_IN_NEW_RUN
+#ifdef SHOW_OUTPUT_RATE
+	    serv->Register("RATE",rate[i][j]);
+#endif
+#endif	    
 	  }
       }
 
@@ -148,7 +160,12 @@ int main(int argc, char *argv[])
   serv->SetItemField("/","_monitoring","5000");
   serv->SetItemField("/ADC/","_drawopt","");
   serv->SetItemField("/ENERGY/","_drawopt","");
-  
+#ifdef CLEAR_IN_NEW_RUN
+#ifdef SHOW_OUTPUT_RATE
+  serv->SetItemField("/RATE/","_drawopt","");
+#endif
+#endif	
+
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
   unsigned int data;
@@ -164,7 +181,7 @@ int main(int argc, char *argv[])
   shm_id_modinfo=shm_open("shmpixie16pkuxiadaq",O_RDWR,0);/*第一步：打开共享内存区*/
   if (shm_id_modinfo == -1)
     {
-      printf( "open shared memory error.errno=%d,desc=%s.\n", errno, strerror(errno));
+      printf( "open shared memory shmpixie16pkuxiadaq error.errno=%d,desc=%s.\n", errno, strerror(errno));
       return -1;
     }
   else
@@ -220,7 +237,10 @@ int main(int argc, char *argv[])
 	      {
 		adc[i][j]->Reset("ICES");
 		energy[i][j]->Reset("ICES");
-	      }
+#ifdef SHOW_OUTPUT_RATE
+		rate[i][j]->Reset("ICES");
+#endif 	
+	      }  
 #endif
 	}
 
@@ -239,6 +259,14 @@ int main(int argc, char *argv[])
 		      adc[i][rawdec[i].getch()]->Fill(rawdec[i].getevte());
 		      double rawch = rawdec[i].getevte()+gRandom->Rndm();
 		      energy[i][rawdec[i].getch()]->Fill(calia0[i][rawdec[i].getch()]+calia1[i][rawdec[i].getch()]*rawch+calia2[i][rawdec[i].getch()]*rawch*rawch);
+#ifdef CLEAR_IN_NEW_RUN
+#ifdef SHOW_OUTPUT_RATE
+		      if(rawdec[i].getsamplerate()==250)
+			rate[i][rawdec[i].getch()]->Fill(rawdec[i].getts()/125000000);
+		      else
+			rate[i][rawdec[i].getch()]->Fill(rawdec[i].getts()/100000000);
+#endif
+#endif 
 		    }
 		}
 	      
