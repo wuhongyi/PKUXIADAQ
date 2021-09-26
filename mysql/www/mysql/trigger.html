@@ -1,8 +1,9 @@
 <!doctype html> 
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html" />
-    <meta http-equiv="charset" content="utf-8">
+    <!-- <meta http-equiv="Content-Type" content="text/html" /> -->
+    <!-- <meta http-equiv="charset" content="utf-8"/> -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <!-- <meta http-equiv="refresh" content="5" /> -->
     <meta name="author" content="Hongyi Wu">
     <meta name="description" content="GDDAQ web Monitor">
@@ -50,7 +51,7 @@
       
       function triggerrefresh()
       {
-      $.get("readtrigger.cgi", function (data) {	   //jQuery get function executes cgireadsettings on Pixie-Net -> return data is list of analog settings
+      $.get("/cgi-bin/readtrigger.cgi", function (data) {	   //jQuery get function executes cgireadsettings on Pixie-Net -> return data is list of analog settings
       //alert("Data:  " + data);
       var dataarray = data.split(';');			  // "split" data string at commas
       //alert("Data[0]:  " + dataarray[0]);
@@ -90,7 +91,7 @@
 
       function fileinforefresh()
       {
-      $.get("readfileinfo.cgi", function (data) {
+      $.get("/cgi-bin/readfileinfo.cgi", function (data) {
       var dataarray = data.split(',');
 
       var fileinfoadc = document.getElementById("fileinfo");				       
@@ -200,7 +201,8 @@
 	<ul class="nav nav-tabs">
 	  <li><a href="index.html" data-toggle="tab">Main</a></li>
 	  <li class="active"><a href="trigger.html" data-toggle="tab">Trigger</a></li>
-	  <li><a href="status.cgi" data-toggle="tab">Status</a></li>
+	   <li><a href="rateone.html" data-toggle="tab">RateOne</a></li>
+	  <li><a href="status.html" data-toggle="tab">Status</a></li>
 	  <li><a href="log.html" data-toggle="tab">Log</a></li>
 	  <li><a href="support.html" data-toggle="tab">Support</a></li>
 	</ul>

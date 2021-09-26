@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: Wed Feb 12 22:47:33 2020 (+0800)
-// Last-Updated: Wed Feb 12 22:54:50 2020 (+0800)
+// Last-Updated: 六 9月 18 15:15:26 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 2
+//     Update #: 3
 // URL: http://wuhongyi.cn 
 
 // g++ readfileinfo.cc `mysql_config --cflags --libs` -o readfileinfo.cgi
@@ -21,6 +21,8 @@
 
 int main(void)
 {
+  printf("Content-type:text/html\n\n");
+  
   MYSQL       *conn;
   MYSQL_RES   *result;
   MYSQL_ROW    row;
@@ -29,7 +31,7 @@ int main(void)
   my_bool reconnect = 1;
   mysql_options(conn, MYSQL_OPT_RECONNECT, &reconnect);
 
-  mysql_real_connect(conn, "222.29.111.140", "data", "xia17pxn", "GDDAQ", 3306, NULL, 0);
+  mysql_real_connect(conn, "162.105.54.101", "data", "xia17pxn", "GDDAQ", 3306, NULL, 0);
  
   mysql_query(conn, "select * from fileinfo order by ts desc limit 1");
  

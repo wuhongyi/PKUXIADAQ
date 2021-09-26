@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 三 2月 26 20:42:35 2020 (+0800)
-// Last-Updated: 二 9月  7 10:49:52 2021 (+0800)
+// Last-Updated: 四 9月 23 19:57:46 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 45
+//     Update #: 49
 // URL: http://wuhongyi.cn 
 
 // wugroot main.cc  -lrt  -o 123
@@ -262,9 +262,15 @@ int main(int argc, char *argv[])
 #ifdef CLEAR_IN_NEW_RUN
 #ifdef SHOW_OUTPUT_RATE
 		      if(rawdec[i].getsamplerate()==250)
-			rate[i][rawdec[i].getch()]->Fill(rawdec[i].getts()/125000000);
+			{
+			  rate[i][rawdec[i].getch()]->Fill(rawdec[i].getts()/125000000);
+			  // std::cout<<rawdec[i].getts()<<std::endl;
+			}
 		      else
-			rate[i][rawdec[i].getch()]->Fill(rawdec[i].getts()/100000000);
+			{
+			  rate[i][rawdec[i].getch()]->Fill(rawdec[i].getts()/100000000);
+			  // std::cout<<rawdec[i].getts()<<std::endl;
+			}
 #endif
 #endif 
 		    }

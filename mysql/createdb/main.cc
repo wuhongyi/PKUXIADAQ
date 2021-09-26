@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 8月 29 21:53:45 2019 (+0800)
-// Last-Updated: 三 2月 12 22:17:29 2020 (+0800)
+// Last-Updated: 六 9月 18 15:11:15 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 24
+//     Update #: 27
 // URL: http://wuhongyi.cn 
 
 // g++ main.cc `mysql_config --cflags --libs` -o 123
@@ -28,7 +28,12 @@ int main(int argc, char *argv[])
   mysql = mysql_init(NULL);
 
   mysql_options(mysql,MYSQL_SET_CHARSET_NAME ,"utf8");
+
+#if MYSQL_VERSION_ID < 80000  //version 5.6/5.7
   my_bool reconnect = 1;
+#else // version 8.0
+  bool reconnect = 1;
+#endif
   mysql_options(mysql, MYSQL_OPT_RECONNECT, &reconnect);
   mysql_options(mysql,MYSQL_OPT_COMPRESS,0);
   

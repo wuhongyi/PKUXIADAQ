@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: Tue Feb 11 22:58:42 2020 (+0800)
-// Last-Updated: Wed Feb 12 00:39:56 2020 (+0800)
+// Last-Updated: 六 9月 18 15:15:46 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 17
+//     Update #: 18
 // URL: http://wuhongyi.cn 
 
 // g++ readtrigger.cc `mysql_config --cflags --libs` -lz -o readtrigger.cgi
@@ -59,6 +59,8 @@
 
 int main(void)
 {
+  printf("Content-type:text/html\n\n");
+  
   // char * data;
   // string label, values;
    
@@ -112,7 +114,7 @@ int main(void)
   my_bool reconnect = 1;
   mysql_options(conn, MYSQL_OPT_RECONNECT, &reconnect);
 
-  mysql_real_connect(conn, "222.29.111.140", "data", "xia17pxn", "GDDAQ", 3306, NULL, 0);
+  mysql_real_connect(conn, "162.105.54.101", "data", "xia17pxn", "GDDAQ", 3306, NULL, 0);
  
   mysql_query(conn, "select * from statistics order by ts desc limit 2");
  
@@ -178,7 +180,7 @@ int main(void)
   // ==================================================================================
 
   // ts,crate,run,nmod,r0,r1,...,r12
-  printf("%s,%d,%d,%d,",ts_new,crate_new,run_new,nmod);
+  printf("%s,%d,%d,%d,",ts_new,crate_new,run_new,nmod_new);
   for (int i = 0; i < 13; ++i)
     {
       if(i < nmod_new)
@@ -244,7 +246,7 @@ int main(void)
 	      ChanEvents_new[j] = (double)Statistics_new[223+j] * std::pow(2.0, 32.0);
 	      ChanEvents_new[j] += (double)Statistics_new[239+j];
 
-	      if(run_new=run)
+	      if(run_new==run)
 		{
 		  tempinputcountrate = int((FastPeaks_new[j]-FastPeaks[j])/(LiveTime_new[j]-LiveTime[j]) + 0.5);
 		  tempoutputcountrate = int((ChanEvents_new[j]-ChanEvents[j])/(RealTime_new-RealTime) +0.5);

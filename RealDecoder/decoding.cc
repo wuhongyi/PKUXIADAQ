@@ -4,12 +4,13 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 9月 11 16:57:53 2020 (+0800)
-// Last-Updated: 二 9月  7 10:44:45 2021 (+0800)
+// Last-Updated: 四 9月 23 20:08:25 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 5
+//     Update #: 13
 // URL: http://wuhongyi.cn 
 
 #include "decoding.hh"
+#include "UserDefine.hh"
 #include <iostream>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -56,7 +57,7 @@ bool decoding::readword(unsigned int buff)
 #ifdef SHOW_OUTPUT_RATE       
       ts = ( buff & kMasktslo ) >> kShifttslo;
 #endif
-#endif 
+#endif
       statemachine = 2;
       break;
 
@@ -66,7 +67,7 @@ bool decoding::readword(unsigned int buff)
 #ifdef SHOW_OUTPUT_RATE        
       ts = ts+(((long)( buff & kMasktshi ) >> kShifttshi)*0x100000000);
 #endif
-#endif 
+#endif
       switch(int(samplerate))
 	{
 	case 100:
