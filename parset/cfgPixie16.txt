@@ -5,7 +5,7 @@ CrateID 0
 
 ## Register parameters
 
-SettingPars ../parset/DSPpar.set
+SettingPars ../parset/DSPparwu1.set
 
 
 ## -----------------------------------------------------------------------------
@@ -176,16 +176,37 @@ ModuleBits 5 14 16 14 14 14 16 14
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 
+
 # Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
 # send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
 # Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
 # The value is set to 0 when the calculated energy is negative.
 # The pileup event energy is not set to 0, output calculated values directly.
-500M14bit_sys ../firmware/pixie16_revfpku_14b500m_firmware_release_06102020/syspixie16_revfpku_adc500hz_r44500.bin
-500M14bit_fip ../firmware/pixie16_revfpku_14b500m_firmware_release_06102020/fippixie16_revfgeneral_14b500m_r34687.bin
-500M14bit_dsplst ../firmware/pixie16_revfpku_14b500m_firmware_release_06102020/Pixie16DSP_revfpku_14b500m_r43351.lst
-500M14bit_dspldr ../firmware/pixie16_revfpku_14b500m_firmware_release_06102020/Pixie16DSP_revfpku_14b500m_r43351.ldr
-500M14bit_dspvar ../firmware/pixie16_revfpku_14b500m_firmware_release_06102020/Pixie16DSP_revfpku_14b500m_r43351.var
+500M14bit_sys ../firmware/pixie16_revfpku_14b500m_firmware_release_10062021/syspixie16_revfpku_adc500hz_r44500.bin
+500M14bit_fip ../firmware/pixie16_revfpku_14b500m_firmware_release_10062021/fippixie16_revfgeneral_14b500m_r45761.bin
+500M14bit_dsplst ../firmware/pixie16_revfpku_14b500m_firmware_release_10062021/Pixie16DSP_revfpku_14b500m_r46426.lst
+500M14bit_dspldr ../firmware/pixie16_revfpku_14b500m_firmware_release_10062021/Pixie16DSP_revfpku_14b500m_r46426.ldr
+500M14bit_dspvar ../firmware/pixie16_revfpku_14b500m_firmware_release_10062021/Pixie16DSP_revfpku_14b500m_r46426.var
+
+
+# Standard firmware
+# 500M14bit_sys ../firmware/pixie16_revf_general_14b500m_firmware_release_09142021/syspixie16_revfgeneral_adc500mhz_r33341.bin
+# 500M14bit_fip ../firmware/pixie16_revf_general_14b500m_firmware_release_09142021/fippixie16_revfgeneral_14b500m_r45761.bin
+# 500M14bit_dsplst ../firmware/pixie16_revf_general_14b500m_firmware_release_09142021/Pixie16DSP_revfgeneral_14b500m_r45762.lst
+# 500M14bit_dspldr ../firmware/pixie16_revf_general_14b500m_firmware_release_09142021/Pixie16DSP_revfgeneral_14b500m_r45762.ldr
+# 500M14bit_dspvar ../firmware/pixie16_revf_general_14b500m_firmware_release_09142021/Pixie16DSP_revfgeneral_14b500m_r45762.var
+
+
+# Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
+# send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
+# Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
+# The value is set to 0 when the calculated energy is negative.
+# The pileup event energy is not set to 0, output calculated values directly.
+# 500M14bit_sys ../firmware/pixie16_revfpku_14b500m_firmware_release_06102020/syspixie16_revfpku_adc500hz_r44500.bin
+# 500M14bit_fip ../firmware/pixie16_revfpku_14b500m_firmware_release_06102020/fippixie16_revfgeneral_14b500m_r34687.bin
+# 500M14bit_dsplst ../firmware/pixie16_revfpku_14b500m_firmware_release_06102020/Pixie16DSP_revfpku_14b500m_r43351.lst
+# 500M14bit_dspldr ../firmware/pixie16_revfpku_14b500m_firmware_release_06102020/Pixie16DSP_revfpku_14b500m_r43351.ldr
+# 500M14bit_dspvar ../firmware/pixie16_revfpku_14b500m_firmware_release_06102020/Pixie16DSP_revfpku_14b500m_r43351.var
 
 
 # Standard firmware

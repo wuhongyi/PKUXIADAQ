@@ -1,0 +1,1 @@
+install(DIRECTORY modules DESTINATION ${CMAKE_INSTALL_PREFIX}/cmake)

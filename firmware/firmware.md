@@ -4,23 +4,33 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 12月 13 09:41:49 2016 (+0800)
-;; Last-Updated: 二 11月  3 20:49:00 2020 (+0800)
+;; Last-Updated: 五 10月  8 16:57:56 2021 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 51
+;;     Update #: 54
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
 
 ## current firmware version
 
-- pixie16_revfpku_14b500m_firmware_release_06102020  PKU firmware
+- pixie16_revfpku_14b500m_firmware_release_10062021
 	- Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
 	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
 	- Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
 	- The value is set to 0 when the calculated energy is negative.
 	- The pileup event energy is not set to 0, output calculated values directly.
 
-- pixie16_revfpku_14b250m_release_11032020  PKU firmware(sometime not output)
+- pixie16_revf_general_14b500m_firmware_release_09142021
+    - standard firmware
+
+- pixie16_revfpku_14b500m_firmware_release_06102020  PKU firmware(sometime not output when QDC enabled)
+	- Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
+	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
+	- Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
+	- The value is set to 0 when the calculated energy is negative.
+	- The pileup event energy is not set to 0, output calculated values directly.
+
+- pixie16_revfpku_14b250m_release_11032020  PKU firmware
 	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
 	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
 	- The value is set to 0 when the calculated energy is negative.
@@ -32,7 +42,7 @@
 		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
 		- (2) removed "no traces for large pulses" feature.	
 		
-- pixie16_revfpku_16b250m_release_11022020  PKU firmware(sometime not output)
+- pixie16_revfpku_16b250m_release_11022020  PKU firmware
 	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
 	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
 	- The value is set to 0 when the calculated energy is negative.
@@ -74,7 +84,7 @@
 
 - pixie16_revf_12b250m_firmware_release  standard firmware
 
-- pixie16_revf_14b500m_firmware_release  standard firmware	
+- pixie16_revf_14b500m_firmware_release  standard firmware(sometime not output when QDC enabled) 
 	
 ----
 
@@ -222,7 +232,7 @@
 		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
 		- (2) removed "no traces for large pulses" feature.
 
-- pixie16_revfpku_14b500m_firmware_release_06102020  PKU firmware
+- pixie16_revfpku_14b500m_firmware_release_06102020  PKU firmware(sometime not output when QDC enabled)
 	- Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
 	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
 	- Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
@@ -253,7 +263,7 @@
 		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
 		- (2) removed "no traces for large pulses" feature.
 
-- pixie16_revfpku_16b250m_release_11022020  PKU firmware(sometime not output)
+- pixie16_revfpku_16b250m_release_11022020  PKU firmware
 	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
 	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
 	- The value is set to 0 when the calculated energy is negative.
@@ -265,7 +275,7 @@
 		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
 		- (2) removed "no traces for large pulses" feature.
 
-- pixie16_revfpku_14b250m_release_11032020  PKU firmware(sometime not output)
+- pixie16_revfpku_14b250m_release_11032020  PKU firmware
 	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
 	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
 	- The value is set to 0 when the calculated energy is negative.
@@ -278,9 +288,15 @@
 		- (2) removed "no traces for large pulses" feature.	
 		
 
+- pixie16_revf_general_14b500m_firmware_release_09142021
+    - standard firmware
 
-
-
+- pixie16_revfpku_14b500m_firmware_release_10062021
+	- Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
+	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
+	- Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
+	- The value is set to 0 when the calculated energy is negative.
+	- The pileup event energy is not set to 0, output calculated values directly.
 
 
 

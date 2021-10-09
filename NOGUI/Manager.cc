@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 22:19:02 2016 (+0800)
-// Last-Updated: 四 8月 29 19:58:39 2019 (+0800)
+// Last-Updated: 六 10月  2 16:50:42 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 58
+//     Update #: 59
 // URL: http://wuhongyi.cn 
 
 #include "Manager.hh"
@@ -21,7 +21,7 @@
 #include <cstdlib>
 
 #include <unistd.h>
-
+#include <errno.h>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 Manager::Manager()

@@ -1,0 +1,18 @@
+set(SDK_PIXIE16_SOURCES
+        pixie16/channel.cpp
+        pixie16/crate.cpp
+        pixie16/csr.cpp
+        pixie16/dsp.cpp
+        pixie16/fpga.cpp
+        pixie16/fpga_comms.cpp
+        pixie16/fpga_fippi.cpp
+        pixie16/hw.cpp
+        pixie16/i2c_bitbash.cpp
+        pixie16/i2cm24c64.cpp
+        pixie16/legacy.cpp
+        pixie16/memory.cpp
+        pixie16/module.cpp
+        pixie16/pcf8574.cpp
+        pixie16/run.cpp
+        pixie16/sim.cpp
+        PARENT_SCOPE)

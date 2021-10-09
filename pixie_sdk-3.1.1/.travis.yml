@@ -1,0 +1,67 @@
+env:
+  global:
+    - MAKEFLAGS="-j 8"
+language: cpp
+dist: focal
+os: linux
+arch: amd64
+
+jobs:
+  include:
+    - name: GCC 7 Test
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+            - libgsl-dev
+            - libncurses5-dev
+            - python3
+            - linux-headers-$(uname -r)
+      env:
+        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+    - name: GCC 8 Test
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+            - libgsl-dev
+            - libncurses5-dev
+            - python3
+            - linux-headers-$(uname -r)
+      env:
+        - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+    - name: GCC 9 Test
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - libgsl-dev
+            - libncurses5-dev
+            - python3
+            - linux-headers-$(uname -r)
+      env:
+        - MATRIX_EVAL=""
+
+before_install:
+  - eval "${MATRIX_EVAL}"
+  - export ORIG_DIR=${PWD}
+  - git clone https://github.com/xiallc/broadcom_pci_pcie_sdk.git
+  - cd broadcom_pci_pcie_sdk
+  - export PLX_SDK_DIR=$PWD
+  - make -C ${PLX_SDK_DIR}/PlxApi PLX_NO_CLEAR_SCREEN=1
+  - test -e ./PlxApi/Library/PlxApi.a
+  - cd ${ORIG_DIR}
+
+script:
+  - mkdir build
+  - cd build
+  - cmake ../ -DBUILD_LEGACY=ON -DBUILD_SDK=ON -DBUILD_TESTS=ON
+  - make
+  - ./tests/unit/legacy/legacy_unit_test_runner
+  - ./tests/unit/sdk/pixie_sdk_unit_test_runner
+  - ./tests/integration/pixie_sdk_integration_test_runner
