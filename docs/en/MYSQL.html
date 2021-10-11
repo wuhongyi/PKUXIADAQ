@@ -1,41 +1,47 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>MYSQL &mdash; GDDAQ beta 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
     <link rel="next" title="Guide" href="UsersGuide/README.html" />
@@ -67,7 +73,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -76,6 +82,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -83,11 +90,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">Introduction</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="README.html">Introduction</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Install</span></p>
+<p class="caption" role="heading"><span class="caption-text">Install</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="INSTALL.html">Installation of Software</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">MYSQL</a><ul>
@@ -101,7 +108,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Users Guide</span></p>
+<p class="caption" role="heading"><span class="caption-text">Users Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/README.html">Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/Crate.html">Crate</a></li>
@@ -116,7 +123,7 @@
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/MultipleModulesSynchronously.html">Multiple Modules Synchronously</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/UpdateCPLD.html">Update CPLD</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Applications</span></p>
+<p class="caption" role="heading"><span class="caption-text">Applications</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Example/README.html">Applications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Example/TOF2TAC.html">TOF measurement in 100M</a></li>
@@ -124,7 +131,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Example/RecommendedParameters.html">Recommended Parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Example/InBeamGammaCIAE.html">In Beam Gamma</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Programmers Guide</span></p>
+<p class="caption" role="heading"><span class="caption-text">Programmers Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="ProgrammersGuide/README.html">Developer’s Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ProgrammersGuide/XIAAPI.html">PIXIE-16 API</a></li>
@@ -134,6 +141,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -168,19 +176,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>MYSQL</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="_sources/MYSQL.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="_sources/MYSQL.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -193,11 +203,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="mysql">
+  <section id="mysql">
 <h1>MYSQL<a class="headerlink" href="#mysql" title="永久链接至标题">¶</a></h1>
-<div class="section" id="mysql-installation-steps">
+<section id="mysql-installation-steps">
 <h2>MYSQL installation steps<a class="headerlink" href="#mysql-installation-steps" title="永久链接至标题">¶</a></h2>
-<div class="section" id="centos-7">
+<section id="centos-7">
 <h3>CentOS 7<a class="headerlink" href="#centos-7" title="永久链接至标题">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># CentOS 7</span>
 yum remove akonadi-mysql.x86_64
@@ -271,8 +281,8 @@ firewall-cmd --permanent --zone<span class="o">=</span>public --add-port<span cl
 firewall-cmd --reload
 </pre></div>
 </div>
-</div>
-<div class="section" id="ubuntu-18-04lts">
+</section>
+<section id="ubuntu-18-04lts">
 <h3>Ubuntu 18.04LTS<a class="headerlink" href="#ubuntu-18-04lts" title="永久链接至标题">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#install the default MySQL package</span>
 apt install mysql-server
@@ -312,9 +322,9 @@ systemctl disable mysql
 systemctl <span class="nb">enable</span> mysql
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="mysql-basic-settings">
+</section>
+</section>
+<section id="mysql-basic-settings">
 <h2>MySQL Basic Settings<a class="headerlink" href="#mysql-basic-settings" title="永久链接至标题">¶</a></h2>
 <p><strong>MySQL security settings</strong></p>
 <p>During the installation, the installer will not prompt you to choose a password for the root user or confirm any other configuration changes. Since this leaves the MySQL installation insecure, you need to manually run the included security script to set a password and change other security defaults.</p>
@@ -330,63 +340,63 @@ mysql -u root -p
 </pre></div>
 </div>
 <div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="c1">#Create a normal user &#39;data&#39; with a password of &#39;xia17pxn&#39;</span>
-<span class="k">CREATE</span> <span class="n">USER</span> <span class="s1">&#39;data&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span> <span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;xia17pxn&#39;</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">USER</span> <span class="s1">&#39;data&#39;</span><span class="nv">@&#39;%&#39;</span> <span class="k">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;xia17pxn&#39;</span><span class="p">;</span>
 
 <span class="c1">#Give this user remote access permissions of SELECT, INSERT, UPDATE, DELETE. This account is generally used to provide system access for implementation.</span>
-<span class="k">GRANT</span> <span class="k">SELECT</span><span class="p">,</span><span class="k">INSERT</span><span class="p">,</span><span class="k">UPDATE</span><span class="p">,</span><span class="k">DELETE</span>  <span class="k">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;data&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+<span class="k">GRANT</span> <span class="k">SELECT</span><span class="p">,</span><span class="k">INSERT</span><span class="p">,</span><span class="k">UPDATE</span><span class="p">,</span><span class="k">DELETE</span>  <span class="k">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;data&#39;</span><span class="nv">@&#39;%&#39;</span><span class="p">;</span>
 
 <span class="c1">#Create an administrator user &#39;admin&#39; with password &#39;xia17pxn&#39;</span>
-<span class="k">CREATE</span> <span class="n">USER</span> <span class="s1">&#39;admin&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span> <span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;xia17pxn&#39;</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">USER</span> <span class="s1">&#39;admin&#39;</span><span class="nv">@&#39;%&#39;</span> <span class="k">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;xia17pxn&#39;</span><span class="p">;</span>
 
 <span class="c1">#Grant this user all remote access permissions. This user is mainly used to manage the entire database, backup, restore and other operations.</span>
-<span class="k">GRANT</span> <span class="k">ALL</span>  <span class="k">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;admin&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+<span class="k">GRANT</span> <span class="k">ALL</span>  <span class="k">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;admin&#39;</span><span class="nv">@&#39;%&#39;</span><span class="p">;</span>
 
 <span class="c1">#Make the authorization effective immediately</span>
-<span class="k">flush</span> <span class="n">privileges</span><span class="p">;</span>
+<span class="k">flush</span> <span class="k">privileges</span><span class="p">;</span>
 
 <span class="c1">#Exit</span>
 <span class="k">exit</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="basic-database-operation-commands">
+</section>
+<section id="basic-database-operation-commands">
 <h2>Basic database operation commands<a class="headerlink" href="#basic-database-operation-commands" title="永久链接至标题">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mysql  -h <span class="m">127</span>.0.0.1 -u admin -p
 mysql  -h <span class="m">127</span>.0.0.1 -u data -p
 <span class="c1">#Here 127.0.0.1 means to view the machine, if remotely query from other computers, change to the IP of the corresponding computer, and then enter the password</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="UsersGuide/README.html" class="btn btn-neutral float-right" title="Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="INSTALL.html" class="btn btn-neutral float-left" title="Installation of Software" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="UsersGuide/README.html" class="btn btn-neutral float-right" title="Guide" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="INSTALL.html" class="btn btn-neutral float-left" title="Installation of Software" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Hongyi Wu(吴鸿毅)
+        &#169; 版权所有 2020, Hongyi Wu(吴鸿毅).
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
 
 </footer>
-
         </div>
       </div>
 
@@ -394,7 +404,6 @@ mysql  -h <span class="m">127</span>.0.0.1 -u data -p
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

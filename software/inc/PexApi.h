@@ -2,24 +2,36 @@
 #define __PEX_API_H
 
 /*******************************************************************************
- * Copyright (c) PLX Technology, Inc.
+ * Copyright 2013-2019 Avago Technologies
+ * Copyright (c) 2009 to 2012 PLX Technology Inc.  All rights reserved.
  *
- * PLX Technology Inc. licenses this source file under the GNU Lesser General Public
- * License (LGPL) version 2.  This source file may be modified or redistributed
- * under the terms of the LGPL and without express permission from PLX Technology.
+ * This software is available to you under a choice of one of two
+ * licenses.  You may choose to be licensed under the terms of the GNU
+ * General Public License (GPL) Version 2, available from the file
+ * COPYING in the main directorY of this source tree, or the
+ * BSD license below:
  *
- * PLX Technology, Inc. provides this software AS IS, WITHOUT ANY WARRANTY,
- * EXPRESS OR IMPLIED, INCLUDING, WITHOUT LIMITATION, ANY WARRANTY OF
- * MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.  PLX makes no guarantee
- * or representations regarding the use of, or the results of the use of,
- * the software and documentation in terms of correctness, accuracy,
- * reliability, currentness, or otherwise; and you rely on the software,
- * documentation and results solely at your own risk.
+ *     Redistribution and use in source and binary forms, with or
+ *     without modification, are permitted provided that the following
+ *     conditions are met:
  *
- * IN NO EVENT SHALL PLX BE LIABLE FOR ANY LOSS OF USE, LOSS OF BUSINESS,
- * LOSS OF PROFITS, INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES
- * OF ANY KIND.
+ *      - Redistributions of source code must retain the above
+ *        copyright notice, this list of conditions and the following
+ *        disclaimer.
  *
+ *      - Redistributions in binary form must reproduce the above
+ *        copyright notice, this list of conditions and the following
+ *        disclaimer in the documentation and/or other materials
+ *        provided with the distribution.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+ * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  ******************************************************************************/
 
 /******************************************************************************
@@ -34,7 +46,7 @@
  *
  * Revision:
  *
- *     02-01-13 : PLX SDK v7.00
+ *     09-01-19 : PCI/PCIe SDK v8.10
  *
  ******************************************************************************/
 
@@ -63,7 +75,7 @@ extern "C" {
 
 
 /******************************************
- *      PLX Device Selection Functions
+ *      Device Selection Functions
  *****************************************/
 PLX_STATUS EXPORT
 PlxPci_DeviceOpen(
@@ -148,9 +160,9 @@ PlxPci_ChipTypeSet(
 
 PLX_STATUS EXPORT
 PlxPci_ChipGetPortMask(
-    U16  PlxChip,
-    U8   PlxRevision,
-    U64 *pPortMask
+    U32            ChipID,
+    U8             Revision,
+    PEX_CHIP_FEAT *PtrFeat
     );
 
 PLX_STATUS EXPORT
@@ -224,7 +236,7 @@ PlxPci_PciRegisterWrite_BypassOS(
 
 
 /******************************************
- * PLX-specific Register Access Functions
+ * Device-specific Register Functions
  *****************************************/
 U32 EXPORT
 PlxPci_PlxRegisterRead(
@@ -494,6 +506,65 @@ PlxPci_EepromWriteByOffset_16(
     PLX_DEVICE_OBJECT *pDevice,
     U32                offset,
     U16                value
+    );
+
+
+/******************************************
+ *     SPI Flash Functions
+ *****************************************/
+PLX_STATUS EXPORT
+PlxPci_SpiFlashPropGet(
+    PLX_DEVICE_OBJECT *PtrDev,
+    U8                 ChipSel,
+    PEX_SPI_OBJ       *PtrSpi
+    );
+
+PLX_STATUS EXPORT
+PlxPci_SpiFlashErase(
+    PLX_DEVICE_OBJECT *PtrDev,
+    PEX_SPI_OBJ       *PtrSpi,
+    U32                StartOffset,
+    U8                 BoolWaitComplete
+    );
+
+PLX_STATUS EXPORT
+PlxPci_SpiFlashReadBuffer(
+    PLX_DEVICE_OBJECT *PtrDev,
+    PEX_SPI_OBJ       *PtrSpi,
+    U32                StartOffset,
+    U8                *PtrRxBuff,
+    U32                SizeRx
+    );
+
+U32 EXPORT
+PlxPci_SpiFlashReadByOffset(
+    PLX_DEVICE_OBJECT *PtrDev,
+    PEX_SPI_OBJ       *PtrSpi,
+    U32                Offset,
+    PLX_STATUS        *PtrStatus
+    );
+
+PLX_STATUS EXPORT
+PlxPci_SpiFlashWriteBuffer(
+    PLX_DEVICE_OBJECT *PtrDev,
+    PEX_SPI_OBJ       *PtrSpi,
+    U32                StartOffset,
+    U8                *PtrTxBuff,
+    U32                SizeTx
+    );
+
+PLX_STATUS EXPORT
+PlxPci_SpiFlashWriteByOffset(
+    PLX_DEVICE_OBJECT *PtrDev,
+    PEX_SPI_OBJ       *PtrSpi,
+    U32                Offset,
+    U32                Data
+    );
+
+PLX_STATUS EXPORT
+PlxPci_SpiFlashGetStatus(
+    PLX_DEVICE_OBJECT *PtrDev,
+    PEX_SPI_OBJ       *PtrSpi
     );
 
 

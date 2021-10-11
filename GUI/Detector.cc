@@ -202,8 +202,9 @@ bool Detector::BootSystem()
 	    OfflineMode = 6;
 	  else if(modulesamplingrate->at(k) == 250 && modulebits->at(k) == 16)
 	    OfflineMode = 7;
-	  
-	  HongyiWuPixie16SetOfflineVariant(k,OfflineMode,modulebits->at(k),modulesamplingrate->at(k));
+
+	  Pixie16SetOfflineVariant(k,OfflineMode);
+	  // HongyiWuPixie16SetOfflineVariant(k,OfflineMode,modulebits->at(k),modulesamplingrate->at(k));
 	  // ModuleInformation[k].Module_OfflineVariant = OfflineMode;
 	}
       OfflineMode = 1;

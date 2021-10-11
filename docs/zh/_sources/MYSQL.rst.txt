@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 日 2月  9 14:20:45 2020 (+0800)
-.. Last-Updated: 二 2月 11 23:13:36 2020 (+0800)
+.. Last-Updated: 五 9月 17 22:09:32 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 15
+..     Update #: 17
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -127,7 +127,7 @@ Ubuntu 18.04LTS
 
    vi /etc/mysql/mysql.conf.d/mysqld.cnf
    #查找下面的行，并使用 # 字符将其注释掉：
-   # bind-address = 127.0.0.1 
+   # bind-address = 127.0.0.1
    #保存文件并退出，然后像下面这样重新启动mysql服务：
    service mysql restart
 

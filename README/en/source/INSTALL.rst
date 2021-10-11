@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 日 3月 22 19:27:55 2020 (+0800)
+.. Last-Updated: 一 10月 11 15:26:56 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 32
+..     Update #: 36
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -20,9 +20,9 @@ Installation for this software is requrired by
 	- GCC >= 4.8
 - FFTW3
 
-The operating system tested by this program includes CentOS7 / Scientific Linux 7.2/7.3/7.4
+The operating system tested by this program includes CentOS7 / Scientific Linux 7 / Ubuntu18.04
 
-
+**This package uses PLX9054 driver with version 8.23. The operating systems supported by this version of the driver are CentOS 7 / CentOS 8 / Debian 08 / Debian 09 / Debian 10 / Ubuntu 18.04.**
 
 .. DANGER::
    Graphical interface programs and non-graphical interface programs cannot run at the same time!
@@ -39,7 +39,7 @@ The steps for Installation
 - Extract this package into your personal directory ($HOME)
 - Set up environment variables
 - Compile Plx9054 driver
-- Compile pixie16 driver API (this API has been modified by Wu Hongyi, driven by unofficial standards)
+- Compile pixie16 driver API (this API has been modified by Hongyi Wu, driven by unofficial standards)
 - Compile graphical acquisition software
 - Compile non-graphical acquisition software
 - Compile online monitor program
@@ -74,7 +74,7 @@ The steps for Installation
   cd PKUXIADAQ/
   #Delete the undeleted driver that may exist. If there is no such directory, you do not need to execute the command.
   rm -rf PlxSdk
-  tar -zxvf PlxSdk.tar.gz
+  tar -xvf PlxSdk823.tar
   cd PlxSdk/PlxApi/
   make clean
   make 
@@ -199,11 +199,15 @@ Instruction for use
    
   cd ~
   cd PKUXIADAQ/PlxSdk/Bin/
-  su #input ROOT password   
+  
+  ## CENTOS
+  su # input ROOT password   
   ./Plx_load 9054
-   
+  ## Ubuntu
+  ## The 18th line of the file Plx_load needs to be modified:  export PLX_SDK_DIR=$HOME/PKUXIADAQ/PlxSdk
+  sudo ./Plx_load 9054
+  
   # You Will see a prompt to load successfully
-   
   exit  #Exit ROOT permission  退出ROOT权限
 	  
 

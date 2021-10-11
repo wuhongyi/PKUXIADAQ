@@ -1,41 +1,48 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>插件前面板 &mdash; GDDAQ beta 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="逻辑功能" href="Logic.html" />
@@ -67,7 +74,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -76,6 +83,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -83,16 +91,16 @@
               
             
             
-              <p class="caption"><span class="caption-text">简介</span></p>
+              <p class="caption" role="heading"><span class="caption-text">简介</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../README.html">简介</a></li>
 </ul>
-<p class="caption"><span class="caption-text">程序安装</span></p>
+<p class="caption" role="heading"><span class="caption-text">程序安装</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../INSTALL.html">程序安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../MYSQL.html">MYSQL</a></li>
 </ul>
-<p class="caption"><span class="caption-text">用户指南</span></p>
+<p class="caption" role="heading"><span class="caption-text">用户指南</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="README.html">用户指南</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Crate.html">机箱</a></li>
@@ -117,7 +125,7 @@
 <li class="toctree-l1"><a class="reference internal" href="MultipleModulesSynchronously.html">时间同步</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UpdateCPLD.html">升级CPLD</a></li>
 </ul>
-<p class="caption"><span class="caption-text">应用案例</span></p>
+<p class="caption" role="heading"><span class="caption-text">应用案例</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Example/README.html">应用案例</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/TOF2TAC.html">100M 模块测量飞行时间</a></li>
@@ -125,12 +133,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../Example/RecommendedParameters.html">推荐参数</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/InBeamGammaCIAE.html">在束伽马谱学</a></li>
 </ul>
-<p class="caption"><span class="caption-text">采购建议与实验调试</span></p>
+<p class="caption" role="heading"><span class="caption-text">采购建议与实验调试</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../ProcurementProposal.html">采购推荐</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ExperimentalDebugging.html">实验调试</a></li>
 </ul>
-<p class="caption"><span class="caption-text">编程指南</span></p>
+<p class="caption" role="heading"><span class="caption-text">编程指南</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/README.html">开发者指南</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/XIAAPI.html">XIA API</a></li>
@@ -140,6 +148,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -174,19 +183,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>插件前面板</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="../_sources/UsersGuide/FrontPanel.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="../_sources/UsersGuide/FrontPanel.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -199,10 +210,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="id1">
+  <section id="id1">
 <h1>插件前面板<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
 <p>每个 Pixie-16 模块的前面板上都有 16 个模拟信号输入连接器，一个 LVDS I/O 端口，五个数字 I/O 连接器以及前面板底部附近的三个 LED。 另外，在前面板的顶部手柄上贴有显示 Pixie-16 型号的标签（例如P16L-250-14，表示 Pixie-16 250 MHz 14bit 模块）。 Pixie-16 模块的序列号（例如，S/N 1100）位于前面板的底部手柄处。</p>
-<div class="section" id="all-revisions">
+<section id="all-revisions">
 <h2>模拟信号输入连接器(all revisions)<a class="headerlink" href="#all-revisions" title="永久链接至标题">¶</a></h2>
 <ul class="simple">
 <li><dl class="simple">
@@ -221,14 +232,14 @@
 </li>
 </ul>
 <p>每个 Pixie-16 模块均接受 16 个模拟输入信号，每个输入连接器均为 SMB插孔（插头触点）连接器。</p>
-</div>
-<div class="section" id="lvds-i-o-all-revisions">
+</section>
+<section id="lvds-i-o-all-revisions">
 <h2>LVDS I/O 端口 (all revisions)<a class="headerlink" href="#lvds-i-o-all-revisions" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/lvdsioport.png" src="../_images/lvdsioport.png" />
 <p>每个 Pixie-16 模块在其前面板上均配有一个 LVDS I/O 端口。 LVDS 代表低压差分信号。 LVDS I/O 连接器是 RJ45 连接器，这意味着可以使用相同的 Cat 5 或 Cat 6 以太网电缆将信号连接到该 I/O 端口或从该 I/O 端口连接信号。但是，此 Pixie-16 I/O 端口没有以太网连接。</p>
 <p>可从此 I/O 端口获得四个差分信号对，即引脚对 <span class="math notranslate nohighlight">\(Fo_{1p}\)</span> / <span class="math notranslate nohighlight">\(Fo_{1n}\)</span>, <span class="math notranslate nohighlight">\(Fi_{1p}\)</span> / <span class="math notranslate nohighlight">\(Fi_{1n}\)</span>, <span class="math notranslate nohighlight">\(Fi_{5p}\)</span> / <span class="math notranslate nohighlight">\(Fi_{5n}\)</span>, and <span class="math notranslate nohighlight">\(Fo_{5p}\)</span> / <span class="math notranslate nohighlight">\(Fo_{5n}\)</span>。每对都可以配置为输入或输出信号。</p>
-</div>
-<div class="section" id="i-o-rev-f-only">
+</section>
+<section id="i-o-rev-f-only">
 <h2>数字 I/O 连接器(Rev. F only)<a class="headerlink" href="#i-o-rev-f-only" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/digitalioconnectorsabcdande.png" src="../_images/digitalioconnectorsabcdande.png" />
 <p>Pixie-16 Rev. F 模块的前面板上装有五个 har-link 连接器，用作数字 I/O 连接器。 HARTING 的 2mm 间距 har-link 连接器专为高速数据传输而设计，速率高达 2 Gbit/s。 其电磁干扰屏蔽如图 <em>2mm pitch har-link connector from HARTING</em> 所示，可确保在电磁污染环境下的出色性能。</p>
@@ -242,33 +253,33 @@
 <p>备用门输入是LVDS格式的信号，保留给特殊应用。</p>
 <p>此类应用程序通常需要开发定制固件以支持 Pixie-16 系统的特殊功能。</p>
 <img alt="../_images/frontpanel_pku.png" src="../_images/frontpanel_pku.png" />
-</div>
-<div class="section" id="leds-all-revisions">
+</section>
+<section id="leds-all-revisions">
 <h2>前面板 LEDs (all revisions)<a class="headerlink" href="#leds-all-revisions" title="永久链接至标题">¶</a></h2>
 <p>在 Pixie-16 前面板底部附近，有三个LED。 它们从左到右分别标记为 RUN，I/O 和 ERR。 它们分别对应三种不同的颜色，分别为**绿色，黄色和红色**。</p>
 <img alt="../_images/frontpanelledsforthepixie16modules.png" src="../_images/frontpanelledsforthepixie16modules.png" />
 <p>当 Pixie-16 模块中的运行正在进行时，<strong>RUN LED</strong> 将亮起，而当运行停止或尚未开始时，则熄灭。</p>
 <p>当 Pixie-16 模块和主机之间的 PCI 总线上有 I/O 活动时，<strong>I/O LED</strong> 将闪烁。</p>
 <p>实际上，<strong>ERR LED</strong> 并不表示 Pixie-16 模块中的任何错误情况。 相反，它用于指示 Pixie-16 模块的外部 FIFO 是否已满。 当外部 FIFO 中没有足够的空间来存储列表模式事件数据时，该指示灯将亮起；如果有足够的空间来存储至少一个列表模式事件数据，则该指示灯将熄灭。当外部 FIFO 已满时，无法再将列表模式事件数据写入其中，直到主机软件通过 PCI 总线读出外部 FIFO 中的部分数据为止。</p>
-</div>
-<div class="section" id="v-i-o-rev-d-only">
+</section>
+<section id="v-i-o-rev-d-only">
 <h2>3.3V I/O 连接器(Rev. D only)<a class="headerlink" href="#v-i-o-rev-d-only" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/revdmodules33vioconnector.png" src="../_images/revdmodules33vioconnector.png" />
 <p>在版本 D Pixie-16 模块上，通道 7 和通道 8 的模拟输入 SMB 连接器之间是 3.3V I/O 连接器（J200）。 它具有 10 个 2mm 间距的单端引脚。引脚＃1、3、4、5、6 和 8 连接到来自 Pixie-16 模块的系统 FPGA 的六个数字输出信号，即 FO0，FO2，FO3，FO4，FO6，FO7，主要用于测试和调试。＃2 和 7 引脚为接地引脚，而 ＃9 和 10 引脚未使用。</p>
-</div>
-<div class="section" id="gate-inputs-rev-d-only">
+</section>
+<section id="gate-inputs-rev-d-only">
 <h2>GATE Inputs(Rev. D only)<a class="headerlink" href="#gate-inputs-rev-d-only" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/revdmodulesgateinputs.png" src="../_images/revdmodulesgateinputs.png" />
 <p>在版本 D Pixie-16 模块上，通道 11 和通道 12 的模拟输入SMB连接器之间是门输入连接器。此连接器是 2mm 针间距的 Amphenol FCI 55 Position Header。这 55 个引脚的布局如图 <em>Rev. D Module’s GATE INPUTS Connector</em> 所示。中间引脚列（J150C）的11个引脚均接地。在门输入连接器的前 8 行中，来自 A/B 列（J150A/J150B）或 D/E列（J150D/J150E）的每对差分引脚对应于一个通道的输入门，其格式为LVDS ，例如 Gxin+/Gxin-(x=0-15)。 J150A3/J150B3 上的差分引脚对是模块栅极输入信号 MGin+/MGin-。通道门输入信号可用于否决或验证给定通道自己的触发信号。模块门输入信号在整个模块级别上起作用，即，它可以用于否决或验证给定模块的所有 16 个通道自己的触发信号。 J150D3/J150E3 上的差分引脚对是备用输入信号 SGin+/SGin-。备用门输入信号可用于需要定制固件的特殊应用。</p>
 <img alt="../_images/revdmodulesgateinputsconnector.png" src="../_images/revdmodulesgateinputsconnector.png" />
 <p>在 Rev. D Pixie-16 模块上，TTL 数字输入信号（最大5V），即 FI0，FI2，FI3，FI4，FI6，FI7，分布在门输入连接器的底部两行中，如图 <em>Rev. D Module’s GATE INPUTS Connector</em> 所示。</p>
-</div>
-<div class="section" id="v-i-o-rev-b-and-c-only">
+</section>
+<section id="v-i-o-rev-b-and-c-only">
 <h2>3.3V I/O 连接器(Rev. B and C only)<a class="headerlink" href="#v-i-o-rev-b-and-c-only" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/revbandcmodules33vioconnector.png" src="../_images/revbandcmodules33vioconnector.png" />
 <p>在 B 和 C 版本的 Pixie-16 模块上，在通道 11 和通道 12 的模拟输入 SMB 连接器之间是 3.3V I/O连接器（J100）。 它具有 16 个单端引脚，间距为 2mm。 引脚 ＃1、3、4、5、6 和 8 连接到来自 Pixie-16 模块的系统 FPGA 的六个数字输出信号，即 FO0，FO2，FO3，FO4，FO6，FO7，主要用于测试和调试。 引脚 ＃2、7、10 和 15 是接地引脚。 引脚 ＃9、11、12、13、14 和 16 连接到六个 TTL 数字输入信号（最大5V），即 FI0，FI2，FI3，FI4，FI6，FI7。</p>
-</div>
-<div class="section" id="id2">
+</section>
+<section id="id2">
 <h2>标准固件中的数字信号(all revisions)<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <p>Pixie-16 的标准固件通过其前面板 I/O 连接器支持数字信号的输入和输出，这已在前面进行了讨论。</p>
 <img alt="../_images/ttldigitalinputsignals.png" src="../_images/ttldigitalinputsignals.png" />
@@ -282,37 +293,37 @@
 <img alt="../_images/ttldigitaloutputsignals.png" src="../_images/ttldigitaloutputsignals.png" />
 <p>表 <em>TTL Digital Output Signals</em> 列出了六个 Pixie-16 TTL 数字输出信号。 可以通过软件设置选择两组六个输出信号（请参见 TrigConfig0 的位[14:12]和[19:16]）。可以通过软件设置进一步选择最后的输出信号 TEST_SEL。 有关这些信号的更多详细信息将在本手册的后续部分中提供。</p>
 <hr class="docutils" />
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="Logic.html" class="btn btn-neutral float-right" title="逻辑功能" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="MakeEvent.html" class="btn btn-neutral float-left" title="MakeEvent" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="Logic.html" class="btn btn-neutral float-right" title="逻辑功能" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="MakeEvent.html" class="btn btn-neutral float-left" title="MakeEvent" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Hongyi Wu(吴鸿毅)
+        &#169; 版权所有 2020, Hongyi Wu(吴鸿毅).
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
 
 </footer>
-
         </div>
       </div>
 
@@ -320,7 +331,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

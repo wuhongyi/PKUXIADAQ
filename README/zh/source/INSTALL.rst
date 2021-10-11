@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 日 3月 22 19:27:54 2020 (+0800)
+.. Last-Updated: 一 10月 11 15:26:56 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 31
+..     Update #: 34
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -19,7 +19,9 @@
 	- GCC >= 4.8
 - FFTW3
 
-本程序测试过的系统包括 CentOS7 / Scientific Linux 7.2/7.3/7.4
+本程序测试过的系统包括 CentOS7 / Scientific Linux 7 / Ubuntu18.04
+
+**本程序包采用 PLX9054 驱动版本为 8.23。该版本的驱动支持的操作系统有 CentOS 7/CentOS 8/Debian 08/Debian 09/Debian 10/Ubuntu 18.04。**
 
 .. DANGER::
    图形界面程序与非图形界面程序不能同时运行！
@@ -66,7 +68,7 @@
   cd ~
   cd PKUXIADAQ/
   rm -rf PlxSdk #删除可能存在的未删除驱动，如果没有该目录则不用执行该行命令
-  tar -zxvf PlxSdk.tar.gz
+  tar -xvf PlxSdk823.tar
   cd PlxSdk/PlxApi/
   make clean
   make 
@@ -185,11 +187,17 @@
 .. code:: bash
 
   ## ROOT权限下加载Plx9054驱动
-   
+ 
   cd ~
   cd PKUXIADAQ/PlxSdk/Bin/
+  
+  ##  CENTOS
   su #输入ROOT密码
   ./Plx_load 9054
+  ## Ubuntu
+  ## 需要修改文件 Plx_load 第18行为 export PLX_SDK_DIR=$HOME/PKUXIADAQ/PlxSdk
+  sudo ./Plx_load 9054
+  
   #将会看到加载成功的提示
   exit  #退出ROOT权限	  
 

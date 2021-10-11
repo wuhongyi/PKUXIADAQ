@@ -1,41 +1,47 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Multiple Modules Synchronously &mdash; GDDAQ beta 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="Update CPLD" href="UpdateCPLD.html" />
@@ -67,7 +73,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -76,6 +82,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -83,16 +90,16 @@
               
             
             
-              <p class="caption"><span class="caption-text">Introduction</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Install</span></p>
+<p class="caption" role="heading"><span class="caption-text">Install</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../INSTALL.html">Installation of Software</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../MYSQL.html">MYSQL</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Users Guide</span></p>
+<p class="caption" role="heading"><span class="caption-text">Users Guide</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="README.html">Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Crate.html">Crate</a></li>
@@ -119,7 +126,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="UpdateCPLD.html">Update CPLD</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Applications</span></p>
+<p class="caption" role="heading"><span class="caption-text">Applications</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Example/README.html">Applications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/TOF2TAC.html">TOF measurement in 100M</a></li>
@@ -127,7 +134,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Example/RecommendedParameters.html">Recommended Parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Example/InBeamGammaCIAE.html">In Beam Gamma</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Programmers Guide</span></p>
+<p class="caption" role="heading"><span class="caption-text">Programmers Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/README.html">Developer’s Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/XIAAPI.html">PIXIE-16 API</a></li>
@@ -137,6 +144,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -171,19 +179,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Multiple Modules Synchronously</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="../_sources/UsersGuide/MultipleModulesSynchronously.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="../_sources/UsersGuide/MultipleModulesSynchronously.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -196,7 +206,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="multiple-modules-synchronously">
+  <section id="multiple-modules-synchronously">
 <h1>Multiple Modules Synchronously<a class="headerlink" href="#multiple-modules-synchronously" title="永久链接至标题">¶</a></h1>
 <p>When many Pixie-16 modules are operated together as a system, it may be required to synchronize clocks and timers between them and to distribute triggers across modules. It will also be necessary to ensure that runs are started and stopped synchronously in all modules. All these signals are distributed through the PXI backplane of the Pixie-16 crate.</p>
 <img alt="../_images/multiplemodulessynchronously.png" src="../_images/multiplemodulessynchronously.png" />
@@ -205,52 +215,52 @@
 <p class="admonition-title">警告</p>
 <p>In 250 MHz or 500 MHz Pixie-16 modules, the frequency of signal processing clock in the FPGA has been divided down to either 125 MHz or 100 MHz, respectively, for more practical implementation of the design. That division might result in different clock phase and thus different timestamp offset for each channel within a given 250 MHz or 500 MHz Pixie-16 module whenever the module is reinitialized. Calibration might be needed to quantify the different timestamp offset for each channel.</p>
 </div>
-<div class="section" id="individual-clock-mode">
+<section id="individual-clock-mode">
 <h2>Individual Clock Mode<a class="headerlink" href="#individual-clock-mode" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/individualclockmode.png" src="../_images/individualclockmode.png" />
 <p>If only one Pixie-16 module is used in the system, or if clocks between modules do not need to be synchronized, the module(s) should be set into individual clock mode. Connect pin 7 of JP101 (the clock input) with a shunt to pin 8 (loc – IN). This will use the 50 MHz local crystal oscillator of the Pixie-16 module as the clock source.</p>
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="pxi-clock-mode">
+<section id="pxi-clock-mode">
 <h2>PXI Clock Mode<a class="headerlink" href="#pxi-clock-mode" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/pxiclockmode.png" src="../_images/pxiclockmode.png" />
 <p>The preferred way to distribute clocks among multiple Pixie-16 modules is to use the PXI clock distributed on the backplane. This clock is by default generated on the backplane and is a 10MHz clock signal, which is then repeated by a fan out buffer and connected to each crate slot by a dedicated line with minimum skew(equal trace length to each slot). Although the 10MHz is too slow to be a useful clock for the Pixie-16, it can be overridden by a local clock signal from a Pixie-16 module that is installed in slot 2 through proper shunt settings on the JP101.</p>
 <p>A Pixie-16 module can be configured to be the PXI clock master in slot 2 by connecting pins 6 and 8 (loc – BP) of the JP101. All modules, including the clock master, should be set to receive the PXI clock by connecting pin 1 and 3 on JP101 (PXI – IN). In this way, the 50 MHz clock from the Pixie-16 clock master is distributed to all Pixie-16 modules through the backplane with nearly identical clock phase.</p>
 <p>One other advantage of the PXI clock mode over the daisy-chained clock mode, which will be discussed next, is that except for the Pixie-16 master module, which has to be installed in slot 2, other Pixie-16 slave modules can be installed in any other slot of the Pixie-16 crate. In contrast, when the daisy-chained clock mode is used, all Pixie-16 modules have to be installed next to each other, i.e. no gap is allowed between modules.</p>
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="daisy-chained-clock-mode">
+<section id="daisy-chained-clock-mode">
 <h2>Daisy-chained Clock Mode<a class="headerlink" href="#daisy-chained-clock-mode" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/daisychainedclockmode.png" src="../_images/daisychainedclockmode.png" />
 <p>A further option for clock distribution is to daisy-chain the clocks from one module to the other, with each module repeating the clock signal and transmitting it to the neighbor on the right. This requires one master module, located in the leftmost slot of the group of Pixie-16 modules. The master module uses its local crystal oscillator as the input and sends its output to the right (loc – IN, out – right). Other Pixie-16 modules in the crate should be configured as clock repeaters by using the signal from the left neighbor as the input and sending its output to the right (left – IN, out – right). However, as mentioned earlier, there must be no slot gap between modules.</p>
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="multi-crate-clock-mode">
+<section id="multi-crate-clock-mode">
 <h2>Multi-Crate Clock Mode<a class="headerlink" href="#multi-crate-clock-mode" title="永久链接至标题">¶</a></h2>
 <img alt="../_images/multicrateclockmode.png" src="../_images/multicrateclockmode.png" />
 <p>In multi- crate systems, a global clock signal can be distributed among these crates using dedicated trigger and clock distribution cards, i.e. the Pixie-16 Rear I/O trigger modules, which are available from XIA.</p>
 <p><em>An example of clock distribution between two crates is illustrated below.</em></p>
-<div class="section" id="installation-of-pixie-16-modules">
+<section id="installation-of-pixie-16-modules">
 <h3>Installation of Pixie-16 Modules<a class="headerlink" href="#installation-of-pixie-16-modules" title="永久链接至标题">¶</a></h3>
 <p>Multiple Pixie-16 modules can be installed in two 14-slot Pixie-16 crates, #1 and #2. For clock distribution purpose, crate #1 is called the Master crate, where the system-wide global clock for all Pixie-16 modules is originated, and crate #2 is called the Slave crate, which receives the global clock from the Master crate.</p>
 <p>The Pixie-16 module installed in slot 2 of the Master crate is designated as the System Director Module, whose local 50 MHz crystal oscillator acts as the source of the system-wide global clock. The distribution of the clock signal from the System Director Module to all Pixie-16 modules in the 2-crate system is done through the Pixie-16 Rear I/O trigger modules.</p>
 <p>The Pixie-16 module installed in slot 2 of the Slave crate is called the crate Master module, which is responsible for receiving the global clock from the Master crate and sending such clock to all modules in that crate through length-matched traces on the backplane. The System Director Module is also responsible for sending the global clock to all modules in the Master crate. Therefore, it is also a crate Master module. Other modules in these two crates are regular modules. Table shows the different types of modules in a 2-crate system.</p>
 <img alt="../_images/moduledefinitionsina2cratesystem.png" src="../_images/moduledefinitionsina2cratesystem.png" />
-</div>
-<div class="section" id="clock-jumper-jp101-settings-on-the-pixie-16-modules">
+</section>
+<section id="clock-jumper-jp101-settings-on-the-pixie-16-modules">
 <h3>Clock Jumper (JP101) Settings on the Pixie-16 Modules<a class="headerlink" href="#clock-jumper-jp101-settings-on-the-pixie-16-modules" title="永久链接至标题">¶</a></h3>
 <p>For all Pixie-16 modules in a 2-crate system to use the same global clock signal, the clock jumper (JP101) in all modules should be set according to Table <em>Clock Jumper JP101 Settings in a 2-crate System</em> and Figure <em>multi-crate clock mode</em>.</p>
 <img alt="../_images/clockjumperjp101settingsina2cratesystem.png" src="../_images/clockjumperjp101settingsina2cratesystem.png" />
-</div>
-<div class="section" id="cable-connections-for-pixie-16-rear-i-o-trigger-modules">
+</section>
+<section id="cable-connections-for-pixie-16-rear-i-o-trigger-modules">
 <h3>Cable Connections for Pixie-16 Rear I/O Trigger Modules<a class="headerlink" href="#cable-connections-for-pixie-16-rear-i-o-trigger-modules" title="永久链接至标题">¶</a></h3>
 <p>The Pixie-16 Rear I/O trigger modules are installed at the rear side of each crate where a 6U card cage is installed. Figure <em>rear I/O trigger modules</em> shows a Pixie-16 Rear I/O trigger module is installed directly behind either the Director or the Master module, respectively, to share clock, triggers, and run start or stop synchronization signals among multiple Pixie-16 crates. The rear of the backplane has connectors J3, J4 and J5, but it does not have J1 and J2, since it does not need to use CompactPCI or PXI communication.</p>
 <p>Typically the first slot at the rear of the backplane with J3, J4, J5 connectors installed is the slot where the Pixie-16 Rear I/O trigger module should be installed. While installing the module, please ensure the alignment of top and bottom rails with the trigger module to avoid damage to the backplane pins.</p>
 <img alt="../_images/reariotriggermodules.png" src="../_images/reariotriggermodules.png" />
 <p>Figure <em>Cable connections between two Pixie-16 rear I/O trigger modules</em> shows the cable connections between two Pixie-16 rear I/O trigger modules that are installed in two separate crates. All connection cables are Category 5 or 6 Ethernet cables and shall have the same length to minimize clock phase difference between Pixie-16 modules in the two crates.</p>
 <img alt="../_images/cableconnectionsbetweentwopixie16reariotriggermodules.png" src="../_images/cableconnectionsbetweentwopixie16reariotriggermodules.png" />
-</div>
-<div class="section" id="jumper-settings-on-the-pixie-16-rear-i-o-trigger-modules">
+</section>
+<section id="jumper-settings-on-the-pixie-16-rear-i-o-trigger-modules">
 <h3>Jumper Settings on the Pixie-16 Rear I/O Trigger Modules<a class="headerlink" href="#jumper-settings-on-the-pixie-16-rear-i-o-trigger-modules" title="永久链接至标题">¶</a></h3>
 <p>Trigger module #1 is installed in the rear slot #2 of crate #1. As mentioned earlier, the rear slot #2 is located at the back of the crate and is at the direct opposite side of the front slot #2 of the crate. Care should be taken when installing the trigger module into the rear slot #2 by avoiding bending any pins of the rear side of the backplane, since that could cause the 3.3V pin to be shorted to neighboring ground pin and thus damage the whole backplane.</p>
 <p>Please note pin numbering for all jumpers on the trigger module is counted from right to left when facing the top side of the module, i.e. the backplane connectors J3 to J5 are on the left (only exception is JP1, which is in vertical orientation and should be counted from bottom to top). A tiny ‘1’ label is painted on the right hand side of the jumpers, indicating pin 1. Figure <em>Pin numbering for the jumpers on the Pixie-16 rear I/O trigger module</em> shows the pin ‘1’ in red boxes.</p>
@@ -261,38 +271,38 @@
 <img alt="../_images/reariotriggermodule2sjumpersettings.png" src="../_images/reariotriggermodule2sjumpersettings.png" />
 <img alt="../_images/cableconnectionsamongfourpixie16reariotriggermodules.png" src="../_images/cableconnectionsamongfourpixie16reariotriggermodules.png" />
 <p>Please note, if there are a total of four crates, the cable connections among those four Pixie-16 rear I/O trigger modules that are installed in those four separate crates should follow the connection methods shown in Figure. For the jumper settings on the Pixie-16 rear I/O trigger modules, trigger module #1 and #2 should use the same jumper settings as those in the trigger module #1 and #2 of the 2-crate system, respectively, whereas trigger module #3 and #4 should use the same jumper settings as those in trigger module #2.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="UpdateCPLD.html" class="btn btn-neutral float-right" title="Update CPLD" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="Logic.html" class="btn btn-neutral float-left" title="Logic" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="UpdateCPLD.html" class="btn btn-neutral float-right" title="Update CPLD" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Logic.html" class="btn btn-neutral float-left" title="Logic" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Hongyi Wu(吴鸿毅)
+        &#169; 版权所有 2020, Hongyi Wu(吴鸿毅).
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
 
 </footer>
-
         </div>
       </div>
 
@@ -300,7 +310,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
