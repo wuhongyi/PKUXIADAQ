@@ -12,7 +12,6 @@ data/
 decode
 event
 pku
-online
 README/node_modules/*
 *.root
 broadcom_pci_pcie_sdk/

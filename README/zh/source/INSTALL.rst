@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 一 10月 11 15:26:56 2021 (+0800)
+.. Last-Updated: 二 10月 12 19:57:26 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 34
+..     Update #: 35
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -261,6 +261,17 @@
 ---------------------------------
 常见安装错误
 ---------------------------------
+
+针对 CentOS8，安装 PLX9054 8.23 驱动时候错误的解决方案：
+
+.. code:: bash
+	  
+   # 修改文件 Include/Plx_sysdep.h 第 153 行为
+   #if (LINUX_VERSION_CODE < KERNEL_VERSION(4,0,0))
+
+
+
+
 
 针对 CentOS/Scientific Linux 7.6/7.7，安装 PLX9054 驱动时候错误的解决方案：
 
