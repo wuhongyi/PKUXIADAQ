@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 四 8月 29 20:55:23 2019 (+0800)
-// Last-Updated: 六 9月 18 15:09:50 2021 (+0800)
+// Last-Updated: 一 11月 22 20:16:47 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 112
+//     Update #: 113
 // URL: http://wuhongyi.cn 
 
 // uncompress(output,&nn,input,length)；
@@ -290,8 +290,8 @@ int main(int argc, char *argv[])
 
 	      // rate[nmod*2] = '\0';
 	      // stat[nmod*SHAREDMEMORYDATASTATISTICS*4] = '\0';
-	      // nszrate = nmod*2;
-	      // nszstat = nmod*SHAREDMEMORYDATASTATISTICS*4;
+	      nszrate = PRESET_MAX_MODULES*2;
+	      nszstat = nmod*SHAREDMEMORYDATASTATISTICS*4;
 	      compress(szrate, &nszrate, rate, PRESET_MAX_MODULES*2);
 	      compress(szstat, &nszstat, stat, nmod*SHAREDMEMORYDATASTATISTICS*4);
 	      // szrate[nszrate] = '\0';

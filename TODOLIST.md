@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 五 11月 30 20:59:18 2018 (+0800)
-;; Last-Updated: 三 2月 26 13:08:34 2020 (+0800)
+;; Last-Updated: 五 11月 12 19:16:44 2021 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 6
+;;     Update #: 7
 ;; URL: http://wuhongyi.cn -->
 
 # TODO
@@ -113,6 +113,29 @@ exit
 gtk-update-icon-cache: Cache file created successfully.
 Error in file "/usr/share/applications/org.gnome.font-viewer.desktop": "font/ttf" is an invalid MIME type ("font" is an unregistered media type)
 Error in file "/usr/share/applications/org.gnome.font-viewer.desktop": "font/otf" is an invalid MIME type ("font" is an unregistered media type)
+
+
+
+Skipping BTF generation for /home/wuhongyi/PKUXIADAQ/PlxSdk/Driver/Plx9054.ko due to unavailability of vmlinux
+
+Build: Plx9054
+
+- PLA: Ubuntu 20.04.3 LTS
+- KER: ver 5.11.0-40-generic 40
+- INC: /lib/modules/5.11.0-40-generic/build/include
+- CPU: x86_64 (64-bit Little Endian)
+- CMP: gcc
+- TYP: 9054 Driver
+- PKG: PCI/PCIe SDK v8.23
+- CFG: Release
+
+  MODPOST /home/wuhongyi/PKUXIADAQ/PlxSdk/Driver/Module.symvers
+  LD [M]  /home/wuhongyi/PKUXIADAQ/PlxSdk/Driver/Plx9054.ko
+  BTF [M] /home/wuhongyi/PKUXIADAQ/PlxSdk/Driver/Plx9054.ko
+Skipping BTF generation for /home/wuhongyi/PKUXIADAQ/PlxSdk/Driver/Plx9054.ko due to unavailability of vmlinux
+
+Driver "Source.Plx9000/Output/Plx9054.ko" built sucessfully
+
 
 
 <!-- TODOLIST.md ends here -->
