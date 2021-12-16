@@ -54,6 +54,8 @@ extern "C" {
 #define PIXIE16APP_API
 #endif
 
+#define RESETDELAY_MAX 255
+  
 /*-------------------------------------
     Define math constants
   -------------------------------------*/

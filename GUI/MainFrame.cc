@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 一 10月 11 13:26:06 2021 (+0800)
+// Last-Updated: 四 12月 16 15:09:46 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 418
+//     Update #: 419
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -87,7 +87,9 @@ void MainFrame::CreateMenuBar()
   MenuSetup->AddEntry("&Energy", ENERGY);
   MenuSetup->AddEntry("&CFD", CFDP);
   MenuSetup->AddEntry("&QDC", QDCP);
+  MenuSetup->AddSeparator();
   MenuSetup->AddEntry("&Decimation", DECIMATIONP);
+  MenuSetup->AddEntry("&ResetDelay", RESETDELAY);
   MenuSetup->AddSeparator();
   MenuSetup->AddEntry("&Copy Pars", COPYPARS);
   MenuSetup->AddSeparator();
@@ -232,6 +234,10 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    case DECIMATIONP:
 	      decimation = new Decimation(fClient->GetRoot(),this,(char*)"Waveform Decimation", 2, 16, detector);
 	      decimation->load_info(0);
+	      break;
+	    case RESETDELAY:
+	      resetdelay = new ResetDelay(fClient->GetRoot(),this,(char*)"Delay CFD Filter", 2, 16, detector);
+	      resetdelay->load_info(0);
 	      break;
 	    case ENERGY:
 	      energy = new Energy(fClient->GetRoot(), this, (char*)"Energy", 5, 16, detector);
@@ -1021,6 +1027,7 @@ void MainFrame::SetMenuStatus(bool flag,int flagonline)
       MenuSetup->EnableEntry(CFDP);
       MenuSetup->EnableEntry(QDCP);
       MenuSetup->EnableEntry(DECIMATIONP);
+      MenuSetup->EnableEntry(RESETDELAY);
       MenuSetup->EnableEntry(COPYPARS);
       MenuSetup->EnableEntry(FILE_SAVE);
       MenuExpert->EnableEntry(MODVAR);
@@ -1047,6 +1054,7 @@ void MainFrame::SetMenuStatus(bool flag,int flagonline)
       MenuSetup->DisableEntry(CFDP);
       MenuSetup->DisableEntry(QDCP);
       MenuSetup->DisableEntry(DECIMATIONP);
+      MenuSetup->DisableEntry(RESETDELAY);
       MenuSetup->DisableEntry(COPYPARS);
       MenuSetup->DisableEntry(FILE_SAVE);
       MenuExpert->DisableEntry(MODVAR);

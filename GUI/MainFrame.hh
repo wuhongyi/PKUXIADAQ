@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:17 2018 (+0800)
-// Last-Updated: 一 10月 11 13:25:50 2021 (+0800)
+// Last-Updated: 四 12月 16 15:09:49 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 65
+//     Update #: 66
 // URL: http://wuhongyi.cn 
 
 #ifndef MAINFRAME_HH_
@@ -23,6 +23,7 @@
 #include "Offline.hh"
 #include "Qdc.hh"
 #include "Decimation.hh"
+#include "ResetDelay.hh"
 #include "CopyPars.hh"
 #include "Simulation.hh"
 #include "TriggerFilter.hh"
@@ -71,6 +72,7 @@ enum Commands //commands for the menu bar popups
     CFDP,
     QDCP,
     DECIMATIONP,
+    RESETDELAY,
     COPYPARS,
     FILE_SAVE,
     MODVAR,
@@ -108,6 +110,7 @@ private:
   TRootHelpDialog *about;
 
   Decimation *decimation;
+  ResetDelay *resetdelay;
   Cfd *cfd;
   Qdc *qdc;
   Energy *energy;
@@ -200,4 +203,3 @@ void DynamicExec();
 
 // 
 // MainFrame.hh ends here
-

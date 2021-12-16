@@ -4,15 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 8月  9 09:24:46 2016 (+0800)
-// Last-Updated: 一 10月 11 13:37:03 2021 (+0800)
+// Last-Updated: 四 12月 16 16:02:47 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 94
+//     Update #: 95
 // URL: http://wuhongyi.cn 
 
 #ifndef _GLOBAL_HH_
 #define _GLOBAL_HH_
 
-const char gVERSION[] = "Version: STD - 2021.10.11";
+const char gVERSION[] = "Version: STD - 2021.12.16";
 
 const char gAbout[] = "\
 Version: STD-2021011\n\
@@ -22,8 +22,8 @@ Support 100 MHz(RevD 12-bit,RevF 14-bit), \n\
         500 MHz(RevF 12/14-bit)\n\
 \n\
 Program Developer:\n\
-  Hongyi Wu (wuhongyi@qq.com   Peking University)\n\
   Jing Li (lijinger02@163.com   Peking University)\n\
+  Hongyi Wu (wuhongyi@qq.com   Peking University)\n\
 \n\
 Technical Support:\n\
   Zhihuan Li (Peking University)\n\
