@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 20:19:34 2019 (+0800)
-.. Last-Updated: 一 10月 11 15:59:36 2021 (+0800)
+.. Last-Updated: 日 1月  9 21:21:52 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 42
+..     Update #: 43
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -41,7 +41,7 @@ MZTIO 网页版说明书请访问:  `English/简体中文 <https://pkunucexp.git
 准预览版本
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**准预览版本 Version:2021.10.11**  
+**准预览版本 Version:2022.01.09**  
 
 程序下载请访问:  `PKUXIADAQ <https://github.com/wuhongyi/PKUXIADAQ>`_ 
 

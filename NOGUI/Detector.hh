@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:51:04 2016 (+0800)
-// Last-Updated: 日 2月  9 13:38:32 2020 (+0800)
+// Last-Updated: 日 1月  9 20:56:57 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 16
+//     Update #: 17
 // URL: http://wuhongyi.cn 
 
 #ifndef _DETECTOR_H_
@@ -90,6 +90,7 @@ public:
   void UpdateEnergySpectrumForModule();
 
   unsigned short GetModuleADCMSPS(int mod) {return ModuleInformation[mod].Module_ADCMSPS;}
+  unsigned short GetModuleADCBits(int mod) {return ModuleInformation[mod].Module_ADCBits;}
   
   struct Module_Info
   {

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 四 12月 16 15:09:46 2021 (+0800)
+// Last-Updated: 日 1月  9 21:17:22 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 419
+//     Update #: 425
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -716,6 +716,19 @@ void MainFrame::ControlPanel(TGCompositeFrame *TabPanel)
   lastruntextinfor->SetEnabled(kFALSE);
   lastruntextinfor->SetFrameDrawn(kFALSE);
   lastruntextinfor->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+
+  TGHorizontalFrame *citepaperframe = new TGHorizontalFrame(informationgroup);
+  informationgroup->AddFrame(citepaperframe,new TGLayoutHints(kLHintsExpandX|kLHintsTop));
+  citepaperframe->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  TGTextEntry *citetextinfor = new TGTextEntry(citepaperframe,new TGTextBuffer(35), 10000);
+  citepaperframe->AddFrame(citetextinfor, new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 6, 5));
+  citetextinfor->SetFont(INFORMATION_FONT, false);
+  citetextinfor->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+  citetextinfor->SetText(gCITE);
+  citetextinfor->SetEnabled(kFALSE);
+  citetextinfor->SetFrameDrawn(kFALSE);
+  citetextinfor->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  
 }
 
 void MainFrame::ConfigFileInfo()
@@ -723,8 +736,8 @@ void MainFrame::ConfigFileInfo()
   if(IsDirectoryExists(filepathtext->GetText()))
     {
       ofstream out("../parset/Run.config");
-      out<<filepathtext->GetText()<<endl;
-      out<<filenametext->GetText()<<endl;
+      out<<filepathtext->GetText()<<std::endl;
+      out<<filenametext->GetText()<<std::endl;
       out.close();
       
       startdaq->SetEnabled(1);
@@ -820,6 +833,18 @@ void MainFrame::StartRun()
 	{
 	  std::cout<<"can't open Log file."<<std::endl;
 	}
+
+      writelog<<"Mod Num: "<<detector->NumModules<<std::endl;
+      for(int i = 0;i < detector->NumModules; i++)
+	{
+	  writelog<<detector->GetModuleADCMSPS(i)<<"  ";
+	}
+      writelog<<std::endl;
+      for(int i = 0;i < detector->NumModules; i++)
+	{
+	  writelog<<detector->GetModuleADCBits(i)<<"  ";
+	}
+      writelog<<std::endl;
       time_t timep;
       time(&timep);
       char tmp[64];

@@ -100,6 +100,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">MYSQL</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">MYSQL安装步骤</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#centos-7">CentOS 7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#centos-8">CentOS 8</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ubuntu-18-04lts">Ubuntu 18.04LTS</a></li>
 </ul>
 </li>
@@ -271,6 +272,44 @@ systemctl is-enabled mysql.service<span class="p">;</span><span class="nb">echo<
 
 <span class="c1">#如果是 enabled 则说明是开机自动，如果不是，执行</span>
 chkconfig --levels <span class="m">235</span> mysqld on
+</pre></div>
+</div>
+<p><strong>防火墙设置 (firewall-cmd)</strong></p>
+<p>远程访问 MySQL， 需开放默认端口号 3306。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#开启防火墙，没有任何提示即开启成功</span>
+systemctl start firewalld
+
+<span class="c1">#执行开放了相应的端口</span>
+firewall-cmd --permanent --zone<span class="o">=</span>public --add-port<span class="o">=</span><span class="m">3306</span>/tcp
+firewall-cmd --permanent --zone<span class="o">=</span>public --add-port<span class="o">=</span><span class="m">3306</span>/udp
+
+<span class="c1">#执行使最新的防火墙设置规则生效</span>
+firewall-cmd --reload
+</pre></div>
+</div>
+</section>
+<section id="centos-8">
+<h3>CentOS 8<a class="headerlink" href="#centos-8" title="永久链接至标题">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#下载 MySQL Repository</span>
+wget https://repo.mysql.com//mysql80-community-release-el8-1.noarch.rpm
+
+<span class="c1"># 使用rpm来安装MySQL</span>
+rpm -ivh mysql80-community-release-el8-1.noarch.rpm
+
+<span class="c1"># 使用dnf安装mysql服务</span>
+dnf -y install mysql-server
+dnf -y install mysql-devel.x86_64
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 检查是否已经设置为开机启动MySQL服务</span>
+systemctl list-unit-files<span class="p">|</span>grep mysqld
+<span class="c1"># 设置开机启动</span>
+systemctl <span class="nb">enable</span> mysqld.service
+systemctl list-unit-files<span class="p">|</span>grep mysqld
+<span class="c1"># 查看是否启动MySQL服务</span>
+ps -ef<span class="p">|</span>grep mysql
+<span class="c1">#启动服务</span>
+systemctl start mysqld.service
 </pre></div>
 </div>
 <p><strong>防火墙设置 (firewall-cmd)</strong></p>

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 22:19:02 2016 (+0800)
-// Last-Updated: 六 10月  2 16:50:42 2021 (+0800)
+// Last-Updated: 日 1月  9 21:01:17 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 59
+//     Update #: 60
 // URL: http://wuhongyi.cn 
 
 #include "Manager.hh"
@@ -154,6 +154,17 @@ void Manager::PreStartRun()
     {
       std::cout<<"can't open Log file."<<std::endl;
     }
+  writelog<<"Mod Num: "<<detector->NumModules<<std::endl;
+  for(int i = 0;i < detector->NumModules; i++)
+    {
+      writelog<<detector->GetModuleADCMSPS(i)<<"  ";
+    }
+  writelog<<std::endl;
+  for(int i = 0;i < detector->NumModules; i++)
+    {
+      writelog<<detector->GetModuleADCBits(i)<<"  ";
+    }
+  writelog<<std::endl;
   time_t timep;
   time(&timep);
   char tmp[64];

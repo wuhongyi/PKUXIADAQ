@@ -83,6 +83,7 @@ public:
   void UpdateEnergySpectrumForModule();
 
   unsigned short GetModuleADCMSPS(int mod) {return ModuleInformation[mod].Module_ADCMSPS;}
+  unsigned short GetModuleADCBits(int mod) {return ModuleInformation[mod].Module_ADCBits;}
   
   struct Module_Info
   {
@@ -206,11 +207,3 @@ private:
 };
 
 #endif /*DETECTOR_HH_*/
-
-
-
-
-
-
-
-

@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 日 2月  9 14:20:45 2020 (+0800)
-.. Last-Updated: 五 9月 17 22:09:32 2021 (+0800)
+.. Last-Updated: 二 10月 12 20:32:14 2021 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 17
+..     Update #: 21
 .. URL: http://wuhongyi.cn 
 
 ##################################################
@@ -109,8 +109,52 @@ CentOS 7
 
 
 
+----------------------------------------------------------------------
+CentOS 8
+----------------------------------------------------------------------
+
+.. code:: bash
+
+   #下载 MySQL Repository
+   wget https://repo.mysql.com//mysql80-community-release-el8-1.noarch.rpm
+
+   # 使用rpm来安装MySQL
+   rpm -ivh mysql80-community-release-el8-1.noarch.rpm
+
+   # 使用dnf安装mysql服务
+   dnf -y install mysql-server
+   dnf -y install mysql-devel.x86_64
+   
+.. code:: bash
+
+   # 检查是否已经设置为开机启动MySQL服务
+   systemctl list-unit-files|grep mysqld
+   # 设置开机启动
+   systemctl enable mysqld.service
+   systemctl list-unit-files|grep mysqld
+   # 查看是否启动MySQL服务
+   ps -ef|grep mysql
+   #启动服务
+   systemctl start mysqld.service
+
+**防火墙设置 (firewall-cmd)**
+
+远程访问 MySQL， 需开放默认端口号 3306。
+
+.. code:: bash
+
+   #开启防火墙，没有任何提示即开启成功
+   systemctl start firewalld
+	  
+   #执行开放了相应的端口	  
+   firewall-cmd --permanent --zone=public --add-port=3306/tcp
+   firewall-cmd --permanent --zone=public --add-port=3306/udp
+       
+   #执行使最新的防火墙设置规则生效
+   firewall-cmd --reload 
 
 
+   
 ----------------------------------------------------------------------
 Ubuntu 18.04LTS
 ----------------------------------------------------------------------

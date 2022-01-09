@@ -428,6 +428,11 @@ sudo ./Plx_load <span class="m">9054</span>
 </section>
 <section id="id4">
 <h2>常见安装错误<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>针对 CentOS8，安装 PLX9054 8.23 驱动时候错误的解决方案：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 修改文件 Include/Plx_sysdep.h 第 153 行为</span>
+<span class="c1">#if (LINUX_VERSION_CODE &lt; KERNEL_VERSION(4,0,0))</span>
+</pre></div>
+</div>
 <p>针对 CentOS/Scientific Linux 7.6/7.7，安装 PLX9054 驱动时候错误的解决方案：</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./builddriver <span class="m">9054</span>
 </pre></div>
