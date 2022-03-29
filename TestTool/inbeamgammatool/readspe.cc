@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 6月 12 19:36:02 2016 (+0800)
-// Last-Updated: 五 9月 30 09:34:11 2016 (+0800)
+// Last-Updated: 二 3月 29 20:46:47 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 11
+//     Update #: 13
 // URL: http://wuhongyi.cn 
 
 #include "TCanvas.h"
@@ -44,17 +44,17 @@ int readspe()
 
     TH1D *h1 = new TH1D("h1","",4096,0,4096);
   
-  uint data;
+  float data;
   char temp[64];
 
-  std::ifstream readdata("bg.spe",std::ios::binary);
+  std::ifstream readdata("data.spe",std::ios::binary);
 
-  readdata.read(temp,sizeof(char)*40);
+  readdata.read(temp,sizeof(char)*36);
   std::cout<<temp<<std::endl;
   
   for (int i = 0; i < 4096; ++i)
     {
-      readdata.read((char*)&data,sizeof(uint));
+      readdata.read((char*)&data,sizeof(float));
       if(data > 0)
 	{
 	  h1->Fill(i,data);

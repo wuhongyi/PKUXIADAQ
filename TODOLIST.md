@@ -4,30 +4,27 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 五 11月 30 20:59:18 2018 (+0800)
-;; Last-Updated: 五 11月 12 19:16:44 2021 (+0800)
+;; Last-Updated: 四 1月 27 21:21:04 2022 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 7
+;;     Update #: 10
 ;; URL: http://wuhongyi.cn -->
 
 # TODO
 
-## 说明书部分
+## 新版本
 
-- 继续完善英文版说明书
-- 在readme中强调我们的设计思路，为什么我们要这么做
+- 老版本驱动，文件夹 software
+- GUI 基于 ROOT，不再更新
+- 支持现有所有类型硬件，不支持新的 x2 硬件
 
-## 录制视频部分
 
-- 录制操作视频
-- 重点是英文视频，放置在 youtube
-- 实验时开启桌面录制
+- 新版本驱动，安装后生成文件夹 pixiesdk
+- GUI 基于 QT
 
 
 
 ## 测试部分
 
-- 多机箱同步测试.一个想法是所有的模块采用独立时钟
-- 插件时间分辨再测试，录制教程
 - offline 添加PSD优化窗口功能(这个存在的难点在于,local trigger 时候记录的波形存在一个流水线延迟,需要重新找真实的触发点)
 - cfd 过阈值与没过阈值时，timestamp 对比,流水线延迟有多少?
 
@@ -136,6 +133,21 @@ Skipping BTF generation for /home/wuhongyi/PKUXIADAQ/PlxSdk/Driver/Plx9054.ko du
 
 Driver "Source.Plx9000/Output/Plx9054.ko" built sucessfully
 
+
+
+
+
+
+
+
+mkdir build
+cd build/
+cmake -DCMAKE_INSTALL_PREFIX=../wuhongyi ..
+make -j8
+make install
+
+
+cmake -DCMAKE_INSTALL_PREFIX=../../pixiesdk ..
 
 
 <!-- TODOLIST.md ends here -->
