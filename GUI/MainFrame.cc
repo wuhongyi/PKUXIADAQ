@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 日 1月  9 21:17:22 2022 (+0800)
+// Last-Updated: 日 4月 17 21:49:01 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 425
+//     Update #: 431
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -26,6 +26,9 @@
 #include <net/if.h>
 #include <arpa/inet.h>
 #include <sys/ioctl.h>
+#include <iostream>
+#include <cstdio>
+#include <iomanip>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 ClassImp(MainFrame)
@@ -312,7 +315,7 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      detector->SetRecordFlag(true);
 	      recordchk->SetState(kButtonDown);
 #ifdef DECODERONLINE	      
-	      detector->SetDecoterFlag(false);
+	      detector->SetDecoderFlag(false);
 	      decoderchk->SetState(kButtonUp);
 #endif
 	      detector->SetRunFlag(true);
@@ -849,7 +852,7 @@ void MainFrame::StartRun()
       time(&timep);
       char tmp[64];
       strftime(tmp, sizeof(tmp), "Start: %Y-%m-%d %H:%M:%S",localtime(&timep));
-      writelog<<tmp<<endl;
+      writelog<<tmp<<std::endl;
       writelog.close();    
       
       if(detector->StartRun(0))
@@ -888,19 +891,7 @@ void MainFrame::StartRun()
 
       SetMenuStatus(true,flagonlinemode);
 
-      std::ofstream writelog;//fstream
-      writelog.open(LogFileName,ios::app);//ios::bin ios::app
-      if(!writelog.is_open())
-	{
-	  std::cout<<"can't open Log file."<<std::endl;
-	}
-      time_t timep;
-      time(&timep);
-      char tmp[64];
-      strftime(tmp, sizeof(tmp), "Stop : %Y-%m-%d %H:%M:%S",localtime(&timep));
-      writelog<<tmp<<endl;
-      writelog.close();    
-      
+   
       onlinemode->SetEnabled(1);
       filesetdone->SetEnabled(1);
       recordchk->SetEnabled(1);
@@ -933,12 +924,40 @@ void MainFrame::RunReadData()
       if(counter > 10) break;
     }
 
+  std::ofstream writelog;//fstream
+  writelog.open(LogFileName,ios::app);//ios::bin ios::app
+  if(!writelog.is_open())
+    {
+      std::cout<<"can't open Log file."<<std::endl;
+    }
+  time_t timep;
+  time(&timep);
+  char tmp[64];
+  strftime(tmp, sizeof(tmp), "Stop : %Y-%m-%d %H:%M:%S",localtime(&timep));
+  writelog<<tmp<<std::endl;
+#ifdef RECODESHA256
+  if(detector->GetRecordFlag())
+    {
+      unsigned char sha[32];
+      writelog<<"SHA256:"<<std::endl;
+      for(int i = 0;i < detector->NumModules; i++)
+	{
+	  detector->GetSHA256(i,sha);
+	  for(int j = 0; j < 32; j++)
+	    writelog<<std::hex << std::setw(2) << std::setfill('0') << (int)(sha[j]);
+	  writelog<<std::endl;
+	}
+    }
+#endif
+  writelog.close(); 
+
+  
   detector->SaveDSPPars(DSPParsFileName);
   for(int i = 0;i < detector->NumModules; i++)
     {
       detector->SaveHistogram(Histogramname[i],i);
     }
-  
+
   std::cout<<"finish!"<<std::endl;
   detector->SetRunFlag(false);
 }
@@ -988,11 +1007,11 @@ void MainFrame::SetDecoderDataFlag()
   if(detector == NULL) return;
   if(decoderchk->IsOn())
     {
-      detector->SetDecoterFlag(true);
+      detector->SetDecoderFlag(true);
     }
   else
     {
-      detector->SetDecoterFlag(false);
+      detector->SetDecoderFlag(false);
     }
 }
 #endif

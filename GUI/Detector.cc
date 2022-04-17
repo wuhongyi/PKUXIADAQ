@@ -9,7 +9,9 @@
 #include <string.h>
 #include <errno.h>
 #include <math.h>
-
+#include <iostream>
+#include <cstdio>
+#include <iomanip>
 using namespace std;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -678,11 +680,18 @@ int Detector::AcquireADCTrace(unsigned short *trace, unsigned long size, unsigne
 
 int Detector::OpenSaveFile(int n,const char *FileN)
 {
-  fsave[n]=fopen(FileN,"wb");
-  if(fsave[n] == NULL){
-    std::cout<<"Cannot open store file!"<<std::endl;
-    return 0;
-  }
+  if(frecord)
+    {
+      fsave[n]=fopen(FileN,"wb");
+      if(fsave[n] == NULL)
+	{
+	  std::cout<<"Cannot open store file!"<<std::endl;
+	  return 0;
+	}
+#ifdef RECODESHA256
+      SHA256_Init(&sha256_ctx[n]);
+#endif      
+    }
   return 1;
 }
 
@@ -699,13 +708,6 @@ void Detector::SetRunFlag(bool flag)
 int Detector::SavetoFile(int nFile)
 {
   // std::cout<<"saving file ..."<<std::endl;
-  if(fsave[nFile] == NULL)
-    {
-      std::cout<<"ERROR! No opened file found for store!"<<std::endl;
-      std::cout<<"CAUTION! No data will be saved!"<<std::endl;
-      buffid[nFile] = 0;
-      return 1;
-    }
 
 #ifdef DECODERONLINE
   if(fdecoder)
@@ -725,14 +727,26 @@ int Detector::SavetoFile(int nFile)
     }
 #endif
 
+
   if(frecord)
     {
+      if(fsave[nFile] == NULL)
+	{
+	  std::cout<<"ERROR! No opened file found for store!"<<std::endl;
+	  std::cout<<"CAUTION! No data will be saved!"<<std::endl;
+	  buffid[nFile] = 0;
+	  return 1;
+	}
+
       size_t n = fwrite(buff[nFile],4,buffid[nFile],fsave[nFile]);
  
       if(n != (size_t)buffid[nFile])
 	{
 	  std::cout<<"Not All Data has been stored!"<<std::endl;
 	}
+#ifdef RECODESHA256
+      SHA256_Update(&sha256_ctx[nFile], (char *)buff[nFile], 4*buffid[nFile]);
+#endif
     }
   FILESIZE[nFile] += buffid[nFile];
   buffid[nFile] = 0;
@@ -747,7 +761,16 @@ int Detector::CloseFile()
     {
       if(buffid[i] > 0) SavetoFile(i);
       FILESIZE[i] = 0;
-      fclose(fsave[i]);
+      if(frecord)
+	{
+	  fclose(fsave[i]);
+#ifdef RECODESHA256
+	  SHA256_Final(SHA256result[i],&sha256_ctx[i]);
+	   // for(int j = 0; j < 32; j++)
+	   //   std::cout<<std::hex << std::setw(2) << std::setfill('0') << (int)(SHA256result[i][j]);
+	   // std::cout<<std::endl;
+#endif
+	}
     }
   return 1;
 }
@@ -795,7 +818,7 @@ int Detector::StopRun()
 }
 
 #ifdef DECODERONLINE
-void Detector::SetDecoterFlag(bool flag)
+void Detector::SetDecoderFlag(bool flag)
 {
   fdecoder = flag;
 }

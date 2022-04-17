@@ -1,7 +1,7 @@
 OBJ = pku
 
 CXX=g++ #-std=c++11  
-CXXFLAGS:=-fno-stack-protector -g -Wall -lrt -lfftw3 -I. -I../software/app -I../software/sys
+CXXFLAGS:=-fno-stack-protector -g -Wall -lrt -lfftw3 -lcrypto -I. -I../software/app -I../software/sys
 ROOTLIBS = $(shell root-config --libs) -lGui
 ROOTINC = -I$(shell root-config --cflags) 
 CXXFLAGS+=$(ROOTINC)

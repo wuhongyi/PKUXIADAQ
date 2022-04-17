@@ -16,7 +16,9 @@
 #include <vector>
 #include <cstring>
 #include <string>
-
+#ifdef RECODESHA256
+#include <openssl/sha.h>
+#endif
 #define FIRMWARE100M12BIT
 #define FIRMWARE100M14BIT
 #define FIRMWARE250M12BIT
@@ -62,8 +64,12 @@ public:
   int CloseFile();
   int SetOnlineFlag(bool flag);
   void SetRecordFlag(bool flag);
+  bool GetRecordFlag() {return frecord;}
 #ifdef DECODERONLINE
-  void SetDecoterFlag(bool flag);
+  void SetDecoderFlag(bool flag);
+#endif
+#ifdef RECODESHA256
+  void GetSHA256(int n, unsigned char *sha) {memcpy(sha, SHA256result[n], 32*sizeof(unsigned char));}
 #endif
   void SetRunFlag(bool flag);
   bool GetRunFlag() {return frunstatus;}
@@ -188,7 +194,10 @@ private:
   bool   fdecoder;
 #endif
 
-
+#ifdef RECODESHA256
+  SHA256_CTX sha256_ctx[PRESET_MAX_MODULES];
+  unsigned char SHA256result[PRESET_MAX_MODULES][32];
+#endif
   
   bool   fonline;
   bool   frecord;
