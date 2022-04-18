@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:52:00 2016 (+0800)
-// Last-Updated: 日 2月  9 20:38:23 2020 (+0800)
+// Last-Updated: 一 4月 18 20:07:47 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 47
+//     Update #: 48
 // URL: http://wuhongyi.cn 
 
 #include "Detector.hh"
@@ -605,11 +605,18 @@ int Detector::RunStatus()
 
 int Detector::OpenSaveFile(int n,const char *FileN)
 {
-  fsave[n]=fopen(FileN,"wb");
-  if(fsave[n] == NULL){
-    cout<<"Cannot open store file!"<<endl;
-    return 0;
-  }
+  if(frecord)
+    {
+      fsave[n]=fopen(FileN,"wb");
+      if(fsave[n] == NULL)
+	{
+	  std::cout<<"Cannot open store file!"<<std::endl;
+	  return 0;
+	}
+#ifdef RECODESHA256
+      SHA256_Init(&sha256_ctx[n]);
+#endif      
+    }
   return 1;
 }
 
@@ -631,22 +638,28 @@ void Detector::SetTimesPerRun(int t)
 int Detector::SavetoFile(int nFile)
 {
   // cout<<"saving file ..."<<endl;
-  if(fsave[nFile] == NULL)
-    {
-      cout<<"ERROR! No opened file found for store!"<<endl;
-      cout<<"CAUTION! No data will be saved!"<<endl;
-      buffid[nFile] = 0;
-      return 1;
-    }
-  
+
+
   if(frecord)
     {
+      if(fsave[nFile] == NULL)
+	{
+	  cout<<"ERROR! No opened file found for store!"<<endl;
+	  cout<<"CAUTION! No data will be saved!"<<endl;
+	  buffid[nFile] = 0;
+	  return 1;
+	}
+  
+
       size_t n = fwrite(buff[nFile],4,buffid[nFile],fsave[nFile]);
  
       if(n != (size_t)buffid[nFile])
 	{
 	  std::cout<<"Not All Data has been stored!"<<std::endl;
 	}
+#ifdef RECODESHA256
+      SHA256_Update(&sha256_ctx[nFile], (char *)buff[nFile], 4*buffid[nFile]);
+#endif
     }
   FILESIZE[nFile] += buffid[nFile];
   buffid[nFile] = 0;
@@ -660,7 +673,13 @@ int Detector::CloseFile()
     {
       if(buffid[i] > 0) SavetoFile(i);
       FILESIZE[i] = 0;
-      fclose(fsave[i]);
+      if(frecord)
+	{
+	  fclose(fsave[i]);
+#ifdef RECODESHA256
+	  SHA256_Final(SHA256result[i],&sha256_ctx[i]);
+#endif
+	}
     }
   return 1;
 }

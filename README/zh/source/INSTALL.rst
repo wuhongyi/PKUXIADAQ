@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 二 10月 12 19:57:26 2021 (+0800)
+.. Last-Updated: 一 4月 18 20:28:55 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 35
+..     Update #: 36
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -18,8 +18,9 @@
 - CERN ROOT 6
 	- GCC >= 4.8
 - FFTW3
-
-本程序测试过的系统包括 CentOS7 / Scientific Linux 7 / Ubuntu18.04
+- OPENSSL
+  
+本程序测试过的系统包括 CentOS7 / Scientific Linux 7 / CentOS8 / Ubuntu18.04 / Ubuntu20.04
 
 **本程序包采用 PLX9054 驱动版本为 8.23。该版本的驱动支持的操作系统有 CentOS 7/CentOS 8/Debian 08/Debian 09/Debian 10/Ubuntu 18.04。**
 
@@ -154,7 +155,7 @@
   ## 编译数据转换程序
    
   cd ~
-  cd PKUXIADAQ/Decode/
+  cd PKUXIADAQ/DecodeAndSortAll/
    
   #修改 UserDefine.hh，按照程序中的说明修改即可
    
@@ -167,7 +168,7 @@
   ## 编译事件重构程序
    
   cd ~
-  cd PKUXIADAQ/MakeEvent/
+  cd PKUXIADAQ/EventBuilder/
    
   #修改 UserDefine.hh，按照程序中的说明修改即可
    
@@ -251,11 +252,11 @@
   ##执行数据转换程序
    
   cd ~
-  cd PKUXIADAQ/Decode/
+  cd PKUXIADAQ/DecodeAndSortAll/
    
-  #在上一轮获取结束之后，我们便可将上一轮数据转为ROOT文件
-  ./decode xxx
-  # xxx 为运行 run number
+  #在上一轮获取结束之后，我们便可将上一轮数据转为 ROOT 文件
+  ./decodeandsort xxx1 [... xxx2 xxx3 ...]
+  # xxx1 为不同机箱的运行 run number
 
 
 ---------------------------------

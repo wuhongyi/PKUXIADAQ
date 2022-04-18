@@ -4,14 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 22:17:54 2016 (+0800)
-// Last-Updated: 四 8月 29 16:18:24 2019 (+0800)
+// Last-Updated: 一 4月 18 20:12:38 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 18
+//     Update #: 19
 // URL: http://wuhongyi.cn 
 
 #ifndef _MANAGER_H_
 #define _MANAGER_H_
 
+#include "Global.hh"
 #include "pixie16app_export.h"
 #include <cstring>
 #include <string>

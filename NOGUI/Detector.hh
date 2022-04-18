@@ -4,13 +4,18 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:51:04 2016 (+0800)
-// Last-Updated: 日 1月  9 20:56:57 2022 (+0800)
+// Last-Updated: 一 4月 18 20:19:27 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 17
+//     Update #: 19
 // URL: http://wuhongyi.cn 
 
 #ifndef _DETECTOR_H_
 #define _DETECTOR_H_
+
+#include "Global.hh"
+#ifdef RECODESHA256
+#include <openssl/sha.h>
+#endif
 
 #include <iostream>
 #include <fstream>
@@ -74,6 +79,7 @@ public:
   int CloseFile();
   int SetOnlineFlag(bool flag);
   void SetRecordFlag(bool flag);
+  bool GetRecordFlag() {return frecord;}
   void SetAutoRunFlag(bool flag);
   void SetTimesPerRun(int t);//s
   int SaveHistogram(char *fileN,int mod);
@@ -84,7 +90,10 @@ public:
   void UpdateFilePathAndNameInSharedMemory(const char *path,const char *filen);
   unsigned int GetFileSize(int n); // in MB
 
-
+#ifdef RECODESHA256
+  void GetSHA256(int n, unsigned char *sha) {memcpy(sha, SHA256result[n], 32*sizeof(unsigned char));}
+#endif
+  
   bool BootSystem();
   void StatisticsForModule();
   void UpdateEnergySpectrumForModule();
@@ -188,6 +197,11 @@ private:
   uint64_t  timesperrun;//ms
   int runnumber;
   unsigned int crateidrunnumber;
+
+#ifdef RECODESHA256
+  SHA256_CTX sha256_ctx[PRESET_MAX_MODULES];
+  unsigned char SHA256result[PRESET_MAX_MODULES][32];
+#endif
   
   uint64_t CurrentTime;
   uint64_t PrevRateTime;

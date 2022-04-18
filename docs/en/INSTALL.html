@@ -212,8 +212,9 @@
 </dl>
 </li>
 <li><p>FFTW3</p></li>
+<li><p>OPENSSL</p></li>
 </ul>
-<p>The operating system tested by this program includes CentOS7 / Scientific Linux 7 / Ubuntu18.04</p>
+<p>The operating system tested by this program includes CentOS7 / Scientific Linux 7 / CentOS8 / Ubuntu18.04 / Ubuntu20.04</p>
 <p><strong>This package uses PLX9054 driver with version 8.23. The operating systems supported by this version of the driver are CentOS 7 / CentOS 8 / Debian 08 / Debian 09 / Debian 10 / Ubuntu 18.04.</strong></p>
 <div class="admonition danger">
 <p class="admonition-title">危险</p>
@@ -332,7 +333,7 @@ make
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">## Compile data converter program</span>
 
 <span class="nb">cd</span> ~
-<span class="nb">cd</span> PKUXIADAQ/Decode/
+<span class="nb">cd</span> PKUXIADAQ/DecodeAndSortAll/
 
 <span class="c1"># Modify UserDefine.hh according to the instructions in the program.</span>
 
@@ -343,7 +344,7 @@ make
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">## Compile event reconstruction program</span>
 
 <span class="nb">cd</span> ~
-<span class="nb">cd</span> PKUXIADAQ/MakeEvent/
+<span class="nb">cd</span> PKUXIADAQ/EventBuilder/
 
 <span class="c1"># Modify UserDefine.hh according to the instructions in the program.</span>
 
@@ -418,12 +419,12 @@ sudo ./Plx_load <span class="m">9054</span>
 
 
 <span class="nb">cd</span> ~
-<span class="nb">cd</span> PKUXIADAQ/Decode/
+<span class="nb">cd</span> PKUXIADAQ/DecodeAndSortAll/
 
-<span class="c1"># After the last run of acquisition, we can convert the previous run of data to ROOT file.</span>
+<span class="c1"># After the last run of acquisition, we can convert the previous run of data to ROOT format file.</span>
 
-./decode xxx
-<span class="c1">#xxx indicates Run Number</span>
+./decodeandsort xxx1 <span class="o">[</span>... xxx2 xxx3 ...<span class="o">]</span>
+<span class="c1">#xxx indicates Run Number in different ceate</span>
 </pre></div>
 </div>
 </section>

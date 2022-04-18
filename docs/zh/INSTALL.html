@@ -217,8 +217,9 @@
 </dl>
 </li>
 <li><p>FFTW3</p></li>
+<li><p>OPENSSL</p></li>
 </ul>
-<p>本程序测试过的系统包括 CentOS7 / Scientific Linux 7 / Ubuntu18.04</p>
+<p>本程序测试过的系统包括 CentOS7 / Scientific Linux 7 / CentOS8 / Ubuntu18.04 / Ubuntu20.04</p>
 <p><strong>本程序包采用 PLX9054 驱动版本为 8.23。该版本的驱动支持的操作系统有 CentOS 7/CentOS 8/Debian 08/Debian 09/Debian 10/Ubuntu 18.04。</strong></p>
 <div class="admonition danger">
 <p class="admonition-title">危险</p>
@@ -333,7 +334,7 @@ make
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">## 编译数据转换程序</span>
 
 <span class="nb">cd</span> ~
-<span class="nb">cd</span> PKUXIADAQ/Decode/
+<span class="nb">cd</span> PKUXIADAQ/DecodeAndSortAll/
 
 <span class="c1">#修改 UserDefine.hh，按照程序中的说明修改即可</span>
 
@@ -344,7 +345,7 @@ make
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">## 编译事件重构程序</span>
 
 <span class="nb">cd</span> ~
-<span class="nb">cd</span> PKUXIADAQ/MakeEvent/
+<span class="nb">cd</span> PKUXIADAQ/EventBuilder/
 
 <span class="c1">#修改 UserDefine.hh，按照程序中的说明修改即可</span>
 
@@ -418,11 +419,11 @@ sudo ./Plx_load <span class="m">9054</span>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">##执行数据转换程序</span>
 
 <span class="nb">cd</span> ~
-<span class="nb">cd</span> PKUXIADAQ/Decode/
+<span class="nb">cd</span> PKUXIADAQ/DecodeAndSortAll/
 
-<span class="c1">#在上一轮获取结束之后，我们便可将上一轮数据转为ROOT文件</span>
-./decode xxx
-<span class="c1"># xxx 为运行 run number</span>
+<span class="c1">#在上一轮获取结束之后，我们便可将上一轮数据转为 ROOT 文件</span>
+./decodeandsort xxx1 <span class="o">[</span>... xxx2 xxx3 ...<span class="o">]</span>
+<span class="c1"># xxx1 为不同机箱的运行 run number</span>
 </pre></div>
 </div>
 </section>

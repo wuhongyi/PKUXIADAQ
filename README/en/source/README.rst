@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 20:19:34 2019 (+0800)
-.. Last-Updated: 日 1月  9 21:22:10 2022 (+0800)
+.. Last-Updated: 一 4月 18 20:45:22 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 42
+..     Update #: 45
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -45,7 +45,7 @@ For web page MZTIO manual, please click: `English/简体中文 <https://pkunucex
 Pre-alpha
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Pre-alpha Version:2022.01.09**  
+**Pre-alpha Version:2022.04.18**  
 
 Download the latest version:  `PKUXIADAQ <https://github.com/wuhongyi/PKUXIADAQ>`_ 
 
@@ -55,7 +55,7 @@ For web page MZTIO manual, please click: `English/简体中文 <https://pkunucex
 
 
 - If you have any comments or suggestions for this project(function addition or improvement), please send an email to Hongyi Wu(wuhongyi@qq.com). 
-- We will improve the Chinese/English manuals of the software as soon as possible. Currently, we mainly explain the use of the software through our demonstration. 
+- We will improve the Chinese/English manuals of the software as soon as possible.
 
 
 ----
@@ -68,7 +68,7 @@ About
 
 - This program is developed by the `Group of Experimental Nuclear Physics, Peking University <https://github.com/pkuNucExp>`_ .
 - The earliest graphical interface development of this program is based on `NSCL DDAS Nscope <http://docs.nscl.msu.edu/daq/newsite/ddas-1.1/nscope.html>`_ . 
-- Thanks to *Hui Tan's(XIA LLC)* support for our development.
+
 
 Technical adviser:
 

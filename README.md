@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 日 1月  9 21:21:18 2022 (+0800)
+;; Last-Updated: 一 4月 18 20:31:26 2022 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 171
+;;     Update #: 172
 ;; URL: http://wuhongyi.cn -->
 
 # A general-purpose digital data acquisition system(GDDAQ)
@@ -42,7 +42,7 @@ For web page MZTIO manual, please click:  [English/简体中文](https://pkunuce
 
 ### Pre-alpha
 
-**Pre-alpha Version:2022.01.09**  
+**Pre-alpha Version:2022.04.18**  
 
 Download the latest version:  [PKUXIADAQ](https://github.com/wuhongyi/PKUXIADAQ)
 

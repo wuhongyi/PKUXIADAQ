@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 22:19:02 2016 (+0800)
-// Last-Updated: 日 1月  9 21:01:17 2022 (+0800)
+// Last-Updated: 一 4月 18 20:19:59 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 60
+//     Update #: 62
 // URL: http://wuhongyi.cn 
 
 #include "Manager.hh"
@@ -19,7 +19,7 @@
 
 #include <cstdio>
 #include <cstdlib>
-
+#include <iomanip>
 #include <unistd.h>
 #include <errno.h>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -199,6 +199,33 @@ void Manager::PostStopRun()
       if(counter > 10) break;
     }
 
+  std::ofstream writelog;//fstream
+  writelog.open(LogFileName,std::ios::app);//ios::bin ios::app
+  if(!writelog.is_open())
+    {
+      std::cout<<"can't open Log file."<<std::endl;
+    }
+  time_t timep;
+  time(&timep);
+  char tmp[64];
+  strftime(tmp, sizeof(tmp), "Stop : %Y-%m-%d %H:%M:%S",localtime(&timep));
+  writelog<<tmp<<std::endl;
+#ifdef RECODESHA256
+  if(detector->GetRecordFlag())
+    {
+      unsigned char sha[32];
+      writelog<<"SHA256:"<<std::endl;
+      for(int i = 0;i < detector->NumModules; i++)
+	{
+	  detector->GetSHA256(i,sha);
+	  for(int j = 0; j < 32; j++)
+	    writelog<<std::hex << std::setw(2) << std::setfill('0') << (int)(sha[j]);
+	  writelog<<std::endl;
+	}
+    }
+#endif
+  writelog.close();
+  
   detector->SaveDSPPars(DSPParsFileName);
   for(int i = 0;i < detector->NumModules;i++)
     {
@@ -213,19 +240,6 @@ void Manager::PostStopRun()
   std::ofstream out("../parset/RunNumber");
   out<<runnum;
   out.close();
-
-  std::ofstream writelog;//fstream
-  writelog.open(LogFileName,std::ios::app);//ios::bin ios::app
-  if(!writelog.is_open())
-    {
-      std::cout<<"can't open Log file."<<std::endl;
-    }
-  time_t timep;
-  time(&timep);
-  char tmp[64];
-  strftime(tmp, sizeof(tmp), "Stop : %Y-%m-%d %H:%M:%S",localtime(&timep));
-  writelog<<tmp<<std::endl;
-  writelog.close();
 
   PrintRunStatus();
 }

@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 一 10月 11 15:26:56 2021 (+0800)
+.. Last-Updated: 一 4月 18 20:28:55 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 36
+..     Update #: 37
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -19,8 +19,9 @@ Installation for this software is requrired by
 - CERN ROOT 6
 	- GCC >= 4.8
 - FFTW3
-
-The operating system tested by this program includes CentOS7 / Scientific Linux 7 / Ubuntu18.04
+- OPENSSL
+  
+The operating system tested by this program includes CentOS7 / Scientific Linux 7 / CentOS8 / Ubuntu18.04 / Ubuntu20.04
 
 **This package uses PLX9054 driver with version 8.23. The operating systems supported by this version of the driver are CentOS 7 / CentOS 8 / Debian 08 / Debian 09 / Debian 10 / Ubuntu 18.04.**
 
@@ -161,7 +162,7 @@ The steps for Installation
   ## Compile data converter program
    
   cd ~
-  cd PKUXIADAQ/Decode/
+  cd PKUXIADAQ/DecodeAndSortAll/
    
   # Modify UserDefine.hh according to the instructions in the program.
    
@@ -174,7 +175,7 @@ The steps for Installation
   ## Compile event reconstruction program
 
   cd ~
-  cd PKUXIADAQ/MakeEvent/
+  cd PKUXIADAQ/EventBuilder/
 
   # Modify UserDefine.hh according to the instructions in the program.
 
@@ -262,12 +263,12 @@ Instruction for use
    
    
   cd ~
-  cd PKUXIADAQ/Decode/
+  cd PKUXIADAQ/DecodeAndSortAll/
    
-  # After the last run of acquisition, we can convert the previous run of data to ROOT file.
+  # After the last run of acquisition, we can convert the previous run of data to ROOT format file.
    
-  ./decode xxx
-  #xxx indicates Run Number
+  ./decodeandsort xxx1 [... xxx2 xxx3 ...]
+  #xxx indicates Run Number in different ceate
 
 
 ---------------------------------

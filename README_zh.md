@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 日 1月  9 21:20:55 2022 (+0800)
+;; Last-Updated: 一 4月 18 20:45:22 2022 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 168
+;;     Update #: 171
 ;; URL: http://wuhongyi.cn -->
 
 # A general-purpose digital data acquisition system(GDDAQ)
@@ -41,7 +41,7 @@ MZTIO 网页版说明书请访问:  [English/简体中文](https://pkunucexp.git
 
 ### 准预览版本
 
-**准预览版本 Version:2022.01.09**  
+**准预览版本 Version:2022.04.18**  
 
 程序下载请访问:  [PKUXIADAQ](https://github.com/wuhongyi/PKUXIADAQ)
 
@@ -51,7 +51,7 @@ MZTIO 网页版说明书请访问:  [简体中文/English](http://wuhongyi.cn/MZ
 
 
 - 对本获取程序有任何的意见及建议(功能添加及改进)，欢迎给吴鸿毅(wuhongyi@qq.com)发邮件。
-- 我们将会尽快完善软件的中英文使用说明书，当前主要以操作演示来讲解软件的使用。
+- 我们将会尽快完善软件的中英文使用说明书。
 
 
 ----
@@ -62,7 +62,7 @@ MZTIO 网页版说明书请访问:  [简体中文/English](http://wuhongyi.cn/MZ
 
 - 本程序由[北京大学实验核物理组](https://github.com/pkuNucExp)开发。
 - 最早的图形界面程序是基于 [NSCL DDAS Nscope](http://docs.nscl.msu.edu/daq/newsite/ddas-1.1/nscope.html) 开发。
-- 特别感谢 *谭辉(XIA LLC)* 对我们开发的支持。
+
 
 
 技术指导:
