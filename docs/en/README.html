@@ -93,11 +93,7 @@
               <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#version">Version</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#stable-version">Stable Version</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#pre-alpha">Pre-alpha</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#version">Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#about">About</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#file-contents">File contents</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#update-plan">Update plan</a></li>
@@ -211,22 +207,7 @@
 <p>A general-purpose digital data acquisition system (GDDAQ) has been developed at Peking University. This GDDAQ, composed of 16-channel Digital Pulse Processor Pixie-16 modules from XIA LLC, is a versatile, flexible, and easily expandable data acquisition system for nuclear physics research in China. The software used by this GDDAQ is based on the CERN ROOT framework and developed and tested in CentOS 7 LINUX operating platform. A flexible trigger system has also been developed to accommodate different experimental settings. A user-friendly software GUI helps users monitor and debug the detection system in real timer or offline. Many offline analysis tools have been developed to help users quickly optimize parameters for various types of detectors without the need for time-consuming tests and measurements. This GDDAQ has been successfully implemented in several nuclear physics experiments and its versatility and high efficiency have been demonstrated.</p>
 <section id="version">
 <h2>Version<a class="headerlink" href="#version" title="永久链接至标题">¶</a></h2>
-<p><strong>We recommend users to download a stable version</strong></p>
-<section id="stable-version">
-<h3>Stable Version<a class="headerlink" href="#stable-version" title="永久链接至标题">¶</a></h3>
-<p><strong>Stable Version Version:2021.10.11</strong></p>
-<p>Download the latest version, please click:  <a class="reference external" href="https://github.com/pkuNucExp/PKUXIADAQ">PKUXIADAQ stable</a></p>
-<p>For web page manual, please click:  <a class="reference external" href="https://pkunucexp.github.io/PKUXIADAQ/">English/简体中文</a></p>
-<p>For web page MZTIO manual, please click: <a class="reference external" href="https://pkunucexp.github.io/MZTIO/">English/简体中文</a></p>
-<ul class="simple">
-<li><p>manual version in reStructuredText: README/</p></li>
-<li><p>manual version in offline web: docs/</p></li>
-<li><p>manual version in pdf: README_en.pdf  README_ch.pdf</p></li>
-</ul>
-</section>
-<section id="pre-alpha">
-<h3>Pre-alpha<a class="headerlink" href="#pre-alpha" title="永久链接至标题">¶</a></h3>
-<p><strong>Pre-alpha Version:2022.04.18</strong></p>
+<p><strong>Version: 2022.04.18</strong></p>
 <p>Download the latest version:  <a class="reference external" href="https://github.com/wuhongyi/PKUXIADAQ">PKUXIADAQ</a></p>
 <p>manual version in web page:  <a class="reference external" href="http://wuhongyi.cn/PKUXIADAQ/">简体中文/English</a></p>
 <p>For web page MZTIO manual, please click: <a class="reference external" href="https://pkunucexp.github.io/MZTIO/">English/简体中文</a></p>
@@ -234,7 +215,6 @@
 <li><p>If you have any comments or suggestions for this project(function addition or improvement), please send an email to Hongyi Wu(<a class="reference external" href="mailto:wuhongyi&#37;&#52;&#48;qq&#46;com">wuhongyi<span>&#64;</span>qq<span>&#46;</span>com</a>).</p></li>
 <li><p>We will improve the Chinese/English manuals of the software as soon as possible.</p></li>
 </ul>
-</section>
 </section>
 <hr class="docutils" />
 <section id="about">
@@ -295,8 +275,9 @@
 <h2>File contents<a class="headerlink" href="#file-contents" title="永久链接至标题">¶</a></h2>
 <p>The following files/folders are included in the user’s use package:</p>
 <ul class="simple">
-<li><p>Decode(Converting raw binary data to ROOT file)</p></li>
+<li><p>DecodeAndSortAll(Converting raw binary data to ROOT file)</p></li>
 <li><p>docs(Web page manual)</p></li>
+<li><p>EventBuilder(event builder，optional)</p></li>
 <li><dl class="simple">
 <dt>firmware</dt><dd><ul>
 <li><p>firmware/firmware.md(History of firmware)</p></li>
@@ -305,12 +286,23 @@
 </dl>
 </li>
 <li><p>GUI</p></li>
-<li><p>MakeEvent(event builder，optional)</p></li>
+<li><p>icons(logo)</p></li>
+<li><dl class="simple">
+<dt>mysql</dt><dd><ul>
+<li><p>createdb</p></li>
+<li><p>onlline</p></li>
+<li><p>www</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 <li><p>NOGUI(Non-graphics software)</p></li>
 <li><p>OnlineStattics(Online monitoring program)</p></li>
+<li><p>papers</p></li>
 <li><p>parset(parameter setting file)</p></li>
-<li><p>PlxSdk.tar.gz(Plx9054 driver)</p></li>
+<li><p>PlxSdk823.tar(Plx9054 driver)</p></li>
 <li><p>README(manual version in markdown)</p></li>
+<li><p>RealDecoder</p></li>
 <li><p>README.md(introduction for home page)</p></li>
 <li><p>README.pdf(manual version in pdf)</p></li>
 <li><p>software(non-standard pixie16 driver API revised by Hongyi Wu)</p></li>
@@ -323,8 +315,8 @@
 <ul class="simple">
 <li><p>The main control interface development based on the ROOT GUI is highly complex, which is difficult for users to modify now. It is not easy for users to develop their own version based on this program.</p></li>
 <li><dl class="simple">
-<dt>We are also developing acquisition software  for online/offline analysis based on web control:</dt><dd><ul>
-<li><p>Django</p></li>
+<dt>We are also developing acquisition software for online/offline analysis based on web control:</dt><dd><ul>
+<li><p>Qt</p></li>
 <li><p>ZeroMQ</p></li>
 <li><p>JSROOT</p></li>
 <li><p>…</p></li>

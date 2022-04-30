@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 9月 21 16:28:37 2020 (+0800)
-// Last-Updated: 五 11月 27 20:00:23 2020 (+0800)
+// Last-Updated: 六 1月  9 19:40:22 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 16
+//     Update #: 39
 // URL: http://wuhongyi.cn 
 
 #include "event.hh"
@@ -58,7 +58,12 @@ event::event(int run)
 
   
   t_in = new TChain("tree");
-  t_in->Add(TString::Format("%s%s_%s_%04d*.root",RAWFILEPATH,RAWFILENAME,RAWFILECRATENUMBER,run).Data());
+#ifdef WAVEFORM
+  t_in->Add(TString::Format("%s%s_%s_%04d*_wave.root",RAWFILEPATH,RAWFILENAME,RAWFILECRATENUMBER,run).Data());
+  t_in->Add(TString::Format("%s%s_%s_%04d*_wave_*.root",RAWFILEPATH,RAWFILENAME,RAWFILECRATENUMBER,run).Data());
+#else
+  t_in->Add(TString::Format("%s%s_%s_%04d*_notwave.root",RAWFILEPATH,RAWFILENAME,RAWFILECRATENUMBER,run).Data());
+#endif
   // file_in = new TFile(TString::Format("%s%s_%s_%04d*.root",RAWFILEPATH,RAWFILENAME,RAWFILECRATENUMBER,run).Data(),"READ");
   // if(!file_in->IsOpen())
   //   {
@@ -77,9 +82,17 @@ event::event(int run)
   t_in->SetBranchAddress("cfd", &cfd, &b_cfd);
   t_in->SetBranchAddress("cfdft", &cfdft, &b_cfdft);
   t_in->SetBranchAddress("cfds", &cfds, &b_cfds);
+#ifdef WAVEFORM
+  t_in->SetBranchAddress("ltra", &ltra, &b_ltra);
+  t_in->SetBranchAddress("data", &data, &b_data);
+#endif
   TotalEntry = t_in->GetEntries();
-  
-  file_out = new TFile(TString::Format("%s%s_%04d_W%d.root",ROOTFILEPATH,ROOTFILENAME,run,EVENTTIMEWINDOWSWIDTH).Data(),"RECREATE");
+
+#ifdef WAVEFORM
+  file_out = new TFile(TString::Format("%s%s_%04d_W%d_wave.root",ROOTFILEPATH,ROOTFILENAME,run,EVENTTIMEWINDOWSWIDTH).Data(),"RECREATE");
+#else
+  file_out = new TFile(TString::Format("%s%s_%04d_W%d_notwave.root",ROOTFILEPATH,ROOTFILENAME,run,EVENTTIMEWINDOWSWIDTH).Data(),"RECREATE");
+#endif
   t_out = new TTree("tree","GDDAQ event data.");
   t_out->Branch("event",&event_vec);
 
@@ -98,7 +111,7 @@ event::~event()
 void event::Process()
 {
   benchmark->Start("event");//计时开始
-
+  // TotalEntry = 1000000;
   for (Long64_t entry = 0; entry < TotalEntry; ++entry)
     {
       if(entry % 10000 == 0)
@@ -135,9 +148,7 @@ void event::Process()
 
   std::cout<<std::endl;
 
-  // file_in->cd();
-  // file_in->Close();
-
+  file_out = t_out->GetCurrentFile();
   file_out->cd();
   t_out->Write();
   file_out->Close();
@@ -170,15 +181,25 @@ void event::ProcessEntry()
   hit.cfd = cfd;
   hit.cfdft = cfdft;
   hit.cfds = cfds;
-
+#ifdef WAVEFORM
+  hit.ltra = ltra;
+  hit.data.clear();
+  if(hit.ltra > 0)
+    {
+      hit.data.insert(hit.data.begin(),data,data+hit.ltra);
+    }
+#endif
+  
   
   event_vec.push_back(hit);
 }
 
 void event::EndEvent()
 {
+  file_out = t_out->GetCurrentFile();
+  file_out->cd();
   t_out->Fill();
-  
+
   event_vec.clear();
   nevt++;
 }

@@ -1,7 +1,7 @@
 CXX=g++        
-CXXFLAGS:=-std=c++11 -g -Wall -lrt -I. -I../software/app -I../software/sys
-ROOTLIBS = $(shell root-config --libs)
-ROOTINC = -I$(shell root-config --incdir) 
+CXXFLAGS:= -g -Wall -lrt -I. -I../software/app -I../software/sys
+ROOTLIBS = $(shell root-config --libs) 
+ROOTINC = -I$(shell root-config --cflags) 
 CXXFLAGS+=$(ROOTINC)
 LIBS:=../software/libPixie16App.a  ../software/libPixie16Sys.a  $(PLX_SDK_DIR)/PlxApi/Library/PlxApi.a
 
@@ -15,10 +15,10 @@ all: daq tran
 
 
 daq: daq.o 
-	$(CXX) -o  $@  daq.o $(CXXFLAGS) $(LIBS) $(ROOTLIBS)
+	$(CXX) $(CXXFLAGS) -o  $@  daq.o  $(LIBS) $(ROOTLIBS)
 
 tran: tran.o decoder.o
-	$(CXX) -o  $@  tran.o decoder.o $(CXXFLAGS) $(ROOTLIBS) 
+	$(CXX) $(CXXFLAGS) -o  $@  tran.o decoder.o  $(ROOTLIBS) 
 
 
 %.o: %.cxx 

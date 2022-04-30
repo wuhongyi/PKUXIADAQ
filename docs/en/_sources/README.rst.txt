@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 20:19:34 2019 (+0800)
-.. Last-Updated: 一 4月 18 20:45:22 2022 (+0800)
+.. Last-Updated: 三 4月 27 15:31:54 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 45
+..     Update #: 46
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -22,30 +22,7 @@ A general-purpose digital data acquisition system (GDDAQ) has been developed at 
 Version
 ---------------------------------
 
-**We recommend users to download a stable version**
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Stable Version
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-**Stable Version Version:2021.10.11**  
-
-Download the latest version, please click:  `PKUXIADAQ stable <https://github.com/pkuNucExp/PKUXIADAQ>`_ 
-
-For web page manual, please click:  `English/简体中文 <https://pkunucexp.github.io/PKUXIADAQ/>`_  
-
-For web page MZTIO manual, please click: `English/简体中文 <https://pkunucexp.github.io/MZTIO/>`_ 
-
-- manual version in reStructuredText: README/  
-- manual version in offline web: docs/  
-- manual version in pdf: README_en.pdf  README_ch.pdf  
-
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Pre-alpha
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-**Pre-alpha Version:2022.04.18**  
+**Version: 2022.04.18**  
 
 Download the latest version:  `PKUXIADAQ <https://github.com/wuhongyi/PKUXIADAQ>`_ 
 
@@ -121,22 +98,28 @@ File contents
 
 The following files/folders are included in the user's use package:
 
-- Decode(Converting raw binary data to ROOT file)
+- DecodeAndSortAll(Converting raw binary data to ROOT file)
 - docs(Web page manual)
+- EventBuilder(event builder，optional)
 - firmware
 	- firmware/firmware.md(History of firmware)
 - GUI
-- MakeEvent(event builder，optional)
+- icons(logo)
+- mysql
+	- createdb
+	- onlline
+	- www
 - NOGUI(Non-graphics software)
 - OnlineStattics(Online monitoring program)
+- papers
 - parset(parameter setting file)
-- PlxSdk.tar.gz(Plx9054 driver)
+- PlxSdk823.tar(Plx9054 driver)
 - README(manual version in markdown)
+- RealDecoder
 - README.md(introduction for home page)
 - README.pdf(manual version in pdf)
 - software(non-standard pixie16 driver API revised by Hongyi Wu)
 - TestTool(testing tool for developer, not necessary for users)
-
 
 ----
 
@@ -144,13 +127,14 @@ The following files/folders are included in the user's use package:
 Update plan
 ---------------------------------  
 
-- The main control interface development based on the ROOT GUI is highly complex, which is difficult for users to modify now. It is not easy for users to develop their own version based on this program.
-- We are also developing acquisition software  for online/offline analysis based on web control:
-	- Django
+- The main control interface development based on the ROOT GUI is highly complex, which is difficult for users to modify now. It is not easy for users to develop their own version based on this program. 
+- We are also developing acquisition software for online/offline analysis based on web control:
+	- Qt
 	- ZeroMQ
 	- JSROOT
 	- ...
 
+	  
 ---------------------------------  
 License
 ---------------------------------

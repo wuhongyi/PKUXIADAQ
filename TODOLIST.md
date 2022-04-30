@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 五 11月 30 20:59:18 2018 (+0800)
-;; Last-Updated: 四 1月 27 21:21:04 2022 (+0800)
+;; Last-Updated: 三 4月 27 15:25:45 2022 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 10
+;;     Update #: 11
 ;; URL: http://wuhongyi.cn -->
 
 # TODO
@@ -20,7 +20,7 @@
 
 - 新版本驱动，安装后生成文件夹 pixiesdk
 - GUI 基于 QT
-
+- 支持所有版本硬件
 
 
 ## 测试部分

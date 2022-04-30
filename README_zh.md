@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 一 4月 18 20:45:22 2022 (+0800)
+;; Last-Updated: 三 4月 27 13:37:59 2022 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 171
+;;     Update #: 172
 ;; URL: http://wuhongyi.cn -->
 
 # A general-purpose digital data acquisition system(GDDAQ)
@@ -21,27 +21,7 @@
 
 ## 版本
 
-**我们建议用户下载稳定版本**
-
-### 稳定版本
-
-**稳定版本 Version:2021.10.11**  
-
-下载最新版本，请点击:  [PKUXIADAQ stable](https://github.com/pkuNucExp/PKUXIADAQ)
-
-网页版说明书请访问:  [English/简体中文](https://pkunucexp.github.io/PKUXIADAQ/)
-
-MZTIO 网页版说明书请访问:  [English/简体中文](https://pkunucexp.github.io/MZTIO/)
-
-
-- reStructuredText版说明书: README/  
-- 离线网页版说明书: docs/  
-- pdf版本说明书: README_en.pdf  README_ch.pdf  
-
-
-### 准预览版本
-
-**准预览版本 Version:2022.04.18**  
+**Version: 2022.04.18**  
 
 程序下载请访问:  [PKUXIADAQ](https://github.com/wuhongyi/PKUXIADAQ)
 
@@ -106,17 +86,24 @@ MZTIO 网页版说明书请访问:  [简体中文/English](http://wuhongyi.cn/MZ
 
 用户使用程序包中包含以下文件/文件夹:
 
-- Decode(将原始二进制数据转为 ROOT)
+- DecodeAndSortAll(将原始二进制数据转为 ROOT)
 - docs(使用说明书，网页版)
+- EventBuilder(事件重构程序，可选)
 - firmware(固件)
 	- firmware/firmware.md(历史各版本固件说明)
 - GUI(图形软件)
-- MakeEvent(事件重构程序，可选)
+- icons(logo)
+- mysql
+	- createdb
+	- onlline
+	- www
 - NOGUI(非图形软件)
 - OnlineStattics(在线监视程序)
+- papers
 - parset(参数设置文件)
-- PlxSdk.tar.gz(Plx9054 驱动)
+- PlxSdk823.tar(Plx9054 驱动)
 - README(markdown 版本说明书)
+- RealDecoder
 - README.md(主页介绍)
 - README.pdf(pdf 版本说明书)
 - software(非标准驱动，吴鸿毅修改)
@@ -128,7 +115,7 @@ MZTIO 网页版说明书请访问:  [简体中文/English](http://wuhongyi.cn/MZ
 
 - 当前基于 ROOT GUI 开发的主控制界面复杂度高，用户修改难度大。其它用户不容易基于其发展适合自己的版本。
 - 我们也在开发基于网页控制的获取在线/离线分析程序:
-	- Django
+	- Qt
 	- ZeroMQ
 	- JSROOT
 	- ...

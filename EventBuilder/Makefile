@@ -14,6 +14,6 @@ LinkDict.cc : event.hh Linkdef.h
 	rootcling -f LinkDict.cc -c $^		
 
 $(OBJ): $(sourcefile)
-	$(GXX) $(CFLAGS) $(ROOTCFLAGS) -o $@ $(filter %.cc ,$(sourcefile))  $(ROOTLIBS)
+	$(GXX) $(CFLAGS) $(ROOTCFLAGS) -o $@ $(filter %.cc ,$(sourcefile)) $(ROOTLIBS)
 clean:
 	rm -f *~ *.o $(OBJ) *Dict*

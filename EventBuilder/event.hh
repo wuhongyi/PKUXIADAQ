@@ -4,14 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 9月 21 16:28:28 2020 (+0800)
-// Last-Updated: 五 11月 27 19:53:16 2020 (+0800)
+// Last-Updated: 四 1月  7 13:55:01 2021 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 11
+//     Update #: 15
 // URL: http://wuhongyi.cn 
 
 #ifndef _EVENT_H_
 #define _EVENT_H_
 
+#include "UserDefine.hh"
 #include "TRandom.h"
 #include "TString.h"
 #include "TROOT.h"
@@ -46,6 +47,11 @@ typedef struct DATAEVENT
   Bool_t          cfdft;
   Short_t         cfds;
 
+#ifdef WAVEFORM
+  unsigned short ltra;
+  // unsigned short *data;
+  std::vector<unsigned short> data;
+#endif
   // Long64_t        tsflag;
   // Short_t         sid;
   // Short_t         cid;
@@ -107,6 +113,10 @@ private:
   TBranch        *b_cfd;   //!
   TBranch        *b_cfdft;   //!
   TBranch        *b_cfds;   //!
+#ifdef WAVEFORM
+  TBranch        *b_ltra;   //!
+  TBranch        *b_data;   //!
+#endif
   
   Short_t sr;//sampling rate
   Bool_t pileup;
@@ -119,6 +129,10 @@ private:
   Short_t cfd;
   Bool_t cfdft;//CFD forced trigger bit
   Short_t cfds;//CFD trigger source bits
+#ifdef WAVEFORM
+  UShort_t ltra;
+  UShort_t data[65536];   //[ltra]
+#endif
   
 };
 
