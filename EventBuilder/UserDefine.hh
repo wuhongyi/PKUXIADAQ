@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 9月 21 19:41:55 2020 (+0800)
-// Last-Updated: 一 9月  6 09:53:54 2021 (+0800)
+// Last-Updated: 日 5月  1 20:15:03 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 19
+//     Update #: 20
 // URL: http://wuhongyi.cn 
 
 #ifndef _USERDEFINE_H_
@@ -22,6 +22,10 @@
 
 
 #define WAVEFORM
+#define ENERGYSUM
+#define QDCSUM
+#define EXTERNALTS
+
 
 #define EVENTTIMEWINDOWSWIDTH  8000   //ns
 

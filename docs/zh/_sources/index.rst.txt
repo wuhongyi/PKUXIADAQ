@@ -40,10 +40,12 @@ Welcome to GDDAQ's guides.
    UsersGuide/README.rst
    UsersGuide/Crate.rst
    UsersGuide/FIRMWARE.rst
-   UsersGuide/Decode.rst
    UsersGuide/GUI.rst
    UsersGuide/NOGUI.rst
    UsersGuide/OnlineStattics.rst
+   UsersGuide/DecodeAndSortAll.rst
+   UsersGuide/EventBuilder.rst
+   UsersGuide/Decode.rst
    UsersGuide/MakeEvent.rst
    UsersGuide/FrontPanel.rst
    UsersGuide/Logic.rst

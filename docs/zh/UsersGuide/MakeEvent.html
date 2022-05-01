@@ -45,7 +45,7 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="插件前面板" href="FrontPanel.html" />
-    <link rel="prev" title="在线统计" href="OnlineStattics.html" /> 
+    <link rel="prev" title="数据解码" href="Decode.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -104,10 +104,12 @@
 <li class="toctree-l1"><a class="reference internal" href="README.html">用户指南</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Crate.html">机箱</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FIRMWARE.html">固件</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Decode.html">数据解码</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GUI.html">图形交互界面</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NOGUI.html">非图形交互界面</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OnlineStattics.html">在线统计</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DecodeAndSortAll.html">数据解码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EventBuilder.html">事件重构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Decode.html">数据解码</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">MakeEvent</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FrontPanel.html">插件前面板</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Logic.html">逻辑功能</a></li>
@@ -201,6 +203,7 @@
             
   <section id="makeevent">
 <h1>MakeEvent<a class="headerlink" href="#makeevent" title="永久链接至标题">¶</a></h1>
+<p><strong>本程序已弃用，请不要再使用本程序。</strong></p>
 <p><strong>本转换程序的使用前提，插件必须从第一个插槽开始，中间不留空插槽。</strong></p>
 <p><strong>MakeEvent 程序用来快速将数据组装成与传统 VME 获取数据类似的结构，方便实验时的初步物理分析，最终的物理分析不能以本程序产生的数据为基准。</strong></p>
 <p>用户首先需要修改 <strong>UesrDefine.hh</strong> 文件中的定义</p>
@@ -252,7 +255,7 @@ make
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="FrontPanel.html" class="btn btn-neutral float-right" title="插件前面板" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="OnlineStattics.html" class="btn btn-neutral float-left" title="在线统计" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="Decode.html" class="btn btn-neutral float-left" title="数据解码" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
     </div>
 
   <hr/>

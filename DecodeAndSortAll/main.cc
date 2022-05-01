@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:01:31 2016 (+0800)
-// Last-Updated: 日 4月 17 19:48:10 2022 (+0800)
+// Last-Updated: 日 5月  1 20:40:33 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 15
+//     Update #: 16
 // URL: http://wuhongyi.cn 
 
 /************************************
@@ -32,6 +32,7 @@ const char gVERSION[] = "Version: DecodeAndSortAll - 2022.04.17";
 int main(int argc, char *argv[])
 {
   std::cout<<gVERSION<<std::endl;
+  std::cout<<"Copyright @ Hongyi Wu (wuhongyi@qq.com/wuhongyi@pku.edu.cn)"<<std::endl;
   int craten = 0;
   int runnumber[8];
   

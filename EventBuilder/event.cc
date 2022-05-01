@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 9月 21 16:28:37 2020 (+0800)
-// Last-Updated: 六 1月  9 19:40:22 2021 (+0800)
+// Last-Updated: 日 5月  1 20:27:41 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 39
+//     Update #: 40
 // URL: http://wuhongyi.cn 
 
 #include "event.hh"
@@ -82,6 +82,25 @@ event::event(int run)
   t_in->SetBranchAddress("cfd", &cfd, &b_cfd);
   t_in->SetBranchAddress("cfdft", &cfdft, &b_cfdft);
   t_in->SetBranchAddress("cfds", &cfds, &b_cfds);
+
+#ifdef ENERGYSUM
+  t_in->SetBranchAddress("esumf", &esumf, &b_esumf);
+  t_in->SetBranchAddress("trae", &trae, &b_trae);
+  t_in->SetBranchAddress("leae", &leae, &b_leae);
+  t_in->SetBranchAddress("gape", &gape, &b_gape);
+  t_in->SetBranchAddress("base", &base, &b_base);
+#endif
+  
+#ifdef QDCSUM
+  t_in->SetBranchAddress("qsumf", &qsumf, &b_qsumf);
+  t_in->SetBranchAddress("qs", &qs, &b_qs);
+#endif
+
+#ifdef EXTERNALTS
+  t_in->SetBranchAddress("etsf", &etsf, &b_etsf);
+  t_in->SetBranchAddress("ets", &ets, &b_ets);
+#endif
+
 #ifdef WAVEFORM
   t_in->SetBranchAddress("ltra", &ltra, &b_ltra);
   t_in->SetBranchAddress("data", &data, &b_data);
@@ -181,6 +200,25 @@ void event::ProcessEntry()
   hit.cfd = cfd;
   hit.cfdft = cfdft;
   hit.cfds = cfds;
+
+#ifdef ENERGYSUM
+  hit.esumf = esumf;
+  hit.trae = trae; 
+  hit.leae = leae; 
+  hit.gape = gape; 
+  hit.base = base;   
+#endif
+  
+#ifdef QDCSUM  
+  hit.qsumf = qsumf;
+  memcpy(hit.qs, qs, sizeof(unsigned int)*8);
+#endif
+
+#ifdef EXTERNALTS
+  hit.etsf = etsf;
+  hit.ets = ets;
+#endif
+  
 #ifdef WAVEFORM
   hit.ltra = ltra;
   hit.data.clear();

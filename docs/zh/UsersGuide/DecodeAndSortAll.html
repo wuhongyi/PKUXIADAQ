@@ -1,0 +1,346 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>数据解码 &mdash; GDDAQ beta 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="事件重构" href="EventBuilder.html" />
+    <link rel="prev" title="在线统计" href="OnlineStattics.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> GDDAQ
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">简介</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">简介</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">程序安装</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../INSTALL.html">程序安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MYSQL.html">MYSQL</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">用户指南</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">用户指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Crate.html">机箱</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FIRMWARE.html">固件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GUI.html">图形交互界面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NOGUI.html">非图形交互界面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OnlineStattics.html">在线统计</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">数据解码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EventBuilder.html">事件重构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Decode.html">数据解码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MakeEvent.html">MakeEvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FrontPanel.html">插件前面板</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Logic.html">逻辑功能</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MultipleModulesSynchronously.html">时间同步</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UpdateCPLD.html">升级CPLD</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">应用案例</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Example/README.html">应用案例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/TOF2TAC.html">100M 模块测量飞行时间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/TimeResolution.html">时间分辨</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/RecommendedParameters.html">推荐参数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/InBeamGammaCIAE.html">在束伽马谱学</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">采购建议与实验调试</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ProcurementProposal.html">采购推荐</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ExperimentalDebugging.html">实验调试</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">编程指南</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/README.html">开发者指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/XIAAPI.html">XIA API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/PKUCode.html">PKU Code</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GDDAQ</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>数据解码</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/UsersGuide/DecodeAndSortAll.rst.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="id1">
+<h1>数据解码<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p><strong>DecodeAndSortAll 程序用来将同一轮数据不同采集卡采集的数据转为一个 ROOT 文件。用户的物理分析以本程序产生的 ROOT 文件为基准。本程序生成的数据已经按照时间戳从小到大排列。</strong></p>
+<p>用户首先需要修改 <strong>UesrDefine.hh</strong> 文件中的定义</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define WAVEFORM</span>
+<span class="cp">#define ENERGYSUM</span>
+<span class="cp">#define QDCSUM</span>
+<span class="cp">#define EXTERNALTS</span>
+
+<span class="cp">#define Crate0</span>
+<span class="cp">#define Crate1</span>
+<span class="cp">#define Crate2</span>
+<span class="cp">#define Crate3</span>
+<span class="cp">#define Crate4</span>
+<span class="cp">#define Crate5</span>
+<span class="cp">#define Crate6</span>
+<span class="cp">#define Crate7</span>
+</pre></div>
+</div>
+<p>以上是数据的最基本定义，WAVEFORM、ENERGYSUM、QDCSUM、EXTERNALTS 这四个变量分别表示 波形、能量计算相关的三段积分和基线、 8段 QDC 积分、外部时钟。如果数据中不需要该数据，或者记录的数据没有以上的数据，则注释掉相应的定义。抛弃不要的数据，可以极大提高数据转换速度。</p>
+<p>Crate0-Crate7 分别表示机箱，当前程序支持最大 8 个机箱的数据进行合并，数据中有几个机箱则开启相应定义，其它则注释掉。多个机箱同步获取的数据使用本程序有个前提：每个机箱的 CrateID 需要设置不一样。</p>
+<p>以下表示需要波形，一个机箱的数据</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define WAVEFORM</span>
+<span class="c1">// #define ENERGYSUM</span>
+<span class="c1">// #define QDCSUM</span>
+<span class="c1">// #define EXTERNALTS</span>
+
+<span class="cp">#define Crate0</span>
+<span class="c1">// #define Crate1</span>
+<span class="c1">// #define Crate2</span>
+<span class="c1">// #define Crate3</span>
+<span class="c1">// #define Crate4</span>
+<span class="c1">// #define Crate5</span>
+<span class="c1">// #define Crate6</span>
+<span class="c1">// #define Crate7</span>
+</pre></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define ROOTFILEPATH &quot;/wuhongyi1/dataroot/&quot;  </span><span class="c1">//要生成ROOT文件的路径</span>
+<span class="cp">#define ROOTFILENAME &quot;data&quot;                  </span><span class="c1">//要生成ROOT文件的名字</span>
+<span class="cp">#define TimesHist 3600  </span><span class="c1">// 单位秒，为了方便查看每个通道计数率随时间的变化，记录的数据中还包括每个通道的直方图，每个 bin 为 1秒。</span>
+</pre></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define Crate0RAWFILEPATH &quot;/wuhongyi1/SHANS2021/C0/&quot;   </span><span class="c1">//第一个机箱原始二进制文件的路径</span>
+<span class="cp">#define Crate0RAWFILENAME &quot;data&quot;                   </span><span class="c1">//第一个机箱原始文件的文件名</span>
+<span class="cp">#define Crate0num 7   </span><span class="c1">//该机箱中使用插件数</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Crate0SamplingRate</span><span class="p">[</span><span class="n">Crate0num</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">};</span><span class="c1">//分别指定每个插件的采样率  100/250/500三种采样率  0为跳过该插件</span>
+</pre></div>
+</div>
+<p>文件夹内还有 crate0.dat - crate7.dat 等 8 个文件，分别表示每个机箱数据的筛选条件。crate.dat 文件为默认设置（不加任何筛选条件），方便用户替换文件。文件中包括五列数据，分别表示模块编号，通道编号，时间差修正量，能量道址下限，能量道址上限。其中前两列不可修改。时间差修正量表示该通道的时间戳会加上该修正量（单位为 ns）；能量道址下限表示当该通道的能量低于该数值时事件舍弃；能量道址上限表示当该通道的能量高于该数值时事件舍弃。</p>
+<p>修改之后执行以下命令编译程序：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make clean
+make
+</pre></div>
+</div>
+<p>编译成功之后将生成一个可执行文件 <strong>decodeandsort</strong>，程序运行方式：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./decodeandsort <span class="o">[</span>Crate0 RunNnumber<span class="o">]</span> <span class="o">[</span>Crate2 RunNnumber<span class="o">]</span> <span class="o">[</span>Crate2 RunNnumber<span class="o">]</span> ...
+</pre></div>
+</div>
+<p>其中 <em>[CrateX RunNnumber]</em> 为想要对应机箱转换的文件运行编号。</p>
+<p>例如：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 转换第一个机箱的第三轮</span>
+./decodeandsort  <span class="m">3</span>
+
+<span class="c1">#转换第一个机箱第 32 轮和第二个机箱第 61 轮</span>
+./decodeandsort  <span class="m">32</span> <span class="m">61</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p><strong>ROOT 文件信息：</strong></p>
+<ul class="simple">
+<li><p>sr(short): sample rate，100/250/500，This value is specified in UesrDefine.hh. / 该数值由 UesrDefine.hh 中指定</p></li>
+<li><p>pileup(bool): 堆积标记。</p></li>
+<li><p>outofr(bool): 是否超量程标记。</p></li>
+<li><p>cid(short): 机箱编号</p></li>
+<li><p>sid(short): 采集卡所在插槽编号</p></li>
+<li><p>ch(short): 采集卡通道</p></li>
+<li><p>evte(unsigned short): 梯形算法的能量</p></li>
+<li><p>ts(long int 64 bit): 时间戳</p></li>
+<li><p>ets(long int 64 bit): 外部时间戳</p></li>
+<li><p>cfd(short): cfd 数值</p></li>
+<li><p>cfdft(bool): cfd 数值是否有效</p></li>
+<li><p>cfds(short):cfd source，仅适用于 250/500 MHz 采集卡</p></li>
+<li><p>trae(unsigned int): 计算能量梯形算法上升段积分</p></li>
+<li><p>leae(unsigned int): 计算能量梯形算法下降段积分</p></li>
+<li><p>gape(unsigned int): 计算能量梯形算法平台段积分</p></li>
+<li><p>base(double): 能量梯形算法的基线</p></li>
+<li><p>qs(unsigned int): 八个QDC面积的积分</p></li>
+<li><p>ltra(unsigned short): 波形采集点数</p></li>
+<li><p>data(unsigned short): 波形数据</p></li>
+<li><p>未完待补充</p></li>
+</ul>
+<p>下图展示一个文件中的 Branch 定义：</p>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="EventBuilder.html" class="btn btn-neutral float-right" title="事件重构" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="OnlineStattics.html" class="btn btn-neutral float-left" title="在线统计" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2020, Hongyi Wu(吴鸿毅).
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

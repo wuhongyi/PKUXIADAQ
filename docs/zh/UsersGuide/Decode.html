@@ -44,8 +44,8 @@
     
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="图形交互界面" href="GUI.html" />
-    <link rel="prev" title="固件" href="FIRMWARE.html" /> 
+    <link rel="next" title="MakeEvent" href="MakeEvent.html" />
+    <link rel="prev" title="事件重构" href="EventBuilder.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -104,10 +104,12 @@
 <li class="toctree-l1"><a class="reference internal" href="README.html">用户指南</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Crate.html">机箱</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FIRMWARE.html">固件</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">数据解码</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GUI.html">图形交互界面</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NOGUI.html">非图形交互界面</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OnlineStattics.html">在线统计</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DecodeAndSortAll.html">数据解码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EventBuilder.html">事件重构</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">数据解码</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MakeEvent.html">MakeEvent</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FrontPanel.html">插件前面板</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Logic.html">逻辑功能</a></li>
@@ -201,6 +203,7 @@
             
   <section id="id1">
 <h1>数据解码<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p><strong>本程序已弃用，请不要再使用本程序。</strong></p>
 <p><strong>Decode 程序用来将同一轮数据不同采集卡采集的数据转为一个 ROOT 文件。用户的物理分析以本程序产生的 ROOT 文件为基准。</strong></p>
 <p>用户首先需要修改 <strong>UesrDefine.hh</strong> 文件中的定义</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define RAWFILEPATH &quot;/home/wuhongyi/data/&quot;   </span><span class="c1">//原始二进制文件的路径</span>
@@ -285,8 +288,8 @@ make
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="GUI.html" class="btn btn-neutral float-right" title="图形交互界面" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="FIRMWARE.html" class="btn btn-neutral float-left" title="固件" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="MakeEvent.html" class="btn btn-neutral float-right" title="MakeEvent" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="EventBuilder.html" class="btn btn-neutral float-left" title="事件重构" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
     </div>
 
   <hr/>

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 9月 21 16:28:28 2020 (+0800)
-// Last-Updated: 四 1月  7 13:55:01 2021 (+0800)
+// Last-Updated: 日 5月  1 20:28:27 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 15
+//     Update #: 18
 // URL: http://wuhongyi.cn 
 
 #ifndef _EVENT_H_
@@ -46,6 +46,24 @@ typedef struct DATAEVENT
   Short_t         cfd;
   Bool_t          cfdft;
   Short_t         cfds;
+
+#ifdef ENERGYSUM
+  Bool_t esumf;
+  UInt_t trae;  // trailing energy sum
+  UInt_t leae;	// leading energy sum
+  UInt_t gape;	// Gap energy sum
+  UInt_t base;	// baseline value
+#endif
+  
+#ifdef QDCSUM
+  Bool_t qsumf;
+  UInt_t qs[8];
+#endif
+
+#ifdef EXTERNALTS
+  Bool_t etsf;
+  Long64_t ets;
+#endif
 
 #ifdef WAVEFORM
   unsigned short ltra;
@@ -113,6 +131,25 @@ private:
   TBranch        *b_cfd;   //!
   TBranch        *b_cfdft;   //!
   TBranch        *b_cfds;   //!
+
+#ifdef ENERGYSUM
+  TBranch        *b_esumf;
+  TBranch        *b_trae;  // trailing energy sum
+  TBranch        *b_leae;	// leading energy sum
+  TBranch        *b_gape;	// Gap energy sum
+  TBranch        *b_base;	// baseline value
+#endif
+  
+#ifdef QDCSUM
+  TBranch        *b_qsumf;
+  TBranch        *b_qs;
+#endif
+
+#ifdef EXTERNALTS
+  TBranch        *b_etsf;
+  TBranch        *b_ets; 	// external clock timestamp
+#endif
+  
 #ifdef WAVEFORM
   TBranch        *b_ltra;   //!
   TBranch        *b_data;   //!
@@ -129,6 +166,25 @@ private:
   Short_t cfd;
   Bool_t cfdft;//CFD forced trigger bit
   Short_t cfds;//CFD trigger source bits
+
+#ifdef ENERGYSUM
+  Bool_t esumf;
+  UInt_t trae;  // trailing energy sum
+  UInt_t leae;	// leading energy sum
+  UInt_t gape;	// Gap energy sum
+  UInt_t base;	// baseline value
+#endif
+  
+#ifdef QDCSUM
+  Bool_t qsumf;
+  UInt_t qs[8];
+#endif
+
+#ifdef EXTERNALTS
+  Bool_t etsf;
+  Long64_t ets; 	// external clock timestamp
+#endif
+  
 #ifdef WAVEFORM
   UShort_t ltra;
   UShort_t data[65536];   //[ltra]
