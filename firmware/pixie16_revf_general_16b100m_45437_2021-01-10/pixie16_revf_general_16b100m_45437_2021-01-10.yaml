@@ -1,0 +1,20 @@
+# Metadata file for the pixie16_revf_general_16b100m_45437_2021-01-10 firmware package.
+# This file and its contents are covered by the XIA LLC Firmware License.
+product:
+  name: Pixie-16
+  revision: F
+  adc:
+    resolution: 16
+    sampling_frequency: 100
+release:
+  type: general
+  date: 2021-01-10
+  version: 45437
+files:
+  dsp:
+    "Pixie16DSP_revfgeneral_16b100m_r45437.ldr": e21fe09c42a9505840ae9f28e61223db
+    "Pixie16DSP_revfgeneral_16b100m_r45437.lst": fe4df0adf94c7bc954d3514fbdb1fa94
+    "Pixie16DSP_revfgeneral_16b100m_r45437.var": 34938d3a54ef71f8f575b8990fbd97bf
+  firmware:
+    "fippixie16_revfgeneral_16b100m_r45406.bin": b7dba51157d3e34012369d33ee3e58d0
+    "syspixie16_revfgeneral_adc100mhz_r33338.bin": 68df6a183ce999f279905bea3f254020

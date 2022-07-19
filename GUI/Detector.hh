@@ -24,7 +24,7 @@
 #define FIRMWARE250M12BIT
 #define FIRMWARE250M14BIT
 #define FIRMWARE250M16BIT
-// #define FIRMWARE500M12BIT
+#define FIRMWARE500M12BIT
 #define FIRMWARE500M14BIT
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

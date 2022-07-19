@@ -176,6 +176,17 @@ ModuleBits 5 14 16 14 14 14 16 14
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 
+# Standard firmware
+500M12bit_sys ../firmware/pixie16_revf_12b250m_firmware_release/syspixie16_revfgeneral_adc250mhz_r33339.bin
+500M12bit_fip ../firmware/pixie16_revf_12b250m_firmware_release/fippixie16_revfgeneral_12b250m_r42081.bin
+500M12bit_dsplst ../firmware/pixie16_revf_12b250m_firmware_release/Pixie16DSP_revfgeneral_12b250m_r41847.lst
+500M12bit_dspldr ../firmware/pixie16_revf_12b250m_firmware_release/Pixie16DSP_revfgeneral_12b250m_r41847.ldr
+500M12bit_dspvar ../firmware/pixie16_revf_12b250m_firmware_release/Pixie16DSP_revfgeneral_12b250m_r41847.var
+
+
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+
 
 # Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
 # send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
@@ -218,13 +229,3 @@ ModuleBits 5 14 16 14 14 14 16 14
 
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
-
-
-## TODO
-#After adding the following firmware, you need to modify the definition in the file Detector.hh.
-
-500M12bit_sys ../firmware/
-500M12bit_fip ../firmware/
-500M12bit_dsplst ../firmware/
-500M12bit_dspldr ../firmware/
-500M12bit_dspvar ../firmware/
