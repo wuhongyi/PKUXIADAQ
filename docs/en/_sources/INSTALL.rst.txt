@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 一 4月 18 20:28:55 2022 (+0800)
+.. Last-Updated: 二 8月 23 19:32:26 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 37
+..     Update #: 42
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -23,7 +23,7 @@ Installation for this software is requrired by
   
 The operating system tested by this program includes CentOS7 / Scientific Linux 7 / CentOS8 / Ubuntu18.04 / Ubuntu20.04
 
-**This package uses PLX9054 driver with version 8.23. The operating systems supported by this version of the driver are CentOS 7 / CentOS 8 / Debian 08 / Debian 09 / Debian 10 / Ubuntu 18.04.**
+**This package uses PLX9054 driver with version 8.23. The operating systems supported by this version of the driver are CentOS 7 / CentOS 8 / Debian 08 / Debian 09 / Debian 10 / Ubuntu 18.04 / Ubuntu 20.04.**
 
 .. DANGER::
    Graphical interface programs and non-graphical interface programs cannot run at the same time!
@@ -87,7 +87,7 @@ The steps for Installation
   make
   #if it succeeds,you will see Application "App/ApiTest" built successfully
    
-   
+  # If an error is reported, find the corresponding solution according to the operating system
   cd ../../Driver/
   ./builddriver 9054
    
@@ -275,6 +275,86 @@ Instruction for use
 Common installation errors
 ---------------------------------
 
+##################################################
+Ubuntu 22.04
+##################################################
+
+Not tested
+
+##################################################
+Ubuntu 20.04
+##################################################
+
+
+for file *Driver/Source.Plx9000/Driver.c*
+
+.. code:: cpp
+
+   // add the following 3 lines at the begining of file:
+   #ifndef INCLUDE_VERMAGIC
+   #define INCLUDE_VERMAGIC
+   #endif
+
+
+for file *Driver/Source.Plx9000/SuppFunc.c*
+   
+.. code:: cpp
+	  
+   // Line 956 is modified as follows:
+   down_read( &current->mm->mmap_lock );
+   
+   // Line 969 is modified as follows:
+   up_read( &current->mm->mmap_lock );
+
+   // Comment line 402-410
+   // if (request_mem_region(
+   //  	      pdx->PciBar[BarIndex].Properties.Physical,
+   //  	      pdx->PciBar[BarIndex].Properties.Size,
+   //  	      PLX_DRIVER_NAME
+   //  	      ) == NULL)
+   // {
+   //     return (-ENOMEM);
+   // }
+   // else
+
+
+   
+##################################################
+Ubuntu 18.04
+##################################################
+
+
+The soon-to-be launched upgrade
+
+
+for file *Driver/Source.Plx9000/ApiFunc.c*
+
+for file *Driver/Source.Plx9000/Dispatch.c*
+
+for file *Driver/Source.Plx9000/Driver.c*
+
+for file *Driver/Source.Plx9000/SuppFunc.c*
+
+
+
+##################################################
+CentOS8
+##################################################
+
+
+For CentOS 8, the wrong solution for installing PLX9054 driver:
+
+.. code:: cpp
+	  
+   // Modify Include/Plx_sysdep.h line 153
+   #if (LINUX_VERSION_CODE < KERNEL_VERSION(4,0,0))
+
+
+##################################################
+CentOS7
+##################################################
+
+
 For CentOS / scientific Linux 7.6 / 7.7, the wrong solution for installing PLX9054 driver:
 
 .. code:: bash
@@ -313,6 +393,18 @@ At this point, the user can modify the file **/usr/src/kernels/3.10.0-957.12.2.e
     endif
 
 
+
+
+---------------------------------
+9054 driver loading error
+---------------------------------
+
+If you use NI PCIe-8381 and the driver cannot be loaded, as shown in the following figure, check whether the dial CLOCK MODE is ON.
+
+
+.. image:: /_static/img/pcie8381.jpg
+	   
+    
 ---------------------------------
 TeamViewer
 ---------------------------------

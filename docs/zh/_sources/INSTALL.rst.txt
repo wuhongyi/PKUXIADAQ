@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 一 4月 18 20:28:55 2022 (+0800)
+.. Last-Updated: 二 8月 23 19:32:26 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 36
+..     Update #: 42
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -22,7 +22,7 @@
   
 本程序测试过的系统包括 CentOS7 / Scientific Linux 7 / CentOS8 / Ubuntu18.04 / Ubuntu20.04
 
-**本程序包采用 PLX9054 驱动版本为 8.23。该版本的驱动支持的操作系统有 CentOS 7/CentOS 8/Debian 08/Debian 09/Debian 10/Ubuntu 18.04。**
+**本程序包采用 PLX9054 驱动版本为 8.23。该版本的驱动支持的操作系统有 CentOS 7/CentOS 8/Debian 08/Debian 09/Debian 10/Ubuntu 18.04/Ubuntu 20.04。**
 
 .. DANGER::
    图形界面程序与非图形界面程序不能同时运行！
@@ -79,7 +79,8 @@
   make clean
   make
   #成功后你将会看到 Application "App/ApiTest" built successfully
-   
+
+  # 如果报错，根据操作系统寻找对应的解决方式
   cd ../../Driver/
   ./builddriver 9054
    
@@ -263,15 +264,79 @@
 常见安装错误
 ---------------------------------
 
+##################################################
+Ubuntu 22.04
+##################################################
+
+未进行测试
+
+##################################################
+Ubuntu 20.04
+##################################################
+
+文件 *Driver/Source.Plx9000/Driver.c*
+
+.. code:: cpp
+
+   // 在文件开头添加以下 3 行 代码
+   #ifndef INCLUDE_VERMAGIC
+   #define INCLUDE_VERMAGIC
+   #endif
+
+文件 *Driver/Source.Plx9000/SuppFunc.c*
+
+.. code:: cpp
+	  
+   // 956 行修改如下
+   down_read( &current->mm->mmap_lock );
+   
+   // 969  行修改如下
+   up_read( &current->mm->mmap_lock );
+
+   // 注释 402-410 行
+   // if (request_mem_region(
+   //  	      pdx->PciBar[BarIndex].Properties.Physical,
+   //  	      pdx->PciBar[BarIndex].Properties.Size,
+   //  	      PLX_DRIVER_NAME
+   //  	      ) == NULL)
+   // {
+   //     return (-ENOMEM);
+   // }
+   // else
+
+   
+##################################################
+Ubuntu 18.04
+##################################################
+
+即将更新
+
+文件 *Driver/Source.Plx9000/ApiFunc.c*
+
+文件 *Driver/Source.Plx9000/Dispatch.c*
+
+文件 *Driver/Source.Plx9000/Driver.c*
+
+文件 *Driver/Source.Plx9000/SuppFunc.c*
+
+
+
+##################################################
+CentOS8
+##################################################
+
+
 针对 CentOS8，安装 PLX9054 8.23 驱动时候错误的解决方案：
 
-.. code:: bash
+.. code:: cpp
 	  
-   # 修改文件 Include/Plx_sysdep.h 第 153 行为
+   // 修改文件 Include/Plx_sysdep.h 第 153 行为
    #if (LINUX_VERSION_CODE < KERNEL_VERSION(4,0,0))
 
 
-
+##################################################
+CentOS7
+##################################################
 
 
 针对 CentOS/Scientific Linux 7.6/7.7，安装 PLX9054 驱动时候错误的解决方案：
@@ -311,6 +376,19 @@
         $(error CONFIG_RETPOLINE=y, but not supported by the compiler. Compiler update recommended.)
     endif
 
+
+---------------------------------
+9054 驱动加载错误
+---------------------------------
+
+如果你使用 NI PCIe-8381, 出现无法加载驱动的情况，那么如下图所示，检查拨盘 CLOCK MODE 是否处于 ON 状态。
+
+.. image:: /_static/img/pcie8381.jpg
+
+
+
+
+	   
 ---------------------------------
 TeamViewer
 ---------------------------------

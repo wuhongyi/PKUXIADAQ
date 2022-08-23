@@ -99,7 +99,15 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation of Software</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-steps-for-installation">The steps for Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#instruction-for-use">Instruction for use</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#common-installation-errors">Common installation errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-installation-errors">Common installation errors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ubuntu-22-04">Ubuntu 22.04</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ubuntu-20-04">Ubuntu 20.04</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ubuntu-18-04">Ubuntu 18.04</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#centos8">CentOS8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#centos7">CentOS7</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#driver-loading-error">9054 driver loading error</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#teamviewer">TeamViewer</a></li>
 </ul>
 </li>
@@ -215,7 +223,7 @@
 <li><p>OPENSSL</p></li>
 </ul>
 <p>The operating system tested by this program includes CentOS7 / Scientific Linux 7 / CentOS8 / Ubuntu18.04 / Ubuntu20.04</p>
-<p><strong>This package uses PLX9054 driver with version 8.23. The operating systems supported by this version of the driver are CentOS 7 / CentOS 8 / Debian 08 / Debian 09 / Debian 10 / Ubuntu 18.04.</strong></p>
+<p><strong>This package uses PLX9054 driver with version 8.23. The operating systems supported by this version of the driver are CentOS 7 / CentOS 8 / Debian 08 / Debian 09 / Debian 10 / Ubuntu 18.04 / Ubuntu 20.04.</strong></p>
 <div class="admonition danger">
 <p class="admonition-title">危险</p>
 <p>Graphical interface programs and non-graphical interface programs cannot run at the same time!</p>
@@ -271,7 +279,7 @@ make clean
 make
 <span class="c1">#if it succeeds,you will see Application &quot;App/ApiTest&quot; built successfully</span>
 
-
+<span class="c1"># If an error is reported, find the corresponding solution according to the operating system</span>
 <span class="nb">cd</span> ../../Driver/
 ./builddriver <span class="m">9054</span>
 
@@ -430,6 +438,57 @@ sudo ./Plx_load <span class="m">9054</span>
 </section>
 <section id="common-installation-errors">
 <h2>Common installation errors<a class="headerlink" href="#common-installation-errors" title="永久链接至标题">¶</a></h2>
+<section id="ubuntu-22-04">
+<h3>Ubuntu 22.04<a class="headerlink" href="#ubuntu-22-04" title="永久链接至标题">¶</a></h3>
+<p>Not tested</p>
+</section>
+<section id="ubuntu-20-04">
+<h3>Ubuntu 20.04<a class="headerlink" href="#ubuntu-20-04" title="永久链接至标题">¶</a></h3>
+<p>for file <em>Driver/Source.Plx9000/Driver.c</em></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// add the following 3 lines at the begining of file:</span>
+<span class="cp">#ifndef INCLUDE_VERMAGIC</span>
+<span class="cp">#define INCLUDE_VERMAGIC</span>
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+<p>for file <em>Driver/Source.Plx9000/SuppFunc.c</em></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Line 956 is modified as follows:</span>
+<span class="n">down_read</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">mm</span><span class="o">-&gt;</span><span class="n">mmap_lock</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// Line 969 is modified as follows:</span>
+<span class="n">up_read</span><span class="p">(</span><span class="w"> </span><span class="o">&amp;</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">mm</span><span class="o">-&gt;</span><span class="n">mmap_lock</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// Comment line 402-410</span>
+<span class="c1">// if (request_mem_region(</span>
+<span class="c1">//         pdx-&gt;PciBar[BarIndex].Properties.Physical,</span>
+<span class="c1">//         pdx-&gt;PciBar[BarIndex].Properties.Size,</span>
+<span class="c1">//         PLX_DRIVER_NAME</span>
+<span class="c1">//         ) == NULL)</span>
+<span class="c1">// {</span>
+<span class="c1">//     return (-ENOMEM);</span>
+<span class="c1">// }</span>
+<span class="c1">// else</span>
+</pre></div>
+</div>
+</section>
+<section id="ubuntu-18-04">
+<h3>Ubuntu 18.04<a class="headerlink" href="#ubuntu-18-04" title="永久链接至标题">¶</a></h3>
+<p>The soon-to-be launched upgrade</p>
+<p>for file <em>Driver/Source.Plx9000/ApiFunc.c</em></p>
+<p>for file <em>Driver/Source.Plx9000/Dispatch.c</em></p>
+<p>for file <em>Driver/Source.Plx9000/Driver.c</em></p>
+<p>for file <em>Driver/Source.Plx9000/SuppFunc.c</em></p>
+</section>
+<section id="centos8">
+<h3>CentOS8<a class="headerlink" href="#centos8" title="永久链接至标题">¶</a></h3>
+<p>For CentOS 8, the wrong solution for installing PLX9054 driver:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Modify Include/Plx_sysdep.h line 153</span>
+<span class="cp">#if (LINUX_VERSION_CODE &lt; KERNEL_VERSION(4,0,0))</span>
+</pre></div>
+</div>
+</section>
+<section id="centos7">
+<h3>CentOS7<a class="headerlink" href="#centos7" title="永久链接至标题">¶</a></h3>
 <p>For CentOS / scientific Linux 7.6 / 7.7, the wrong solution for installing PLX9054 driver:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./builddriver <span class="m">9054</span>
 </pre></div>
@@ -460,6 +519,12 @@ make: *** <span class="o">[</span>BuildDriver<span class="o">]</span> Error <spa
 endif
 </pre></div>
 </div>
+</section>
+</section>
+<section id="driver-loading-error">
+<h2>9054 driver loading error<a class="headerlink" href="#driver-loading-error" title="永久链接至标题">¶</a></h2>
+<p>If you use NI PCIe-8381 and the driver cannot be loaded, as shown in the following figure, check whether the dial CLOCK MODE is ON.</p>
+<img alt="_images/pcie8381.jpg" src="_images/pcie8381.jpg" />
 </section>
 <section id="teamviewer">
 <h2>TeamViewer<a class="headerlink" href="#teamviewer" title="永久链接至标题">¶</a></h2>
