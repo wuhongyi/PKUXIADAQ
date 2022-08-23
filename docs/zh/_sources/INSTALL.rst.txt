@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 二 8月 23 19:32:26 2022 (+0800)
+.. Last-Updated: 二 8月 23 19:37:39 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 42
+..     Update #: 43
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -197,7 +197,7 @@
   su #输入ROOT密码
   ./Plx_load 9054
   ## Ubuntu
-  ## 需要修改文件 Plx_load 第18行为 export PLX_SDK_DIR=$HOME/PKUXIADAQ/PlxSdk
+  ## 需要修改文件 Plx_load 第18行为 export PLX_SDK_DIR=/home/[user name]/PKUXIADAQ/PlxSdk
   sudo ./Plx_load 9054
   
   #将会看到加载成功的提示

@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 二 8月 23 19:32:26 2022 (+0800)
+.. Last-Updated: 二 8月 23 19:36:37 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 42
+..     Update #: 43
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -205,7 +205,7 @@ Instruction for use
   su # input ROOT password   
   ./Plx_load 9054
   ## Ubuntu
-  ## The 18th line of the file Plx_load needs to be modified:  export PLX_SDK_DIR=$HOME/PKUXIADAQ/PlxSdk
+  ## The 18th line of the file Plx_load needs to be modified:  export PLX_SDK_DIR=/home/[user name]/PKUXIADAQ/PlxSdk
   sudo ./Plx_load 9054
   
   # You Will see a prompt to load successfully
