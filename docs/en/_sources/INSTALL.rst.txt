@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 二 8月 23 19:36:37 2022 (+0800)
+.. Last-Updated: 二 8月 23 20:16:32 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 43
+..     Update #: 44
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -327,9 +327,6 @@ Ubuntu 18.04
 The soon-to-be launched upgrade
 
 
-for file *Driver/Source.Plx9000/ApiFunc.c*
-
-for file *Driver/Source.Plx9000/Dispatch.c*
 
 for file *Driver/Source.Plx9000/Driver.c*
 
