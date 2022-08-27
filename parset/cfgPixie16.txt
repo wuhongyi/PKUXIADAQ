@@ -177,11 +177,11 @@ ModuleBits 5 14 16 14 14 14 16 14
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 
 # Standard firmware
-500M12bit_sys ../firmware/pixie16_revf_12b250m_firmware_release/syspixie16_revfgeneral_adc250mhz_r33339.bin
-500M12bit_fip ../firmware/pixie16_revf_12b250m_firmware_release/fippixie16_revfgeneral_12b250m_r42081.bin
-500M12bit_dsplst ../firmware/pixie16_revf_12b250m_firmware_release/Pixie16DSP_revfgeneral_12b250m_r41847.lst
-500M12bit_dspldr ../firmware/pixie16_revf_12b250m_firmware_release/Pixie16DSP_revfgeneral_12b250m_r41847.ldr
-500M12bit_dspvar ../firmware/pixie16_revf_12b250m_firmware_release/Pixie16DSP_revfgeneral_12b250m_r41847.var
+500M12bit_sys ../firmware/pixie16_revf_general_12b500m/syspixie16_revfgeneral_adc500mhz_r31567.bin
+500M12bit_fip ../firmware/pixie16_revf_general_12b500m/fippixie16_revfgeneral_12b500m_r31778.bin
+500M12bit_dsplst ../firmware/pixie16_revf_general_12b500m/Pixie16DSP_revfgeneral_12b500m_r31779.lst
+500M12bit_dspldr ../firmware/pixie16_revf_general_12b500m/Pixie16DSP_revfgeneral_12b500m_r31779.ldr
+500M12bit_dspvar ../firmware/pixie16_revf_general_12b500m/Pixie16DSP_revfgeneral_12b500m_r31779.var
 
 
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
