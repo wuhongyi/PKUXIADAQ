@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 二 8月 23 20:16:32 2022 (+0800)
+.. Last-Updated: 三 10月 12 15:12:23 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 44
+..     Update #: 45
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -201,6 +201,7 @@
   sudo ./Plx_load 9054
   
   #将会看到加载成功的提示
+  ##  CENTOS
   exit  #退出ROOT权限	  
 
 
@@ -210,7 +211,7 @@
    
   cd ~
   cd ~/PKUXIADAQ/GUI
-  ./pku
+  ./gddaq
    
    
   #将会弹出图形化界面
@@ -227,7 +228,7 @@
    
   cd ~
   cd ~/PKUXIADAQ/NOGUI
-  ./pku
+  ./gddaq
    
   根据提示输入控制命令	  
 

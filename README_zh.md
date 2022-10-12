@@ -4,16 +4,16 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 二 7月 19 21:01:39 2022 (+0800)
+;; Last-Updated: 三 10月 12 15:01:35 2022 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 175
+;;     Update #: 178
 ;; URL: http://wuhongyi.cn -->
 
 # A general-purpose digital data acquisition system(GDDAQ)
 
 <!-- toc -->
 
-![PKU logo](pkulogo100.jpg)
+![Yi logo](Yilogo100.png)
 
 [English](https://github.com/wuhongyi/PKUXIADAQ/blob/master/README.md) | 简体中文
 
@@ -21,7 +21,7 @@
 
 ## 版本
 
-- **GUI Version: 2022.07.19**  
+- **GUI Version: 2022.10.12**  
 - **DecodeAndSortAll Version: 2022.04.17**
 - **EventBuilder Version: 2022.05.01**
 
@@ -130,7 +130,7 @@ MZTIO 网页版说明书请访问:  [简体中文/English](http://wuhongyi.cn/MZ
 - [Performance of digital data acquisition system in gamma-ray spectroscopy](https://doi.org/10.1007/s41365-021-00917-8)
 - [基于数字化的通用获取系统及波形分析算法](https://doi.org/10.1360/TB-2021-0552)
  
-使用包含 pku 名字的固件，请发邮件联系吴鸿毅（wuhongyi@qq.com/wuhongyi@pku.edu.cn）获取授权。  
+使用包含 pku 的固件，请发邮件联系吴鸿毅（wuhongyi@qq.com/wuhongyi@pku.edu.cn）获取授权。  
  
 
 <!-- README.md ends here -->

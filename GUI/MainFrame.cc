@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 日 4月 17 21:49:01 2022 (+0800)
+// Last-Updated: 三 10月 12 14:53:54 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 431
+//     Update #: 434
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -403,16 +403,17 @@ void MainFrame::ControlPanel(TGCompositeFrame *TabPanel)
 
 
 
+
   TGCompositeFrame *LogoFrame = new TGCompositeFrame(bootframe, 0, 0, kHorizontalFrame);
   bootframe->AddFrame(LogoFrame, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 10, 10));
   LogoFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
-  TGImageMap* fImagePKU = new TGImageMap(LogoFrame, "../icons/logo1.png");
-  LogoFrame->AddFrame(fImagePKU,new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 0, 0));
-  fImagePKU->ChangeOptions(fImagePKU->GetOptions() ^ kRaisedFrame);
-  fImagePKU->Resize(100,100);
-  fImagePKU->ChangeOptions(fImagePKU->GetOptions() | kFixedSize);
-  fImagePKU->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  // TGImageMap* fImagePKU = new TGImageMap(LogoFrame, "../icons/logo1.png");
+  // LogoFrame->AddFrame(fImagePKU,new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 0, 0));
+  // fImagePKU->ChangeOptions(fImagePKU->GetOptions() ^ kRaisedFrame);
+  // fImagePKU->Resize(100,100);
+  // fImagePKU->ChangeOptions(fImagePKU->GetOptions() | kFixedSize);
+  // fImagePKU->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   TGImageMap* fImageWHY = new TGImageMap(LogoFrame, "../icons/logo2.png");
   LogoFrame->AddFrame(fImageWHY,new TGLayoutHints(kLHintsTop | kLHintsRight, 70, 0, 0, 0));
@@ -420,7 +421,6 @@ void MainFrame::ControlPanel(TGCompositeFrame *TabPanel)
   fImageWHY->Resize(100,100);
   fImageWHY->ChangeOptions(fImageWHY->GetOptions() | kFixedSize);
   fImageWHY->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
-
 
   
   //make the buttons frame        

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 7月 29 20:39:43 2016 (+0800)
-// Last-Updated: 一 10月 11 12:47:54 2021 (+0800)
+// Last-Updated: 三 10月 12 14:56:02 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 1084
+//     Update #: 1086
 // URL: http://wuhongyi.cn 
 
 // offlinedata->GetEventWaveLocation()
@@ -420,15 +420,15 @@ void Offline::MakeFold0Panel(TGCompositeFrame *TabPanel)
   TabPanel->AddFrame(LogoFrame, new TGLayoutHints(kLHintsTop | kLHintsLeft, 10,0,10, 0));
   LogoFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
-  TGImageMap* fImagePKU = new TGImageMap(LogoFrame, "../icons/logo1.png");
-  LogoFrame->AddFrame(fImagePKU,new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 0, 0));
-  fImagePKU->Resize(100,100);
-  fImagePKU->ChangeOptions(fImagePKU->GetOptions() | kFixedSize);
-  fImagePKU->ChangeOptions(fImagePKU->GetOptions() ^ kRaisedFrame);
-  fImagePKU->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  // TGImageMap* fImagePKU = new TGImageMap(LogoFrame, "../icons/logo1.png");
+  // LogoFrame->AddFrame(fImagePKU,new TGLayoutHints(kLHintsLeft | kLHintsTop, 0, 0, 0, 0));
+  // fImagePKU->Resize(100,100);
+  // fImagePKU->ChangeOptions(fImagePKU->GetOptions() | kFixedSize);
+  // fImagePKU->ChangeOptions(fImagePKU->GetOptions() ^ kRaisedFrame);
+  // fImagePKU->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   TGImageMap* fImageWHY = new TGImageMap(LogoFrame, "../icons/logo2.png");
-  LogoFrame->AddFrame(fImageWHY,new TGLayoutHints(kLHintsTop | kLHintsRight, 100, 0, 0, 0));
+  LogoFrame->AddFrame(fImageWHY,new TGLayoutHints(kLHintsTop | kLHintsRight, 0, 0, 0, 0));
   fImageWHY->Resize(100,100);
   fImageWHY->ChangeOptions(fImageWHY->GetOptions() | kFixedSize);
   fImageWHY->ChangeOptions(fImageWHY->GetOptions() ^ kRaisedFrame);

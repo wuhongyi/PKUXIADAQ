@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:39:34 2019 (+0800)
-.. Last-Updated: 六 9月 21 22:25:44 2019 (+0800)
+.. Last-Updated: 三 10月 12 15:13:38 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 6
+..     Update #: 7
 .. URL: http://wuhongyi.cn 
 
 =================================
@@ -17,7 +17,7 @@ After setting the parameter file in the **parset**, enter the GUI directory and 
 
 .. code:: bash
 
-  ./pku	 
+  ./gddaq
 
 ---------------------------------
 The main control interface

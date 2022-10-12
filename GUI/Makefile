@@ -1,4 +1,4 @@
-OBJ = pku
+OBJ = gddaq
 
 CXX=g++ #-std=c++11  
 CXXFLAGS:=-fno-stack-protector -g -Wall -lrt -lfftw3 -lcrypto -I. -I../software/app -I../software/sys

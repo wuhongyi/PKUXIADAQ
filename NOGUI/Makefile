@@ -1,4 +1,4 @@
-OBJ = pku
+OBJ = gddaq
 
 CXX=g++ #-std=c++11
 CXXFLAGS:= -g -Wall -I. -I../software/app -I../software/sys

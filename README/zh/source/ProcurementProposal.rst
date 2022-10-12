@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 14:57:03 2019 (+0800)
-.. Last-Updated: 四 8月  5 18:22:32 2021 (+0800)
+.. Last-Updated: 三 10月 12 15:08:33 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 23
+..     Update #: 24
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -45,7 +45,7 @@ XIA LLC 推出的 Pixie16 系列采集卡，拥有 100M 12/14 bit、250M 12/14/1
     - CsI
     - gas det
     - ...
-- 250M 14/16 bit、500 M 14 bit
+- 250M 14/16 bit、500 M 14/12 bit
     - LaBr3
     - Plastic scintillator
     - Liquid scintillator

@@ -1,0 +1,50 @@
+name: Github Actions
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+  OPTIONS: -DBUILD_LEGACY=ON -DBUILD_SDK=ON -DBUILD_TESTS=ON
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally
+    # well on Windows or Mac.  You can convert this to a matrix build if you need
+    # cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: PLX
+        run: |
+          export ORIG_DIR=${PWD}
+          git clone https://github.com/xiallc/broadcom_pci_pcie_sdk.git
+          cd broadcom_pci_pcie_sdk
+          export PLX_SDK_DIR=${PWD}
+          echo "PLX_SDK_DIR=${PLX_SDK_DIR}" >> ${GITHUB_ENV}
+          make -C ${PLX_SDK_DIR}/PlxApi PLX_NO_CLEAR_SCREEN=1
+          test -e ./PlxApi/Library/PlxApi.a
+          cd ${ORIG_DIR}
+
+      - name: Configure
+        run: |
+          mkdir build
+          cd build
+          cmake ../ ${{env.OPTIONS}}
+
+      - name: Build
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+      - name: Test
+        working-directory: ${{github.workspace}}/build
+        run: |
+          ./tests/unit/legacy/legacy_unit_test_runner
+          ./tests/unit/sdk/pixie_sdk_unit_test_runner
+          ./tests/integration/pixie_sdk_integration_test_runner

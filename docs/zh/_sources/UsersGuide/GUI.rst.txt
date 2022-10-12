@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:39:34 2019 (+0800)
-.. Last-Updated: 六 9月 21 22:26:09 2019 (+0800)
+.. Last-Updated: 三 10月 12 15:13:37 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 6
+..     Update #: 7
 .. URL: http://wuhongyi.cn 
 
 =================================
@@ -19,7 +19,7 @@
 
 .. code:: bash
 
-  ./pku	 
+  ./gddaq
 
 ---------------------------------
 主控制界面

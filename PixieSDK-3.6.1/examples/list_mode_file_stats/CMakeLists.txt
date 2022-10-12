@@ -1,0 +1,6 @@
+IF(BUILD_SDK)
+    add_executable(list_mode_file_stats list_mode_file_stats.cpp)
+    target_include_directories(list_mode_file_stats PUBLIC ${PROJECT_SOURCE_DIR}/sdk/include ${PROJECT_SOURCE_DIR}/externals/)
+    xia_configure_target(TARGET list_mode_file_stats USE_PLX LIBS PixieData)
+    install(TARGETS list_mode_file_stats RUNTIME DESTINATION bin)
+endif(BUILD_SDK)

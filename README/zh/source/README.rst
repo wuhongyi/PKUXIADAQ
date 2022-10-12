@@ -4,23 +4,23 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 20:19:34 2019 (+0800)
-.. Last-Updated: 二 8月 23 20:18:05 2022 (+0800)
+.. Last-Updated: 三 10月 12 15:07:25 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 45
+..     Update #: 47
 .. URL: http://wuhongyi.cn 
 
 =================================   
 简介
 =================================
 
-.. image:: /_static/img/pkulogo100.jpg
+.. image:: /_static/img/Yilogo100.png
 
 ---------------------------------
 版本
 ---------------------------------
 
 
-**Version: 2022.07.19**  
+**Version: 2022.10.12**  
 
 程序下载请访问:  `PKUXIADAQ <https://github.com/wuhongyi/PKUXIADAQ>`_ 
 
@@ -138,7 +138,7 @@ MZTIO 网页版说明书请访问:  `简体中文/English <http://wuhongyi.cn/MZ
 - `基于数字化的通用获取系统及波形分析算法 <https://doi.org/10.1360/TB-2021-0552>`_
 
 
-
+**使用包含 pku 的固件，请发邮件联系吴鸿毅（wuhongyi@qq.com/wuhongyi@pku.edu.cn）获取授权。**
   
 .. 
 .. README.rst ends here

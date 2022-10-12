@@ -4,16 +4,16 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 20:19:34 2019 (+0800)
-.. Last-Updated: 二 8月 23 20:18:05 2022 (+0800)
+.. Last-Updated: 三 10月 12 15:06:53 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 47
+..     Update #: 48
 .. URL: http://wuhongyi.cn 
 
 =================================   
 Introduction
 =================================
 
-.. image:: /_static/img/pkulogo100.jpg
+.. image:: /_static/img/Yilogo100.png
 
 
 A general-purpose digital data acquisition system (GDDAQ) has been developed at Peking University. This GDDAQ, composed of 16-channel Digital Pulse Processor Pixie-16 modules from XIA LLC, is a versatile, flexible, and easily expandable data acquisition system for nuclear physics research in China. The software used by this GDDAQ is based on the CERN ROOT framework and developed and tested in CentOS 7 LINUX operating platform. A flexible trigger system has also been developed to accommodate different experimental settings. A user-friendly software GUI helps users monitor and debug the detection system in real timer or offline. Many offline analysis tools have been developed to help users quickly optimize parameters for various types of detectors without the need for time-consuming tests and measurements. This GDDAQ has been successfully implemented in several nuclear physics experiments and its versatility and high efficiency have been demonstrated.
@@ -22,7 +22,7 @@ A general-purpose digital data acquisition system (GDDAQ) has been developed at 
 Version
 ---------------------------------
 
-**Version: 2022.07.19**  
+**Version: 2022.10.12**  
 
 Download the latest version:  `PKUXIADAQ <https://github.com/wuhongyi/PKUXIADAQ>`_ 
 

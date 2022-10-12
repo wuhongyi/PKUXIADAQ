@@ -1,0 +1,98 @@
+version: 0.2
+
+batch:
+  fast-fail: false
+  build-list:
+    - identifier: Default
+      env:
+        variables:
+          BUILD_OPTIONS: " "
+    - identifier: All
+      env:
+        variables:
+          BUILD_OPTIONS: -DBUILD_LEGACY=ON -DBUILD_SDK=ON -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON
+    - identifier: SDK_with_examples_and_tests
+      env:
+        variables:
+          BUILD_OPTIONS: -DBUILD_LEGACY=OFF -DBUILD_SDK=ON -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON
+    - identifier: SDK_without_examples_and_tests
+      env:
+        variables:
+          BUILD_OPTIONS: -DBUILD_LEGACY=OFF -DBUILD_SDK=ON -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF
+    - identifier: Legacy_with_examples_and_tests
+      env:
+        variables:
+          BUILD_OPTIONS: -DBUILD_LEGACY=ON -DBUILD_SDK=OFF -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON
+    - identifier: Legacy_without_examples_and_tests
+      env:
+        variables:
+          BUILD_OPTIONS: -DBUILD_LEGACY=ON -DBUILD_SDK=OFF -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF
+
+phases:
+  install:
+    commands:
+      - echo Entered the install phase for ${CODEBUILD_BATCH_BUILD_IDENTIFIER}...
+      - uname -r
+      - yum -y install cmake3
+    finally:
+      - echo This always runs even if the install command fails
+  pre_build:
+    commands:
+      - echo Entered the pre_build phase for ${CODEBUILD_BATCH_BUILD_IDENTIFIER}...
+      - export PLX_SDK_DIR=${CODEBUILD_SRC_DIR_plx}
+      - export PLX_CHIP=9054
+      - make -C ${PLX_SDK_DIR}/PlxApi/ PLX_NO_CLEAR_SCREEN=1
+      - test -e ${PLX_SDK_DIR}/PlxApi/Library/PlxApi.a || exit 1
+    finally:
+      - echo This always runs even if the pre_build command fails
+  build:
+    commands:
+      - echo Entered the build phase for ${CODEBUILD_BATCH_BUILD_IDENTIFIER} ...
+      - echo Build started on `date`
+      - echo "Build running with options:" ${BUILD_OPTIONS}
+      - mkdir build
+      - cd build
+      - cmake3 ../ ${BUILD_OPTIONS}
+      - make -j4
+      - >
+        if [[ ${BUILD_OPTIONS} == *"BUILD_SDK=ON"* || ${BUILD_OPTIONS} == " " ]];
+        then
+        echo Checking for libPixieSDK.a;
+        test -e ./sdk/src/pixie/libPixieSDK.a || exit 2;
+        echo Checking for libPixie16Api.so;
+        test -e ./sdk/src/pixie16/libPixie16Api.so || exit 3;
+        if [[ ${BUILD_OPTIONS} == *"BUILD_EXAMPLES=ON"* || ${BUILD_OPTIONS} == " " ]];
+        then
+        echo Checking for example_pixie16api;
+        test -e ./examples/example_pixie16api/example_pixie16api || exit 4;
+        fi;
+        if [[ ${BUILD_OPTIONS} == *"BUILD_TESTS=ON"* ]];
+        then
+        echo Executing pixie_sdk_unit_test_runner;
+        ./tests/unit/sdk/pixie_sdk_unit_test_runner || exit 5;
+        echo Executing pixie_sdk_integration_test_runner;
+        ./tests/integration/pixie_sdk_integration_test_runner || exit 6;
+        fi;
+        fi;
+      - >
+        if [[ ${BUILD_OPTIONS} == *"BUILD_LEGACY=ON"* ]];
+        then
+        echo Checking for libPixie16App.a;
+        test -e ./sdk/src/legacy/libPixie16App.a || exit 20;
+        if [[ ${BUILD_OPTIONS} == *"BUILD_EXAMPLES=ON"* ]];
+        then
+        echo Checking for example_pixie16app;
+        test -e ./examples/example_pixie16app/example_pixie16app || exit 21;
+        fi;
+        if [[ ${BUILD_OPTIONS} == *"BUILD_TESTS=ON"* ]];
+        then
+        echo Executing legacy_unit_test_runner;
+        ./tests/unit/legacy/legacy_unit_test_runner || exit 22;
+        fi;
+        fi;
+    finally:
+      - echo This always runs even if the build command fails
+  post_build:
+    commands:
+      - echo Entered the post_build phase for ${CODEBUILD_BATCH_BUILD_IDENTIFIER}...
+      - echo Build completed on `date`
