@@ -1,1 +1,0 @@
-install(FILES set_file_decoder.py DESTINATION bin)
