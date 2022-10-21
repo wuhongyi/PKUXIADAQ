@@ -4,16 +4,19 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 12月 13 09:41:49 2016 (+0800)
-;; Last-Updated: 五 10月  8 16:57:56 2021 (+0800)
+;; Last-Updated: 五 10月 21 19:14:33 2022 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 54
+;;     Update #: 56
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
 
 ## current firmware version
 
-- pixie16_revfpku_14b500m_firmware_release_10062021
+- pixie16_revf_12b500m_r47978_10102022
+	- standard firmware
+
+- pixie16_revfpku_14b500m_firmware_release_10062021(sometime not output when QDC enabled) 
 	- Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
 	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
 	- Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
@@ -22,13 +25,6 @@
 
 - pixie16_revf_general_14b500m_firmware_release_09142021
     - standard firmware
-
-- pixie16_revfpku_14b500m_firmware_release_06102020  PKU firmware(sometime not output when QDC enabled)
-	- Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
-	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
-	- Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
-	- The value is set to 0 when the calculated energy is negative.
-	- The pileup event energy is not set to 0, output calculated values directly.
 
 - pixie16_revfpku_14b250m_release_11032020  PKU firmware
 	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
@@ -297,6 +293,12 @@
 	- Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
 	- The value is set to 0 when the calculated energy is negative.
 	- The pileup event energy is not set to 0, output calculated values directly.
+
+- pixie16_revf_general_12b500m(sometime not output when QDC enabled) 
+	- standard firmware
+
+- pixie16_revf_12b500m_r47978_10102022
+	- standard firmware
 
 
 
