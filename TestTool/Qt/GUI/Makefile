@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = gui1.0.0
-DISTDIR = /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/GUIqt/.tmp/gui1.0.0
+DISTDIR = /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/TestTool/Qt/GUI/.tmp/gui1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
 LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so /usr/lib/x86_64-linux-gnu/libGL.so -lpthread   
@@ -463,43 +463,43 @@ moc_MainWindow.cpp: MainWindow.hh \
 		nlohmann/json.hpp \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/GUIqt/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/GUIqt -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include MainWindow.hh -o moc_MainWindow.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/TestTool/Qt/GUI/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/TestTool/Qt/GUI -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include MainWindow.hh -o moc_MainWindow.cpp
 
 moc_About.cpp: About.hh \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/GUIqt/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/GUIqt -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include About.hh -o moc_About.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/TestTool/Qt/GUI/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/TestTool/Qt/GUI -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include About.hh -o moc_About.cpp
 
 moc_ControlPanel.cpp: ControlPanel.hh \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/GUIqt/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/GUIqt -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ControlPanel.hh -o moc_ControlPanel.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/TestTool/Qt/GUI/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/TestTool/Qt/GUI -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ControlPanel.hh -o moc_ControlPanel.cpp
 
 moc_ReadoutThread.cpp: ReadoutThread.hh \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/GUIqt/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/GUIqt -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ReadoutThread.hh -o moc_ReadoutThread.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/TestTool/Qt/GUI/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/TestTool/Qt/GUI -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ReadoutThread.hh -o moc_ReadoutThread.cpp
 
 moc_ConnectDialog.cpp: ConnectDialog.hh \
 		nlohmann/json.hpp \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/GUIqt/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/GUIqt -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ConnectDialog.hh -o moc_ConnectDialog.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/TestTool/Qt/GUI/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/TestTool/Qt/GUI -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ConnectDialog.hh -o moc_ConnectDialog.cpp
 
 moc_OutputSettingDialog.cpp: OutputSettingDialog.hh \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/GUIqt/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/GUIqt -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include OutputSettingDialog.hh -o moc_OutputSettingDialog.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/TestTool/Qt/GUI/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/TestTool/Qt/GUI -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include OutputSettingDialog.hh -o moc_OutputSettingDialog.cpp
 
 moc_Login.cpp: Login.hh \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/GUIqt/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/GUIqt -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Login.hh -o moc_Login.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/TestTool/Qt/GUI/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/TestTool/Qt/GUI -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Login.hh -o moc_Login.cpp
 
 moc_BasicSettings.cpp: BasicSettings.hh \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/GUIqt/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/GUIqt -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include BasicSettings.hh -o moc_BasicSettings.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/TestTool/Qt/GUI/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/media/wuhongyi/99526dbc-cdd5-4683-827c-b1b1a9a54c96/PKUXIADAQ/TestTool/Qt/GUI -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include BasicSettings.hh -o moc_BasicSettings.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
