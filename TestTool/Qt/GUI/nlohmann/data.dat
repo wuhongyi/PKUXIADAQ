@@ -1,0 +1,88 @@
+{
+"crateid": 0,
+"modules": 3,
+"slotid": [2, 3, 5],
+"firmware": ["std", "pku", "pku"],
+
+
+"par": "pixie.set",
+
+
+
+
+
+
+"dspfpga_100_12_std": {
+"ldr": "../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.ldr",
+"var": "../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.var",
+"fippi": "../firmware/pixie16_revd_12b100m_firmware_release/fippixie16_revdgeneral_r32495.bin",
+"sys": "../firmware/pixie16_revd_12b100m_firmware_release/syspixie16_revdgeneral_r33157.bin",
+"trig": "../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.lst"
+},
+
+"dspfpga_100_14_std": {
+"ldr": "../firmware/pixie16_revf_general_14b100m_firmware_release/Pixie16DSP_revfgeneral_14b100m_r37640.ldr",
+"var": "../firmware/pixie16_revf_general_14b100m_firmware_release/Pixie16DSP_revfgeneral_14b100m_r37640.var",
+"fippi": "../firmware/pixie16_revf_general_14b100m_firmware_release/fippixie16_revfgeneral_14b100m_r36263.bin",
+"sys": "../firmware/pixie16_revf_general_14b100m_firmware_release/syspixie16_revfgeneral_adc100mhz_r33338.bin",
+"trig": "../firmware/pixie16_revf_general_14b100m_firmware_release/Pixie16DSP_revfgeneral_14b100m_r37640.lst"
+},
+
+"dspfpga_100_14_pku": {
+"ldr": "../firmware/",
+"var": "../firmware/",
+"fippi": "../firmware/",
+"sys": "../firmware/",
+"trig": "../firmware/"
+},
+
+"dspfpga_250_12_std": {
+"ldr": "../firmware/",
+"var": "../firmware/",
+"fippi": "../firmware/",
+"sys": "../firmware/",
+"trig": "../firmware/"
+},
+
+"dspfpga_250_14_pku": {
+"ldr": "../firmware/",
+"var": "../firmware/",
+"fippi": "../firmware/",
+"sys": "../firmware/",
+"trig": "../firmware/"
+},
+
+"dspfpga_250_16_pku": {
+"ldr": "../firmware/",
+"var": "../firmware/",
+"fippi": "../firmware/",
+"sys": "../firmware/",
+"trig": "../firmware/"
+},
+
+"dspfpga_500_12_std": {
+"ldr": "../firmware/",
+"var": "../firmware/",
+"fippi": "../firmware/",
+"sys": "../firmware/",
+"trig": "../firmware/"
+},
+
+"dspfpga_500_14_std": {
+"ldr": "../firmware/",
+"var": "../firmware/",
+"fippi": "../firmware/",
+"sys": "../firmware/",
+"trig": "../firmware/"
+},
+
+"dspfpga_500_14_pku": {
+"ldr": "../firmware/",
+"var": "../firmware/",
+"fippi": "../firmware/",
+"sys": "../firmware/",
+"trig": "../firmware/"
+}
+
+
+}
