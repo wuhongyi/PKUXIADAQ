@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 4月 23 21:07:31 2022 (+0800)
-// Last-Updated: 六 4月 23 22:16:40 2022 (+0800)
+// Last-Updated: 二 10月 25 20:35:22 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 4
+//     Update #: 5
 // URL: http://wuhongyi.cn 
 
 #ifndef _CONTROLPANEL_H_
@@ -46,7 +46,7 @@ public:
   void DisableAll(bool f);
   void ToogleStartStop();
   void SetStartStopStatus(int status);
-  void UpdateStartableDevices(int cmd, const QString& name);
+  void UpdateStartableDevices();
 
   QGridLayout *gridlayout;
   QVBoxLayout *verticallayout;

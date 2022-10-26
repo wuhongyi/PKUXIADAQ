@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 12月 17 15:18:54 2021 (+0800)
-// Last-Updated: 六 10月 22 15:14:03 2022 (+0800)
+// Last-Updated: 二 10月 25 22:20:09 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 73
+//     Update #: 79
 // URL: http://wuhongyi.cn 
 
 #include "MainWindow.hh"
@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent)
   this->setStatusBar(mMainStatusBar);
 
   mControlPanel = new ControlPanel(this);
-  // mControlPanel->disableAll(false);
+  mControlPanel->DisableAll(true);
   // mControlPanel->setVisible(false);
   
   
@@ -95,6 +95,12 @@ MainWindow::MainWindow(QWidget *parent)
   PopulateToolBar();
   PopulateMenu();
   CreateDockWindows(width*0.8);
+
+  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  mDevice = new DeviceHandle();
+
+  
 }
 
 void MainWindow::PopulateToolBar()
@@ -210,7 +216,7 @@ void MainWindow::AboutSoftware()
 
 void MainWindow::ConnectModule()
 {
-  ConnectDialog dialog(this);
+  ConnectDialog dialog(this, mDevice);
   dialog.setModal(true);
   // dialog.exec();
 
@@ -218,12 +224,32 @@ void MainWindow::ConnectModule()
   
   if(dialog.exec() == QDialog::Accepted)
     {
+      if(mReadoutThread != nullptr) delete mReadoutThread;
+      mReadoutThread = new ReadoutThread(this, mDevice);
+
+      
+      mControlPanel->UpdateStartableDevices();
+
+      
       if(mBasicSettings != nullptr) delete mBasicSettings;
-      mBasicSettings = new BasicSettings(this);
+      mBasicSettings = new BasicSettings(this, mDevice);
       mBasicSettings->show();
       mBasicSettings->setVisible(false);
 
+
+
+      //
       mBasicSettingsAct->setEnabled(true);
+
+
+      
+    }
+  else
+    {
+      mControlPanel->DisableAll(true);
+
+
+      mBasicSettingsAct->setEnabled(false);
     }
 }
 
@@ -327,6 +353,39 @@ void MainWindow::GetOutputSettings(QString &folder, QString &prefix, QString &ru
   prefix = mOutput_prefix;
   run = mOutput_run;
 }
+
+void MainWindow::StartAcquisition()
+{
+  // daq start
+  // 时间同步 handle start
+  mDevice->StartAcquisition();
+
+  
+  // readout start
+  mReadoutThread->startRun();
+  mReadoutThread->start();
+
+
+  // 操作按钮保护，禁止控制
+  mControlPanel->ToogleStartStop(); 
+}
+
+void MainWindow::StopAcquisition()
+{
+  // daq stop
+  // handle stop
+  mDevice->StopAcquisition();  
+  
+  // readout stop
+  mReadoutThread->stopRun();
+  mReadoutThread->wait();
+
+
+  // 释放操作保护按钮
+  mControlPanel->ToogleStartStop();
+}
+
+
 
 
 // 

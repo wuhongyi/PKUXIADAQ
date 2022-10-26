@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 9月  9 13:59:54 2022 (+0800)
-// Last-Updated: 六 9月 10 12:10:54 2022 (+0800)
+// Last-Updated: 二 10月 25 19:33:05 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 29
+//     Update #: 31
 // URL: http://wuhongyi.cn 
 
 #ifndef _CONNECTDIALOG_H_
@@ -24,13 +24,14 @@
 
 #include "nlohmann/json.hpp"
 class MainWindow;
+class DeviceHandle;
 
 class ConnectDialog : public QDialog
 {
   Q_OBJECT
   
 public:
-  ConnectDialog(MainWindow *parent = 0);
+  ConnectDialog(MainWindow *parent, DeviceHandle *device);
   virtual ~ConnectDialog();
 
   void IncreaseProgressBar(int i, int n);
@@ -38,7 +39,7 @@ public:
 private:
   MainWindow * const mMainWindow;
   bool mConnecting = false;
-
+  DeviceHandle *mDevice = nullptr;
 
   void ShowProgress(bool flag);
   

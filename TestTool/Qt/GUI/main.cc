@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 12月 17 15:15:22 2021 (+0800)
-// Last-Updated: 六 10月 22 12:10:43 2022 (+0800)
+// Last-Updated: 二 10月 25 14:36:08 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 18
+//     Update #: 19
 // URL: http://wuhongyi.cn 
 
 #include <QApplication>
@@ -20,7 +20,7 @@
 
 int main(int argc, char *argv[])
 {
-  Q_INIT_RESOURCE(gui);
+  Q_INIT_RESOURCE(gddaq);
 
   QTextCodec *codec = QTextCodec::codecForName("UTF-8");
   QTextCodec::setCodecForLocale(codec); //解决汉字乱码问题

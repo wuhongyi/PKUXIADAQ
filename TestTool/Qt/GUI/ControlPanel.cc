@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 4月 23 21:07:44 2022 (+0800)
-// Last-Updated: 六 4月 23 22:16:40 2022 (+0800)
+// Last-Updated: 二 10月 25 20:35:22 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 10
+//     Update #: 13
 // URL: http://wuhongyi.cn 
 
 #include "ControlPanel.hh"
@@ -54,8 +54,8 @@ ControlPanel::ControlPanel(MainWindow *parent)
   trigger_timer = new QTimer(this);
   // QObject::connect(trigger_timer, SIGNAL(timeout()), mMainWindow, SLOT(SWTrg()));
 
-  // connect(this->ui->pbStartAcq, SIGNAL(clicked()), mMainWindow, SLOT(startAcquisition()));
-  // connect(this->ui->pbStopAcq, SIGNAL(clicked()), mMainWindow, SLOT(stopAcquisition()));
+  connect(pbStartAcq, SIGNAL(clicked()), mMainWindow, SLOT(StartAcquisition()));
+  connect(pbStopAcq, SIGNAL(clicked()), mMainWindow, SLOT(StopAcquisition()));
 
   QMetaObject::connectSlotsByName(this);
 }
@@ -67,14 +67,25 @@ ControlPanel::~ControlPanel()
 
 void ControlPanel::DisableAll(bool f)
 {
-	// ui->pbStartAcq->setEnabled(!f);
-	// ui->pbStopAcq->setEnabled(!f);
+  pbStartAcq->setEnabled(!f);
+  pbStopAcq->setEnabled(!f);
 	// ui->pB_Trigger->setEnabled(!f);
 }
 
 
 void ControlPanel::ToogleStartStop()
 {
+  if(pbStartAcq->isEnabled())
+    {
+      pbStartAcq->setEnabled(false);
+      pbStopAcq->setEnabled(true);
+    }
+  else
+    {
+      pbStartAcq->setEnabled(true);
+      pbStopAcq->setEnabled(false);
+    }
+  
 	// if (ui->pbStartAcq->isEnabled()) { //start acq 
 	// 	ui->pbStartAcq->setEnabled(false);
 	// 	ui->pbStopAcq->setEnabled(true);
@@ -113,8 +124,10 @@ void ControlPanel::SetStartStopStatus(int status)
 
 
 
-void ControlPanel::UpdateStartableDevices(int cmd, const QString& name)
+void ControlPanel::UpdateStartableDevices()
 {
+  pbStartAcq->setEnabled(true);
+  
 	// int idx;
 	// ui->cbDev->blockSignals(true);
 	// switch (cmd) {

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 12月 17 15:18:35 2021 (+0800)
-// Last-Updated: 六 10月 22 14:44:13 2022 (+0800)
+// Last-Updated: 二 10月 25 19:30:54 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 35
+//     Update #: 36
 // URL: http://wuhongyi.cn 
 
 #ifndef _MAINWINDOW_H_
@@ -72,6 +72,10 @@ public slots:
   void OpenOutputSettings();
 
   void ShowBasicSettings();
+
+  void StartAcquisition();
+  void StopAcquisition();
+
   
 private:
 

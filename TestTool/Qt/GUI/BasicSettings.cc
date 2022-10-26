@@ -4,23 +4,32 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 10月 21 20:26:55 2022 (+0800)
-// Last-Updated: 六 10月 22 22:37:31 2022 (+0800)
+// Last-Updated: 二 10月 25 22:19:08 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 48
+//     Update #: 125
 // URL: http://wuhongyi.cn 
 
 #include "BasicSettings.hh"
 #include "MainWindow.hh"
-#include "iostream"
+#include <iostream>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-BasicSettings::BasicSettings(MainWindow *parent)
-: QMainWindow(parent), mMainWindow(parent)
+BasicSettings::BasicSettings(MainWindow *parent, DeviceHandle *device)
+: QMainWindow(parent), mMainWindow(parent), mDevice(device)
 {
   if (this->objectName().isEmpty())
     this->setObjectName(QString::fromUtf8("BasicSettings"));
 
   this->setWindowTitle(QApplication::translate("BasicSettings", "Basic Settings", nullptr));
+
+  const QSize availableSize = qApp->desktop()->availableGeometry().size();
+  int width = availableSize.width();
+  int height = availableSize.height();
+  width *= 0.55; // 90% of the screen size
+  height *= 0.8; // 90% of the screen size
+  QSize newSize(width, height);
+  // int widthPlot = width *= 0.8; // TODO prossible bug...
+  setGeometry( QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, newSize, qApp->desktop()->availableGeometry()) );
   
   centralWidget = new QWidget(this);
   setCentralWidget(centralWidget);
@@ -57,9 +66,8 @@ BasicSettings::BasicSettings(MainWindow *parent)
 
       gridpagemod[i] = new QGridLayout(pagemod[i]);
       gridpagemod[i]->setSpacing(3);
-      gridpagemod[i]->setContentsMargins(11, 11, 11, 11);//左侧、顶部、右侧和底部边距
+      //gridpagemod[i]->setContentsMargins(11, 11, 11, 11);//左侧、顶部、右侧和底部边距
       gridpagemod[i]->setObjectName(QString::fromUtf8("gridpagemod")+QString::number(i));
-
 
 
       QLabel *lab00 = new QLabel("Version");
@@ -121,7 +129,6 @@ BasicSettings::BasicSettings(MainWindow *parent)
       verticalLayout[i]->setObjectName(QString::fromUtf8("verticallayout")+QString::number(i));
       verticalLayout[i]->setContentsMargins(4, 4, 4, 4);
 
-      
       switch(i)
 	{
 	case 0:
@@ -131,7 +138,7 @@ BasicSettings::BasicSettings(MainWindow *parent)
 	  TabDataRecord(1);
 	  break;
 	case 2:
-	  TabFastFilter(2);
+	  TabTriggerFilter(2);
 	  break;
 	case 3:
 	  TabEnergyFilter(3);
@@ -149,7 +156,6 @@ BasicSettings::BasicSettings(MainWindow *parent)
 	  break;
 	}
       
-
     }
 
 
@@ -158,21 +164,16 @@ BasicSettings::BasicSettings(MainWindow *parent)
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
+  statusbar = new QStatusBar(this);
+  statusbar->setObjectName(QString::fromUtf8("basicsettingsstatusbar"));
+  this->setStatusBar(statusbar);
 
-        
-
+  statusinfo = new QLabel("Info: xxxxxxxxxxxxxxxxxxxxxxxxxxxx", this);
+  statusbar->addWidget(statusinfo);
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
 
 
-
-
-
-
-  
-
-
-  
   toolBox->setCurrentIndex(0);
   tabWidget->setCurrentIndex(0);
 
@@ -189,113 +190,176 @@ BasicSettings::~BasicSettings()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void BasicSettings::TabPolarityGainBaseline(int n)
+
+void BasicSettings::on_toolBox_currentChanged(int index)
 {
-  tabWidget->setTabText(tabWidget->indexOf(tab[n]), QApplication::translate("BasicSettings", "Base", nullptr));
+  std::cout << "toolBox: " << index << std::endl;
 
-  
-}
-
-void BasicSettings::TabDataRecord(int n)
-{
-  tabWidget->setTabText(tabWidget->indexOf(tab[n]), QApplication::translate("BasicSettings", "Record", nullptr));
-
-
-  
-}
-
-void BasicSettings::TabCFD(int n)
-{
-  tabWidget->setTabText(tabWidget->indexOf(tab[n]), QApplication::translate("BasicSettings", "CFD", nullptr));
-  
-}
-
-void BasicSettings::TabFastFilter(int n)
-{
-  tabWidget->setTabText(tabWidget->indexOf(tab[n]), QApplication::translate("BasicSettings", "Trigger", nullptr));
-}
-
-void BasicSettings::TabEnergyFilter(int n)
-{
-  tabWidget->setTabText(tabWidget->indexOf(tab[n]), QApplication::translate("BasicSettings", "Energy", nullptr));
-  
-}
-
-void BasicSettings::TabWaveform(int n)
-{
-  tabWidget->setTabText(tabWidget->indexOf(tab[n]), QApplication::translate("BasicSettings", "Wave", nullptr));
-}
-
-void BasicSettings::TabQDC(int n)
-{
-  tabWidget->setTabText(tabWidget->indexOf(tab[n]), QApplication::translate("BasicSettings", "QDC", nullptr));
-
-  tableqdc = new QTableWidget(tab[n]);
-  verticalLayout[n]->addWidget(tableqdc);
-  // tableqdc->setSortingEnabled(false);
-  tableqdc->setRowCount(MAXCHANNELNUM);
-  tableqdc->setColumnCount(8);
-  tableqdc->setSelectionBehavior(QAbstractItemView::SelectRows); // SelectItems
-
-  
-  QStringList header;
-  header << "QDC0(us)" << "QDC1(us)" << "QDC2(us)" << "QDC3(us)" << "QDC4(us)" << "QDC5(us)" << "QDC6(us)" << "QDC7(us)";
-  tableqdc->setHorizontalHeaderLabels(header);
-
-  for (int i = 0; i < MAXCHANNELNUM; ++i)
-    for (int j = 0; j < 8; ++j)
-      {
-	QTableWidgetItem *item = new QTableWidgetItem();
-	item->setTextAlignment(Qt::AlignCenter);
-	item->setText(QString::asprintf("%f", i*MAXCHANNELNUM+j));
-        tableqdc->setItem(i, j, item);
-
-	
-      }
-
+  //pgb
   for (int i = 0; i < MAXCHANNELNUM; ++i)
     {
-      if(i < TESTCH)
+      if(i < TESTCH[index])
+	tablepgb->setRowHidden(i, false);
+      else
+	tablepgb->setRowHidden(i, true);
+    }
+
+  cbpgbcopych->clear();
+  for (int i = 0; i < TESTCH[index]; ++i)
+    {
+      cbpgbcopych->addItem(QString::asprintf("ch - %02d", i));
+    }
+
+  on_chkboxpgbenabled0_clicked(chkboxpgbenabled[0]->isChecked());
+  on_chkboxpgbenabled1_clicked(chkboxpgbenabled[1]->isChecked());
+  on_chkboxpgbenabled2_clicked(chkboxpgbenabled[2]->isChecked());
+  
+  // record
+  for (int i = 0; i < MAXCHANNELNUM; ++i)
+    {
+      if(i < TESTCH[index])
+	tabledatarecord->setRowHidden(i, false);
+      else
+	tabledatarecord->setRowHidden(i, true);
+    }
+
+  cbrecordcopych->clear();
+  for (int i = 0; i < TESTCH[index]; ++i)
+    {
+      cbrecordcopych->addItem(QString::asprintf("ch - %02d", i));
+    }
+  
+  on_chkboxrecordenabled0_clicked(chkboxrecordenabled[0]->isChecked());
+  on_chkboxrecordenabled1_clicked(chkboxrecordenabled[1]->isChecked());
+  on_chkboxrecordenabled2_clicked(chkboxrecordenabled[2]->isChecked());
+  on_chkboxrecordenabled3_clicked(chkboxrecordenabled[3]->isChecked());
+  on_chkboxrecordenabled4_clicked(chkboxrecordenabled[4]->isChecked());
+
+
+  // wave
+  for (int i = 0; i < MAXCHANNELNUM; ++i)
+    {
+      if(i < TESTCH[index])
+	tablewave->setRowHidden(i, false);
+      else
+	tablewave->setRowHidden(i, true);
+    }
+
+  cbwavecopych->clear();
+  for (int i = 0; i < TESTCH[index]; ++i)
+    {
+      cbwavecopych->addItem(QString::asprintf("ch - %02d", i));
+    }
+
+  on_chkboxwaveenabled0_clicked(chkboxwaveenabled[0]->isChecked());
+  on_chkboxwaveenabled1_clicked(chkboxwaveenabled[1]->isChecked());
+  on_chkboxwaveenabled2_clicked(chkboxwaveenabled[2]->isChecked());
+
+  // trigger
+  for (int i = 0; i < MAXCHANNELNUM; ++i)
+    {
+      if(i < TESTCH[index])
+	tabletrigger->setRowHidden(i, false);
+      else
+	tabletrigger->setRowHidden(i, true);
+    }
+
+  cbtriggercopych->clear();
+  for (int i = 0; i < TESTCH[index]; ++i)
+    {
+      cbtriggercopych->addItem(QString::asprintf("ch - %02d", i));
+    }
+
+  on_chkboxtriggerenabled0_clicked(chkboxtriggerenabled[0]->isChecked());
+  on_chkboxtriggerenabled1_clicked(chkboxtriggerenabled[1]->isChecked());
+  on_chkboxtriggerenabled2_clicked(chkboxtriggerenabled[2]->isChecked());
+
+
+  // energy
+  for (int i = 0; i < MAXCHANNELNUM; ++i)
+    {
+      if(i < TESTCH[index])
+	tableenergy->setRowHidden(i, false);
+      else
+	tableenergy->setRowHidden(i, true);
+    }
+
+  cbenergycopych->clear();
+  for (int i = 0; i < TESTCH[index]; ++i)
+    {
+      cbenergycopych->addItem(QString::asprintf("ch - %02d", i));
+    }
+
+  on_chkboxenergyenabled0_clicked(chkboxenergyenabled[0]->isChecked());
+  on_chkboxenergyenabled1_clicked(chkboxenergyenabled[1]->isChecked());
+  on_chkboxenergyenabled2_clicked(chkboxenergyenabled[2]->isChecked());	 
+
+  // cfd
+    for (int i = 0; i < MAXCHANNELNUM; ++i)
+    {
+      if(i < TESTCH[index])
+	tablecfd->setRowHidden(i, false);
+      else
+	tablecfd->setRowHidden(i, true);
+    }
+
+  cbcfdcopych->clear();
+  for (int i = 0; i < TESTCH[index]; ++i)
+    {
+      cbcfdcopych->addItem(QString::asprintf("ch - %02d", i));
+    }
+
+  on_chkboxcfdenabled0_clicked(chkboxcfdenabled[0]->isChecked());
+  on_chkboxcfdenabled1_clicked(chkboxcfdenabled[1]->isChecked());
+  on_chkboxcfdenabled2_clicked(chkboxcfdenabled[2]->isChecked());
+  on_chkboxcfdenabled3_clicked(chkboxcfdenabled[3]->isChecked());
+  on_chkboxcfdenabled4_clicked(chkboxcfdenabled[4]->isChecked());
+
+ 
+  // qdc
+  for (int i = 0; i < MAXCHANNELNUM; ++i)
+    {
+      if(i < TESTCH[index])
 	tableqdc->setRowHidden(i, false);
       else
 	tableqdc->setRowHidden(i, true);
     }
 
-
-  
-  {
-    QTableWidgetItem *item = tableqdc->item(0, 0);
-    std::cout << item->text().toStdString().data()  << std::endl;
-  }
-  
-}
-
-void BasicSettings::on_toolBox_currentChanged(int index)
-{
-  std::cout << "toolBox" << index << std::endl;
-
   QTableWidgetItem *item = tableqdc->item(0, 0);
   item->setText(QString::asprintf("%d", index));
+  cbqdccopych->clear();
+  for (int i = 0; i < TESTCH[index]; ++i)
+    {
+      cbqdccopych->addItem(QString::asprintf("ch - %02d", i));
+    }
+
+  on_chkboxqdcenabled0_clicked(chkboxqdcenabled[0]->isChecked());
+  on_chkboxqdcenabled1_clicked(chkboxqdcenabled[1]->isChecked());
+  on_chkboxqdcenabled2_clicked(chkboxqdcenabled[2]->isChecked());
+  on_chkboxqdcenabled3_clicked(chkboxqdcenabled[3]->isChecked());
+  on_chkboxqdcenabled4_clicked(chkboxqdcenabled[4]->isChecked());
+  on_chkboxqdcenabled5_clicked(chkboxqdcenabled[5]->isChecked());
+  on_chkboxqdcenabled6_clicked(chkboxqdcenabled[6]->isChecked());
+  on_chkboxqdcenabled7_clicked(chkboxqdcenabled[7]->isChecked());
+
+
+  statusinfo->setText(QString::asprintf("Change module %d done", index));
+  
 }
 
 
 void BasicSettings::on_tabWidget_currentChanged(int index)
 {
-
   std::cout << "tab: "<< index << std::endl;
-  
+
+  statusinfo->setText(QString::asprintf("Change tab %d done", index));
 }
+
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+
 
 
 // 
 // BasicSettings.cc ends here
-
-
-
-
-
-
-
-
-
-

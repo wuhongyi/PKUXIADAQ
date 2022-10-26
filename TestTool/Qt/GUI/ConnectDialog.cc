@@ -4,18 +4,19 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 9月  9 14:00:18 2022 (+0800)
-// Last-Updated: 六 10月 22 13:07:54 2022 (+0800)
+// Last-Updated: 三 10月 26 21:24:10 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 106
+//     Update #: 124
 // URL: http://wuhongyi.cn 
 
 #include "ConnectDialog.hh"
 #include "MainWindow.hh"
+#include "DeviceHandle.hh"
 #include <iostream>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-ConnectDialog::ConnectDialog(MainWindow *parent)
-: QDialog(parent), mMainWindow(parent)
+ConnectDialog::ConnectDialog(MainWindow *parent, DeviceHandle *device)
+: QDialog(parent), mMainWindow(parent), mDevice(device)
 {
   if(this->objectName().isEmpty())
     this->setObjectName(QString::fromUtf8("ConnectDialog"));
@@ -216,6 +217,7 @@ void ConnectDialog::ShowProgress(bool flag)
 
 void ConnectDialog::ConnectButtonClick()
 {
+
   if (mConnecting)
     {
       this->reject();
@@ -225,18 +227,61 @@ void ConnectDialog::ConnectButtonClick()
   mConnecting = true;
 
   // API for connect
-  if(false)
+  // TODO
+
+  mDevice->SetCrateID((unsigned short)cratenumber->currentIndex());
+  mDevice->ClearDevice();
+
+  // mDevice->AddDevice(2);
+  // mDevice->AddDevice(3);
+  // mDevice->AddDevice(5);
+
+
+  
+  // 检查模块数与选择是否一致
+  QList<QAbstractButton*> ins_list = modulesel->buttons();
+  for(int i = 0; i < ins_list.length(); i++)
     {
+      // std::cout<< i << std::endl;
+      if(ins_list.at(i)->isChecked()) mDevice->AddDevice((unsigned short)i+2);
+    }
+  
+  std::cout << "number of module: " << mDevice->GetNumberOfDevice() << std::endl;
+
+  bool retval = false;
+  
+  retval = mDevice->InitSystem();
+  if(retval == false)
+    {
+      std::cout << "PCI Pixie init has failed" << std::endl;
+      ShowProgress(false);
+      mConnecting = false;
+      return;
+    }
+  std::cout<< "init ststem" << std::endl;
+  
+  retval = mDevice->ReadModuleInfo();
+  if(retval == false)
+    {
+      std::cout << "failed to read module information in module" << std::endl;
       ShowProgress(false);
       mConnecting = false;
       return;
     }
 
+
+  // nlohmann::json json = mMainWindow->GetJSON();
+  // mDevice->SetNumberOfDevice(json["slotid"].size());
+  
   // this->close();
 }
 
 void ConnectDialog::BootButtonClick()
 {
+  
+  
+
+  
   // this->reject();
   if (mConnecting)
     {
@@ -258,6 +303,8 @@ void ConnectDialog::IncreaseProgressBar(int i, int n)
 
 void ConnectDialog::Load()
 {
+  // 加载配置文件需要释放系统的类
+  // 确保后续重新生成匹配的界面
   mMainWindow->LoadConfigure();
 
 
@@ -284,6 +331,8 @@ void ConnectDialog::Load()
       ins_list.at(json["slotid"][i].get<int>()-2)->setChecked(true);
     }
 
+
+  
 }
 
 // 

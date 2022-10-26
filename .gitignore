@@ -15,8 +15,10 @@ pku
 README/node_modules/*
 *.root
 broadcom_pci_pcie_sdk/
-
+Pixie16Msg.log
 
 moc_*
 pixiesdk/
+PixieSDK-3.6.1/
+PixieSDK-3.6.1.tar.gz
 parset/wuhongyi/

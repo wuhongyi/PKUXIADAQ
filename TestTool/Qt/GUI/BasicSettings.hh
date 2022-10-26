@@ -4,13 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 10月 21 20:26:00 2022 (+0800)
-// Last-Updated: 六 10月 22 22:36:19 2022 (+0800)
+// Last-Updated: 二 10月 25 22:19:08 2022 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 17
+//     Update #: 49
 // URL: http://wuhongyi.cn 
 
 #ifndef _BASICSETTINGS_H_
 #define _BASICSETTINGS_H_
+
+#include "DeviceHandle.hh"
 
 #include <QWidget>
 #include <QString>
@@ -40,6 +42,10 @@
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QTableWidget>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QComboBox>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #define TABNUM_BASICSETTINGS 7
@@ -47,8 +53,8 @@
 #define MAXCHANNELNUM 64
 
 
-#define TESTMOD 13
-#define TESTCH 16
+#define TESTMOD mDevice->GetNumberOfDevice() //13
+// #define TESTCH 32
 
 class MainWindow;
 
@@ -57,7 +63,7 @@ class BasicSettings : public QMainWindow
   Q_OBJECT
 
 public:
-  BasicSettings(MainWindow *parent = nullptr);
+  BasicSettings(MainWindow *parent, DeviceHandle *device);
   virtual ~BasicSettings();
 
 
@@ -65,25 +71,30 @@ private:
   void TabPolarityGainBaseline(int n);// +/-, Gain, baseline
   void TabDataRecord(int n);// GC, TC, EQS, ERB, ETS
   void TabCFD(int n);// ECT, DELAY, FRAC, THRE, delay filter
-  void TabFastFilter(int n);// rise, top, thre
+  void TabTriggerFilter(int n);// rise, top, thre
   void TabEnergyFilter(int n);// rise, top, tau
   void TabWaveform(int n);// delay, trace, dec
   void TabQDC(int n);// q0-q7
 
 private:
 
+  int TESTCH[13] = {32, 16, 64, 16, 32, 32, 16, 64, 16, 16, 32, 64, 16};
+  
   // QGridLayout 网格化布局
   // QVBoxLayout 上下排列
   // QHBoxLayout 水平排列
   
   MainWindow * const mMainWindow;
-
-
+  DeviceHandle *mDevice = nullptr;
+  
   QWidget *centralWidget;
   QSplitter *splitter;// 左右区域分割
   QToolBox *toolBox;// 内部装 QWidget page
   QTabWidget *tabWidget; // 内部装 QWidget tab
 
+  QStatusBar *statusbar;
+  QLabel *statusinfo;
+  
   // QToolBox
   QWidget *pagemod[MAXMODULENUM];
   QGridLayout *gridpagemod[MAXMODULENUM];//
@@ -92,19 +103,323 @@ private:
   QWidget *tab[TABNUM_BASICSETTINGS];
   QVBoxLayout *verticalLayout[TABNUM_BASICSETTINGS];
 
+
+  //PolarityGainBaseline
+  QTableWidget *tablepgb;					   
   
+  QGroupBox *groupboxpgb0;
+  QHBoxLayout *horizontalgbpgb0;
+  QCheckBox *chkboxpgbenabled[8];
 
+  QGroupBox *groupboxpgb1;
+  QHBoxLayout *horizontalgbpgb1;
+  QRadioButton *rbtablepgbrow;
+  QRadioButton *rbtablepgbcol;
+  QRadioButton *rbtablepgbitem;
+  
+  
+  QGroupBox *groupboxpgb2;
+  QHBoxLayout *horizontalgbpgb2;
+  QPushButton *pbtablepgbloadselected;
+  QPushButton *pbtablepgbloadall;
+  QPushButton *pbtablepgbapplyselected;
+  QPushButton *pbtablepgbapplyall;
 
+  QGroupBox *groupboxpgb3;
+  QHBoxLayout *horizontalgbpgb3;
+  QComboBox *cbpgbcopych;
+  QPushButton *pbtablepgbcopy;
+
+  
+  // data record
+  QTableWidget *tabledatarecord;
+  
+  QGroupBox *groupboxrecord0;
+  QHBoxLayout *horizontalgbrecord0;
+  QCheckBox *chkboxrecordenabled[5];
+
+  QGroupBox *groupboxrecord1;
+  QHBoxLayout *horizontalgbrecord1;
+  QRadioButton *rbtablerecordrow;
+  QRadioButton *rbtablerecordcol;
+  QRadioButton *rbtablerecorditem;
+
+  QGroupBox *groupboxrecord2;
+  QHBoxLayout *horizontalgbrecord2;
+  QPushButton *pbtablerecordloadselected;
+  QPushButton *pbtablerecordloadall;
+  QPushButton *pbtablerecordapplyselected;
+  QPushButton *pbtablerecordapplyall;
+
+  QGroupBox *groupboxrecord3;
+  QHBoxLayout *horizontalgbrecord3;
+  QComboBox *cbrecordcopych;
+  QPushButton *pbtablerecordcopy;
+
+  // wave
+  QTableWidget *tablewave;					   
+  
+  QGroupBox *groupboxwave0;
+  QHBoxLayout *horizontalgbwave0;
+  QCheckBox *chkboxwaveenabled[8];
+
+  QGroupBox *groupboxwave1;
+  QHBoxLayout *horizontalgbwave1;
+  QRadioButton *rbtablewaverow;
+  QRadioButton *rbtablewavecol;
+  QRadioButton *rbtablewaveitem;
+  
+  
+  QGroupBox *groupboxwave2;
+  QHBoxLayout *horizontalgbwave2;
+  QPushButton *pbtablewaveloadselected;
+  QPushButton *pbtablewaveloadall;
+  QPushButton *pbtablewaveapplyselected;
+  QPushButton *pbtablewaveapplyall;
+
+  QGroupBox *groupboxwave3;
+  QHBoxLayout *horizontalgbwave3;
+  QComboBox *cbwavecopych;
+  QPushButton *pbtablewavecopy;  
+
+  // trigger
+  QTableWidget *tabletrigger;					   
+  
+  QGroupBox *groupboxtrigger0;
+  QHBoxLayout *horizontalgbtrigger0;
+  QCheckBox *chkboxtriggerenabled[3];
+
+  QGroupBox *groupboxtrigger1;
+  QHBoxLayout *horizontalgbtrigger1;
+  QRadioButton *rbtabletriggerrow;
+  QRadioButton *rbtabletriggercol;
+  QRadioButton *rbtabletriggeritem;
+  
+  QGroupBox *groupboxtrigger2;
+  QHBoxLayout *horizontalgbtrigger2;
+  QPushButton *pbtabletriggerloadselected;
+  QPushButton *pbtabletriggerloadall;
+  QPushButton *pbtabletriggerapplyselected;
+  QPushButton *pbtabletriggerapplyall;
+
+  QGroupBox *groupboxtrigger3;
+  QHBoxLayout *horizontalgbtrigger3;
+  QComboBox *cbtriggercopych;
+  QPushButton *pbtabletriggercopy;
+
+  // energy
+  QTableWidget *tableenergy;					   
+  
+  QGroupBox *groupboxenergy0;
+  QHBoxLayout *horizontalgbenergy0;
+  QCheckBox *chkboxenergyenabled[3];
+
+  QGroupBox *groupboxenergy1;
+  QHBoxLayout *horizontalgbenergy1;
+  QRadioButton *rbtableenergyrow;
+  QRadioButton *rbtableenergycol;
+  QRadioButton *rbtableenergyitem;
+  
+  QGroupBox *groupboxenergy2;
+  QHBoxLayout *horizontalgbenergy2;
+  QPushButton *pbtableenergyloadselected;
+  QPushButton *pbtableenergyloadall;
+  QPushButton *pbtableenergyapplyselected;
+  QPushButton *pbtableenergyapplyall;
+
+  QGroupBox *groupboxenergy3;
+  QHBoxLayout *horizontalgbenergy3;
+  QComboBox *cbenergycopych;
+  QPushButton *pbtableenergycopy;
+
+  // CFD
+  QTableWidget *tablecfd;					   
+  
+  QGroupBox *groupboxcfd0;
+  QHBoxLayout *horizontalgbcfd0;
+  QCheckBox *chkboxcfdenabled[5];
+
+  QGroupBox *groupboxcfd1;
+  QHBoxLayout *horizontalgbcfd1;
+  QRadioButton *rbtablecfdrow;
+  QRadioButton *rbtablecfdcol;
+  QRadioButton *rbtablecfditem;
+  
+  
+  QGroupBox *groupboxcfd2;
+  QHBoxLayout *horizontalgbcfd2;
+  QPushButton *pbtablecfdloadselected;
+  QPushButton *pbtablecfdloadall;
+  QPushButton *pbtablecfdapplyselected;
+  QPushButton *pbtablecfdapplyall;
+
+  QGroupBox *groupboxcfd3;
+  QHBoxLayout *horizontalgbcfd3;
+  QComboBox *cbcfdcopych;
+  QPushButton *pbtablecfdcopy;  
 
   // QDC
   QTableWidget *tableqdc;					   
-
   
-		     
-		     
+  QGroupBox *groupboxqdc0;
+  QHBoxLayout *horizontalgbqdc0;
+  QCheckBox *chkboxqdcenabled[8];
+
+  QGroupBox *groupboxqdc1;
+  QHBoxLayout *horizontalgbqdc1;
+  QRadioButton *rbtableqdcrow;
+  QRadioButton *rbtableqdccol;
+  QRadioButton *rbtableqdcitem;
+  
+  
+  QGroupBox *groupboxqdc2;
+  QHBoxLayout *horizontalgbqdc2;
+  QPushButton *pbtableqdcloadselected;
+  QPushButton *pbtableqdcloadall;
+  QPushButton *pbtableqdcapplyselected;
+  QPushButton *pbtableqdcapplyall;
+
+  QGroupBox *groupboxqdc3;
+  QHBoxLayout *horizontalgbqdc3;
+  QComboBox *cbqdccopych;
+  QPushButton *pbtableqdccopy;
+  // QComboBox *cbqdccopymod;
+			
 private slots:
   void on_toolBox_currentChanged(int index); //ToolBox当前组变化时，显示TabWidget相应的页面
   void on_tabWidget_currentChanged(int index);
+
+  //PolarityGainBaseline
+  void on_rbtablepgbrow_clicked(); 
+  void on_rbtablepgbitem_clicked();
+  void on_rbtablepgbcol_clicked();
+
+  void on_pbtablepgbloadselected_clicked();
+  void on_pbtablepgbloadall_clicked();
+  void on_pbtablepgbapplyselected_clicked();
+  void on_pbtablepgbapplyall_clicked();
+
+  void on_pbtablepgbcopy_clicked();
+
+  void on_chkboxpgbenabled0_clicked(bool checked);
+  void on_chkboxpgbenabled1_clicked(bool checked);
+  void on_chkboxpgbenabled2_clicked(bool checked);
+
+  void TablePolarityGainBaselineCheckState(int row, int column);
+  
+  // record
+  void on_rbtablerecordrow_clicked(); 
+  void on_rbtablerecorditem_clicked();
+  void on_rbtablerecordcol_clicked();
+
+  void on_pbtablerecordloadselected_clicked();
+  void on_pbtablerecordloadall_clicked();
+  void on_pbtablerecordapplyselected_clicked();
+  void on_pbtablerecordapplyall_clicked();
+
+  void on_pbtablerecordcopy_clicked();
+
+  void on_chkboxrecordenabled0_clicked(bool checked);
+  void on_chkboxrecordenabled1_clicked(bool checked);
+  void on_chkboxrecordenabled2_clicked(bool checked);
+  void on_chkboxrecordenabled3_clicked(bool checked);
+  void on_chkboxrecordenabled4_clicked(bool checked);
+
+  void TableDataRecordCheckState(int row, int column);
+  
+
+
+  // wave
+  void on_rbtablewaverow_clicked(); 
+  void on_rbtablewaveitem_clicked();
+  void on_rbtablewavecol_clicked();
+
+  void on_pbtablewaveloadselected_clicked();
+  void on_pbtablewaveloadall_clicked();
+  void on_pbtablewaveapplyselected_clicked();
+  void on_pbtablewaveapplyall_clicked();
+
+  void on_pbtablewavecopy_clicked();
+
+  void on_chkboxwaveenabled0_clicked(bool checked);
+  void on_chkboxwaveenabled1_clicked(bool checked);
+  void on_chkboxwaveenabled2_clicked(bool checked);
+
+
+  // trigger
+  void on_rbtabletriggerrow_clicked(); 
+  void on_rbtabletriggeritem_clicked();
+  void on_rbtabletriggercol_clicked();
+
+  void on_pbtabletriggerloadselected_clicked();
+  void on_pbtabletriggerloadall_clicked();
+  void on_pbtabletriggerapplyselected_clicked();
+  void on_pbtabletriggerapplyall_clicked();
+
+  void on_pbtabletriggercopy_clicked();
+
+  void on_chkboxtriggerenabled0_clicked(bool checked);
+  void on_chkboxtriggerenabled1_clicked(bool checked);
+  void on_chkboxtriggerenabled2_clicked(bool checked);
+
+  // energy
+  void on_rbtableenergyrow_clicked(); 
+  void on_rbtableenergyitem_clicked();
+  void on_rbtableenergycol_clicked();
+
+  void on_pbtableenergyloadselected_clicked();
+  void on_pbtableenergyloadall_clicked();
+  void on_pbtableenergyapplyselected_clicked();
+  void on_pbtableenergyapplyall_clicked();
+
+  void on_pbtableenergycopy_clicked();
+
+  void on_chkboxenergyenabled0_clicked(bool checked);
+  void on_chkboxenergyenabled1_clicked(bool checked);
+  void on_chkboxenergyenabled2_clicked(bool checked);
+
+  // cfd
+  void on_rbtablecfdrow_clicked(); 
+  void on_rbtablecfditem_clicked();
+  void on_rbtablecfdcol_clicked();
+
+  void on_pbtablecfdloadselected_clicked();
+  void on_pbtablecfdloadall_clicked();
+  void on_pbtablecfdapplyselected_clicked();
+  void on_pbtablecfdapplyall_clicked();
+
+  void on_pbtablecfdcopy_clicked();
+
+  void on_chkboxcfdenabled0_clicked(bool checked);
+  void on_chkboxcfdenabled1_clicked(bool checked);
+  void on_chkboxcfdenabled2_clicked(bool checked);
+  void on_chkboxcfdenabled3_clicked(bool checked);
+  void on_chkboxcfdenabled4_clicked(bool checked);
+
+  void TableCFDCheckState(int row, int column);
+  
+  // qdc
+  void on_rbtableqdcrow_clicked(); 
+  void on_rbtableqdcitem_clicked();
+  void on_rbtableqdccol_clicked();
+
+  void on_pbtableqdcloadselected_clicked();
+  void on_pbtableqdcloadall_clicked();
+  void on_pbtableqdcapplyselected_clicked();
+  void on_pbtableqdcapplyall_clicked();
+
+  void on_pbtableqdccopy_clicked();
+
+  void on_chkboxqdcenabled0_clicked(bool checked);
+  void on_chkboxqdcenabled1_clicked(bool checked);
+  void on_chkboxqdcenabled2_clicked(bool checked);
+  void on_chkboxqdcenabled3_clicked(bool checked);
+  void on_chkboxqdcenabled4_clicked(bool checked);
+  void on_chkboxqdcenabled5_clicked(bool checked);
+  void on_chkboxqdcenabled6_clicked(bool checked);
+  void on_chkboxqdcenabled7_clicked(bool checked);
+
+  // void on_cbqdccopymod_currentIndexChanged(int index);
   
 };
 
