@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 五 11月 30 20:59:18 2018 (+0800)
-;; Last-Updated: 三 4月 27 15:25:45 2022 (+0800)
+;; Last-Updated: 四 11月  3 20:59:06 2022 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 11
+;;     Update #: 12
 ;; URL: http://wuhongyi.cn -->
 
 # TODO
@@ -140,14 +140,6 @@ Driver "Source.Plx9000/Output/Plx9054.ko" built sucessfully
 
 
 
-mkdir build
-cd build/
-cmake -DCMAKE_INSTALL_PREFIX=../wuhongyi ..
-make -j8
-make install
-
-
-cmake -DCMAKE_INSTALL_PREFIX=../../pixiesdk ..
 
 
 <!-- TODOLIST.md ends here -->
