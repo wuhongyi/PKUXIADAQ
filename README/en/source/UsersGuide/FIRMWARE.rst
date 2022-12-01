@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 22:13:09 2019 (+0800)
-.. Last-Updated: 二 11月  3 20:55:39 2020 (+0800)
+.. Last-Updated: 四 12月  1 22:53:38 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 12
+..     Update #: 13
 .. URL: http://wuhongyi.cn 
 
 =================================
@@ -51,7 +51,7 @@ Added the following features based on standard firmware：
 	- standard firmware
 
 	  
-- 250MHz 14bit(pixie16_revfpku_14b250m_release_11032020) some bug
+- 250MHz 14bit(pixie16_revfpku_14b250m_release_11032020) 
 	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
 	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
 	- The value is set to 0 when the calculated energy is negative.
@@ -64,7 +64,7 @@ Added the following features based on standard firmware：
 		- (2) removed "no traces for large pulses" feature.
 
 		  
-- 250MHz 16bit(pixie16_revfpku_16b250m_release_11022020) some bug
+- 250MHz 16bit(pixie16_revfpku_16b250m_release_11022020) 
 	- multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
 	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
 	- The value is set to 0 when the calculated energy is negative.
@@ -78,7 +78,7 @@ Added the following features based on standard firmware：
 	  
 
 		  
-- 500MHz 14bit(pixie16_revfpku_14b500m_firmware_release_06102020)
+- 500MHz 14bit(pixie16_revfpku_14b500m_firmware_release_10062021) (sometime not output when QDC enabled) 
 	- Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
 	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
 	- Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
