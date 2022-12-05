@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 22:13:09 2019 (+0800)
-.. Last-Updated: 四 12月  1 22:53:38 2022 (+0800)
+.. Last-Updated: 一 12月  5 21:56:52 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 13
+..     Update #: 14
 .. URL: http://wuhongyi.cn 
 
 =================================
@@ -85,7 +85,7 @@ Added the following features based on standard firmware：
 	- The value is set to 0 when the calculated energy is negative.
 	- The pileup event energy is not set to 0, output calculated values directly.
 	  
-- 500MHz 14bit(pixie16_revf_14b500m_firmware_release)
+- 500MHz 14bit(pixie16_revf_14b500m_45762_20221205)
 	- standard firmware
   
 .. 

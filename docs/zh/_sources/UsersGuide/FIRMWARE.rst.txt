@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 22:13:09 2019 (+0800)
-.. Last-Updated: 四 12月  1 22:54:04 2022 (+0800)
+.. Last-Updated: 一 12月  5 21:55:57 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 12
+..     Update #: 13
 .. URL: http://wuhongyi.cn 
 
 =================================
@@ -72,7 +72,7 @@
 	- 删除DSP中非必要的处理：包括堆积检测、超量程波形检测等
 
 	  
-- 500MHz 14bit(pixie16_revf_14b500m_firmware_release)	  
+- 500MHz 14bit(pixie16_revf_14b500m_45762_20221205)	  
 	- 标准固件
 	  
 .. 

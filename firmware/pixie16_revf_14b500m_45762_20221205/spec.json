@@ -1,0 +1,34 @@
+{
+	"product": "Pixie-16",
+	"module_tag": "15-14-500",
+	"tag": "beta",
+	"date": "2022-12-05",
+	"version": "1.0.0",
+	"files": {
+		"sys": {
+			"version": "33341",
+			"sha512": "7b70f3a1a01bb267917758c1ceb53f12088285a4058f5062f5a0c949828cba45281fca0257b0e223dba555985385f9c116840d25e9e94b3fa5fc8c530580e321",
+			"crc32": "0x6F682821"
+		},
+		"fippi": {
+			"version": "48206",
+			"sha512": "3bc0c0766429c4dc9df43cddb6d5b8a7ae67568eb0c711ba60b4814a7369f5d12e4b3cdff08ff386893540822c352e20b2c8204e791f914ba00c77e5e7f96488",
+			"crc32": "0x73FFF0CC"
+		},
+		"dsp": {
+			"version": "45762",
+			"sha512": "3b59fa4d84405429ab4222e5427d59f68bc1044ab4e19a2144c511e50b1ce1171d790d080074dbed5acd1841c71245c9c8c515867aa8451fd81b834175827bab"
+			"crc32": "0x8ACC068E"
+		},
+		"lst": {
+			"version": "45762",
+			"sha512": "d0a44fa11b14e47be3a8639c0f28aaa4549895f74f29e997f814e79704da52b524279a37194e770309db4b4dc69dce189434f724e22cb98d66806e1da9a9a6fe"
+			"crc32": "0xCDCD5D16"
+		},
+		"var": {
+			"version": "45762",
+			"sha512": "004091d80ecb8068192382ab3fda3f4c65bf61faa9a3f855a8261a3ca898659776bd73bed936617f92473d6effcbd88f6d56f4fcb737dd4cfd3d681493beec7a"
+			"crc32": "0x880F5AEB"
+		}
+	}
+}
