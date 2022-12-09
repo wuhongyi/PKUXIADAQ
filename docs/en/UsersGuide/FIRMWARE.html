@@ -242,17 +242,6 @@
 </dl>
 </li>
 <li><dl class="simple">
-<dt>100MHz 14 bit(pixie16_revfpku_14b100m_dsp_update_05082018)</dt><dd><ul>
-<li><p>multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1</p></li>
-<li><p>The value is set to 0 when the calculated energy is negative.</p></li>
-<li><p>The pileup event energy is not set to 0, output calculated values directly.</p></li>
-<li><p>In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.</p></li>
-<li><p>The record waveform mode with down frequency output. The strategy adopted is to select the output of 1, 1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128 frequency, ie how many points retain one point. The points retained are the averaged values.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
 <dt>250MHz 12bit(pixie16_revf_12b250m_firmware_release)</dt><dd><ul>
 <li><p>standard firmware</p></li>
 </ul>
@@ -314,7 +303,14 @@
 </dl>
 </li>
 <li><dl class="simple">
-<dt>500MHz 14bit(pixie16_revfpku_14b500m_firmware_release_10062021) (sometime not output when QDC enabled)</dt><dd><ul>
+<dt>500MHz 12bit(pixie16_revf_general_12b500m)</dt><dd><ul>
+<li><p>standard firmware</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>500MHz 14bit(pixie16_revf_pku_14b500m_20221209)</dt><dd><ul>
 <li><p>Output 4-ch debug signals of the front panel A to the chassis backplane’s TriggerAll bits [28:31], TrigConfig3[0] control enable/disable</p></li>
 <li><p>send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane</p></li>
 <li><p>Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;</p></li>

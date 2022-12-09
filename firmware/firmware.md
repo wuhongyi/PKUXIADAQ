@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 12月 13 09:41:49 2016 (+0800)
-;; Last-Updated: 一 12月  5 21:39:44 2022 (+0800)
+;; Last-Updated: 六 12月 10 01:02:05 2022 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 58
+;;     Update #: 59
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
@@ -19,7 +19,7 @@
 - pixie16_revf_12b500m_r47978_20221117
 	- standard firmware
 
-- pixie16_revfpku_14b500m_firmware_release_10062021(sometime not output when QDC enabled) 
+- pixie16_revf_pku_14b500m_20221209  PKU firmware
 	- Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
 	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
 	- Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
@@ -305,6 +305,14 @@
 
 - pixie16_revf_14b500m_45762_20221205
     - standard firmware
+	
+- pixie16_revf_pku_14b500m_20221209  PKU firmware
+	- Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
+	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
+	- Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
+	- The value is set to 0 when the calculated energy is negative.
+	- The pileup event energy is not set to 0, output calculated values directly.	
+	
 	
 	
 

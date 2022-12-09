@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 22:13:09 2019 (+0800)
-.. Last-Updated: 一 12月  5 21:56:52 2022 (+0800)
+.. Last-Updated: 六 12月 10 01:13:18 2022 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 14
+..     Update #: 16
 .. URL: http://wuhongyi.cn 
 
 =================================
@@ -38,14 +38,7 @@ Added the following features based on standard firmware：
 		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
 		- (2) removed "no traces for large pulses" feature.
 
-		  
-- 100MHz 14 bit(pixie16_revfpku_14b100m_dsp_update_05082018)
-	- multiplicity results(front panel A) can be output regardless of MultiplicityMaskHigh[31]=0 or 1
-	- The value is set to 0 when the calculated energy is negative. 
-	- The pileup event energy is not set to 0, output calculated values directly.
-	- In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
-	- The record waveform mode with down frequency output. The strategy adopted is to select the output of 1, 1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128 frequency, ie how many points retain one point. The points retained are the averaged values.
-
+		
 	  
 - 250MHz 12bit(pixie16_revf_12b250m_firmware_release)	
 	- standard firmware
@@ -77,13 +70,17 @@ Added the following features based on standard firmware：
 		- (2) removed "no traces for large pulses" feature.
 	  
 
+- 500MHz 12bit(pixie16_revf_general_12b500m)
+	- standard firmware
+	  
 		  
-- 500MHz 14bit(pixie16_revfpku_14b500m_firmware_release_10062021) (sometime not output when QDC enabled) 
+- 500MHz 14bit(pixie16_revf_pku_14b500m_20221209) 
 	- Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
 	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
 	- Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
 	- The value is set to 0 when the calculated energy is negative.
 	- The pileup event energy is not set to 0, output calculated values directly.
+
 	  
 - 500MHz 14bit(pixie16_revf_14b500m_45762_20221205)
 	- standard firmware
