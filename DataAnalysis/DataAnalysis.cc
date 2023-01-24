@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 9月 21 16:28:37 2020 (+0800)
-// Last-Updated: 日 12月 25 16:54:03 2022 (+0800)
+// Last-Updated: 一 1月 16 11:42:44 2023 (+0800)
 //	     By: Hongyi Wu(吴鸿毅)
-//     Update #: 43
+//     Update #: 44
 // URL: http://wuhongyi.cn
 
 #include "DataAnalysis.hh"
@@ -62,7 +62,11 @@ void DataAnalysis::Loop(TTree *opt_)
 
 	  det.subts = 0.0;
 
-	  det.ts = 10*det.ts;
+	  if((*br_event)[i].sr == 250)
+	    det.ts = 8*det.ts;
+	  else if((*br_event)[i].sr == 100 || (*br_event)[i].sr == 500)
+	    det.ts = 10*det.ts;
+	  
 	  if((*br_event)[i].sr == 500)
 	    det.subts = ((*br_event)[i].cfds-1+(*br_event)[i].cfd/8192.0)*2.0;
 	  else if((*br_event)[i].sr == 250)

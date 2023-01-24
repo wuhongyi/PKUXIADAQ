@@ -5,7 +5,7 @@ CrateID 0
 
 ## Register parameters
 
-SettingPars ../parset/DSPpar.set
+SettingPars ../parset/DSPbaf.set
 
 
 ## -----------------------------------------------------------------------------
@@ -28,7 +28,7 @@ ModuleSampingRate 2 500 500 500 500 500 250 250 500
 
 # module number and bits
 # The first number mean how many modules, other number means every module bits(12/14/16)
-ModuleBits 2 14 14 14 14 14 16 14
+ModuleBits 2 12 14 14 14 14 16 14
 
 
 ## -----------------------------------------------------------------------------
@@ -96,7 +96,12 @@ ModuleBits 2 14 14 14 14 14 16 14
 250M14bit_dspldr ../firmware/pixie16_revfpku_14b250m_release_11032020/Pixie16DSP_revfpku_14b250m_r44496.ldr
 250M14bit_dspvar ../firmware/pixie16_revfpku_14b250m_release_11032020/Pixie16DSP_revfpku_14b250m_r44496.var
 
-
+# Standard firmware
+# 250M14bit_sys ../firmware/pixie16_revf_general_14b250m_20151027/syspixie16_revfgeneral_adc250mhz_r33339.bin
+# 250M14bit_fip ../firmware/pixie16_revf_general_14b250m_20151027/fippixie16_revfgeneral_14b250m_r33332.bin
+# 250M14bit_dsplst ../firmware/pixie16_revf_general_14b250m_20151027/Pixie16DSP_revfgeneral_14b250m_r33356.lst
+# 250M14bit_dspldr ../firmware/pixie16_revf_general_14b250m_20151027/Pixie16DSP_revfgeneral_14b250m_r33356.ldr
+# 250M14bit_dspvar ../firmware/pixie16_revf_general_14b250m_20151027/Pixie16DSP_revfgeneral_14b250m_r33356.var
 
 
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
@@ -115,16 +120,22 @@ ModuleBits 2 14 14 14 14 14 16 14
 250M16bit_dspldr ../firmware/pixie16_revfpku_16b250m_release_11022020/Pixie16DSP_revfpku_16b250m_r44497.ldr
 250M16bit_dspvar ../firmware/pixie16_revfpku_16b250m_release_11022020/Pixie16DSP_revfpku_16b250m_r44497.var
 
+# Standard firmware
+# 250M16bit_sys ../firmware/pixie16_revf_general_16b250m_20220502/syspixie16_revfgeneral_adc250mhz_r33339.bin
+# 250M16bit_fip ../firmware/pixie16_revf_general_16b250m_20220502/fippixie16_revfgeneral_16b250m_r42083.bin
+# 250M16bit_dsplst ../firmware/pixie16_revf_general_16b250m_20220502/Pixie16DSP_revfgeneral_16b250m_r41808.lst
+# 250M16bit_dspldr ../firmware/pixie16_revf_general_16b250m_20220502/Pixie16DSP_revfgeneral_16b250m_r41808.ldr
+# 250M16bit_dspvar ../firmware/pixie16_revf_general_16b250m_20220502/Pixie16DSP_revfgeneral_16b250m_r41808.var
 
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 
 # Standard firmware
-500M12bit_sys ../firmware/pixie16_revf_12b500m_r47978_20221117/syspixie16_revfgeneral_adc500mhz_r31567.bin
-500M12bit_fip ../firmware/pixie16_revf_12b500m_r47978_20221117/fippixie16_revfgeneral_12b500m_r48132.bin
-500M12bit_dsplst ../firmware/pixie16_revf_12b500m_r47978_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.lst
-500M12bit_dspldr ../firmware/pixie16_revf_12b500m_r47978_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.ldr
-500M12bit_dspvar ../firmware/pixie16_revf_12b500m_r47978_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.var
+500M12bit_sys ../firmware/pixie16_revf_12b500m_20221117/syspixie16_revfgeneral_adc500mhz_r31567.bin
+500M12bit_fip ../firmware/pixie16_revf_12b500m_20221117/fippixie16_revfgeneral_12b500m_r48132.bin
+500M12bit_dsplst ../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.lst
+500M12bit_dspldr ../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.ldr
+500M12bit_dspvar ../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.var
 
 
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
@@ -144,11 +155,11 @@ ModuleBits 2 14 14 14 14 14 16 14
 
 
 # Standard firmware
-# 500M14bit_sys ../firmware/pixie16_revf_14b500m_45762_20221205/syspixie16_revfgeneral_adc500mhz_r33341.bin
-# 500M14bit_fip ../firmware/pixie16_revf_14b500m_45762_20221205/fippixie16_revfgeneral_14b500m_r48206.bin
-# 500M14bit_dsplst ../firmware/pixie16_revf_14b500m_45762_20221205/Pixie16DSP_revfgeneral_14b500m_r45762.lst
-# 500M14bit_dspldr ../firmware/pixie16_revf_14b500m_45762_20221205/Pixie16DSP_revfgeneral_14b500m_r45762.ldr
-# 500M14bit_dspvar ../firmware/pixie16_revf_14b500m_45762_20221205/Pixie16DSP_revfgeneral_14b500m_r45762.var
+# 500M14bit_sys ../firmware/pixie16_revf_14b500m_20221205/syspixie16_revfgeneral_adc500mhz_r33341.bin
+# 500M14bit_fip ../firmware/pixie16_revf_14b500m_20221205/fippixie16_revfgeneral_14b500m_r48206.bin
+# 500M14bit_dsplst ../firmware/pixie16_revf_14b500m_20221205/Pixie16DSP_revfgeneral_14b500m_r45762.lst
+# 500M14bit_dspldr ../firmware/pixie16_revf_14b500m_20221205/Pixie16DSP_revfgeneral_14b500m_r45762.ldr
+# 500M14bit_dspvar ../firmware/pixie16_revf_14b500m_20221205/Pixie16DSP_revfgeneral_14b500m_r45762.var
 
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
