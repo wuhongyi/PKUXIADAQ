@@ -40,6 +40,7 @@ Welcome to GDDAQ's guides.
    UsersGuide/README.rst
    UsersGuide/Crate.rst
    UsersGuide/FIRMWARE.rst
+   UsersGuide/GUIqt.rst
    UsersGuide/GUI.rst
    UsersGuide/NOGUI.rst
    UsersGuide/OnlineStattics.rst
