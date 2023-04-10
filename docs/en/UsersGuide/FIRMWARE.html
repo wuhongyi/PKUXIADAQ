@@ -306,6 +306,18 @@
 </dl>
 </li>
 <li><dl class="simple">
+<dt>xia_pixie-16_15-500-12_1.0.0_pku 20230410</dt><dd><ul>
+<li><p>Output 4-ch debug signals of the front panel A to the chassis backplane’s TriggerAll bits [28:31], TrigConfig3[0] control enable/disable</p></li>
+<li><p>send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane</p></li>
+<li><p>Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;</p></li>
+<li><p>The value is set to 0 when the calculated energy is negative.</p></li>
+<li><p>The pileup event energy is not set to 0, output calculated values directly.</p></li>
+<li><p>Discard a list mode event if computed event energy is smaller than EMIN (EnergyLow)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
 <dt>500MHz 12bit(pixie16_revf_general_12b500m)</dt><dd><ul>
 <li><p>standard firmware</p></li>
 </ul>

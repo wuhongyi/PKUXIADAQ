@@ -270,6 +270,18 @@
 </dl>
 </li>
 <li><dl class="simple">
+<dt>xia_pixie-16_15-500-12_1.0.0_pku 20230410</dt><dd><ul>
+<li><p>4 路调试监视信号输出到机箱背板 TriggerAll[28:31]，通过 TrigConfig3[0] 来控制是否开启</p></li>
+<li><p>通过机箱背板传输外部时钟清除信号、外部时钟信号、run inhibit 信号。通过 TrigConfig3[1/2] 来控制信号源是前面板还是机箱背板</p></li>
+<li><p>MultiplicityMaskHigh[31]=0和1 时候RJ45口输出 multiplicity 结果。</p></li>
+<li><p>当计算的能量为负数时，该值设置为 0。</p></li>
+<li><p>pileup 事件能量保留，不设置为 0。</p></li>
+<li><p>当计算能量小于 EMIN 时，舍弃事件。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
 <dt>pixie16_revf_general_12b500m</dt><dd><ul>
 <li><p>标准固件</p></li>
 </ul>

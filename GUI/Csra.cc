@@ -111,6 +111,8 @@ Csra::Csra(const TGWindow * p, const TGWindow * main, Detector *det)
   make_columns(column[20], ckBtn_20, (char*)"MVS", (char*)"Module veto selection (front panel module GATE vs. module validation trigger)", 7000,3);
   make_columns(column[21], ckBtn_21, (char*)"ETS", (char*)"Enable (checked) or disable (unchecked) recording of external clock timestamps in event header", 7100);
 
+  make_columns(column[22], ckBtn_22, (char*)"EL", (char*)"Enable (checked) or disable (unchecked) discard a list mode event if computed event energy is smaller than EMIN(EnergyLow)", 7200);
+  
   
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   
@@ -365,11 +367,11 @@ int Csra::change_values(Long_t mod)
 void Csra::checkbutton(Long_t parm1)
 {
   // 添加功能类需要修改本函数
-  if(parm1 > 7116 || parm1 < 5000) return;
+  if(parm1 > 7216 || parm1 < 5000) return;
   if(parm1%100 == 16 ) // All
     {
       int k = parm1/100-50;//第几个功能类
-      if(k < 0 || k > 21) return;
+      if(k < 0 || k > 22) return;
       if(tmpckBtn[k][16]->IsDown()){
 	for(int i = 0;i < 16;i++)
 	  tmpckBtn[k][i]->SetState(kButtonDown);
@@ -381,7 +383,7 @@ void Csra::checkbutton(Long_t parm1)
   else //0-15
     {
       int k = parm1/100-50;
-      if(k < 0 || k > 21) return;
+      if(k < 0 || k > 22) return;
       int j = parm1%100;
       if(j < 0 || j > 15) return;
       if(!tmpckBtn[k][j]->IsDown()){
@@ -416,4 +418,5 @@ void Csra::getckbuttonaddress()
   tmpckBtn[19] = ckBtn_19;
   tmpckBtn[20] = ckBtn_20;
   tmpckBtn[21] = ckBtn_21;
+  tmpckBtn[22] = ckBtn_22;
 }

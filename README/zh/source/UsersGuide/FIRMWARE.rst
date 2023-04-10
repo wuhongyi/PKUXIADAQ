@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 22:13:09 2019 (+0800)
-.. Last-Updated: 六 12月 10 01:10:54 2022 (+0800)
+.. Last-Updated: 一 4月 10 20:18:00 2023 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 14
+..     Update #: 15
 .. URL: http://wuhongyi.cn 
 
 =================================
@@ -56,6 +56,14 @@
 	- 删除一些非必要的等待来加速事件处理。
 	- 删除DSP中非必要的处理：包括堆积检测、超量程波形检测等	  
 
+- xia_pixie-16_15-500-12_1.0.0_pku 20230410
+	- 4 路调试监视信号输出到机箱背板 TriggerAll[28:31]，通过 TrigConfig3[0] 来控制是否开启
+	- 通过机箱背板传输外部时钟清除信号、外部时钟信号、run inhibit 信号。通过 TrigConfig3[1/2] 来控制信号源是前面板还是机箱背板
+	- MultiplicityMaskHigh[31]=0和1 时候RJ45口输出 multiplicity 结果。
+	- 当计算的能量为负数时，该值设置为 0。
+	- pileup 事件能量保留，不设置为 0。
+	- 当计算能量小于 EMIN 时，舍弃事件。  
+	  
 - pixie16_revf_general_12b500m
 	- 标准固件
 	 	  

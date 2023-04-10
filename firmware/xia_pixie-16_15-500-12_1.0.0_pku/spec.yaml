@@ -1,0 +1,28 @@
+product:
+  name: Pixie-16
+  module_tag: 15-500-12
+release:
+  type: custom
+  date: 2023-04-10T04:04:37Z
+  version: 1.0.0
+files:
+  fippi:
+    version: '48132'
+    crc32: 0x0EB0D13C
+    sha512: 720510f65ef01925dabaef7d2fecc5b96855e999c02ba727d18c9feed02a1705cbaf5112743ba034c6510ac97aa961bad6567123cb1595c151bd14150f426b50
+  ldr:
+    version: '48766'
+    crc32: 0xF08A1E4D
+    sha512: 1ccdffd4cebc3d2addbeae5aa72376d4bd54be6e6a576221e287020961b3a60f7db265ef1b81ab0612ae2b8b0e6a24e2ffaa45d3b76388dd31300bdc574f8467
+  lst:
+    version: '48766'
+    crc32: 0x09DE654D
+    sha512: 039c3607f6b8413c8dac7a238af18376c2a4ab51538a60e91a2d745615c8f98955c796c0319bf787af53e2145fa5c7624b2e1423452db9eb729004b013ae8db5
+  sys:
+    version: '44500'
+    crc32: 0x18E6B859
+    sha512: 49ea34c83aec1ab9f69bb04b40b9884e20bf2b1b1f99dcfc738da4571f234fb3002361e6f7d51cb9388a1c9dc7741b1e73535d115fe96260bd1b4031e882fd7d
+  var:
+    version: '48766'
+    crc32: 0x880F5AEB
+    sha512: 004091d80ecb8068192382ab3fda3f4c65bf61faa9a3f855a8261a3ca898659776bd73bed936617f92473d6effcbd88f6d56f4fcb737dd4cfd3d681493beec7a    

@@ -5,7 +5,7 @@ CrateID 0
 
 ## Register parameters
 
-SettingPars ../parset/DSPbaf.set
+SettingPars ../parset/DSPpar.set
 
 
 ## -----------------------------------------------------------------------------
@@ -24,7 +24,7 @@ AutoRunModeTimes   1800
 
 # module number and samping rate
 # The first number mean how many modules, other number means every module samping rate(100/250/500)
-ModuleSampingRate 2 500 500 500 500 500 250 250 500
+ModuleSampingRate 2 250 250 500 500 500 250 250 500
 
 # module number and bits
 # The first number mean how many modules, other number means every module bits(12/14/16)
@@ -130,12 +130,25 @@ ModuleBits 2 12 14 14 14 14 16 14
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 
+# Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
+# send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
+# Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
+# The value is set to 0 when the calculated energy is negative.
+# The pileup event energy is not set to 0, output calculated values directly.
+# Discard a list mode event if computed event energy is smaller than EMIN (EnergyLow)
+500M12bit_sys ../firmware/xia_pixie-16_15-500-12_1.0.0_pku/sys.bin
+500M12bit_fip ../firmware/xia_pixie-16_15-500-12_1.0.0_pku/fippi.bin
+500M12bit_dsplst ../firmware/xia_pixie-16_15-500-12_1.0.0_pku/dsp.lst
+500M12bit_dspldr ../firmware/xia_pixie-16_15-500-12_1.0.0_pku/dsp.ldr
+500M12bit_dspvar ../firmware/xia_pixie-16_15-500-12_1.0.0_pku/dsp.var
+
+
 # Standard firmware
-500M12bit_sys ../firmware/pixie16_revf_12b500m_20221117/syspixie16_revfgeneral_adc500mhz_r31567.bin
-500M12bit_fip ../firmware/pixie16_revf_12b500m_20221117/fippixie16_revfgeneral_12b500m_r48132.bin
-500M12bit_dsplst ../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.lst
-500M12bit_dspldr ../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.ldr
-500M12bit_dspvar ../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.var
+# 500M12bit_sys ../firmware/pixie16_revf_12b500m_20221117/syspixie16_revfgeneral_adc500mhz_r31567.bin
+# 500M12bit_fip ../firmware/pixie16_revf_12b500m_20221117/fippixie16_revfgeneral_12b500m_r48132.bin
+# 500M12bit_dsplst ../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.lst
+# 500M12bit_dspldr ../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.ldr
+# 500M12bit_dspvar ../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.var
 
 
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$

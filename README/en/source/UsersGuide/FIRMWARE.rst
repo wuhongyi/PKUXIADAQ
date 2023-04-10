@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 22:13:09 2019 (+0800)
-.. Last-Updated: 六 12月 10 01:13:18 2022 (+0800)
+.. Last-Updated: 一 4月 10 20:18:00 2023 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 16
+..     Update #: 17
 .. URL: http://wuhongyi.cn 
 
 =================================
@@ -69,7 +69,14 @@ Added the following features based on standard firmware：
 		- (1) no longer process pile-up rejection or inverse pile-up rejection, all events will be accepted, but still with pileup flag in the event header;
 		- (2) removed "no traces for large pulses" feature.
 	  
-
+- xia_pixie-16_15-500-12_1.0.0_pku 20230410
+	- Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
+	- send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
+	- Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
+	- The value is set to 0 when the calculated energy is negative.
+	- The pileup event energy is not set to 0, output calculated values directly.
+	- Discard a list mode event if computed event energy is smaller than EMIN (EnergyLow)
+	
 - 500MHz 12bit(pixie16_revf_general_12b500m)
 	- standard firmware
 	  
