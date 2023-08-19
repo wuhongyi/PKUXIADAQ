@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 三 2月 26 20:42:35 2020 (+0800)
-// Last-Updated: 四 9月 23 19:57:46 2021 (+0800)
+// Last-Updated: 六 8月 19 11:09:57 2023 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 49
+//     Update #: 58
 // URL: http://wuhongyi.cn 
 
 // wugroot main.cc  -lrt  -o 123
@@ -41,8 +41,13 @@
 using namespace std;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+const char gVERSION[] = "Version: RealDecoder - 2023.08.19";
+
 int main(int argc, char *argv[])
 {
+  std::cout<<gVERSION<<std::endl;
+  std::cout<<"Copyright @ Hongyi Wu (wuhongyi@qq.com/wuhongyi@pku.edu.cn)"<<std::endl;
+  
   int goodch[MODULE_NUM_MAX][16];
   int histbin[MODULE_NUM_MAX][16];
   double histmin[MODULE_NUM_MAX][16];
@@ -50,6 +55,18 @@ int main(int argc, char *argv[])
   double  calia0[MODULE_NUM_MAX][16];
   double  calia1[MODULE_NUM_MAX][16];
   double  calia2[MODULE_NUM_MAX][16];
+
+  int psdgoodch[MODULE_NUM_MAX][16];
+  int psdxhistbin[MODULE_NUM_MAX][16];
+  double psdxhistmin[MODULE_NUM_MAX][16];
+  double psdxhistmax[MODULE_NUM_MAX][16];
+  int psdyhistbin[MODULE_NUM_MAX][16];
+  double psdyhistmin[MODULE_NUM_MAX][16];
+  double psdyhistmax[MODULE_NUM_MAX][16];
+  double psdp0[MODULE_NUM_MAX][16];
+  double psdp1[MODULE_NUM_MAX][16];
+
+  
   for (int i = 0; i < MODULE_NUM_MAX; ++i)
     for (int j = 0; j < 16; ++j)
       {
@@ -60,6 +77,16 @@ int main(int argc, char *argv[])
 	calia0[i][j] = 0.0;
 	calia1[i][j] = 0.0;
 	calia2[i][j] = 0.0;
+
+	psdgoodch[i][j] = 0;
+	psdxhistbin[i][j] = 1000;
+	psdxhistmin[i][j] = 0;
+	psdxhistmax[i][j] = 60000;
+	psdyhistbin[i][j] = 1000;
+	psdyhistmin[i][j] = 0;
+	psdyhistmax[i][j] = 1;
+	psdp0[i][j] = 0.0;
+	psdp1[i][j] = 0.0;
       }
   
   std::ifstream readtxt;
@@ -92,11 +119,42 @@ int main(int argc, char *argv[])
   readtxt.close();  
 
 
+  Short_t psdsid_tmp, psdch_tmp;
+  int psdgoodch_tmp;
+  int psdxhistbin_tmp;
+  double psdxhistmin_tmp, psdxhistmax_tmp;
+  int psdyhistbin_tmp;
+  double psdyhistmin_tmp, psdyhistmax_tmp;
+  Double_t psdp0_tmp, psdp1_tmp;
+  readtxt.open("psd.dat");
+  if(!readtxt.is_open())
+    {
+      std::cout<<"can't open file."<<std::endl;
+    }
+  getline(readtxt,str_tmp);
+  while(!readtxt.eof())
+    {
+      readtxt>>psdsid_tmp>>psdch_tmp>>psdgoodch_tmp>>psdxhistbin_tmp>>psdxhistmin_tmp>>psdxhistmax_tmp>>psdyhistbin_tmp>>psdyhistmin_tmp>>psdyhistmax_tmp>>psdp0_tmp>>psdp1_tmp;
+      if(readtxt.eof()) break;
+      psdgoodch[psdsid_tmp-2][psdch_tmp] = psdgoodch_tmp;
+      psdxhistbin[psdsid_tmp-2][psdch_tmp] = psdxhistbin_tmp;
+      psdxhistmin[psdsid_tmp-2][psdch_tmp] = psdxhistmin_tmp;
+      psdxhistmax[psdsid_tmp-2][psdch_tmp] = psdxhistmax_tmp;
+      psdyhistbin[psdsid_tmp-2][psdch_tmp] = psdyhistbin_tmp;
+      psdyhistmin[psdsid_tmp-2][psdch_tmp] = psdyhistmin_tmp;
+      psdyhistmax[psdsid_tmp-2][psdch_tmp] = psdyhistmax_tmp;
+      psdp0[psdsid_tmp-2][psdch_tmp] = psdp0_tmp;
+      psdp1[psdsid_tmp-2][psdch_tmp] = psdp1_tmp;
+    }
+  readtxt.close();  
 
   
   TH1I *adc[MODULE_NUM_MAX][16];
   TH1I *energy[MODULE_NUM_MAX][16];
   TH1I *rate[MODULE_NUM_MAX][16];
+
+  TH2I *psd[MODULE_NUM_MAX][16];
+  
   for (int i = 0; i < MODULE_NUM_MAX; ++i)
     for (int j = 0; j < 16; ++j)
       {
@@ -104,12 +162,19 @@ int main(int argc, char *argv[])
 	adc[i][j]->SetDirectory(0);
 	energy[i][j] = new TH1I(TString::Format("ENERGY_%02d_%02d",i,j).Data(),"",histbin[i][j],histmin[i][j],histmax[i][j]);
 	energy[i][j]->SetDirectory(0);
+	
 #ifdef CLEAR_IN_NEW_RUN
 #ifdef SHOW_OUTPUT_RATE
 	rate[i][j] = new TH1I(TString::Format("RATE_%02d_%02d",i,j).Data(),"",RATE_HIST_BIN,RATE_HIST_MIN,RATE_HIST_MAX);
 	rate[i][j]->SetDirectory(0);	
 #endif
-#endif	
+#endif
+
+	if(psdgoodch[i][j] == 1)
+	  {
+	    psd[i][j] = new TH2I(TString::Format("PSD_%02d_%02d",i,j).Data(),"",psdxhistbin[i][j],psdxhistmin[i][j],psdxhistmax[i][j],psdyhistbin[i][j],psdyhistmin[i][j],psdyhistmax[i][j]);
+	    psd[i][j]->SetDirectory(0);
+	  }
       }
 
   
@@ -136,6 +201,11 @@ int main(int argc, char *argv[])
 #endif
 #endif	    
 	  }
+
+	if(psdgoodch[i][j] == 1)
+	  {
+	    serv->Register("PSD", psd[i][j]);
+	  }
       }
 
   
@@ -150,6 +220,12 @@ int main(int argc, char *argv[])
 	    serv->RegisterCommand(TString::Format("/Control/ENERGY/ENERGY_%02d_%02d",i,j).Data(),TString::Format("/Objects/ENERGY/ENERGY_%02d_%02d/->Reset()",i,j).Data(), "rootsys/icons/ed_delete.png");
 	    serv->SetItemField(TString::Format("/Control/ENERGY/ENERGY_%02d_%02d",i,j).Data(),"_update_item", TString::Format("ENERGY_%02d_%02d",i,j).Data()); // let browser update histogram view after commands execution
 	  }
+
+	if(psdgoodch[i][j] == 1)
+	  {
+	    serv->RegisterCommand(TString::Format("/Control/PSD/PSD_%02d_%02d",i,j).Data(),TString::Format("/Objects/PSD/PSD_%02d_%02d/->Reset()",i,j).Data(), "rootsys/icons/ed_delete.png");
+	    serv->SetItemField(TString::Format("/Control/PSD/PSD_%02d_%02d",i,j).Data(),"_update_item", TString::Format("PSD_%02d_%02d",i,j).Data()); 
+	  }
       }
 
 
@@ -160,6 +236,7 @@ int main(int argc, char *argv[])
   serv->SetItemField("/","_monitoring","5000");
   serv->SetItemField("/ADC/","_drawopt","");
   serv->SetItemField("/ENERGY/","_drawopt","");
+  serv->SetItemField("/PSD/","_drawopt","");
 #ifdef CLEAR_IN_NEW_RUN
 #ifdef SHOW_OUTPUT_RATE
   serv->SetItemField("/RATE/","_drawopt","");
@@ -237,6 +314,10 @@ int main(int argc, char *argv[])
 	      {
 		adc[i][j]->Reset("ICES");
 		energy[i][j]->Reset("ICES");
+		if(psdgoodch[i][j] == 1)
+		  {
+		    psd[i][j]->Reset("ICES");
+		  }
 #ifdef SHOW_OUTPUT_RATE
 		rate[i][j]->Reset("ICES");
 #endif 	
@@ -257,6 +338,13 @@ int main(int argc, char *argv[])
 		  if(rawdec[i].readword(data))
 		    {
 		      adc[i][rawdec[i].getch()]->Fill(rawdec[i].getevte());
+		      if(rawdec[i].getqsumflag())
+			{
+			  if(psdgoodch[i][rawdec[i].getch()] == 1)
+			    {
+			      psd[i][rawdec[i].getch()]->Fill(rawdec[i].getevte(), (rawdec[i].getqs1()-rawdec[i].getqs0()*psdp0[i][rawdec[i].getch()])/(rawdec[i].getqs1()+rawdec[i].getqs2()-rawdec[i].getqs0()*(psdp0[i][rawdec[i].getch()]+psdp1[i][rawdec[i].getch()])));
+			    }
+			}
 		      double rawch = rawdec[i].getevte()+gRandom->Rndm();
 		      energy[i][rawdec[i].getch()]->Fill(calia0[i][rawdec[i].getch()]+calia1[i][rawdec[i].getch()]*rawch+calia2[i][rawdec[i].getch()]*rawch*rawch);
 #ifdef CLEAR_IN_NEW_RUN

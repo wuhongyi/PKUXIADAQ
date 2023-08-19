@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 20:19:34 2019 (+0800)
-.. Last-Updated: 一 4月 10 20:14:42 2023 (+0800)
+.. Last-Updated: 六 8月 19 15:07:09 2023 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 48
+..     Update #: 49
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -20,7 +20,14 @@
 ---------------------------------
 
 
-**Version: 2023.04.10**  
+- **GUI Qt: 即将发布**  
+- **GUI ROOT Version: 2023.04.10**  
+- **RealDecoder Version: 2023.08.19**  
+- **DecodeAndSortAll Version: 2022.04.17**
+- **EventBuilder Version: 2022.05.01**
+- **DataAnalysis framework Version: 2022.12.25**
+
+  
 
 程序下载请访问:  `PKUXIADAQ <https://github.com/wuhongyi/PKUXIADAQ>`_ 
 
@@ -97,7 +104,7 @@ MZTIO 网页版说明书请访问:  `简体中文/English <http://wuhongyi.cn/MZ
 	- firmware/firmware.md(历史各版本固件说明)
 - GUI(图形软件)
 - icons(logo)
-- mysql
+- mysql(特定实验专用，单一用户不建议使用)
 	- createdb
 	- onlline
 	- www
@@ -107,7 +114,7 @@ MZTIO 网页版说明书请访问:  `简体中文/English <http://wuhongyi.cn/MZ
 - parset(参数设置文件)
 - PlxSdk823.tar(Plx9054 驱动)
 - README(markdown 版本说明书)
-- RealDecoder
+- RealDecoder(网页版在线监视，可选)
 - README.md(主页介绍)
 - README.pdf(pdf 版本说明书)
 - software(非标准驱动，吴鸿毅修改)
@@ -121,7 +128,7 @@ MZTIO 网页版说明书请访问:  `简体中文/English <http://wuhongyi.cn/MZ
 
 - 当前基于 ROOT GUI 开发的主控制界面复杂度高，用户修改难度大。其它用户不容易基于其发展适合自己的版本。
 - 我们也在开发基于网页控制的获取在线/离线分析程序:
-	- Django
+	- Qt
 	- ZeroMQ
 	- JSROOT
 	- ...

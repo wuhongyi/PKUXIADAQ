@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 9月 11 16:57:53 2020 (+0800)
-// Last-Updated: 四 9月 23 20:08:25 2021 (+0800)
+// Last-Updated: 三 8月 16 14:57:15 2023 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 13
+//     Update #: 14
 // URL: http://wuhongyi.cn 
 
 #include "decoding.hh"
@@ -16,7 +16,8 @@
 
 decoding::decoding()
 {
-
+  qsumf = false;
+  
   statemachine = 0;
 }
 
@@ -29,6 +30,7 @@ decoding::~decoding()
 
 void decoding::init()
 {
+  qsumf = false;
   statemachine = 0;
 }
 
@@ -47,6 +49,7 @@ bool decoding::readword(unsigned int buff)
       levt = (buff & kMasklevt) >> kShiftlevt;
       pileup = (buff & kMaskpileup) >> kShiftpileup;
 
+      if(lhead == 12 || lhead == 14 || lhead == 16 || lhead == 18) qsumf = true;
       tmplength = levt-4;
       statemachine = 1;
       break;
@@ -101,17 +104,40 @@ bool decoding::readword(unsigned int buff)
 
       if(tmplength==0) statemachine = 0;
       else statemachine = 4;
-      flag = true;
       break;
       
     default:
+      if(lhead == 12 || lhead == 14)
+	{
+	  if(statemachine >= 4 && statemachine <= 11)
+	    {
+	      qs[statemachine-4] = buff;
+	    }
+	}
+      if(lhead == 16 || lhead == 18)
+	{
+	  if(statemachine >= 8 && statemachine <= 15)
+	    {
+	      qs[statemachine-8] = buff;
+	    }
+	}
+      statemachine++;
       tmplength--;
       if(tmplength==0) statemachine = 0;
       break;      
     }
 
+  if(statemachine == 0) flag = true;
   return flag;
 }
 
 // 
 // decoding.cc ends here
+
+
+
+
+
+
+
+

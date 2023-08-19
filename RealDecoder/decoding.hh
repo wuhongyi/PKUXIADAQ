@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 9月 11 16:57:39 2020 (+0800)
-// Last-Updated: 四 9月 23 20:08:25 2021 (+0800)
+// Last-Updated: 三 8月 16 15:00:59 2023 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 5
+//     Update #: 7
 // URL: http://wuhongyi.cn 
 
 #ifndef _DECODING_H_
@@ -42,6 +42,10 @@ public:
   inline unsigned short getevte() {return evte;}
   inline bool getoutofr() {return outofr;}
 
+  inline bool getqsumflag() {return qsumf;}
+  inline unsigned int getqs0() {return qs[0];}
+  inline unsigned int getqs1() {return qs[1];}
+  inline unsigned int getqs2() {return qs[2];}
   
 private:
 
@@ -69,7 +73,8 @@ private:
   unsigned short ltra;  // Trace length
   bool outofr;          //Trace Out-of-Range Flag
   
-
+  bool qsumf;
+  unsigned int qs[8];	// qdc sum #0-#7
 
   // const parameters for decoder
   const static unsigned int kMaskchannel =	0x0000000f;

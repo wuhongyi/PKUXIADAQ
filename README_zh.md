@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 一 4月 10 10:23:49 2023 (+0800)
+;; Last-Updated: 六 8月 19 14:37:29 2023 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 182
+;;     Update #: 184
 ;; URL: http://wuhongyi.cn -->
 
 # A general-purpose digital data acquisition system(GDDAQ)
@@ -23,6 +23,7 @@
 
 - **GUI Qt: 即将发布**  
 - **GUI ROOT Version: 2023.04.10**  
+- **RealDecoder Version: 2023.08.19**  
 - **DecodeAndSortAll Version: 2022.04.17**
 - **EventBuilder Version: 2022.05.01**
 - **DataAnalysis framework Version: 2022.12.25**
@@ -97,7 +98,7 @@ MZTIO 网页版说明书请访问:  [简体中文/English](http://wuhongyi.cn/MZ
 	- firmware/firmware.md(历史各版本固件说明)
 - GUI(图形软件)
 - icons(logo)
-- mysql
+- mysql(特定实验专用，单一用户不建议使用)
 	- createdb
 	- onlline
 	- www
@@ -107,7 +108,7 @@ MZTIO 网页版说明书请访问:  [简体中文/English](http://wuhongyi.cn/MZ
 - parset(参数设置文件)
 - PlxSdk823.tar(Plx9054 驱动)
 - README(markdown 版本说明书)
-- RealDecoder
+- RealDecoder(网页版在线监视，可选)
 - README.md(主页介绍)
 - README.pdf(pdf 版本说明书)
 - software(非标准驱动，吴鸿毅修改)

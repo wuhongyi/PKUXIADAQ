@@ -4,9 +4,9 @@
 ## Author: Hongyi Wu(吴鸿毅)
 ## Email: wuhongyi@qq.com 
 ## Created: 日 10月  2 19:40:07 2016 (+0800)
-## Last-Updated: 日 4月 17 19:51:07 2022 (+0800)
+## Last-Updated: 五 8月 11 17:38:12 2023 (+0800)
 ##           By: Hongyi Wu(吴鸿毅)
-##     Update #: 8
+##     Update #: 11
 ## URL: http://wuhongyi.cn 
 
 OBJ = decodeandsort
@@ -15,7 +15,7 @@ sourcefile = main.cc decoder.hh decoder.cc r2root.hh r2root.cc UserDefine.hh
 ROOTCFLAGS  = $(shell root-config --cflags)
 ROOTLIBS    = $(shell root-config --libs)
 
-CFLAGS = -g -Wall -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
+CFLAGS = -g -w -O2
 
 GXX = g++ 
 

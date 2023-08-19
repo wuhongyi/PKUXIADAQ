@@ -4,7 +4,7 @@ sourcefile = main.cc UserDefine.hh decoding.hh decoding.cc
 ROOTCFLAGS  = $(shell root-config --cflags)
 ROOTLIBS    = $(shell root-config --libs) -lGui -lRHTTP -lrt
 
-CFLAGS = -Wall -O2 -I$(ROOTSYS)/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
+CFLAGS = -w -O2 -I$(ROOTSYS)/include 
 
 GXX = g++ 
 

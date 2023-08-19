@@ -49,6 +49,20 @@ ModuleBits 2 12 14 14 14 14 16 14
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 
+# 4-ch debug signals of the front panel A to the chassis backplane, TrigConfig3[0] control
+# send the external timestamp clock and clear as well as the run inhibit to the backplane. TrigConfig3[1/2] control front panel/backplane
+# Multiplicity result output from RJ45 and front panel A
+# NoNegEnergy && AlwaysCompEnergy
+# waveform buffer is full,record header
+# down frequency output
+# speed up the event processing & removed a few unnecessary processing routines
+# Discard a list mode event if computed event energy is smaller than EMIN (EnergyLow)
+100M14bit_sys ../firmware/Pixie16_RevF_14_100_PKU_07042023/syspixie16_revfpku_adc100hz_r44498.bin
+100M14bit_fip ../firmware/Pixie16_RevF_14_100_PKU_07042023/fippixie16_revfpku_14b100m_r39574.bin
+100M14bit_dsplst ../firmware/Pixie16_RevF_14_100_PKU_07042023/Pixie16DSP_revfpku_14b100m_r49064.lst
+100M14bit_dspldr ../firmware/Pixie16_RevF_14_100_PKU_07042023/Pixie16DSP_revfpku_14b100m_r49064.ldr
+100M14bit_dspvar ../firmware/Pixie16_RevF_14_100_PKU_07042023/Pixie16DSP_revfpku_14b100m_r49064.var
+
 
 # 4-ch debug signals of the front panel A to the chassis backplane, TrigConfig3[0] control
 # send the external timestamp clock and clear as well as the run inhibit to the backplane. TrigConfig3[1/2] control front panel/backplane
@@ -57,11 +71,11 @@ ModuleBits 2 12 14 14 14 14 16 14
 # waveform buffer is full,record header
 # down frequency output
 # speed up the event processing & removed a few unnecessary processing routines
-100M14bit_sys ../firmware/pixie16_revfpku_14b100m_firmware_release_06092020/syspixie16_revfpku_adc100hz_r44498.bin
-100M14bit_fip ../firmware/pixie16_revfpku_14b100m_firmware_release_06092020/fippixie16_revfpku_14b100m_r39574.bin
-100M14bit_dsplst ../firmware/pixie16_revfpku_14b100m_firmware_release_06092020/Pixie16DSP_revfpku_14b100m_r40391.lst
-100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_firmware_release_06092020/Pixie16DSP_revfpku_14b100m_r40391.ldr
-100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_06092020/Pixie16DSP_revfpku_14b100m_r40391.var
+# 100M14bit_sys ../firmware/pixie16_revfpku_14b100m_firmware_release_06092020/syspixie16_revfpku_adc100hz_r44498.bin
+# 100M14bit_fip ../firmware/pixie16_revfpku_14b100m_firmware_release_06092020/fippixie16_revfpku_14b100m_r39574.bin
+# 100M14bit_dsplst ../firmware/pixie16_revfpku_14b100m_firmware_release_06092020/Pixie16DSP_revfpku_14b100m_r40391.lst
+# 100M14bit_dspldr ../firmware/pixie16_revfpku_14b100m_firmware_release_06092020/Pixie16DSP_revfpku_14b100m_r40391.ldr
+# 100M14bit_dspvar ../firmware/pixie16_revfpku_14b100m_firmware_release_06092020/Pixie16DSP_revfpku_14b100m_r40391.var
 
 # Standard firmware
 # 100M14bit_sys ../firmware/pixie16_revf_general_14b100m_firmware_release/syspixie16_revfgeneral_adc100mhz_r33338.bin

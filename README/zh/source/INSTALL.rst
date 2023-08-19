@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 三 10月 12 15:12:23 2022 (+0800)
+.. Last-Updated: 六 8月 19 14:31:00 2023 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 45
+..     Update #: 46
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -43,6 +43,7 @@
 - 编译图形化获取软件
 - 编译非图形化获取软件
 - 编译在线监视程序
+- 编译网页在线监视(可选)  
 - 编译数据转换程序
 - 编译事件重构程序(可选)
 
@@ -152,6 +153,21 @@
 
 
 .. code:: bash
+	  
+  ##编译网页版在线监视（可选）
+   
+  cd ~
+  cd PKUXIADAQ/RealDecoder/
+
+   
+  make clean
+  make
+
+
+
+
+  
+.. code:: bash
 
   ## 编译数据转换程序
    
@@ -166,7 +182,7 @@
 
 .. code:: bash  
 
-  ## 编译事件重构程序
+  ## 编译事件重构程序（可选）
    
   cd ~
   cd PKUXIADAQ/EventBuilder/
