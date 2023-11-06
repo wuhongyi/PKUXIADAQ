@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 12月 13 09:41:49 2016 (+0800)
-;; Last-Updated: 六 8月 19 15:13:29 2023 (+0800)
+;; Last-Updated: 日 9月 17 16:32:03 2023 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 63
+;;     Update #: 64
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
@@ -363,8 +363,8 @@ pixie16_revf_general_16b250m_20220502
 		- (2) removed "no traces for large pulses" feature.
 	- Discard a list mode event if computed event energy is smaller than EMIN (EnergyLow)	
 	
-	
-	
+- xia_pixie-16_17-250-14_75_0.10.0 	 standard firmware
+
 	
 
 <!-- firmware.md ends here -->

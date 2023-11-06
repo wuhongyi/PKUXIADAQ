@@ -144,13 +144,30 @@
 <li class="toctree-l3"><a class="reference internal" href="#id9">100M</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#si">Si</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#he3">He3</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id10">100M</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#si">Si</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id11">100M</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#labr3">LaBr3</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id11">250M</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id12">500M</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">250M</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">500M</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#baf2">BaF2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#m-12bit">500M 12bit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#m-14bit">500M 14bit</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ls">LS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#m-12-14bit">500M 12/14bit</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id14">He3</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id15">100M 14bit</a></li>
 </ul>
 </li>
 </ul>
@@ -533,10 +550,38 @@
 </section>
 </section>
 <hr class="docutils" />
-<section id="si">
-<h2>Si<a class="headerlink" href="#si" title="永久链接至标题">¶</a></h2>
+<section id="he3">
+<h2>He3<a class="headerlink" href="#he3" title="永久链接至标题">¶</a></h2>
 <section id="id10">
 <h3>100M<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt>fast filter</dt><dd><ul>
+<li><p>FL: 0.2</p></li>
+<li><p>FG: 0.2</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>slow filter</dt><dd><ul>
+<li><p>SL:</p></li>
+<li><p>SG:</p></li>
+<li><p>Range: 1</p></li>
+<li><p>TAU: 以实际测量为准</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>CFD 不开启</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="si">
+<h2>Si<a class="headerlink" href="#si" title="永久链接至标题">¶</a></h2>
+<section id="id11">
+<h3>100M<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
 <p>CIAE pre-amp</p>
 <ul class="simple">
 <li><dl class="simple">
@@ -584,8 +629,8 @@
 <hr class="docutils" />
 <section id="labr3">
 <h2>LaBr3<a class="headerlink" href="#labr3" title="永久链接至标题">¶</a></h2>
-<section id="id11">
-<h3>250M<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<section id="id12">
+<h3>250M<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
 <ul class="simple">
 <li><dl class="simple">
 <dt>fast filter</dt><dd><ul>
@@ -615,8 +660,8 @@
 </li>
 </ul>
 </section>
-<section id="id12">
-<h3>500M<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<section id="id13">
+<h3>500M<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
 <ul class="simple">
 <li><dl class="simple">
 <dt>fast filter</dt><dd><ul>
@@ -636,6 +681,152 @@
 </dd>
 </dl>
 </li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="baf2">
+<h2>BaF2<a class="headerlink" href="#baf2" title="永久链接至标题">¶</a></h2>
+<section id="m-12bit">
+<h3>500M 12bit<a class="headerlink" href="#m-12bit" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt>fast filter</dt><dd><ul>
+<li><p>FL: 0.02</p></li>
+<li><p>FG: 0.0</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>slow filter</dt><dd><ul>
+<li><p>SL: 1.24</p></li>
+<li><p>SG: 0.06</p></li>
+<li><p>Range: 1</p></li>
+<li><p>TAU: 0.63</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>CFD 开启时 PSD 参数</dt><dd><ul>
+<li><p>pre trigger 0.5</p></li>
+<li><p>QDC 0.35/0.04/0.12</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>CFD 不开启时 PSD 参数</dt><dd><ul>
+<li><p>pre trigger 0.4</p></li>
+<li><p>0.31/0.04/0.12</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="m-14bit">
+<h3>500M 14bit<a class="headerlink" href="#m-14bit" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt>fast filter</dt><dd><ul>
+<li><p>FL: 0.02</p></li>
+<li><p>FG: 0.0</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>slow filter</dt><dd><ul>
+<li><p>SL: 1.24</p></li>
+<li><p>SG: 0.06</p></li>
+<li><p>Range: 1</p></li>
+<li><p>TAU: 0.63</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>CFD 开启时 PSD 参数</dt><dd><ul>
+<li><p>pre trigger 0.5</p></li>
+<li><p>QDC 0.35/0.04/0.16</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>CFD 不开启时 PSD 参数</dt><dd><ul>
+<li><p>pre trigger 0.4</p></li>
+<li><p>0.31/0.04/0.16</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ls">
+<h2>LS<a class="headerlink" href="#ls" title="永久链接至标题">¶</a></h2>
+<section id="m-12-14bit">
+<h3>500M 12/14bit<a class="headerlink" href="#m-12-14bit" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt>fast filter</dt><dd><ul>
+<li><p>FL: 0.02</p></li>
+<li><p>FG: 0.0</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>slow filter</dt><dd><ul>
+<li><p>SL: 0.14</p></li>
+<li><p>SG: 0.06</p></li>
+<li><p>Range: 1</p></li>
+<li><p>TAU: 0.016</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>CFD 开启时 PSD 参数</dt><dd><ul>
+<li><p>pre trigger 0.5</p></li>
+<li><p>QDC 0.34/0.06/0.2</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id14">
+<h2>He3<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h2>
+<section id="id15">
+<h3>100M 14bit<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt>fast filter</dt><dd><ul>
+<li><p>FL: 0.2</p></li>
+<li><p>FG: 0.4</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>slow filter</dt><dd><ul>
+<li><p>SL: 4.96</p></li>
+<li><p>SG: 6.08</p></li>
+<li><p>Range: 4</p></li>
+<li><p>TAU: 37.0(mesytec)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>CFD 不开启</p></li>
+<li><p>QDC 不开启</p></li>
 </ul>
 </section>
 </section>
