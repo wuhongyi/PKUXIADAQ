@@ -16,6 +16,8 @@ README/node_modules/*
 *.root
 broadcom_pci_pcie_sdk/
 Pixie16Msg.log
+pages/
+
 
 moc_*
 pixiesdk/
