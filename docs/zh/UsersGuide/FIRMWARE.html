@@ -1,0 +1,360 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>固件 &mdash; GDDAQ beta 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Qt 图形交互界面" href="GUIqt.html" />
+    <link rel="prev" title="机箱" href="Crate.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> GDDAQ
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">简介</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">简介</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">程序安装</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../INSTALL.html">程序安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MYSQL.html">MYSQL</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">用户指南</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">用户指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Crate.html">机箱</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">固件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GUIqt.html">Qt 图形交互界面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GUI.html">图形交互界面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NOGUI.html">非图形交互界面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OnlineStattics.html">在线统计</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DecodeAndSortAll.html">数据解码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EventBuilder.html">事件重构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Decode.html">数据解码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MakeEvent.html">MakeEvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FrontPanel.html">插件前面板</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Logic.html">逻辑功能</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MultipleModulesSynchronously.html">时间同步</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UpdateCPLD.html">升级CPLD</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">应用案例</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Example/README.html">应用案例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/TOF2TAC.html">100M 模块测量飞行时间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/TimeResolution.html">时间分辨</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/RecommendedParameters.html">推荐参数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/InBeamGammaCIAE.html">在束伽马谱学</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">采购建议与实验调试</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ProcurementProposal.html">采购推荐</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ExperimentalDebugging.html">实验调试</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">编程指南</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/README.html">开发者指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/XIAAPI.html">XIA API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProgrammersGuide/PKUCode.html">PKU Code</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GDDAQ</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>固件</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/UsersGuide/FIRMWARE.rst.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="id1">
+<h1>固件<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p><strong>北京大学定制固件</strong></p>
+<p>在标准固件的基础上添加了以下功能：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>100MHz 12 bit(pixie16_revd_12b100m_firmware_release)</dt><dd><ul>
+<li><p>标准固件</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>100MHz 14 bit(pixie16_revf_general_14b100m_firmware_release)</dt><dd><ul>
+<li><p>标准固件</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>100MHz 14 bit(pixie16_revfpku_14b100m_firmware_release_06092020) 波形降频1/4时存在问题</dt><dd><ul>
+<li><p>4 路调试监视信号输出到机箱背板 TriggerAll[28:31]，通过 TrigConfig3[0] 来控制是否开启</p></li>
+<li><p>通过机箱背板传输外部时钟清除信号、外部时钟信号、run inhibit 信号。通过 TrigConfig3[1/2] 来控制信号源是前面板还是机箱背板</p></li>
+<li><p>MultiplicityMaskHigh[31]=0和1 时候RJ45口与前面板A均能输出 multiplicity 结果。</p></li>
+<li><p>当计算的能量为负数时，该值设置为 0。</p></li>
+<li><p>pileup 事件能量保留，不设置为 0。</p></li>
+<li><p>在记录波形模式下，waveform 的buffer满了的时候，插件不busy，header继续记录，该情况下，输出的数据没有波形。</p></li>
+<li><p>在采集波形时候，增加了降频输出的功能，采取的策略为可选择1，1/2，1/4，1/8，1/16，1/32，1/64，1/128频率的输出，即多少个点保留一个点。保留的点是平均后的值。</p></li>
+<li><p>删除一些非必要的等待来加速事件处理。</p></li>
+<li><p>删除DSP中非必要的处理：包括堆积检测、超量程波形检测等</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>250MHz 12bit(pixie16_revf_12b250m_firmware_release)</dt><dd><ul>
+<li><p>标准固件</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>250MHz 14bit(pixie16_revfpku_14b250m_release_11032020)</dt><dd><ul>
+<li><p>MultiplicityMaskHigh[31]=0和1 时候RJ45口与前面板均能输出 multiplicity 结果。</p></li>
+<li><p>通过机箱背板传输外部时钟清除信号、外部时钟信号、run inhibit 信号。通过 TrigConfig3[1/2] 来控制信号源是前面板还是机箱背板</p></li>
+<li><p>当计算的能量为负数时，该值设置为 0。</p></li>
+<li><p>pileup 事件能量保留，不设置为 0。</p></li>
+<li><p>4 路调试监视信号输出到机箱背板 TriggerAll[28:31]，通过 TrigConfig3[0] 来控制是否开启</p></li>
+<li><p>删除一些非必要的等待来加速事件处理。</p></li>
+<li><p>删除DSP中非必要的处理：包括堆积检测、超量程波形检测等</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>250MHz 16bit(pixie16_revfpku_16b250m_release_11022020)</dt><dd><ul>
+<li><p>MultiplicityMaskHigh[31]=0和1 时候RJ45口与前面板均能输出 multiplicity 结果。</p></li>
+<li><p>通过机箱背板传输外部时钟清除信号、外部时钟信号、run inhibit 信号。通过 TrigConfig3[1/2] 来控制信号源是前面板还是机箱背板</p></li>
+<li><p>当计算的能量为负数时，该值设置为 0。</p></li>
+<li><p>pileup 事件能量保留，不设置为 0。</p></li>
+<li><p>4 路调试监视信号输出到机箱背板 TriggerAll[28:31]，通过 TrigConfig3[0] 来控制是否开启</p></li>
+<li><p>删除一些非必要的等待来加速事件处理。</p></li>
+<li><p>删除DSP中非必要的处理：包括堆积检测、超量程波形检测等</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>xia_pixie-16_15-500-12_1.0.0_pku 20230410</dt><dd><ul>
+<li><p>4 路调试监视信号输出到机箱背板 TriggerAll[28:31]，通过 TrigConfig3[0] 来控制是否开启</p></li>
+<li><p>通过机箱背板传输外部时钟清除信号、外部时钟信号、run inhibit 信号。通过 TrigConfig3[1/2] 来控制信号源是前面板还是机箱背板</p></li>
+<li><p>MultiplicityMaskHigh[31]=0和1 时候RJ45口输出 multiplicity 结果。</p></li>
+<li><p>当计算的能量为负数时，该值设置为 0。</p></li>
+<li><p>pileup 事件能量保留，不设置为 0。</p></li>
+<li><p>当计算能量小于 EMIN 时，舍弃事件。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>pixie16_revf_general_12b500m</dt><dd><ul>
+<li><p>标准固件</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>pixie16_revf_pku_14b500m_20221209  PKU firmware</dt><dd><ul>
+<li><p>4 路调试监视信号输出到机箱背板 TriggerAll[28:31]，通过 TrigConfig3[0] 来控制是否开启</p></li>
+<li><p>通过机箱背板传输外部时钟清除信号、外部时钟信号、run inhibit 信号。通过 TrigConfig3[1/2] 来控制信号源是前面板还是机箱背板</p></li>
+<li><p>MultiplicityMaskHigh[31]=0和1 时候RJ45口输出 multiplicity 结果。</p></li>
+<li><p>当计算的能量为负数时，该值设置为 0。</p></li>
+<li><p>pileup 事件能量保留，不设置为 0。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>500MHz 14bit(pixie16_revf_14b500m_45762_20221205)</dt><dd><ul>
+<li><p>标准固件</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="GUIqt.html" class="btn btn-neutral float-right" title="Qt 图形交互界面" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Crate.html" class="btn btn-neutral float-left" title="机箱" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2020, Hongyi Wu(吴鸿毅).
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

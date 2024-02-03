@@ -1,0 +1,520 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>PKU Code &mdash; GDDAQ beta 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="prev" title="PIXIE-16 API" href="XIAAPI.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> GDDAQ
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Install</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../INSTALL.html">Installation of Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MYSQL.html">MYSQL</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Users Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/README.html">Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/Crate.html">Crate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/FIRMWARE.html">FIRMWARE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/GUIqt.html">Qt GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/GUI.html">GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/NOGUI.html">NOGUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/OnlineStattics.html">Online Stattics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/DecodeAndSortAll.html">数据解码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/EventBuilder.html">事件重构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/Decode.html">Decode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/MakeEvent.html">MakeEvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/FrontPanel.html">Front Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/Logic.html">Logic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/MultipleModulesSynchronously.html">Multiple Modules Synchronously</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../UsersGuide/UpdateCPLD.html">Update CPLD</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Applications</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Example/README.html">Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/TOF2TAC.html">TOF measurement in 100M</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/TimeResolution.html">Time Resolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/RecommendedParameters.html">Recommended Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Example/InBeamGammaCIAE.html">In Beam Gamma</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programmers Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="XIAAPI.html">PIXIE-16 API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">PKU Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#decode">Decode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gui">GUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#makeevent">MakeEvent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#onlinestattics">OnlineStattics</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GDDAQ</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>PKU Code</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/ProgrammersGuide/PKUCode.rst.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="pku-code">
+<h1>PKU Code<a class="headerlink" href="#pku-code" title="永久链接至标题">¶</a></h1>
+<p>本节介绍程序的主要思路。</p>
+<p><strong>DOTO  需要补充框图帮助理解程序！！！</strong></p>
+<section id="decode">
+<h2>Decode<a class="headerlink" href="#decode" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>decoder.cc</p></li>
+<li><dl class="simple">
+<dt>decoder.hh</dt><dd><ul>
+<li><p>读取二进制文件</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>main.cc</dt><dd><ul>
+<li><p>主程序</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Makefile</p></li>
+<li><p>r2root.cc</p></li>
+<li><dl class="simple">
+<dt>r2root.hh</dt><dd><ul>
+<li><p>保存ROOT文件</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>UserDefine.hh</dt><dd><ul>
+<li><p>用户定义参数</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="gui">
+<h2>GUI<a class="headerlink" href="#gui" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>Base.cc</p></li>
+<li><dl class="simple">
+<dt>Base.hh</dt><dd><ul>
+<li><p>子界面，基线、极性、增益、波形长度、数据记录等参数调节</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Cfd.cc</p></li>
+<li><dl class="simple">
+<dt>Cfd.hh</dt><dd><ul>
+<li><p>子界面，CFD参数调节</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>CopyPars.cc</p></li>
+<li><dl class="simple">
+<dt>CopyPars.hh</dt><dd><ul>
+<li><p>子界面，参数复制</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Csra.cc</p></li>
+<li><dl class="simple">
+<dt>Csra.hh</dt><dd><ul>
+<li><p>子界面，方便快速调节每通道的控制寄存器</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Decimation.cc</p></li>
+<li><dl class="simple">
+<dt>Decimation.hh</dt><dd><ul>
+<li><p>子界面，降频参数设置</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Detector.cc</p></li>
+<li><dl class="simple">
+<dt>Detector.hh</dt><dd><ul>
+<li><p>数据采集循环主体</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Energy.cc</p></li>
+<li><dl class="simple">
+<dt>Energy.hh</dt><dd><ul>
+<li><p>子界面，梯形参数调节界面</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>ExpertMod.cc</p></li>
+<li><dl class="simple">
+<dt>ExpertMod.hh</dt><dd><ul>
+<li><p>子界面，采集卡模块参数设置</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Global.cc</p></li>
+<li><dl class="simple">
+<dt>Global.hh</dt><dd><ul>
+<li><p>全局函数</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>HistXDT.cc</p></li>
+<li><dl class="simple">
+<dt>HistXDT.hh</dt><dd><ul>
+<li><p>子界面，设置记录的一维能谱的最小值、bin宽及DSP抓波形时的部长</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>LogicTrigger.cc</p></li>
+<li><dl class="simple">
+<dt>LogicTrigger.hh</dt><dd><ul>
+<li><p>子界面，逻辑参数调节</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>main.cc</p></li>
+<li><p>MainFrame.cc</p></li>
+<li><dl class="simple">
+<dt>MainFrame.hh</dt><dd><ul>
+<li><p>主控制界面</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>MainLinkdef.h</p></li>
+<li><p>Makefile</p></li>
+<li><p>Offline.cc</p></li>
+<li><dl class="simple">
+<dt>Offline.hh</dt><dd><ul>
+<li><p>离线分析主界面，离线分析功能代码</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>OfflineData.cc</p></li>
+<li><dl class="simple">
+<dt>OfflineData.hh</dt><dd><ul>
+<li><p>离线分析读取文件数据</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>pkuFFTW.cc</p></li>
+<li><dl class="simple">
+<dt>pkuFFTW.hh</dt><dd><ul>
+<li><p>基于FFTW3封装类</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Qdc.cc</p></li>
+<li><dl class="simple">
+<dt>Qdc.hh</dt><dd><ul>
+<li><p>子界面，用于 QDC 积分门窗的调节</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>ReadChanStatus.cc</p></li>
+<li><dl class="simple">
+<dt>ReadChanStatus.hh</dt><dd><ul>
+<li><p>子界面，查看DSP中抓取的波形及baseline</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Simulation.cc</p></li>
+<li><dl class="simple">
+<dt>Simulation.hh</dt><dd><ul>
+<li><p>未实现</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Table.cc</p></li>
+<li><dl class="simple">
+<dt>Table.hh</dt><dd><ul>
+<li><p>基类，用于参数调节界面</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>TriggerFilter.cc</p></li>
+<li><dl class="simple">
+<dt>TriggerFilter.hh</dt><dd><ul>
+<li><p>子界面，fast filter 参数调节界面</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>wuReadData.hh</dt><dd><ul>
+<li><p>模版函数，用来读取输入卡</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="makeevent">
+<h2>MakeEvent<a class="headerlink" href="#makeevent" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt>main.cc</dt><dd><ul>
+<li><p>主程序</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Makefile</p></li>
+<li><p>sort.cc</p></li>
+<li><dl class="simple">
+<dt>sort.hh</dt><dd><ul>
+<li><p>事件组装</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>UserDefine.hh</dt><dd><ul>
+<li><p>用户定义参数</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="onlinestattics">
+<h2>OnlineStattics<a class="headerlink" href="#onlinestattics" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>Linkdef.hh</p></li>
+<li><dl class="simple">
+<dt>main.cc</dt><dd><ul>
+<li><p>主程序</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Makefile</p></li>
+<li><p>Online.cc</p></li>
+<li><dl class="simple">
+<dt>Online.hh</dt><dd><ul>
+<li><p>在线监视界面</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>PixieOnline.config</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="XIAAPI.html" class="btn btn-neutral float-left" title="PIXIE-16 API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2020, Hongyi Wu(吴鸿毅).
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
