@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 日 3月 12 21:29:21 2023 (+0800)
-.. Last-Updated: 日 3月 12 21:47:06 2023 (+0800)
+.. Last-Updated: 二 2月 13 20:15:00 2024 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 1
+..     Update #: 4
 .. URL: http://wuhongyi.cn 
 
 =================================
@@ -15,7 +15,20 @@ Qt 图形交互界面
 
 **即将发布**
 
-进入 GUI 目录，执行以下命令即可弹出登陆界面
+.. code:: bash
+	  
+  unzip PixieSDK-master.zip
+  cd PixieSDK-master
+  mkdir build
+  cd build
+  cmake  -DCMAKE_INSTALL_PREFIX=../../pixiesdk ..
+  make
+  make install
+
+
+  
+
+进入 GUI_Qt 目录，执行以下命令即可弹出登陆界面
 
 .. code:: bash
 
@@ -25,7 +38,7 @@ Qt 图形交互界面
   
 .. image:: /_static/img/qtlogin.png
   
-输入用户名、密码后，弹出主控制界面。 Qt 版图形界面集成了参数设置、数据采集、在线监视等功能。
+输入用户名 (admin)、密码(admin)后，弹出主控制界面。 Qt 版图形界面集成了参数设置、数据采集、在线监视等功能。
 
 ---------------------------------
 主控制界面

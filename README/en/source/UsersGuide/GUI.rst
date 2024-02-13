@@ -4,13 +4,13 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:39:34 2019 (+0800)
-.. Last-Updated: 三 10月 12 15:13:38 2022 (+0800)
+.. Last-Updated: 日 2月  4 18:00:21 2024 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 7
+..     Update #: 8
 .. URL: http://wuhongyi.cn 
 
 =================================
-GUI
+ROOT GUI
 =================================
 
 After setting the parameter file in the **parset**, enter the GUI directory and execute the following command to pop up the main control interface.

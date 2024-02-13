@@ -44,7 +44,7 @@
     
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
-    <link rel="next" title="Installation of Software" href="INSTALL.html" />
+    <link rel="next" title="Installation of ROOT GUI Software" href="INSTALL.html" />
     <link rel="prev" title="GDDAQ" href="index.html" /> 
 </head>
 
@@ -103,7 +103,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Install</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="INSTALL.html">Installation of Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="INSTALL.html">Installation of ROOT GUI Software</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MYSQL.html">MYSQL</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Users Guide</span></p>
@@ -112,7 +112,7 @@
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/Crate.html">Crate</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/FIRMWARE.html">FIRMWARE</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/GUIqt.html">Qt GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="UsersGuide/GUI.html">GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/GUI.html">ROOT GUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/NOGUI.html">NOGUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/OnlineStattics.html">Online Stattics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/DecodeAndSortAll.html">数据解码</a></li>
@@ -210,7 +210,19 @@
 <p>A general-purpose digital data acquisition system (GDDAQ) has been developed at Peking University. This GDDAQ, composed of 16-channel Digital Pulse Processor Pixie-16 modules from XIA LLC, is a versatile, flexible, and easily expandable data acquisition system for nuclear physics research in China. The software used by this GDDAQ is based on the CERN ROOT framework and developed and tested in CentOS 7 LINUX operating platform. A flexible trigger system has also been developed to accommodate different experimental settings. A user-friendly software GUI helps users monitor and debug the detection system in real timer or offline. Many offline analysis tools have been developed to help users quickly optimize parameters for various types of detectors without the need for time-consuming tests and measurements. This GDDAQ has been successfully implemented in several nuclear physics experiments and its versatility and high efficiency have been demonstrated.</p>
 <section id="version">
 <h2>Version<a class="headerlink" href="#version" title="永久链接至标题">¶</a></h2>
-<p><strong>Version: 2023.04.10</strong></p>
+<ul class="simple">
+<li><p><strong>GUI Qt: 即将发布</strong></p></li>
+<li><dl class="simple">
+<dt><strong>GUI ROOT Version: 2023.04.10</strong></dt><dd><ul>
+<li><p><strong>RealDecoder Version: 2023.08.19</strong></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>DecodeAndSortAll Version: 2022.04.17</strong></p></li>
+<li><p><strong>EventBuilder Version: 2022.05.01</strong></p></li>
+<li><p><strong>DataAnalysis framework Version: 2022.12.25</strong></p></li>
+</ul>
 <p>Download the latest version:  <a class="reference external" href="https://github.com/wuhongyi/PKUXIADAQ">PKUXIADAQ</a></p>
 <p>manual version in web page:  <a class="reference external" href="http://wuhongyi.cn/PKUXIADAQ/">简体中文/English</a></p>
 <p>For web page MZTIO manual, please click: <a class="reference external" href="https://pkunucexp.github.io/MZTIO/">English/简体中文</a></p>
@@ -277,9 +289,10 @@
 <section id="file-contents">
 <h2>File contents<a class="headerlink" href="#file-contents" title="永久链接至标题">¶</a></h2>
 <p>The following files/folders are included in the user’s use package:</p>
+<p><strong>master branch</strong></p>
 <ul class="simple">
+<li><p>DataAnalysis(data analysis，optional)</p></li>
 <li><p>DecodeAndSortAll(Converting raw binary data to ROOT file)</p></li>
-<li><p>docs(Web page manual)</p></li>
 <li><p>EventBuilder(event builder，optional)</p></li>
 <li><dl class="simple">
 <dt>firmware</dt><dd><ul>
@@ -288,6 +301,9 @@
 </dd>
 </dl>
 </li>
+<li><p>GUI_Qt</p></li>
+<li><dl class="simple">
+<dt>GUI_ROOT</dt><dd><ul>
 <li><p>GUI</p></li>
 <li><p>icons(logo)</p></li>
 <li><dl class="simple">
@@ -301,15 +317,22 @@
 </li>
 <li><p>NOGUI(Non-graphics software)</p></li>
 <li><p>OnlineStattics(Online monitoring program)</p></li>
-<li><p>papers</p></li>
 <li><p>parset(parameter setting file)</p></li>
-<li><p>PlxSdk823.tar(Plx9054 driver)</p></li>
-<li><p>README(manual version in markdown)</p></li>
 <li><p>RealDecoder</p></li>
+<li><p>software(non-standard pixie16 driver API revised by Hongyi Wu)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>papers</p></li>
+<li><p>PlxSdk823.tar(Plx9054 driver)</p></li>
+</ul>
+<p><strong>pages branch</strong></p>
+<ul class="simple">
+<li><p>README(manual version in markdown)</p></li>
+<li><p>docs(Web page manual)</p></li>
 <li><p>README.md(introduction for home page)</p></li>
 <li><p>README.pdf(manual version in pdf)</p></li>
-<li><p>software(non-standard pixie16 driver API revised by Hongyi Wu)</p></li>
-<li><p>TestTool(testing tool for developer, not necessary for users)</p></li>
 </ul>
 </section>
 <hr class="docutils" />
@@ -346,7 +369,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="INSTALL.html" class="btn btn-neutral float-right" title="Installation of Software" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="INSTALL.html" class="btn btn-neutral float-right" title="Installation of ROOT GUI Software" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="index.html" class="btn btn-neutral float-left" title="GDDAQ" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
     </div>
 

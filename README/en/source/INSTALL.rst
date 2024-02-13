@@ -4,13 +4,13 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 三 10月 12 15:12:25 2022 (+0800)
+.. Last-Updated: 日 2月  4 17:58:45 2024 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 45
+..     Update #: 46
 .. URL: http://wuhongyi.cn 
 
 =================================   
-Installation of Software
+Installation of ROOT GUI Software
 =================================   
 
 
@@ -99,7 +99,7 @@ The steps for Installation
   ## Compile pixie16
    
   cd ~
-  cd PKUXIADAQ/software/
+  cd PKUXIADAQ/GUI_ROOT/software/
   make clean
   make 
    
@@ -111,7 +111,7 @@ The steps for Installation
 
   # Modify settings parameters
   cd ~
-  cd PKUXIADAQ/parset/
+  cd PKUXIADAQ/GUI_ROOT/parset/
    
    
   # Modify cfgPixie16.txt file。
@@ -131,7 +131,7 @@ The steps for Installation
   ## Compile graphical acquisition software
    
   cd ~
-  cd PKUXIADAQ/GUI/
+  cd PKUXIADAQ/GUI_ROOT/GUI/
   make clean
   make 
 
@@ -141,7 +141,7 @@ The steps for Installation
   ## Compile non-graphical acquisition software
    
   cd ~
-  cd PKUXIADAQ/NOGUI/
+  cd PKUXIADAQ/GUI_ROOT/NOGUI/
   make clean
   make 
 
@@ -151,11 +151,25 @@ The steps for Installation
   ## Compile online monitor program
    
   cd ~
-  cd PKUXIADAQ/OnlineStattics/
+  cd PKUXIADAQ/GUI_ROOT/OnlineStattics/
    
   make clean
   make 
 
+
+.. code:: bash
+	  
+  ##编译 ROOT web monitor program（optional）
+   
+  cd ~
+  cd PKUXIADAQ/GUI_ROOT/RealDecoder/
+
+   
+  make clean
+  make
+
+
+  
 
 .. code:: bash
 
@@ -204,6 +218,7 @@ Instruction for use
   ## CENTOS
   su # input ROOT password   
   ./Plx_load 9054
+  
   ## Ubuntu
   ## The 18th line of the file Plx_load needs to be modified:  export PLX_SDK_DIR=/home/[user name]/PKUXIADAQ/PlxSdk
   sudo ./Plx_load 9054
@@ -219,7 +234,7 @@ Instruction for use
   ## Start the graphical interface program
    
   cd ~
-  cd ~/PKUXIADAQ/GUI
+  cd ~/PKUXIADAQ/GUI_ROOT/GUI
   ./gddaq
    
   # The graphical interface will pop up.
@@ -235,7 +250,7 @@ Instruction for use
   ## Start the non-graphical interface program
    
   cd ~
-  cd ~/PKUXIADAQ/NOGUI
+  cd ~/PKUXIADAQ/GUI_ROOT/NOGUI
   ./gddaq
 	  
 
@@ -246,7 +261,7 @@ Instruction for use
    
    
   cd ~
-  cd PKUXIADAQ/OnlineStattics/
+  cd PKUXIADAQ/GUI_ROOT/OnlineStattics/
   ./online
    
   # The graphical interface will pop up.

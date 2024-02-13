@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>程序安装 &mdash; GDDAQ beta 文档</title>
+  <title>ROOT GUI 程序安装 &mdash; GDDAQ beta 文档</title>
   
 
   
@@ -96,10 +96,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">程序安装</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">程序安装</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id2">软件安装步骤</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">程序使用说明</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">常见安装错误</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ROOT GUI 程序安装</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">软件安装步骤</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">程序使用说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">常见安装错误</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#ubuntu-22-04">Ubuntu 22.04</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ubuntu-20-04">Ubuntu 20.04</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ubuntu-18-04">Ubuntu 18.04</a></li>
@@ -107,7 +107,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#centos7">CentOS7</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">9054 驱动加载错误</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">9054 驱动加载错误</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#teamviewer">TeamViewer</a></li>
 </ul>
 </li>
@@ -119,7 +119,7 @@
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/Crate.html">机箱</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/FIRMWARE.html">固件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/GUIqt.html">Qt 图形交互界面</a></li>
-<li class="toctree-l1"><a class="reference internal" href="UsersGuide/GUI.html">图形交互界面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/GUI.html">基于 ROOT 图形交互界面</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/NOGUI.html">非图形交互界面</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/OnlineStattics.html">在线统计</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/DecodeAndSortAll.html">数据解码</a></li>
@@ -197,7 +197,7 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>程序安装</li>
+      <li>ROOT GUI 程序安装</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -216,8 +216,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="id1">
-<h1>程序安装<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+  <section id="root-gui">
+<h1>ROOT GUI 程序安装<a class="headerlink" href="#root-gui" title="永久链接至标题">¶</a></h1>
 <p>本程序安装要求</p>
 <ul class="simple">
 <li><dl class="simple">
@@ -238,8 +238,8 @@
 <p>图形界面程序与非图形界面程序不能同时运行！</p>
 <p>图形界面程序与非图形界面程序不能同时运行！</p>
 </div>
-<section id="id2">
-<h2>软件安装步骤<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<section id="id1">
+<h2>软件安装步骤<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <ul class="simple">
 <li><p>删除个人目录下的老版本PKUXIADAQ文件夹</p></li>
 <li><p>将本程序包解压缩到个人目录中($HOME)</p></li>
@@ -294,7 +294,7 @@ make
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">##编译pixie16</span>
 
 <span class="nb">cd</span> ~
-<span class="nb">cd</span> PKUXIADAQ/software/
+<span class="nb">cd</span> PKUXIADAQ/GUI_ROOT/software/
 make clean
 make
 
@@ -303,7 +303,7 @@ make
 </div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#修改设置参数</span>
 <span class="nb">cd</span> ~
-<span class="nb">cd</span> PKUXIADAQ/parset/
+<span class="nb">cd</span> PKUXIADAQ/GUI_ROOT/parset/
 
 
 <span class="c1">#修改cfgPixie16.txt文件。</span>
@@ -321,7 +321,7 @@ make
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">##编译图形化获取软件</span>
 
 <span class="nb">cd</span> ~
-<span class="nb">cd</span> PKUXIADAQ/GUI/
+<span class="nb">cd</span> PKUXIADAQ/GUI_ROOT/GUI/
 make clean
 make
 </pre></div>
@@ -329,7 +329,7 @@ make
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">##编译非图形化获取软件</span>
 
 <span class="nb">cd</span> ~
-<span class="nb">cd</span> PKUXIADAQ/NOGUI/
+<span class="nb">cd</span> PKUXIADAQ/GUI_ROOT/NOGUI/
 make clean
 make
 </pre></div>
@@ -337,7 +337,7 @@ make
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">##编译在线监视程序</span>
 
 <span class="nb">cd</span> ~
-<span class="nb">cd</span> PKUXIADAQ/OnlineStattics/
+<span class="nb">cd</span> PKUXIADAQ/GUI_ROOT/OnlineStattics/
 
 
 make clean
@@ -347,7 +347,7 @@ make
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">##编译网页版在线监视（可选）</span>
 
 <span class="nb">cd</span> ~
-<span class="nb">cd</span> PKUXIADAQ/RealDecoder/
+<span class="nb">cd</span> PKUXIADAQ/GUI_ROOT/RealDecoder/
 
 
 make clean
@@ -376,10 +376,21 @@ make clean
 make
 </pre></div>
 </div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">## 数据分析程序（可选）</span>
+
+<span class="nb">cd</span> ~
+<span class="nb">cd</span> PKUXIADAQ/DataAnalysis/
+
+<span class="c1">#修改 UserDefine.hh，按照程序中的说明修改即可</span>
+<span class="c1"># 添加分析代码</span>
+make clean
+make
+</pre></div>
+</div>
 </section>
 <hr class="docutils" />
-<section id="id3">
-<h2>程序使用说明<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<section id="id2">
+<h2>程序使用说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <ul class="simple">
 <li><p>开机机箱后重启电脑(电脑必须晚于机箱开启)</p></li>
 <li><p>开启机箱后ROOT权限下加载Plx9054驱动</p></li>
@@ -393,6 +404,7 @@ make
 <span class="c1">##  CENTOS</span>
 su <span class="c1">#输入ROOT密码</span>
 ./Plx_load <span class="m">9054</span>
+
 <span class="c1">## Ubuntu</span>
 <span class="c1">## 需要修改文件 Plx_load 第18行为 export PLX_SDK_DIR=/home/[user name]/PKUXIADAQ/PlxSdk</span>
 sudo ./Plx_load <span class="m">9054</span>
@@ -405,7 +417,7 @@ sudo ./Plx_load <span class="m">9054</span>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">##启动图形界面程序</span>
 
 <span class="nb">cd</span> ~
-<span class="nb">cd</span> ~/PKUXIADAQ/GUI
+<span class="nb">cd</span> ~/PKUXIADAQ/GUI_ROOT/GUI
 ./gddaq
 
 
@@ -420,7 +432,7 @@ sudo ./Plx_load <span class="m">9054</span>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">##启动非图形界面程序</span>
 
 <span class="nb">cd</span> ~
-<span class="nb">cd</span> ~/PKUXIADAQ/NOGUI
+<span class="nb">cd</span> ~/PKUXIADAQ/GUI_ROOT/NOGUI
 ./gddaq
 
 根据提示输入控制命令
@@ -429,7 +441,7 @@ sudo ./Plx_load <span class="m">9054</span>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">##启动在线监视程序</span>
 
 <span class="nb">cd</span> ~
-<span class="nb">cd</span> PKUXIADAQ/OnlineStattics/
+<span class="nb">cd</span> PKUXIADAQ/GUI_ROOT/OnlineStattics/
 ./online
 
 
@@ -451,8 +463,8 @@ sudo ./Plx_load <span class="m">9054</span>
 </pre></div>
 </div>
 </section>
-<section id="id4">
-<h2>常见安装错误<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<section id="id3">
+<h2>常见安装错误<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <section id="ubuntu-22-04">
 <h3>Ubuntu 22.04<a class="headerlink" href="#ubuntu-22-04" title="永久链接至标题">¶</a></h3>
 <p>未进行测试</p>
@@ -534,8 +546,8 @@ endif
 </div>
 </section>
 </section>
-<section id="id5">
-<h2>9054 驱动加载错误<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<section id="id4">
+<h2>9054 驱动加载错误<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
 <p>如果你使用 NI PCIe-8381, 出现无法加载驱动的情况，那么如下图所示，检查拨盘 CLOCK MODE 是否处于 ON 状态。</p>
 <img alt="_images/pcie8381.jpg" src="_images/pcie8381.jpg" />
 </section>

@@ -44,7 +44,7 @@
     
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
-    <link rel="next" title="程序安装" href="INSTALL.html" />
+    <link rel="next" title="ROOT GUI 程序安装" href="INSTALL.html" />
     <link rel="prev" title="GDDAQ" href="index.html" /> 
 </head>
 
@@ -103,7 +103,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">程序安装</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="INSTALL.html">程序安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="INSTALL.html">ROOT GUI 程序安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MYSQL.html">MYSQL</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">用户指南</span></p>
@@ -112,7 +112,7 @@
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/Crate.html">机箱</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/FIRMWARE.html">固件</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/GUIqt.html">Qt 图形交互界面</a></li>
-<li class="toctree-l1"><a class="reference internal" href="UsersGuide/GUI.html">图形交互界面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UsersGuide/GUI.html">基于 ROOT 图形交互界面</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/NOGUI.html">非图形交互界面</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/OnlineStattics.html">在线统计</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UsersGuide/DecodeAndSortAll.html">数据解码</a></li>
@@ -216,8 +216,13 @@
 <h2>版本<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <ul class="simple">
 <li><p><strong>GUI Qt: 即将发布</strong></p></li>
-<li><p><strong>GUI ROOT Version: 2023.04.10</strong></p></li>
+<li><dl class="simple">
+<dt><strong>GUI ROOT Version: 2023.04.10</strong></dt><dd><ul>
 <li><p><strong>RealDecoder Version: 2023.08.19</strong></p></li>
+</ul>
+</dd>
+</dl>
+</li>
 <li><p><strong>DecodeAndSortAll Version: 2022.04.17</strong></p></li>
 <li><p><strong>EventBuilder Version: 2022.05.01</strong></p></li>
 <li><p><strong>DataAnalysis framework Version: 2022.12.25</strong></p></li>
@@ -288,9 +293,10 @@
 <section id="id6">
 <h2>文件目录<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
 <p>用户使用程序包中包含以下文件/文件夹:</p>
+<p><strong>master 分支</strong></p>
 <ul class="simple">
+<li><p>DataAnalysis(数据分析框架)</p></li>
 <li><p>DecodeAndSortAll(将原始二进制数据转为 ROOT)</p></li>
-<li><p>docs(使用说明书，网页版)</p></li>
 <li><p>EventBuilder(事件重构程序，可选)</p></li>
 <li><dl class="simple">
 <dt>firmware(固件)</dt><dd><ul>
@@ -299,6 +305,9 @@
 </dd>
 </dl>
 </li>
+<li><p>GUI_Qt</p></li>
+<li><dl class="simple">
+<dt>GUI_ROOT</dt><dd><ul>
 <li><p>GUI(图形软件)</p></li>
 <li><p>icons(logo)</p></li>
 <li><dl class="simple">
@@ -312,15 +321,22 @@
 </li>
 <li><p>NOGUI(非图形软件)</p></li>
 <li><p>OnlineStattics(在线监视程序)</p></li>
-<li><p>papers</p></li>
 <li><p>parset(参数设置文件)</p></li>
-<li><p>PlxSdk823.tar(Plx9054 驱动)</p></li>
-<li><p>README(markdown 版本说明书)</p></li>
 <li><p>RealDecoder(网页版在线监视，可选)</p></li>
+<li><p>software(非标准驱动，吴鸿毅修改)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>papers</p></li>
+<li><p>PlxSdk823.tar(Plx9054 驱动)</p></li>
+</ul>
+<p><strong>pages 分支</strong></p>
+<ul class="simple">
+<li><p>README(markdown 版本说明书)</p></li>
+<li><p>docs(使用说明书，网页版)</p></li>
 <li><p>README.md(主页介绍)</p></li>
 <li><p>README.pdf(pdf 版本说明书)</p></li>
-<li><p>software(非标准驱动，吴鸿毅修改)</p></li>
-<li><p>TestTool(开发者测试工具，用户不需要！！！)</p></li>
 </ul>
 </section>
 <hr class="docutils" />
@@ -358,7 +374,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="INSTALL.html" class="btn btn-neutral float-right" title="程序安装" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="INSTALL.html" class="btn btn-neutral float-right" title="ROOT GUI 程序安装" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="index.html" class="btn btn-neutral float-left" title="GDDAQ" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
     </div>
 

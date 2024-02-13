@@ -4,18 +4,18 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:39:34 2019 (+0800)
-.. Last-Updated: 三 10月 12 15:13:37 2022 (+0800)
+.. Last-Updated: 日 2月  4 18:00:18 2024 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 7
+..     Update #: 8
 .. URL: http://wuhongyi.cn 
 
 =================================
-图形交互界面
+基于 ROOT 图形交互界面
 =================================
 
 配置好 **parset** 内参数文件
 
-进入 GUI 目录，执行以下命令即可弹出主控制界面
+进入 GUI_ROOT/GUI 目录，执行以下命令即可弹出主控制界面
 
 .. code:: bash
 

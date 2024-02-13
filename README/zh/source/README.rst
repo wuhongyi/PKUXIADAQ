@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 20:19:34 2019 (+0800)
-.. Last-Updated: 六 8月 19 15:07:09 2023 (+0800)
+.. Last-Updated: 日 2月  4 17:05:32 2024 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 49
+..     Update #: 50
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -19,10 +19,9 @@
 版本
 ---------------------------------
 
-
 - **GUI Qt: 即将发布**  
 - **GUI ROOT Version: 2023.04.10**  
-- **RealDecoder Version: 2023.08.19**  
+   - **RealDecoder Version: 2023.08.19**  
 - **DecodeAndSortAll Version: 2022.04.17**
 - **EventBuilder Version: 2022.05.01**
 - **DataAnalysis framework Version: 2022.12.25**
@@ -97,28 +96,37 @@ MZTIO 网页版说明书请访问:  `简体中文/English <http://wuhongyi.cn/MZ
 
 用户使用程序包中包含以下文件/文件夹:
 
+**master 分支**
+
+- DataAnalysis(数据分析框架)
 - DecodeAndSortAll(将原始二进制数据转为 ROOT)
-- docs(使用说明书，网页版)
 - EventBuilder(事件重构程序，可选)
 - firmware(固件)
 	- firmware/firmware.md(历史各版本固件说明)
-- GUI(图形软件)
-- icons(logo)
-- mysql(特定实验专用，单一用户不建议使用)
-	- createdb
-	- onlline
-	- www
-- NOGUI(非图形软件)
-- OnlineStattics(在线监视程序)
+- GUI_Qt
+- GUI_ROOT
+   - GUI(图形软件)
+   - icons(logo)
+   - mysql(特定实验专用，单一用户不建议使用)
+	   - createdb
+	   - onlline
+	   - www
+   - NOGUI(非图形软件)
+   - OnlineStattics(在线监视程序)
+   - parset(参数设置文件)
+   - RealDecoder(网页版在线监视，可选)
+   - software(非标准驱动，吴鸿毅修改)
 - papers
-- parset(参数设置文件)
 - PlxSdk823.tar(Plx9054 驱动)
+
+
+**pages 分支**
+
 - README(markdown 版本说明书)
-- RealDecoder(网页版在线监视，可选)
+- docs(使用说明书，网页版)
 - README.md(主页介绍)
 - README.pdf(pdf 版本说明书)
-- software(非标准驱动，吴鸿毅修改)
-- TestTool(开发者测试工具，用户不需要！！！)
+
 
 ----
 

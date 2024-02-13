@@ -4,13 +4,13 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 六 8月 19 14:31:00 2023 (+0800)
+.. Last-Updated: 日 2月  4 17:58:47 2024 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 46
+..     Update #: 47
 .. URL: http://wuhongyi.cn 
 
 =================================   
-程序安装
+ROOT GUI 程序安装
 =================================   
 
 本程序安装要求
@@ -93,7 +93,7 @@
   ##编译pixie16
    
   cd ~
-  cd PKUXIADAQ/software/
+  cd PKUXIADAQ/GUI_ROOT/software/
   make clean
   make 
    
@@ -105,7 +105,7 @@
 
   #修改设置参数
   cd ~
-  cd PKUXIADAQ/parset/
+  cd PKUXIADAQ/GUI_ROOT/parset/
    
    
   #修改cfgPixie16.txt文件。
@@ -125,7 +125,7 @@
   ##编译图形化获取软件
    
   cd ~
-  cd PKUXIADAQ/GUI/
+  cd PKUXIADAQ/GUI_ROOT/GUI/
   make clean
   make 
 
@@ -135,7 +135,7 @@
   ##编译非图形化获取软件
    
   cd ~
-  cd PKUXIADAQ/NOGUI/
+  cd PKUXIADAQ/GUI_ROOT/NOGUI/
   make clean
   make
 
@@ -145,7 +145,7 @@
   ##编译在线监视程序
    
   cd ~
-  cd PKUXIADAQ/OnlineStattics/
+  cd PKUXIADAQ/GUI_ROOT/OnlineStattics/
 
    
   make clean
@@ -157,7 +157,7 @@
   ##编译网页版在线监视（可选）
    
   cd ~
-  cd PKUXIADAQ/RealDecoder/
+  cd PKUXIADAQ/GUI_ROOT/RealDecoder/
 
    
   make clean
@@ -192,6 +192,21 @@
   make clean
   make
 
+
+.. code:: bash  
+
+  ## 数据分析程序（可选）
+   
+  cd ~
+  cd PKUXIADAQ/DataAnalysis/
+   
+  #修改 UserDefine.hh，按照程序中的说明修改即可
+  # 添加分析代码 
+  make clean
+  make
+
+
+  
 ----
   
 ---------------------------------
@@ -212,6 +227,7 @@
   ##  CENTOS
   su #输入ROOT密码
   ./Plx_load 9054
+  
   ## Ubuntu
   ## 需要修改文件 Plx_load 第18行为 export PLX_SDK_DIR=/home/[user name]/PKUXIADAQ/PlxSdk
   sudo ./Plx_load 9054
@@ -226,7 +242,7 @@
   ##启动图形界面程序
    
   cd ~
-  cd ~/PKUXIADAQ/GUI
+  cd ~/PKUXIADAQ/GUI_ROOT/GUI
   ./gddaq
    
    
@@ -243,7 +259,7 @@
   ##启动非图形界面程序
    
   cd ~
-  cd ~/PKUXIADAQ/NOGUI
+  cd ~/PKUXIADAQ/GUI_ROOT/NOGUI
   ./gddaq
    
   根据提示输入控制命令	  
@@ -254,7 +270,7 @@
   ##启动在线监视程序
    
   cd ~
-  cd PKUXIADAQ/OnlineStattics/
+  cd PKUXIADAQ/GUI_ROOT/OnlineStattics/
   ./online
    
    
