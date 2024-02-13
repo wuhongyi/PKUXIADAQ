@@ -1,0 +1,192 @@
+## -----------------------------------------------------------------------------
+##Designation of the chassis number,choose in 0-15
+
+CrateID 0
+
+## Register parameters
+
+SettingPars ../parset/gem.set
+
+
+## -----------------------------------------------------------------------------
+## Online Mode
+
+# module number and slot number
+# The first number mean how many modules, other number means every module slot number
+ModuleSlot 4 2 3 4 5 6 7 8
+
+
+# Only use in NOGUI, unit: second
+AutoRunModeTimes   1800
+
+## -----------------------------------------------------------------------------
+## Offline Mode
+
+# module number and samping rate
+# The first number mean how many modules, other number means every module samping rate(100/250/500)
+ModuleSampingRate 4 250 250 250 250 500 250 250 500
+
+# module number and bits
+# The first number mean how many modules, other number means every module bits(12/14/16)
+ModuleBits 4 14 14 14 14 14 16 14
+
+
+## -----------------------------------------------------------------------------
+## firmware
+
+## The user does not modify the following parts
+
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+
+# standard firmware
+100M12bit_sys ../../firmware/pixie16_revd_12b100m_firmware_release/syspixie16_revdgeneral_r33157.bin
+100M12bit_fip ../../firmware/pixie16_revd_12b100m_firmware_release/fippixie16_revdgeneral_r32495.bin
+100M12bit_dsplst ../../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.lst
+100M12bit_dspldr ../../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.ldr
+100M12bit_dspvar ../../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.var
+
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+
+# 4-ch debug signals of the front panel A to the chassis backplane, TrigConfig3[0] control
+# send the external timestamp clock and clear as well as the run inhibit to the backplane. TrigConfig3[1/2] control front panel/backplane
+# Multiplicity result output from RJ45 and front panel A
+# NoNegEnergy && AlwaysCompEnergy
+# waveform buffer is full,record header
+# down frequency output
+# speed up the event processing & removed a few unnecessary processing routines
+# Discard a list mode event if computed event energy is smaller than EMIN (EnergyLow)
+100M14bit_sys ../../firmware/Pixie16_RevF_14_100_PKU_07042023/syspixie16_revfpku_adc100hz_r44498.bin
+100M14bit_fip ../../firmware/Pixie16_RevF_14_100_PKU_07042023/fippixie16_revfpku_14b100m_r39574.bin
+100M14bit_dsplst ../../firmware/Pixie16_RevF_14_100_PKU_07042023/Pixie16DSP_revfpku_14b100m_r49064.lst
+100M14bit_dspldr ../../firmware/Pixie16_RevF_14_100_PKU_07042023/Pixie16DSP_revfpku_14b100m_r49064.ldr
+100M14bit_dspvar ../../firmware/Pixie16_RevF_14_100_PKU_07042023/Pixie16DSP_revfpku_14b100m_r49064.var
+
+
+# 4-ch debug signals of the front panel A to the chassis backplane, TrigConfig3[0] control
+# send the external timestamp clock and clear as well as the run inhibit to the backplane. TrigConfig3[1/2] control front panel/backplane
+# Multiplicity result output from RJ45 and front panel A
+# NoNegEnergy && AlwaysCompEnergy
+# waveform buffer is full,record header
+# down frequency output
+# speed up the event processing & removed a few unnecessary processing routines
+# 100M14bit_sys ../../firmware/pixie16_revfpku_14b100m_firmware_release_06092020/syspixie16_revfpku_adc100hz_r44498.bin
+# 100M14bit_fip ../../firmware/pixie16_revfpku_14b100m_firmware_release_06092020/fippixie16_revfpku_14b100m_r39574.bin
+# 100M14bit_dsplst ../../firmware/pixie16_revfpku_14b100m_firmware_release_06092020/Pixie16DSP_revfpku_14b100m_r40391.lst
+# 100M14bit_dspldr ../../firmware/pixie16_revfpku_14b100m_firmware_release_06092020/Pixie16DSP_revfpku_14b100m_r40391.ldr
+# 100M14bit_dspvar ../../firmware/pixie16_revfpku_14b100m_firmware_release_06092020/Pixie16DSP_revfpku_14b100m_r40391.var
+
+# Standard firmware
+# 100M14bit_sys ../../firmware/pixie16_revf_general_14b100m_firmware_release/syspixie16_revfgeneral_adc100mhz_r33338.bin
+# 100M14bit_fip ../../firmware/pixie16_revf_general_14b100m_firmware_release/fippixie16_revfgeneral_14b100m_r36263.bin
+# 100M14bit_dsplst ../../firmware/pixie16_revf_general_14b100m_firmware_release/Pixie16DSP_revfgeneral_14b100m_r37640.lst
+# 100M14bit_dspldr ../../firmware/pixie16_revf_general_14b100m_firmware_release/Pixie16DSP_revfgeneral_14b100m_r37640.ldr
+# 100M14bit_dspvar ../../firmware/pixie16_revf_general_14b100m_firmware_release/Pixie16DSP_revfgeneral_14b100m_r37640.var
+
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+
+# Standard firmware
+250M12bit_sys ../../firmware/pixie16_revf_12b250m_firmware_release/syspixie16_revfgeneral_adc250mhz_r33339.bin
+250M12bit_fip ../../firmware/pixie16_revf_12b250m_firmware_release/fippixie16_revfgeneral_12b250m_r42081.bin
+250M12bit_dsplst ../../firmware/pixie16_revf_12b250m_firmware_release/Pixie16DSP_revfgeneral_12b250m_r41847.lst
+250M12bit_dspldr ../../firmware/pixie16_revf_12b250m_firmware_release/Pixie16DSP_revfgeneral_12b250m_r41847.ldr
+250M12bit_dspvar ../../firmware/pixie16_revf_12b250m_firmware_release/Pixie16DSP_revfgeneral_12b250m_r41847.var
+
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+
+# multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
+# send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
+# The value is set to 0 when the calculated energy is negative.
+# The pileup event energy is not set to 0, output calculated values directly.
+# 4-ch debug signals of the front panel A to the chassis backplane’s TriggerAll bits 28 to 31. TrigConfig3[0] control
+# In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
+# speed up the event processing & removed a few unnecessary processing routines
+250M14bit_sys ../../firmware/pixie16_revfpku_14b250m_release_11032020/syspixie16_revfpku_adc250hz_r44499.bin
+250M14bit_fip ../../firmware/pixie16_revfpku_14b250m_release_11032020/fippixie16_revfpku_14b250m_r45226.bin
+250M14bit_dsplst ../../firmware/pixie16_revfpku_14b250m_release_11032020/Pixie16DSP_revfpku_14b250m_r44496.lst
+250M14bit_dspldr ../../firmware/pixie16_revfpku_14b250m_release_11032020/Pixie16DSP_revfpku_14b250m_r44496.ldr
+250M14bit_dspvar ../../firmware/pixie16_revfpku_14b250m_release_11032020/Pixie16DSP_revfpku_14b250m_r44496.var
+
+# Standard firmware
+# 250M14bit_sys ../../firmware/pixie16_revf_general_14b250m_20151027/syspixie16_revfgeneral_adc250mhz_r33339.bin
+# 250M14bit_fip ../../firmware/pixie16_revf_general_14b250m_20151027/fippixie16_revfgeneral_14b250m_r33332.bin
+# 250M14bit_dsplst ../../firmware/pixie16_revf_general_14b250m_20151027/Pixie16DSP_revfgeneral_14b250m_r33356.lst
+# 250M14bit_dspldr ../../firmware/pixie16_revf_general_14b250m_20151027/Pixie16DSP_revfgeneral_14b250m_r33356.ldr
+# 250M14bit_dspvar ../../firmware/pixie16_revf_general_14b250m_20151027/Pixie16DSP_revfgeneral_14b250m_r33356.var
+
+
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+
+# multiplicity results can be output regardless of MultiplicityMaskHigh[31]=0 or 1. Output from front panel A and RJ45.
+# send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
+# The value is set to 0 when the calculated energy is negative.
+# The pileup event energy is not set to 0, output calculated values directly.
+# 4-ch debug signals of the front panel A to the chassis backplane’s TriggerAll bits 28 to 31. TrigConfig3[0] control
+# In the record waveform mode, when the waveform buffer is full, the module is not busy, and the header continues to record. In this case, the output event data has no waveform.
+# speed up the event processing & removed a few unnecessary processing routines
+250M16bit_sys ../../firmware/pixie16_revfpku_16b250m_release_11022020/syspixie16_revfpku_adc250hz_r44499.bin
+250M16bit_fip ../../firmware/pixie16_revfpku_16b250m_release_11022020/fippixie16_revfpku_16b250m_r45222.bin
+250M16bit_dsplst ../../firmware/pixie16_revfpku_16b250m_release_11022020/Pixie16DSP_revfpku_16b250m_r44497.lst
+250M16bit_dspldr ../../firmware/pixie16_revfpku_16b250m_release_11022020/Pixie16DSP_revfpku_16b250m_r44497.ldr
+250M16bit_dspvar ../../firmware/pixie16_revfpku_16b250m_release_11022020/Pixie16DSP_revfpku_16b250m_r44497.var
+
+# Standard firmware
+# 250M16bit_sys ../../firmware/pixie16_revf_general_16b250m_20220502/syspixie16_revfgeneral_adc250mhz_r33339.bin
+# 250M16bit_fip ../../firmware/pixie16_revf_general_16b250m_20220502/fippixie16_revfgeneral_16b250m_r42083.bin
+# 250M16bit_dsplst ../../firmware/pixie16_revf_general_16b250m_20220502/Pixie16DSP_revfgeneral_16b250m_r41808.lst
+# 250M16bit_dspldr ../../firmware/pixie16_revf_general_16b250m_20220502/Pixie16DSP_revfgeneral_16b250m_r41808.ldr
+# 250M16bit_dspvar ../../firmware/pixie16_revf_general_16b250m_20220502/Pixie16DSP_revfgeneral_16b250m_r41808.var
+
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+
+# Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
+# send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
+# Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
+# The value is set to 0 when the calculated energy is negative.
+# The pileup event energy is not set to 0, output calculated values directly.
+# Discard a list mode event if computed event energy is smaller than EMIN (EnergyLow)
+500M12bit_sys ../../firmware/xia_pixie-16_15-500-12_1.0.0_pku/sys.bin
+500M12bit_fip ../../firmware/xia_pixie-16_15-500-12_1.0.0_pku/fippi.bin
+500M12bit_dsplst ../../firmware/xia_pixie-16_15-500-12_1.0.0_pku/dsp.lst
+500M12bit_dspldr ../../firmware/xia_pixie-16_15-500-12_1.0.0_pku/dsp.ldr
+500M12bit_dspvar ../../firmware/xia_pixie-16_15-500-12_1.0.0_pku/dsp.var
+
+
+# Standard firmware
+# 500M12bit_sys ../../firmware/pixie16_revf_12b500m_20221117/syspixie16_revfgeneral_adc500mhz_r31567.bin
+# 500M12bit_fip ../../firmware/pixie16_revf_12b500m_20221117/fippixie16_revfgeneral_12b500m_r48132.bin
+# 500M12bit_dsplst ../../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.lst
+# 500M12bit_dspldr ../../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.ldr
+# 500M12bit_dspvar ../../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.var
+
+
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+
+
+# Output 4-ch debug signals of the front panel A to the chassis backplane's TriggerAll bits [28:31], TrigConfig3[0] control enable/disable
+# send the external timestamp clock and clear as well as the run inhibit to the backplane using the MZTIO card. TrigConfig3[1/2] control front panel/backplane
+# Multiplicity results output from RJ45 port regardless of MultiplicityMaskHigh[31]=0 or 1;
+# The value is set to 0 when the calculated energy is negative.
+# The pileup event energy is not set to 0, output calculated values directly.
+500M14bit_sys ../../firmware/pixie16_revf_pku_14b500m_20221209/syspixie16_revfpku_adc500hz_r44500.bin
+500M14bit_fip ../../firmware/pixie16_revf_pku_14b500m_20221209/fippixie16_revfgeneral_14b500m_r48206.bin
+500M14bit_dsplst ../../firmware/pixie16_revf_pku_14b500m_20221209/Pixie16DSP_revfpku_14b500m_r46426.lst
+500M14bit_dspldr ../../firmware/pixie16_revf_pku_14b500m_20221209/Pixie16DSP_revfpku_14b500m_r46426.ldr
+500M14bit_dspvar ../../firmware/pixie16_revf_pku_14b500m_20221209/Pixie16DSP_revfpku_14b500m_r46426.var
+
+
+# Standard firmware
+# 500M14bit_sys ../../firmware/pixie16_revf_14b500m_20221205/syspixie16_revfgeneral_adc500mhz_r33341.bin
+# 500M14bit_fip ../../firmware/pixie16_revf_14b500m_20221205/fippixie16_revfgeneral_14b500m_r48206.bin
+# 500M14bit_dsplst ../../firmware/pixie16_revf_14b500m_20221205/Pixie16DSP_revfgeneral_14b500m_r45762.lst
+# 500M14bit_dspldr ../../firmware/pixie16_revf_14b500m_20221205/Pixie16DSP_revfgeneral_14b500m_r45762.ldr
+# 500M14bit_dspvar ../../firmware/pixie16_revf_14b500m_20221205/Pixie16DSP_revfgeneral_14b500m_r45762.var
+
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$

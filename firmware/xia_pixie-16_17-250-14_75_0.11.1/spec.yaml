@@ -1,0 +1,29 @@
+product:
+  name: Pixie-16
+  module_tag: 17-250-14
+release:
+  date: 2023-10-17T20:21:19Z
+  version: 0.11.0
+  id: '75'
+device:
+  dsp:
+    version: '3.3B'
+    crc32: '0xC5932C60'
+    filename: dsp.ldr
+  fippi:
+    - version: '0x3C41'
+      crc32: '0x38465EC1'
+      filename: fippi.bin
+      mask: '0x0000000F'
+  lst:
+    version: '3.3B'
+    crc32: '0xA2067117'
+    filename: dsp.lst
+  sys:
+    version: '0x003C_A941'
+    crc32: '0xAED3AA30'
+    filename: sys.bin
+  var:
+    version: '3.3B'
+    crc32: '0xE161B44C'
+    filename: dsp.var

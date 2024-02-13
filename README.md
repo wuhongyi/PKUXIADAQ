@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 六 8月 19 11:13:25 2023 (+0800)
+;; Last-Updated: 日 2月  4 17:05:46 2024 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 184
+;;     Update #: 186
 ;; URL: http://wuhongyi.cn -->
 
 # A general-purpose digital data acquisition system(GDDAQ)
@@ -24,7 +24,7 @@ A general-purpose digital data acquisition system (GDDAQ) has been developed at 
 ## Version
 
 - **GUI Qt: coming soon**  
-- **GUI ROOT Version: 2023.04.10**  
+   - **GUI ROOT Version: 2023.04.10**  
 - **RealDecoder Version: 2023.08.19**  
 - **DecodeAndSortAll Version: 2022.04.17**
 - **EventBuilder Version: 2022.05.01**
@@ -93,28 +93,37 @@ Currently we have tested most types of modules, so you can run the type of modul
 
 The following files/folders are included in the user's use package:
 
+**master branch**
+
+- DataAnalysis(data analysis，optional)
 - DecodeAndSortAll(Converting raw binary data to ROOT file)
-- docs(Web page manual)
 - EventBuilder(event builder，optional)
 - firmware
 	- firmware/firmware.md(History of firmware)
-- GUI
-- icons(logo)
-- mysql
-	- createdb
-	- onlline
-	- www
-- NOGUI(Non-graphics software)
-- OnlineStattics(Online monitoring program)
+- GUI_Qt
+- GUI_ROOT
+   - GUI
+   - icons(logo)
+   - mysql
+   	   - createdb
+	   - onlline
+	   - www
+   - NOGUI(Non-graphics software)
+   - OnlineStattics(Online monitoring program)
+   - parset(parameter setting file)
+   - RealDecoder
+   - software(non-standard pixie16 driver API revised by Hongyi Wu)
 - papers
-- parset(parameter setting file)
 - PlxSdk823.tar(Plx9054 driver)
+
+
+**pages branch**
+
 - README(manual version in markdown)
-- RealDecoder
+- docs(Web page manual)
 - README.md(introduction for home page)
 - README.pdf(manual version in pdf)
-- software(non-standard pixie16 driver API revised by Hongyi Wu)
-- TestTool(testing tool for developer, not necessary for users)
+
 
 ----
 

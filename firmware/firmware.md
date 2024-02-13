@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 12月 13 09:41:49 2016 (+0800)
-;; Last-Updated: 日 9月 17 16:32:03 2023 (+0800)
+;; Last-Updated: 一 2月  5 21:53:10 2024 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 64
+;;     Update #: 66
 ;; URL: http://wuhongyi.cn -->
 
 # FIRMWARE
@@ -365,6 +365,13 @@ pixie16_revf_general_16b250m_20220502
 	
 - xia_pixie-16_17-250-14_75_0.10.0 	 standard firmware
 
-	
+- xia_pixie-16_17-125-14_75_0.2.0 	 standard firmware
+
+- xia_pixie-16_17-250-14_75_0.11.1 	 standard firmware
+
+
+
+
+
 
 <!-- firmware.md ends here -->
