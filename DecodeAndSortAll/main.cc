@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:01:31 2016 (+0800)
-// Last-Updated: 日 5月  1 20:40:33 2022 (+0800)
+// Last-Updated: 六 2月 17 13:56:30 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 16
+//     Update #: 19
 // URL: http://wuhongyi.cn 
 
 /************************************
@@ -27,14 +27,14 @@
 #include <cstdlib>
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-const char gVERSION[] = "Version: DecodeAndSortAll - 2022.04.17";
+const char gVERSION[] = "Version: DecodeAndSortAll - 2024.02.17";
 
 int main(int argc, char *argv[])
 {
   std::cout<<gVERSION<<std::endl;
   std::cout<<"Copyright @ Hongyi Wu (wuhongyi@qq.com/wuhongyi@pku.edu.cn)"<<std::endl;
   int craten = 0;
-  int runnumber[8];
+  int runnumber[4];
   
 #ifdef Crate0
   TString RunNumber0(argv[1]);
@@ -54,26 +54,6 @@ int main(int argc, char *argv[])
 #ifdef Crate3
   TString RunNumber3(argv[4]);
   runnumber[craten] = RunNumber3.Atoi();
-  craten++;
-#endif
-#ifdef Crate4
-  TString RunNumber4(argv[5]);
-  runnumber[craten] = RunNumber4.Atoi();
-  craten++;
-#endif
-#ifdef Crate5
-  TString RunNumber5(argv[6]);
-  runnumber[craten] = RunNumber5.Atoi();
-  craten++;
-#endif
-#ifdef Crate6
-  TString RunNumber6(argv[7]);
-  runnumber[craten] = RunNumber6.Atoi();
-  craten++;
-#endif
-#ifdef Crate7
-  TString RunNumber7(argv[8]);
-  runnumber[craten] = RunNumber7.Atoi();
   craten++;
 #endif
 

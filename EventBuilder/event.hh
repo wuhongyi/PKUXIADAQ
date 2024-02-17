@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 9月 21 16:28:28 2020 (+0800)
-// Last-Updated: 日 5月  1 20:28:27 2022 (+0800)
+// Last-Updated: 六 2月 17 14:23:13 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 18
+//     Update #: 19
 // URL: http://wuhongyi.cn 
 
 #ifndef _EVENT_H_
@@ -30,6 +30,9 @@
 #include <climits>
 #include <cmath>
 // #include <unistd.h> 
+
+#define MAXBOARD  24  //预设最大24个
+#define MAXCHANNEL 64
 
 typedef struct DATAEVENT
 {
@@ -92,11 +95,11 @@ public:
   void EndEvent();
 
 private:
-  Short_t flagdet[8][208];
-  Short_t flagdetid[8][208];
-  double  calia0[8][208];
-  double  calia1[8][208];
-  double  calia2[8][208];
+  Short_t flagdet[4][MAXBOARD][MAXCHANNEL];
+  Short_t flagdetid[4][MAXBOARD][MAXCHANNEL];
+  double  calia0[4][MAXBOARD][MAXCHANNEL];
+  double  calia1[4][MAXBOARD][MAXCHANNEL];
+  double  calia2[4][MAXBOARD][MAXCHANNEL];
 
 
   DATAEVENT hit;

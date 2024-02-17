@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:31 2016 (+0800)
-// Last-Updated: 日 4月 17 19:45:25 2022 (+0800)
+// Last-Updated: 六 2月 17 13:49:50 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 50
+//     Update #: 53
 // URL: http://wuhongyi.cn 
 
 #ifndef _R2ROOT_H_
@@ -74,7 +74,7 @@ struct eventdata
 class r2root
 {
 public:
-  r2root(int run[8]);
+  r2root(int run[4]);
   virtual ~r2root();
 
   void Process();
@@ -105,9 +105,9 @@ private:
   Long64_t flagkey;
   eventdata mapvalue;
 
-  Short_t timeoffset[8][256];
-  UShort_t chlow[8][256];
-  UShort_t chhigh[8][256];  
+  Short_t timeoffset[4][MAXBOARD][MAXCHANNEL];
+  UShort_t chlow[4][MAXBOARD][MAXCHANNEL];
+  UShort_t chhigh[4][MAXBOARD][MAXCHANNEL];  
   
 private:
   Short_t sr;//sampling rate

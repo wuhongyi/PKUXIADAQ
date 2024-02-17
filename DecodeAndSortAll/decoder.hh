@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:06 2016 (+0800)
-// Last-Updated: 日 4月 17 18:49:20 2022 (+0800)
+// Last-Updated: 六 2月 17 13:41:13 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 28
+//     Update #: 32
 // URL: http://wuhongyi.cn 
 
 // 20170825 add external clock timestamp 
@@ -25,6 +25,7 @@
 #include <stdio.h>
 
 #define MAXBOARD  24  //预设最大24个
+#define MAXCHANNEL 64
 #define MAXTRACEN 100000 // maximum number of trace points
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -36,6 +37,9 @@ public:
 
   inline void setsamplerate(short sr) {samplerate = sr;}//MHz
   inline short getsamplerate() {return samplerate;}
+
+  inline void setrevision(unsigned short rv) {revision = rv;}
+  inline unsigned short getrevision() {return revision;}
   
   void clearall();
   bool openfile(const char*);
@@ -84,6 +88,7 @@ private:
   bool decode();
 
   short samplerate;
+  unsigned short revision;
   
   int fd; // File descripter
   unsigned int buff[32768]; // buffer to read 4 buytes from file(32bit)
@@ -132,11 +137,17 @@ private:
   
   // const parameters for decoder
   const static unsigned int kMaskchannel =	0x0000000f;
-  const static unsigned int kShiftchannel =	0x0;
+  const static unsigned int kShiftchannel =	0;
+  const static unsigned int kMaskchannelh =	0x0000003f;
+  const static unsigned int kShiftchannelh =	0;
   const static unsigned int kMasksid =		0x000000f0;
   const static unsigned int kShiftsid =		4;
+  const static unsigned int kMasksidh =		0x000003c0;
+  const static unsigned int kShiftsidh =	6;
   const static unsigned int kMaskcid =		0x00000f00;
   const static unsigned int kShiftcid =		8;
+  const static unsigned int kMaskcidh =		0x00000c00;
+  const static unsigned int kShiftcidh =	10;
   const static unsigned int kMasklhead =        0x0001f000;
   const static unsigned int kShiftlhead = 	12;
   const static unsigned int kMasklevt =         0x7ffe0000;

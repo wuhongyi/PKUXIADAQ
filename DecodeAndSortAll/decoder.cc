@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 18:51:18 2016 (+0800)
-// Last-Updated: 日 4月 17 18:49:20 2022 (+0800)
+// Last-Updated: 五 2月 16 22:07:13 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 44
+//     Update #: 45
 // URL: http://wuhongyi.cn 
 
 #include "decoder.hh"
@@ -17,6 +17,7 @@ decoder::decoder()
   clearall();
   fd = -1;
   samplerate = 0;
+  revision = 15;
 }
 
 decoder::~decoder()
@@ -111,9 +112,18 @@ bool decoder::decode()
   if(n <= 0) return false;
   
   // decode 1st word in this event
-  ch = (buff[0] & kMaskchannel) >> kShiftchannel;
-  sid = (buff[0] & kMasksid) >> kShiftsid;
-  cid = (buff[0] & kMaskcid) >> kShiftcid;
+  if(revision >= 17)
+    {
+      ch = (buff[0] & kMaskchannelh) >> kShiftchannelh;
+      sid = (buff[0] & kMasksidh) >> kShiftsidh;
+      cid = (buff[0] & kMaskcidh) >> kShiftcidh;
+    }
+  else
+    {
+      ch = (buff[0] & kMaskchannel) >> kShiftchannel;
+      sid = (buff[0] & kMasksid) >> kShiftsid;
+      cid = (buff[0] & kMaskcid) >> kShiftcid;
+    }
   lhead = (buff[0] & kMasklhead) >> kShiftlhead;
   levt = (buff[0] & kMasklevt) >> kShiftlevt;
   pileup = (buff[0] & kMaskpileup) >> kShiftpileup;
@@ -126,6 +136,10 @@ bool decoder::decode()
   switch(int(samplerate))
     {
     case 100:
+      cfd = ( buff[2] & kMaskcfd100 ) >> kShiftcfd100; 
+      cfdft = ( buff[2] & kMaskcfdft100 ) >> kShiftcfdft100; 
+      break;
+    case 125:// TODO
       cfd = ( buff[2] & kMaskcfd100 ) >> kShiftcfd100; 
       cfdft = ( buff[2] & kMaskcfdft100 ) >> kShiftcfdft100; 
       break;

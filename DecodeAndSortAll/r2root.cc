@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:39 2016 (+0800)
-// Last-Updated: 日 4月 17 19:55:38 2022 (+0800)
+// Last-Updated: 六 2月 17 13:56:05 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 149
+//     Update #: 154
 // URL: http://wuhongyi.cn 
 
 // 20220417 sprintf 套娃警告问题需要处理，应更改为 TString
@@ -41,7 +41,16 @@ r2root::r2root(int run[8])
   mmod = 0;
   std::ifstream readtxt;
   char tempfilename[1024];
- 
+
+  for (int i = 0; i < 4; ++i)
+    for (int j = 0; j < MAXBOARD; ++j)
+      for (int k = 0; k < MAXCHANNEL; ++k)
+	{
+	  timeoffset[i][j][k] = 0;
+	  chlow[i][j][k] = 0;
+	  chhigh[i][j][k] = 65535;
+	}
+  
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
   // crate 0
 #ifdef Crate0
@@ -55,15 +64,15 @@ r2root::r2root(int run[8])
     {
       readtxt>>sid_tmp>>ch_tmp>>offset_tmp>>chlow_tmp>>chhigh_tmp;
       if(readtxt.eof()) break;
-      timeoffset[0][(sid_tmp<<4)+ch_tmp] = offset_tmp;
-      chlow[0][(sid_tmp<<4)+ch_tmp] = chlow_tmp;
-      chhigh[0][(sid_tmp<<4)+ch_tmp] = chhigh_tmp;
+      timeoffset[0][sid_tmp][ch_tmp] = offset_tmp;
+      chlow[0][sid_tmp][ch_tmp] = chlow_tmp;
+      chhigh[0][sid_tmp][ch_tmp] = chhigh_tmp;
     }
   readtxt.close();
   
   for (int i = 0; i < Crate0num; ++i)
     {
-      if(Crate0SamplingRate[i] == 100 || Crate0SamplingRate[i] == 250 || Crate0SamplingRate[i] == 500)
+      if(Crate0SamplingRate[i] == 100 || Crate0SamplingRate[i] == 125 || Crate0SamplingRate[i] == 250 || Crate0SamplingRate[i] == 500)
 	{
 	  sprintf(tempfilename,"%s%04d/%s_R%04d_M%02d.bin",Crate0RAWFILEPATH,run[craten],Crate0RAWFILENAME,run[craten],i);
 	  if(!IsFileExists(tempfilename))
@@ -73,6 +82,7 @@ r2root::r2root(int run[8])
 	    }
 
 	  rawdec[mmod].setsamplerate(Crate0SamplingRate[i]);
+	  rawdec[mmod].setrevision(Crate0Revision[i]);
 	  rawdec[mmod].openfile(tempfilename);
 	}
       else
@@ -105,15 +115,15 @@ r2root::r2root(int run[8])
     {
       readtxt>>sid_tmp>>ch_tmp>>offset_tmp>>chlow_tmp>>chhigh_tmp;
       if(readtxt.eof()) break;
-      timeoffset[1][(sid_tmp<<4)+ch_tmp] = offset_tmp;
-      chlow[1][(sid_tmp<<4)+ch_tmp] = chlow_tmp;
-      chhigh[1][(sid_tmp<<4)+ch_tmp] = chhigh_tmp;
+      timeoffset[1][sid_tmp][ch_tmp] = offset_tmp;
+      chlow[1][sid_tmp][ch_tmp] = chlow_tmp;
+      chhigh[1][sid_tmp][ch_tmp] = chhigh_tmp;
     }
   readtxt.close();
 
   for (int i = 0; i < Crate1num; ++i)
     {
-      if(Crate1SamplingRate[i] == 100 || Crate1SamplingRate[i] == 250 || Crate1SamplingRate[i] == 500)
+      if(Crate1SamplingRate[i] == 100 || Crate0SamplingRate[i] == 125 || Crate1SamplingRate[i] == 250 || Crate1SamplingRate[i] == 500)
 	{
 	  sprintf(tempfilename,"%s%04d/%s_R%04d_M%02d.bin",Crate1RAWFILEPATH,run[craten],Crate1RAWFILENAME,run[craten],i);
 	  if(!IsFileExists(tempfilename))
@@ -123,6 +133,7 @@ r2root::r2root(int run[8])
 	    }
 
 	  rawdec[mmod].setsamplerate(Crate1SamplingRate[i]);
+	  rawdec[mmod].setrevision(Crate0Revision[i]);
 	  rawdec[mmod].openfile(tempfilename);
 	}
       else
@@ -154,15 +165,15 @@ r2root::r2root(int run[8])
     {
       readtxt>>sid_tmp>>ch_tmp>>offset_tmp>>chlow_tmp>>chhigh_tmp;
       if(readtxt.eof()) break;
-      timeoffset[2][(sid_tmp<<4)+ch_tmp] = offset_tmp;
-      chlow[2][(sid_tmp<<4)+ch_tmp] = chlow_tmp;
-      chhigh[2][(sid_tmp<<4)+ch_tmp] = chhigh_tmp;
+      timeoffset[2][sid_tmp][ch_tmp] = offset_tmp;
+      chlow[2][sid_tmp][ch_tmp] = chlow_tmp;
+      chhigh[2][sid_tmp][ch_tmp] = chhigh_tmp;
     }
   readtxt.close();
   
   for (int i = 0; i < Crate2num; ++i)
     {
-      if(Crate2SamplingRate[i] == 100 || Crate2SamplingRate[i] == 250 || Crate2SamplingRate[i] == 500)
+      if(Crate2SamplingRate[i] == 100 || Crate0SamplingRate[i] == 125 || Crate2SamplingRate[i] == 250 || Crate2SamplingRate[i] == 500)
 	{
 	  sprintf(tempfilename,"%s%04d/%s_R%04d_M%02d.bin",Crate2RAWFILEPATH,run[craten],Crate2RAWFILENAME,run[craten],i);
 	  if(!IsFileExists(tempfilename))
@@ -172,6 +183,7 @@ r2root::r2root(int run[8])
 	    }
 
 	  rawdec[mmod].setsamplerate(Crate2SamplingRate[i]);
+	  rawdec[mmod].setrevision(Crate0Revision[i]);
 	  rawdec[mmod].openfile(tempfilename);
 	}
       else
@@ -204,15 +216,15 @@ r2root::r2root(int run[8])
     {
       readtxt>>sid_tmp>>ch_tmp>>offset_tmp>>chlow_tmp>>chhigh_tmp;
       if(readtxt.eof()) break;
-      timeoffset[3][(sid_tmp<<4)+ch_tmp] = offset_tmp;
-      chlow[3][(sid_tmp<<4)+ch_tmp] = chlow_tmp;
-      chhigh[3][(sid_tmp<<4)+ch_tmp] = chhigh_tmp;
+      timeoffset[3][sid_tmp][ch_tmp] = offset_tmp;
+      chlow[3][sid_tmp][ch_tmp] = chlow_tmp;
+      chhigh[3][sid_tmp][ch_tmp] = chhigh_tmp;
     }
   readtxt.close();
   
   for (int i = 0; i < Crate3num; ++i)
     {
-      if(Crate3SamplingRate[i] == 100 || Crate3SamplingRate[i] == 250 || Crate3SamplingRate[i] == 500)
+      if(Crate3SamplingRate[i] == 100 || Crate0SamplingRate[i] == 125 || Crate3SamplingRate[i] == 250 || Crate3SamplingRate[i] == 500)
 	{
 	  sprintf(tempfilename,"%s%04d/%s_R%04d_M%02d.bin",Crate3RAWFILEPATH,run[craten],Crate3RAWFILENAME,run[craten],i);
 	  if(!IsFileExists(tempfilename))
@@ -222,6 +234,7 @@ r2root::r2root(int run[8])
 	    }
 
 	  rawdec[mmod].setsamplerate(Crate3SamplingRate[i]);
+	  rawdec[mmod].setrevision(Crate0Revision[i]);
 	  rawdec[mmod].openfile(tempfilename);
 	}
       else
@@ -237,206 +250,6 @@ r2root::r2root(int run[8])
   craten++;
 #else
   std::cout<<"Crate 3 num < 1. Please check the file ==> UserDefine.hh"<<std::endl;
-  exit(1);
-#endif
-#endif
-
-  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-  // crate 4
-#ifdef Crate4
-#if Crate4num > 0
-  flagfile += Crate4num;
-
-  readtxt.open("crate4.dat");
-  if(!readtxt.is_open()) {std::cout<<"can't open file crate4.dat."<<std::endl; }
-  getline(readtxt,str_tmp);
-  while(!readtxt.eof())
-    {
-      readtxt>>sid_tmp>>ch_tmp>>offset_tmp>>chlow_tmp>>chhigh_tmp;
-      if(readtxt.eof()) break;
-      timeoffset[4][(sid_tmp<<4)+ch_tmp] = offset_tmp;
-      chlow[4][(sid_tmp<<4)+ch_tmp] = chlow_tmp;
-      chhigh[4][(sid_tmp<<4)+ch_tmp] = chhigh_tmp;
-    }
-  readtxt.close();
-
-  for (int i = 0; i < Crate4num; ++i)
-    {
-      if(Crate4SamplingRate[i] == 100 || Crate4SamplingRate[i] == 250 || Crate4SamplingRate[i] == 500)
-	{
-	  sprintf(tempfilename,"%s%04d/%s_R%04d_M%02d.bin",Crate4RAWFILEPATH,run[craten],Crate4RAWFILENAME,run[craten],i);
-	  if(!IsFileExists(tempfilename))
-	    {
-	      std::cout<<"can't find raw data: "<<tempfilename<<std::endl;
-	      exit(1);
-	    }
-
-	  rawdec[mmod].setsamplerate(Crate4SamplingRate[i]);
-	  rawdec[mmod].openfile(tempfilename);
-	}
-      else
-	{
-	  rawdec[i].setsamplerate(0);
-	}
-
-      flagcrate[mmod] = 4;
-      havedata[mmod] = false;
-      mmod++;
-    }
-
-  craten++;
-#else
-  std::cout<<"Crate 4 num < 1. Please check the file ==> UserDefine.hh"<<std::endl;
-  exit(1);
-#endif
-#endif
-  
-  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-  // crate 5
-#ifdef Crate5
-#if Crate5num > 0
-  flagfile += Crate5num;
-
-  readtxt.open("crate5.dat");
-  if(!readtxt.is_open()) {std::cout<<"can't open file crate5.dat."<<std::endl; }
-  getline(readtxt,str_tmp);
-  while(!readtxt.eof())
-    {
-      readtxt>>sid_tmp>>ch_tmp>>offset_tmp>>chlow_tmp>>chhigh_tmp;
-      if(readtxt.eof()) break;
-      timeoffset[5][(sid_tmp<<4)+ch_tmp] = offset_tmp;
-      chlow[5][(sid_tmp<<4)+ch_tmp] = chlow_tmp;
-      chhigh[5][(sid_tmp<<4)+ch_tmp] = chhigh_tmp;
-    }
-  readtxt.close();
-
-  for (int i = 0; i < Crate5num; ++i)
-    {
-      if(Crate5SamplingRate[i] == 100 || Crate5SamplingRate[i] == 250 || Crate5SamplingRate[i] == 500)
-	{
-	  sprintf(tempfilename,"%s%04d/%s_R%04d_M%02d.bin",Crate5RAWFILEPATH,run[craten],Crate5RAWFILENAME,run[craten],i);
-	  if(!IsFileExists(tempfilename))
-	    {
-	      std::cout<<"can't find raw data: "<<tempfilename<<std::endl;
-	      exit(1);
-	    }
-
-	  rawdec[mmod].setsamplerate(Crate5SamplingRate[i]);
-	  rawdec[mmod].openfile(tempfilename);
-	}
-      else
-	{
-	  rawdec[i].setsamplerate(0);
-	}
-
-      flagcrate[mmod] = 5;
-      havedata[mmod] = false;
-      mmod++;
-    }
-
-  craten++;
-#else
-  std::cout<<"Crate 5 num < 1. Please check the file ==> UserDefine.hh"<<std::endl;
-  exit(1);
-#endif
-#endif
-
-  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-  // crate 6
-#ifdef Crate6
-#if Crate6num > 0
-  flagfile += Crate6num;
-
-  readtxt.open("crate6.dat");
-  if(!readtxt.is_open()) {std::cout<<"can't open file crate6.dat."<<std::endl; }
-  getline(readtxt,str_tmp);
-  while(!readtxt.eof())
-    {
-      readtxt>>sid_tmp>>ch_tmp>>offset_tmp>>chlow_tmp>>chhigh_tmp;
-      if(readtxt.eof()) break;
-      timeoffset[6][(sid_tmp<<4)+ch_tmp] = offset_tmp;
-      chlow[6][(sid_tmp<<4)+ch_tmp] = chlow_tmp;
-      chhigh[6][(sid_tmp<<4)+ch_tmp] = chhigh_tmp;
-    }
-  readtxt.close();
-
-  for (int i = 0; i < Crate6num; ++i)
-    {
-      if(Crate6SamplingRate[i] == 100 || Crate6SamplingRate[i] == 250 || Crate6SamplingRate[i] == 500)
-	{
-	  sprintf(tempfilename,"%s%04d/%s_R%04d_M%02d.bin",Crate6RAWFILEPATH,run[craten],Crate6RAWFILENAME,run[craten],i);
-	  if(!IsFileExists(tempfilename))
-	    {
-	      std::cout<<"can't find raw data: "<<tempfilename<<std::endl;
-	      exit(1);
-	    }
-
-	  rawdec[mmod].setsamplerate(Crate6SamplingRate[i]);
-	  rawdec[mmod].openfile(tempfilename);
-	}
-      else
-	{
-	  rawdec[i].setsamplerate(0);
-	}
-
-      flagcrate[mmod] = 6;
-      havedata[mmod] = false;
-      mmod++;
-    }
-
-  craten++;
-#else
-  std::cout<<"Crate 6 num < 1. Please check the file ==> UserDefine.hh"<<std::endl;
-  exit(1);
-#endif
-#endif
-
-  //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-  // crate 7
-#ifdef Crate7
-#if Crate7num > 0
-  flagfile += Crate7num;
-
-  readtxt.open("crate7.dat");
-  if(!readtxt.is_open()) {std::cout<<"can't open file crate7.dat."<<std::endl; }
-  getline(readtxt,str_tmp);
-  while(!readtxt.eof())
-    {
-      readtxt>>sid_tmp>>ch_tmp>>offset_tmp>>chlow_tmp>>chhigh_tmp;
-      if(readtxt.eof()) break;
-      timeoffset[7][(sid_tmp<<4)+ch_tmp] = offset_tmp;
-      chlow[7][(sid_tmp<<4)+ch_tmp] = chlow_tmp;
-      chhigh[7][(sid_tmp<<4)+ch_tmp] = chhigh_tmp;
-    }
-  readtxt.close();
-
-  for (int i = 0; i < Crate7num; ++i)
-    {
-      if(Crate7SamplingRate[i] == 100 || Crate7SamplingRate[i] == 250 || Crate7SamplingRate[i] == 500)
-	{
-	  sprintf(tempfilename,"%s%04d/%s_R%04d_M%02d.bin",Crate7RAWFILEPATH,run[craten],Crate7RAWFILENAME,run[craten],i);
-	  if(!IsFileExists(tempfilename))
-	    {
-	      std::cout<<"can't find raw data: "<<tempfilename<<std::endl;
-	      exit(1);
-	    }
-
-	  rawdec[mmod].setsamplerate(Crate7SamplingRate[i]);
-	  rawdec[mmod].openfile(tempfilename);
-	}
-      else
-	{
-	  rawdec[i].setsamplerate(0);
-	}
-
-      flagcrate[mmod] = 7;
-      havedata[mmod] = false;
-      mmod++;
-    }
-
-  craten++;
-#else
-  std::cout<<"Crate 7 num < 1. Please check the file ==> UserDefine.hh"<<std::endl;
   exit(1);
 #endif
 #endif
@@ -504,7 +317,6 @@ void r2root::Process()
 {
   benchmark->Start("r2root");//计时开始
 
-  int posflag;
   unsigned int sizelen;
   Long64_t timestamp;
   int mark = -1; 
@@ -526,7 +338,7 @@ void r2root::Process()
 
 	  while(havedata[i])
 	    {
-	      if(rawdec[i].getsamplerate() == 250)
+	      if(rawdec[i].getsamplerate() == 250 || rawdec[i].getsamplerate() == 125)
 		timestamp = 8*rawdec[i].getts();
 	      else
 		timestamp = 10*rawdec[i].getts();
@@ -595,21 +407,20 @@ void r2root::Process()
 #endif		  
 		  havedata[mark] = rawdec[mark].getnextevt();
 
-		  posflag = (mapvalue.sid<<4)+mapvalue.ch;
-		  if(mapvalue.evte < chlow[flagcrate[i]][posflag] || mapvalue.evte > chhigh[flagcrate[i]][posflag]) continue;
-		  if(mapvalue.sr == 250)
+		  if(mapvalue.evte < chlow[flagcrate[i]][mapvalue.sid][mapvalue.ch] || mapvalue.evte > chhigh[flagcrate[i]][mapvalue.sid][mapvalue.ch]) continue;
+		  if(mapvalue.sr == 250 || mapvalue.sr == 125)
 		    {
-		      mapvalue.ts = mapvalue.ts+(timeoffset[flagcrate[i]][posflag]/8);
+		      mapvalue.ts = mapvalue.ts+(timeoffset[flagcrate[i]][mapvalue.sid][mapvalue.ch]/8);
 		      mapvalue.tsflag = mapvalue.ts*8;
 		    }
 		  else
 		    {
-		      mapvalue.ts = mapvalue.ts+(timeoffset[flagcrate[i]][posflag]/10);
+		      mapvalue.ts = mapvalue.ts+(timeoffset[flagcrate[i]][mapvalue.sid][mapvalue.ch]/10);
 		      mapvalue.tsflag = mapvalue.ts*10;
 		    }
 
-		  flagkey = ((((((mapvalue.tsflag)<<4)+mapvalue.cid)<<4)+mapvalue.sid)<<4)+mapvalue.ch;
-		  // flagkey = ((((mapvalue.tsflag)<<4)+mapvalue.sid)<<4)+mapvalue.ch;
+		  flagkey = ((((((mapvalue.tsflag)<<4)+mapvalue.cid)<<4)+mapvalue.sid)<<6)+mapvalue.ch;
+
 		  sortdata.insert(std::make_pair(flagkey,mapvalue));
 
 // #ifdef WAVEFORM

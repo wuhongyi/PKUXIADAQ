@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 9月 21 16:28:37 2020 (+0800)
-// Last-Updated: 一 1月 16 11:42:44 2023 (+0800)
+// Last-Updated: 六 2月 17 14:26:50 2024 (+0800)
 //	     By: Hongyi Wu(吴鸿毅)
-//     Update #: 44
+//     Update #: 45
 // URL: http://wuhongyi.cn
 
 #include "DataAnalysis.hh"
@@ -62,7 +62,7 @@ void DataAnalysis::Loop(TTree *opt_)
 
 	  det.subts = 0.0;
 
-	  if((*br_event)[i].sr == 250)
+	  if((*br_event)[i].sr == 250 || (*br_event)[i].sr == 125)
 	    det.ts = 8*det.ts;
 	  else if((*br_event)[i].sr == 100 || (*br_event)[i].sr == 500)
 	    det.ts = 10*det.ts;
@@ -73,7 +73,9 @@ void DataAnalysis::Loop(TTree *opt_)
 	    det.subts = ((*br_event)[i].cfd/16384.0-(*br_event)[i].cfds)*4.0;
 	  else if((*br_event)[i].sr == 100)
 	    det.subts = ((*br_event)[i].cfd/32768.0)*10.0;
-	    
+	  else if((*br_event)[i].sr == 125)
+	    det.subts = ((*br_event)[i].cfd/32768.0)*8.0;
+	  
 #ifdef WAVEFORM
 	det.wave.clear();
 	if((*br_event)[i].ltra > 0) //!!!!!!

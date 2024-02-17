@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 9月 21 16:28:37 2020 (+0800)
-// Last-Updated: 日 5月  1 20:27:41 2022 (+0800)
+// Last-Updated: 六 2月 17 14:23:13 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 40
+//     Update #: 41
 // URL: http://wuhongyi.cn 
 
 #include "event.hh"
@@ -18,14 +18,15 @@ event::event(int run)
   flag = false;
   nevt = 0;
   
-  for (int i = 0; i < 8; ++i)
-    for (int j = 0; j < 208; ++j)
+  for (int i = 0; i < 4; ++i)
+    for (int j = 0; j < MAXBOARD; ++j)
+      for (int k = 0; k < MAXCHANNEL; ++k)
       {
-	flagdet[i][j] = -1;
-	flagdetid[i][j] = -1;
-	calia0[i][j] = 0.0;
-	calia1[i][j] = 0.0;
-	calia2[i][j] = 0.0;
+	flagdet[i][j][k] = -1;
+	flagdetid[i][j][k] = -1;
+	calia0[i][j][k] = 0.0;
+	calia1[i][j][k] = 0.0;
+	calia2[i][j][k] = 0.0;
       }
 
   std::ifstream readtxt;
@@ -46,13 +47,12 @@ event::event(int run)
     {
       readtxt>>cid_tmp>>sid_tmp>>ch_tmp>>det_tmp>>id_tmp>>a0_tmp>>a1_tmp>>a2_tmp;
       if(readtxt.eof()) break;
-      Short_t flagchtmp = (sid_tmp-2)*16+ch_tmp;
-      flagdet[cid_tmp][flagchtmp] = det_tmp;
-      flagdetid[cid_tmp][flagchtmp] = id_tmp;
-      calia0[cid_tmp][flagchtmp] = a0_tmp;
-      calia1[cid_tmp][flagchtmp] = a1_tmp;
-      calia2[cid_tmp][flagchtmp] = a2_tmp;
-      std::cout<<flagdet[cid_tmp][flagchtmp]<<"  "<<flagdetid[cid_tmp][flagchtmp]<<"  "<<calia0[cid_tmp][flagchtmp]<<"  "<<calia1[cid_tmp][flagchtmp]<<"  "<<calia2[cid_tmp][flagchtmp]<<"  "<<std::endl;
+      flagdet[cid_tmp][sid_tmp-2][ch_tmp] = det_tmp;
+      flagdetid[cid_tmp][sid_tmp-2][ch_tmp] = id_tmp;
+      calia0[cid_tmp][sid_tmp-2][ch_tmp] = a0_tmp;
+      calia1[cid_tmp][sid_tmp-2][ch_tmp] = a1_tmp;
+      calia2[cid_tmp][sid_tmp-2][ch_tmp] = a2_tmp;
+      std::cout<<flagdet[cid_tmp][sid_tmp-2][ch_tmp]<<"  "<<flagdetid[cid_tmp][sid_tmp-2][ch_tmp]<<"  "<<calia0[cid_tmp][sid_tmp-2][ch_tmp]<<"  "<<calia1[cid_tmp][sid_tmp-2][ch_tmp]<<"  "<<calia2[cid_tmp][sid_tmp-2][ch_tmp]<<"  "<<std::endl;
     }
   readtxt.close();  
 
@@ -144,7 +144,7 @@ void event::Process()
 
       if(flag)
 	{
-	  if(sr==250) tsnow = ts*8;
+	  if(sr == 250 || sr == 125) tsnow = ts*8;
 	  else tsnow = ts*10;
 
 	  if(TMath::Abs(tsnow-inittime) <= Long64_t(EVENTTIMEWINDOWSWIDTH))
@@ -179,7 +179,7 @@ void event::Process()
 
 void event::InitEvent()
 {
-  if(sr==250) inittime = ts*8;
+  if(sr == 250 || sr == 125) inittime = ts*8;
   else inittime = ts*10;
 
   ProcessEntry();
@@ -188,13 +188,12 @@ void event::InitEvent()
 void event::ProcessEntry()
 {
   double rawch = gRandom->Rndm()+evte;
-  int tmpch = (sid-2)*16+ch;
-  hit.det = flagdet[cid][tmpch];
-  hit.id = flagdetid[cid][tmpch];
+  hit.det = flagdet[cid][sid-2][ch];
+  hit.id = flagdetid[cid][sid-2][ch];
   hit.sr = sr;
   hit.ts = ts;
   hit.raw = evte;
-  hit.e = calia0[cid][tmpch]+calia1[cid][tmpch]*rawch+calia2[cid][tmpch]*rawch*rawch;
+  hit.e = calia0[cid][sid-2][ch]+calia1[cid][sid-2][ch]*rawch+calia2[cid][sid-2][ch]*rawch*rawch;
   hit.pileup = pileup;
   hit.outofr = outofr;
   hit.cfd = cfd;
