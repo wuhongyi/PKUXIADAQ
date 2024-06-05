@@ -4,19 +4,20 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 日 3月 12 21:29:21 2023 (+0800)
-.. Last-Updated: 二 2月 13 20:15:00 2024 (+0800)
+.. Last-Updated: 三 6月  5 21:07:18 2024 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 4
+..     Update #: 6
 .. URL: http://wuhongyi.cn 
 
 =================================
 Qt 图形交互界面
 =================================
 
-**即将发布**
 
 .. code:: bash
 	  
+  # tar -zxvf PixieSDK-4.2.1.tar.gz
+  # cd PixieSDK-4.2.1
   unzip PixieSDK-master.zip
   cd PixieSDK-master
   mkdir build

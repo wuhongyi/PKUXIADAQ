@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 21:03:32 2019 (+0800)
-.. Last-Updated: 日 2月  4 17:58:47 2024 (+0800)
+.. Last-Updated: 三 6月  5 21:05:42 2024 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 47
+..     Update #: 48
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -83,6 +83,7 @@ ROOT GUI 程序安装
 
   # 如果报错，根据操作系统寻找对应的解决方式
   cd ../../Driver/
+  # chmod +x builddriver
   ./builddriver 9054
    
   #成功后你将会看到 Driver "Plx9054/Plx9054.ko" built sucessfully
