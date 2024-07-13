@@ -4,12 +4,13 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:39 2016 (+0800)
-// Last-Updated: 六 2月 17 13:56:05 2024 (+0800)
+// Last-Updated: 六 7月 13 23:10:41 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 154
+//     Update #: 155
 // URL: http://wuhongyi.cn 
 
 // 20220417 sprintf 套娃警告问题需要处理，应更改为 TString
+// 20240713 解决 gcc10 以上版本 sprintf 套娃警告问题
 
 #include "r2root.hh"
 #include "UserDefine.hh"
@@ -256,19 +257,23 @@ r2root::r2root(int run[8])
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-  sprintf(tempfilename,"%s%s_C%d",ROOTFILEPATH,ROOTFILENAME,craten);
+  char *tempname;
+  tempname = (char *)malloc(1024);
+  size_t extra_len = 0;
+  extra_len += sprintf(tempname+extra_len,"%s%s_C%d",ROOTFILEPATH,ROOTFILENAME,craten);
+
   for (int i = 0; i < craten; ++i)
     {
-      sprintf(tempfilename,"%s_%04d",tempfilename,run[i]);
+      extra_len += sprintf(tempname+extra_len,"_%04d",run[i]);
     }
 
 #ifdef WAVEFORM
-  sprintf(tempfilename,"%s_wave.root",tempfilename);
+  extra_len += sprintf(tempname+extra_len,"%s","_wave.root");
 #else
-  sprintf(tempfilename,"%s_notwave.root",tempfilename);
+  extra_len += sprintf(tempname+extra_len,"%s","_notwave.root");
 #endif
-  
-  file = new TFile(tempfilename,"RECREATE");
+
+  file = new TFile(tempname,"RECREATE");
   t = new TTree("tree","GDDAQ Multi-Crate sort Data");
   // t->Branch("tsflag", &tsflag, "tsflag/L");
   t->Branch("sr", &sr, "sr/S");

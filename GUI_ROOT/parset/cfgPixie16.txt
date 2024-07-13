@@ -158,11 +158,11 @@ ModuleBits 4 14 14 14 14 14 16 14
 
 
 # Standard firmware
-# 500M12bit_sys ../../firmware/pixie16_revf_12b500m_20221117/syspixie16_revfgeneral_adc500mhz_r31567.bin
-# 500M12bit_fip ../../firmware/pixie16_revf_12b500m_20221117/fippixie16_revfgeneral_12b500m_r48132.bin
-# 500M12bit_dsplst ../../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.lst
-# 500M12bit_dspldr ../../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.ldr
-# 500M12bit_dspvar ../../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.var
+# 500M12bit_sys ../../firmware/xia_pixie-16_15-500-12_general_1.2.0/sys.bin
+# 500M12bit_fip ../../firmware/xia_pixie-16_15-500-12_general_1.2.0/fippi.bin
+# 500M12bit_dsplst ../../firmware/xia_pixie-16_15-500-12_general_1.2.0/dsp.lst
+# 500M12bit_dspldr ../../firmware/xia_pixie-16_15-500-12_general_1.2.0/dsp.ldr
+# 500M12bit_dspvar ../../firmware/xia_pixie-16_15-500-12_general_1.2.0/dsp.var
 
 
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$

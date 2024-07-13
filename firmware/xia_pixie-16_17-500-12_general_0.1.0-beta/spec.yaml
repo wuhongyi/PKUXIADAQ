@@ -1,0 +1,16 @@
+product:
+    module_tag:
+        - "17-500-12"
+release:
+    date: "2024-03-27T10:38:00Z"
+    id: "general"
+device:
+    dsp:
+        filename: "Pixie16DSP.ldr"
+        version: "3.3E"
+    sys:
+        filename: "PXlargeSYS_500.bin"
+        version: "0x103E_A941"
+    fippi:
+        - filename: "PXlarge500.bin"
+          version: "0x3E41"
