@@ -180,7 +180,7 @@
 "fip": "../firmware/xia_pixie-16_17-500-12_general_0.1.0-beta/PXlarge500.bin",
 "sys": "../firmware/xia_pixie-16_17-500-12_general_0.1.0-beta/PXlargeSYS_500.bin",
 "trig": "../firmware/xia_pixie-16_17-500-12_general_0.1.0-beta/Pixie16DSP.lst"
-},
+}
 
 
 

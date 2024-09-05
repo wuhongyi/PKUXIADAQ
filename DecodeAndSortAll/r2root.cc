@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:39 2016 (+0800)
-// Last-Updated: 六 7月 13 23:10:41 2024 (+0800)
+// Last-Updated: 四 9月  5 19:38:31 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 155
+//     Update #: 156
 // URL: http://wuhongyi.cn 
 
 // 20220417 sprintf 套娃警告问题需要处理，应更改为 TString
@@ -124,7 +124,7 @@ r2root::r2root(int run[8])
 
   for (int i = 0; i < Crate1num; ++i)
     {
-      if(Crate1SamplingRate[i] == 100 || Crate0SamplingRate[i] == 125 || Crate1SamplingRate[i] == 250 || Crate1SamplingRate[i] == 500)
+      if(Crate1SamplingRate[i] == 100 || Crate1SamplingRate[i] == 125 || Crate1SamplingRate[i] == 250 || Crate1SamplingRate[i] == 500)
 	{
 	  sprintf(tempfilename,"%s%04d/%s_R%04d_M%02d.bin",Crate1RAWFILEPATH,run[craten],Crate1RAWFILENAME,run[craten],i);
 	  if(!IsFileExists(tempfilename))
@@ -134,7 +134,7 @@ r2root::r2root(int run[8])
 	    }
 
 	  rawdec[mmod].setsamplerate(Crate1SamplingRate[i]);
-	  rawdec[mmod].setrevision(Crate0Revision[i]);
+	  rawdec[mmod].setrevision(Crate1Revision[i]);
 	  rawdec[mmod].openfile(tempfilename);
 	}
       else
@@ -174,7 +174,7 @@ r2root::r2root(int run[8])
   
   for (int i = 0; i < Crate2num; ++i)
     {
-      if(Crate2SamplingRate[i] == 100 || Crate0SamplingRate[i] == 125 || Crate2SamplingRate[i] == 250 || Crate2SamplingRate[i] == 500)
+      if(Crate2SamplingRate[i] == 100 || Crate2SamplingRate[i] == 125 || Crate2SamplingRate[i] == 250 || Crate2SamplingRate[i] == 500)
 	{
 	  sprintf(tempfilename,"%s%04d/%s_R%04d_M%02d.bin",Crate2RAWFILEPATH,run[craten],Crate2RAWFILENAME,run[craten],i);
 	  if(!IsFileExists(tempfilename))
@@ -184,7 +184,7 @@ r2root::r2root(int run[8])
 	    }
 
 	  rawdec[mmod].setsamplerate(Crate2SamplingRate[i]);
-	  rawdec[mmod].setrevision(Crate0Revision[i]);
+	  rawdec[mmod].setrevision(Crate2Revision[i]);
 	  rawdec[mmod].openfile(tempfilename);
 	}
       else
@@ -225,7 +225,7 @@ r2root::r2root(int run[8])
   
   for (int i = 0; i < Crate3num; ++i)
     {
-      if(Crate3SamplingRate[i] == 100 || Crate0SamplingRate[i] == 125 || Crate3SamplingRate[i] == 250 || Crate3SamplingRate[i] == 500)
+      if(Crate3SamplingRate[i] == 100 || Crate3SamplingRate[i] == 125 || Crate3SamplingRate[i] == 250 || Crate3SamplingRate[i] == 500)
 	{
 	  sprintf(tempfilename,"%s%04d/%s_R%04d_M%02d.bin",Crate3RAWFILEPATH,run[craten],Crate3RAWFILENAME,run[craten],i);
 	  if(!IsFileExists(tempfilename))
@@ -235,7 +235,7 @@ r2root::r2root(int run[8])
 	    }
 
 	  rawdec[mmod].setsamplerate(Crate3SamplingRate[i]);
-	  rawdec[mmod].setrevision(Crate0Revision[i]);
+	  rawdec[mmod].setrevision(Crate3Revision[i]);
 	  rawdec[mmod].openfile(tempfilename);
 	}
       else
