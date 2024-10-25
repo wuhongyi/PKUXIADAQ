@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ROOT GUI &mdash; GDDAQ beta 文档</title>
+  <title>ROOT GUI &mdash; GDDAQ V20241025 文档</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
@@ -16,7 +16,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=055b2939"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b0a50035"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="../_static/translations.js?v=beaddf03"></script>
@@ -271,8 +271,8 @@
 </li>
 </ul>
 <p>After the main interface is open, select the <strong>Online Mode</strong> option. You need to connect to the chassis. All functions (including offline analysis) can be used in this mode. If the <strong>Online Mode</strong> option is not selected, it means that the offline mode is enabled, and the acquired parameters can be set and modified or analyze the acquired waveform.</p>
-<p>After selecting or not selecting the <strong>Online Mode</strong> option, press the <strong>Boot</strong> button to start the initialization process and see the status changes in the <em>Information</em> section at the bottom.</p>
-<p>After the system is successfully initialized, confirm the file storage path, file name, and file number in the <em>Setup</em> column. If there is any problem, modify it directly. After confirming, press <strong>Complete</strong>.</p>
+<p>After selecting or not selecting the <strong>OnlineMode</strong> option. If it is the first initialization after powering on the chassis, press the <strong>Boot</strong> button to start the initialization process, which will load firmware, parameters, and other information. In addition, you can continue to control and obtain the system through the <strong>Relink</strong> button. You can see the status changes in the <em>Information</em> column at the bottom.</p>
+<p>After the system is successfully initialized or reconnected, confirm the file storage path, file name, and file number in the <em>Setup</em> column. If there is any problem, modify it directly. After confirming, press <strong>Complete</strong>.</p>
 <p>After confirming the information in the <em>Setup</em> column, the main button <strong>RunStart</strong> in the <em>Control</em> column is open. Click this button to get data acquisition open, the button status changes to <strong>RunStop</strong>, click the button again, the data acquisition completed, and the <em>Run Num</em> number is automatically added.  Click <strong>RunStart</strong> again to open the next run.</p>
 <p>Currently, you can adjust and modify the parameters through the submenu in the top drop-down bar before you acquire data. Do not manipulate all options except the <em>Control</em> bar when acquiring data.</p>
 <p>The <strong>Online Statistics</strong> option in the <em>Control</em> column is turned on to get the input rate and output rate information for each signal sent to the <em>OnineStatistics</em> program every <strong>3 s</strong>.</p>

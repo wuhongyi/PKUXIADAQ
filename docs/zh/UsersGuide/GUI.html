@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>基于 ROOT 图形交互界面 &mdash; GDDAQ beta 文档</title>
+  <title>基于 ROOT 图形交互界面 &mdash; GDDAQ V20241025 文档</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
@@ -16,7 +16,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=055b2939"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b0a50035"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="../_static/translations.js?v=beaddf03"></script>
@@ -277,8 +277,8 @@
 </li>
 </ul>
 <p>开启获取主界面之后，选择 <strong>Online Mode</strong> 选项表示在线模式，需要连接机箱，该模式下可使用所有的功能（包括离线分析功能）。不选择**Online Mode** 选项则表示开启离线模式，可设置、修改获取参数，分析已采集波形。</p>
-<p>选择、或者不选择 <strong>Online Mode</strong> 选项之后，按 <strong>Boot</strong> 按钮开启初始化过程，可看到最下方 <em>Information</em> 栏目中的状态变化。</p>
-<p>系统初始化成功后，再次确认 <em>Setup</em> 栏中的获取文件存放路径、文件名、文件编号是否有问题，如果有问题则直接修改，确认之后按 <strong>Complete</strong>。</p>
+<p>选择、或者不选择 <strong>Online Mode</strong> 选项之后。如果是机箱上电之后的第一次初始化，则按 <strong>Boot</strong> 按钮开启初始化过程，这个过程将会加载固件、参数等信息。除此之外都可以通过 <strong>Relink</strong> 按钮来继续控制获取系统。可看到最下方 <em>Information</em> 栏目中的状态变化。</p>
+<p>系统初始化或者连接成功后，再次确认 <em>Setup</em> 栏中的获取文件存放路径、文件名、文件编号是否有问题，如果有问题则直接修改，确认之后按 <strong>Complete</strong>。</p>
 <p>确认 <em>Setup</em> 栏中的信息之后， <em>Control</em> 栏中的主按钮 <strong>RunStart</strong> 则开启，此时点击该按钮，获取则开启，按钮状态更改为 <strong>RunStop</strong>，再次点击该按钮，获取结束，运行的 <em>Run Num</em> 号码自动加一。再次点击 <strong>RunStart</strong> 开启下轮获取。</p>
 <p>当前，获取之前可通过最上方的下拉栏里面的子菜单来调节、修改参数。获取数据时请勿操作 <em>Control</em> 栏之外的所有选项。</p>
 <p><em>Control</em> 栏内的 <strong>Online Statistics</strong> 选项开启则获取每 <strong>3 s</strong> 向 <em>OnineStatistics</em> 程序发送时时每路信号的输入率、输出率信息。</p>

@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 三 7月  3 10:39:34 2019 (+0800)
-.. Last-Updated: 日 2月  4 18:00:21 2024 (+0800)
+.. Last-Updated: 五 10月 25 22:03:23 2024 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 8
+..     Update #: 9
 .. URL: http://wuhongyi.cn 
 
 =================================
@@ -52,9 +52,11 @@ At the top of the main interface are five drop-down columns: File, Base, Expert,
 
 After the main interface is open, select the **Online Mode** option. You need to connect to the chassis. All functions (including offline analysis) can be used in this mode. If the **Online Mode** option is not selected, it means that the offline mode is enabled, and the acquired parameters can be set and modified or analyze the acquired waveform.
 
-After selecting or not selecting the **Online Mode** option, press the **Boot** button to start the initialization process and see the status changes in the *Information* section at the bottom.
 
-After the system is successfully initialized, confirm the file storage path, file name, and file number in the *Setup* column. If there is any problem, modify it directly. After confirming, press **Complete**.
+After selecting or not selecting the **OnlineMode** option. If it is the first initialization after powering on the chassis, press the **Boot** button to start the initialization process, which will load firmware, parameters, and other information. In addition, you can continue to control and obtain the system through the **Relink** button. You can see the status changes in the *Information* column at the bottom.
+
+
+After the system is successfully initialized or reconnected, confirm the file storage path, file name, and file number in the *Setup* column. If there is any problem, modify it directly. After confirming, press **Complete**.
 
 After confirming the information in the *Setup* column, the main button **RunStart** in the *Control* column is open. Click this button to get data acquisition open, the button status changes to **RunStop**, click the button again, the data acquisition completed, and the *Run Num* number is automatically added.  Click **RunStart** again to open the next run.
 
