@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 22:17:54 2016 (+0800)
-// Last-Updated: 一 4月 18 20:12:38 2022 (+0800)
+// Last-Updated: 五 10月 25 18:52:08 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 19
+//     Update #: 20
 // URL: http://wuhongyi.cn 
 
 #ifndef _MANAGER_H_
@@ -42,6 +42,8 @@ protected:
   void SetFileName();
   // void RunReadData();
   void SetOnlineDataFlag();
+  void SetClockResetFlag();
+
   
   bool IsDirectoryExists(const char *path);//Determine if the folder exists
   bool CreateDirectory(const char *path);//Create folder
@@ -63,6 +65,7 @@ private:
 
   bool fupdateenergyonline;
   bool fonlinedata;
+  bool fresetclockdata;
   bool frecorddata;
   bool fautorun;
   bool fstartdaq;

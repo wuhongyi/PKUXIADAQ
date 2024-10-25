@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:50:10 2016 (+0800)
-// Last-Updated: 三 1月 30 01:55:38 2019 (+0800)
+// Last-Updated: 五 10月 25 18:51:46 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 12
+//     Update #: 13
 // URL: http://wuhongyi.cn 
 
 #include "Global.hh"
@@ -108,6 +108,7 @@ void PrintInterface()
   printf("  [o]   Open/Close Send Shared Memory Online\n");
   printf("  [w]   Open/Close Write Data To Harddisk\n");
   printf("  [a]   OPen/Close Auto Run Mode\n");
+  printf("  [r]   Open/Close Reset clock counters every run\n");
   printf("  [e]   Update Online Energy Spectrum\n");
   printf("  [c]   Clean Screen\n");
   printf("  [h]   Print Run Status\n");

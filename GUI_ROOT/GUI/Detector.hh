@@ -65,6 +65,8 @@ public:
   int SetOnlineFlag(bool flag);
   void SetRecordFlag(bool flag);
   bool GetRecordFlag() {return frecord;}
+  void SetClockResetFlag(bool flag);
+  bool GetClockResetFlag() {return fresetclock;}
 #ifdef DECODERONLINE
   void SetDecoderFlag(bool flag);
 #endif
@@ -83,7 +85,7 @@ public:
   
   int AcquireADCTrace(unsigned short *trace, unsigned long size, unsigned short module, unsigned short ChanNum);
 
-  bool BootSystem();
+  bool BootSystem(bool firstboot);
 
   void StatisticsForModule();
   void UpdateEnergySpectrumForModule();
@@ -201,6 +203,7 @@ private:
   
   bool   fonline;
   bool   frecord;
+  bool fresetclock;
   int runnumber;
   bool frunstatus;
   unsigned int crateidrunnumber;

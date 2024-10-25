@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:17 2018 (+0800)
-// Last-Updated: 四 12月 16 15:09:49 2021 (+0800)
+// Last-Updated: 五 10月 25 14:09:38 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 66
+//     Update #: 68
 // URL: http://wuhongyi.cn 
 
 #ifndef MAINFRAME_HH_
@@ -64,6 +64,7 @@ enum Commands //commands for the menu bar popups
   {
     FILE_EXIT,
     BOOT_BUTTON,
+    RECONNECT_BUTTON,
     ABOUT,
     BASE,
     ENERGY,
@@ -96,6 +97,7 @@ public:
   void ConfigFileInfo();
   void StartRun();
   void SetOnlineDataFlag();
+  void SetClockResetFlag();
   void SetRecordDataFlag();
   void SetOnlineMode();
 #ifdef DECODERONLINE
@@ -153,7 +155,7 @@ private:
   TGPopupMenu *MenuOffline;
   TGPopupMenu *MenuExp;
   TGTextButton *bootB;
-
+  TGTextButton *reconnect;
   
   // ******** File Setup Variables *********
   char  LogFileName[1024];
@@ -174,9 +176,11 @@ private:
   // ******* ListMode Run Control **********
   TGTextButton	*startdaq;
   TGCheckButton   *onlinechk;
+  TGCheckButton   *resetclockchk;
   TGCheckButton   *recordchk;
   TGCheckButton   *updateenergyonline;
   bool            fonlinedata;
+  bool            fresetclockdata;
   bool            frecorddata;
   bool            fstartdaq;
 

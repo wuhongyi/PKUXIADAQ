@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:52:00 2016 (+0800)
-// Last-Updated: 一 4月 18 20:07:47 2022 (+0800)
+// Last-Updated: 五 10月 25 18:34:07 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 48
+//     Update #: 50
 // URL: http://wuhongyi.cn 
 
 #include "Detector.hh"
@@ -292,7 +292,7 @@ bool Detector::BootSystem()
       else
   	{
   	  std::cout<<"There is no Samping Rate =>"<<ModuleInformation[k].Module_ADCMSPS<<" and Bits =>"<<ModuleInformation[k].Module_ADCBits<<" firmware. "<<std::endl;
-  	  std::cout<<"Please contact Hongyi Wu(wuhongyi@qq.com)"<<std::endl;
+  	  std::cout<<"Please contact Hongyi Wu(wuhongyi@qq.com/wuhongyi@pku.edu.cn)"<<std::endl;
   	  return false;
   	}
       std::cout<<"----------------------------------------"<<std::endl;
@@ -309,7 +309,7 @@ bool Detector::BootSystem()
   				 DSPParFile,	// name of DSP parameter file
   				 DSPVarFile,	// name of DSP variable names file
   				 k,	// pixie module number
-  				 0x7F);	// boot pattern bit mask
+  				 0x70);	// boot pattern bit mask
       
       if (retval != 0)
   	{
@@ -411,27 +411,27 @@ bool Detector::BootSystem()
 
 
   // Adjust DC-Offsets
-  for(unsigned short k = 0; k < NumModules; k++)
-    {		
-      retval = Pixie16AdjustOffsets(k);
-      if (retval < 0)
-	{
-	  ErrorInfo("Detector.cc", "BootSystem()", "Pixie16AdjustOffsets", retval);
-	  std::cout<<"Pixie16AdjustOffsets in module "<<k<<" failed, retval = "<<retval<<std::endl;
-	  return false;
-	}
+  // for(unsigned short k = 0; k < NumModules; k++)
+  //   {		
+  //     retval = Pixie16AdjustOffsets(k);
+  //     if (retval < 0)
+  // 	{
+  // 	  ErrorInfo("Detector.cc", "BootSystem()", "Pixie16AdjustOffsets", retval);
+  // 	  std::cout<<"Pixie16AdjustOffsets in module "<<k<<" failed, retval = "<<retval<<std::endl;
+  // 	  return false;
+  // 	}
 
-      unsigned int blcut;
-      for (unsigned short kk = 0; kk < 16; ++kk)
-	{
-	  retval = Pixie16BLcutFinder(k,kk,&blcut);
-	  if(retval < 0)
-	    {
-	      ErrorInfo("Detector.cc", "BootSystem()", "Pixie16BLcutFinder", retval);
-	      return false;
-	    }
-	}
-    }  
+  //     unsigned int blcut;
+  //     for (unsigned short kk = 0; kk < 16; ++kk)
+  // 	{
+  // 	  retval = Pixie16BLcutFinder(k,kk,&blcut);
+  // 	  if(retval < 0)
+  // 	    {
+  // 	      ErrorInfo("Detector.cc", "BootSystem()", "Pixie16BLcutFinder", retval);
+  // 	      return false;
+  // 	    }
+  // 	}
+  //   }  
 
   std::cout<<"----------------------------------------"<<std::endl;
 
@@ -484,7 +484,7 @@ int Detector::StartRun(int continue_run)
       return retval;
     }
    
-  if (continue_run == 0)
+  if (fresetclock == true)
     {
       // Reset clock counters to 0
       retval = Pixie16WriteSglModPar((char*)"IN_SYNCH", 0, 0);
@@ -623,6 +623,11 @@ int Detector::OpenSaveFile(int n,const char *FileN)
 void Detector::SetRecordFlag(bool flag)
 {
   frecord = flag;
+}
+
+void Detector::SetClockResetFlag(bool flag)
+{
+  fresetclock = flag;
 }
 
 void Detector::SetAutoRunFlag(bool flag)

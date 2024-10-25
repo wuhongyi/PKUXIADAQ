@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 16:51:04 2016 (+0800)
-// Last-Updated: 二 7月 19 20:59:27 2022 (+0800)
+// Last-Updated: 五 10月 25 18:34:23 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 20
+//     Update #: 21
 // URL: http://wuhongyi.cn 
 
 #ifndef _DETECTOR_H_
@@ -80,6 +80,8 @@ public:
   int SetOnlineFlag(bool flag);
   void SetRecordFlag(bool flag);
   bool GetRecordFlag() {return frecord;}
+  void SetClockResetFlag(bool flag);
+  bool GetClockResetFlag() {return fresetclock;}
   void SetAutoRunFlag(bool flag);
   void SetTimesPerRun(int t);//s
   int SaveHistogram(char *fileN,int mod);
@@ -193,6 +195,7 @@ private:
   
   bool   fonline;
   bool   frecord;
+  bool fresetclock;
   bool fautorun;
   uint64_t  timesperrun;//ms
   int runnumber;

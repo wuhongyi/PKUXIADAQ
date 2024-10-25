@@ -139,7 +139,7 @@ bool Detector::ReadConfigFile(char *config)
   return true;
 }
 
-bool Detector::BootSystem()
+bool Detector::BootSystem(bool firstboot)
 {
   ReadConfigFile();
   
@@ -343,15 +343,30 @@ bool Detector::BootSystem()
       std::cout<<DSPCodeFile<<std::endl;
       std::cout<<DSPParFile<<std::endl;
       std::cout<<DSPVarFile<<std::endl;
-      retval = Pixie16BootModule(ComFPGAConfigFile,	// name of communications FPGA configuration file
-  				 SPFPGAConfigFile,	// name of signal processing FPGA configuration file
-  				 TrigFPGAConfigFile,	// name of trigger FPGA configuration file
-  				 DSPCodeFile,	// name of executable code file for digital signal processor (DSP)
-  				 DSPParFile,	// name of DSP parameter file
-  				 DSPVarFile,	// name of DSP variable names file
-  				 k,	// pixie module number
-  				 0x7F);	// boot pattern bit mask
-      
+
+      if(firstboot)
+	{
+	  retval = Pixie16BootModule(ComFPGAConfigFile,	// name of communications FPGA configuration file
+				     SPFPGAConfigFile,	// name of signal processing FPGA configuration file
+				     TrigFPGAConfigFile,	// name of trigger FPGA configuration file
+				     DSPCodeFile,	// name of executable code file for digital signal processor (DSP)
+				     DSPParFile,	// name of DSP parameter file
+				     DSPVarFile,	// name of DSP variable names file
+				     k,	// pixie module number
+				     0x7F);	// boot pattern bit mask
+	}
+      else
+	{
+	  retval = Pixie16BootModule(ComFPGAConfigFile,	// name of communications FPGA configuration file
+				     SPFPGAConfigFile,	// name of signal processing FPGA configuration file
+				     TrigFPGAConfigFile,	// name of trigger FPGA configuration file
+				     DSPCodeFile,	// name of executable code file for digital signal processor (DSP)
+				     DSPParFile,	// name of DSP parameter file
+				     DSPVarFile,	// name of DSP variable names file
+				     k,	// pixie module number
+				     0x70);	// boot pattern bit mask
+	}
+
       if (retval != 0)
   	{
   	  ErrorInfo("Detector.cc", "BootSystem()", "Pixie16BootModule", retval);
@@ -451,24 +466,27 @@ bool Detector::BootSystem()
   
   
   // Adjust DC-Offsets
-  for(unsigned short k = 0; k < NumModules; k++)
-    {		
-      retval = Pixie16AdjustOffsets(k);
-      if (retval < 0)
-	{
-	  ErrorInfo("Detector.cc", "BootSystem()", "Pixie16AdjustOffsets", retval);
-	  std::cout<<"Pixie16AdjustOffsets in module "<<k<<" failed, retval = "<<retval<<std::endl;
-	  return false;
-	}
-
-      unsigned int blcut;
-      for (unsigned short kk = 0; kk < 16; ++kk)
-	{
-	  retval = Pixie16BLcutFinder(k,kk,&blcut);
-	  if(retval < 0)
+  if(firstboot)
+    {
+      for(unsigned short k = 0; k < NumModules; k++)
+	{		
+	  retval = Pixie16AdjustOffsets(k);
+	  if (retval < 0)
 	    {
-	      ErrorInfo("Detector.cc", "BootSystem()", "Pixie16BLcutFinder", retval);
+	      ErrorInfo("Detector.cc", "BootSystem()", "Pixie16AdjustOffsets", retval);
+	      std::cout<<"Pixie16AdjustOffsets in module "<<k<<" failed, retval = "<<retval<<std::endl;
 	      return false;
+	    }
+
+	  unsigned int blcut;
+	  for (unsigned short kk = 0; kk < 16; ++kk)
+	    {
+	      retval = Pixie16BLcutFinder(k,kk,&blcut);
+	      if(retval < 0)
+		{
+		  ErrorInfo("Detector.cc", "BootSystem()", "Pixie16BLcutFinder", retval);
+		  return false;
+		}
 	    }
 	}
     }
@@ -493,7 +511,6 @@ bool Detector::BootSystem()
     }
   
    return true;
-
 }
 
 int Detector::Syncronise()
@@ -531,7 +548,7 @@ int Detector::StartRun(int continue_run)
       return retval;
     }
    
-  if (continue_run == 0)
+  if (fresetclock == true)
     {
       // Reset clock counters to 0
       retval = Pixie16WriteSglModPar((char*)"IN_SYNCH", 0, 0);
@@ -698,6 +715,12 @@ int Detector::OpenSaveFile(int n,const char *FileN)
 void Detector::SetRecordFlag(bool flag)
 {
   frecord = flag;
+}
+
+
+void Detector::SetClockResetFlag(bool flag)
+{
+  fresetclock = flag;
 }
 
 void Detector::SetRunFlag(bool flag)

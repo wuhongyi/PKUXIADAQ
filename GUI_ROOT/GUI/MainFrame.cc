@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 三 10月 12 14:53:54 2022 (+0800)
+// Last-Updated: 五 10月 25 21:06:01 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 434
+//     Update #: 450
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -305,25 +305,26 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	    {	      
 	    case BOOT_BUTTON:
 	      bootB->SetEnabled(0);
+	      reconnect->SetEnabled(0);
 	      filesetdone->SetEnabled(0);
 	      StateMsgFold1->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
 	      StateMsgFold1->SetText("Booting... Wait a moment");
 	      gSystem->ProcessEvents();
-	      // gPad->SetCursor(kWatch);
+
 	      if(detector != 0) delete detector;
 	      detector = new Detector(flagonlinemode);
 	      detector->SetRecordFlag(true);
+	      detector->SetClockResetFlag(false);
 	      recordchk->SetState(kButtonDown);
 #ifdef DECODERONLINE	      
 	      detector->SetDecoderFlag(false);
 	      decoderchk->SetState(kButtonUp);
 #endif
 	      detector->SetRunFlag(true);
-	      if(detector->BootSystem())
+	      if(detector->BootSystem(true))
 		{
 		  StateMsgFold1->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
 		  StateMsgFold1->SetText("Booted System");
-		  // gPad->SetCursor(kPointer);
 
 		  SetMenuStatus(true,flagonlinemode);
 		  filesetdone->SetEnabled(1);
@@ -338,6 +339,43 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      ExpModeInit();
 	      break;
 
+	    case RECONNECT_BUTTON:
+	      bootB->SetEnabled(0);
+	      reconnect->SetEnabled(0);
+	      filesetdone->SetEnabled(0);
+	      StateMsgFold1->SetTextColor(TColor::RGB2Pixel(COLOR_RED_R,COLOR_RED_G,COLOR_RED_B), false);
+	      StateMsgFold1->SetText("Connecting... Wait a moment");
+	      gSystem->ProcessEvents();
+
+	      if(detector != 0) delete detector;
+	      detector = new Detector(flagonlinemode);
+	      detector->SetRecordFlag(true);
+	      detector->SetClockResetFlag(false);
+	      recordchk->SetState(kButtonDown);
+#ifdef DECODERONLINE	      
+	      detector->SetDecoderFlag(false);
+	      decoderchk->SetState(kButtonUp);
+#endif
+	      detector->SetRunFlag(true);
+	      if(detector->BootSystem(false))
+		{
+		  StateMsgFold1->SetTextColor(TColor::RGB2Pixel(COLOR_GREEN_R,COLOR_GREEN_G,COLOR_GREEN_B), false);
+		  StateMsgFold1->SetText("Connected System");
+
+		  SetMenuStatus(true,flagonlinemode);
+		  filesetdone->SetEnabled(1);
+		}
+	      else
+		{
+		  StateMsgFold1->SetTextColor(TColor::RGB2Pixel(COLOR_BLUE_R,COLOR_BLUE_G,COLOR_BLUE_B), false);
+		  StateMsgFold1->SetText("Connected Failed...");
+		  bootB->SetEnabled(1);
+		}
+	      detector->SetRunFlag(false);
+	      ExpModeInit();
+	      break;
+
+	      
 	    default:
 	      break;
 	    }
@@ -416,7 +454,7 @@ void MainFrame::ControlPanel(TGCompositeFrame *TabPanel)
   // fImagePKU->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
 
   TGImageMap* fImageWHY = new TGImageMap(LogoFrame, "../icons/logo2.png");
-  LogoFrame->AddFrame(fImageWHY,new TGLayoutHints(kLHintsTop | kLHintsRight, 70, 0, 0, 0));
+  LogoFrame->AddFrame(fImageWHY,new TGLayoutHints(kLHintsTop | kLHintsRight, 90, 0, 0, 0));
   fImageWHY->ChangeOptions(fImageWHY->GetOptions() ^ kRaisedFrame);
   fImageWHY->Resize(100,100);
   fImageWHY->ChangeOptions(fImageWHY->GetOptions() | kFixedSize);
@@ -429,7 +467,7 @@ void MainFrame::ControlPanel(TGCompositeFrame *TabPanel)
   ButtonFrame->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   // Online mode
-  onlinemode = new TGCheckButton(ButtonFrame,"Online Mode");
+  onlinemode = new TGCheckButton(ButtonFrame,"OnlineMode");
   onlinemode->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   onlinemode->SetTextColor(TColor::RGB2Pixel(CHECKBUTTON_TEXT_R,CHECKBUTTON_TEXT_G,CHECKBUTTON_TEXT_B));
   onlinemode->SetFont(CHECKBUTTON_FONT, false);
@@ -439,7 +477,7 @@ void MainFrame::ControlPanel(TGCompositeFrame *TabPanel)
   
   // BOOT button//////////////////////////////////////////////////////////////    
   bootB = new TGTextButton(ButtonFrame, "  Boot  ", BOOT_BUTTON);
-  ButtonFrame->AddFrame(bootB, new TGLayoutHints(kLHintsRight | kLHintsTop, 0,0,0,0));
+  ButtonFrame->AddFrame(bootB, new TGLayoutHints(kLHintsRight | kLHintsTop, 5,0,0,0));
   bootB->ChangeOptions(bootB->GetOptions() ^ kRaisedFrame);
   bootB->SetFont(TEXTBUTTON_FONT, false);
   bootB->Resize(75,24);
@@ -447,6 +485,16 @@ void MainFrame::ControlPanel(TGCompositeFrame *TabPanel)
   bootB->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
   bootB->Associate(this);
 
+
+  reconnect = new TGTextButton(ButtonFrame, "Relink", RECONNECT_BUTTON);
+  ButtonFrame->AddFrame(reconnect, new TGLayoutHints(kLHintsRight | kLHintsTop, 0,0,0,0));
+  reconnect->ChangeOptions(reconnect->GetOptions() ^ kRaisedFrame);
+  reconnect->SetFont(TEXTBUTTON_FONT, false);
+  reconnect->Resize(75,24);
+  reconnect->SetTextColor(TColor::RGB2Pixel(TEXTBUTTON_TEXT_R,TEXTBUTTON_TEXT_G,TEXTBUTTON_TEXT_B));
+  reconnect->SetBackgroundColor(TColor::RGB2Pixel(TEXTBUTTON_BG_R,TEXTBUTTON_BG_G,TEXTBUTTON_BG_B));
+  reconnect->Associate(this);
+  
 
   //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -571,7 +619,7 @@ void MainFrame::ControlPanel(TGCompositeFrame *TabPanel)
   cgrouphframe0->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   
   // send/not send online data stream box
-  onlinechk = new TGCheckButton(cgrouphframe0,"Online Statistics");
+  onlinechk = new TGCheckButton(cgrouphframe0,"OnlineStatistics");
   onlinechk->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   onlinechk->SetTextColor(TColor::RGB2Pixel(CHECKBUTTON_TEXT_R,CHECKBUTTON_TEXT_G,CHECKBUTTON_TEXT_B));
   onlinechk->SetFont(CHECKBUTTON_FONT, false);
@@ -579,6 +627,18 @@ void MainFrame::ControlPanel(TGCompositeFrame *TabPanel)
   fonlinedata = 1;
   onlinechk->Connect("Clicked()","MainFrame",this,"SetOnlineDataFlag()");
   cgrouphframe0->AddFrame(onlinechk,new TGLayoutHints(kLHintsLeft|kLHintsTop,0,0,5,10));
+
+  // reset clock
+  resetclockchk = new TGCheckButton(cgrouphframe0,"ClkReset");
+  resetclockchk->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
+  resetclockchk->SetTextColor(TColor::RGB2Pixel(CHECKBUTTON_TEXT_R,CHECKBUTTON_TEXT_G,CHECKBUTTON_TEXT_B));
+  resetclockchk->SetFont(CHECKBUTTON_FONT, false);
+  resetclockchk->SetState(kButtonUp);
+  fresetclockdata = 0;
+  resetclockchk->Connect("Clicked()","MainFrame",this,"SetClockResetFlag()");
+  cgrouphframe0->AddFrame(resetclockchk,new TGLayoutHints(kLHintsTop,5,0,5,10));
+  
+  
   // record/not record raw data
   recordchk = new TGCheckButton(cgrouphframe0,"Record");
   recordchk->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
@@ -701,7 +761,7 @@ void MainFrame::ControlPanel(TGCompositeFrame *TabPanel)
   StateMsgFrame->AddFrame(StateMsgFold1, new TGLayoutHints(kLHintsTop | kLHintsLeft, 0, 0, 5, 5));
   StateMsgFold1->SetFont(INFORMATION_FONT, false);
   StateMsgFold1->SetTextColor(TColor::RGB2Pixel(COLOR_BLUE_R,COLOR_BLUE_G,COLOR_BLUE_B), false);
-  StateMsgFold1->SetText("System not booted");
+  StateMsgFold1->SetText("System not booted or Connected");
   StateMsgFold1->SetEnabled(kFALSE);
   StateMsgFold1->SetFrameDrawn(kFALSE);
   StateMsgFold1->ChangeBackground(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
@@ -810,6 +870,7 @@ void MainFrame::StartRun()
       onlinemode->SetEnabled(0);
       filesetdone->SetEnabled(0);
       recordchk->SetEnabled(0);
+      resetclockchk->SetEnabled(0);
 #ifdef DECODERONLINE
       decoderchk->SetEnabled(0);
 #endif
@@ -864,6 +925,7 @@ void MainFrame::StartRun()
 	  onlinemode->SetEnabled(1);
 	  filesetdone->SetEnabled(1);
 	  recordchk->SetEnabled(1);
+	  resetclockchk->SetEnabled(1);
 	  return;
 	}
 
@@ -895,6 +957,7 @@ void MainFrame::StartRun()
       onlinemode->SetEnabled(1);
       filesetdone->SetEnabled(1);
       recordchk->SetEnabled(1);
+      resetclockchk->SetEnabled(1);
 #ifdef DECODERONLINE
       decoderchk->SetEnabled(1);
 #endif
@@ -978,7 +1041,7 @@ void MainFrame::SetOnlineMode()
   bootB->SetEnabled(1);
 
   StateMsgFold1->SetTextColor(TColor::RGB2Pixel(COLOR_BLUE_R,COLOR_BLUE_G,COLOR_BLUE_B), false);
-  StateMsgFold1->SetText("System not booted");
+  StateMsgFold1->SetText("System not booted or Connected");
 
   startdaq->SetEnabled(0);
 }
@@ -999,6 +1062,24 @@ void MainFrame::SetOnlineDataFlag()
       std::cout<<"DAQ wont send online data!"<<std::endl;
     }
 }
+
+void MainFrame::SetClockResetFlag()
+{
+  if(detector == NULL) return;
+  if(resetclockchk->IsOn())
+    {
+      fresetclockdata = true;
+      detector->SetClockResetFlag(true);
+      std::cout<<"DAQ will reset clock counter every run!"<<std::endl;
+    }
+  else
+    {
+      fresetclockdata = false;
+      detector->SetClockResetFlag(false);
+      std::cout<<"DAQ wont reset clock counter every run!"<<std::endl;
+    }
+}
+
 
 
 #ifdef DECODERONLINE

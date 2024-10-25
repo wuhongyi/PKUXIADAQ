@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 一 8月 15 22:19:02 2016 (+0800)
-// Last-Updated: 一 4月 18 20:19:59 2022 (+0800)
+// Last-Updated: 五 10月 25 18:54:47 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 62
+//     Update #: 64
 // URL: http://wuhongyi.cn 
 
 #include "Manager.hh"
@@ -32,7 +32,8 @@ Manager::Manager()
   frecorddata = true;
   fupdateenergyonline = false;
   fautorun = false;
-
+  fresetclockdata = false;
+  
   autoruntimes = wuReadData::ReadValue<int>("AutoRunModeTimes", "../parset/cfgPixie16.txt");
 
   
@@ -132,6 +133,23 @@ void Manager::SetOnlineDataFlag()
       std::cout<<"DAQ wont send online data!"<<std::endl;
     }
 }
+
+void Manager::SetClockResetFlag()
+{
+  if(!fresetclockdata)
+    {
+      fresetclockdata = true;
+      detector->SetClockResetFlag(true);
+      std::cout<<"DAQ will reset clock counter every run!"<<std::endl;
+    }
+  else
+    {
+      fresetclockdata = false;
+      detector->SetClockResetFlag(false);
+      std::cout<<"DAQ wont reset clock counter every run!"<<std::endl;
+    }
+}
+
 
 void Manager::PreStartRun()
 {
@@ -308,6 +326,12 @@ void Manager::CheckKeyboard()
 	    break;
 	  }
 
+	case 'r' :
+	  {
+	    SetClockResetFlag();
+	    break;
+	  }
+	  
 	case 'e':
 	  {
 	    fupdateenergyonline = true;
@@ -364,6 +388,11 @@ void Manager::PrintRunStatus()
     std::cout<<"Write Data To Harddisk: OPEN"<<std::endl;
   else
     std::cout<<"Write Data To Harddisk: CLOSE"<<std::endl;
+
+  if(fresetclockdata)
+    std::cout<<"Reset clock counters every run: OPEN"<<std::endl;
+  else
+    std::cout<<"Reset clock counters every run: CLOSE"<<std::endl;
   
 }
 
