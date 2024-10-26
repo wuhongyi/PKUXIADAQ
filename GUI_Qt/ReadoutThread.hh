@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 三 6月 22 09:30:18 2022 (+0800)
-// Last-Updated: 二 6月 11 22:38:33 2024 (+0800)
+// Last-Updated: 六 10月 26 23:13:09 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 30
+//     Update #: 31
 // URL: http://wuhongyi.cn 
 
 #ifndef _READOUTTHREAD_H_
@@ -76,6 +76,7 @@ private:
   
   bool mDoRead = false;
   bool mSaving = false;
+  bool mResetClock = false;
   bool mRequestStop = false;
 
   bool mRunning = false;

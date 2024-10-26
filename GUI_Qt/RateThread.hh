@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 3月 12 14:30:22 2023 (+0800)
-// Last-Updated: 日 3月 12 21:04:19 2023 (+0800)
+// Last-Updated: 一 10月 14 22:20:42 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 3
+//     Update #: 6
 // URL: http://wuhongyi.cn 
 
 #ifndef _RATETHREAD_H_
@@ -53,6 +53,12 @@ private:
   double LiveTime[MAXMODULENUM][MAXCHANNELNUM];
   double RawOutputCount[MAXMODULENUM][MAXCHANNELNUM];//real
   double RawInputCount[MAXMODULENUM][MAXCHANNELNUM];//live
+
+
+#ifdef INBEAMGAMMA
+  int CountRateUpper[MAXMODULENUM][MAXCHANNELNUM];//upper limit
+  int CountRateLower[MAXMODULENUM][MAXCHANNELNUM];//lower limit
+#endif  
 };
 
 #endif /* _RATETHREAD_H_ */

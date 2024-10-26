@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 10月 25 14:31:51 2022 (+0800)
-// Last-Updated: 五 6月 14 01:10:46 2024 (+0800)
+// Last-Updated: 六 10月 26 09:48:49 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 31
+//     Update #: 36
 // URL: http://wuhongyi.cn 
 
 #ifndef _GLOBAL_H_
@@ -21,9 +21,12 @@
 #include "QMutex"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#define EXPIRATIONDATE 20240914
+#define EXPIRATIONDATE 20250630
 
 #define ONLINEMODE
+
+
+#define INBEAMGAMMA
 
 
 // Features customized for special users
@@ -75,7 +78,7 @@ extern RAWDATABUFFER rawdatabuffer;
 #endif
 
 #define CONFIG_DIR ".GDDAQ"
-#define DEFAUL_RUN_CONFIG_FILENAME "GDDAQ_Run.conf"
+#define DEFAUL_RUN_CONFIG_FILENAME "GDDAQ_XIA.conf"
 
 
 

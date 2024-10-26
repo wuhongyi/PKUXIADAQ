@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 12月 17 15:18:35 2021 (+0800)
-// Last-Updated: 四 6月  6 21:04:43 2024 (+0800)
+// Last-Updated: 六 10月 26 23:04:24 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 58
+//     Update #: 62
 // URL: http://wuhongyi.cn 
 
 #ifndef _MAINWINDOW_H_
@@ -46,8 +46,8 @@ public:
   void LoadConfigure();
   nlohmann::json GetJSON();
 
-  void SetOutputSettings(QString folder, QString prefix, QString run);
-  void GetOutputSettings(QString &folder, QString &prefix, QString &run);
+  void SetOutputSettings(QString folder, QString prefix, QString run, bool saved, bool reset);
+  void GetOutputSettings(QString &folder, QString &prefix, QString &run, bool &saved, bool &reset);
   void ShowOutputSettings();
   void SaveOutputSettings();
 
@@ -145,6 +145,8 @@ private:
   QLineEdit *leFolder;
   QLineEdit *lePrefix;
   QLineEdit *leRun;
+  QCheckBox *leSaved;
+  QCheckBox *leClockReset;
   
 }; 
 

@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 9月  9 13:59:54 2022 (+0800)
-// Last-Updated: 日 6月  4 14:47:02 2023 (+0800)
+// Last-Updated: 六 10月 26 21:04:50 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 32
+//     Update #: 33
 // URL: http://wuhongyi.cn 
 
 #ifndef _CONNECTDIALOG_H_
@@ -77,7 +77,10 @@ private:
 private slots:
   void ConnectButtonClick();
   void BootButtonClick();
+  void ConnectAndBoot(bool first);
 
+
+  
   void Load();
 };
 

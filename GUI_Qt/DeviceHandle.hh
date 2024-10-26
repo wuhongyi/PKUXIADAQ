@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 三 6月 22 09:55:01 2022 (+0800)
-// Last-Updated: 三 1月 17 12:51:50 2024 (+0800)
+// Last-Updated: 六 10月 26 23:19:11 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 69
+//     Update #: 71
 // URL: http://wuhongyi.cn 
 
 #ifndef _DEVICEHANDLE_H_
@@ -19,7 +19,7 @@
 // 所有交互由该类完成
 
 
-	       // 确保 ConnectDialog 系统初始化成功之后，不可再打开
+// 确保 ConnectDialog 系统初始化成功之后，不可再打开
 #include <string>
 #include <cstring>
 #include <vector>
@@ -63,7 +63,7 @@ public:
   DeviceHandle();
   virtual ~DeviceHandle();
 
-  void SYNCH();
+  void SYNCH(bool resetclk);
   void StartAcquisition();
   void StopAcquisition();
   bool GetAcqStatus();
@@ -82,7 +82,7 @@ public:
   void ExitSystem();
   bool ReadModuleInfo();
   bool GetModuleInfo(unsigned short num, unsigned short *rev, unsigned short *msps, unsigned short *bits);
-  bool BootModule(std::string ComFPGAConfigFile, std::string SPFPGAConfigFile, std::string DSPCodeFile, std::string DSPParFile, std::string DSPVarFile, unsigned short ModNum);
+  bool BootModule(std::string ComFPGAConfigFile, std::string SPFPGAConfigFile, std::string DSPCodeFile, std::string DSPParFile, std::string DSPVarFile, unsigned short ModNum, bool firstboot);
 
   bool WriteSglChanParQDC(unsigned short mod, unsigned short ch, unsigned short q, double value);
   bool WriteSglChanParTRACEDELAY(unsigned short mod, unsigned short ch, double value);
