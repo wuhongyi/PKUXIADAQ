@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 六 3月 11 16:34:28 2023 (+0800)
-// Last-Updated: 六 4月  8 19:11:24 2023 (+0800)
+// Last-Updated: 日 11月  3 20:49:34 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 12
+//     Update #: 26
 // URL: http://wuhongyi.cn 
 
 #ifndef _ONLINERATE_H_
@@ -23,6 +23,7 @@
 #include <QWidget>
 #include <QGridLayout>
 #include <QtCore/QVariant>
+#include <QtGui/QColor>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
@@ -52,6 +53,8 @@
 
 class MainWindow;
 class ModuleRate;
+class ModuleAlert;
+
 
 class OnlineRate : public QMainWindow
 {
@@ -62,9 +65,13 @@ public:
   virtual ~OnlineRate();
 
 
-  void UpdateOnlineRateInput(unsigned short mod, unsigned short ch, double value);
-  void UpdateOnlineRateOutput(unsigned short mod, unsigned short ch, double value);
+  void UpdateOnlineRateInput(unsigned short mod, unsigned short ch, double value, QColor color = QColor(Qt::black));
+  void UpdateOnlineRateOutput(unsigned short mod, unsigned short ch, double value, QColor color = QColor(Qt::black));
   void UpdateOutputDataSize(unsigned short mod, unsigned long value);
+
+
+
+
   
 private:
 
@@ -75,6 +82,9 @@ private:
 
   ModuleRate *mModuleRate[13];
   QPushButton *ratebt[13];
+
+  ModuleAlert *mModuleAlert[13];
+  QPushButton *alertbt[13];
 private:
 
   QTableWidget *tableonline;
@@ -83,7 +93,8 @@ private:
 			     
 private slots:
   void VisibleModuleRate();
-  
+  void VisibleModuleAlert();
+  void SaveCountRateLimit();
 };
 
 class ModuleRate : public QWidget
@@ -94,8 +105,8 @@ public:
   ModuleRate(QWidget *parent, DeviceHandle *device, unsigned short mod);
   virtual ~ModuleRate();
 
-  void UpdateInput(unsigned short ch, double value);
-  void UpdateOutput(unsigned short ch, double value);
+  void UpdateInput(unsigned short ch, double value, QColor color = QColor(Qt::black));
+  void UpdateOutput(unsigned short ch, double value, QColor color = QColor(Qt::black));
   
 private:
   DeviceHandle *mDevice = nullptr;
@@ -107,6 +118,33 @@ private slots:
   void VisibleRate();
   
 };
+
+
+class ModuleAlert : public QWidget
+{
+ Q_OBJECT
+  
+public:
+  ModuleAlert(QWidget *parent, MainWindow *w, DeviceHandle *device, unsigned short mod);
+  virtual ~ModuleAlert();
+
+
+  void ReadLowerUpper();
+  void WriteLowerUpper();
+  
+
+private:
+  MainWindow * const mMainWindow;
+  DeviceHandle *mDevice = nullptr;
+  unsigned short mMod;
+  unsigned short mGroup;
+  QTableWidget *tablealert;
+
+private slots:
+  void VisibleAlert();
+
+};
+
 
 #endif /* _ONLINERATE_H_ */
 

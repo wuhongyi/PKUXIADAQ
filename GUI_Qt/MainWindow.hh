@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 12月 17 15:18:35 2021 (+0800)
-// Last-Updated: 六 10月 26 23:04:24 2024 (+0800)
+// Last-Updated: 一 11月 11 18:54:30 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 62
+//     Update #: 68
 // URL: http://wuhongyi.cn 
 
 #ifndef _MAINWINDOW_H_
@@ -23,6 +23,7 @@
 #include "OnlineRate.hh"
 #include "Debug.hh"
 
+#include <QtGui/QColor>
 #include "QtWidgets/QMainWindow"
 #include "QtWidgets"
 #include "QStringList"
@@ -51,11 +52,22 @@ public:
   void ShowOutputSettings();
   void SaveOutputSettings();
 
+  bool IsSavedFile() {return leSaved->isChecked();}
+  
   bool DAQRunning() {return mReadoutThread->IsRunning();}
 
-  void UpdateOnlineRateInput(unsigned short mod, unsigned short ch, double value);
-  void UpdateOnlineRateOutput(unsigned short mod, unsigned short ch, double value);
+  void UpdateOnlineRateInput(unsigned short mod, unsigned short ch, double value, QColor color = QColor(Qt::black));
+  void UpdateOnlineRateOutput(unsigned short mod, unsigned short ch, double value, QColor color = QColor(Qt::black));
   void UpdateOutputDataSize(unsigned short mod, unsigned long value);
+
+
+  int GetCountRateUpper(unsigned short mod, unsigned short ch);
+  int GetCountRateLower(unsigned short mod, unsigned short ch);
+  void SetCountRateUpper(unsigned short mod, unsigned short ch, int value);
+  void SetCountRateLower(unsigned short mod, unsigned short ch, int value);
+  void SaveCountRateLimit();
+
+
   
 private:
 
@@ -81,6 +93,8 @@ public slots:
   void StartAcquisition();
   void StopAcquisition();
 
+  void SaveDefaultJSON();
+  void SaveAsJSON();
   
 private:
 

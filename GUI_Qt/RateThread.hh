@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 3月 12 14:30:22 2023 (+0800)
-// Last-Updated: 一 10月 14 22:20:42 2024 (+0800)
+// Last-Updated: 日 11月  3 21:33:33 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 6
+//     Update #: 13
 // URL: http://wuhongyi.cn 
 
 #ifndef _RATETHREAD_H_
@@ -36,7 +36,14 @@ public:
   RateThread(MainWindow *w, DeviceHandle *dev);
   virtual ~RateThread();
 
+  int GetCountRateUpper(unsigned short mod, unsigned short ch);
+  int GetCountRateLower(unsigned short mod, unsigned short ch);
 
+  void SetCountRateUpper(unsigned short mod, unsigned short ch, int value);
+  void SetCountRateLower(unsigned short mod, unsigned short ch, int value);
+
+  void SaveCountRateLimit();
+  
 protected:
   
   void run();
@@ -55,9 +62,17 @@ private:
   double RawInputCount[MAXMODULENUM][MAXCHANNELNUM];//live
 
 
-#ifdef INBEAMGAMMA
   int CountRateUpper[MAXMODULENUM][MAXCHANNELNUM];//upper limit
   int CountRateLower[MAXMODULENUM][MAXCHANNELNUM];//lower limit
+  QString CountRateFile;
+  
+#ifdef INBEAMGAMMA
+  bool FlagGeDet[MAXMODULENUM][MAXCHANNELNUM];
+  int CountLimitGe[MAXMODULENUM][MAXCHANNELNUM];
+  unsigned int CountM2;
+  unsigned int CountM2Time;//s  +3
+
+  QString InBeamGammaGeFile;
 #endif  
 };
 

@@ -787,13 +787,13 @@
                 "OffsetDAC": [
                     43802,
                     43797,
-                    43691,
+                    43593,
                     43802,
-                    43928,
+                    43728,
                     43853,
-                    43960,
+                    43860,
                     43797,
-                    43866,
+                    43768,
                     43948,
                     43765,
                     43863,
@@ -1853,6 +1853,8 @@
                 "tag": "17-250-14",
                 "version": "n/a"
             },
+            "firmware-release": "0.0.0",
+            "firmware-tag": "17-250-14",
             "hardware_revision": "H",
             "num-channels": 32,
             "number": 0,
@@ -2738,19 +2740,19 @@
                     0
                 ],
                 "OffsetDAC": [
-                    43942,
+                    43742,
                     43817,
                     43845,
-                    43957,
+                    43757,
                     44022,
-                    43933,
-                    43868,
+                    43733,
+                    43764,
                     43833,
-                    43975,
+                    43874,
                     43923,
-                    44070,
+                    43870,
                     43960,
-                    43913,
+                    43713,
                     43836,
                     43983,
                     43887,
@@ -3806,6 +3808,8 @@
                 "tag": "17-250-14",
                 "version": "n/a"
             },
+            "firmware-release": "0.0.0",
+            "firmware-tag": "17-250-14",
             "hardware_revision": "H",
             "num-channels": 32,
             "number": 1,
@@ -4698,21 +4702,21 @@
                     45690,
                     45620,
                     45781,
-                    45740,
+                    45635,
                     45633,
                     45573,
                     45697,
                     45703,
-                    45727,
+                    45527,
                     45620,
-                    45702,
+                    45502,
                     45513,
-                    30462,
-                    30526,
-                    30561,
-                    30598,
-                    30450,
+                    30361,
+                    30427,
+                    30465,
                     30503,
+                    30450,
+                    30397,
                     30640,
                     30561,
                     30652,
@@ -4722,7 +4726,7 @@
                     30441,
                     30492,
                     30732,
-                    30676
+                    30580
                 ],
                 "PAFlength": [
                     1439,
@@ -5546,193 +5550,193 @@
             "config": [
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 }
@@ -5759,6 +5763,8 @@
                 "tag": "17-125-14",
                 "version": "n/a"
             },
+            "firmware-release": "0.0.0",
+            "firmware-tag": "17-125-14",
             "hardware_revision": "H",
             "num-channels": 32,
             "number": 2,
@@ -6645,16 +6651,16 @@
                 ],
                 "OffsetDAC": [
                     45734,
-                    45731,
-                    45713,
+                    45629,
+                    45513,
                     45587,
                     45779,
                     45582,
                     45654,
                     45529,
-                    45612,
+                    45509,
                     45526,
-                    45590,
+                    45486,
                     45615,
                     45582,
                     45747,
@@ -6664,18 +6670,18 @@
                     30570,
                     30556,
                     30557,
-                    30673,
+                    30564,
                     30687,
-                    30698,
-                    30722,
+                    30602,
+                    30619,
                     30527,
-                    30542,
+                    30443,
                     30452,
-                    30568,
+                    30469,
                     30528,
-                    30638,
-                    30595,
-                    30599
+                    30540,
+                    30494,
+                    30503
                 ],
                 "PAFlength": [
                     1439,
@@ -7499,193 +7505,193 @@
             "config": [
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 2,
+                    "adc_clk_div": 1,
                     "adc_msps": 125,
                     "fpga_clk_mhz": 125
                 }
@@ -7712,6 +7718,8 @@
                 "tag": "17-125-14",
                 "version": "n/a"
             },
+            "firmware-release": "0.0.0",
+            "firmware-tag": "17-125-14",
             "hardware_revision": "H",
             "num-channels": 32,
             "number": 3,
@@ -7815,6 +7823,10 @@
         "channel": {
             "input": {
                 "BLcut": [
+                    0,
+                    5,
+                    1,
+                    0,
                     1,
                     1,
                     1,
@@ -7826,11 +7838,7 @@
                     1,
                     1,
                     1,
-                    1,
-                    1,
-                    1,
-                    1,
-                    7
+                    1
                 ],
                 "BaselinePercent": [
                     10,
@@ -7905,22 +7913,22 @@
                     120
                 ],
                 "ChanCSRa": [
-                    164,
-                    164,
-                    164,
-                    164,
-                    262564,
-                    164,
-                    164,
-                    164,
-                    164,
-                    164,
-                    164,
-                    164,
-                    164,
-                    164,
-                    164,
-                    164
+                    16516,
+                    16516,
+                    16516,
+                    16516,
+                    16516,
+                    16516,
+                    16516,
+                    16516,
+                    16516,
+                    16516,
+                    16516,
+                    16516,
+                    16516,
+                    16516,
+                    16516,
+                    16516
                 ],
                 "ChanCSRb": [
                     0,
@@ -8197,7 +8205,7 @@
                     0,
                     0,
                     0,
-                    196608,
+                    0,
                     0,
                     0,
                     0,
@@ -8215,7 +8223,7 @@
                     0,
                     0,
                     0,
-                    4096,
+                    0,
                     0,
                     0,
                     0,
@@ -8229,40 +8237,40 @@
                     0
                 ],
                 "OffsetDAC": [
-                    26272,
-                    26464,
-                    26144,
-                    26400,
-                    26400,
-                    26272,
-                    24608,
-                    26144,
-                    26016,
-                    26272,
-                    26400,
-                    26208,
-                    26336,
-                    26208,
-                    25888,
-                    32
+                    65504,
+                    65504,
+                    55456,
+                    65504,
+                    46816,
+                    47136,
+                    46944,
+                    46944,
+                    46880,
+                    47008,
+                    47008,
+                    47008,
+                    47008,
+                    46752,
+                    46880,
+                    47264
                 ],
                 "PAFlength": [
-                    324,
-                    324,
-                    324,
-                    324,
+                    824,
+                    824,
+                    824,
+                    824,
                     374,
-                    324,
-                    324,
-                    324,
-                    324,
-                    324,
-                    324,
-                    324,
-                    324,
-                    324,
-                    324,
-                    324
+                    824,
+                    824,
+                    824,
+                    824,
+                    824,
+                    824,
+                    824,
+                    824,
+                    824,
+                    824,
+                    824
                 ],
                 "PSAlength": [
                     0,
@@ -8575,7 +8583,7 @@
                     2000,
                     2000,
                     2000,
-                    100,
+                    2000,
                     2000,
                     2000,
                     2000,
@@ -8684,107 +8692,107 @@
             "config": [
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 1,
-                    "adc_msps": 100,
-                    "fpga_clk_mhz": 100
+                    "adc_clk_div": 2,
+                    "adc_msps": 250,
+                    "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 1,
-                    "adc_msps": 100,
-                    "fpga_clk_mhz": 100
+                    "adc_clk_div": 2,
+                    "adc_msps": 250,
+                    "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 1,
-                    "adc_msps": 100,
-                    "fpga_clk_mhz": 100
+                    "adc_clk_div": 2,
+                    "adc_msps": 250,
+                    "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 1,
-                    "adc_msps": 100,
-                    "fpga_clk_mhz": 100
+                    "adc_clk_div": 2,
+                    "adc_msps": 250,
+                    "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 1,
-                    "adc_msps": 100,
-                    "fpga_clk_mhz": 100
+                    "adc_clk_div": 2,
+                    "adc_msps": 250,
+                    "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 1,
-                    "adc_msps": 100,
-                    "fpga_clk_mhz": 100
+                    "adc_clk_div": 2,
+                    "adc_msps": 250,
+                    "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 1,
-                    "adc_msps": 100,
-                    "fpga_clk_mhz": 100
+                    "adc_clk_div": 2,
+                    "adc_msps": 250,
+                    "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 1,
-                    "adc_msps": 100,
-                    "fpga_clk_mhz": 100
+                    "adc_clk_div": 2,
+                    "adc_msps": 250,
+                    "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 1,
-                    "adc_msps": 100,
-                    "fpga_clk_mhz": 100
+                    "adc_clk_div": 2,
+                    "adc_msps": 250,
+                    "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 1,
-                    "adc_msps": 100,
-                    "fpga_clk_mhz": 100
+                    "adc_clk_div": 2,
+                    "adc_msps": 250,
+                    "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 1,
-                    "adc_msps": 100,
-                    "fpga_clk_mhz": 100
+                    "adc_clk_div": 2,
+                    "adc_msps": 250,
+                    "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 1,
-                    "adc_msps": 100,
-                    "fpga_clk_mhz": 100
+                    "adc_clk_div": 2,
+                    "adc_msps": 250,
+                    "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 1,
-                    "adc_msps": 100,
-                    "fpga_clk_mhz": 100
+                    "adc_clk_div": 2,
+                    "adc_msps": 250,
+                    "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 1,
-                    "adc_msps": 100,
-                    "fpga_clk_mhz": 100
+                    "adc_clk_div": 2,
+                    "adc_msps": 250,
+                    "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 1,
-                    "adc_msps": 100,
-                    "fpga_clk_mhz": 100
+                    "adc_clk_div": 2,
+                    "adc_msps": 250,
+                    "fpga_clk_mhz": 125
                 },
                 {
                     "adc_bits": 14,
-                    "adc_clk_div": 1,
-                    "adc_msps": 100,
-                    "fpga_clk_mhz": 100
+                    "adc_clk_div": 2,
+                    "adc_msps": 250,
+                    "fpga_clk_mhz": 125
                 }
             ],
             "dsp": {
                 "adc_bits": 14,
-                "adc_msps": 100,
-                "file": "Pixie16DSP_revfpku_14b100m_r49064.ldr",
+                "adc_msps": 250,
+                "file": "Pixie16DSP_revfpku_14b250m_r44496.ldr",
                 "rev": 15,
-                "tag": "15-100-14",
+                "tag": "15-250-14",
                 "version": "n/a"
             },
             "fifo": {
@@ -8795,31 +8803,33 @@
             },
             "fippi": {
                 "adc_bits": 14,
-                "adc_msps": 100,
-                "file": "fippixie16_revfpku_14b100m_r39574.bin",
+                "adc_msps": 250,
+                "file": "fippixie16_revfpku_14b250m_r45226.bin",
                 "rev": 15,
-                "tag": "15-100-14",
+                "tag": "15-250-14",
                 "version": "n/a"
             },
+            "firmware-release": "0.0.0",
+            "firmware-tag": "15-250-14",
             "hardware_revision": "F",
             "num-channels": 16,
             "number": 4,
-            "serial-num": 1312,
+            "serial-num": 1400,
             "slot": 6,
             "sys": {
                 "adc_bits": 14,
-                "adc_msps": 100,
-                "file": "syspixie16_revfpku_adc100hz_r44498.bin",
+                "adc_msps": 250,
+                "file": "syspixie16_revfpku_adc250hz_r44499.bin",
                 "rev": 15,
-                "tag": "15-100-14",
+                "tag": "15-250-14",
                 "version": "n/a"
             },
             "var": {
                 "adc_bits": 14,
-                "adc_msps": 100,
-                "file": "Pixie16DSP_revfpku_14b100m_r49064.var",
+                "adc_msps": 250,
+                "file": "Pixie16DSP_revfpku_14b250m_r44496.var",
                 "rev": 15,
-                "tag": "15-100-14",
+                "tag": "15-250-14",
                 "version": "n/a"
             }
         },

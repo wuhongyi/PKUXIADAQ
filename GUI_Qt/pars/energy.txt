@@ -1,0 +1,2 @@
+mod  ch    a0    a1    a2    bin    min    max
+
