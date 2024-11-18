@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 10月 25 14:31:51 2022 (+0800)
-// Last-Updated: 一 11月 11 19:03:35 2024 (+0800)
+// Last-Updated: 一 11月 18 14:23:08 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 45
+//     Update #: 52
 // URL: http://wuhongyi.cn 
 
 #ifndef _GLOBAL_H_
@@ -19,14 +19,16 @@
 
 #include "QVector"
 #include "QMutex"
+#include "QString"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#define EXPIRATIONDATE 20250711
+#define VERSIONDATE  20241114
+#define EXPIRATIONDATE 20250714
 
 #define ONLINEMODE
 
 
-#define INBEAMGAMMA
+// #define INBEAMGAMMA       // Use only in IMP/CIAE inbeam gamma experiment
 #define INBEAMGAMMALIMIT  900 //s
 #define INBEAMGAMMASTOPTIME  7200 //s
 
@@ -68,7 +70,7 @@ typedef struct RAWDATABUFFER
 extern QMutex datavectordecoder_mutex[];
 extern QVector<RAWDATABUFFER> datavectordecoder[];
 extern RAWDATABUFFER rawdatabuffer;
-
+extern QString LOGINUSERNAME;
 
 
 #ifdef WIN32

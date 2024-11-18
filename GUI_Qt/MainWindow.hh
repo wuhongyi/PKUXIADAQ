@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 12月 17 15:18:35 2021 (+0800)
-// Last-Updated: 一 11月 11 18:54:30 2024 (+0800)
+// Last-Updated: 五 11月 15 12:36:12 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 68
+//     Update #: 73
 // URL: http://wuhongyi.cn 
 
 #ifndef _MAINWINDOW_H_
@@ -44,6 +44,7 @@ class MainWindow : public QMainWindow
 public:
   MainWindow(QWidget *parent = Q_NULLPTR);
 
+  
   void LoadConfigure();
   nlohmann::json GetJSON();
 
@@ -67,7 +68,7 @@ public:
   void SetCountRateLower(unsigned short mod, unsigned short ch, int value);
   void SaveCountRateLimit();
 
-
+  void SetProgressBarValue(int  value);
   
 private:
 
@@ -101,9 +102,9 @@ private:
   QWidget *mCenterWidget;
 
   QToolBar *mMainToolBar;
-  QStatusBar *mMainStatusBar;
-  QPushButton* mStatusLED;
-  QProgressBar *mMainProgressBar;
+  QStatusBar *mMainStatusBar;//
+  QPushButton* mStatusLED;//
+  QProgressBar *mMainProgressBar;//
   QLabel *mMainStatusBarText;
   
   QString mTmpConfigFileName;
