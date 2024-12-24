@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 二 7月  2 20:19:34 2019 (+0800)
-.. Last-Updated: 五 10月 25 22:05:59 2024 (+0800)
+.. Last-Updated: 二 12月 24 18:46:46 2024 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 52
+..     Update #: 53
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -19,7 +19,7 @@
 版本
 ---------------------------------
 
-- **GUI Qt: 测试版本**  
+- **GUI Qt: 2024.12.24**  
 - **GUI ROOT Version: 2024.10.25**  
    - **RealDecoder Version: 2023.08.19**  
 - **DecodeAndSortAll Version: 2022.04.17**

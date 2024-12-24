@@ -29,8 +29,9 @@ Welcome to GDDAQ's guides.
    
    INSTALL.rst
    MYSQL.rst
+   INSTALLQT.rst
 
-
+   
 #################################
 
 .. toctree::

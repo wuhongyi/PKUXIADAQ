@@ -4,30 +4,15 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 日 3月 12 21:29:21 2023 (+0800)
-.. Last-Updated: 三 6月  5 21:07:18 2024 (+0800)
+.. Last-Updated: 五 11月  8 23:29:02 2024 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 6
+..     Update #: 7
 .. URL: http://wuhongyi.cn 
 
 =================================
 Qt 图形交互界面
 =================================
 
-
-.. code:: bash
-	  
-  # tar -zxvf PixieSDK-4.2.1.tar.gz
-  # cd PixieSDK-4.2.1
-  unzip PixieSDK-master.zip
-  cd PixieSDK-master
-  mkdir build
-  cd build
-  cmake  -DCMAKE_INSTALL_PREFIX=../../pixiesdk ..
-  make
-  make install
-
-
-  
 
 进入 GUI_Qt 目录，执行以下命令即可弹出登陆界面
 
