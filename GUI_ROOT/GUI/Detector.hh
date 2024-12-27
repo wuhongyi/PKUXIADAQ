@@ -92,6 +92,8 @@ public:
 
   unsigned short GetModuleADCMSPS(int mod) {return ModuleInformation[mod].Module_ADCMSPS;}
   unsigned short GetModuleADCBits(int mod) {return ModuleInformation[mod].Module_ADCBits;}
+  unsigned int GetModuleSerNum(int mod) {return ModuleInformation[mod].Module_SerNum;}
+  unsigned short GetModuleRev(int mod) {return ModuleInformation[mod].Module_Rev;}
   
   struct Module_Info
   {

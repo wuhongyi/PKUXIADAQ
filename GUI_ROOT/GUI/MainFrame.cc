@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 五 10月 25 21:06:01 2024 (+0800)
+// Last-Updated: 五 12月 27 19:29:43 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 450
+//     Update #: 451
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -898,17 +898,13 @@ void MainFrame::StartRun()
 	  std::cout<<"can't open Log file."<<std::endl;
 	}
 
-      writelog<<"Mod Num: "<<detector->NumModules<<std::endl;
+      writelog << "Mod Num: " << detector->NumModules << std::endl;
+      writelog << "Rev  Samples  Bits  S/N" << std::endl;
       for(int i = 0;i < detector->NumModules; i++)
 	{
-	  writelog<<detector->GetModuleADCMSPS(i)<<"  ";
+	  writelog << detector->GetModuleRev(i) << "  " << detector->GetModuleADCMSPS(i) << "  " << detector->GetModuleADCBits(i) << "  " << detector->GetModuleSerNum(i) << "  " << std::endl;
 	}
-      writelog<<std::endl;
-      for(int i = 0;i < detector->NumModules; i++)
-	{
-	  writelog<<detector->GetModuleADCBits(i)<<"  ";
-	}
-      writelog<<std::endl;
+
       time_t timep;
       time(&timep);
       char tmp[64];

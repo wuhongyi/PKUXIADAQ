@@ -4,15 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 8月  9 09:24:46 2016 (+0800)
-// Last-Updated: 五 10月 25 13:49:24 2024 (+0800)
+// Last-Updated: 五 12月 27 19:30:41 2024 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 105
+//     Update #: 106
 // URL: http://wuhongyi.cn 
 
 #ifndef _GLOBAL_HH_
 #define _GLOBAL_HH_
 
-const char gVERSION[] = "Version: STD - 2024.10.25";
+const char gVERSION[] = "Version: STD - 2024.12.27";
 
 const char gCITE[] = "Cite: H.Y. Wu et al., NIM A 975(2020)164200";
 
