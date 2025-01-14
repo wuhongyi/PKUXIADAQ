@@ -4,13 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 日 10月  2 19:11:39 2016 (+0800)
-// Last-Updated: 四 9月  5 19:38:31 2024 (+0800)
+// Last-Updated: 二 1月 14 11:13:56 2025 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 156
+//     Update #: 158
 // URL: http://wuhongyi.cn 
 
 // 20220417 sprintf 套娃警告问题需要处理，应更改为 TString
 // 20240713 解决 gcc10 以上版本 sprintf 套娃警告问题
+// 20250114 解决舍弃的波形内存没释放问题
+
 
 #include "r2root.hh"
 #include "UserDefine.hh"
@@ -412,7 +414,16 @@ void r2root::Process()
 #endif		  
 		  havedata[mark] = rawdec[mark].getnextevt();
 
-		  if(mapvalue.evte < chlow[flagcrate[i]][mapvalue.sid][mapvalue.ch] || mapvalue.evte > chhigh[flagcrate[i]][mapvalue.sid][mapvalue.ch]) continue;
+		  if(mapvalue.evte < chlow[flagcrate[i]][mapvalue.sid][mapvalue.ch] || mapvalue.evte > chhigh[flagcrate[i]][mapvalue.sid][mapvalue.ch])
+		    {
+#ifdef WAVEFORM
+		      if(mapvalue.ltra > 0)
+			{
+			  delete[] mapvalue.data;
+			}
+#endif
+		      continue;
+		    }
 		  if(mapvalue.sr == 250 || mapvalue.sr == 125)
 		    {
 		      mapvalue.ts = mapvalue.ts+(timeoffset[flagcrate[i]][mapvalue.sid][mapvalue.ch]/8);
