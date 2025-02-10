@@ -40,11 +40,11 @@ ModuleBits 9  14 14 14 14 14 14 14 14 14 14
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 
 # standard firmware
-100M12bit_sys ../../firmware/pixie16_revd_12b100m_firmware_release/syspixie16_revdgeneral_r33157.bin
-100M12bit_fip ../../firmware/pixie16_revd_12b100m_firmware_release/fippixie16_revdgeneral_r32495.bin
-100M12bit_dsplst ../../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.lst
-100M12bit_dspldr ../../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.ldr
-100M12bit_dspvar ../../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.var
+100M12bit_sys ../../firmware/xia_pixie-16_13-100-12_general_1.0.0/sys.bin
+100M12bit_fip ../../firmware/xia_pixie-16_13-100-12_general_1.0.0/fippi.bin
+100M12bit_dsplst ../../firmware/xia_pixie-16_13-100-12_general_1.0.0/dsp.lst
+100M12bit_dspldr ../../firmware/xia_pixie-16_13-100-12_general_1.0.0/dsp.ldr
+100M12bit_dspvar ../../firmware/xia_pixie-16_13-100-12_general_1.0.0/dsp.var
 
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
@@ -78,11 +78,22 @@ ModuleBits 9  14 14 14 14 14 14 14 14 14 14
 # 100M14bit_dspvar ../../firmware/pixie16_revfpku_14b100m_firmware_release_06092020/Pixie16DSP_revfpku_14b100m_r40391.var
 
 # Standard firmware
-# 100M14bit_sys ../../firmware/pixie16_revf_general_14b100m_firmware_release/syspixie16_revfgeneral_adc100mhz_r33338.bin
-# 100M14bit_fip ../../firmware/pixie16_revf_general_14b100m_firmware_release/fippixie16_revfgeneral_14b100m_r36263.bin
-# 100M14bit_dsplst ../../firmware/pixie16_revf_general_14b100m_firmware_release/Pixie16DSP_revfgeneral_14b100m_r37640.lst
-# 100M14bit_dspldr ../../firmware/pixie16_revf_general_14b100m_firmware_release/Pixie16DSP_revfgeneral_14b100m_r37640.ldr
-# 100M14bit_dspvar ../../firmware/pixie16_revf_general_14b100m_firmware_release/Pixie16DSP_revfgeneral_14b100m_r37640.var
+# 100M14bit_sys ../../firmware/xia_pixie-16_15-100-14_general_1.0.1/sys.bin
+# 100M14bit_fip ../../firmware/xia_pixie-16_15-100-14_general_1.0.1/fippi.bin
+# 100M14bit_dsplst ../../firmware/xia_pixie-16_15-100-14_general_1.0.1/dsp.lst
+# 100M14bit_dspldr ../../firmware/xia_pixie-16_15-100-14_general_1.0.1/dsp.ldr
+# 100M14bit_dspvar ../../firmware/xia_pixie-16_15-100-14_general_1.0.1/dsp.var
+
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
+
+# Standard firmware
+100M16bit_sys ../../firmware/xia_pixie-16_15-100-16_general_1.0.2/sys.bin
+100M16bit_fip ../../firmware/xia_pixie-16_15-100-16_general_1.0.2/fippi.bin
+100M16bit_dsplst ../../firmware/xia_pixie-16_15-100-16_general_1.0.2/dsp.lst
+100M16bit_dspldr ../../firmware/xia_pixie-16_15-100-16_general_1.0.2/dsp.ldr
+100M16bit_dspvar ../../firmware/xia_pixie-16_15-100-16_general_1.0.2/dsp.var
+
 
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$
@@ -111,11 +122,11 @@ ModuleBits 9  14 14 14 14 14 14 14 14 14 14
 250M14bit_dspvar ../../firmware/pixie16_revfpku_14b250m_release_11032020/Pixie16DSP_revfpku_14b250m_r44496.var
 
 # Standard firmware
-# 250M14bit_sys ../../firmware/pixie16_revf_general_14b250m_20151027/syspixie16_revfgeneral_adc250mhz_r33339.bin
-# 250M14bit_fip ../../firmware/pixie16_revf_general_14b250m_20151027/fippixie16_revfgeneral_14b250m_r33332.bin
-# 250M14bit_dsplst ../../firmware/pixie16_revf_general_14b250m_20151027/Pixie16DSP_revfgeneral_14b250m_r33356.lst
-# 250M14bit_dspldr ../../firmware/pixie16_revf_general_14b250m_20151027/Pixie16DSP_revfgeneral_14b250m_r33356.ldr
-# 250M14bit_dspvar ../../firmware/pixie16_revf_general_14b250m_20151027/Pixie16DSP_revfgeneral_14b250m_r33356.var
+# 250M14bit_sys ../../firmware/xia_pixie-16_15-250-14_general_1.0.1/sys.bin
+# 250M14bit_fip ../../firmware/xia_pixie-16_15-250-14_general_1.0.1/fippi.bin
+# 250M14bit_dsplst ../../firmware/xia_pixie-16_15-250-14_general_1.0.1/dsp.lst
+# 250M14bit_dspldr ../../firmware/xia_pixie-16_15-250-14_general_1.0.1/dsp.ldr
+# 250M14bit_dspvar ../../firmware/xia_pixie-16_15-250-14_general_1.0.1/dsp.var
 
 
 ## &&&&&&&&&&          **********          %%%%%%%%%%          $$$$$$$$$$

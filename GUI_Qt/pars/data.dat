@@ -1,4 +1,5 @@
 {
+"fwver": 20250210,
 "crateid": 0,
 "modules": 6,
 "slotid": [2, 3, 4, 5, 6, 7],
@@ -14,29 +15,29 @@
 
 
 
-"rev14_100_12_std": {
-"ldr": "../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.ldr",
-"var": "../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.var",
-"fip": "../firmware/pixie16_revd_12b100m_firmware_release/fippixie16_revdgeneral_r32495.bin",
-"sys": "../firmware/pixie16_revd_12b100m_firmware_release/syspixie16_revdgeneral_r33157.bin",
-"trig": "../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.lst"
+"rev13_100_12_std": {
+"ldr": "../firmware/xia_pixie-16_13-100-12_general_1.0.0/dsp.ldr",
+"var": "../firmware/xia_pixie-16_13-100-12_general_1.0.0/dsp.var",
+"fip": "../firmware/xia_pixie-16_13-100-12_general_1.0.0/fippi.bin",
+"sys": "../firmware/xia_pixie-16_13-100-12_general_1.0.0/sys.bin",
+"trig": "../firmware/xia_pixie-16_13-100-12_general_1.0.0/dsp.lst"
 },
 
-"rev14_100_12_pku": {
-"ldr": "../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.ldr",
-"var": "../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.var",
-"fip": "../firmware/pixie16_revd_12b100m_firmware_release/fippixie16_revdgeneral_r32495.bin",
-"sys": "../firmware/pixie16_revd_12b100m_firmware_release/syspixie16_revdgeneral_r33157.bin",
-"trig": "../firmware/pixie16_revd_12b100m_firmware_release/Pixie16DSP_revdgeneral_r32777.lst"
+"rev13_100_12_pku": {
+"ldr": "../firmware/xia_pixie-16_13-100-12_general_1.0.0/dsp.ldr",
+"var": "../firmware/xia_pixie-16_13-100-12_general_1.0.0/dsp.var",
+"fip": "../firmware/xia_pixie-16_13-100-12_general_1.0.0/fippi.bin",
+"sys": "../firmware/xia_pixie-16_13-100-12_general_1.0.0/sys.bin",
+"trig": "../firmware/xia_pixie-16_13-100-12_general_1.0.0/dsp.lst"
 },
 
 
 "rev15_100_14_std": {
-"ldr": "../firmware/pixie16_revf_general_14b100m_firmware_release/Pixie16DSP_revfgeneral_14b100m_r37640.ldr",
-"var": "../firmware/pixie16_revf_general_14b100m_firmware_release/Pixie16DSP_revfgeneral_14b100m_r37640.var",
-"fip": "../firmware/pixie16_revf_general_14b100m_firmware_release/fippixie16_revfgeneral_14b100m_r36263.bin",
-"sys": "../firmware/pixie16_revf_general_14b100m_firmware_release/syspixie16_revfgeneral_adc100mhz_r33338.bin",
-"trig": "../firmware/pixie16_revf_general_14b100m_firmware_release/Pixie16DSP_revfgeneral_14b100m_r37640.lst"
+"ldr": "../firmware/xia_pixie-16_15-100-14_general_1.0.1/dsp.ldr",
+"var": "../firmware/xia_pixie-16_15-100-14_general_1.0.1/dsp.var",
+"fip": "../firmware/xia_pixie-16_15-100-14_general_1.0.1/fippi.bin",
+"sys": "../firmware/xia_pixie-16_15-100-14_general_1.0.1/sys.bin",
+"trig": "../firmware/xia_pixie-16_15-100-14_general_1.0.1/dsp.lst"
 },
 
 "rev15_100_14_pku": {
@@ -45,6 +46,22 @@
 "fip": "../firmware/Pixie16_RevF_14_100_PKU_07042023/fippixie16_revfpku_14b100m_r39574.bin",
 "sys": "../firmware/Pixie16_RevF_14_100_PKU_07042023/syspixie16_revfpku_adc100hz_r44498.bin",
 "trig": "../firmware/Pixie16_RevF_14_100_PKU_07042023/Pixie16DSP_revfpku_14b100m_r49064.lst"
+},
+
+"rev15_100_16_std": {
+"ldr": "../firmware/xia_pixie-16_15-100-16_general_1.0.2/dsp.ldr",
+"var": "../firmware/xia_pixie-16_15-100-16_general_1.0.2/dsp.var",
+"fip": "../firmware/xia_pixie-16_15-100-16_general_1.0.2/fippi.bin",
+"sys": "../firmware/xia_pixie-16_15-100-16_general_1.0.2/sys.bin",
+"trig": "../firmware/xia_pixie-16_15-100-16_general_1.0.2/dsp.lst"
+},
+
+"rev15_100_16_pku": {
+"ldr": "../firmware/xia_pixie-16_15-100-16_general_1.0.2/dsp.ldr",
+"var": "../firmware/xia_pixie-16_15-100-16_general_1.0.2/dsp.var",
+"fip": "../firmware/xia_pixie-16_15-100-16_general_1.0.2/fippi.bin",
+"sys": "../firmware/xia_pixie-16_15-100-16_general_1.0.2/sys.bin",
+"trig": "../firmware/xia_pixie-16_15-100-16_general_1.0.2/dsp.lst"
 },
 
 
@@ -66,11 +83,11 @@
 
 
 "rev15_250_14_std": {
-"ldr": "../firmware/pixie16_revf_general_14b250m_20151027/Pixie16DSP_revfgeneral_14b250m_r33356.ldr",
-"var": "../firmware/pixie16_revf_general_14b250m_20151027/Pixie16DSP_revfgeneral_14b250m_r33356.var",
-"fip": "../firmware/pixie16_revf_general_14b250m_20151027/fippixie16_revfgeneral_14b250m_r33332.bin",
-"sys": "../firmware/pixie16_revf_general_14b250m_20151027/syspixie16_revfgeneral_adc250mhz_r33339.bin",
-"trig": "../firmware/pixie16_revf_general_14b250m_20151027/Pixie16DSP_revfgeneral_14b250m_r33356.lst"
+"ldr": "../firmware/xia_pixie-16_15-250-14_general_1.0.1/dsp.ldr",
+"var": "../firmware/xia_pixie-16_15-250-14_general_1.0.1/dsp.var",
+"fip": "../firmware/xia_pixie-16_15-250-14_general_1.0.1/fippi.bin",
+"sys": "../firmware/xia_pixie-16_15-250-14_general_1.0.1/sys.bin",
+"trig": "../firmware/xia_pixie-16_15-250-14_general_1.0.1/dsp.lst"
 },
 
 "rev15_250_14_pku": {
@@ -100,11 +117,11 @@
 
 
 "rev15_500_12_std": {
-"ldr": "../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.ldr",
-"var": "../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.var",
-"fip": "../firmware/pixie16_revf_12b500m_20221117/fippixie16_revfgeneral_12b500m_r48132.bin",
-"sys": "../firmware/pixie16_revf_12b500m_20221117/syspixie16_revfgeneral_adc500mhz_r31567.bin",
-"trig": "../firmware/pixie16_revf_12b500m_20221117/Pixie16DSP_revfgeneral_12b500m_r31779.lst"
+"ldr": "../firmware/xia_pixie-16_15-500-12_general_1.2.0/dsp.ldr",
+"var": "../firmware/xia_pixie-16_15-500-12_general_1.2.0/dsp.var",
+"fip": "../firmware/xia_pixie-16_15-500-12_general_1.2.0/fippi.bin",
+"sys": "../firmware/xia_pixie-16_15-500-12_general_1.2.0/sys.bin",
+"trig": "../firmware/xia_pixie-16_15-500-12_general_1.2.0/dsp.lst"
 },
 
 "rev15_500_12_pku": {

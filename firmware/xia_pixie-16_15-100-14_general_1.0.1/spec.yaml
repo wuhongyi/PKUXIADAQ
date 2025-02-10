@@ -1,0 +1,30 @@
+device:
+  dsp:
+    crc32: '0x8B30C20D'
+    filename: dsp.ldr
+    version: '38896'
+  fippi:
+  - crc32: '0x0F3829CC'
+    filename: fippi.bin
+    mask: '0x0000000F'
+    version: '36263'
+  lst:
+    crc32: '0x541DC055'
+    filename: dsp.lst
+    version: '38896'
+  sys:
+    crc32: '0xD59A9436'
+    filename: sys.bin
+    version: '33338'
+  var:
+    crc32: '0x880F5AEB'
+    filename: dsp.var
+    version: '38896'
+product:
+  module_tag:
+  - 15-100-14
+  name: Pixie-16
+release:
+  date: '2023-10-17T19:53:49Z'
+  id: general
+  version: 1.0.1

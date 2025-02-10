@@ -1,0 +1,51 @@
+{
+    "device": {
+        "dsp": {
+            "crc32": "0x079C7725",
+            "filename": "dsp.ldr",
+            "version": "40804"
+        },
+        "fippi": [
+            {
+                "crc32": "0x440035E6",
+                "filename": "fippi.bin",
+                "mask": "0x0000000F",
+                "version": "33320"
+            }
+        ],
+        "lst": {
+            "crc32": "0x541DC055",
+            "filename": "dsp.lst",
+            "version": "40804"
+        },
+        "sys": {
+            "crc32": "0x9D69A135",
+            "filename": "sys.bin",
+            "version": "33157"
+        },
+        "var": {
+            "crc32": "0x880F5AEB",
+            "filename": "dsp.var",
+            "version": "40804"
+        }
+    },
+    "product": {
+        "module_tag": [
+            "13-100-12",
+            "12-100-12",
+            "11-100-12"
+        ],
+        "name": "Pixie-16"
+    },
+    "release": {
+        "date": "2024-04-23T12:21:18Z",
+        "id": "general",
+        "version": "1.0.0"
+    },
+    "changelog": {
+        "updates": [
+            "Energy calculation now calculates the result for all events (ex. pile-up, out of range)",
+            "Energy calculations now return 0 if the calculated energy was 0."
+        ]
+    }
+}
