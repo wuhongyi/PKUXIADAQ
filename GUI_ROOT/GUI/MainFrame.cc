@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 五 3月  9 13:01:33 2018 (+0800)
-// Last-Updated: 五 12月 27 19:29:43 2024 (+0800)
+// Last-Updated: 日 3月 16 16:54:13 2025 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 451
+//     Update #: 454
 // URL: http://wuhongyi.cn 
 
 #include "MainFrame.hh"
@@ -314,8 +314,14 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      if(detector != 0) delete detector;
 	      detector = new Detector(flagonlinemode);
 	      detector->SetRecordFlag(true);
-	      detector->SetClockResetFlag(false);
 	      recordchk->SetState(kButtonDown);
+	      
+#ifdef CLOCKRESET
+	      detector->SetClockResetFlag(true);
+#else
+	      detector->SetClockResetFlag(false);
+#endif	      
+	      	      
 #ifdef DECODERONLINE	      
 	      detector->SetDecoderFlag(false);
 	      decoderchk->SetState(kButtonUp);
@@ -350,8 +356,14 @@ Bool_t MainFrame::ProcessMessage(Long_t msg, Long_t parm1, Long_t parm2)
 	      if(detector != 0) delete detector;
 	      detector = new Detector(flagonlinemode);
 	      detector->SetRecordFlag(true);
-	      detector->SetClockResetFlag(false);
 	      recordchk->SetState(kButtonDown);
+
+#ifdef CLOCKRESET
+	      detector->SetClockResetFlag(true);
+#else
+	      detector->SetClockResetFlag(false);
+#endif	
+	      
 #ifdef DECODERONLINE	      
 	      detector->SetDecoderFlag(false);
 	      decoderchk->SetState(kButtonUp);
@@ -633,8 +645,15 @@ void MainFrame::ControlPanel(TGCompositeFrame *TabPanel)
   resetclockchk->SetBackgroundColor(TColor::RGB2Pixel(FRAME_BG_R,FRAME_BG_G,FRAME_BG_B));
   resetclockchk->SetTextColor(TColor::RGB2Pixel(CHECKBUTTON_TEXT_R,CHECKBUTTON_TEXT_G,CHECKBUTTON_TEXT_B));
   resetclockchk->SetFont(CHECKBUTTON_FONT, false);
+
+#ifdef CLOCKRESET
+  resetclockchk->SetState(kButtonDown);
+  fresetclockdata = 1;
+#else
   resetclockchk->SetState(kButtonUp);
   fresetclockdata = 0;
+#endif	
+
   resetclockchk->Connect("Clicked()","MainFrame",this,"SetClockResetFlag()");
   cgrouphframe0->AddFrame(resetclockchk,new TGLayoutHints(kLHintsTop,5,0,5,10));
   

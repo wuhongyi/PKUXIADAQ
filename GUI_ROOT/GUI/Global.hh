@@ -4,15 +4,15 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 8月  9 09:24:46 2016 (+0800)
-// Last-Updated: 五 12月 27 19:30:41 2024 (+0800)
+// Last-Updated: 日 3月 16 16:49:28 2025 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 106
+//     Update #: 107
 // URL: http://wuhongyi.cn 
 
 #ifndef _GLOBAL_HH_
 #define _GLOBAL_HH_
 
-const char gVERSION[] = "Version: STD - 2024.12.27";
+const char gVERSION[] = "Version: STD - 2025.03.16";
 
 const char gCITE[] = "Cite: H.Y. Wu et al., NIM A 975(2020)164200";
 
@@ -40,6 +40,8 @@ Art Director:\n\
 // Features customized for special users
 #define DECODERONLINE
 
+
+#define CLOCKRESET
 
 #define RECODESHA256
 
