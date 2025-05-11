@@ -4,9 +4,9 @@
 .. Author: Hongyi Wu(吴鸿毅)
 .. Email: wuhongyi@qq.com 
 .. Created: 五 11月  8 23:26:13 2024 (+0800)
-.. Last-Updated: 五 11月  8 23:33:53 2024 (+0800)
+.. Last-Updated: 日 5月 11 22:41:58 2025 (+0800)
 ..           By: Hongyi Wu(吴鸿毅)
-..     Update #: 2
+..     Update #: 3
 .. URL: http://wuhongyi.cn 
 
 =================================   
@@ -39,8 +39,8 @@ Qt 程序安装
 
 .. code:: bash
 	  
-  tar -zxvf PixieSDK-4.4.0.tar.gz
-  cd PixieSDK-4.4.0
+  tar -zxvf PixieSDK-5.0.0.tar.gz
+  cd PixieSDK-5.0.0
   mkdir build
   cd build
   cmake  -DCMAKE_INSTALL_PREFIX=../../pixiesdk ..
