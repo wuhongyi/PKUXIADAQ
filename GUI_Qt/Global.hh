@@ -4,9 +4,9 @@
 // Author: Hongyi Wu(吴鸿毅)
 // Email: wuhongyi@qq.com 
 // Created: 二 10月 25 14:31:51 2022 (+0800)
-// Last-Updated: 一 2月 10 21:34:33 2025 (+0800)
+// Last-Updated: 日 5月 11 21:04:31 2025 (+0800)
 //           By: Hongyi Wu(吴鸿毅)
-//     Update #: 60
+//     Update #: 61
 // URL: http://wuhongyi.cn 
 
 #ifndef _GLOBAL_H_
@@ -22,8 +22,8 @@
 #include "QString"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#define VERSIONDATE  20250210
-#define EXPIRATIONDATE 20251010
+#define VERSIONDATE  20250511
+#define EXPIRATIONDATE 20251231
 
 #define ONLINEMODE
 
