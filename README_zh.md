@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 日 5月 11 22:40:41 2025 (+0800)
+;; Last-Updated: 四 12月 18 21:13:38 2025 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 205
+;;     Update #: 206
 ;; URL: http://wuhongyi.cn -->
 
 # A general-purpose digital data acquisition system(GDDAQ)
@@ -21,7 +21,7 @@
 
 ## 版本
 
-- **GUI Qt: version 2025.05.11**  
+- **GUI Qt: version 2025.12.18**  
 - **GUI ROOT Version: 2025.03.16**  
    - **RealDecoder Version: 2023.08.19**  
 - **DecodeAndSortAll Version: 2025.01.14**
@@ -136,7 +136,7 @@ MZTIO 网页版说明书请访问:  [简体中文/English](http://wuhongyi.cn/MZ
 
 ## 版权声明
 
-如果您使用本软件或者基于本软件开发的任何软件，请引用以下文献：
+如果您使用本项目，请引用以下文献：
 
 - [A general-purpose digital data acquisition system (GDDAQ) at Peking University](https://doi.org/10.1016/j.nima.2020.164200)
 - [Performance of digital data acquisition system in gamma-ray spectroscopy](https://doi.org/10.1007/s41365-021-00917-8)
