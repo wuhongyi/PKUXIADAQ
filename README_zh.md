@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 六 6月 18 13:37:42 2016 (+0800)
-;; Last-Updated: 四 12月 18 21:13:38 2025 (+0800)
+;; Last-Updated: 日 5月  3 16:55:56 2026 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 206
+;;     Update #: 207
 ;; URL: http://wuhongyi.cn -->
 
 # A general-purpose digital data acquisition system(GDDAQ)
@@ -21,7 +21,7 @@
 
 ## 版本
 
-- **GUI Qt: version 2025.12.18**  
+- **GUI Qt: version 2026.05.03**  
 - **GUI ROOT Version: 2025.03.16**  
    - **RealDecoder Version: 2023.08.19**  
 - **DecodeAndSortAll Version: 2025.01.14**

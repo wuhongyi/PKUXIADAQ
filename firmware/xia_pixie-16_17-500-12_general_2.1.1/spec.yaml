@@ -1,0 +1,30 @@
+device:
+  dsp:
+    crc32: '0xCCD724D8'
+    filename: dsp.ldr
+    version: '50385'
+    svn: '50385'
+  fippi:
+  - crc32: '0xBDC1B556'
+    filename: fippi.bin
+    mask: '0x0000000F'
+    version: '0x43A0'
+    svn: '50313'
+  sys:
+    crc32: '0xE4CAE5EB'
+    filename: sys.bin
+    version: '0x603D_A9A1'
+    svn: '49711'
+  var:
+    crc32: '0xE161B44C'
+    filename: dsp.var
+    version: '50385'
+    svn: '50385'
+product:
+  module_tag:
+  - 17-500-12
+  name: Pixie-16
+release:
+  date: '2026-03-27T10:54:00Z'
+  id: general
+  version: '2.1.1'

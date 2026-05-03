@@ -1,0 +1,42 @@
+{
+    "device": {
+        "dsp": {
+            "crc32": "0x96DEF3DE",
+            "filename": "dsp.ldr",
+            "version": "47160",
+            "svn": "47160"
+        },
+        "fippi": [
+            {
+                "crc32": "0x38465EC1",
+                "filename": "fippi.bin",
+                "mask": "0x0000000F",
+                "version": "0x3C41",
+                "svn": "49338"
+            }
+        ],
+        "sys": {
+            "crc32": "0xAED3AA30",
+            "filename": "sys.bin",
+            "version": "0x003C_A941",
+            "svn": "49341"
+        },
+        "var": {
+            "crc32": "0xE161B44C",
+            "filename": "dsp.var",
+            "version": "47160",
+            "svn": "47160"
+        }
+    },
+    "product": {
+        "module_tag": [
+            "17-250-14"
+        ],
+        "name": "Pixie-16"
+    },
+    "release": {
+        "date": "2026-03-27T10:54:00Z",
+        "id": "general",
+        "version": "1.0.1"
+    }
+}
